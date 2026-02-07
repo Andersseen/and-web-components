@@ -1,20 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "packages/angular-workspace/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/angular-workspace"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/packages/angular-workspace/$1"
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
