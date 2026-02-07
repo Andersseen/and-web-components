@@ -4,7 +4,7 @@
   "scripts": {
     "build:stencil": "pnpm -C packages/stencil-library build",
     "start:demo": "pnpm -C packages/stencil-library build && pnpm -C packages/angular-workspace start",
-    "build:demo": "pnpm build:stencil && pnpm -C packages/angular-workspace build"
+    "build:demo": "pnpm build:stencil && pnpm -C packages/angular-workspace build demo-app"
   },
   "devDependencies": {
     "@types/node": "^25.2.1",
