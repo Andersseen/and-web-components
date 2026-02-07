@@ -1,11 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  MyCarousel,
+  MyCarouselItem,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-carousel-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyCarousel, MyCarouselItem],
   template: `
     <div class="demo-section">
       <h2>Carousel</h2>

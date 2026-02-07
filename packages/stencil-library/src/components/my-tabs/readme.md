@@ -7,18 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                 | Type      | Default     |
-| ---------- | ---------- | --------------------------- | --------- | ----------- |
-| `active`   | `active`   | Managed by parent `my-tabs` | `boolean` | `false`     |
-| `disabled` | `disabled` |                             | `boolean` | `false`     |
-| `value`    | `value`    |                             | `string`  | `undefined` |
-
-
-## Events
-
-| Event             | Description | Type                  |
-| ----------------- | ----------- | --------------------- |
-| `tabTriggerClick` |             | `CustomEvent<string>` |
+| Property   | Attribute  | Description | Type      | Default     |
+| ---------- | ---------- | ----------- | --------- | ----------- |
+| `disabled` | `disabled` |             | `boolean` | `false`     |
+| `value`    | `value`    |             | `string`  | `undefined` |
 
 
 ----------------------------------------------

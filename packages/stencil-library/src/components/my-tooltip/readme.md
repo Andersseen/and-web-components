@@ -7,10 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type                                     | Default     |
-| ----------- | ----------- | ----------- | ---------------------------------------- | ----------- |
-| `content`   | `content`   |             | `string`                                 | `undefined` |
-| `placement` | `placement` |             | `"bottom" \| "left" \| "right" \| "top"` | `'top'`     |
+| Property     | Attribute     | Description | Type                                     | Default     |
+| ------------ | ------------- | ----------- | ---------------------------------------- | ----------- |
+| `closeDelay` | `close-delay` |             | `number`                                 | `0`         |
+| `content`    | `content`     |             | `string`                                 | `undefined` |
+| `openDelay`  | `open-delay`  |             | `number`                                 | `0`         |
+| `placement`  | `placement`   |             | `"bottom" \| "left" \| "right" \| "top"` | `'top'`     |
 
 
 ----------------------------------------------

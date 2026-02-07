@@ -4,7 +4,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "component-library": ["dist/component-library"]
+      "angular-components": ["./dist/angular-components"],
+      "component-library": ["dist/component-library"],
+      "@angular-components/*": ["./projects/angular-components/src/lib/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -30,5 +32,13 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "disableTypeScriptVersionCheck": true
-  }
+  },
+  "references": [
+    {
+      "path": "./projects/angular-components/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/angular-components/tsconfig.spec.json"
+    }
+  ]
 }

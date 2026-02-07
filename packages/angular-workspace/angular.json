@@ -114,6 +114,32 @@
           }
         }
       }
+    },
+    "angular-components": {
+      "projectType": "library",
+      "root": "projects/angular-components",
+      "sourceRoot": "projects/angular-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/angular-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/angular-components/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

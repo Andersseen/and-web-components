@@ -1,4 +1,5 @@
 import { Config } from '@stencil/core';
+import { angularOutputTarget } from '@stencil/angular-output-target';
 
 import { postcss } from '@stencil-community/postcss';
 import autoprefixer from 'autoprefixer';
@@ -22,8 +23,14 @@ export const config: Config = {
     },
     {
       type: 'www',
-      serviceWorker: null, // disable service workers
+      serviceWorker: null,
     },
+    angularOutputTarget({
+      componentCorePackage: 'stencil-library',
+      outputType: 'standalone',
+      directivesProxyFile: '../angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
+      directivesArrayFile: '../angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
+    }),
   ],
   plugins: [
     postcss({

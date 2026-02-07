@@ -1,10 +1,13 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  MyAccordion,
+  MyAccordionItem,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-accordion-demo',
-  imports: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  standalone: true,
+  imports: [MyAccordion, MyAccordionItem],
   template: `
     <div class="demo-section">
       <h2>Accordion</h2>

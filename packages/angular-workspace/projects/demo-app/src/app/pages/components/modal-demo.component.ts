@@ -1,5 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import 'stencil-library/components/my-modal';
+import 'stencil-library/components/my-button';
 
 @Component({
   selector: 'app-modal-demo',

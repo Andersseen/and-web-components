@@ -1,6 +1,5 @@
 import { Component, Prop, h, Host, Element } from '@stencil/core';
 import * as accordion from '@zag-js/accordion';
-import { normalizeProps } from '@zag-js/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -25,8 +24,7 @@ export class MyAccordionItem {
     // We check for parent.service now instead of parent.state
     if (!parent || !parent.service) return null;
 
-    // Connect using service (2 args)
-    const api = accordion.connect(parent.service, normalizeProps);
+    const api = (accordion.connect as any)(parent.service, (v: any) => v);
     const itemProps = api.getItemProps({ value: this.value, disabled: this.disabled });
 
     return (

@@ -1,50 +1,25 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MyCard } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-card-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyCard],
   template: `
     <div class="demo-section">
       <h2>Card</h2>
-      <p>Container for content with optional variants</p>
+      <p>Flexible content containers</p>
       <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 1rem;
-        "
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem"
       >
-        <my-card variant="default" class="p-6">
-          <h3
-            style="
-              margin: 0 0 0.5rem 0;
-              font-size: 1.25rem;
-              font-weight: 600;
-            "
-          >
-            Default Card
-          </h3>
-          <p style="margin: 0; color: #6b7280">
-            This is a default card with standard styling.
-          </p>
+        <my-card>
+          <h3 style="margin-top: 0">Card Title</h3>
+          <p>This is a simple card with default styling.</p>
         </my-card>
-        <my-card variant="destructive" class="p-6">
-          <h3
-            style="
-              margin: 0 0 0.5rem 0;
-              font-size: 1.25rem;
-              font-weight: 600;
-              color: #dc2626;
-            "
-          >
-            Destructive Card
-          </h3>
-          <p style="margin: 0; color: #991b1b">
-            This is a destructive variant card.
-          </p>
+        <my-card variant="elevated">
+          <h3 style="margin-top: 0">Elevated Card</h3>
+          <p>This card has an elevated shadow effect.</p>
         </my-card>
       </div>
     </div>

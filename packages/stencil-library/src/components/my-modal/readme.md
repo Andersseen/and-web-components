@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description                | Type      | Default |
-| -------- | --------- | -------------------------- | --------- | ------- |
-| `open`   | `open`    | Whether the modal is open. | `boolean` | `false` |
+| Property | Attribute | Description | Type      | Default |
+| -------- | --------- | ----------- | --------- | ------- |
+| `open`   | `open`    |             | `boolean` | `false` |
 
 
 ## Events

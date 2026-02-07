@@ -1,6 +1,5 @@
 import { Component, h, Host, Element } from '@stencil/core';
 import * as accordion from '@zag-js/accordion';
-import { normalizeProps } from '@zag-js/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -17,7 +16,7 @@ export class MyAccordionTrigger {
 
     if (!parent || !parent.service || !item) return null;
 
-    const api = accordion.connect(parent.service, normalizeProps);
+    const api = (accordion.connect as any)(parent.service, (v: any) => v);
     // item.value exposes the value prop from the item component
     const triggerProps = api.getItemTriggerProps({ value: item.value });
 

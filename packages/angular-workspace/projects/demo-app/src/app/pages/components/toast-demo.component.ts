@@ -1,16 +1,14 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  MyToast,
+  MyButton,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-toast-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyToast, MyButton],
   template: `
     <div class="demo-section">
       <h2>Toast</h2>

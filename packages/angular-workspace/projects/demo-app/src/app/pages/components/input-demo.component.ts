@@ -1,11 +1,11 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MyInput } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-input-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyInput],
   template: `
     <div class="demo-section">
       <h2>Input</h2>

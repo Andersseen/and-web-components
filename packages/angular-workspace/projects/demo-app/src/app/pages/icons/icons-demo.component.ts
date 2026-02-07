@@ -1,5 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import 'stencil-library/components/my-card';
+import 'stencil-library/components/my-icon';
 
 @Component({
   selector: 'app-icons-demo',

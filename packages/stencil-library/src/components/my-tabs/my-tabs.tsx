@@ -1,6 +1,5 @@
 import { Component, h, Host, State, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
 import * as tabs from '@zag-js/tabs';
-import { normalizeProps, useMachine } from '@zag-js/core';
 
 @Component({
   tag: 'my-tabs',
@@ -19,7 +18,7 @@ export class MyTabs {
   @Event() valueChange: EventEmitter<string>;
 
   componentWillLoad() {
-    this.service = tabs.machine({
+    this.service = (tabs.machine as any).start({
       id: 'tabs',
       value: this.value || this.defaultValue,
       orientation: this.orientation,
@@ -34,14 +33,12 @@ export class MyTabs {
     this.service.subscribe(state => {
       this.state = state;
     });
-
-    this.service.start();
   }
 
   // Si el valor cambia externamente (ej. desde Angular), sincronizamos Zag
   @Watch('value')
   handleValueChange(newValue: string) {
-    const api = tabs.connect(this.state, this.service.send, normalizeProps);
+    const api = (tabs.connect as any)(this.state, this.service.send, (v: any) => v);
     api.setValue(newValue);
   }
 
@@ -50,11 +47,8 @@ export class MyTabs {
   }
 
   render() {
-    // Generamos la API de Zag
-    const api = tabs.connect(this.state, this.service.send, normalizeProps);
-
     return (
-      <Host {...api.getRootProps()} class="flex w-full flex-col">
+      <Host class="flex w-full flex-col">
         {/* Pasamos la API a través de slots es difícil en WC, 
             por lo que los hijos simplemente buscarán al padre más cercano */}
         <slot></slot>

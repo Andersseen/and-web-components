@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description                                 | Type                                                            | Default     |
-| --------- | --------- | ------------------------------------------- | --------------------------------------------------------------- | ----------- |
-| `items`   | --        |                                             | `DropdownItem[]`                                                | `[]`        |
-| `variant` | `variant` | The visual variant of the dropdown trigger. | `"default" \| "ghost" \| "outline" \| "primary" \| "secondary"` | `'default'` |
+| Property  | Attribute | Description | Type                                                            | Default     |
+| --------- | --------- | ----------- | --------------------------------------------------------------- | ----------- |
+| `items`   | --        |             | `DropdownItem[]`                                                | `[]`        |
+| `variant` | `variant` |             | `"default" \| "ghost" \| "outline" \| "primary" \| "secondary"` | `'default'` |
 
 
 ## Events

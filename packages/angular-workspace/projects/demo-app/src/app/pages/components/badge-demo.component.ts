@@ -1,11 +1,11 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MyBadge } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-badge-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyBadge],
   template: `
     <div class="demo-section">
       <h2>Badge</h2>

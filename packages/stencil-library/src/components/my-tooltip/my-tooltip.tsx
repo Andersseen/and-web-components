@@ -1,7 +1,5 @@
 import { Component, Host, h, Prop, State, Element } from '@stencil/core';
 import * as tooltip from '@zag-js/tooltip';
-import { normalizeProps, useMachine } from '@zag-js/core';
-import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tooltip',
@@ -20,7 +18,7 @@ export class MyTooltip {
   private service: any;
 
   componentWillLoad() {
-    this.service = useMachine(tooltip.machine, {
+    this.service = (tooltip.machine as any).start({
       id: 'tooltip',
       openDelay: this.openDelay,
       closeDelay: this.closeDelay,
@@ -31,8 +29,6 @@ export class MyTooltip {
     this.service.subscribe(state => {
       this.state = state;
     });
-
-    this.service.start();
   }
 
   disconnectedCallback() {
@@ -40,7 +36,7 @@ export class MyTooltip {
   }
 
   render() {
-    const api = tooltip.connect(this.service, normalizeProps);
+    const api = (tooltip.connect as any)(this.service, (v: any) => v);
 
     return (
       <Host>

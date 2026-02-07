@@ -1,6 +1,5 @@
 import { Component, Prop, h, Host, State, Watch, Event, EventEmitter, Element } from '@stencil/core';
 import * as dialog from '@zag-js/dialog';
-import { normalizeProps, useMachine } from '@zag-js/core';
 
 @Component({
   tag: 'my-modal',
@@ -17,7 +16,7 @@ export class MyModal {
   private service: any;
 
   componentWillLoad() {
-    this.service = useMachine(dialog.machine, {
+    this.service = (dialog.machine as any).start({
       id: 'dialog',
       open: this.open,
       getRootNode: () => this.el.shadowRoot,
@@ -32,14 +31,12 @@ export class MyModal {
     this.service.subscribe(state => {
       this.state = state;
     });
-
-    this.service.start();
   }
 
   @Watch('open')
   handleOpenChange(newValue: boolean) {
     if (!this.service) return;
-    const api = dialog.connect(this.service, normalizeProps);
+    const api = (dialog.connect as any)(this.service, (v: any) => v);
     if (api.open !== newValue) {
       if (newValue) {
         api.setOpen(true);
@@ -54,10 +51,10 @@ export class MyModal {
   }
 
   render() {
-    const api = dialog.connect(this.service, normalizeProps);
+    const api = (dialog.connect as any)(this.service, (v: any) => v);
 
     return (
-      <Host {...api.getRootProps()}>
+      <Host>
         {api.open && (
           <div
             {...api.getBackdropProps()}

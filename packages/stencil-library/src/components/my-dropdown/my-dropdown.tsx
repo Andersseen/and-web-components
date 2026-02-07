@@ -1,6 +1,5 @@
-import { Component, Host, h, Prop, State, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Element, Event, EventEmitter } from '@stencil/core';
 import * as menu from '@zag-js/menu';
-import { normalizeProps, useMachine } from '@zag-js/core';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/utils';
 
@@ -45,7 +44,7 @@ export class MyDropdown {
   private service: any;
 
   componentWillLoad() {
-    this.service = useMachine(menu.machine, {
+    this.service = (menu.machine as any).start({
       id: 'menu',
       getRootNode: () => this.el.shadowRoot,
       onSelect: details => {
@@ -56,8 +55,6 @@ export class MyDropdown {
     this.service.subscribe(state => {
       this.state = state;
     });
-
-    this.service.start();
   }
 
   disconnectedCallback() {
@@ -65,7 +62,7 @@ export class MyDropdown {
   }
 
   render() {
-    const api = menu.connect(this.service, normalizeProps);
+    const api = (menu.connect as any)(this.service, (v: any) => v);
 
     return (
       <Host>

@@ -1,11 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  MyDrawer,
+  MyButton,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-drawer-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyDrawer, MyButton],
   template: `
     <div class="demo-section">
       <h2>Drawer</h2>

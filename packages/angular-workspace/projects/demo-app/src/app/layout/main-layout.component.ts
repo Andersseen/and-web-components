@@ -7,6 +7,8 @@ import {
   NavigationEnd,
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import 'stencil-library/components/my-navbar';
+import 'stencil-library/components/my-sidebar';
 
 interface SidebarItem {
   id: string;

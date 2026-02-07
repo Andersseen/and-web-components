@@ -1,11 +1,11 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MyCard } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-navbar-demo',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MyCard],
   template: `
     <div class="demo-section">
       <h2>Navbar</h2>

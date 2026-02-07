@@ -1,6 +1,5 @@
 import { Component, h, Host, Prop, Element } from '@stencil/core';
 import * as tabs from '@zag-js/tabs';
-import { normalizeProps } from '@zag-js/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -15,7 +14,7 @@ export class MyTabsContent {
     const parent = this.el.closest('my-tabs') as any;
     if (!parent) return null;
 
-    const api = tabs.connect(parent.state, parent.service.send, normalizeProps);
+    const api = (tabs.connect as any)(parent.state, parent.service.send, (v: any) => v);
     const contentProps = api.getContentProps({ value: this.value });
     const isHidden = api.value !== this.value;
 

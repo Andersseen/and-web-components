@@ -1,11 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  MyTabs,
+  MyTabsContent,
+  MyTabsList,
+  MyTabsTrigger,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tabs-demo',
-  standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [MyTabs, MyTabsContent, MyTabsList, MyTabsTrigger],
   template: `
     <div class="demo-section">
       <h2>Tabs</h2>
