@@ -1,6 +1,24 @@
 import { Component, Host, h, State, Method, Element } from '@stencil/core';
+import { cva } from 'class-variance-authority';
+import { cn } from '../../utils/utils';
 
-export type ToastType = 'success' | 'error' | 'info' | 'warning';
+export type ToastType = 'default' | 'success' | 'error' | 'info' | 'warning';
+
+const toastVariants = cva('pointer-events-auto flex w-full max-w-md items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 shadow-lg transition-all', {
+  variants: {
+    variant: {
+      default: 'bg-background text-foreground border-border',
+      destructive: 'bg-destructive text-destructive-foreground border-destructive group-hover:bg-destructive group-hover:text-destructive-foreground',
+      success: 'bg-background text-foreground border-border',
+      error: 'bg-destructive text-destructive-foreground border-destructive',
+      info: 'bg-background text-foreground border-border',
+      warning: 'bg-background text-foreground border-border',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
 
 @Component({
   tag: 'my-toast',
@@ -16,7 +34,7 @@ export class MyToast {
    * Present a new toast
    */
   @Method()
-  async present(message: string, type: ToastType = 'info', duration: number = 3000) {
+  async present(message: string, type: ToastType = 'default', duration: number = 3000) {
     const id = Date.now();
     this.toasts = [...this.toasts, { id, message, type }];
 
@@ -31,29 +49,18 @@ export class MyToast {
 
   render() {
     return (
-      <Host>
-        <div class="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+      <Host class="block relative z-[100]">
+        <div class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 w-full max-w-md pointer-events-none">
           {this.toasts.map(toast => (
-            <div
-              key={toast.id}
-              class={{
-                'flex items-center w-full max-w-xs p-4 rounded-lg shadow dark:bg-gray-800 dark:text-gray-400': true,
-                'text-green-500 bg-white': toast.type === 'success',
-                'text-red-500 bg-white': toast.type === 'error',
-                'text-blue-500 bg-white': toast.type === 'info',
-                'text-orange-500 bg-white': toast.type === 'warning',
-                'animate-slide-in': true,
-              }}
-              role="alert"
-            >
-              <div class="text-sm font-normal">{toast.message}</div>
+            <div key={toast.id} class={cn(toastVariants({ variant: toast.type }), 'animate-in slide-in-from-right-full fade-in duration-300')} role="alert">
+              <div class="text-sm font-medium opacity-90">{toast.message}</div>
               <button
                 type="button"
-                class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center h-8 w-8 text-gray-500 hover:text-gray-900 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700"
+                class="ml-auto inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md p-0.5 opacity-50 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-opacity"
                 aria-label="Close"
                 onClick={() => this.dismiss(toast.id)}
               >
-                <my-icon name="close" class="w-4 h-4" />
+                <my-icon name="close" size="16" />
               </button>
             </div>
           ))}

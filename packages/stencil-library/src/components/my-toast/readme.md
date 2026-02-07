@@ -13,11 +13,11 @@ Present a new toast
 
 #### Parameters
 
-| Name       | Type                                          | Description |
-| ---------- | --------------------------------------------- | ----------- |
-| `message`  | `string`                                      |             |
-| `type`     | `"info" \| "error" \| "success" \| "warning"` |             |
-| `duration` | `number`                                      |             |
+| Name       | Type                                                       | Description |
+| ---------- | ---------------------------------------------------------- | ----------- |
+| `message`  | `string`                                                   |             |
+| `type`     | `"info" \| "error" \| "default" \| "success" \| "warning"` |             |
+| `duration` | `number`                                                   |             |
 
 #### Returns
 

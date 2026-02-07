@@ -2,7 +2,7 @@ import {
   MyButton,
   MyToast,
 } from '@angular-components/stencil-generated/components';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-toast-demo',
@@ -17,11 +17,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   `,
 })
 export default class ToastDemo {
-  @ViewChild('toast') toastElement!: ElementRef;
+  @ViewChild('toast') toastElement!: MyToast;
 
   async showToast() {
-    if (this.toastElement && this.toastElement.nativeElement) {
-      await this.toastElement.nativeElement.present(
+    if (this.toastElement) {
+      await this.toastElement.present(
         'This is a toast notification!',
         'success',
       );
