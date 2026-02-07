@@ -1,0 +1,19 @@
+# Source files
+src/
+dist/docs/
+www/
+
+# Configuration
+stencil.config.ts
+tsconfig.json
+package-lock.json
+pnpm-lock.yaml
+
+# System
+.DS_Store
+node_modules/
+.gitignore
+
+# Tests
+**/*.spec.ts
+**/*.e2e.ts

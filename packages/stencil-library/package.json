@@ -11,7 +11,8 @@
   "exports": {
     ".": {
       "import": "./dist/stencil-library/stencil-library.esm.js",
-      "require": "./dist/stencil-library/stencil-library.cjs.js"
+      "require": "./dist/stencil-library/stencil-library.cjs.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./my-component": {
       "import": "./dist/components/my-component.js",
@@ -23,6 +24,9 @@
       "types": "./loader/index.d.ts"
     },
     "./dist/stencil-library/stencil-library.css": "./dist/stencil-library/stencil-library.css"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
