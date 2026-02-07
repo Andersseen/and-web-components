@@ -1,4 +1,6 @@
-import { Component, Prop, h, Host, Element, Watch } from '@stencil/core';
+import { Component, Prop, h, Host, Element } from '@stencil/core';
+import * as accordion from '@zag-js/accordion';
+import { normalizeProps } from '@zag-js/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -7,17 +9,10 @@ import { cn } from '../../utils/utils';
   shadow: true,
 })
 export class MyAccordionItem {
-  /**
-   * The value of the item.
-   */
-  @Prop({ reflect: true }) value: string;
-
-  /**
-   * Whether the item is open.
-   */
-  @Prop({ reflect: true, mutable: true }) open: boolean = false;
-
   @Element() el: HTMLElement;
+
+  @Prop() value: string;
+  @Prop() disabled: boolean = false;
 
   componentWillLoad() {
     if (!this.value) {
@@ -25,41 +20,18 @@ export class MyAccordionItem {
     }
   }
 
-  componentDidLoad() {
-    this.updateChildren();
-  }
-
-  @Watch('open')
-  openHandler() {
-    this.updateChildren();
-  }
-
-  updateChildren() {
-    const trigger = this.el.querySelector('my-accordion-trigger') as any;
-    const content = this.el.querySelector('my-accordion-content') as any;
-
-    if (trigger) {
-      trigger.open = this.open;
-    }
-    if (content) {
-      content.open = this.open;
-    }
-  }
-
-  /**
-   * The header text for the item.
-   */
-  @Prop() header: string;
-
   render() {
+    const parent = this.el.closest('my-accordion') as any;
+    // We check for parent.service now instead of parent.state
+    if (!parent || !parent.service) return null;
+
+    // Connect using service (2 args)
+    const api = accordion.connect(parent.service, normalizeProps);
+    const itemProps = api.getItemProps({ value: this.value, disabled: this.disabled });
+
     return (
-      <Host class={cn('block border-b')}>
-        <my-accordion-trigger open={this.open} value={this.value}>
-          {this.header}
-        </my-accordion-trigger>
-        <my-accordion-content open={this.open}>
-          <slot></slot>
-        </my-accordion-content>
+      <Host {...itemProps} class={cn('block border-b')}>
+        <slot></slot>
       </Host>
     );
   }

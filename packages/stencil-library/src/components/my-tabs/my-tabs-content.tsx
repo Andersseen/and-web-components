@@ -1,28 +1,31 @@
-import { Component, Prop, h, Host } from '@stencil/core';
+import { Component, h, Host, Prop, Element } from '@stencil/core';
+import * as tabs from '@zag-js/tabs';
+import { normalizeProps } from '@zag-js/core';
 import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tabs-content',
-  styleUrl: '../../global/global.css',
   shadow: true,
 })
 export class MyTabsContent {
+  @Element() el: HTMLElement;
   @Prop() value: string;
 
-  /**
-   * Managed by parent `my-tabs`
-   */
-  @Prop({ reflect: true }) active: boolean = false;
-
   render() {
+    const parent = this.el.closest('my-tabs') as any;
+    if (!parent) return null;
+
+    const api = tabs.connect(parent.state, parent.service.send, normalizeProps);
+    const contentProps = api.getContentProps({ value: this.value });
+    const isHidden = api.value !== this.value;
+
     return (
       <Host
+        {...contentProps}
         class={cn(
           'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-          this.active ? 'block animate-in fade-in-50 zoom-in-95' : 'hidden',
+          isHidden ? 'hidden' : 'block animate-in fade-in-50 zoom-in-95',
         )}
-        role="tabpanel"
-        data-state={this.active ? 'active' : 'inactive'}
       >
         <slot></slot>
       </Host>

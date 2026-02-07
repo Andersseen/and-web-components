@@ -1,9 +1,9 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "and-web-components",
+  "private": false,
   "scripts": {
-    "build:stencil": "npm run build --prefix packages/stencil-library",
-    "start:demo": "npm run start --prefix packages/angular-workspace"
+    "build:stencil": "pnpm -C packages/stencil-library build",
+    "start:demo": "pnpm -C packages/angular-workspace start"
   },
   "devDependencies": {
     "@types/node": "^25.2.1",

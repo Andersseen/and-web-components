@@ -1,42 +1,33 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, h, Host, Prop, Element, State } from '@stencil/core';
+import * as tabs from '@zag-js/tabs';
+import { normalizeProps } from '@zag-js/core';
 import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tabs-trigger',
-  styleUrls: ['my-tabs.css', '../../global/global.css'],
   shadow: true,
 })
 export class MyTabsTrigger {
+  @Element() el: HTMLElement;
   @Prop() value: string;
   @Prop() disabled: boolean = false;
 
-  /**
-   * Managed by parent `my-tabs`
-   */
-  @Prop({ reflect: true }) active: boolean = false;
-
-  @Event() tabTriggerClick: EventEmitter<string>;
-
-  @Element() el: HTMLElement;
-
-  handleClick = () => {
-    if (!this.disabled) {
-      this.tabTriggerClick.emit(this.value);
-    }
-  };
-
   render() {
+    // Buscamos la instancia de la máquina del padre
+    const parent = this.el.closest('my-tabs') as any;
+    if (!parent) return null;
+
+    const api = tabs.connect(parent.state, parent.service.send, normalizeProps);
+    const triggerProps = api.getTriggerProps({ value: this.value, disabled: this.disabled });
+    const isActive = api.value === this.value;
+
     return (
-      <Host class={cn('flex-1')}>
+      <Host class="flex-1">
         <button
-          type="button"
-          role="tab"
-          aria-selected={this.active ? 'true' : 'false'}
-          disabled={this.disabled}
-          onClick={this.handleClick}
+          {...triggerProps}
           class={cn(
-            'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
-            this.active ? 'bg-background text-foreground shadow-sm' : 'hover:bg-background/50 hover:text-foreground',
+            'inline-flex w-full items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+            isActive ? 'bg-background text-foreground shadow-sm' : 'hover:bg-background/50 hover:text-foreground',
           )}
         >
           <slot></slot>

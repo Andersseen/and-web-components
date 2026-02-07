@@ -55,8 +55,14 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@zag-js/accordion": "^1.33.1",
+    "@zag-js/core": "^1.33.1",
+    "@zag-js/dialog": "^1.33.1",
+    "@zag-js/menu": "^1.33.1",
+    "@zag-js/tooltip": "^1.33.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "@babel/runtime": "^7.26.0"
   }
 }

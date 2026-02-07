@@ -1,4 +1,7 @@
 import { Component, Host, h, Prop, State, Element } from '@stencil/core';
+import * as tooltip from '@zag-js/tooltip';
+import { normalizeProps, useMachine } from '@zag-js/core';
+import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tooltip',
@@ -10,83 +13,52 @@ export class MyTooltip {
 
   @Prop() content: string;
   @Prop() placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Prop() openDelay: number = 0;
+  @Prop() closeDelay: number = 0;
 
-  @State() visible: boolean = false;
-  @State() actualPlacement: string = 'top';
+  @State() state: any;
+  private service: any;
 
-  private show() {
-    this.visible = true;
-    this.calculatePosition();
-  }
-
-  private hide() {
-    this.visible = false;
-  }
-
-  private calculatePosition() {
-    requestAnimationFrame(() => {
-      const tooltip = this.el.shadowRoot.querySelector('.tooltip-content') as HTMLElement;
-      if (!tooltip) return;
-
-      const rect = this.el.getBoundingClientRect();
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const margin = 8;
-
-      let top = 0;
-      let left = 0;
-
-      switch (this.placement) {
-        case 'top':
-          top = rect.top - tooltipRect.height - margin;
-          left = rect.left + rect.width / 2 - tooltipRect.width / 2;
-          break;
-        case 'bottom':
-          top = rect.bottom + margin;
-          left = rect.left + rect.width / 2 - tooltipRect.width / 2;
-          break;
-        case 'left':
-          top = rect.top + rect.height / 2 - tooltipRect.height / 2;
-          left = rect.left - tooltipRect.width - margin;
-          break;
-        case 'right':
-          top = rect.top + rect.height / 2 - tooltipRect.height / 2;
-          left = rect.right + margin;
-          break;
-      }
-
-      // Boundary checks (basic flipping if off-screen)
-      if (top < 0 && this.placement === 'top') {
-        top = rect.bottom + margin; // flip to bottom
-      }
-      if (left < 0 && this.placement === 'left') {
-        left = rect.right + margin; // flip to right
-      }
-      if (left + tooltipRect.width > window.innerWidth && this.placement === 'right') {
-        left = rect.left - tooltipRect.width - margin; // flip to left
-      }
-      // Note: Full collisions logic (like Popper.js) is more complex, this is a basic implementation as requested.
-
-      tooltip.style.top = `${top}px`;
-      tooltip.style.left = `${left}px`;
+  componentWillLoad() {
+    this.service = useMachine(tooltip.machine, {
+      id: 'tooltip',
+      openDelay: this.openDelay,
+      closeDelay: this.closeDelay,
+      placement: this.placement,
+      getRootNode: () => this.el.shadowRoot,
     });
+
+    this.service.subscribe(state => {
+      this.state = state;
+    });
+
+    this.service.start();
+  }
+
+  disconnectedCallback() {
+    this.service.stop();
   }
 
   render() {
-    return (
-      <Host onMouseEnter={() => this.show()} onMouseLeave={() => this.hide()} onFocusin={() => this.show()} onFocusout={() => this.hide()}>
-        <div class="relative inline-block">
-          <slot></slot>
+    const api = tooltip.connect(this.service, normalizeProps);
 
-          <div
-            class={{
-              'tooltip-content fixed z-[9999] px-2 py-1 text-xs font-medium text-white bg-black rounded shadow-sm whitespace-nowrap transition-opacity duration-200 pointer-events-none': true,
-              'opacity-0 invisible': !this.visible,
-              'opacity-100 visible': this.visible,
-            }}
-            role="tooltip"
-          >
-            {this.content || <slot name="content"></slot>}
+    return (
+      <Host>
+        <div class="relative inline-block">
+          <div {...api.getTriggerProps()}>
+            <slot></slot>
           </div>
+
+          {api.open && (
+            <div {...api.getPositionerProps()} class="z-50">
+              <div
+                {...api.getContentProps()}
+                class="z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+              >
+                {this.content || <slot name="content"></slot>}
+              </div>
+            </div>
+          )}
         </div>
       </Host>
     );
