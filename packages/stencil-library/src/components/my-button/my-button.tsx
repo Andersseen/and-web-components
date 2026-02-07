@@ -32,7 +32,7 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
 
 @Component({
   tag: 'my-button',
-  styleUrl: 'my-button.css',
+  styleUrls: ['my-button.css', '../../global/global.css'],
   shadow: true,
 })
 export class MyButton {

@@ -4,7 +4,7 @@ export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 @Component({
   tag: 'my-toast',
-  styleUrl: 'my-toast.css',
+  styleUrls: ['my-toast.css', '../../global/global.css'],
   shadow: true,
 })
 export class MyToast {

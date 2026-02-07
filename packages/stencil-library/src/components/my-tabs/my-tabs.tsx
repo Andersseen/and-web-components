@@ -3,7 +3,7 @@ import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tabs',
-  styleUrl: 'my-tabs.css',
+  styleUrls: ['my-tabs.css', '../../global/global.css'],
   shadow: true,
 })
 export class MyTabs {

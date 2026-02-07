@@ -3,7 +3,7 @@ import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tooltip',
-  styleUrl: 'my-tooltip.css',
+  styleUrls: ['my-tooltip.css', '../../global/global.css'],
   shadow: true,
 })
 export class MyTooltip {
