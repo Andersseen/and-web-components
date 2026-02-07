@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                                                            | Default     |
-| --------- | --------- | ----------- | --------------------------------------------------------------- | ----------- |
-| `items`   | --        |             | `DropdownItem[]`                                                | `[]`        |
-| `variant` | `variant` |             | `"default" \| "ghost" \| "outline" \| "primary" \| "secondary"` | `'default'` |
+| Property  | Attribute | Description | Type             | Default     |
+| --------- | --------- | ----------- | ---------------- | ----------- |
+| `items`   | --        |             | `DropdownItem[]` | `[]`        |
+| `label`   | `label`   |             | `string`         | `'Options'` |
+| `variant` | `variant` |             | `any`            | `'default'` |
 
 
 ## Events

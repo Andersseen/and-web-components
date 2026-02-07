@@ -9,12 +9,15 @@
     "composite": true,
     "types": [],
     "paths": {
-      "stencil-library/*": ["../../../stencil-library/dist/*"],
-      "stencil-library/components": [
-        "../../../stencil-library/dist/components/index.d.ts"
-      ]
+      "stencil-library/components/*": [
+        "../../../stencil-library/dist/components/*"
+      ],
+      "stencil-library": ["../../../stencil-library/dist/types/index.d.ts"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../../../stencil-library/dist/types/components.d.ts"
+  ],
   "exclude": ["**/*.spec.ts"]
 }

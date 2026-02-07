@@ -1,35 +1,33 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import 'stencil-library/components/my-modal';
-import 'stencil-library/components/my-button';
+import {
+  MyButton,
+  MyModal,
+} from '@angular-components/stencil-generated/components';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-modal-demo',
-  standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [MyButton, MyModal],
+  schemas: [],
   template: `
     <div class="demo-section">
       <h2>Modal</h2>
       <p>Dialog overlay for important content</p>
-      <my-button label="Open Modal" (click)="openModal()"></my-button>
+      <my-button (click)="openModal()">Open Modal</my-button>
 
       <my-modal [open]="modalOpen()" (myClose)="closeModal()">
-        <h3 slot="header">Modal Title</h3>
+        <h3>Modal Title</h3>
         <p>This is the modal content. You can add any elements here.</p>
-        <div slot="footer">
-          <my-button
-            label="Cancel"
-            variant="ghost"
-            (click)="closeModal()"
-          ></my-button>
-          <my-button label="Confirm" (click)="closeModal()"></my-button>
+        <div
+          style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;"
+        >
+          <my-button variant="ghost" (click)="closeModal()">Cancel</my-button>
+          <my-button (click)="closeModal()">Confirm</my-button>
         </div>
       </my-modal>
     </div>
   `,
 })
-export class ModalDemoComponent {
+export default class ModalDemo {
   modalOpen = signal(false);
 
   openModal() {

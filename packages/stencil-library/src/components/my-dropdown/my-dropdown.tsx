@@ -1,18 +1,17 @@
-import { Component, Host, h, Prop, State, Element, Event, EventEmitter } from '@stencil/core';
-import * as menu from '@zag-js/menu';
+import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/utils';
 
 const dropdownTriggerVariants = cva(
-  'inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  'inline-flex w-full items-center justify-between gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground ring-border hover:bg-accent hover:text-accent-foreground',
-        primary: 'bg-primary text-primary-foreground ring-primary hover:bg-primary/90',
-        secondary: 'bg-secondary text-secondary-foreground ring-secondary hover:bg-secondary/80',
-        ghost: 'bg-transparent text-foreground ring-transparent hover:bg-accent hover:text-accent-foreground',
-        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        default: 'bg-white text-slate-900 ring-slate-300 hover:bg-slate-50',
+        primary: 'bg-blue-600 text-white ring-blue-600 hover:bg-blue-700',
+        secondary: 'bg-slate-100 text-slate-900 ring-slate-200 hover:bg-slate-200',
+        ghost: 'bg-transparent text-slate-900 ring-transparent hover:bg-slate-100',
+        outline: 'border border-slate-300 bg-white hover:bg-slate-50',
       },
     },
     defaultVariants: {
@@ -21,11 +20,10 @@ const dropdownTriggerVariants = cva(
   },
 );
 
-export type DropdownVariant = 'default' | 'primary' | 'secondary' | 'ghost' | 'outline';
-
 export type DropdownItem = {
   text: string;
   value: string;
+  disabled?: boolean;
 };
 
 @Component({
@@ -37,57 +35,76 @@ export class MyDropdown {
   @Element() el: HTMLElement;
 
   @Prop() items: DropdownItem[] = [];
-  @Prop() variant: DropdownVariant = 'default';
+  @Prop() variant: any = 'default';
+  @Prop() label: string = 'Options';
+
   @Event() dropdownSelect: EventEmitter<string>;
 
-  @State() state: any;
-  private service: any;
+  @State() isOpen = false;
 
-  componentWillLoad() {
-    this.service = (menu.machine as any).start({
-      id: 'menu',
-      getRootNode: () => this.el.shadowRoot,
-      onSelect: details => {
-        this.dropdownSelect.emit(details.value);
-      },
-    });
-
-    this.service.subscribe(state => {
-      this.state = state;
-    });
+  @Listen('click', { target: 'window' })
+  handleWindowClick(ev: MouseEvent) {
+    if (!this.isOpen) return;
+    const path = ev.composedPath();
+    if (!path.includes(this.el)) {
+      this.close();
+    }
   }
 
-  disconnectedCallback() {
-    this.service.stop();
+  toggle() {
+    this.isOpen = !this.isOpen;
+  }
+
+  close() {
+    this.isOpen = false;
+  }
+
+  handleSelect(value: string) {
+    this.dropdownSelect.emit(value);
+    this.close();
   }
 
   render() {
-    const api = (menu.connect as any)(this.service, (v: any) => v);
-
     return (
       <Host>
-        <div class="relative inline-block text-left">
-          <button {...api.getTriggerProps()} type="button" class={cn(dropdownTriggerVariants({ variant: this.variant }))}>
+        <div class="relative inline-block text-left w-full">
+          {/* TRIGGER */}
+          <div class="cursor-pointer" onClick={() => this.toggle()}>
             <slot name="trigger">
-              Options
-              <my-icon name="chevron-down" class="-mr-1 h-5 w-5 text-muted-foreground" />
+              <button
+                type="button"
+                class={cn(dropdownTriggerVariants({ variant: this.variant }), 'w-full justify-between')}
+                aria-expanded={this.isOpen.toString()}
+                aria-haspopup="true"
+              >
+                {this.label}
+                <my-icon name="chevron-down" class={cn('ml-2 h-4 w-4 transition-transform duration-200', this.isOpen && 'rotate-180')} />
+              </button>
             </slot>
-          </button>
+          </div>
 
+          {/* MENU */}
           <div
-            {...api.getPositionerProps()}
-            class="z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md transition-all duration-200 ease-out data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
+            class={cn(
+              'absolute left-0 z-50 mt-2 min-w-[8rem] origin-top-right overflow-hidden rounded-md border bg-white p-1 shadow-md',
+              'transition-opacity duration-200',
+              this.isOpen ? 'opacity-100 visible' : 'opacity-0 invisible',
+            )}
+            role="menu"
           >
-            <div {...api.getContentProps()}>
-              {this.items.map(item => (
-                <div
-                  {...api.getItemProps({ value: item.value })}
-                  class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-                >
-                  {item.text}
-                </div>
-              ))}
-            </div>
+            {this.items.map(item => (
+              <div
+                class={cn(
+                  'relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
+                  'hover:bg-slate-100 hover:text-slate-900',
+                  item.disabled && 'pointer-events-none opacity-50',
+                )}
+                onClick={() => !item.disabled && this.handleSelect(item.value)}
+                role="menuitem"
+              >
+                {item.text}
+              </div>
+            ))}
           </div>
         </div>
       </Host>

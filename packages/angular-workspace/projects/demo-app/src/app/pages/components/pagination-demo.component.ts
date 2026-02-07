@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MyPagination } from '@angular-components/stencil-generated/components';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-pagination-demo',
-  standalone: true,
-  imports: [CommonModule, MyPagination],
+  imports: [MyPagination],
   template: `
     <div class="demo-section">
       <h2>Pagination</h2>
@@ -14,4 +12,4 @@ import { MyPagination } from '@angular-components/stencil-generated/components';
     </div>
   `,
 })
-export class PaginationDemoComponent {}
+export default class PaginationDemo {}

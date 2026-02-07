@@ -1,5 +1,4 @@
-import { Component, Element, Prop, h, Host, State, Watch } from '@stencil/core';
-import * as accordion from '@zag-js/accordion';
+import { Component, Element, Prop, h, Host, Watch, Listen, Event, EventEmitter } from '@stencil/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -15,48 +14,55 @@ export class MyAccordion {
   @Prop({ mutable: true }) value: string | string[];
   @Prop() defaultValue: string | string[];
 
-  @State() state: any;
-  public service: any;
+  @Event() myValueChange: EventEmitter<string | string[]>;
 
-  componentWillLoad() {
-    // Create service by calling .start() with props on the machine
-    // The machine constant is a pre-configured Machine, start() initializes it
-    this.service = (accordion.machine as any).start({
-      value: this.value || this.defaultValue,
-      multiple: this.type === 'multiple',
-      collapsible: this.collapsible,
-      getRootNode: () => this.el.shadowRoot,
-      onValueChange: (details: any) => {
-        this.value = details.value;
-      },
-    });
-
-    this.service.subscribe((state: any) => {
-      this.state = state;
-    });
+  componentDidLoad() {
+    if (!this.value && this.defaultValue) {
+      this.value = this.defaultValue;
+    }
+    this.updateChildren();
   }
 
   @Watch('value')
-  handleValueChange(newValue: string | string[]) {
-    if (this.service && this.state) {
-      const api = (accordion.connect as any)(this.service, (v: any) => v);
-      if (JSON.stringify(api.value) !== JSON.stringify(newValue)) {
-        api.setValue(newValue as any);
+  handleValueChange() {
+    this.updateChildren();
+    this.myValueChange.emit(this.value);
+  }
+
+  @Listen('accordionTriggerClick')
+  handleTriggerClick(ev: CustomEvent) {
+    const itemValue = ev.detail;
+    if (this.type === 'multiple') {
+      const currentValue = Array.isArray(this.value) ? this.value : this.value ? [this.value as string] : [];
+      if (currentValue.includes(itemValue)) {
+        this.value = currentValue.filter(v => v !== itemValue);
+      } else {
+        this.value = [...currentValue, itemValue];
+      }
+    } else {
+      // Single mode
+      if (this.value === itemValue) {
+        if (this.collapsible) {
+          this.value = ''; // Collapse if allowed
+        }
+      } else {
+        this.value = itemValue;
       }
     }
   }
 
-  disconnectedCallback() {
-    this.service?.stop();
+  updateChildren() {
+    const items = Array.from(this.el.querySelectorAll('my-accordion-item')) as any[];
+    items.forEach(item => {
+      const isSelected = this.type === 'multiple' ? Array.isArray(this.value) && this.value.includes(item.value) : this.value === item.value;
+
+      item.open = isSelected;
+    });
   }
 
   render() {
-    if (!this.state) return null;
-
-    const api = (accordion.connect as any)(this.service, (v: any) => v);
-
     return (
-      <Host {...api.getRootProps()} class={cn('block')}>
+      <Host class={cn('block')}>
         <slot></slot>
       </Host>
     );

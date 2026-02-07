@@ -9,7 +9,6 @@
 
 | Property  | Attribute | Description | Type                         | Default     |
 | --------- | --------- | ----------- | ---------------------------- | ----------- |
-| `class`   | `class`   |             | `string`                     | `undefined` |
 | `variant` | `variant` |             | `"default" \| "destructive"` | `'default'` |
 
 

@@ -2,11 +2,12 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/utils';
 
-const cardVariants = cva('rounded-xl border bg-card text-card-foreground shadow', {
+const cardVariants = cva('rounded-xl border bg-card text-card-foreground shadow p-6', {
   variants: {
     variant: {
       default: '',
       destructive: 'border-destructive/50 text-destructive dark:border-destructive',
+      elevated: 'shadow-lg bg-card',
     },
   },
   defaultVariants: {
@@ -21,11 +22,9 @@ const cardVariants = cva('rounded-xl border bg-card text-card-foreground shadow'
 })
 export class MyCard {
   @Prop() variant: 'default' | 'destructive' = 'default';
-  @Prop() class: string;
-
   render() {
     return (
-      <Host class={cn(cardVariants({ variant: this.variant }), this.class)}>
+      <Host class={cn(cardVariants({ variant: this.variant }))}>
         <slot></slot>
       </Host>
     );

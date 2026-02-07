@@ -19,4 +19,4 @@ import { MyBadge } from '@angular-components/stencil-generated/components';
     </div>
   `,
 })
-export class BadgeDemoComponent {}
+export default class BadgeDemo {}

@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Element } from '@stencil/core';
-import * as tooltip from '@zag-js/tooltip';
+import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tooltip',
@@ -14,47 +14,57 @@ export class MyTooltip {
   @Prop() openDelay: number = 0;
   @Prop() closeDelay: number = 0;
 
-  @State() state: any;
-  private service: any;
+  @State() isVisible = false;
+  private timeout: any;
 
-  componentWillLoad() {
-    this.service = (tooltip.machine as any).start({
-      id: 'tooltip',
-      openDelay: this.openDelay,
-      closeDelay: this.closeDelay,
-      placement: this.placement,
-      getRootNode: () => this.el.shadowRoot,
-    });
-
-    this.service.subscribe(state => {
-      this.state = state;
-    });
+  show() {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.isVisible = true;
+    }, this.openDelay);
   }
 
-  disconnectedCallback() {
-    this.service.stop();
+  hide() {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.isVisible = false;
+    }, this.closeDelay);
+  }
+
+  getPlacementClass() {
+    switch (this.placement) {
+      case 'top':
+        return 'bottom-full left-1/2 -translate-x-1/2 mb-2';
+      case 'bottom':
+        return 'top-full left-1/2 -translate-x-1/2 mt-2';
+      case 'left':
+        return 'right-full top-1/2 -translate-y-1/2 mr-2';
+      case 'right':
+        return 'left-full top-1/2 -translate-y-1/2 ml-2';
+      default:
+        return 'bottom-full left-1/2 -translate-x-1/2 mb-2';
+    }
   }
 
   render() {
-    const api = (tooltip.connect as any)(this.service, (v: any) => v);
-
     return (
-      <Host>
+      <Host onMouseEnter={() => this.show()} onMouseLeave={() => this.hide()} onFocusin={() => this.show()} onFocusout={() => this.hide()}>
         <div class="relative inline-block">
-          <div {...api.getTriggerProps()}>
+          {/* Trigger */}
+          <div class="inline-block relative">
             <slot></slot>
           </div>
 
-          {api.open && (
-            <div {...api.getPositionerProps()} class="z-50">
-              <div
-                {...api.getContentProps()}
-                class="z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
-              >
-                {this.content || <slot name="content"></slot>}
-              </div>
-            </div>
-          )}
+          {/* Tooltip Content */}
+          <div
+            class={cn(
+              'absolute z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md transition-opacity duration-200 whitespace-nowrap',
+              this.isVisible ? 'opacity-100 visible' : 'opacity-0 invisible',
+              this.getPlacementClass(),
+            )}
+          >
+            {this.content || <slot name="content"></slot>}
+          </div>
         </div>
       </Host>
     );

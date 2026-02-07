@@ -1,56 +1,58 @@
-import { Component, h, Host, State, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
-import * as tabs from '@zag-js/tabs';
+import { Component, h, Host, Prop, Element, Event, EventEmitter, Listen, Watch } from '@stencil/core';
+import { cn } from '../../utils/utils';
 
 @Component({
   tag: 'my-tabs',
+  styleUrl: 'my-tabs.css',
   shadow: true,
 })
 export class MyTabs {
   @Element() el: HTMLElement;
 
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true, reflect: true }) value: string;
   @Prop() defaultValue: string;
   @Prop() orientation: 'horizontal' | 'vertical' = 'horizontal';
-
-  @State() state: any;
-  private service: any;
 
   @Event() valueChange: EventEmitter<string>;
 
   componentWillLoad() {
-    this.service = (tabs.machine as any).start({
-      id: 'tabs',
-      value: this.value || this.defaultValue,
-      orientation: this.orientation,
-      // Muy importante para Web Components: permite que Zag encuentre los elementos dentro del Shadow DOM
-      getRootNode: () => this.el.shadowRoot,
-      onValueChange: details => {
-        this.value = details.value;
-        this.valueChange.emit(details.value);
-      },
-    });
-
-    this.service.subscribe(state => {
-      this.state = state;
-    });
+    if (!this.value && this.defaultValue) {
+      this.value = this.defaultValue;
+    }
   }
 
-  // Si el valor cambia externamente (ej. desde Angular), sincronizamos Zag
+  @Listen('tabTriggerClick')
+  handleTabClick(ev: CustomEvent) {
+    this.value = ev.detail;
+    this.valueChange.emit(this.value);
+  }
+
+  componentDidLoad() {
+    this.updateChildren();
+  }
+
   @Watch('value')
-  handleValueChange(newValue: string) {
-    const api = (tabs.connect as any)(this.state, this.service.send, (v: any) => v);
-    api.setValue(newValue);
+  valueChanged() {
+    this.updateChildren();
   }
 
-  disconnectedCallback() {
-    this.service.stop();
+  updateChildren() {
+    // Select all potential children (both light DOM and projected)
+    const triggers = Array.from(this.el.querySelectorAll('my-tabs-trigger'));
+    const contents = Array.from(this.el.querySelectorAll('my-tabs-content'));
+
+    triggers.forEach((trigger: any) => {
+      trigger.selected = trigger.value === this.value;
+    });
+
+    contents.forEach((content: any) => {
+      content.selected = content.value === this.value;
+    });
   }
 
   render() {
     return (
-      <Host class="flex w-full flex-col">
-        {/* Pasamos la API a través de slots es difícil en WC, 
-            por lo que los hijos simplemente buscarán al padre más cercano */}
+      <Host class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}>
         <slot></slot>
       </Host>
     );

@@ -13,17 +13,11 @@ export const routes: Routes = [
       },
       {
         path: 'components',
-        loadChildren: () =>
-          import('./pages/components/components.routes').then(
-            (m) => m.COMPONENT_ROUTES,
-          ),
+        loadChildren: () => import('./components.routes'),
       },
       {
         path: 'icons',
-        loadComponent: () =>
-          import('./pages/icons/icons-demo.component').then(
-            (m) => m.IconsDemoComponent,
-          ),
+        loadComponent: () => import('./pages/icons/icons-demo.component'),
       },
     ],
   },

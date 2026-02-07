@@ -3,7 +3,6 @@ import { MyCard } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-sidebar-demo',
-  standalone: true,
   imports: [MyCard],
   template: `
     <div class="demo-section">
@@ -19,4 +18,4 @@ import { MyCard } from '@angular-components/stencil-generated/components';
     </div>
   `,
 })
-export class SidebarDemoComponent {}
+export default class SidebarDemo {}

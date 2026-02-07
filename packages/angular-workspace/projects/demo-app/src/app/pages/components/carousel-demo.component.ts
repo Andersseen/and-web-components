@@ -7,7 +7,6 @@ import {
 
 @Component({
   selector: 'app-carousel-demo',
-  standalone: true,
   imports: [CommonModule, MyCarousel, MyCarouselItem],
   template: `
     <div class="demo-section">
@@ -66,4 +65,4 @@ import {
     </div>
   `,
 })
-export class CarouselDemoComponent {}
+export default class CarouselDemo {}

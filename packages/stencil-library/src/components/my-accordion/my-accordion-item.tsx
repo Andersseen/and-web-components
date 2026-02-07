@@ -1,5 +1,4 @@
-import { Component, Prop, h, Host, Element } from '@stencil/core';
-import * as accordion from '@zag-js/accordion';
+import { Component, Prop, h, Host, Element, Watch } from '@stencil/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -12,6 +11,7 @@ export class MyAccordionItem {
 
   @Prop() value: string;
   @Prop() disabled: boolean = false;
+  @Prop({ mutable: true }) open: boolean = false;
 
   componentWillLoad() {
     if (!this.value) {
@@ -19,16 +19,38 @@ export class MyAccordionItem {
     }
   }
 
+  @Watch('open')
+  handleOpenChange() {
+    this.updateChildren();
+  }
+
+  componentDidLoad() {
+    // Initial update in case open was set before children were ready
+    // Use a small timeout to let light DOM children upgrade
+    setTimeout(() => this.updateChildren(), 0);
+  }
+
+  updateChildren() {
+    const trigger = this.el.querySelector('my-accordion-trigger') as any;
+    const content = this.el.querySelector('my-accordion-content') as any;
+
+    if (trigger) {
+      trigger.open = this.open;
+      trigger.disabled = this.disabled;
+      trigger.value = this.value; // Pass value so trigger knows what to emit
+    }
+    if (content) {
+      content.open = this.open;
+    }
+  }
+
   render() {
-    const parent = this.el.closest('my-accordion') as any;
-    // We check for parent.service now instead of parent.state
-    if (!parent || !parent.service) return null;
-
-    const api = (accordion.connect as any)(parent.service, (v: any) => v);
-    const itemProps = api.getItemProps({ value: this.value, disabled: this.disabled });
-
     return (
-      <Host {...itemProps} class={cn('block border-b')}>
+      <Host
+        class={cn('block border-b', this.disabled ? 'opacity-50 pointer-events-none' : '')}
+        data-state={this.open ? 'open' : 'closed'}
+        data-disabled={this.disabled ? '' : undefined}
+      >
         <slot></slot>
       </Host>
     );

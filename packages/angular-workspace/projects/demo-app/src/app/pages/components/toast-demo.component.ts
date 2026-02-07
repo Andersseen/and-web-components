@@ -1,24 +1,22 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  MyToast,
   MyButton,
+  MyToast,
 } from '@angular-components/stencil-generated/components';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-toast-demo',
-  standalone: true,
-  imports: [CommonModule, MyToast, MyButton],
+  imports: [MyToast, MyButton],
   template: `
     <div class="demo-section">
       <h2>Toast</h2>
       <p>Temporary notification messages</p>
-      <my-button label="Show Toast" (click)="showToast()"></my-button>
+      <my-button (click)="showToast()">Show Toast</my-button>
       <my-toast #toast></my-toast>
     </div>
   `,
 })
-export class ToastDemoComponent {
+export default class ToastDemo {
   @ViewChild('toast') toastElement!: ElementRef;
 
   async showToast() {

@@ -1,33 +1,30 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MyButton } from '@angular-components/stencil-generated/components';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-button-demo',
-  standalone: true,
-  imports: [CommonModule, MyButton],
+  imports: [MyButton],
   template: `
     <div class="demo-section">
       <h2>Button</h2>
       <p>Interactive buttons with multiple variants and sizes</p>
       <div class="demo-examples">
-        <my-button label="Default" variant="default"></my-button>
-        <my-button label="Primary" variant="primary"></my-button>
-        <my-button label="Secondary" variant="secondary"></my-button>
-        <my-button label="Destructive" variant="destructive"></my-button>
-        <my-button label="Outline" variant="outline"></my-button>
-        <my-button label="Ghost" variant="ghost"></my-button>
-        <my-button label="Link" variant="link"></my-button>
+        <my-button variant="default">Default</my-button>
+        <my-button variant="destructive">Destructive</my-button>
+        <my-button variant="outline">Outline</my-button>
+        <my-button variant="secondary">Secondary</my-button>
+        <my-button variant="ghost">Ghost</my-button>
+        <my-button variant="link">Link</my-button>
       </div>
 
       <h3>Sizes</h3>
       <div class="demo-examples">
-        <my-button label="Small" size="sm"></my-button>
-        <my-button label="Default" size="default"></my-button>
-        <my-button label="Large" size="lg"></my-button>
-        <my-button label="Icon" size="icon">🚀</my-button>
+        <my-button size="sm">Small</my-button>
+        <my-button size="default">Default</my-button>
+        <my-button size="lg">Large</my-button>
+        <my-button size="icon">🚀</my-button>
       </div>
     </div>
   `,
 })
-export class ButtonDemoComponent {}
+export default class ButtonDemo {}

@@ -1,14 +1,10 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  RouterOutlet,
-  Router,
-  RouterModule,
-  NavigationEnd,
-} from '@angular/router';
+  MyNavbar,
+  MySidebar,
+} from '@angular-components/stencil-generated/components';
+import { Component, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import 'stencil-library/components/my-navbar';
-import 'stencil-library/components/my-sidebar';
 
 interface SidebarItem {
   id: string;
@@ -18,9 +14,8 @@ interface SidebarItem {
 
 @Component({
   selector: 'app-main-layout',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [RouterOutlet, MyNavbar, MySidebar],
+  schemas: [],
   template: `
     <div class="app-container">
       <!-- Navbar -->
@@ -33,7 +28,6 @@ interface SidebarItem {
       </my-navbar>
 
       <div class="main-content">
-        <!-- Sidebar (only show for components section) -->
         @if (activeSection() === 'components') {
           <my-sidebar
             [items]="componentItems"
@@ -91,9 +85,7 @@ export class MainLayoutComponent {
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
     { id: 'input', label: 'Input', icon: 'file-text' },
     { id: 'modal', label: 'Modal', icon: 'layout' },
-    { id: 'navbar', label: 'Navbar', icon: 'menu' },
     { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
-    { id: 'sidebar', label: 'Sidebar', icon: 'menu' },
     { id: 'tabs', label: 'Tabs', icon: 'file-text' },
     { id: 'toast', label: 'Toast', icon: 'bell' },
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
@@ -103,7 +95,6 @@ export class MainLayoutComponent {
   activeComponent = signal<string>('accordion');
 
   constructor(private router: Router) {
-    // Determine active section and component based on URL
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {

@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MyInput } from '@angular-components/stencil-generated/components';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-input-demo',
-  standalone: true,
-  imports: [CommonModule, MyInput],
+  imports: [MyInput],
   template: `
     <div class="demo-section">
       <h2>Input</h2>
@@ -19,4 +17,4 @@ import { MyInput } from '@angular-components/stencil-generated/components';
     </div>
   `,
 })
-export class InputDemoComponent {}
+export default class InputDemo {}

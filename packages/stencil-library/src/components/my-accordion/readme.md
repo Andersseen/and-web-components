@@ -5,6 +5,22 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property   | Attribute  | Description | Type      | Default     |
+| ---------- | ---------- | ----------- | --------- | ----------- |
+| `disabled` | `disabled` |             | `boolean` | `false`     |
+| `open`     | `open`     |             | `boolean` | `false`     |
+| `value`    | `value`    |             | `string`  | `undefined` |
+
+
+## Events
+
+| Event                   | Description | Type                  |
+| ----------------------- | ----------- | --------------------- |
+| `accordionTriggerClick` |             | `CustomEvent<string>` |
+
+
 ## Dependencies
 
 ### Depends on

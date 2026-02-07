@@ -1,5 +1,4 @@
-import { Component, h, Host, Element } from '@stencil/core';
-import * as accordion from '@zag-js/accordion';
+import { Component, h, Host, Element, Prop } from '@stencil/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -10,17 +9,15 @@ import { cn } from '../../utils/utils';
 export class MyAccordionContent {
   @Element() el: HTMLElement;
 
+  @Prop() open: boolean = false;
+
   render() {
-    const parent = this.el.closest('my-accordion') as any;
-    const item = this.el.closest('my-accordion-item') as any;
-
-    if (!parent || !parent.service || !item) return null;
-
-    const api = (accordion.connect as any)(parent.service, (v: any) => v);
-    const contentProps = api.getItemContentProps({ value: item.value });
-
     return (
-      <Host class={cn('overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down')} {...contentProps}>
+      <Host
+        class={cn('overflow-hidden text-sm transition-all', this.open ? 'animate-accordion-down opacity-100' : 'animate-accordion-up opacity-0 h-0 hidden')}
+        data-state={this.open ? 'open' : 'closed'}
+        hidden={!this.open}
+      >
         <div class="pb-4 pt-0">
           <slot></slot>
         </div>

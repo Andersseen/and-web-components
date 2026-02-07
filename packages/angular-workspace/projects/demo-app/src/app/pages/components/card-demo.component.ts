@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MyCard } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-card-demo',
-  standalone: true,
-  imports: [CommonModule, MyCard],
+  imports: [MyCard],
   template: `
     <div class="demo-section">
       <h2>Card</h2>
@@ -25,4 +23,4 @@ import { MyCard } from '@angular-components/stencil-generated/components';
     </div>
   `,
 })
-export class CardDemoComponent {}
+export default class CardDemo {}

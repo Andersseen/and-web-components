@@ -1,13 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import 'stencil-library/components/my-card';
-import 'stencil-library/components/my-icon';
+import {
+  MyCard,
+  MyIcon,
+} from '@angular-components/stencil-generated/components';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-icons-demo',
-  standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
+  imports: [MyCard, MyIcon],
+  schemas: [],
   template: `
     <div class="demo-section">
       <h1 class="section-title">Icons</h1>
@@ -99,7 +100,7 @@ import 'stencil-library/components/my-icon';
     `,
   ],
 })
-export class IconsDemoComponent {
+export default class IconsDemoPage {
   icons = [
     'close',
     'chevron-down',

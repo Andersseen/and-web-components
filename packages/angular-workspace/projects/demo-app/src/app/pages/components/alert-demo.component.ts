@@ -25,4 +25,4 @@ import {
     </div>
   `,
 })
-export class AlertDemoComponent {}
+export default class AlertDemo {}

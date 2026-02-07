@@ -13,7 +13,7 @@ import {
     <div class="demo-section">
       <h2>Drawer</h2>
       <p>Slide-out panel from the side of the screen</p>
-      <my-button label="Open Drawer" (click)="openDrawer()"></my-button>
+      <my-button (click)="openDrawer()">Open Drawer</my-button>
 
       <my-drawer [open]="drawerOpen()" (myClose)="closeDrawer()">
         <h3 slot="header">Drawer Title</h3>
@@ -25,7 +25,7 @@ import {
     </div>
   `,
 })
-export class DrawerDemoComponent {
+export default class DrawerDemo {
   drawerOpen = signal(false);
 
   openDrawer() {

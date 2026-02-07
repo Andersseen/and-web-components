@@ -7,14 +7,14 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonProps } from "./components/my-button/my-button";
 import { DrawerPlacement } from "./components/my-drawer/my-drawer";
-import { DropdownItem, DropdownVariant } from "./components/my-dropdown/my-dropdown";
+import { DropdownItem } from "./components/my-dropdown/my-dropdown";
 import { IconName } from "./components/my-icon/icons";
 import { NavItem } from "./components/my-navbar/my-navbar";
 import { SidebarItem } from "./components/my-sidebar/my-sidebar";
 import { ToastType } from "./components/my-toast/my-toast";
 export { ButtonProps } from "./components/my-button/my-button";
 export { DrawerPlacement } from "./components/my-drawer/my-drawer";
-export { DropdownItem, DropdownVariant } from "./components/my-dropdown/my-dropdown";
+export { DropdownItem } from "./components/my-dropdown/my-dropdown";
 export { IconName } from "./components/my-icon/icons";
 export { NavItem } from "./components/my-navbar/my-navbar";
 export { SidebarItem } from "./components/my-sidebar/my-sidebar";
@@ -33,15 +33,32 @@ export namespace Components {
         "value": string | string[];
     }
     interface MyAccordionContent {
+        /**
+          * @default false
+         */
+        "open": boolean;
     }
     interface MyAccordionItem {
         /**
           * @default false
          */
         "disabled": boolean;
+        /**
+          * @default false
+         */
+        "open": boolean;
         "value": string;
     }
     interface MyAccordionTrigger {
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * @default false
+         */
+        "open": boolean;
+        "value": string;
     }
     interface MyAlert {
         /**
@@ -56,9 +73,6 @@ export namespace Components {
         "variant": 'default' | 'secondary' | 'destructive' | 'outline';
     }
     interface MyButton {
-        /**
-          * Permite pasar clases extra desde fuera
-         */
         "customClass": string;
         /**
           * @default false
@@ -78,7 +92,6 @@ export namespace Components {
         "variant": ButtonProps['variant'];
     }
     interface MyCard {
-        "class": string;
         /**
           * @default 'default'
          */
@@ -114,9 +127,13 @@ export namespace Components {
          */
         "items": DropdownItem[];
         /**
+          * @default 'Options'
+         */
+        "label": string;
+        /**
           * @default 'default'
          */
-        "variant": DropdownVariant;
+        "variant": any;
     }
     interface MyIcon {
         /**
@@ -208,6 +225,10 @@ export namespace Components {
         "value": string;
     }
     interface MyTabsContent {
+        /**
+          * @default false
+         */
+        "selected": boolean;
         "value": string;
     }
     interface MyTabsList {
@@ -217,6 +238,10 @@ export namespace Components {
           * @default false
          */
         "disabled": boolean;
+        /**
+          * @default false
+         */
+        "selected": boolean;
         "value": string;
     }
     interface MyToast {
@@ -240,6 +265,14 @@ export namespace Components {
          */
         "placement": 'top' | 'right' | 'bottom' | 'left';
     }
+}
+export interface MyAccordionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyAccordionElement;
+}
+export interface MyAccordionTriggerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyAccordionTriggerElement;
 }
 export interface MyDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -273,8 +306,23 @@ export interface MyTabsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMyTabsElement;
 }
+export interface MyTabsTriggerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyTabsTriggerElement;
+}
 declare global {
+    interface HTMLMyAccordionElementEventMap {
+        "myValueChange": string | string[];
+    }
     interface HTMLMyAccordionElement extends Components.MyAccordion, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLMyAccordionElementEventMap>(type: K, listener: (this: HTMLMyAccordionElement, ev: MyAccordionCustomEvent<HTMLMyAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLMyAccordionElementEventMap>(type: K, listener: (this: HTMLMyAccordionElement, ev: MyAccordionCustomEvent<HTMLMyAccordionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLMyAccordionElement: {
         prototype: HTMLMyAccordionElement;
@@ -292,7 +340,18 @@ declare global {
         prototype: HTMLMyAccordionItemElement;
         new (): HTMLMyAccordionItemElement;
     };
+    interface HTMLMyAccordionTriggerElementEventMap {
+        "accordionTriggerClick": string;
+    }
     interface HTMLMyAccordionTriggerElement extends Components.MyAccordionTrigger, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLMyAccordionTriggerElementEventMap>(type: K, listener: (this: HTMLMyAccordionTriggerElement, ev: MyAccordionTriggerCustomEvent<HTMLMyAccordionTriggerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLMyAccordionTriggerElementEventMap>(type: K, listener: (this: HTMLMyAccordionTriggerElement, ev: MyAccordionTriggerCustomEvent<HTMLMyAccordionTriggerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLMyAccordionTriggerElement: {
         prototype: HTMLMyAccordionTriggerElement;
@@ -489,7 +548,18 @@ declare global {
         prototype: HTMLMyTabsListElement;
         new (): HTMLMyTabsListElement;
     };
+    interface HTMLMyTabsTriggerElementEventMap {
+        "tabTriggerClick": string;
+    }
     interface HTMLMyTabsTriggerElement extends Components.MyTabsTrigger, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLMyTabsTriggerElementEventMap>(type: K, listener: (this: HTMLMyTabsTriggerElement, ev: MyTabsTriggerCustomEvent<HTMLMyTabsTriggerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLMyTabsTriggerElementEventMap>(type: K, listener: (this: HTMLMyTabsTriggerElement, ev: MyTabsTriggerCustomEvent<HTMLMyTabsTriggerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLMyTabsTriggerElement: {
         prototype: HTMLMyTabsTriggerElement;
@@ -541,6 +611,7 @@ declare namespace LocalJSX {
          */
         "collapsible"?: boolean;
         "defaultValue"?: string | string[];
+        "onMyValueChange"?: (event: MyAccordionCustomEvent<string | string[]>) => void;
         /**
           * @default 'single'
          */
@@ -548,15 +619,33 @@ declare namespace LocalJSX {
         "value"?: string | string[];
     }
     interface MyAccordionContent {
+        /**
+          * @default false
+         */
+        "open"?: boolean;
     }
     interface MyAccordionItem {
         /**
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * @default false
+         */
+        "open"?: boolean;
         "value"?: string;
     }
     interface MyAccordionTrigger {
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        "onAccordionTriggerClick"?: (event: MyAccordionTriggerCustomEvent<string>) => void;
+        /**
+          * @default false
+         */
+        "open"?: boolean;
+        "value"?: string;
     }
     interface MyAlert {
         /**
@@ -571,9 +660,6 @@ declare namespace LocalJSX {
         "variant"?: 'default' | 'secondary' | 'destructive' | 'outline';
     }
     interface MyButton {
-        /**
-          * Permite pasar clases extra desde fuera
-         */
         "customClass"?: string;
         /**
           * @default false
@@ -593,7 +679,6 @@ declare namespace LocalJSX {
         "variant"?: ButtonProps['variant'];
     }
     interface MyCard {
-        "class"?: string;
         /**
           * @default 'default'
          */
@@ -632,11 +717,15 @@ declare namespace LocalJSX {
           * @default []
          */
         "items"?: DropdownItem[];
+        /**
+          * @default 'Options'
+         */
+        "label"?: string;
         "onDropdownSelect"?: (event: MyDropdownCustomEvent<string>) => void;
         /**
           * @default 'default'
          */
-        "variant"?: DropdownVariant;
+        "variant"?: any;
     }
     interface MyIcon {
         /**
@@ -747,6 +836,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MyTabsContent {
+        /**
+          * @default false
+         */
+        "selected"?: boolean;
         "value"?: string;
     }
     interface MyTabsList {
@@ -756,6 +849,11 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
+        "onTabTriggerClick"?: (event: MyTabsTriggerCustomEvent<string>) => void;
+        /**
+          * @default false
+         */
+        "selected"?: boolean;
         "value"?: string;
     }
     interface MyToast {
@@ -782,9 +880,18 @@ declare namespace LocalJSX {
         "value": string | string[];
         "defaultValue": string | string[];
     }
+    interface MyAccordionContentAttributes {
+        "open": boolean;
+    }
     interface MyAccordionItemAttributes {
         "value": string;
         "disabled": boolean;
+        "open": boolean;
+    }
+    interface MyAccordionTriggerAttributes {
+        "open": boolean;
+        "disabled": boolean;
+        "value": string;
     }
     interface MyAlertAttributes {
         "variant": 'default' | 'destructive';
@@ -801,7 +908,6 @@ declare namespace LocalJSX {
     }
     interface MyCardAttributes {
         "variant": 'default' | 'destructive';
-        "class": string;
     }
     interface MyCarouselAttributes {
         "autoplay": boolean;
@@ -812,7 +918,8 @@ declare namespace LocalJSX {
         "placement": DrawerPlacement;
     }
     interface MyDropdownAttributes {
-        "variant": DropdownVariant;
+        "variant": string;
+        "label": string;
     }
     interface MyIconAttributes {
         "name": IconName;
@@ -848,10 +955,12 @@ declare namespace LocalJSX {
     }
     interface MyTabsContentAttributes {
         "value": string;
+        "selected": boolean;
     }
     interface MyTabsTriggerAttributes {
         "value": string;
         "disabled": boolean;
+        "selected": boolean;
     }
     interface MyTooltipAttributes {
         "content": string;
@@ -862,9 +971,9 @@ declare namespace LocalJSX {
 
     interface IntrinsicElements {
         "my-accordion": Omit<MyAccordion, keyof MyAccordionAttributes> & { [K in keyof MyAccordion & keyof MyAccordionAttributes]?: MyAccordion[K] } & { [K in keyof MyAccordion & keyof MyAccordionAttributes as `attr:${K}`]?: MyAccordionAttributes[K] } & { [K in keyof MyAccordion & keyof MyAccordionAttributes as `prop:${K}`]?: MyAccordion[K] };
-        "my-accordion-content": MyAccordionContent;
+        "my-accordion-content": Omit<MyAccordionContent, keyof MyAccordionContentAttributes> & { [K in keyof MyAccordionContent & keyof MyAccordionContentAttributes]?: MyAccordionContent[K] } & { [K in keyof MyAccordionContent & keyof MyAccordionContentAttributes as `attr:${K}`]?: MyAccordionContentAttributes[K] } & { [K in keyof MyAccordionContent & keyof MyAccordionContentAttributes as `prop:${K}`]?: MyAccordionContent[K] };
         "my-accordion-item": Omit<MyAccordionItem, keyof MyAccordionItemAttributes> & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes]?: MyAccordionItem[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `attr:${K}`]?: MyAccordionItemAttributes[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `prop:${K}`]?: MyAccordionItem[K] };
-        "my-accordion-trigger": MyAccordionTrigger;
+        "my-accordion-trigger": Omit<MyAccordionTrigger, keyof MyAccordionTriggerAttributes> & { [K in keyof MyAccordionTrigger & keyof MyAccordionTriggerAttributes]?: MyAccordionTrigger[K] } & { [K in keyof MyAccordionTrigger & keyof MyAccordionTriggerAttributes as `attr:${K}`]?: MyAccordionTriggerAttributes[K] } & { [K in keyof MyAccordionTrigger & keyof MyAccordionTriggerAttributes as `prop:${K}`]?: MyAccordionTrigger[K] };
         "my-alert": Omit<MyAlert, keyof MyAlertAttributes> & { [K in keyof MyAlert & keyof MyAlertAttributes]?: MyAlert[K] } & { [K in keyof MyAlert & keyof MyAlertAttributes as `attr:${K}`]?: MyAlertAttributes[K] } & { [K in keyof MyAlert & keyof MyAlertAttributes as `prop:${K}`]?: MyAlert[K] };
         "my-badge": Omit<MyBadge, keyof MyBadgeAttributes> & { [K in keyof MyBadge & keyof MyBadgeAttributes]?: MyBadge[K] } & { [K in keyof MyBadge & keyof MyBadgeAttributes as `attr:${K}`]?: MyBadgeAttributes[K] } & { [K in keyof MyBadge & keyof MyBadgeAttributes as `prop:${K}`]?: MyBadge[K] };
         "my-button": Omit<MyButton, keyof MyButtonAttributes> & { [K in keyof MyButton & keyof MyButtonAttributes]?: MyButton[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `attr:${K}`]?: MyButtonAttributes[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `prop:${K}`]?: MyButton[K] };
