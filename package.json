@@ -1,0 +1,13 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "build:stencil": "npm run build --prefix packages/stencil-library",
+    "start:demo": "npm run start --prefix packages/angular-workspace"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.1",
+    "lerna": "^9.0.3",
+    "typescript": "^5.9.3"
+  }
+}

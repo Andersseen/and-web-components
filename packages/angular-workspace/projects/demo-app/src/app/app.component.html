@@ -1,0 +1,492 @@
+<div class="app-container">
+  <!-- Navbar -->
+  <my-navbar
+    [items]="navItems"
+    [activeItem]="activeSection"
+    (navItemClick)="onNavItemClick($event)"
+  >
+    <span slot="brand">🎨 UI Components</span>
+  </my-navbar>
+
+  <div class="main-content">
+    <!-- Sidebar (only show for components section) -->
+    <my-sidebar
+      *ngIf="activeSection === 'components'"
+      [items]="componentItems"
+      [activeItem]="activeComponent"
+      (sidebarItemClick)="onSidebarItemClick($event)"
+    >
+    </my-sidebar>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Components Section -->
+      <div *ngIf="activeSection === 'components'">
+        <h1 class="section-title">Components</h1>
+        <p class="section-description">
+          Explore our collection of reusable Stencil components with Tailwind
+          CSS styling
+        </p>
+
+        <!-- Accordion Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'accordion'">
+          <h2>Accordion</h2>
+          <p>Collapsible content panels for organizing information</p>
+          <my-accordion>
+            <my-accordion-item
+              value="item-1"
+              header="What is Stencil?"
+              expanded
+            >
+              Stencil is a compiler that generates Web Components (specifically,
+              Custom Elements). Stencil combines the best concepts of the most
+              popular frameworks into a simple build-time tool.
+            </my-accordion-item>
+            <my-accordion-item value="item-2" header="Why use Web Components?">
+              Web Components are a set of web platform APIs that allow you to
+              create new custom, reusable, encapsulated HTML tags to use in web
+              pages and web apps.
+            </my-accordion-item>
+            <my-accordion-item value="item-3" header="What is Tailwind CSS?">
+              Tailwind CSS is a utility-first CSS framework that provides
+              low-level utility classes to build custom designs.
+            </my-accordion-item>
+          </my-accordion>
+        </div>
+
+        <!-- Alert Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'alert'">
+          <h2>Alert</h2>
+          <p>Display important messages to users</p>
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <my-alert variant="default">
+              <my-icon slot="icon" name="info" size="18"></my-icon>
+              This is a default alert message.
+            </my-alert>
+            <my-alert variant="destructive">
+              <my-icon slot="icon" name="error" size="18"></my-icon>
+              This is a destructive alert message.
+            </my-alert>
+          </div>
+        </div>
+
+        <!-- Badge Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'badge'">
+          <h2>Badge</h2>
+          <p>Small status indicators</p>
+          <div class="flex gap-4 items-center flex-wrap">
+            <my-badge variant="default">Default</my-badge>
+            <my-badge variant="secondary">Secondary</my-badge>
+            <my-badge variant="destructive">Destructive</my-badge>
+            <my-badge variant="outline">Outline</my-badge>
+          </div>
+        </div>
+
+        <!-- Button Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'button'">
+          <h2>Button</h2>
+          <p>Interactive buttons with multiple variants and sizes</p>
+          <div class="demo-examples">
+            <my-button label="Default" variant="default"></my-button>
+            <my-button label="Secondary" variant="secondary"></my-button>
+            <my-button label="Destructive" variant="destructive"></my-button>
+            <my-button label="Outline" variant="outline"></my-button>
+            <my-button label="Ghost" variant="ghost"></my-button>
+            <my-button label="Link" variant="link"></my-button>
+          </div>
+          <div class="demo-examples" style="margin-top: 1rem">
+            <my-button label="Small" size="sm"></my-button>
+            <my-button label="Default" size="default"></my-button>
+            <my-button label="Large" size="lg"></my-button>
+          </div>
+          <div class="demo-examples" style="margin-top: 1rem">
+            <my-button label="Disabled" [disabled]="true"></my-button>
+          </div>
+        </div>
+
+        <!-- Card Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'card'">
+          <h2>Card</h2>
+          <p>Container for content with optional variants</p>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 1rem;
+            "
+          >
+            <my-card variant="default" class="p-6">
+              <h3
+                style="
+                  margin: 0 0 0.5rem 0;
+                  font-size: 1.25rem;
+                  font-weight: 600;
+                "
+              >
+                Default Card
+              </h3>
+              <p style="margin: 0; color: #6b7280">
+                This is a default card with standard styling.
+              </p>
+            </my-card>
+            <my-card variant="destructive" class="p-6">
+              <h3
+                style="
+                  margin: 0 0 0.5rem 0;
+                  font-size: 1.25rem;
+                  font-weight: 600;
+                  color: #dc2626;
+                "
+              >
+                Destructive Card
+              </h3>
+              <p style="margin: 0; color: #991b1b">
+                This is a destructive variant card.
+              </p>
+            </my-card>
+          </div>
+        </div>
+
+        <!-- Carousel Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'carousel'">
+          <h2>Carousel</h2>
+          <p>Slide through multiple items</p>
+          <my-carousel autoplay="true">
+            <my-carousel-item>
+              <div
+                style="
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  height: 300px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: white;
+                  font-size: 2rem;
+                  font-weight: bold;
+                "
+              >
+                Slide 1
+              </div>
+            </my-carousel-item>
+            <my-carousel-item>
+              <div
+                style="
+                  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                  height: 300px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: white;
+                  font-size: 2rem;
+                  font-weight: bold;
+                "
+              >
+                Slide 2
+              </div>
+            </my-carousel-item>
+            <my-carousel-item>
+              <div
+                style="
+                  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+                  height: 300px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: white;
+                  font-size: 2rem;
+                  font-weight: bold;
+                "
+              >
+                Slide 3
+              </div>
+            </my-carousel-item>
+          </my-carousel>
+        </div>
+
+        <!-- Drawer Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'drawer'">
+          <h2>Drawer</h2>
+          <p>Slide-out panel from the side of the screen</p>
+          <my-button label="Open Drawer" (click)="openDrawer()"></my-button>
+        </div>
+
+        <!-- Dropdown Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'dropdown'">
+          <h2>Dropdown</h2>
+          <p>Dropdown menu with selectable items</p>
+          <my-dropdown [items]="dropdownItems">
+            <my-button slot="trigger" label="Open Menu"></my-button>
+          </my-dropdown>
+        </div>
+
+        <!-- Input Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'input'">
+          <h2>Input</h2>
+          <p>Form input fields</p>
+          <div class="flex flex-col gap-4 max-w-sm">
+            <my-input placeholder="Default Input" type="text"></my-input>
+            <my-input placeholder="Disabled Input" disabled="true"></my-input>
+            <my-input placeholder="Email Input" type="email"></my-input>
+            <my-input placeholder="Password Input" type="password"></my-input>
+          </div>
+        </div>
+
+        <!-- Modal Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'modal'">
+          <h2>Modal</h2>
+          <p>Dialog overlay for important content</p>
+          <my-button label="Open Modal" (click)="openModal()"></my-button>
+        </div>
+
+        <!-- Navbar Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'navbar'">
+          <h2>Navbar</h2>
+          <p>Top navigation bar (you're using it now!)</p>
+          <my-card class="p-4">
+            <p style="margin: 0; color: #6b7280">
+              The navbar component is used at the top of this demo app. It
+              provides navigation between the Components and Icons sections.
+            </p>
+          </my-card>
+        </div>
+
+        <!-- Pagination Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'pagination'">
+          <h2>Pagination</h2>
+          <p>Navigate through pages of content</p>
+          <my-pagination total-pages="10" current-page="1"></my-pagination>
+        </div>
+
+        <!-- Sidebar Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'sidebar'">
+          <h2>Sidebar</h2>
+          <p>Side navigation panel (you're using it now!)</p>
+          <my-card class="p-4">
+            <p style="margin: 0; color: #6b7280">
+              The sidebar component is used on the left of this demo app. It
+              provides navigation between different components. Try clicking the
+              collapse button!
+            </p>
+          </my-card>
+        </div>
+
+        <!-- Tabs Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'tabs'">
+          <h2>Tabs</h2>
+          <p>Organize content into tabbed sections</p>
+          <my-tabs value="tab1">
+            <my-tabs-list class="grid w-full grid-cols-3">
+              <my-tabs-trigger value="tab1">Profile</my-tabs-trigger>
+              <my-tabs-trigger value="tab2">Settings</my-tabs-trigger>
+              <my-tabs-trigger value="tab3">Messages</my-tabs-trigger>
+            </my-tabs-list>
+            <my-tabs-content value="tab1">
+              <div style="padding: 1rem">
+                <h3 style="margin: 0 0 0.5rem 0">Profile Content</h3>
+                <p style="margin: 0; color: #6b7280">
+                  This is the profile tab content.
+                </p>
+              </div>
+            </my-tabs-content>
+            <my-tabs-content value="tab2">
+              <div style="padding: 1rem">
+                <h3 style="margin: 0 0 0.5rem 0">Settings Content</h3>
+                <p style="margin: 0; color: #6b7280">
+                  This is the settings tab content.
+                </p>
+              </div>
+            </my-tabs-content>
+            <my-tabs-content value="tab3">
+              <div style="padding: 1rem">
+                <h3 style="margin: 0 0 0.5rem 0">Messages Content</h3>
+                <p style="margin: 0; color: #6b7280">
+                  This is the messages tab content.
+                </p>
+              </div>
+            </my-tabs-content>
+          </my-tabs>
+        </div>
+
+        <!-- Toast Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'toast'">
+          <h2>Toast</h2>
+          <p>Temporary notification messages</p>
+          <my-button label="Show Toast" (click)="showToast()"></my-button>
+          <my-toast #toast></my-toast>
+        </div>
+
+        <!-- Tooltip Demo -->
+        <div class="demo-section" *ngIf="activeComponent === 'tooltip'">
+          <h2>Tooltip</h2>
+          <p>Contextual information on hover</p>
+          <div class="flex gap-4 items-center flex-wrap">
+            <my-tooltip content="Tooltip on Top" placement="top">
+              <my-button label="Top"></my-button>
+            </my-tooltip>
+
+            <my-tooltip content="Tooltip on Right" placement="right">
+              <my-button label="Right"></my-button>
+            </my-tooltip>
+
+            <my-tooltip content="Tooltip on Bottom" placement="bottom">
+              <my-button label="Bottom"></my-button>
+            </my-tooltip>
+
+            <my-tooltip content="Tooltip on Left" placement="left">
+              <my-button label="Left"></my-button>
+            </my-tooltip>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icons Section -->
+      <div *ngIf="activeSection === 'icons'">
+        <h1 class="section-title">Icons</h1>
+        <p class="section-description">
+          All available icons in the library (future separate package)
+        </p>
+
+        <my-card class="p-6">
+          <div class="icons-grid">
+            <div class="icon-item">
+              <my-icon name="close" size="24"></my-icon>
+              <span class="icon-name">close</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="chevron-down" size="24"></my-icon>
+              <span class="icon-name">chevron-down</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="chevron-left" size="24"></my-icon>
+              <span class="icon-name">chevron-left</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="chevron-right" size="24"></my-icon>
+              <span class="icon-name">chevron-right</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="arrow-up" size="24"></my-icon>
+              <span class="icon-name">arrow-up</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="info" size="24"></my-icon>
+              <span class="icon-name">info</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="error" size="24"></my-icon>
+              <span class="icon-name">error</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="loader" size="24"></my-icon>
+              <span class="icon-name">loader</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="home" size="24"></my-icon>
+              <span class="icon-name">home</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="layout" size="24"></my-icon>
+              <span class="icon-name">layout</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="layers" size="24"></my-icon>
+              <span class="icon-name">layers</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="image" size="24"></my-icon>
+              <span class="icon-name">image</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="star" size="24"></my-icon>
+              <span class="icon-name">star</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="settings" size="24"></my-icon>
+              <span class="icon-name">settings</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="user" size="24"></my-icon>
+              <span class="icon-name">user</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="lock" size="24"></my-icon>
+              <span class="icon-name">lock</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="bell" size="24"></my-icon>
+              <span class="icon-name">bell</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="menu" size="24"></my-icon>
+              <span class="icon-name">menu</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="box" size="24"></my-icon>
+              <span class="icon-name">box</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="file-text" size="24"></my-icon>
+              <span class="icon-name">file-text</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="toggle-left" size="24"></my-icon>
+              <span class="icon-name">toggle-left</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="list-ordered" size="24"></my-icon>
+              <span class="icon-name">list-ordered</span>
+            </div>
+            <div class="icon-item">
+              <my-icon name="message-square" size="24"></my-icon>
+              <span class="icon-name">message-square</span>
+            </div>
+          </div>
+        </my-card>
+
+        <my-card class="p-6" style="margin-top: 2rem">
+          <h3 style="margin: 0 0 1rem 0; font-size: 1.25rem; font-weight: 600">
+            Future Separate Package
+          </h3>
+          <p style="margin: 0; color: #6b7280">
+            These icons are currently part of the component library but are
+            designed to be extracted into a separate, standalone package. This
+            will allow you to install and use the icons independently from the
+            component library.
+          </p>
+          <div
+            style="
+              margin-top: 1rem;
+              padding: 1rem;
+              background: #f3f4f6;
+              border-radius: 6px;
+            "
+          >
+            <code style="color: #1f2937">npm install @your-org/icons</code>
+          </div>
+        </my-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Root Level Components (to avoid overflow clipping) -->
+<my-drawer [open]="drawerOpen" (myClose)="closeDrawer()">
+  <h3 slot="header">Drawer Title</h3>
+  <div>
+    <p>This is the drawer content. You can put any content here.</p>
+    <p>It slides in from the right side of the screen.</p>
+  </div>
+</my-drawer>
+
+<my-modal [open]="modalOpen" (myClose)="closeModal()">
+  <h3 slot="header">Modal Title</h3>
+  <p>This is the modal content. You can add any elements here.</p>
+  <div slot="footer">
+    <my-button
+      label="Cancel"
+      variant="ghost"
+      (click)="closeModal()"
+    ></my-button>
+    <my-button label="Confirm" (click)="closeModal()"></my-button>
+  </div>
+</my-modal>
