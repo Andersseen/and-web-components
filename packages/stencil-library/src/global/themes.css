@@ -1,0 +1,36 @@
+@layer base {
+  :root {
+    /* Default / Modern Theme */
+    --radius: 0.5rem;
+    --spacing-factor: 1;
+    --border-width: 1px;
+  }
+
+  [data-theme='compact'],
+  :host-context([data-theme='compact']) {
+    --radius: 0.25rem;
+    --spacing-factor: 0.75;
+    --border-width: 1px;
+  }
+
+  [data-theme='playful'],
+  :host-context([data-theme='playful']) {
+    --radius: 1rem;
+    --spacing-factor: 1.25;
+    --border-width: 2px;
+  }
+
+  [data-theme='retro'],
+  :host-context([data-theme='retro']) {
+    --radius: 0;
+    --spacing-factor: 1;
+    --border-width: 2px;
+  }
+
+  [data-theme='elegant'],
+  :host-context([data-theme='elegant']) {
+    --radius: 0.75rem;
+    --spacing-factor: 1.1;
+    --border-width: 0.5px;
+  }
+}

@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/utils';
 
 const dropdownTriggerVariants = cva(
-  'inline-flex w-full items-center justify-between gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  'inline-flex w-full items-center justify-between gap-x-t-gap-sm rounded-md px-t-gap py-t-gap-sm text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
   {
     variants: {
       variant: {
@@ -78,7 +78,9 @@ export class MyDropdown {
                 aria-haspopup="true"
               >
                 {this.label}
-                <my-icon name="chevron-down" class={cn('ml-2 h-4 w-4 transition-transform duration-200', this.isOpen && 'rotate-180')} />
+                <span class="ml-auto flex shrink-0 items-center justify-center">
+                  <my-icon name={this.isOpen ? 'chevron-up' : 'chevron-down'} class="h-4 w-4" />
+                </span>
               </button>
             </slot>
           </div>
@@ -87,7 +89,7 @@ export class MyDropdown {
           <div
             class={cn(
               'absolute left-0 z-50 mt-2 min-w-[8rem] origin-top-right overflow-hidden rounded-md border bg-white p-1 shadow-md',
-              'transition-opacity duration-200',
+              'transition-opacity',
               this.isOpen ? 'opacity-100 visible' : 'opacity-0 invisible',
             )}
             role="menu"

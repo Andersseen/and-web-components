@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ['./src/**/*.{ts,tsx,html}'],
+  safelist: ['dark'],
   theme: {
     container: {
       center: true,
@@ -10,6 +12,15 @@ module.exports = {
       },
     },
     extend: {
+      borderWidth: {
+        DEFAULT: 'var(--border-width)',
+      },
+      spacing: {
+        't-gap': 'calc(1rem * var(--spacing-factor))',
+        't-gap-sm': 'calc(0.5rem * var(--spacing-factor))',
+        't-gap-md': 'calc(1rem * var(--spacing-factor))',
+        't-gap-lg': 'calc(1.5rem * var(--spacing-factor))',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -19,6 +30,17 @@ module.exports = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          50: 'hsl(var(--primary-50))',
+          100: 'hsl(var(--primary-100))',
+          200: 'hsl(var(--primary-200))',
+          300: 'hsl(var(--primary-300))',
+          400: 'hsl(var(--primary-400))',
+          500: 'hsl(var(--primary-500))',
+          600: 'hsl(var(--primary-600))',
+          700: 'hsl(var(--primary-700))',
+          800: 'hsl(var(--primary-800))',
+          900: 'hsl(var(--primary-900))',
+          950: 'hsl(var(--primary-950))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
