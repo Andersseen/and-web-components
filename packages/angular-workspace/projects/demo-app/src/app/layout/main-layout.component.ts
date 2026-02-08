@@ -23,13 +23,14 @@ interface SidebarItem {
     <div class="app-container">
       <!-- Navbar -->
       <my-navbar
+        class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
         (navItemClick)="onNavItemClick($event)"
       >
         <span slot="brand">
-          <my-icon name="layout" style="width: 20px; height: 20px;"></my-icon>
-          Stencil UI
+          <my-icon name="layout"></my-icon>
+          And Web Components UI
         </span>
 
         <div
@@ -77,6 +78,7 @@ interface SidebarItem {
       <div class="main-content">
         @if (activeSection() === 'components') {
           <my-sidebar
+            class="bg-background"
             [items]="componentItems"
             [activeItem]="activeComponent()"
             (sidebarItemClick)="onSidebarItemClick($event)"

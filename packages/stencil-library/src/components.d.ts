@@ -9,15 +9,15 @@ import { ButtonProps } from "./components/my-button/my-button";
 import { DrawerPlacement } from "./components/my-drawer/my-drawer";
 import { DropdownItem } from "./components/my-dropdown/my-dropdown";
 import { IconName } from "./components/my-icon/icons";
-import { NavItem } from "./components/my-navbar/my-navbar";
-import { SidebarItem } from "./components/my-sidebar/my-sidebar";
+import { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
+import { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 import { ToastType } from "./components/my-toast/my-toast";
 export { ButtonProps } from "./components/my-button/my-button";
 export { DrawerPlacement } from "./components/my-drawer/my-drawer";
 export { DropdownItem } from "./components/my-dropdown/my-dropdown";
 export { IconName } from "./components/my-icon/icons";
-export { NavItem } from "./components/my-navbar/my-navbar";
-export { SidebarItem } from "./components/my-sidebar/my-sidebar";
+export { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
+export { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 export { ToastType } from "./components/my-toast/my-toast";
 export namespace Components {
     interface MyAccordion {
@@ -186,6 +186,11 @@ export namespace Components {
           * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },     { id: 'icons', label: 'Icons' },   ]
          */
         "items": NavItem[];
+        /**
+          * Variant of the navbar
+          * @default 'default'
+         */
+        "variant": NavbarProps['variant'];
     }
     interface MyPagination {
         /**
@@ -215,6 +220,11 @@ export namespace Components {
           * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]
          */
         "items": SidebarItem[];
+        /**
+          * Variant of the sidebar
+          * @default 'default'
+         */
+        "variant": SidebarProps['variant'];
     }
     interface MyTabs {
         "defaultValue": string;
@@ -784,6 +794,11 @@ declare namespace LocalJSX {
           * Emitted when a navigation item is clicked
          */
         "onNavItemClick"?: (event: MyNavbarCustomEvent<string>) => void;
+        /**
+          * Variant of the navbar
+          * @default 'default'
+         */
+        "variant"?: NavbarProps['variant'];
     }
     interface MyPagination {
         /**
@@ -825,6 +840,11 @@ declare namespace LocalJSX {
           * Emitted when the sidebar collapse state changes
          */
         "onSidebarToggle"?: (event: MySidebarCustomEvent<boolean>) => void;
+        /**
+          * Variant of the sidebar
+          * @default 'default'
+         */
+        "variant"?: SidebarProps['variant'];
     }
     interface MyTabs {
         "defaultValue"?: string;
@@ -939,6 +959,7 @@ declare namespace LocalJSX {
     }
     interface MyNavbarAttributes {
         "activeItem": string;
+        "variant": NavbarProps['variant'];
     }
     interface MyPaginationAttributes {
         "totalPages": number;
@@ -947,6 +968,7 @@ declare namespace LocalJSX {
     interface MySidebarAttributes {
         "activeItem": string;
         "collapsed": boolean;
+        "variant": SidebarProps['variant'];
     }
     interface MyTabsAttributes {
         "value": string;
