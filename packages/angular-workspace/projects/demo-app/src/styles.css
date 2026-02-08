@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 @import "@fontsource/inter";
 @import "stencil-library/dist/stencil-library/stencil-library.css";
 
@@ -9,7 +8,6 @@ body {
 
 /* Component Demo Sections */
 .demo-section {
-  background: white;
   border-radius: 8px;
   padding: 2rem;
   margin-bottom: 2rem;
@@ -20,12 +18,12 @@ body {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--foreground);
 }
 
 .demo-section p {
   margin: 0 0 1.5rem 0;
-  color: #6b7280;
+  color: var(--foreground);
 }
 
 .demo-examples {
@@ -48,21 +46,21 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--foreground);
   border-radius: 8px;
   transition: all 0.2s;
   cursor: pointer;
 }
 
 .icon-item:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: var(--foreground);
+  background: var(--foreground);
   transform: translateY(-2px);
 }
 
 .icon-name {
   font-size: 0.875rem;
-  color: #4b5563;
+  color: var(--foreground);
   text-align: center;
 }
 
@@ -70,11 +68,11 @@ body {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #111827;
+  color: var(--foreground);
 }
 
 .section-description {
   font-size: 1.125rem;
-  color: #6b7280;
+  color: var(--foreground);
   margin-bottom: 2rem;
 }

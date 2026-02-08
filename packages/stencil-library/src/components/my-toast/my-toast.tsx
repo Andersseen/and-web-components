@@ -4,21 +4,24 @@ import { cn } from '../../utils/utils';
 
 export type ToastType = 'default' | 'success' | 'error' | 'info' | 'warning';
 
-const toastVariants = cva('pointer-events-auto flex w-full max-w-md items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 shadow-lg transition-all', {
-  variants: {
-    variant: {
-      default: 'bg-background text-foreground border-border',
-      destructive: 'bg-destructive text-destructive-foreground border-destructive group-hover:bg-destructive group-hover:text-destructive-foreground',
-      success: 'bg-background text-foreground border-border',
-      error: 'bg-destructive text-destructive-foreground border-destructive',
-      info: 'bg-background text-foreground border-border',
-      warning: 'bg-background text-foreground border-border',
+const toastVariants = cva(
+  'pointer-events-auto flex w-full max-w-md items-center justify-between space-x-t-gap overflow-hidden rounded-md border p-t-gap shadow-lg transition-all',
+  {
+    variants: {
+      variant: {
+        default: 'bg-background text-foreground border-border',
+        destructive: 'bg-destructive text-destructive-foreground border-destructive group-hover:bg-destructive group-hover:text-destructive-foreground',
+        success: 'bg-background text-foreground border-border',
+        error: 'bg-destructive text-destructive-foreground border-destructive',
+        info: 'bg-background text-foreground border-border',
+        warning: 'bg-background text-foreground border-border',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
     },
   },
-  defaultVariants: {
-    variant: 'default',
-  },
-});
+);
 
 @Component({
   tag: 'my-toast',
@@ -50,7 +53,7 @@ export class MyToast {
   render() {
     return (
       <Host class="block relative z-[100]">
-        <div class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 w-full max-w-md pointer-events-none">
+        <div class="fixed bottom-t-gap right-t-gap z-[100] flex flex-col gap-t-gap-sm w-full max-w-md pointer-events-none">
           {this.toasts.map(toast => (
             <div key={toast.id} class={cn(toastVariants({ variant: toast.type }), 'animate-in slide-in-from-right-full fade-in duration-300')} role="alert">
               <div class="text-sm font-medium opacity-90">{toast.message}</div>

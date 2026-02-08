@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './themes.css';
+@import './palettes.css';
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -31,11 +34,10 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
   }
 
-  .dark {
+  .dark,
+  :host-context(.dark) {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 

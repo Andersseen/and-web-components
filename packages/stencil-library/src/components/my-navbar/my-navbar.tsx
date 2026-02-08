@@ -1,4 +1,6 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { cva, VariantProps } from 'class-variance-authority';
+import { cn } from '../../utils/cn';
 
 export type NavItem = {
   id: string;
@@ -6,9 +8,38 @@ export type NavItem = {
   icon?: string;
 };
 
+const navbarVariants = cva('w-full border-b', {
+  variants: {
+    variant: {
+      default: 'bg-background border-border',
+      ghost: 'bg-transparent border-transparent',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+const navItemVariants = cva(
+  'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+  {
+    variants: {
+      active: {
+        true: 'bg-accent text-accent-foreground',
+        false: 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
+      },
+    },
+    defaultVariants: {
+      active: false,
+    },
+  },
+);
+
+export type NavbarProps = VariantProps<typeof navbarVariants>;
+
 @Component({
   tag: 'my-navbar',
-  styleUrl: 'my-navbar.css',
+  styleUrls: ['my-navbar.css', '../../global/global.css'],
   shadow: true,
 })
 export class MyNavbar {
@@ -28,6 +59,11 @@ export class MyNavbar {
   ];
 
   /**
+   * Variant of the navbar
+   */
+  @Prop() variant: NavbarProps['variant'] = 'default';
+
+  /**
    * Emitted when a navigation item is clicked
    */
   @Event() navItemClick: EventEmitter<string>;
@@ -39,7 +75,7 @@ export class MyNavbar {
   render() {
     return (
       <Host>
-        <nav class="navbar">
+        <nav class={cn(navbarVariants({ variant: this.variant }))}>
           <div class="navbar-container">
             <div class="navbar-brand">
               <slot name="brand">
@@ -50,10 +86,7 @@ export class MyNavbar {
               {this.items.map(item => (
                 <button
                   key={item.id}
-                  class={{
-                    'nav-item': true,
-                    'nav-item-active': this.activeItem === item.id,
-                  }}
+                  class={cn(navItemVariants({ active: this.activeItem === item.id }), 'bg-transparent border-none cursor-pointer')}
                   onClick={() => this.handleNavClick(item.id)}
                 >
                   {item.label}

@@ -408,14 +408,14 @@ export declare interface MyModal extends Components.MyModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineMyNavbar,
-  inputs: ['activeItem', 'items']
+  inputs: ['activeItem', 'items', 'variant']
 })
 @Component({
   selector: 'my-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'items'],
+  inputs: ['activeItem', 'items', 'variant'],
   outputs: ['navItemClick'],
 })
 export class MyNavbar {
@@ -468,14 +468,14 @@ export declare interface MyPagination extends Components.MyPagination {
 
 @ProxyCmp({
   defineCustomElementFn: defineMySidebar,
-  inputs: ['activeItem', 'collapsed', 'items']
+  inputs: ['activeItem', 'collapsed', 'items', 'variant']
 })
 @Component({
   selector: 'my-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'collapsed', 'items'],
+  inputs: ['activeItem', 'collapsed', 'items', 'variant'],
   outputs: ['sidebarItemClick', 'sidebarToggle'],
 })
 export class MySidebar {

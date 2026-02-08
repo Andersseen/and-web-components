@@ -20,8 +20,8 @@ export class MyTabsTrigger {
         role="tab"
         onClick={() => !this.disabled && this.tabTriggerClick.emit(this.value)}
         class={cn(
-          'flex flex-1 items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium transition-all cursor-pointer',
-          this.selected ? 'bg-white text-black shadow-sm' : 'text-slate-500 hover:text-slate-900',
+          'flex flex-1 items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium transition-all cursor-pointer ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          this.selected ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
           this.disabled && 'opacity-50 pointer-events-none',
         )}
       >

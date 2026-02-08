@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app-button-demo',
   imports: [MyButton],
   template: `
-    <div class="demo-section">
+    <section class="demo-section">
       <h2>Button</h2>
       <p>Interactive buttons with multiple variants and sizes</p>
       <div class="demo-examples">
@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
         <my-button size="lg">Large</my-button>
         <my-button size="icon">🚀</my-button>
       </div>
-    </div>
+    </section>
   `,
 })
 export default class ButtonDemo {}

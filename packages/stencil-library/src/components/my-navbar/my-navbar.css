@@ -2,35 +2,20 @@
   display: block;
 }
 
-.navbar {
-  @apply w-full border-b border-gray-200 bg-white;
-}
-
 .navbar-container {
   @apply mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8;
 }
 
 .navbar-brand {
-  @apply flex items-center;
+  @apply flex items-center gap-2;
 }
 
 .brand-text {
-  @apply text-xl font-bold tracking-tight text-gray-900;
+  @apply text-xl font-bold tracking-tight text-foreground;
 }
 
 .navbar-menu {
   @apply flex items-center gap-1;
-}
-
-.nav-item {
-  @apply rounded-md px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.nav-item-active {
-  @apply bg-gray-100 text-gray-900;
 }
 
 .navbar-actions {

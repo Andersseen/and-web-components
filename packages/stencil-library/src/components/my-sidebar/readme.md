@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                      | Type            | Default                                                                                                                      |
-| ------------ | ------------- | -------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `activeItem` | `active-item` | The active navigation item ID    | `string`        | `'home'`                                                                                                                     |
-| `collapsed`  | `collapsed`   | Whether the sidebar is collapsed | `boolean`       | `false`                                                                                                                      |
-| `items`      | --            | Navigation items to display      | `SidebarItem[]` | `[     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]` |
+| Property     | Attribute     | Description                      | Type                   | Default                                                                                                                      |
+| ------------ | ------------- | -------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `activeItem` | `active-item` | The active navigation item ID    | `string`               | `'home'`                                                                                                                     |
+| `collapsed`  | `collapsed`   | Whether the sidebar is collapsed | `boolean`              | `false`                                                                                                                      |
+| `items`      | --            | Navigation items to display      | `SidebarItem[]`        | `[     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]` |
+| `variant`    | `variant`     | Variant of the sidebar           | `"default" \| "ghost"` | `'default'`                                                                                                                  |
 
 
 ## Events
