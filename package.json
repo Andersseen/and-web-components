@@ -2,8 +2,9 @@
   "name": "and-web-components",
   "private": false,
   "scripts": {
-    "build:stencil": "pnpm -C packages/stencil-library build",
-    "start:demo": "pnpm -C packages/stencil-library build && pnpm -C packages/angular-workspace start",
+    "build:headless": "pnpm -C packages/headless-core build",
+    "build:stencil": "pnpm build:headless && pnpm -C packages/stencil-library build",
+    "start:demo": "pnpm build:stencil && pnpm -C packages/angular-workspace start",
     "build:demo": "pnpm build:stencil && pnpm -C packages/angular-workspace build demo-app",
     "deploy:cloudflare": "pnpm build:demo && pnpm -C packages/angular-workspace exec wrangler pages deploy"
   },
