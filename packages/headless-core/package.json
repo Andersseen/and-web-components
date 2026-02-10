@@ -10,7 +10,7 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist-cjs/index.js"
     },
     "./button": {
       "types": "./dist/button/index.d.ts",
@@ -34,7 +34,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json",
     "dev": "tsc --watch",
     "test": "jest",
     "lint": "eslint src --ext .ts",

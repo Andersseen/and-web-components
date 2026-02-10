@@ -36,7 +36,7 @@ export class MyPagination {
     return (
       <nav aria-label="Pagination">
         <button class="pagination-button nav-button" onClick={() => this.handlePageChange(this.currentPage - 1)} disabled={this.currentPage <= 1}>
-          <my-icon name="chevron-left" class="h-4 w-4" />
+          <my-icon name="chevron-left" size={16} class="h-4 w-4" />
           <span class="sr-only">Previous</span>
         </button>
 
@@ -51,7 +51,7 @@ export class MyPagination {
         ))}
 
         <button class="pagination-button nav-button" onClick={() => this.handlePageChange(this.currentPage + 1)} disabled={this.currentPage >= this.totalPages}>
-          <my-icon name="chevron-right" class="h-4 w-4" />
+          <my-icon name="chevron-right" size={16} class="h-4 w-4" />
           <span class="sr-only">Next</span>
         </button>
       </nav>

@@ -79,7 +79,7 @@ export class MyDropdown {
               >
                 {this.label}
                 <span class="ml-auto flex shrink-0 items-center justify-center">
-                  <my-icon name={this.isOpen ? 'chevron-up' : 'chevron-down'} class="h-4 w-4" />
+                  <my-icon name={this.isOpen ? 'chevron-up' : 'chevron-down'} size={16} class="h-4 w-4" />
                 </span>
               </button>
             </slot>

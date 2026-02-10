@@ -126,6 +126,9 @@ importers:
 
   packages/stencil-library:
     dependencies:
+      '@andersseen/headless-core':
+        specifier: link:../headless-core
+        version: link:../headless-core
       '@babel/runtime':
         specifier: ^7.26.0
         version: 7.28.4

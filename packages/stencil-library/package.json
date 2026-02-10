@@ -61,6 +61,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@andersseen/headless-core": "link:../headless-core",
     "@babel/runtime": "^7.26.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
