@@ -1,0 +1,63 @@
+{
+  "name": "@andersseen/headless-core",
+  "version": "0.1.0",
+  "description": "Headless UI components for Web Components - Framework agnostic state machines and logic",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./accordion": {
+      "types": "./dist/accordion/index.d.ts",
+      "import": "./dist/accordion/index.js"
+    },
+    "./tabs": {
+      "types": "./dist/tabs/index.d.ts",
+      "import": "./dist/tabs/index.js"
+    },
+    "./dropdown": {
+      "types": "./dist/dropdown/index.d.ts",
+      "import": "./dist/dropdown/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "headless",
+    "web-components",
+    "stencil",
+    "typescript",
+    "ui-components",
+    "accessibility",
+    "state-machine"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.5",
+    "jest": "^29.7.0",
+    "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
