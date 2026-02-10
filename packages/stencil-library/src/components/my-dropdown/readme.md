@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type             | Default     |
-| --------- | --------- | ----------- | ---------------- | ----------- |
-| `items`   | --        |             | `DropdownItem[]` | `[]`        |
-| `label`   | `label`   |             | `string`         | `'Options'` |
-| `variant` | `variant` |             | `any`            | `'default'` |
+| Property        | Attribute         | Description | Type                                     | Default     |
+| --------------- | ----------------- | ----------- | ---------------------------------------- | ----------- |
+| `closeOnSelect` | `close-on-select` |             | `boolean`                                | `true`      |
+| `items`         | --                |             | `DropdownItem[]`                         | `[]`        |
+| `label`         | `label`           |             | `string`                                 | `'Options'` |
+| `placement`     | `placement`       |             | `"bottom" \| "left" \| "right" \| "top"` | `'bottom'`  |
+| `variant`       | `variant`         |             | `any`                                    | `'default'` |
 
 
 ## Events

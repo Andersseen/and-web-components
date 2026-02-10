@@ -171,14 +171,14 @@ export declare interface MyBadge extends Components.MyBadge {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMyButton,
-  inputs: ['customClass', 'disabled', 'size', 'type', 'variant']
+  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant']
 })
 @Component({
   selector: 'my-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'disabled', 'size', 'type', 'variant'],
+  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant'],
 })
 export class MyButton {
   protected el: HTMLMyButtonElement;
@@ -292,14 +292,14 @@ export declare interface MyDrawer extends Components.MyDrawer {
 
 @ProxyCmp({
   defineCustomElementFn: defineMyDropdown,
-  inputs: ['items', 'label', 'variant']
+  inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant']
 })
 @Component({
   selector: 'my-dropdown',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['items', 'label', 'variant'],
+  inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant'],
   outputs: ['dropdownSelect'],
 })
 export class MyDropdown {
@@ -494,14 +494,14 @@ export declare interface MySidebar extends Components.MySidebar {
 
 @ProxyCmp({
   defineCustomElementFn: defineMyTabs,
-  inputs: ['defaultValue', 'orientation', 'value']
+  inputs: ['activationMode', 'defaultValue', 'orientation', 'value']
 })
 @Component({
   selector: 'my-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['defaultValue', 'orientation', 'value'],
+  inputs: ['activationMode', 'defaultValue', 'orientation', 'value'],
   outputs: ['valueChange'],
 })
 export class MyTabs {
@@ -544,14 +544,15 @@ export declare interface MyTabsContent extends Components.MyTabsContent {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTabsList
+  defineCustomElementFn: defineMyTabsList,
+  inputs: ['orientation']
 })
 @Component({
   selector: 'my-tabs-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['orientation'],
 })
 export class MyTabsList {
   protected el: HTMLMyTabsListElement;
@@ -567,14 +568,14 @@ export declare interface MyTabsList extends Components.MyTabsList {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMyTabsTrigger,
-  inputs: ['disabled', 'selected', 'value']
+  inputs: ['disabled', 'selected', 'tabsLogic', 'value']
 })
 @Component({
   selector: 'my-tabs-trigger',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'selected', 'value'],
+  inputs: ['disabled', 'selected', 'tabsLogic', 'value'],
   outputs: ['tabTriggerClick'],
 })
 export class MyTabsTrigger {

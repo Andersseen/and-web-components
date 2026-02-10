@@ -1,4 +1,4 @@
-import { Component, h, Host } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { cn } from '../../utils/utils';
 
 @Component({
@@ -7,9 +7,11 @@ import { cn } from '../../utils/utils';
   shadow: true,
 })
 export class MyTabsList {
+  @Prop() orientation: 'horizontal' | 'vertical' = 'horizontal';
+
   render() {
     return (
-      <Host class={cn('flex flex-row w-full h-10 items-center rounded-md bg-muted p-1 text-muted-foreground')}>
+      <Host role="tablist" aria-orientation={this.orientation} class={cn('flex flex-row w-full h-10 items-center rounded-md bg-muted p-1 text-muted-foreground')}>
         <slot></slot>
       </Host>
     );

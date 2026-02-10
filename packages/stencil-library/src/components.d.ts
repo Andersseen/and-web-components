@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionReturn } from "@andersseen/headless-core";
+import { AccordionReturn, TabsReturn } from "@andersseen/headless-core";
 import { ButtonProps } from "./components/my-button/my-button";
 import { DrawerPlacement } from "./components/my-drawer/my-drawer";
 import { DropdownItem } from "./components/my-dropdown/my-dropdown";
@@ -13,7 +13,7 @@ import { IconName } from "./components/my-icon/icons";
 import { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 import { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 import { ToastType } from "./components/my-toast/my-toast";
-export { AccordionReturn } from "@andersseen/headless-core";
+export { AccordionReturn, TabsReturn } from "@andersseen/headless-core";
 export { ButtonProps } from "./components/my-button/my-button";
 export { DrawerPlacement } from "./components/my-drawer/my-drawer";
 export { DropdownItem } from "./components/my-dropdown/my-dropdown";
@@ -109,6 +109,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * @default false
+         */
+        "loading": boolean;
+        /**
           * @default 'default'
          */
         "size": ButtonProps['size'];
@@ -153,6 +157,10 @@ export namespace Components {
     }
     interface MyDropdown {
         /**
+          * @default true
+         */
+        "closeOnSelect": boolean;
+        /**
           * @default []
          */
         "items": DropdownItem[];
@@ -160,6 +168,10 @@ export namespace Components {
           * @default 'Options'
          */
         "label": string;
+        /**
+          * @default 'bottom'
+         */
+        "placement": 'top' | 'bottom' | 'left' | 'right';
         /**
           * @default 'default'
          */
@@ -257,6 +269,10 @@ export namespace Components {
         "variant": SidebarProps['variant'];
     }
     interface MyTabs {
+        /**
+          * @default 'automatic'
+         */
+        "activationMode": 'automatic' | 'manual';
         "defaultValue": string;
         /**
           * @default 'horizontal'
@@ -272,6 +288,10 @@ export namespace Components {
         "value": string;
     }
     interface MyTabsList {
+        /**
+          * @default 'horizontal'
+         */
+        "orientation": 'horizontal' | 'vertical';
     }
     interface MyTabsTrigger {
         /**
@@ -282,6 +302,7 @@ export namespace Components {
           * @default false
          */
         "selected": boolean;
+        "tabsLogic": TabsReturn;
         "value": string;
     }
     interface MyToast {
@@ -712,6 +733,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * @default false
+         */
+        "loading"?: boolean;
+        /**
           * @default 'default'
          */
         "size"?: ButtonProps['size'];
@@ -760,6 +785,10 @@ declare namespace LocalJSX {
     }
     interface MyDropdown {
         /**
+          * @default true
+         */
+        "closeOnSelect"?: boolean;
+        /**
           * @default []
          */
         "items"?: DropdownItem[];
@@ -768,6 +797,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         "onDropdownSelect"?: (event: MyDropdownCustomEvent<string>) => void;
+        /**
+          * @default 'bottom'
+         */
+        "placement"?: 'top' | 'bottom' | 'left' | 'right';
         /**
           * @default 'default'
          */
@@ -883,6 +916,10 @@ declare namespace LocalJSX {
         "variant"?: SidebarProps['variant'];
     }
     interface MyTabs {
+        /**
+          * @default 'automatic'
+         */
+        "activationMode"?: 'automatic' | 'manual';
         "defaultValue"?: string;
         "onValueChange"?: (event: MyTabsCustomEvent<string>) => void;
         /**
@@ -899,6 +936,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MyTabsList {
+        /**
+          * @default 'horizontal'
+         */
+        "orientation"?: 'horizontal' | 'vertical';
     }
     interface MyTabsTrigger {
         /**
@@ -910,6 +951,7 @@ declare namespace LocalJSX {
           * @default false
          */
         "selected"?: boolean;
+        "tabsLogic"?: TabsReturn;
         "value"?: string;
     }
     interface MyToast {
@@ -950,6 +992,7 @@ declare namespace LocalJSX {
         "size": ButtonProps['size'];
         "type": 'button' | 'submit' | 'reset';
         "disabled": boolean;
+        "loading": boolean;
         "customClass": string;
     }
     interface MyCardAttributes {
@@ -966,6 +1009,8 @@ declare namespace LocalJSX {
     interface MyDropdownAttributes {
         "variant": string;
         "label": string;
+        "placement": 'top' | 'bottom' | 'left' | 'right';
+        "closeOnSelect": boolean;
     }
     interface MyIconAttributes {
         "name": IconName;
@@ -1000,10 +1045,14 @@ declare namespace LocalJSX {
         "value": string;
         "defaultValue": string;
         "orientation": 'horizontal' | 'vertical';
+        "activationMode": 'automatic' | 'manual';
     }
     interface MyTabsContentAttributes {
         "value": string;
         "selected": boolean;
+    }
+    interface MyTabsListAttributes {
+        "orientation": 'horizontal' | 'vertical';
     }
     interface MyTabsTriggerAttributes {
         "value": string;
@@ -1038,7 +1087,7 @@ declare namespace LocalJSX {
         "my-sidebar": Omit<MySidebar, keyof MySidebarAttributes> & { [K in keyof MySidebar & keyof MySidebarAttributes]?: MySidebar[K] } & { [K in keyof MySidebar & keyof MySidebarAttributes as `attr:${K}`]?: MySidebarAttributes[K] } & { [K in keyof MySidebar & keyof MySidebarAttributes as `prop:${K}`]?: MySidebar[K] };
         "my-tabs": Omit<MyTabs, keyof MyTabsAttributes> & { [K in keyof MyTabs & keyof MyTabsAttributes]?: MyTabs[K] } & { [K in keyof MyTabs & keyof MyTabsAttributes as `attr:${K}`]?: MyTabsAttributes[K] } & { [K in keyof MyTabs & keyof MyTabsAttributes as `prop:${K}`]?: MyTabs[K] };
         "my-tabs-content": Omit<MyTabsContent, keyof MyTabsContentAttributes> & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes]?: MyTabsContent[K] } & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes as `attr:${K}`]?: MyTabsContentAttributes[K] } & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes as `prop:${K}`]?: MyTabsContent[K] };
-        "my-tabs-list": MyTabsList;
+        "my-tabs-list": Omit<MyTabsList, keyof MyTabsListAttributes> & { [K in keyof MyTabsList & keyof MyTabsListAttributes]?: MyTabsList[K] } & { [K in keyof MyTabsList & keyof MyTabsListAttributes as `attr:${K}`]?: MyTabsListAttributes[K] } & { [K in keyof MyTabsList & keyof MyTabsListAttributes as `prop:${K}`]?: MyTabsList[K] };
         "my-tabs-trigger": Omit<MyTabsTrigger, keyof MyTabsTriggerAttributes> & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes]?: MyTabsTrigger[K] } & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes as `attr:${K}`]?: MyTabsTriggerAttributes[K] } & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes as `prop:${K}`]?: MyTabsTrigger[K] };
         "my-toast": MyToast;
         "my-tooltip": Omit<MyTooltip, keyof MyTooltipAttributes> & { [K in keyof MyTooltip & keyof MyTooltipAttributes]?: MyTooltip[K] } & { [K in keyof MyTooltip & keyof MyTooltipAttributes as `attr:${K}`]?: MyTooltipAttributes[K] } & { [K in keyof MyTooltip & keyof MyTooltipAttributes as `prop:${K}`]?: MyTooltip[K] };

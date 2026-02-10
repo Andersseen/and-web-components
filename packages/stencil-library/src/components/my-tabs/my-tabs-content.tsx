@@ -15,6 +15,8 @@ export class MyTabsContent {
     return (
       <Host
         role="tabpanel"
+        hidden={!this.selected}
+        tabIndex={0}
         class={cn('mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', this.selected ? 'block animate-in fade-in-50 zoom-in-95' : 'hidden')}
       >
         <slot></slot>
