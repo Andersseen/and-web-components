@@ -5,20 +5,27 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Overview
 
-| Property   | Attribute  | Description | Type      | Default     |
-| ---------- | ---------- | ----------- | --------- | ----------- |
-| `disabled` | `disabled` |             | `boolean` | `false`     |
-| `open`     | `open`     |             | `boolean` | `false`     |
-| `value`    | `value`    |             | `string`  | `undefined` |
+Accordion trigger/header component
+
+## Methods
+
+### `setItemProps(props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }) => Promise<void>`
+
+Set item properties from parent
+
+#### Parameters
+
+| Name    | Type                                                                       | Description |
+| ------- | -------------------------------------------------------------------------- | ----------- |
+| `props` | `{ itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }` |             |
+
+#### Returns
+
+Type: `Promise<void>`
 
 
-## Events
-
-| Event                   | Description | Type                  |
-| ----------------------- | ----------- | --------------------- |
-| `accordionTriggerClick` |             | `CustomEvent<string>` |
 
 
 ## Dependencies

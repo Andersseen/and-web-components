@@ -32,19 +32,17 @@ import { defineCustomElement as defineMyToast } from 'stencil-library/components
 import { defineCustomElement as defineMyTooltip } from 'stencil-library/components/my-tooltip.js';
 @ProxyCmp({
   defineCustomElementFn: defineMyAccordion,
-  inputs: ['collapsible', 'defaultValue', 'type', 'value']
+  inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation']
 })
 @Component({
   selector: 'my-accordion',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapsible', 'defaultValue', 'type', 'value'],
-  outputs: ['myValueChange'],
+  inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation'],
 })
 export class MyAccordion {
   protected el: HTMLMyAccordionElement;
-  @Output() myValueChange = new EventEmitter<CustomEvent<string | string[]>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -52,22 +50,19 @@ export class MyAccordion {
 }
 
 
-export declare interface MyAccordion extends Components.MyAccordion {
-
-  myValueChange: EventEmitter<CustomEvent<string | string[]>>;
-}
+export declare interface MyAccordion extends Components.MyAccordion {}
 
 
 @ProxyCmp({
   defineCustomElementFn: defineMyAccordionContent,
-  inputs: ['open']
+  methods: ['setItemProps']
 })
 @Component({
   selector: 'my-accordion-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['open'],
+  inputs: [],
 })
 export class MyAccordionContent {
   protected el: HTMLMyAccordionContentElement;
@@ -83,14 +78,15 @@ export declare interface MyAccordionContent extends Components.MyAccordionConten
 
 @ProxyCmp({
   defineCustomElementFn: defineMyAccordionItem,
-  inputs: ['disabled', 'open', 'value']
+  inputs: ['disabled', 'value'],
+  methods: ['setAccordionLogic']
 })
 @Component({
   selector: 'my-accordion-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'open', 'value'],
+  inputs: ['disabled', { name: 'value', required: true }],
 })
 export class MyAccordionItem {
   protected el: HTMLMyAccordionItemElement;
@@ -106,19 +102,17 @@ export declare interface MyAccordionItem extends Components.MyAccordionItem {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMyAccordionTrigger,
-  inputs: ['disabled', 'open', 'value']
+  methods: ['setItemProps']
 })
 @Component({
   selector: 'my-accordion-trigger',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'open', 'value'],
-  outputs: ['accordionTriggerClick'],
+  inputs: [],
 })
 export class MyAccordionTrigger {
   protected el: HTMLMyAccordionTriggerElement;
-  @Output() accordionTriggerClick = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -126,10 +120,7 @@ export class MyAccordionTrigger {
 }
 
 
-export declare interface MyAccordionTrigger extends Components.MyAccordionTrigger {
-
-  accordionTriggerClick: EventEmitter<CustomEvent<string>>;
-}
+export declare interface MyAccordionTrigger extends Components.MyAccordionTrigger {}
 
 
 @ProxyCmp({
@@ -180,14 +171,14 @@ export declare interface MyBadge extends Components.MyBadge {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMyButton,
-  inputs: ['customClass', 'disabled', 'size', 'type', 'variant']
+  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant']
 })
 @Component({
   selector: 'my-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'disabled', 'size', 'type', 'variant'],
+  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant'],
 })
 export class MyButton {
   protected el: HTMLMyButtonElement;
@@ -301,14 +292,14 @@ export declare interface MyDrawer extends Components.MyDrawer {
 
 @ProxyCmp({
   defineCustomElementFn: defineMyDropdown,
-  inputs: ['items', 'label', 'variant']
+  inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant']
 })
 @Component({
   selector: 'my-dropdown',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['items', 'label', 'variant'],
+  inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant'],
   outputs: ['dropdownSelect'],
 })
 export class MyDropdown {
@@ -503,14 +494,14 @@ export declare interface MySidebar extends Components.MySidebar {
 
 @ProxyCmp({
   defineCustomElementFn: defineMyTabs,
-  inputs: ['defaultValue', 'orientation', 'value']
+  inputs: ['activationMode', 'defaultValue', 'orientation', 'value']
 })
 @Component({
   selector: 'my-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['defaultValue', 'orientation', 'value'],
+  inputs: ['activationMode', 'defaultValue', 'orientation', 'value'],
   outputs: ['valueChange'],
 })
 export class MyTabs {
@@ -553,14 +544,15 @@ export declare interface MyTabsContent extends Components.MyTabsContent {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTabsList
+  defineCustomElementFn: defineMyTabsList,
+  inputs: ['orientation']
 })
 @Component({
   selector: 'my-tabs-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['orientation'],
 })
 export class MyTabsList {
   protected el: HTMLMyTabsListElement;
@@ -576,14 +568,14 @@ export declare interface MyTabsList extends Components.MyTabsList {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMyTabsTrigger,
-  inputs: ['disabled', 'selected', 'value']
+  inputs: ['disabled', 'selected', 'tabsLogic', 'value']
 })
 @Component({
   selector: 'my-tabs-trigger',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'selected', 'value'],
+  inputs: ['disabled', 'selected', 'tabsLogic', 'value'],
   outputs: ['tabTriggerClick'],
 })
 export class MyTabsTrigger {

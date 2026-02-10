@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { AccordionReturn, TabsReturn } from "@andersseen/headless-core";
 import { ButtonProps } from "./components/my-button/my-button";
 import { DrawerPlacement } from "./components/my-drawer/my-drawer";
 import { DropdownItem } from "./components/my-dropdown/my-dropdown";
@@ -12,6 +13,7 @@ import { IconName } from "./components/my-icon/icons";
 import { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 import { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 import { ToastType } from "./components/my-toast/my-toast";
+export { AccordionReturn, TabsReturn } from "@andersseen/headless-core";
 export { ButtonProps } from "./components/my-button/my-button";
 export { DrawerPlacement } from "./components/my-drawer/my-drawer";
 export { DropdownItem } from "./components/my-dropdown/my-dropdown";
@@ -20,45 +22,73 @@ export { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 export { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 export { ToastType } from "./components/my-toast/my-toast";
 export namespace Components {
+    /**
+     * Accordion container component using headless logic
+     * @example ```html
+     * <my-accordion allow-multiple="true">
+     *   <my-accordion-item value="item-1">
+     *     <my-accordion-trigger>Item 1</my-accordion-trigger>
+     *     <my-accordion-content>Content 1</my-accordion-content>
+     *   </my-accordion-item>
+     * </my-accordion>
+     * ```
+     */
     interface MyAccordion {
         /**
+          * Allow multiple items to be expanded simultaneously
           * @default false
          */
-        "collapsible": boolean;
-        "defaultValue": string | string[];
+        "allowMultiple": boolean;
         /**
-          * @default 'single'
+          * Default expanded item values
          */
-        "type": 'single' | 'multiple';
-        "value": string | string[];
+        "defaultValue"?: string[];
+        /**
+          * Whether the accordion is disabled
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Orientation of the accordion
+          * @default 'vertical'
+         */
+        "orientation": 'horizontal' | 'vertical';
     }
+    /**
+     * Accordion content/panel component
+     */
     interface MyAccordionContent {
         /**
-          * @default false
+          * Set item properties from parent
          */
-        "open": boolean;
+        "setItemProps": (props: { itemId: string; accordionLogic: AccordionReturn; }) => Promise<void>;
     }
+    /**
+     * Accordion item component
+     */
     interface MyAccordionItem {
         /**
+          * Whether this item is disabled
           * @default false
          */
         "disabled": boolean;
         /**
-          * @default false
+          * Method for parent to pass accordion logic
          */
-        "open": boolean;
+        "setAccordionLogic": (logic: AccordionReturn) => Promise<void>;
+        /**
+          * Unique value for this accordion item
+         */
         "value": string;
     }
+    /**
+     * Accordion trigger/header component
+     */
     interface MyAccordionTrigger {
         /**
-          * @default false
+          * Set item properties from parent
          */
-        "disabled": boolean;
-        /**
-          * @default false
-         */
-        "open": boolean;
-        "value": string;
+        "setItemProps": (props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }) => Promise<void>;
     }
     interface MyAlert {
         /**
@@ -78,6 +108,10 @@ export namespace Components {
           * @default false
          */
         "disabled": boolean;
+        /**
+          * @default false
+         */
+        "loading": boolean;
         /**
           * @default 'default'
          */
@@ -123,6 +157,10 @@ export namespace Components {
     }
     interface MyDropdown {
         /**
+          * @default true
+         */
+        "closeOnSelect": boolean;
+        /**
           * @default []
          */
         "items": DropdownItem[];
@@ -130,6 +168,10 @@ export namespace Components {
           * @default 'Options'
          */
         "label": string;
+        /**
+          * @default 'bottom'
+         */
+        "placement": 'top' | 'bottom' | 'left' | 'right';
         /**
           * @default 'default'
          */
@@ -227,6 +269,10 @@ export namespace Components {
         "variant": SidebarProps['variant'];
     }
     interface MyTabs {
+        /**
+          * @default 'automatic'
+         */
+        "activationMode": 'automatic' | 'manual';
         "defaultValue": string;
         /**
           * @default 'horizontal'
@@ -242,6 +288,10 @@ export namespace Components {
         "value": string;
     }
     interface MyTabsList {
+        /**
+          * @default 'horizontal'
+         */
+        "orientation": 'horizontal' | 'vertical';
     }
     interface MyTabsTrigger {
         /**
@@ -252,6 +302,7 @@ export namespace Components {
           * @default false
          */
         "selected": boolean;
+        "tabsLogic": TabsReturn;
         "value": string;
     }
     interface MyToast {
@@ -275,14 +326,6 @@ export namespace Components {
          */
         "placement": 'top' | 'right' | 'bottom' | 'left';
     }
-}
-export interface MyAccordionCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMyAccordionElement;
-}
-export interface MyAccordionTriggerCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMyAccordionTriggerElement;
 }
 export interface MyDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -321,47 +364,45 @@ export interface MyTabsTriggerCustomEvent<T> extends CustomEvent<T> {
     target: HTMLMyTabsTriggerElement;
 }
 declare global {
-    interface HTMLMyAccordionElementEventMap {
-        "myValueChange": string | string[];
-    }
+    /**
+     * Accordion container component using headless logic
+     * @example ```html
+     * <my-accordion allow-multiple="true">
+     *   <my-accordion-item value="item-1">
+     *     <my-accordion-trigger>Item 1</my-accordion-trigger>
+     *     <my-accordion-content>Content 1</my-accordion-content>
+     *   </my-accordion-item>
+     * </my-accordion>
+     * ```
+     */
     interface HTMLMyAccordionElement extends Components.MyAccordion, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyAccordionElementEventMap>(type: K, listener: (this: HTMLMyAccordionElement, ev: MyAccordionCustomEvent<HTMLMyAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyAccordionElementEventMap>(type: K, listener: (this: HTMLMyAccordionElement, ev: MyAccordionCustomEvent<HTMLMyAccordionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLMyAccordionElement: {
         prototype: HTMLMyAccordionElement;
         new (): HTMLMyAccordionElement;
     };
+    /**
+     * Accordion content/panel component
+     */
     interface HTMLMyAccordionContentElement extends Components.MyAccordionContent, HTMLStencilElement {
     }
     var HTMLMyAccordionContentElement: {
         prototype: HTMLMyAccordionContentElement;
         new (): HTMLMyAccordionContentElement;
     };
+    /**
+     * Accordion item component
+     */
     interface HTMLMyAccordionItemElement extends Components.MyAccordionItem, HTMLStencilElement {
     }
     var HTMLMyAccordionItemElement: {
         prototype: HTMLMyAccordionItemElement;
         new (): HTMLMyAccordionItemElement;
     };
-    interface HTMLMyAccordionTriggerElementEventMap {
-        "accordionTriggerClick": string;
-    }
+    /**
+     * Accordion trigger/header component
+     */
     interface HTMLMyAccordionTriggerElement extends Components.MyAccordionTrigger, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyAccordionTriggerElementEventMap>(type: K, listener: (this: HTMLMyAccordionTriggerElement, ev: MyAccordionTriggerCustomEvent<HTMLMyAccordionTriggerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyAccordionTriggerElementEventMap>(type: K, listener: (this: HTMLMyAccordionTriggerElement, ev: MyAccordionTriggerCustomEvent<HTMLMyAccordionTriggerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLMyAccordionTriggerElement: {
         prototype: HTMLMyAccordionTriggerElement;
@@ -615,47 +656,63 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    type OneOf<K extends string, T> = { [P in K]: T } | { [P in `attr:${K}`]: T } | { [P in `prop:${K}`]: T };
+
+    /**
+     * Accordion container component using headless logic
+     * @example ```html
+     * <my-accordion allow-multiple="true">
+     *   <my-accordion-item value="item-1">
+     *     <my-accordion-trigger>Item 1</my-accordion-trigger>
+     *     <my-accordion-content>Content 1</my-accordion-content>
+     *   </my-accordion-item>
+     * </my-accordion>
+     * ```
+     */
     interface MyAccordion {
         /**
+          * Allow multiple items to be expanded simultaneously
           * @default false
          */
-        "collapsible"?: boolean;
-        "defaultValue"?: string | string[];
-        "onMyValueChange"?: (event: MyAccordionCustomEvent<string | string[]>) => void;
+        "allowMultiple"?: boolean;
         /**
-          * @default 'single'
+          * Default expanded item values
          */
-        "type"?: 'single' | 'multiple';
-        "value"?: string | string[];
+        "defaultValue"?: string[];
+        /**
+          * Whether the accordion is disabled
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Orientation of the accordion
+          * @default 'vertical'
+         */
+        "orientation"?: 'horizontal' | 'vertical';
     }
+    /**
+     * Accordion content/panel component
+     */
     interface MyAccordionContent {
-        /**
-          * @default false
-         */
-        "open"?: boolean;
     }
+    /**
+     * Accordion item component
+     */
     interface MyAccordionItem {
         /**
+          * Whether this item is disabled
           * @default false
          */
         "disabled"?: boolean;
         /**
-          * @default false
+          * Unique value for this accordion item
          */
-        "open"?: boolean;
-        "value"?: string;
+        "value": string;
     }
+    /**
+     * Accordion trigger/header component
+     */
     interface MyAccordionTrigger {
-        /**
-          * @default false
-         */
-        "disabled"?: boolean;
-        "onAccordionTriggerClick"?: (event: MyAccordionTriggerCustomEvent<string>) => void;
-        /**
-          * @default false
-         */
-        "open"?: boolean;
-        "value"?: string;
     }
     interface MyAlert {
         /**
@@ -675,6 +732,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * @default false
+         */
+        "loading"?: boolean;
         /**
           * @default 'default'
          */
@@ -724,6 +785,10 @@ declare namespace LocalJSX {
     }
     interface MyDropdown {
         /**
+          * @default true
+         */
+        "closeOnSelect"?: boolean;
+        /**
           * @default []
          */
         "items"?: DropdownItem[];
@@ -732,6 +797,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         "onDropdownSelect"?: (event: MyDropdownCustomEvent<string>) => void;
+        /**
+          * @default 'bottom'
+         */
+        "placement"?: 'top' | 'bottom' | 'left' | 'right';
         /**
           * @default 'default'
          */
@@ -847,6 +916,10 @@ declare namespace LocalJSX {
         "variant"?: SidebarProps['variant'];
     }
     interface MyTabs {
+        /**
+          * @default 'automatic'
+         */
+        "activationMode"?: 'automatic' | 'manual';
         "defaultValue"?: string;
         "onValueChange"?: (event: MyTabsCustomEvent<string>) => void;
         /**
@@ -863,6 +936,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MyTabsList {
+        /**
+          * @default 'horizontal'
+         */
+        "orientation"?: 'horizontal' | 'vertical';
     }
     interface MyTabsTrigger {
         /**
@@ -874,6 +951,7 @@ declare namespace LocalJSX {
           * @default false
          */
         "selected"?: boolean;
+        "tabsLogic"?: TabsReturn;
         "value"?: string;
     }
     interface MyToast {
@@ -895,23 +973,13 @@ declare namespace LocalJSX {
     }
 
     interface MyAccordionAttributes {
-        "type": 'single' | 'multiple';
-        "collapsible": boolean;
-        "value": string | string[];
-        "defaultValue": string | string[];
-    }
-    interface MyAccordionContentAttributes {
-        "open": boolean;
+        "allowMultiple": boolean;
+        "orientation": 'horizontal' | 'vertical';
+        "disabled": boolean;
     }
     interface MyAccordionItemAttributes {
         "value": string;
         "disabled": boolean;
-        "open": boolean;
-    }
-    interface MyAccordionTriggerAttributes {
-        "open": boolean;
-        "disabled": boolean;
-        "value": string;
     }
     interface MyAlertAttributes {
         "variant": 'default' | 'destructive';
@@ -924,6 +992,7 @@ declare namespace LocalJSX {
         "size": ButtonProps['size'];
         "type": 'button' | 'submit' | 'reset';
         "disabled": boolean;
+        "loading": boolean;
         "customClass": string;
     }
     interface MyCardAttributes {
@@ -940,6 +1009,8 @@ declare namespace LocalJSX {
     interface MyDropdownAttributes {
         "variant": string;
         "label": string;
+        "placement": 'top' | 'bottom' | 'left' | 'right';
+        "closeOnSelect": boolean;
     }
     interface MyIconAttributes {
         "name": IconName;
@@ -974,10 +1045,14 @@ declare namespace LocalJSX {
         "value": string;
         "defaultValue": string;
         "orientation": 'horizontal' | 'vertical';
+        "activationMode": 'automatic' | 'manual';
     }
     interface MyTabsContentAttributes {
         "value": string;
         "selected": boolean;
+    }
+    interface MyTabsListAttributes {
+        "orientation": 'horizontal' | 'vertical';
     }
     interface MyTabsTriggerAttributes {
         "value": string;
@@ -993,9 +1068,9 @@ declare namespace LocalJSX {
 
     interface IntrinsicElements {
         "my-accordion": Omit<MyAccordion, keyof MyAccordionAttributes> & { [K in keyof MyAccordion & keyof MyAccordionAttributes]?: MyAccordion[K] } & { [K in keyof MyAccordion & keyof MyAccordionAttributes as `attr:${K}`]?: MyAccordionAttributes[K] } & { [K in keyof MyAccordion & keyof MyAccordionAttributes as `prop:${K}`]?: MyAccordion[K] };
-        "my-accordion-content": Omit<MyAccordionContent, keyof MyAccordionContentAttributes> & { [K in keyof MyAccordionContent & keyof MyAccordionContentAttributes]?: MyAccordionContent[K] } & { [K in keyof MyAccordionContent & keyof MyAccordionContentAttributes as `attr:${K}`]?: MyAccordionContentAttributes[K] } & { [K in keyof MyAccordionContent & keyof MyAccordionContentAttributes as `prop:${K}`]?: MyAccordionContent[K] };
-        "my-accordion-item": Omit<MyAccordionItem, keyof MyAccordionItemAttributes> & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes]?: MyAccordionItem[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `attr:${K}`]?: MyAccordionItemAttributes[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `prop:${K}`]?: MyAccordionItem[K] };
-        "my-accordion-trigger": Omit<MyAccordionTrigger, keyof MyAccordionTriggerAttributes> & { [K in keyof MyAccordionTrigger & keyof MyAccordionTriggerAttributes]?: MyAccordionTrigger[K] } & { [K in keyof MyAccordionTrigger & keyof MyAccordionTriggerAttributes as `attr:${K}`]?: MyAccordionTriggerAttributes[K] } & { [K in keyof MyAccordionTrigger & keyof MyAccordionTriggerAttributes as `prop:${K}`]?: MyAccordionTrigger[K] };
+        "my-accordion-content": MyAccordionContent;
+        "my-accordion-item": Omit<MyAccordionItem, keyof MyAccordionItemAttributes> & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes]?: MyAccordionItem[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `attr:${K}`]?: MyAccordionItemAttributes[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `prop:${K}`]?: MyAccordionItem[K] } & OneOf<"value", MyAccordionItem["value"]>;
+        "my-accordion-trigger": MyAccordionTrigger;
         "my-alert": Omit<MyAlert, keyof MyAlertAttributes> & { [K in keyof MyAlert & keyof MyAlertAttributes]?: MyAlert[K] } & { [K in keyof MyAlert & keyof MyAlertAttributes as `attr:${K}`]?: MyAlertAttributes[K] } & { [K in keyof MyAlert & keyof MyAlertAttributes as `prop:${K}`]?: MyAlert[K] };
         "my-badge": Omit<MyBadge, keyof MyBadgeAttributes> & { [K in keyof MyBadge & keyof MyBadgeAttributes]?: MyBadge[K] } & { [K in keyof MyBadge & keyof MyBadgeAttributes as `attr:${K}`]?: MyBadgeAttributes[K] } & { [K in keyof MyBadge & keyof MyBadgeAttributes as `prop:${K}`]?: MyBadge[K] };
         "my-button": Omit<MyButton, keyof MyButtonAttributes> & { [K in keyof MyButton & keyof MyButtonAttributes]?: MyButton[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `attr:${K}`]?: MyButtonAttributes[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `prop:${K}`]?: MyButton[K] };
@@ -1012,7 +1087,7 @@ declare namespace LocalJSX {
         "my-sidebar": Omit<MySidebar, keyof MySidebarAttributes> & { [K in keyof MySidebar & keyof MySidebarAttributes]?: MySidebar[K] } & { [K in keyof MySidebar & keyof MySidebarAttributes as `attr:${K}`]?: MySidebarAttributes[K] } & { [K in keyof MySidebar & keyof MySidebarAttributes as `prop:${K}`]?: MySidebar[K] };
         "my-tabs": Omit<MyTabs, keyof MyTabsAttributes> & { [K in keyof MyTabs & keyof MyTabsAttributes]?: MyTabs[K] } & { [K in keyof MyTabs & keyof MyTabsAttributes as `attr:${K}`]?: MyTabsAttributes[K] } & { [K in keyof MyTabs & keyof MyTabsAttributes as `prop:${K}`]?: MyTabs[K] };
         "my-tabs-content": Omit<MyTabsContent, keyof MyTabsContentAttributes> & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes]?: MyTabsContent[K] } & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes as `attr:${K}`]?: MyTabsContentAttributes[K] } & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes as `prop:${K}`]?: MyTabsContent[K] };
-        "my-tabs-list": MyTabsList;
+        "my-tabs-list": Omit<MyTabsList, keyof MyTabsListAttributes> & { [K in keyof MyTabsList & keyof MyTabsListAttributes]?: MyTabsList[K] } & { [K in keyof MyTabsList & keyof MyTabsListAttributes as `attr:${K}`]?: MyTabsListAttributes[K] } & { [K in keyof MyTabsList & keyof MyTabsListAttributes as `prop:${K}`]?: MyTabsList[K] };
         "my-tabs-trigger": Omit<MyTabsTrigger, keyof MyTabsTriggerAttributes> & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes]?: MyTabsTrigger[K] } & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes as `attr:${K}`]?: MyTabsTriggerAttributes[K] } & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes as `prop:${K}`]?: MyTabsTrigger[K] };
         "my-toast": MyToast;
         "my-tooltip": Omit<MyTooltip, keyof MyTooltipAttributes> & { [K in keyof MyTooltip & keyof MyTooltipAttributes]?: MyTooltip[K] } & { [K in keyof MyTooltip & keyof MyTooltipAttributes as `attr:${K}`]?: MyTooltipAttributes[K] } & { [K in keyof MyTooltip & keyof MyTooltipAttributes as `prop:${K}`]?: MyTooltip[K] };
@@ -1022,9 +1097,29 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * Accordion container component using headless logic
+             * @example ```html
+             * <my-accordion allow-multiple="true">
+             *   <my-accordion-item value="item-1">
+             *     <my-accordion-trigger>Item 1</my-accordion-trigger>
+             *     <my-accordion-content>Content 1</my-accordion-content>
+             *   </my-accordion-item>
+             * </my-accordion>
+             * ```
+             */
             "my-accordion": LocalJSX.IntrinsicElements["my-accordion"] & JSXBase.HTMLAttributes<HTMLMyAccordionElement>;
+            /**
+             * Accordion content/panel component
+             */
             "my-accordion-content": LocalJSX.IntrinsicElements["my-accordion-content"] & JSXBase.HTMLAttributes<HTMLMyAccordionContentElement>;
+            /**
+             * Accordion item component
+             */
             "my-accordion-item": LocalJSX.IntrinsicElements["my-accordion-item"] & JSXBase.HTMLAttributes<HTMLMyAccordionItemElement>;
+            /**
+             * Accordion trigger/header component
+             */
             "my-accordion-trigger": LocalJSX.IntrinsicElements["my-accordion-trigger"] & JSXBase.HTMLAttributes<HTMLMyAccordionTriggerElement>;
             "my-alert": LocalJSX.IntrinsicElements["my-alert"] & JSXBase.HTMLAttributes<HTMLMyAlertElement>;
             "my-badge": LocalJSX.IntrinsicElements["my-badge"] & JSXBase.HTMLAttributes<HTMLMyBadgeElement>;

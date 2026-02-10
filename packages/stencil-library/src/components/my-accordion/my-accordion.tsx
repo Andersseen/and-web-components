@@ -1,6 +1,20 @@
-import { Component, Element, Prop, h, Host, Watch, Listen, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, Prop, State, h, Host, Watch } from '@stencil/core';
+import { createAccordion, type AccordionReturn } from '@andersseen/headless-core';
 import { cn } from '../../utils/utils';
 
+/**
+ * Accordion container component using headless logic
+ *
+ * @example
+ * ```html
+ * <my-accordion allow-multiple="true">
+ *   <my-accordion-item value="item-1">
+ *     <my-accordion-trigger>Item 1</my-accordion-trigger>
+ *     <my-accordion-content>Content 1</my-accordion-content>
+ *   </my-accordion-item>
+ * </my-accordion>
+ * ```
+ */
 @Component({
   tag: 'my-accordion',
   styleUrl: '../../global/global.css',
@@ -9,60 +23,84 @@ import { cn } from '../../utils/utils';
 export class MyAccordion {
   @Element() el: HTMLElement;
 
-  @Prop() type: 'single' | 'multiple' = 'single';
-  @Prop() collapsible: boolean = false;
-  @Prop({ mutable: true }) value: string | string[];
-  @Prop() defaultValue: string | string[];
+  /**
+   * Allow multiple items to be expanded simultaneously
+   */
+  @Prop() allowMultiple: boolean = false;
 
-  @Event() myValueChange: EventEmitter<string | string[]>;
+  /**
+   * Default expanded item values
+   */
+  @Prop() defaultValue?: string[];
 
-  componentDidLoad() {
-    if (!this.value && this.defaultValue) {
-      this.value = this.defaultValue;
-    }
-    this.updateChildren();
-  }
+  /**
+   * Orientation of the accordion
+   */
+  @Prop() orientation: 'horizontal' | 'vertical' = 'vertical';
 
-  @Watch('value')
-  handleValueChange() {
-    this.updateChildren();
-    this.myValueChange.emit(this.value);
-  }
+  /**
+   * Whether the accordion is disabled
+   */
+  @Prop() disabled: boolean = false;
 
-  @Listen('accordionTriggerClick')
-  handleTriggerClick(ev: CustomEvent) {
-    const itemValue = ev.detail;
-    if (this.type === 'multiple') {
-      const currentValue = Array.isArray(this.value) ? this.value : this.value ? [this.value as string] : [];
-      if (currentValue.includes(itemValue)) {
-        this.value = currentValue.filter(v => v !== itemValue);
-      } else {
-        this.value = [...currentValue, itemValue];
-      }
-    } else {
-      // Single mode
-      if (this.value === itemValue) {
-        if (this.collapsible) {
-          this.value = ''; // Collapse if allowed
-        }
-      } else {
-        this.value = itemValue;
-      }
-    }
-  }
+  /**
+   * Headless accordion logic instance
+   */
+  @State() private accordionLogic: AccordionReturn;
 
-  updateChildren() {
-    const items = Array.from(this.el.querySelectorAll('my-accordion-item')) as any[];
-    items.forEach(item => {
-      const isSelected = this.type === 'multiple' ? Array.isArray(this.value) && this.value.includes(item.value) : this.value === item.value;
-
-      item.open = isSelected;
+  componentWillLoad() {
+    // Initialize headless accordion
+    this.accordionLogic = createAccordion({
+      allowMultiple: this.allowMultiple,
+      defaultValue: this.defaultValue,
+      orientation: this.orientation,
+      disabled: this.disabled,
+      onValueChange: () => {
+        // Update children when values change
+        this.updateChildren();
+      },
     });
   }
 
+  componentDidLoad() {
+    // Initial update for children
+    this.updateChildren();
+  }
+
+  @Watch('disabled')
+  handleDisabledChange() {
+    this.accordionLogic?.actions.setDisabled(this.disabled);
+  }
+
+  /**
+   * Update child accordion items with current state
+   */
+  private updateChildren() {
+    const items = Array.from(this.el.querySelectorAll('my-accordion-item')) as any[];
+    items.forEach(item => {
+      // Pass the accordion logic to children
+      if (item && typeof item.setAccordionLogic === 'function') {
+        item.setAccordionLogic(this.accordionLogic);
+      }
+    });
+  }
+
+  /**
+   * Public method to expose accordion logic to children
+   */
+  getAccordionLogic(): AccordionReturn {
+    return this.accordionLogic;
+  }
+
   render() {
+    if (!this.accordionLogic) {
+      return null;
+    }
+
+    const containerProps = this.accordionLogic.getContainerProps();
+
     return (
-      <Host class={cn('block')}>
+      <Host class={cn('w-full')} {...containerProps}>
         <slot></slot>
       </Host>
     );

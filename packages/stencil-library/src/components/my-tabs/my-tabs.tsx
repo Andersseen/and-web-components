@@ -1,5 +1,6 @@
-import { Component, h, Host, Prop, Element, Event, EventEmitter, Listen, Watch } from '@stencil/core';
+import { Component, h, Host, Prop, Element, Event, EventEmitter, Listen, Watch, State } from '@stencil/core';
 import { cn } from '../../utils/utils';
+import { createTabs, TabsReturn } from '@andersseen/headless-core';
 
 @Component({
   tag: 'my-tabs',
@@ -12,10 +13,23 @@ export class MyTabs {
   @Prop({ mutable: true, reflect: true }) value: string;
   @Prop() defaultValue: string;
   @Prop() orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @Prop() activationMode: 'automatic' | 'manual' = 'automatic';
 
   @Event() valueChange: EventEmitter<string>;
 
+  @State() private tabsLogic: TabsReturn;
+
   componentWillLoad() {
+    this.tabsLogic = createTabs({
+      defaultValue: this.value || this.defaultValue,
+      orientation: this.orientation,
+      activationMode: this.activationMode,
+      onValueChange: tabId => {
+        this.value = tabId;
+        this.valueChange.emit(tabId);
+      },
+    });
+
     if (!this.value && this.defaultValue) {
       this.value = this.defaultValue;
     }
@@ -23,8 +37,7 @@ export class MyTabs {
 
   @Listen('tabTriggerClick')
   handleTabClick(ev: CustomEvent) {
-    this.value = ev.detail;
-    this.valueChange.emit(this.value);
+    this.tabsLogic.actions.selectTab(ev.detail);
   }
 
   componentDidLoad() {
@@ -43,6 +56,7 @@ export class MyTabs {
 
     triggers.forEach((trigger: any) => {
       trigger.selected = trigger.value === this.value;
+      trigger.tabsLogic = this.tabsLogic; // Pass headless logic to children
     });
 
     contents.forEach((content: any) => {
@@ -51,8 +65,10 @@ export class MyTabs {
   }
 
   render() {
+    const containerProps = this.tabsLogic?.getContainerProps() || {};
+
     return (
-      <Host class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}>
+      <Host {...containerProps} class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}>
         <slot></slot>
       </Host>
     );

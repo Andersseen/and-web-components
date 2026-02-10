@@ -1,37 +1,96 @@
-import { Component, h, Host, Element, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Host, State, Method } from '@stencil/core';
+import { type AccordionReturn } from '@andersseen/headless-core';
 import { cn } from '../../utils/utils';
 
+/**
+ * Accordion trigger/header component
+ */
 @Component({
   tag: 'my-accordion-trigger',
   styleUrl: '../../global/global.css',
   shadow: true,
 })
 export class MyAccordionTrigger {
-  @Element() el: HTMLElement;
+  @State() private itemId: string = '';
+  @State() private accordionLogic: AccordionReturn | null = null;
+  @State() private disabled: boolean = false;
+  @State() private isExpanded: boolean = false;
 
-  @Prop() open: boolean = false;
-  @Prop() disabled: boolean = false;
-  @Prop() value: string; // ID of the item
+  /**
+   * Set item properties from parent
+   */
+  @Method()
+  async setItemProps(props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean }) {
+    this.itemId = props.itemId;
+    this.accordionLogic = props.accordionLogic;
+    this.disabled = props.disabled || false;
+    this.updateState();
+  }
 
-  @Event({ bubbles: true, composed: true }) accordionTriggerClick: EventEmitter<string>;
+  /**
+   * Update local expanded state
+   */
+  private updateState() {
+    if (this.accordionLogic && this.itemId) {
+      this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
+    }
+  }
 
-  handleClick = () => {
-    if (!this.disabled) {
-      this.accordionTriggerClick.emit(this.value);
+  /**
+   * Handle click to toggle accordion item
+   */
+  private handleClick = () => {
+    if (!this.disabled && this.accordionLogic && this.itemId) {
+      this.accordionLogic.actions.toggle(this.itemId);
+      this.updateState();
+    }
+  };
+
+  /**
+   * Handle keyboard navigation
+   */
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (this.accordionLogic && this.itemId) {
+      this.accordionLogic.handleTriggerKeyDown(event, this.itemId);
+      this.updateState();
     }
   };
 
   render() {
+    if (!this.accordionLogic || !this.itemId) {
+      // Fallback rendering while waiting for props
+      return (
+        <Host class={cn('flex')}>
+          <button class="flex flex-1 items-center justify-between py-4 font-medium">
+            <slot></slot>
+          </button>
+        </Host>
+      );
+    }
+
+    // Get accessibility props from headless logic
+    const triggerProps = this.accordionLogic.getTriggerProps(this.itemId);
+
     return (
       <Host class={cn('flex')}>
         <button
-          class={cn('flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline', this.disabled ? 'cursor-not-allowed text-muted-foreground' : '')}
+          class={cn(
+            'flex flex-1 items-center justify-between py-4 font-medium transition-all',
+            'hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            this.disabled ? 'cursor-not-allowed text-muted-foreground' : '',
+          )}
           onClick={this.handleClick}
-          aria-expanded={this.open.toString()}
+          onKeyDown={this.handleKeyDown}
+          aria-expanded={triggerProps['aria-expanded']}
+          aria-controls={triggerProps['aria-controls']}
+          aria-disabled={triggerProps['aria-disabled']}
+          role={triggerProps.role}
+          tabindex={triggerProps.tabindex}
           disabled={this.disabled}
+          data-state={triggerProps['data-state']}
         >
           <slot></slot>
-          <my-icon name="chevron-down" class={cn('h-4 w-4 shrink-0 transition-transform duration-200', this.open ? 'rotate-180' : '')} />
+          <my-icon name="chevron-down" size={16} class={cn('h-4 w-4 shrink-0 transition-transform duration-200 origin-center', this.isExpanded ? 'rotate-180' : '')} />
         </button>
       </Host>
     );
