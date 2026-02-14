@@ -124,6 +124,7 @@ export class MainLayoutComponent {
   navItems = [
     { id: 'components', label: 'Components' },
     { id: 'icons', label: 'Icons' },
+    { id: 'motion', label: 'Motion' },
   ];
 
   componentItems: SidebarItem[] = [
@@ -159,7 +160,7 @@ export class MainLayoutComponent {
     { text: 'Amber', value: 'amber' },
   ];
 
-  activeSection = signal<'components' | 'icons' | 'themes'>('components');
+  activeSection = signal<'components' | 'icons' | 'themes' | 'motion'>('components');
   activeComponent = signal<string>('accordion');
   isDark = signal<boolean>(false);
 
@@ -172,6 +173,8 @@ export class MainLayoutComponent {
           this.activeSection.set('icons');
         } else if (url.includes('/themes')) {
           this.activeSection.set('themes');
+        } else if (url.includes('/motion')) {
+          this.activeSection.set('motion');
         } else {
           this.activeSection.set('components');
           const componentId = url.split('/').pop();
@@ -186,12 +189,14 @@ export class MainLayoutComponent {
   }
 
   onNavItemClick(event: any) {
-    const section = event.detail as 'components' | 'icons' | 'themes';
+    const section = event.detail as 'components' | 'icons' | 'themes' | 'motion';
     this.activeSection.set(section);
     if (section === 'icons') {
       this.router.navigate(['/icons']);
     } else if (section === 'themes') {
       this.router.navigate(['/themes']);
+    } else if (section === 'motion') {
+      this.router.navigate(['/motion']);
     } else {
       this.router.navigate(['/components']);
     }

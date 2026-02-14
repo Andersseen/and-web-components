@@ -19,6 +19,10 @@ export const routes: Routes = [
         path: 'icons',
         loadComponent: () => import('./pages/icons/icons-demo.component'),
       },
+      {
+        path: 'motion',
+        loadComponent: () => import('./pages/motion-demo/motion-demo.component'),
+      },
     ],
   },
 ];
