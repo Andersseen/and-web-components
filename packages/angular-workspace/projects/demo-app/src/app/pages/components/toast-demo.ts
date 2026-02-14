@@ -27,11 +27,11 @@ import { Component, ViewChild } from '@angular/core';
 export default class ToastDemo {
   @ViewChild('toast') toastElement!: MyToast;
 
-  async showToast(type: 'default' | 'success' | 'error' = 'default') {
+  async showToast(type: string = 'default') {
     if (this.toastElement) {
       await this.toastElement.present(
         `This is a ${type} toast notification!`,
-        type,
+        type as any,
       );
     }
   }
