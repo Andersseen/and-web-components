@@ -25,6 +25,7 @@
  - [my-drawer](../my-drawer)
  - [my-dropdown](../my-dropdown)
  - [my-modal](../my-modal)
+ - [my-navbar](../my-navbar)
  - [my-pagination](../my-pagination)
  - [my-sidebar](../my-sidebar)
  - [my-toast](../my-toast)
@@ -38,6 +39,7 @@ graph TD;
   my-drawer --> my-icon
   my-dropdown --> my-icon
   my-modal --> my-icon
+  my-navbar --> my-icon
   my-pagination --> my-icon
   my-sidebar --> my-icon
   my-toast --> my-icon

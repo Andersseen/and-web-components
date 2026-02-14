@@ -21,6 +21,22 @@
 | `navItemClick` | Emitted when a navigation item is clicked | `CustomEvent<string>` |
 
 
+## Dependencies
+
+### Depends on
+
+- [my-icon](../my-icon)
+- [my-drawer](../my-drawer)
+
+### Graph
+```mermaid
+graph TD;
+  my-navbar --> my-icon
+  my-navbar --> my-drawer
+  my-drawer --> my-icon
+  style my-navbar fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
