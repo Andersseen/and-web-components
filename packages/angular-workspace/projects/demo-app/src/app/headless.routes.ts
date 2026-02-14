@@ -26,6 +26,26 @@ const headlessRoutes: Routes = [
     path: 'accordion',
     loadComponent: () => import('./pages/headless/accordion-headless-demo'),
   },
+  {
+    path: 'modal',
+    loadComponent: () => import('./pages/headless/modal-headless-demo'),
+  },
+  {
+    path: 'tooltip',
+    loadComponent: () => import('./pages/headless/tooltip-headless-demo'),
+  },
+  {
+    path: 'toast',
+    loadComponent: () => import('./pages/headless/toast-headless-demo'),
+  },
+  {
+    path: 'drawer',
+    loadComponent: () => import('./pages/headless/drawer-headless-demo'),
+  },
+  {
+    path: 'alert',
+    loadComponent: () => import('./pages/headless/alert-headless-demo'),
+  },
 ];
 
 export default headlessRoutes;

@@ -159,6 +159,11 @@ export class MainLayoutComponent {
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
     { id: 'tabs', label: 'Tabs', icon: 'file-text' },
     { id: 'accordion', label: 'Accordion', icon: 'layers' },
+    { id: 'modal', label: 'Modal', icon: 'layout' },
+    { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
+    { id: 'toast', label: 'Toast', icon: 'bell' },
+    { id: 'drawer', label: 'Drawer', icon: 'layout' },
+    { id: 'alert', label: 'Alert', icon: 'info' },
   ];
 
   themeOptions = [
