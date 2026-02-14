@@ -16,6 +16,10 @@ export const routes: Routes = [
         loadChildren: () => import('./components.routes'),
       },
       {
+        path: 'headless',
+        loadChildren: () => import('./headless.routes'),
+      },
+      {
         path: 'icons',
         loadComponent: () => import('./pages/icons/icons-demo.component'),
       },

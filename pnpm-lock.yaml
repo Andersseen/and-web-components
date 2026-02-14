@@ -20,6 +20,9 @@ importers:
 
   packages/angular-workspace:
     dependencies:
+      '@andersseen/headless-core':
+        specifier: file:../headless-core
+        version: link:../headless-core
       '@angular/animations':
         specifier: ^21.1.3
         version: 21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0))
@@ -127,7 +130,7 @@ importers:
   packages/stencil-library:
     dependencies:
       '@andersseen/headless-core':
-        specifier: link:../headless-core
+        specifier: file:../headless-core
         version: link:../headless-core
       '@babel/runtime':
         specifier: ^7.26.0

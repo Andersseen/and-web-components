@@ -85,6 +85,15 @@ interface SidebarItem {
           >
           </my-sidebar>
         }
+        @if (activeSection() === 'headless') {
+          <my-sidebar
+            class="bg-background"
+            [items]="headlessItems"
+            [activeItem]="activeHeadless()"
+            (sidebarItemClick)="onHeadlessSidebarItemClick($event)"
+          >
+          </my-sidebar>
+        }
 
         <!-- Content Area -->
         <div class="content-area">
@@ -123,6 +132,7 @@ interface SidebarItem {
 export class MainLayoutComponent {
   navItems = [
     { id: 'components', label: 'Components' },
+    { id: 'headless', label: 'Headless' },
     { id: 'icons', label: 'Icons' },
   ];
 
@@ -143,6 +153,14 @@ export class MainLayoutComponent {
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
   ];
 
+  headlessItems: SidebarItem[] = [
+    { id: 'overview', label: 'Overview', icon: 'info' },
+    { id: 'button', label: 'Button', icon: 'box' },
+    { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
+    { id: 'tabs', label: 'Tabs', icon: 'file-text' },
+    { id: 'accordion', label: 'Accordion', icon: 'layers' },
+  ];
+
   themeOptions = [
     { text: 'Modern', value: 'default' },
     { text: 'Compact', value: 'compact' },
@@ -159,8 +177,11 @@ export class MainLayoutComponent {
     { text: 'Amber', value: 'amber' },
   ];
 
-  activeSection = signal<'components' | 'icons' | 'themes'>('components');
+  activeSection = signal<'components' | 'icons' | 'headless' | 'themes'>(
+    'components',
+  );
   activeComponent = signal<string>('accordion');
+  activeHeadless = signal<string>('overview');
   isDark = signal<boolean>(false);
 
   constructor(private router: Router) {
@@ -170,6 +191,8 @@ export class MainLayoutComponent {
         const url = event.urlAfterRedirects;
         if (url.includes('/icons')) {
           this.activeSection.set('icons');
+        } else if (url.includes('/headless')) {
+          this.activeSection.set('headless');
         } else if (url.includes('/themes')) {
           this.activeSection.set('themes');
         } else {
@@ -186,10 +209,16 @@ export class MainLayoutComponent {
   }
 
   onNavItemClick(event: any) {
-    const section = event.detail as 'components' | 'icons' | 'themes';
+    const section = event.detail as
+      | 'components'
+      | 'icons'
+      | 'headless'
+      | 'themes';
     this.activeSection.set(section);
     if (section === 'icons') {
       this.router.navigate(['/icons']);
+    } else if (section === 'headless') {
+      this.router.navigate(['/headless']);
     } else if (section === 'themes') {
       this.router.navigate(['/themes']);
     } else {
@@ -220,5 +249,11 @@ export class MainLayoutComponent {
     const componentId = event.detail;
     this.activeComponent.set(componentId);
     this.router.navigate(['/components', componentId]);
+  }
+
+  onHeadlessSidebarItemClick(event: any) {
+    const headlessId = event.detail;
+    this.activeHeadless.set(headlessId);
+    this.router.navigate(['/headless', headlessId]);
   }
 }
