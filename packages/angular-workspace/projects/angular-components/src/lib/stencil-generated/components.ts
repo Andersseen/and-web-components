@@ -125,17 +125,19 @@ export declare interface MyAccordionTrigger extends Components.MyAccordionTrigge
 
 @ProxyCmp({
   defineCustomElementFn: defineMyAlert,
-  inputs: ['variant']
+  inputs: ['dismissible', 'variant']
 })
 @Component({
   selector: 'my-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['variant'],
+  inputs: ['dismissible', 'variant'],
+  outputs: ['myDismiss'],
 })
 export class MyAlert {
   protected el: HTMLMyAlertElement;
+  @Output() myDismiss = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -143,7 +145,10 @@ export class MyAlert {
 }
 
 
-export declare interface MyAlert extends Components.MyAlert {}
+export declare interface MyAlert extends Components.MyAlert {
+
+  myDismiss: EventEmitter<CustomEvent<void>>;
+}
 
 
 @ProxyCmp({

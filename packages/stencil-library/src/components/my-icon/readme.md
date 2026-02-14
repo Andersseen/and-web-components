@@ -20,6 +20,7 @@
 ### Used by
 
  - [my-accordion-trigger](../my-accordion)
+ - [my-alert](../my-alert)
  - [my-carousel](../my-carousel)
  - [my-drawer](../my-drawer)
  - [my-dropdown](../my-dropdown)
@@ -32,6 +33,7 @@
 ```mermaid
 graph TD;
   my-accordion-trigger --> my-icon
+  my-alert --> my-icon
   my-carousel --> my-icon
   my-drawer --> my-icon
   my-dropdown --> my-icon

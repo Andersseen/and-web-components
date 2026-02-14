@@ -1,7 +1,6 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen } from '@stencil/core';
+import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
 import { cn } from '../../utils/utils';
-
-export type DrawerPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 @Component({
   tag: 'my-drawer',
@@ -24,34 +23,55 @@ export class MyDrawer {
    */
   @Event() myClose: EventEmitter<void>;
 
+  private drawerLogic: any;
+
+  componentWillLoad() {
+    this.drawerLogic = createDrawer({
+      defaultOpen: this.open,
+      placement: this.placement,
+      onOpenChange: isOpen => {
+        this.open = isOpen;
+        if (!isOpen) {
+          this.myClose.emit();
+        }
+      },
+    });
+  }
+
   @Watch('open')
   openHandler(newValue: boolean) {
     if (newValue) {
+      this.drawerLogic.actions.open();
       document.body.style.overflow = 'hidden';
     } else {
+      this.drawerLogic.actions.close();
       document.body.style.overflow = '';
     }
   }
 
-  private handleBackdropClick = () => {
-    this.open = false;
-    this.myClose.emit();
-  };
+  @Watch('placement')
+  placementHandler(newValue: DrawerPlacement) {
+    this.drawerLogic.actions.setPlacement(newValue);
+  }
 
-  private handleCloseClick = () => {
-    this.open = false;
-    this.myClose.emit();
-  };
+  @Listen('keydown', { target: 'window' })
+  handleKeyDown(ev: KeyboardEvent) {
+    this.drawerLogic.handleKeyDown(ev);
+  }
 
   render() {
+    const overlayProps = this.drawerLogic.getOverlayProps();
+    const contentProps = this.drawerLogic.getContentProps();
+    const closeButtonProps = this.drawerLogic.getCloseButtonProps();
+
     return (
       <Host>
-        <div class={cn('drawer-backdrop', this.open ? 'open' : '')} onClick={this.handleBackdropClick} />
-        <div class={cn('drawer-content', `drawer-${this.placement}`, this.open ? 'open' : '')}>
+        <div class={cn('drawer-backdrop', this.open ? 'open' : '')} {...overlayProps} onClick={() => this.drawerLogic.handleOverlayClick()} />
+        <div class={cn('drawer-content', `drawer-${this.placement}`, this.open ? 'open' : '')} {...contentProps}>
           <div class="drawer-header">
             <slot name="header"></slot>
           </div>
-          <button class="drawer-close" onClick={this.handleCloseClick}>
+          <button class="drawer-close" onClick={() => this.drawerLogic.actions.close()} {...closeButtonProps}>
             <my-icon name="close" class="h-4 w-4" />
             <span class="sr-only">Close</span>
           </button>

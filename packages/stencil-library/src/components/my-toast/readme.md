@@ -7,7 +7,7 @@
 
 ## Methods
 
-### `present(message: string, type?: ToastType, duration?: number) => Promise<void>`
+### `present(message: string, type?: ToastType, duration?: number) => Promise<any>`
 
 Present a new toast
 
@@ -21,7 +21,7 @@ Present a new toast
 
 #### Returns
 
-Type: `Promise<void>`
+Type: `Promise<any>`
 
 
 
