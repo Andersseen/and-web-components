@@ -1,76 +1,9 @@
-:root {
-  --motion-duration: 0.3s;
-  --motion-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Base class for all animations */
-[class*="motion-"] {
-  animation-duration: var(--motion-duration);
-  animation-timing-function: var(--motion-ease);
-  animation-fill-mode: both;
-}
-
-/* Keyframes */
-@keyframes motionFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes motionFadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes motionScaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes motionSlideInTop {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes motionSlideInBottom {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes motionSlideInLeft {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes motionSlideInRight {
-  from { transform: translateX(20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-/* Utility Classes */
-.motion-fade-in {
-  animation-name: motionFadeIn;
-}
-
-.motion-fade-out {
-  animation-name: motionFadeOut;
-}
-
-.motion-scale-in {
-  animation-name: motionScaleIn;
-}
-
-.motion-slide-in-top {
-  animation-name: motionSlideInTop;
-}
-
-.motion-slide-in-bottom {
-  animation-name: motionSlideInBottom;
-}
-
-.motion-slide-in-left {
-  animation-name: motionSlideInLeft;
-}
-
-.motion-slide-in-right {
-  animation-name: motionSlideInRight;
-}
+/* Motion Core – Aggregated Styles */
+@import "./css/base.css";
+@import "./css/fade.css";
+@import "./css/scale.css";
+@import "./css/bounce.css";
+@import "./css/rotate.css";
+@import "./css/slide-in.css";
+@import "./css/slide-out.css";
+@import "./css/a11y.css";

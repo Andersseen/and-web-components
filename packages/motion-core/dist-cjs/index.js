@@ -1,21 +1,18 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./core.js"), exports);
-// We don't export CSS here because it's a separate file for bundlers usually.
-// But some might want to import it for side-effects in JS bundlers.
-// import './index.css';
-// We'll let the user decide how to import CSS.
+exports.SlideAnimations = exports.RotateAnimations = exports.BounceAnimations = exports.ScaleAnimations = exports.FadeAnimations = exports.MotionAnimations = exports.Motion = void 0;
+var motion_js_1 = require("./motion.js");
+Object.defineProperty(exports, "Motion", { enumerable: true, get: function () { return motion_js_1.Motion; } });
+var index_js_1 = require("./animations/index.js");
+Object.defineProperty(exports, "MotionAnimations", { enumerable: true, get: function () { return index_js_1.MotionAnimations; } });
+// Re-export individual animation modules for granular imports
+var fade_js_1 = require("./animations/fade.js");
+Object.defineProperty(exports, "FadeAnimations", { enumerable: true, get: function () { return fade_js_1.FadeAnimations; } });
+var scale_js_1 = require("./animations/scale.js");
+Object.defineProperty(exports, "ScaleAnimations", { enumerable: true, get: function () { return scale_js_1.ScaleAnimations; } });
+var bounce_js_1 = require("./animations/bounce.js");
+Object.defineProperty(exports, "BounceAnimations", { enumerable: true, get: function () { return bounce_js_1.BounceAnimations; } });
+var rotate_js_1 = require("./animations/rotate.js");
+Object.defineProperty(exports, "RotateAnimations", { enumerable: true, get: function () { return rotate_js_1.RotateAnimations; } });
+var slide_js_1 = require("./animations/slide.js");
+Object.defineProperty(exports, "SlideAnimations", { enumerable: true, get: function () { return slide_js_1.SlideAnimations; } });

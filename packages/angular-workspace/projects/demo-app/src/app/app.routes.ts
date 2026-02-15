@@ -21,7 +21,7 @@ export const routes: Routes = [
       },
       {
         path: 'motion',
-        loadComponent: () => import('./pages/motion-demo/motion-demo.component'),
+        loadChildren: () => import('./motion.routes'),
       },
     ],
   },

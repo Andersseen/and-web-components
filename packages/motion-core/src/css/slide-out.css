@@ -1,0 +1,59 @@
+@keyframes motionSlideOutTop {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes motionSlideOutBottom {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+@keyframes motionSlideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes motionSlideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+}
+
+.motion-slide-out-top {
+  animation-name: motionSlideOutTop;
+}
+
+.motion-slide-out-bottom {
+  animation-name: motionSlideOutBottom;
+}
+
+.motion-slide-out-left {
+  animation-name: motionSlideOutLeft;
+}
+
+.motion-slide-out-right {
+  animation-name: motionSlideOutRight;
+}

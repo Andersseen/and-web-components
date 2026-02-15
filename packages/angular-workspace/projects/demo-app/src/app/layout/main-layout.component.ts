@@ -85,6 +85,15 @@ interface SidebarItem {
           >
           </my-sidebar>
         }
+        @if (activeSection() === 'motion') {
+          <my-sidebar
+            class="bg-background"
+            [items]="motionItems"
+            [activeItem]="activeMotion()"
+            (sidebarItemClick)="onMotionItemClick($event)"
+          >
+          </my-sidebar>
+        }
 
         <!-- Content Area -->
         <div class="content-area">
@@ -144,6 +153,16 @@ export class MainLayoutComponent {
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
   ];
 
+  motionItems: SidebarItem[] = [
+    { id: 'fade', label: 'Fade', icon: 'eye' },
+    { id: 'scale', label: 'Scale & Bounce', icon: 'maximize' },
+    { id: 'slide', label: 'Slide', icon: 'move-horizontal' },
+    { id: 'hover', label: 'Hover Effects', icon: 'mouse-pointer' },
+    { id: 'tap', label: 'Tap Effects', icon: 'pointer' },
+    { id: 'custom', label: 'Custom Options', icon: 'sliders' },
+    { id: 'stagger', label: 'Stagger', icon: 'list' },
+  ];
+
   themeOptions = [
     { text: 'Modern', value: 'default' },
     { text: 'Compact', value: 'compact' },
@@ -160,8 +179,11 @@ export class MainLayoutComponent {
     { text: 'Amber', value: 'amber' },
   ];
 
-  activeSection = signal<'components' | 'icons' | 'themes' | 'motion'>('components');
+  activeSection = signal<'components' | 'icons' | 'themes' | 'motion'>(
+    'components',
+  );
   activeComponent = signal<string>('accordion');
+  activeMotion = signal<string>('fade');
   isDark = signal<boolean>(false);
 
   constructor(private router: Router) {
@@ -175,6 +197,10 @@ export class MainLayoutComponent {
           this.activeSection.set('themes');
         } else if (url.includes('/motion')) {
           this.activeSection.set('motion');
+          const motionId = url.split('/').pop();
+          if (motionId && motionId !== 'motion') {
+            this.activeMotion.set(motionId);
+          }
         } else {
           this.activeSection.set('components');
           const componentId = url.split('/').pop();
@@ -189,7 +215,11 @@ export class MainLayoutComponent {
   }
 
   onNavItemClick(event: any) {
-    const section = event.detail as 'components' | 'icons' | 'themes' | 'motion';
+    const section = event.detail as
+      | 'components'
+      | 'icons'
+      | 'themes'
+      | 'motion';
     this.activeSection.set(section);
     if (section === 'icons') {
       this.router.navigate(['/icons']);
@@ -225,5 +255,11 @@ export class MainLayoutComponent {
     const componentId = event.detail;
     this.activeComponent.set(componentId);
     this.router.navigate(['/components', componentId]);
+  }
+
+  onMotionItemClick(event: any) {
+    const motionId = event.detail;
+    this.activeMotion.set(motionId);
+    this.router.navigate(['/motion', motionId]);
   }
 }

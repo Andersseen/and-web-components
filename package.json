@@ -3,9 +3,10 @@
   "private": false,
   "scripts": {
     "build:headless": "pnpm -C packages/headless-core build",
+    "build:motion": "pnpm -C packages/motion-core build",
     "build:stencil": "pnpm build:headless && pnpm -C packages/stencil-library build",
-    "start:demo": "pnpm build:stencil && pnpm -C packages/angular-workspace start",
-    "build:demo": "pnpm build:stencil && pnpm -C packages/angular-workspace build demo-app",
+    "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace start",
+    "build:demo": "pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace build demo-app",
     "deploy:cloudflare": "pnpm build:demo && pnpm -C packages/angular-workspace exec wrangler pages deploy"
   },
   "devDependencies": {

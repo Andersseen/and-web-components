@@ -1,5 +1,10 @@
-export * from './core.js';
-// We don't export CSS here because it's a separate file for bundlers usually.
-// But some might want to import it for side-effects in JS bundlers.
-// import './index.css';
-// We'll let the user decide how to import CSS.
+export { Motion } from "./motion.js";
+export { MotionAnimations } from "./animations/index.js";
+export type { MotionAnimation, MotionOptions } from "./types.js";
+
+// Re-export individual animation modules for granular imports
+export { FadeAnimations } from "./animations/fade.js";
+export { ScaleAnimations } from "./animations/scale.js";
+export { BounceAnimations } from "./animations/bounce.js";
+export { RotateAnimations } from "./animations/rotate.js";
+export { SlideAnimations } from "./animations/slide.js";
