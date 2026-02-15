@@ -161,6 +161,7 @@ export class MainLayoutComponent {
     { id: 'tap', label: 'Tap Effects', icon: 'pointer' },
     { id: 'custom', label: 'Custom Options', icon: 'sliders' },
     { id: 'stagger', label: 'Stagger', icon: 'list' },
+    { id: 'attribute', label: 'Attribute API', icon: 'code' },
   ];
 
   themeOptions = [

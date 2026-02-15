@@ -1,4 +1,5 @@
 export { Motion } from "./motion.js";
+export { MotionDirective } from "./directive.js";
 export { MotionAnimations } from "./animations/index.js";
 export type { MotionAnimation, MotionOptions } from "./types.js";
 

@@ -40,5 +40,10 @@ const motionRoutes: Routes = [
     loadComponent: () =>
       import('./pages/motion-demo/pages/stagger-demo.component'),
   },
+  {
+    path: 'attribute',
+    loadComponent: () =>
+      import('./pages/motion-demo/pages/attribute-demo.component'),
+  },
 ];
 export default motionRoutes;
