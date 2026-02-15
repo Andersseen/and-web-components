@@ -10,6 +10,7 @@ const ATTR = {
   EASING: "my-motion-easing",
   DELAY: "my-motion-delay",
   STAGGER: "my-motion-stagger",
+  REPEAT: "my-motion-repeat",
 } as const;
 
 /** Supported trigger modes. */
@@ -111,10 +112,21 @@ export class MotionDirective {
     MotionDirective.intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const el = entry.target as HTMLElement;
+          const repeat = el.hasAttribute(ATTR.REPEAT);
+
           if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            MotionDirective.intersectionObserver?.unobserve(el);
+            if (!repeat) {
+              MotionDirective.intersectionObserver?.unobserve(el);
+            }
             MotionDirective.animateEnter(el);
+          } else if (repeat) {
+            // Reset for next entry
+            el.style.opacity = "0";
+            const animation = resolveAnimation(
+              el.getAttribute(ATTR.MOTION) || "",
+            );
+            if (animation) el.classList.remove(animation);
           }
         });
       },

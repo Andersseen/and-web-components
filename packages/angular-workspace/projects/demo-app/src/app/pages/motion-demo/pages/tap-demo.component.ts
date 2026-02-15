@@ -7,47 +7,66 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
-import { MOTION_DEMO_STYLES } from '../shared-styles';
 
 @Component({
   selector: 'app-tap-demo',
   imports: [CommonModule],
   template: `
-    <div class="motion-page">
-      <div class="motion-header">
-        <h1>Tap Effects</h1>
-        <p>
+    <div class="max-w-4xl mx-auto flex flex-col gap-6">
+      <div class="mb-2">
+        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">Tap Effects</h1>
+        <p class="text-base text-zinc-500">
           Trigger animations on click/tap. Returns a cleanup function to prevent
           memory leaks.
         </p>
       </div>
 
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Interaction</span>
-          <h2>Tap Cards</h2>
-          <p>Click any card to trigger its bound animation.</p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Interaction</span
+          >
+          <h2 class="text-xl font-bold mb-1">Tap Cards</h2>
+          <p class="text-sm text-zinc-500">
+            Click any card to trigger its bound animation.
+          </p>
         </div>
 
-        <div class="demo-stage">
-          <div class="tap-grid">
-            <div #tapBox1 class="tap-card gradient-blue">
-              <span>💥</span>
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div class="flex gap-4 justify-center flex-wrap">
+            <div
+              #tapBox1
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md transition-shadow duration-150 active:shadow-sm bg-gradient-to-br from-blue-500 to-blue-700"
+            >
+              <span class="text-2xl">💥</span>
               <span>Scale</span>
             </div>
-            <div #tapBox2 class="tap-card gradient-purple">
-              <span>🎉</span>
+            <div
+              #tapBox2
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md transition-shadow duration-150 active:shadow-sm bg-gradient-to-br from-violet-500 to-violet-700"
+            >
+              <span class="text-2xl">🎉</span>
               <span>Bounce</span>
             </div>
-            <div #tapBox3 class="tap-card gradient-green">
-              <span>🌀</span>
+            <div
+              #tapBox3
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md transition-shadow duration-150 active:shadow-sm bg-gradient-to-br from-green-500 to-green-700"
+            >
+              <span class="text-2xl">🌀</span>
               <span>Rotate</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
             >const unbind = Motion.bindTap(el, MotionAnimations.BounceIn,
             {{ '{' }} duration: 150 {{ '}' }});</code
           >
@@ -55,43 +74,7 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
       </section>
     </div>
   `,
-  styles: [
-    MOTION_DEMO_STYLES,
-    `
-      .tap-grid {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .tap-card {
-        width: 100px;
-        height: 100px;
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.25rem;
-        color: #fff;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        user-select: none;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        transition: box-shadow 0.15s;
-      }
-
-      .tap-card span:first-child {
-        font-size: 1.5rem;
-      }
-
-      .tap-card:active {
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class TapDemoComponent implements AfterViewInit, OnDestroy {
   @ViewChild('tapBox1') tapBox1!: ElementRef<HTMLElement>;

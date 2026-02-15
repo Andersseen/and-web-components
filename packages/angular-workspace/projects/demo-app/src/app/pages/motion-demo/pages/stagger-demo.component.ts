@@ -2,65 +2,105 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
 import { MyButton } from '@angular-components/stencil-generated/components';
-import { MOTION_DEMO_STYLES } from '../shared-styles';
 
 @Component({
   selector: 'app-stagger-demo',
   imports: [CommonModule, MyButton],
   template: `
-    <div class="motion-page">
-      <div class="motion-header">
-        <h1>Staggered Entrance</h1>
-        <p>
+    <div class="max-w-4xl mx-auto flex flex-col gap-6">
+      <div class="mb-2">
+        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
+          Staggered Entrance
+        </h1>
+        <p class="text-base text-zinc-500">
           Animate a list of items with incremental delays for a cascading
           effect.
         </p>
       </div>
 
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Pattern</span>
-          <h2>Stagger List</h2>
-          <p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Pattern</span
+          >
+          <h2 class="text-xl font-bold mb-1">Stagger List</h2>
+          <p class="text-sm text-zinc-500">
             Each item enters with an increasing delay, creating a cascading
             wave.
           </p>
         </div>
 
-        <div class="card-actions">
+        <div class="flex flex-wrap gap-2 mb-4">
           <my-button (click)="playStagger()">Play Stagger</my-button>
           <my-button variant="outline" (click)="resetStagger()"
             >Reset</my-button
           >
         </div>
 
-        <div class="demo-stage">
-          <div class="stagger-list">
-            <div #staggerItem1 class="stagger-item" style="display: none;">
-              <div class="stagger-dot gradient-blue"></div>
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div class="flex flex-col gap-2 w-full max-w-sm">
+            <div
+              #staggerItem1
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+              style="display: none;"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-blue-500 to-blue-700"
+              ></div>
               <span>Item 1</span>
             </div>
-            <div #staggerItem2 class="stagger-item" style="display: none;">
-              <div class="stagger-dot gradient-purple"></div>
+            <div
+              #staggerItem2
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+              style="display: none;"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-violet-500 to-violet-700"
+              ></div>
               <span>Item 2</span>
             </div>
-            <div #staggerItem3 class="stagger-item" style="display: none;">
-              <div class="stagger-dot gradient-green"></div>
+            <div
+              #staggerItem3
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+              style="display: none;"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-green-500 to-green-700"
+              ></div>
               <span>Item 3</span>
             </div>
-            <div #staggerItem4 class="stagger-item" style="display: none;">
-              <div class="stagger-dot gradient-amber"></div>
+            <div
+              #staggerItem4
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+              style="display: none;"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-amber-500 to-amber-700"
+              ></div>
               <span>Item 4</span>
             </div>
-            <div #staggerItem5 class="stagger-item" style="display: none;">
-              <div class="stagger-dot gradient-rose"></div>
+            <div
+              #staggerItem5
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+              style="display: none;"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-rose-500 to-rose-700"
+              ></div>
               <span>Item 5</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
             >items.forEach((el, i) =&gt; Motion.enter(el,
             MotionAnimations.SlideInLeft, {{ '{' }} delay: i * 80
             {{ '}' }}));</code
@@ -69,37 +109,7 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
       </section>
     </div>
   `,
-  styles: [
-    MOTION_DEMO_STYLES,
-    `
-      .stagger-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
-        max-width: 400px;
-      }
-
-      .stagger-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        background: var(--background, #fff);
-        border: 1px solid var(--border, #e4e4e7);
-        font-weight: 500;
-        color: var(--foreground);
-      }
-
-      .stagger-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class StaggerDemoComponent implements AfterViewInit {
   @ViewChild('staggerItem1') staggerItem1!: ElementRef<HTMLElement>;

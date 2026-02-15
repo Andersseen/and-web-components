@@ -7,69 +7,112 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MotionDirective } from '@my-lib/motion-core';
-import { MOTION_DEMO_STYLES } from '../shared-styles';
 
 @Component({
   selector: 'app-attribute-demo',
   imports: [CommonModule],
   template: `
-    <div class="motion-page" #demoRoot>
-      <div class="motion-header">
-        <h1>Attribute API</h1>
-        <p>Declare animations directly in HTML — zero TypeScript required.</p>
+    <div class="max-w-4xl mx-auto flex flex-col gap-6" #demoRoot>
+      <div class="mb-2">
+        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
+          Attribute API
+        </h1>
+        <p class="text-base text-zinc-500">
+          Declare animations directly in HTML — zero TypeScript required.
+        </p>
       </div>
 
       <!-- ========== Enter Trigger ========== -->
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Enter</span>
-          <h2>Scroll Into View</h2>
-          <p>Elements animate automatically when they enter the viewport.</p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Enter</span
+          >
+          <h2 class="text-xl font-bold mb-1">Scroll Into View</h2>
+          <p class="text-sm text-zinc-500">
+            Elements animate automatically when they enter the viewport. Added
+            <code>my-motion-repeat</code> to demo repeating animations.
+          </p>
         </div>
 
-        <div class="demo-stage">
-          <div class="enter-grid">
-            <div my-motion="fade-in" class="demo-box gradient-blue">
-              <span>👋</span>
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div class="flex gap-4 justify-center flex-wrap">
+            <div
+              my-motion="fade-in"
+              my-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-blue-500 to-blue-700"
+            >
+              <span class="text-2xl">👋</span>
               <span>Fade</span>
             </div>
-            <div my-motion="scale-in" class="demo-box gradient-purple">
-              <span>✨</span>
+            <div
+              my-motion="scale-in"
+              my-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-violet-500 to-violet-700"
+            >
+              <span class="text-2xl">✨</span>
               <span>Scale</span>
             </div>
-            <div my-motion="bounce-in" class="demo-box gradient-green">
-              <span>🎉</span>
+            <div
+              my-motion="bounce-in"
+              my-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-green-500 to-green-700"
+            >
+              <span class="text-2xl">🎉</span>
               <span>Bounce</span>
             </div>
-            <div my-motion="rotate-in" class="demo-box gradient-amber">
-              <span>🔄</span>
+            <div
+              my-motion="rotate-in"
+              my-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-amber-500 to-amber-700"
+            >
+              <span class="text-2xl">🔄</span>
               <span>Rotate</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code>&lt;div my-motion="fade-in"&gt;Hello&lt;/div&gt;</code>
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
+            >&lt;div my-motion="fade-in"
+            my-motion-repeat&gt;Hello&lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- ========== Hover Trigger ========== -->
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Hover</span>
-          <h2>Hover Effects</h2>
-          <p>Combine enter and leave animations on mouse hover.</p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Hover</span
+          >
+          <h2 class="text-xl font-bold mb-1">Hover Effects</h2>
+          <p class="text-sm text-zinc-500">
+            Combine enter and leave animations on mouse hover.
+          </p>
         </div>
 
-        <div class="demo-stage">
-          <div class="hover-grid">
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div class="flex gap-4 justify-center flex-wrap">
             <div
               my-motion="scale-in"
               my-motion-trigger="hover"
               my-motion-leave="scale-out"
-              class="hover-card gradient-teal"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 to-teal-700"
             >
-              <span>🎯</span>
+              <span class="text-2xl">🎯</span>
               <span>Scale</span>
             </div>
             <div
@@ -77,16 +120,18 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
               my-motion-trigger="hover"
               my-motion-leave="scale-out"
               my-motion-duration="250"
-              class="hover-card gradient-rose"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-rose-500 to-rose-700"
             >
-              <span>🔄</span>
+              <span class="text-2xl">🔄</span>
               <span>Rotate</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
             >&lt;div my-motion="scale-in" my-motion-trigger="hover"
             my-motion-leave="scale-out"&gt;Card&lt;/div&gt;</code
           >
@@ -94,49 +139,58 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
       </section>
 
       <!-- ========== Tap Trigger ========== -->
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Tap</span>
-          <h2>Click / Tap</h2>
-          <p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Tap</span
+          >
+          <h2 class="text-xl font-bold mb-1">Click / Tap</h2>
+          <p class="text-sm text-zinc-500">
             Trigger animations on click or tap — great for buttons and
             interactive elements.
           </p>
         </div>
 
-        <div class="demo-stage">
-          <div class="tap-grid">
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div class="flex gap-4 justify-center flex-wrap">
             <div
               my-motion="bounce-in"
               my-motion-trigger="tap"
-              class="tap-card gradient-blue"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-blue-500 to-blue-700"
             >
-              <span>💥</span>
+              <span class="text-2xl">💥</span>
               <span>Bounce</span>
             </div>
             <div
               my-motion="scale-in"
               my-motion-trigger="tap"
               my-motion-duration="150"
-              class="tap-card gradient-purple"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-violet-500 to-violet-700"
             >
-              <span>🎯</span>
+              <span class="text-2xl">🎯</span>
               <span>Scale</span>
             </div>
             <div
               my-motion="rotate-in"
               my-motion-trigger="tap"
               my-motion-duration="250"
-              class="tap-card gradient-green"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-green-500 to-green-700"
             >
-              <span>🌀</span>
+              <span class="text-2xl">🌀</span>
               <span>Rotate</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
             >&lt;button my-motion="bounce-in" my-motion-trigger="tap"&gt;Click
             me&lt;/button&gt;</code
           >
@@ -144,38 +198,53 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
       </section>
 
       <!-- ========== Custom Options ========== -->
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Options</span>
-          <h2>Custom Duration, Easing & Delay</h2>
-          <p>Fine-tune animations with extra attributes — no JS needed.</p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Options</span
+          >
+          <h2 class="text-xl font-bold mb-1">
+            Custom Duration, Easing & Delay
+          </h2>
+          <p class="text-sm text-zinc-500">
+            Fine-tune animations with extra attributes — no JS needed.
+          </p>
         </div>
 
-        <div class="demo-stage">
-          <div class="enter-grid">
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div class="flex gap-4 justify-center flex-wrap">
             <div
               my-motion="slide-in-left"
               my-motion-duration="800"
               my-motion-easing="ease-in-out"
-              class="demo-box gradient-rose"
+              my-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-rose-500 to-rose-700"
             >
-              <span>⚙️</span>
+              <span class="text-2xl">⚙️</span>
               <span>Slow</span>
             </div>
             <div
               my-motion="slide-in-right"
               my-motion-duration="300"
               my-motion-delay="400"
-              class="demo-box gradient-teal"
+              my-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-teal-500 to-teal-700"
             >
-              <span>⏱</span>
+              <span class="text-2xl">⏱</span>
               <span>Delayed</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
             >&lt;div my-motion="slide-in-left" my-motion-duration="800"
             my-motion-easing="ease-in-out"&gt;...&lt;/div&gt;</code
           >
@@ -183,43 +252,85 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
       </section>
 
       <!-- ========== Stagger ========== -->
-      <section class="motion-card">
-        <div class="card-header">
-          <span class="card-badge">Pattern</span>
-          <h2>Stagger</h2>
-          <p>
+      <section
+        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
+      >
+        <div class="mb-5">
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
+            >Pattern</span
+          >
+          <h2 class="text-xl font-bold mb-1">Stagger</h2>
+          <p class="text-sm text-zinc-500">
             Add <code>my-motion-stagger</code> on the parent to cascade children
             with incremental delays.
           </p>
         </div>
 
-        <div class="demo-stage">
-          <div class="stagger-list" my-motion-stagger="100">
-            <div my-motion="slide-in-left" class="stagger-item">
-              <div class="stagger-dot gradient-blue"></div>
+        <div
+          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
+        >
+          <div
+            class="flex flex-col gap-2 w-full max-w-sm"
+            my-motion-stagger="100"
+          >
+            <div
+              my-motion="slide-in-left"
+              my-motion-repeat
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-blue-500 to-blue-700"
+              ></div>
               <span>Item 1</span>
             </div>
-            <div my-motion="slide-in-left" class="stagger-item">
-              <div class="stagger-dot gradient-purple"></div>
+            <div
+              my-motion="slide-in-left"
+              my-motion-repeat
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-violet-500 to-violet-700"
+              ></div>
               <span>Item 2</span>
             </div>
-            <div my-motion="slide-in-left" class="stagger-item">
-              <div class="stagger-dot gradient-green"></div>
+            <div
+              my-motion="slide-in-left"
+              my-motion-repeat
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-green-500 to-green-700"
+              ></div>
               <span>Item 3</span>
             </div>
-            <div my-motion="slide-in-left" class="stagger-item">
-              <div class="stagger-dot gradient-amber"></div>
+            <div
+              my-motion="slide-in-left"
+              my-motion-repeat
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-amber-500 to-amber-700"
+              ></div>
               <span>Item 4</span>
             </div>
-            <div my-motion="slide-in-left" class="stagger-item">
-              <div class="stagger-dot gradient-rose"></div>
+            <div
+              my-motion="slide-in-left"
+              my-motion-repeat
+              class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
+            >
+              <div
+                class="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gradient-to-br from-rose-500 to-rose-700"
+              ></div>
               <span>Item 5</span>
             </div>
           </div>
         </div>
 
-        <div class="code-snippet">
-          <code
+        <div
+          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
+        >
+          <code class="text-xs font-mono whitespace-nowrap"
             >&lt;ul my-motion-stagger="100"&gt; &lt;li
             my-motion="slide-in-left"&gt;Item&lt;/li&gt; ... &lt;/ul&gt;</code
           >
@@ -227,115 +338,30 @@ import { MOTION_DEMO_STYLES } from '../shared-styles';
       </section>
 
       <!-- API Note -->
-      <div class="a11y-note">
-        <span>💡</span>
-        <p>
-          Initialize once with <code>MotionDirective.init()</code>. For advanced
-          control, use the TypeScript <code>Motion</code> class directly. Both
-          approaches respect <code>prefers-reduced-motion</code>.
+      <div
+        class="flex items-start gap-3 p-4 rounded-xl bg-zinc-100 border border-zinc-200"
+      >
+        <span class="text-xl flex-shrink-0">💡</span>
+        <p class="text-sm text-zinc-500 leading-relaxed m-0">
+          Initialize once with
+          <code
+            class="bg-white px-1.5 py-0.5 rounded border border-zinc-200 text-xs"
+            >MotionDirective.init()</code
+          >. For advanced control, use the TypeScript
+          <code
+            class="bg-white px-1.5 py-0.5 rounded border border-zinc-200 text-xs"
+            >Motion</code
+          >
+          class directly. Both approaches respect
+          <code
+            class="bg-white px-1.5 py-0.5 rounded border border-zinc-200 text-xs"
+            >prefers-reduced-motion</code
+          >.
         </p>
       </div>
     </div>
   `,
-  styles: [
-    MOTION_DEMO_STYLES,
-    `
-      .enter-grid {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .hover-grid {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .hover-card {
-        width: 100px;
-        height: 100px;
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.25rem;
-        color: #fff;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        transition: box-shadow 0.2s;
-      }
-
-      .hover-card span:first-child {
-        font-size: 1.5rem;
-      }
-
-      .tap-grid {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .tap-card {
-        width: 100px;
-        height: 100px;
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.25rem;
-        color: #fff;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        user-select: none;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        transition: box-shadow 0.15s;
-      }
-
-      .tap-card span:first-child {
-        font-size: 1.5rem;
-      }
-
-      .tap-card:active {
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      .stagger-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
-        max-width: 400px;
-      }
-
-      .stagger-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        background: var(--background, #fff);
-        border: 1px solid var(--border, #e4e4e7);
-        font-weight: 500;
-        color: var(--foreground);
-      }
-
-      .stagger-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class AttributeDemoComponent
   implements AfterViewInit, OnDestroy
