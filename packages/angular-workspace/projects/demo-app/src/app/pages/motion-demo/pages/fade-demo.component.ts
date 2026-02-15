@@ -1,79 +1,111 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
-import { MyButton } from '@angular-components/stencil-generated/components';
+import {
+  MyButton,
+  MyCard,
+  MyBadge,
+  MyIcon,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-fade-demo',
-  imports: [CommonModule, MyButton],
+  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
   template: `
-    <div class="max-w-4xl mx-auto flex flex-col gap-6">
-      <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
-          Fade Animations
-        </h1>
-        <p class="text-base text-zinc-500">
-          Show and hide elements with smooth opacity transitions.
+    <div class="demo-page">
+      <!-- Hero -->
+      <div class="hero mb-8">
+        <h1 class="text-3xl font-bold tracking-tight mb-3">Fade Animations</h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Smooth opacity transitions for entering and leaving elements. Perfect
+          for modal dialogs, notifications, and revealing content.
         </p>
       </div>
 
-      <section
-        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
-      >
-        <div class="mb-5">
-          <span
-            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
-            >Enter / Leave</span
-          >
-          <h2 class="text-xl font-bold mb-1">Fade In & Out</h2>
-          <p class="text-sm text-zinc-500">
-            The simplest enter/leave pattern. Smoothly transition element
-            opacity.
-          </p>
-        </div>
+      <!-- Main Demo -->
+      <my-card class="block mb-8">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <my-badge variant="secondary">Enter / Leave</my-badge>
+                <span class="text-sm text-muted-foreground">Opacity</span>
+              </div>
+              <h2 class="text-lg font-semibold">Basic Fade</h2>
+              <p class="text-sm text-muted-foreground mt-1">
+                The most essential transition effect.
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <my-button (click)="enterBox()" size="sm">
+                <my-icon name="eye" class="mr-2" size="14"></my-icon>
+                Fade In
+              </my-button>
+              <my-button variant="outline" (click)="leaveBox()" size="sm">
+                <my-icon name="eye-off" class="mr-2" size="14"></my-icon>
+                Fade Out
+              </my-button>
+            </div>
+          </div>
 
-        <div class="flex flex-wrap gap-2 mb-4">
-          <my-button (click)="enterBox()">Fade In</my-button>
-          <my-button variant="outline" (click)="leaveBox()">Fade Out</my-button>
-        </div>
-
-        <div
-          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
-        >
+          <!-- Preview Area -->
           <div
-            #fadeBox
-            class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-blue-500 to-blue-700"
-            style="display: none;"
+            class="h-64 flex items-center justify-center bg-zinc-50/50 dark:bg-zinc-900/50 rounded-lg border border-dashed border-zinc-200 dark:border-zinc-800 mb-6 relative overflow-hidden"
           >
-            <span class="text-2xl">👋</span>
-            <span>Hello!</span>
+            <div
+              #fadeBox
+              class="w-32 h-32 bg-blue-500 rounded-xl shadow-lg flex items-center justify-center text-white"
+              style="display: none;"
+            >
+              <span class="text-3xl">👋</span>
+            </div>
+          </div>
+
+          <!-- Code Block -->
+          <div class="bg-zinc-950 rounded-md p-4 overflow-x-auto">
+            <code class="text-sm font-mono text-blue-300">
+              <span class="text-purple-400">await</span> Motion.enter(element,
+              MotionAnimations.FadeIn);<br />
+              <span class="text-purple-400">await</span> Motion.leave(element,
+              MotionAnimations.FadeOut);
+            </code>
           </div>
         </div>
+      </my-card>
 
-        <div
-          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
-        >
-          <code class="text-xs font-mono whitespace-nowrap"
-            >await Motion.enter(el, MotionAnimations.FadeIn);</code
-          >
-        </div>
-      </section>
-
+      <!-- Accessibility Info -->
       <div
-        class="flex items-start gap-3 p-4 rounded-xl bg-zinc-100 border border-zinc-200"
+        class="flex items-start gap-4 p-4 rounded-lg bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800"
       >
-        <span class="text-xl flex-shrink-0">♿</span>
-        <p class="text-sm text-zinc-500 leading-relaxed m-0">
-          All animations respect
-          <code
-            class="bg-white px-1.5 py-0.5 rounded border border-zinc-200 text-xs"
-            >prefers-reduced-motion: reduce</code
-          >. Users who prefer reduced motion will see instant transitions.
-        </p>
+        <div
+          class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full text-blue-600 dark:text-blue-400"
+        >
+          <my-icon name="accessibility" size="20"></my-icon>
+        </div>
+        <div>
+          <h3 class="font-medium text-blue-900 dark:text-blue-100 mb-1">
+            Respects Preferences
+          </h3>
+          <p class="text-sm text-blue-700 dark:text-blue-300 leading-relaxed">
+            All motion animations automatically check for
+            <code
+              class="px-1 py-0.5 rounded bg-blue-100/50 dark:bg-blue-900/30 font-mono text-xs"
+              >prefers-reduced-motion</code
+            >. If the user has requested reduced motion, transitions are skipped
+            instantly.
+          </p>
+        </div>
       </div>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: block;
+        padding-bottom: 4rem;
+      }
+    `,
+  ],
 })
 export default class FadeDemoComponent implements AfterViewInit {
   @ViewChild('fadeBox') fadeBox!: ElementRef<HTMLElement>;
