@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MyAccordion,
   MyAccordionItem,
@@ -13,12 +14,33 @@ import {
     MyAccordionItem,
     MyAccordionTrigger,
     MyAccordionContent,
+    FormsModule,
   ],
   template: `
     <div class="demo-section">
       <h2>Accordion</h2>
       <p>Collapsible content panels for organizing information</p>
-      <my-accordion>
+
+      <div class="flex gap-4 mb-4">
+        <label class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            [ngModel]="allowMultiple()"
+            (ngModelChange)="allowMultiple.set($event)"
+          />
+          Allow Multiple
+        </label>
+        <label class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            [ngModel]="disabled()"
+            (ngModelChange)="disabled.set($event)"
+          />
+          Disabled
+        </label>
+      </div>
+
+      <my-accordion [allowMultiple]="allowMultiple()" [disabled]="disabled()">
         <my-accordion-item value="item-1">
           <my-accordion-trigger>What is Stencil?</my-accordion-trigger>
           <my-accordion-content>
@@ -46,4 +68,7 @@ import {
     </div>
   `,
 })
-export default class AccordionDemo {}
+export default class AccordionDemo {
+  allowMultiple = signal(false);
+  disabled = signal(false);
+}

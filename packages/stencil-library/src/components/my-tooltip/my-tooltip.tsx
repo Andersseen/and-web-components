@@ -1,5 +1,6 @@
-import { Component, Host, h, Prop, State, Element } from '@stencil/core';
+import { Component, Host, h, Prop, State, Element, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
+import { createTooltip, type TooltipPlacement } from '@andersseen/headless-core';
 import { cn } from '../../utils/utils';
 
 const tooltipVariants = cva(
@@ -37,38 +38,53 @@ export class MyTooltip {
   @Element() el: HTMLElement;
 
   @Prop() content: string;
-  @Prop() placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Prop() placement: TooltipPlacement = 'top';
   @Prop() openDelay: number = 0;
   @Prop() closeDelay: number = 0;
 
   @State() isVisible = false;
-  private timeout: any;
 
-  show() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.isVisible = true;
-    }, this.openDelay);
+  private tooltipLogic: any;
+
+  componentWillLoad() {
+    this.tooltipLogic = createTooltip({
+      placement: this.placement,
+      openDelay: this.openDelay,
+      closeDelay: this.closeDelay,
+      onVisibilityChange: isVisible => {
+        this.isVisible = isVisible;
+      },
+    });
   }
 
-  hide() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.isVisible = false;
-    }, this.closeDelay);
+  @Watch('placement')
+  placementHandler(newValue: TooltipPlacement) {
+    this.tooltipLogic.actions.setPlacement(newValue);
+  }
+
+  disconnectedCallback() {
+    this.tooltipLogic.destroy();
   }
 
   render() {
+    const triggerProps = this.tooltipLogic.getTriggerProps();
+    const tooltipProps = this.tooltipLogic.getTooltipProps();
+
     return (
-      <Host onMouseEnter={() => this.show()} onMouseLeave={() => this.hide()} onFocusin={() => this.show()} onFocusout={() => this.hide()}>
+      <Host
+        onMouseEnter={() => this.tooltipLogic.handleMouseEnter()}
+        onMouseLeave={() => this.tooltipLogic.handleMouseLeave()}
+        onFocusin={() => this.tooltipLogic.handleFocusIn()}
+        onFocusout={() => this.tooltipLogic.handleFocusOut()}
+      >
         <div class="relative inline-block">
           {/* Trigger */}
-          <div class="inline-block relative">
+          <div class="inline-block relative" {...triggerProps}>
             <slot></slot>
           </div>
 
           {/* Tooltip Content */}
-          <div class={cn(tooltipVariants({ placement: this.placement, visible: this.isVisible }))} data-state={this.isVisible ? 'open' : 'closed'} data-side={this.placement}>
+          <div class={cn(tooltipVariants({ placement: this.placement, visible: this.isVisible }))} {...tooltipProps}>
             {this.content || <slot name="content"></slot>}
           </div>
         </div>

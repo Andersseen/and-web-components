@@ -22,6 +22,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [my-navbar](../my-navbar)
+
 ### Depends on
 
 - [my-icon](../my-icon)
@@ -30,6 +34,7 @@
 ```mermaid
 graph TD;
   my-drawer --> my-icon
+  my-navbar --> my-drawer
   style my-drawer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

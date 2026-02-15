@@ -20,10 +20,12 @@
 ### Used by
 
  - [my-accordion-trigger](../my-accordion)
+ - [my-alert](../my-alert)
  - [my-carousel](../my-carousel)
  - [my-drawer](../my-drawer)
  - [my-dropdown](../my-dropdown)
  - [my-modal](../my-modal)
+ - [my-navbar](../my-navbar)
  - [my-pagination](../my-pagination)
  - [my-sidebar](../my-sidebar)
  - [my-toast](../my-toast)
@@ -32,10 +34,12 @@
 ```mermaid
 graph TD;
   my-accordion-trigger --> my-icon
+  my-alert --> my-icon
   my-carousel --> my-icon
   my-drawer --> my-icon
   my-dropdown --> my-icon
   my-modal --> my-icon
+  my-navbar --> my-icon
   my-pagination --> my-icon
   my-sidebar --> my-icon
   my-toast --> my-icon

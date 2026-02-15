@@ -21,6 +21,10 @@ import {
           <my-icon slot="icon" name="alert-circle" size="18"></my-icon>
           This is a destructive alert message.
         </my-alert>
+        <my-alert variant="default" dismissible>
+          <my-icon slot="icon" name="info" size="18"></my-icon>
+          This is a dismissible alert. Click the X to close.
+        </my-alert>
       </div>
     </div>
   `,

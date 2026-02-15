@@ -5,22 +5,18 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionReturn, TabsReturn } from "@andersseen/headless-core";
+import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
 import { ButtonProps } from "./components/my-button/my-button";
-import { DrawerPlacement } from "./components/my-drawer/my-drawer";
 import { DropdownItem } from "./components/my-dropdown/my-dropdown";
 import { IconName } from "./components/my-icon/icons";
 import { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 import { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
-import { ToastType } from "./components/my-toast/my-toast";
-export { AccordionReturn, TabsReturn } from "@andersseen/headless-core";
+export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
 export { ButtonProps } from "./components/my-button/my-button";
-export { DrawerPlacement } from "./components/my-drawer/my-drawer";
 export { DropdownItem } from "./components/my-dropdown/my-dropdown";
 export { IconName } from "./components/my-icon/icons";
 export { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 export { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
-export { ToastType } from "./components/my-toast/my-toast";
 export namespace Components {
     /**
      * Accordion container component using headless logic
@@ -92,9 +88,13 @@ export namespace Components {
     }
     interface MyAlert {
         /**
+          * @default false
+         */
+        "dismissible": boolean;
+        /**
           * @default 'default'
          */
-        "variant": 'default' | 'destructive';
+        "variant": AlertVariant;
     }
     interface MyBadge {
         /**
@@ -309,7 +309,7 @@ export namespace Components {
         /**
           * Present a new toast
          */
-        "present": (message: string, type?: ToastType, duration?: number) => Promise<void>;
+        "present": (message: string, type?: ToastType, duration?: number) => Promise<any>;
     }
     interface MyTooltip {
         /**
@@ -324,8 +324,12 @@ export namespace Components {
         /**
           * @default 'top'
          */
-        "placement": 'top' | 'right' | 'bottom' | 'left';
+        "placement": TooltipPlacement;
     }
+}
+export interface MyAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyAlertElement;
 }
 export interface MyDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -408,7 +412,18 @@ declare global {
         prototype: HTMLMyAccordionTriggerElement;
         new (): HTMLMyAccordionTriggerElement;
     };
+    interface HTMLMyAlertElementEventMap {
+        "myDismiss": void;
+    }
     interface HTMLMyAlertElement extends Components.MyAlert, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLMyAlertElementEventMap>(type: K, listener: (this: HTMLMyAlertElement, ev: MyAlertCustomEvent<HTMLMyAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLMyAlertElementEventMap>(type: K, listener: (this: HTMLMyAlertElement, ev: MyAlertCustomEvent<HTMLMyAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLMyAlertElement: {
         prototype: HTMLMyAlertElement;
@@ -716,9 +731,14 @@ declare namespace LocalJSX {
     }
     interface MyAlert {
         /**
+          * @default false
+         */
+        "dismissible"?: boolean;
+        "onMyDismiss"?: (event: MyAlertCustomEvent<void>) => void;
+        /**
           * @default 'default'
          */
-        "variant"?: 'default' | 'destructive';
+        "variant"?: AlertVariant;
     }
     interface MyBadge {
         /**
@@ -969,7 +989,7 @@ declare namespace LocalJSX {
         /**
           * @default 'top'
          */
-        "placement"?: 'top' | 'right' | 'bottom' | 'left';
+        "placement"?: TooltipPlacement;
     }
 
     interface MyAccordionAttributes {
@@ -982,7 +1002,8 @@ declare namespace LocalJSX {
         "disabled": boolean;
     }
     interface MyAlertAttributes {
-        "variant": 'default' | 'destructive';
+        "variant": AlertVariant;
+        "dismissible": boolean;
     }
     interface MyBadgeAttributes {
         "variant": 'default' | 'secondary' | 'destructive' | 'outline';
@@ -1061,7 +1082,7 @@ declare namespace LocalJSX {
     }
     interface MyTooltipAttributes {
         "content": string;
-        "placement": 'top' | 'right' | 'bottom' | 'left';
+        "placement": TooltipPlacement;
         "openDelay": number;
         "closeDelay": number;
     }

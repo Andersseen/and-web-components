@@ -11,7 +11,15 @@ import { Component, ViewChild } from '@angular/core';
     <div class="demo-section">
       <h2>Toast</h2>
       <p>Temporary notification messages</p>
-      <my-button (click)="showToast()">Show Toast</my-button>
+      <div class="flex gap-2">
+        <my-button (click)="showToast('default')">Default</my-button>
+        <my-button (click)="showToast('success')" variant="outline"
+          >Success</my-button
+        >
+        <my-button (click)="showToast('error')" variant="destructive"
+          >Error</my-button
+        >
+      </div>
       <my-toast #toast></my-toast>
     </div>
   `,
@@ -19,11 +27,11 @@ import { Component, ViewChild } from '@angular/core';
 export default class ToastDemo {
   @ViewChild('toast') toastElement!: MyToast;
 
-  async showToast() {
+  async showToast(type: string = 'default') {
     if (this.toastElement) {
       await this.toastElement.present(
-        'This is a toast notification!',
-        'success',
+        `This is a ${type} toast notification!`,
+        type as any,
       );
     }
   }

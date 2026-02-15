@@ -27,6 +27,26 @@
     "./dropdown": {
       "types": "./dist/dropdown/index.d.ts",
       "import": "./dist/dropdown/index.js"
+    },
+    "./modal": {
+      "types": "./dist/modal/index.d.ts",
+      "import": "./dist/modal/index.js"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip/index.d.ts",
+      "import": "./dist/tooltip/index.js"
+    },
+    "./toast": {
+      "types": "./dist/toast/index.d.ts",
+      "import": "./dist/toast/index.js"
+    },
+    "./drawer": {
+      "types": "./dist/drawer/index.d.ts",
+      "import": "./dist/drawer/index.js"
+    },
+    "./alert": {
+      "types": "./dist/alert/index.d.ts",
+      "import": "./dist/alert/index.js"
     }
   },
   "files": [

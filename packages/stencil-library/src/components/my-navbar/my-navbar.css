@@ -21,3 +21,22 @@
 .navbar-actions {
   @apply flex items-center gap-2;
 }
+
+/* Responsive Utilities for Shadow DOM */
+.hidden {
+  display: none !important;
+}
+
+.flex {
+  display: flex !important;
+}
+
+@media (min-width: 768px) {
+  .md\:flex {
+    display: flex !important;
+  }
+
+  .md\:hidden {
+    display: none !important;
+  }
+}
