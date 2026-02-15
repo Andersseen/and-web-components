@@ -1,0 +1,63 @@
+
+> angular-workspace@0.0.0 start /app/packages/angular-workspace
+> ng serve
+
+- Generating browser application bundles (phase: setup)...
+[32m✔[39m Browser application bundle generation complete.
+
+Initial chunk files                                                                                     | Names                                            |  Raw size
+vendor.js                                                                                               | vendor                                           |   2.15 MB |
+main.js                                                                                                 | main                                             | 780.61 kB |
+polyfills.js                                                                                            | polyfills                                        | 219.06 kB |
+styles.css, styles.js                                                                                   | styles                                           | 162.93 kB |
+runtime.js                                                                                              | runtime                                          |  13.14 kB |
+
+                                                                                                        | Initial total                                    |   3.33 MB
+
+Lazy chunk files                                                                                        | Names                                            |  Raw size
+default-node_modules_pnpm_angular_forms_21_1_3__angular_common_21_1_3__angular_core_21_1_3__a-d98021.js | pages-components-accordion-demo                  | 180.75 kB |
+default-headless-core_dist_index_js.js                                                                  | pages-headless-button-headless-demo              |  45.68 kB |
+projects_demo-app_src_app_pages_headless_drawer-headless-demo_ts.js                                     | pages-headless-drawer-headless-demo              |  39.71 kB |
+projects_demo-app_src_app_pages_headless_modal-headless-demo_ts.js                                      | pages-headless-modal-headless-demo               |  34.15 kB |
+projects_demo-app_src_app_pages_headless_dropdown-headless-demo_ts.js                                   | pages-headless-dropdown-headless-demo            |  33.63 kB |
+projects_demo-app_src_app_pages_headless_overview-demo_ts.js                                            | pages-headless-overview-demo                     |  32.92 kB |
+projects_demo-app_src_app_pages_headless_tooltip-headless-demo_ts.js                                    | pages-headless-tooltip-headless-demo             |  31.96 kB |
+projects_demo-app_src_app_pages_headless_toast-headless-demo_ts.js                                      | pages-headless-toast-headless-demo               |  31.54 kB |
+projects_demo-app_src_app_pages_headless_tabs-headless-demo_ts.js                                       | pages-headless-tabs-headless-demo                |  30.27 kB |
+projects_demo-app_src_app_pages_headless_alert-headless-demo_ts.js                                      | pages-headless-alert-headless-demo               |  28.99 kB |
+projects_demo-app_src_app_pages_headless_button-headless-demo_ts.js                                     | pages-headless-button-headless-demo              |  27.90 kB |
+projects_demo-app_src_app_pages_headless_accordion-headless-demo_ts.js                                  | pages-headless-accordion-headless-demo           |  24.84 kB |
+default-motion-core_dist_index_js.js                                                                    | pages-motion-demo-pages-fade-demo-component      |  24.00 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_slide-demo_component_ts.js                            | pages-motion-demo-pages-slide-demo-component     |  17.43 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_custom-demo_component_ts.js                           | pages-motion-demo-pages-custom-demo-component    |  15.99 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_stagger-demo_component_ts.js                          | pages-motion-demo-pages-stagger-demo-component   |  15.27 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_attribute-demo_component_ts.js                        | pages-motion-demo-pages-attribute-demo-component |  13.93 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_scale-demo_component_ts.js                            | pages-motion-demo-pages-scale-demo-component     |  13.85 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_fade-demo_component_ts.js                             | pages-motion-demo-pages-fade-demo-component      |  13.27 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_hover-demo_component_ts.js                            | pages-motion-demo-pages-hover-demo-component     |  10.54 kB |
+projects_demo-app_src_app_pages_motion-demo_pages_tap-demo_component_ts.js                              | pages-motion-demo-pages-tap-demo-component       |  10.42 kB |
+projects_demo-app_src_app_pages_icons_icons-demo_component_ts.js                                        | pages-icons-icons-demo-component                 |   9.19 kB |
+projects_demo-app_src_app_pages_components_accordion-demo_ts.js                                         | pages-components-accordion-demo                  |   7.44 kB |
+projects_demo-app_src_app_pages_components_drawer-demo_ts.js                                            | pages-components-drawer-demo                     |   6.49 kB |
+projects_demo-app_src_app_pages_components_toast-demo_ts.js                                             | pages-components-toast-demo                      |   5.67 kB |
+projects_demo-app_src_app_pages_components_button-demo_ts.js                                            | pages-components-button-demo                     |   5.24 kB |
+projects_demo-app_src_app_pages_components_modal-demo_ts.js                                             | pages-components-modal-demo                      |   5.20 kB |
+projects_demo-app_src_app_components_routes_ts.js                                                       | components-routes                                |   4.62 kB |
+projects_demo-app_src_app_headless_routes_ts.js                                                         | headless-routes                                  |   4.08 kB |
+projects_demo-app_src_app_pages_components_carousel-demo_ts.js                                          | pages-components-carousel-demo                   |   4.05 kB |
+projects_demo-app_src_app_pages_components_tabs-demo_ts.js                                              | pages-components-tabs-demo                       |   3.88 kB |
+projects_demo-app_src_app_motion_routes_ts.js                                                           | motion-routes                                    |   3.75 kB |
+projects_demo-app_src_app_pages_components_alert-demo_ts.js                                             | pages-components-alert-demo                      |   3.68 kB |
+projects_demo-app_src_app_pages_components_tooltip-demo_ts.js                                           | pages-components-tooltip-demo                    |   3.67 kB |
+projects_demo-app_src_app_pages_components_badge-demo_ts.js                                             | pages-components-badge-demo                      |   3.54 kB |
+projects_demo-app_src_app_pages_components_card-demo_ts.js                                              | pages-components-card-demo                       |   3.43 kB |
+projects_demo-app_src_app_pages_components_dropdown-demo_ts.js                                          | pages-components-dropdown-demo                   |   3.05 kB |
+projects_demo-app_src_app_pages_components_input-demo_ts.js                                             | pages-components-input-demo                      |   2.75 kB |
+projects_demo-app_src_app_pages_components_pagination-demo_ts.js                                        | pages-components-pagination-demo                 |   2.49 kB |
+
+Build at: 2026-02-15T18:14:25.788Z - Hash: ba94df869184e75c - Time: 16167ms
+
+** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+
+
+✔ Compiled successfully.

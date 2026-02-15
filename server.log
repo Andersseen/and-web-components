@@ -1,0 +1,59 @@
+
+> and-web-components@ start:demo /app
+> pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace start
+
+
+> and-web-components@ build:stencil /app
+> pnpm build:headless && pnpm -C packages/stencil-library build
+
+
+> and-web-components@ build:headless /app
+> pnpm -C packages/headless-core build
+
+
+> @andersseen/headless-core@0.1.0 build /app/packages/headless-core
+> rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json
+
+
+> stencil-library@0.0.1 build /app/packages/stencil-library
+> stencil build
+
+[2m[13:36.1][22m  [36m@stencil/core[39m
+[2m[13:36.8][22m  [36mv4.42.0[39m 🚑
+[2m[13:39.5][22m  build, stencil-library, prod mode, started [2m...[22m
+[2m[13:39.6][22m  transpile started [2m...[22m
+[2m[13:42.7][22m  transpile finished [2min 3.14 s[22m
+[2m[13:43.0][22m  generate custom elements started [2m...[22m
+[2m[13:43.0][22m  generate lazy started [2m...[22m
+[2m[13:51.6][22m  generate custom elements finished [2min 8.64 s[22m
+[2m[13:51.6][22m  generate lazy finished [2min 8.64 s[22m
+[2m[13:51.6][22m  copy started [2m...[22m
+[2m[13:51.7][22m  generating angular-library started [2m...[22m
+[2m[13:51.7][22m  updated readme docs: my-accordion
+[2m[13:51.7][22m  updated readme docs: my-accordion-content
+[2m[13:51.7][22m  updated readme docs: my-accordion-item
+[2m[13:51.7][22m  updated readme docs: my-accordion-trigger
+[2m[13:51.7][22m  updated readme docs: my-carousel
+[2m[13:51.7][22m  updated readme docs: my-carousel-item
+[2m[13:51.7][22m  updated readme docs: my-tabs
+[2m[13:51.7][22m  updated readme docs: my-tabs-content
+[2m[13:51.7][22m  updated readme docs: my-tabs-list
+[2m[13:51.7][22m  updated readme docs: my-tabs-trigger
+[2m[13:51.7][22m  copy finished (0 files) [2min 135 ms[22m
+[2m[13:51.7][22m  generate angular-library finished [2min 25 ms[22m
+[2m[13:51.9][22m  [1m[32mbuild finished[39m[22m [2min 12.36 s[22m
+
+
+> and-web-components@ build:motion /app
+> pnpm -C packages/motion-core build
+
+
+> @my-lib/motion-core@0.1.0 build /app/packages/motion-core
+> rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cat src/css/base.css src/css/fade.css src/css/scale.css src/css/bounce.css src/css/rotate.css src/css/slide-in.css src/css/slide-out.css src/css/a11y.css > dist/style.css && cp -r src/css dist/css
+
+
+> angular-workspace@0.0.0 start /app/packages/angular-workspace
+> ng serve
+
+ ELIFECYCLE  Command failed.
+ ELIFECYCLE  Command failed.

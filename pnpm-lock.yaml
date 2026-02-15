@@ -61,7 +61,7 @@ importers:
         version: 7.8.2
       stencil-library:
         specifier: file:../stencil-library
-        version: file:packages/stencil-library
+        version: link:../stencil-library
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
@@ -6579,9 +6579,6 @@ packages:
   stdin-discarder@0.3.1:
     resolution: {integrity: sha512-reExS1kSGoElkextOcPkel4NE99S0BWxjUHQeDFnR8S993JxpPX7KU4MNmO19NXhlJp+8dmdCbKQVNgLJh2teA==}
     engines: {node: '>=18'}
-
-  stencil-library@file:packages/stencil-library:
-    resolution: {directory: packages/stencil-library, type: directory}
 
   streamroller@3.1.5:
     resolution: {integrity: sha512-KFxaM7XT+irxvdqSP1LGLgNWbYN7ay5owZ3r/8t77p+EtSUAfUgtl7be3xtqtOmGUl9K9YPO2ca8133RlTjvKw==}
@@ -14904,14 +14901,6 @@ snapshots:
   stdin-discarder@0.2.2: {}
 
   stdin-discarder@0.3.1: {}
-
-  stencil-library@file:packages/stencil-library:
-    dependencies:
-      '@andersseen/headless-core': link:../headless-core
-      '@babel/runtime': 7.28.4
-      class-variance-authority: 0.7.1
-      clsx: 2.1.1
-      tailwind-merge: 3.4.0
 
   streamroller@3.1.5:
     dependencies:
