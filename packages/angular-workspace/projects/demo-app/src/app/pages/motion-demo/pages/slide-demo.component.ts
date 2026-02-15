@@ -1,102 +1,147 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
-import { MyButton } from '@angular-components/stencil-generated/components';
+import {
+  MyButton,
+  MyCard,
+  MyBadge,
+  MyIcon,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-slide-demo',
-  imports: [CommonModule, MyButton],
+  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
   template: `
-    <div class="max-w-4xl mx-auto flex flex-col gap-6">
-      <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
-          Slide Animations
-        </h1>
-        <p class="text-base text-zinc-500">
-          Slide elements in and out from any direction.
+    <div class="demo-page">
+      <!-- Hero -->
+      <div class="hero mb-8">
+        <h1 class="text-3xl font-bold tracking-tight mb-3">Slide Animations</h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Enter and leave animations from any direction. Useful for drawers,
+          sidebars, and list items.
         </p>
       </div>
 
-      <section
-        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
-      >
-        <div class="mb-5">
-          <span
-            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
-            >Directional</span
-          >
-          <h2 class="text-xl font-bold mb-1">Slide In & Out</h2>
-          <p class="text-sm text-zinc-500">
-            Directional enter/leave animations from all four edges.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-          <div class="flex flex-col gap-2">
-            <span
-              class="text-xs font-semibold uppercase tracking-wider text-zinc-500"
-              >Slide In</span
-            >
-            <div class="flex flex-wrap gap-1.5">
-              <my-button size="sm" (click)="slideIn('top')">↑ Top</my-button>
-              <my-button size="sm" (click)="slideIn('bottom')"
-                >↓ Bottom</my-button
-              >
-              <my-button size="sm" (click)="slideIn('left')">← Left</my-button>
-              <my-button size="sm" (click)="slideIn('right')"
-                >→ Right</my-button
-              >
+      <!-- Main Demo -->
+      <my-card class="block mb-8">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <my-badge variant="secondary">Directional</my-badge>
+                <span class="text-sm text-muted-foreground">Translate</span>
+              </div>
+              <h2 class="text-lg font-semibold">Slide In & Out</h2>
+              <p class="text-sm text-muted-foreground mt-1">
+                Control the direction of movement.
+              </p>
             </div>
           </div>
-          <div class="flex flex-col gap-2">
-            <span
-              class="text-xs font-semibold uppercase tracking-wider text-zinc-500"
-              >Slide Out</span
-            >
-            <div class="flex flex-wrap gap-1.5">
-              <my-button size="sm" variant="outline" (click)="slideOut('top')"
-                >↑ Top</my-button
+
+          <!-- Controls grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <!-- Slide In -->
+            <div class="flex flex-col gap-3">
+              <span
+                class="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                >Slide In</span
               >
-              <my-button
-                size="sm"
-                variant="outline"
-                (click)="slideOut('bottom')"
-                >↓ Bottom</my-button
+              <div class="grid grid-cols-2 gap-2">
+                <my-button size="sm" (click)="slideIn('top')">
+                  <my-icon name="arrow-down" class="mr-2" size="14"></my-icon>
+                  From Top
+                </my-button>
+                <my-button size="sm" (click)="slideIn('bottom')">
+                  <my-icon name="arrow-up" class="mr-2" size="14"></my-icon>
+                  From Bottom
+                </my-button>
+                <my-button size="sm" (click)="slideIn('left')">
+                  <my-icon name="arrow-right" class="mr-2" size="14"></my-icon>
+                  From Left
+                </my-button>
+                <my-button size="sm" (click)="slideIn('right')">
+                  <my-icon name="arrow-left" class="mr-2" size="14"></my-icon>
+                  From Right
+                </my-button>
+              </div>
+            </div>
+
+            <!-- Slide Out -->
+            <div class="flex flex-col gap-3">
+              <span
+                class="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                >Slide Out</span
               >
-              <my-button size="sm" variant="outline" (click)="slideOut('left')"
-                >← Left</my-button
-              >
-              <my-button size="sm" variant="outline" (click)="slideOut('right')"
-                >→ Right</my-button
-              >
+              <div class="grid grid-cols-2 gap-2">
+                <my-button
+                  size="sm"
+                  variant="outline"
+                  (click)="slideOut('top')"
+                >
+                  <my-icon name="arrow-up" class="mr-2" size="14"></my-icon>
+                  To Top
+                </my-button>
+                <my-button
+                  size="sm"
+                  variant="outline"
+                  (click)="slideOut('bottom')"
+                >
+                  <my-icon name="arrow-down" class="mr-2" size="14"></my-icon>
+                  To Bottom
+                </my-button>
+                <my-button
+                  size="sm"
+                  variant="outline"
+                  (click)="slideOut('left')"
+                >
+                  <my-icon name="arrow-left" class="mr-2" size="14"></my-icon>
+                  To Left
+                </my-button>
+                <my-button
+                  size="sm"
+                  variant="outline"
+                  (click)="slideOut('right')"
+                >
+                  <my-icon name="arrow-right" class="mr-2" size="14"></my-icon>
+                  To Right
+                </my-button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div
-          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4 overflow-hidden relative"
-        >
+          <!-- Preview Area -->
           <div
-            #slideBox
-            class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-green-500 to-green-700"
-            style="display: none;"
+            class="h-64 flex items-center justify-center bg-zinc-50/50 dark:bg-zinc-900/50 rounded-lg border border-dashed border-zinc-200 dark:border-zinc-800 mb-6 relative overflow-hidden"
           >
-            <span class="text-2xl">🚀</span>
-            <span>Slide!</span>
+            <div
+              #slideBox
+              class="w-32 h-32 bg-green-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-white gap-2"
+              style="display: none;"
+            >
+              <span class="text-4xl">🚀</span>
+              <span class="font-bold">Whoosh!</span>
+            </div>
+          </div>
+
+          <!-- Code Block -->
+          <div class="bg-zinc-950 rounded-md p-4 overflow-x-auto">
+            <code class="text-sm font-mono text-blue-300">
+              <span class="text-purple-400">await</span> Motion.enter(el,
+              MotionAnimations.SlideInLeft);
+            </code>
           </div>
         </div>
-
-        <div
-          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
-        >
-          <code class="text-xs font-mono whitespace-nowrap"
-            >await Motion.enter(el, MotionAnimations.SlideInLeft);</code
-          >
-        </div>
-      </section>
+      </my-card>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: block;
+        padding-bottom: 4rem;
+      }
+    `,
+  ],
 })
 export default class SlideDemoComponent implements AfterViewInit {
   @ViewChild('slideBox') slideBox!: ElementRef<HTMLElement>;

@@ -2,126 +2,162 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
-import { MyButton } from '@angular-components/stencil-generated/components';
+import {
+  MyButton,
+  MyCard,
+  MyBadge,
+  MyIcon,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-custom-demo',
-  imports: [CommonModule, FormsModule, MyButton],
+  imports: [CommonModule, FormsModule, MyButton, MyCard, MyBadge, MyIcon],
   template: `
-    <div class="max-w-4xl mx-auto flex flex-col gap-6">
-      <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
-          Custom Options
-        </h1>
-        <p class="text-base text-zinc-500">
-          Fine-tune animations with duration, easing, and delay.
+    <div class="demo-page">
+      <!-- Hero -->
+      <div class="hero mb-8">
+        <h1 class="text-3xl font-bold tracking-tight mb-3">Custom Options</h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Fine-tune animations with duration, easing, and delay. Create the
+          perfect feel for your interactions.
         </p>
       </div>
 
-      <section
-        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
-      >
-        <div class="mb-5">
-          <span
-            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
-            >Options</span
-          >
-          <h2 class="text-xl font-bold mb-1">Animation Playground</h2>
-          <p class="text-sm text-zinc-500">
-            Adjust the sliders and select easing to customize the animation
-            behavior.
-          </p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4 p-4 rounded-xl bg-zinc-100 border border-zinc-200"
-        >
-          <div class="flex flex-col gap-1.5">
-            <label
-              class="text-xs font-semibold uppercase tracking-wider text-zinc-500"
-              >Duration</label
-            >
-            <input
-              type="range"
-              min="100"
-              max="2000"
-              step="100"
-              [(ngModel)]="customDuration"
-              class="w-full accent-blue-500"
-            />
-            <span class="text-xs font-medium text-zinc-900 tabular-nums"
-              >{{ customDuration }}ms</span
-            >
+      <!-- Main Demo -->
+      <my-card class="block mb-8">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <my-badge variant="secondary">Configuration</my-badge>
+                <span class="text-sm text-muted-foreground"
+                  >Timing & Easing</span
+                >
+              </div>
+              <h2 class="text-lg font-semibold">Animation Playground</h2>
+              <p class="text-sm text-muted-foreground mt-1">
+                Adjust the parameters to customize the behavior.
+              </p>
+            </div>
           </div>
-          <div class="flex flex-col gap-1.5">
-            <label
-              class="text-xs font-semibold uppercase tracking-wider text-zinc-500"
-              >Easing</label
-            >
-            <select
-              [(ngModel)]="customEasing"
-              class="px-2 py-1.5 rounded-md border border-zinc-200 bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-            >
-              <option value="ease">ease</option>
-              <option value="ease-in">ease-in</option>
-              <option value="ease-out">ease-out</option>
-              <option value="ease-in-out">ease-in-out</option>
-              <option value="linear">linear</option>
-              <option value="cubic-bezier(0.68,-0.55,0.265,1.55)">
-                spring
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col gap-1.5">
-            <label
-              class="text-xs font-semibold uppercase tracking-wider text-zinc-500"
-              >Delay</label
-            >
-            <input
-              type="range"
-              min="0"
-              max="1000"
-              step="50"
-              [(ngModel)]="customDelay"
-              class="w-full accent-blue-500"
-            />
-            <span class="text-xs font-medium text-zinc-900 tabular-nums"
-              >{{ customDelay }}ms</span
-            >
-          </div>
-        </div>
 
-        <div class="flex flex-wrap gap-2 mb-4">
-          <my-button (click)="playCustom()">Play Animation</my-button>
-        </div>
-
-        <div
-          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
-        >
+          <!-- Controls -->
           <div
-            #customBox
-            class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-rose-500 to-rose-700"
-            style="display: none;"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 p-4 rounded-xl bg-muted/50 border border-border"
           >
-            <span class="text-2xl">⚙️</span>
-            <span>Custom!</span>
+            <!-- Duration -->
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+              >
+                Duration
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="100"
+                  max="2000"
+                  step="100"
+                  [(ngModel)]="customDuration"
+                  class="flex-1 h-2 bg-secondary rounded-lg appearance-none cursor-pointer"
+                />
+                <span class="text-xs font-mono w-12 text-right"
+                  >{{ customDuration }}ms</span
+                >
+              </div>
+            </div>
+
+            <!-- Easing -->
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+              >
+                Easing
+              </label>
+              <select
+                [(ngModel)]="customEasing"
+                class="px-3 py-1.5 rounded-md border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="ease">ease</option>
+                <option value="ease-in">ease-in</option>
+                <option value="ease-out">ease-out</option>
+                <option value="ease-in-out">ease-in-out</option>
+                <option value="linear">linear</option>
+                <option value="cubic-bezier(0.68,-0.55,0.265,1.55)">
+                  spring
+                </option>
+              </select>
+            </div>
+
+            <!-- Delay -->
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+              >
+                Delay
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="50"
+                  [(ngModel)]="customDelay"
+                  class="flex-1 h-2 bg-secondary rounded-lg appearance-none cursor-pointer"
+                />
+                <span class="text-xs font-mono w-12 text-right"
+                  >{{ customDelay }}ms</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <my-button (click)="playCustom()">
+              <my-icon name="play" class="mr-2" size="14"></my-icon>
+              Play Animation
+            </my-button>
+          </div>
+
+          <!-- Preview Area -->
+          <div
+            class="h-64 flex items-center justify-center bg-zinc-50/50 dark:bg-zinc-900/50 rounded-lg border border-dashed border-zinc-200 dark:border-zinc-800 mb-6 relative overflow-hidden"
+          >
+            <div
+              #customBox
+              class="w-24 h-24 bg-rose-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-white gap-2"
+              style="display: none;"
+            >
+              <span class="text-3xl">⚙️</span>
+              <span class="font-bold text-xs">Custom</span>
+            </div>
+          </div>
+
+          <!-- Code Block -->
+          <div class="bg-zinc-950 rounded-md p-4 overflow-x-auto">
+            <code class="text-sm font-mono text-blue-300">
+              <span class="text-purple-400">await</span> Motion.enter(el,
+              MotionAnimations.BounceIn, {{ '{' }} <br />&nbsp;&nbsp;duration:
+              {{ customDuration }}, <br />&nbsp;&nbsp;easing: '{{
+                customEasing
+              }}', <br />&nbsp;&nbsp;delay: {{ customDelay }} <br />{{ '}' }});
+            </code>
           </div>
         </div>
-
-        <div
-          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
-        >
-          <code class="text-xs font-mono whitespace-nowrap"
-            >await Motion.enter(el, MotionAnimations.BounceIn,
-            {{ '{' }} duration: {{ customDuration }}, easing: '{{
-              customEasing
-            }}', delay: {{ customDelay }} {{ '}' }});</code
-          >
-        </div>
-      </section>
+      </my-card>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: block;
+        padding-bottom: 4rem;
+      }
+      input[type='range'] {
+        @apply accent-primary;
+      }
+    `,
+  ],
 })
 export default class CustomDemoComponent implements AfterViewInit {
   @ViewChild('customBox') customBox!: ElementRef<HTMLElement>;

@@ -7,74 +7,93 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import {
+  MyCard,
+  MyBadge,
+  MyIcon,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tap-demo',
-  imports: [CommonModule],
+  imports: [CommonModule, MyCard, MyBadge, MyIcon],
   template: `
-    <div class="max-w-4xl mx-auto flex flex-col gap-6">
-      <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">Tap Effects</h1>
-        <p class="text-base text-zinc-500">
-          Trigger animations on click/tap. Returns a cleanup function to prevent
-          memory leaks.
+    <div class="demo-page">
+      <!-- Hero -->
+      <div class="hero mb-8">
+        <h1 class="text-3xl font-bold tracking-tight mb-3">Tap Effects</h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Trigger animations on click/tap with automatic cleanup. Ideal for
+          mobile interactions and playful feedback.
         </p>
       </div>
 
-      <section
-        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
-      >
-        <div class="mb-5">
-          <span
-            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
-            >Interaction</span
-          >
-          <h2 class="text-xl font-bold mb-1">Tap Cards</h2>
-          <p class="text-sm text-zinc-500">
-            Click any card to trigger its bound animation.
-          </p>
-        </div>
-
-        <div
-          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
-        >
-          <div class="flex gap-4 justify-center flex-wrap">
-            <div
-              #tapBox1
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md transition-shadow duration-150 active:shadow-sm bg-gradient-to-br from-blue-500 to-blue-700"
-            >
-              <span class="text-2xl">💥</span>
-              <span>Scale</span>
-            </div>
-            <div
-              #tapBox2
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md transition-shadow duration-150 active:shadow-sm bg-gradient-to-br from-violet-500 to-violet-700"
-            >
-              <span class="text-2xl">🎉</span>
-              <span>Bounce</span>
-            </div>
-            <div
-              #tapBox3
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md transition-shadow duration-150 active:shadow-sm bg-gradient-to-br from-green-500 to-green-700"
-            >
-              <span class="text-2xl">🌀</span>
-              <span>Rotate</span>
+      <!-- Main Demo -->
+      <my-card class="block mb-8">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <my-badge variant="secondary">Interaction</my-badge>
+                <span class="text-sm text-muted-foreground"
+                  >Click/Tap Events</span
+                >
+              </div>
+              <h2 class="text-lg font-semibold">Tap Cards</h2>
+              <p class="text-sm text-muted-foreground mt-1">
+                Click any card to trigger its bound animation.
+              </p>
             </div>
           </div>
-        </div>
 
-        <div
-          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
-        >
-          <code class="text-xs font-mono whitespace-nowrap"
-            >const unbind = Motion.bindTap(el, MotionAnimations.BounceIn,
-            {{ '{' }} duration: 150 {{ '}' }});</code
+          <!-- Preview Area -->
+          <div
+            class="h-64 flex items-center justify-center bg-zinc-50/50 dark:bg-zinc-900/50 rounded-lg border border-dashed border-zinc-200 dark:border-zinc-800 mb-6 relative overflow-hidden"
           >
+            <div class="flex gap-4 justify-center flex-wrap">
+              <div
+                #tapBox1
+                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md bg-blue-500"
+              >
+                <my-icon name="maximize" size="24"></my-icon>
+                <span>Scale</span>
+              </div>
+              <div
+                #tapBox2
+                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md bg-violet-500"
+              >
+                <my-icon name="activity" size="24"></my-icon>
+                <span>Bounce</span>
+              </div>
+              <div
+                #tapBox3
+                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md bg-green-500"
+              >
+                <my-icon name="rotate-ccw" size="24"></my-icon>
+                <span>Rotate</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code Block -->
+          <div class="bg-zinc-950 rounded-md p-4 overflow-x-auto">
+            <code class="text-sm font-mono text-blue-300">
+              <span class="text-purple-400">const</span> unbind =
+              Motion.bindTap(el, MotionAnimations.BounceIn, {{ '{' }} duration:
+              150 {{ '}' }});
+            </code>
+          </div>
         </div>
-      </section>
+      </my-card>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: block;
+        padding-bottom: 4rem;
+      }
+    `,
+  ],
 })
 export default class TapDemoComponent implements AfterViewInit, OnDestroy {
   @ViewChild('tapBox1') tapBox1!: ElementRef<HTMLElement>;

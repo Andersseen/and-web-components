@@ -1,70 +1,102 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Motion, MotionAnimations } from '@my-lib/motion-core';
-import { MyButton } from '@angular-components/stencil-generated/components';
+import {
+  MyButton,
+  MyCard,
+  MyBadge,
+  MyIcon,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-scale-demo',
-  imports: [CommonModule, MyButton],
+  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
   template: `
-    <div class="max-w-4xl mx-auto flex flex-col gap-6">
-      <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
-          Scale, Bounce & Rotate
-        </h1>
-        <p class="text-base text-zinc-500">
-          Playful entrance effects using transform and opacity.
+    <div class="demo-page">
+      <!-- Hero -->
+      <div class="hero mb-8">
+        <h1 class="text-3xl font-bold tracking-tight mb-3">Scale & Rotate</h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Playful entrance and exit effects using transform properties. Great
+          for drawing attention to new content.
         </p>
       </div>
 
-      <section
-        class="border border-zinc-200 rounded-xl p-6 bg-white transition-shadow hover:shadow-lg duration-200"
-      >
-        <div class="mb-5">
-          <span
-            class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full mb-2"
-            >Transform</span
-          >
-          <h2 class="text-xl font-bold mb-1">Scale & Bounce</h2>
-          <p class="text-sm text-zinc-500">
-            Eye-catching enter/leave effects that combine scale transforms with
-            opacity.
-          </p>
-        </div>
+      <!-- Main Demo -->
+      <my-card class="block mb-8">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <my-badge variant="secondary">Transform</my-badge>
+                <span class="text-sm text-muted-foreground"
+                  >Scale / Rotate</span
+                >
+              </div>
+              <h2 class="text-lg font-semibold">Entrance Effects</h2>
+              <p class="text-sm text-muted-foreground mt-1">
+                Combine scaling and rotation for dynamic reveals.
+              </p>
+            </div>
+          </div>
 
-        <div class="flex flex-wrap gap-2 mb-4">
-          <my-button (click)="playScaleIn()">Scale In</my-button>
-          <my-button (click)="playBounceIn()">Bounce In</my-button>
-          <my-button (click)="playRotateIn()">Rotate In</my-button>
-          <my-button variant="outline" (click)="playScaleOut()"
-            >Scale Out</my-button
-          >
-        </div>
+          <!-- Controls -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            <my-button (click)="playScaleIn()" size="sm">
+              <my-icon name="maximize" class="mr-2" size="14"></my-icon>
+              Scale In
+            </my-button>
+            <my-button (click)="playBounceIn()" size="sm">
+              <my-icon name="activity" class="mr-2" size="14"></my-icon>
+              Bounce In
+            </my-button>
+            <my-button (click)="playRotateIn()" size="sm">
+              <my-icon name="rotate-cw" class="mr-2" size="14"></my-icon>
+              Rotate In
+            </my-button>
+            <div class="w-px h-8 bg-border mx-2"></div>
+            <my-button variant="outline" (click)="playScaleOut()" size="sm">
+              <my-icon name="minimize" class="mr-2" size="14"></my-icon>
+              Scale Out
+            </my-button>
+          </div>
 
-        <div
-          class="min-h-[120px] flex items-center justify-center border border-dashed border-zinc-200 rounded-lg bg-zinc-100 mb-3 p-4"
-        >
+          <!-- Preview Area -->
           <div
-            #scaleBox
-            class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-violet-500 to-violet-700"
-            style="display: none;"
+            class="h-64 flex items-center justify-center bg-zinc-50/50 dark:bg-zinc-900/50 rounded-lg border border-dashed border-zinc-200 dark:border-zinc-800 mb-6 relative overflow-hidden"
           >
-            <span class="text-2xl">✨</span>
-            <span>Wow!</span>
+            <div
+              #scaleBox
+              class="w-32 h-32 bg-violet-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-white gap-2"
+              style="display: none;"
+            >
+              <span class="text-4xl">✨</span>
+              <span class="font-bold">Poof!</span>
+            </div>
+          </div>
+
+          <!-- Code Block -->
+          <div class="bg-zinc-950 rounded-md p-4 overflow-x-auto">
+            <code class="text-sm font-mono text-blue-300">
+              <span class="text-purple-400">await</span> Motion.enter(el,
+              MotionAnimations.BounceIn);
+            </code>
           </div>
         </div>
-
-        <div
-          class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
-        >
-          <code class="text-xs font-mono whitespace-nowrap"
-            >await Motion.enter(el, MotionAnimations.BounceIn);</code
-          >
-        </div>
-      </section>
+      </my-card>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: block;
+        padding-bottom: 4rem;
+      }
+      .bg-border {
+        background-color: hsl(var(--border));
+      }
+    `,
+  ],
 })
 export default class ScaleDemoComponent implements AfterViewInit {
   @ViewChild('scaleBox') scaleBox!: ElementRef<HTMLElement>;
