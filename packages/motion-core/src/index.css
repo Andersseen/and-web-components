@@ -1,0 +1,9 @@
+/* Motion Core – Aggregated Styles */
+@import "./css/base.css";
+@import "./css/fade.css";
+@import "./css/scale.css";
+@import "./css/bounce.css";
+@import "./css/rotate.css";
+@import "./css/slide-in.css";
+@import "./css/slide-out.css";
+@import "./css/a11y.css";

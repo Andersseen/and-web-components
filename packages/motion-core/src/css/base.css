@@ -1,0 +1,11 @@
+:root {
+  --motion-duration: 0.3s;
+  --motion-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Base class for all animations */
+[class*="motion-"] {
+  animation-duration: var(--motion-duration);
+  animation-timing-function: var(--motion-ease);
+  animation-fill-mode: both;
+}

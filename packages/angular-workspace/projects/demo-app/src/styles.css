@@ -1,5 +1,6 @@
 @import "@fontsource/inter";
 @import "stencil-library/dist/stencil-library/stencil-library.css";
+@import "@my-lib/motion-core/style.css";
 
 body {
   margin: 0;

@@ -1,0 +1,44 @@
+{
+  "name": "@my-lib/motion-core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic animation library for TypeScript and CSS",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist-cjs/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "dist-cjs",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cat src/css/base.css src/css/fade.css src/css/scale.css src/css/bounce.css src/css/rotate.css src/css/slide-in.css src/css/slide-out.css src/css/a11y.css > dist/style.css && cp -r src/css dist/css",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "animation",
+    "motion",
+    "typescript",
+    "css",
+    "framework-agnostic"
+  ],
+  "author": "Jules",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

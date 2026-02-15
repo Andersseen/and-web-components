@@ -94,6 +94,15 @@ interface SidebarItem {
           >
           </my-sidebar>
         }
+        @if (activeSection() === 'motion') {
+          <my-sidebar
+            class="bg-background"
+            [items]="motionItems"
+            [activeItem]="activeMotion()"
+            (sidebarItemClick)="onMotionItemClick($event)"
+          >
+          </my-sidebar>
+        }
 
         <!-- Content Area -->
         <div class="content-area">
@@ -134,6 +143,7 @@ export class MainLayoutComponent {
     { id: 'components', label: 'Components' },
     { id: 'headless', label: 'Headless' },
     { id: 'icons', label: 'Icons' },
+    { id: 'motion', label: 'Motion' },
   ];
 
   componentItems: SidebarItem[] = [
@@ -165,6 +175,16 @@ export class MainLayoutComponent {
     { id: 'drawer', label: 'Drawer', icon: 'layout' },
     { id: 'alert', label: 'Alert', icon: 'info' },
   ];
+  motionItems: SidebarItem[] = [
+    { id: 'fade', label: 'Fade', icon: 'eye' },
+    { id: 'scale', label: 'Scale & Bounce', icon: 'maximize' },
+    { id: 'slide', label: 'Slide', icon: 'move-horizontal' },
+    { id: 'hover', label: 'Hover Effects', icon: 'mouse-pointer' },
+    { id: 'tap', label: 'Tap Effects', icon: 'pointer' },
+    { id: 'custom', label: 'Custom Options', icon: 'sliders' },
+    { id: 'stagger', label: 'Stagger', icon: 'list' },
+    { id: 'attribute', label: 'Attribute API', icon: 'code' },
+  ];
 
   themeOptions = [
     { text: 'Modern', value: 'default' },
@@ -182,11 +202,13 @@ export class MainLayoutComponent {
     { text: 'Amber', value: 'amber' },
   ];
 
-  activeSection = signal<'components' | 'icons' | 'headless' | 'themes'>(
-    'components',
-  );
   activeComponent = signal<string>('accordion');
   activeHeadless = signal<string>('overview');
+  activeSection = signal<
+    'components' | 'icons' | 'themes' | 'headless' | 'motion'
+  >('components');
+
+  activeMotion = signal<string>('fade');
   isDark = signal<boolean>(false);
 
   constructor(private router: Router) {
@@ -200,6 +222,12 @@ export class MainLayoutComponent {
           this.activeSection.set('headless');
         } else if (url.includes('/themes')) {
           this.activeSection.set('themes');
+        } else if (url.includes('/motion')) {
+          this.activeSection.set('motion');
+          const motionId = url.split('/').pop();
+          if (motionId && motionId !== 'motion') {
+            this.activeMotion.set(motionId);
+          }
         } else {
           this.activeSection.set('components');
           const componentId = url.split('/').pop();
@@ -218,7 +246,8 @@ export class MainLayoutComponent {
       | 'components'
       | 'icons'
       | 'headless'
-      | 'themes';
+      | 'themes'
+      | 'motion';
     this.activeSection.set(section);
     if (section === 'icons') {
       this.router.navigate(['/icons']);
@@ -226,6 +255,8 @@ export class MainLayoutComponent {
       this.router.navigate(['/headless']);
     } else if (section === 'themes') {
       this.router.navigate(['/themes']);
+    } else if (section === 'motion') {
+      this.router.navigate(['/motion']);
     } else {
       this.router.navigate(['/components']);
     }
@@ -260,5 +291,11 @@ export class MainLayoutComponent {
     const headlessId = event.detail;
     this.activeHeadless.set(headlessId);
     this.router.navigate(['/headless', headlessId]);
+  }
+
+  onMotionItemClick(event: any) {
+    const motionId = event.detail;
+    this.activeMotion.set(motionId);
+    this.router.navigate(['/motion', motionId]);
   }
 }

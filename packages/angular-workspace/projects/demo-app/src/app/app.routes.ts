@@ -23,6 +23,10 @@ export const routes: Routes = [
         path: 'icons',
         loadComponent: () => import('./pages/icons/icons-demo.component'),
       },
+      {
+        path: 'motion',
+        loadChildren: () => import('./motion.routes'),
+      },
     ],
   },
 ];
