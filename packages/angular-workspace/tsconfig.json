@@ -6,7 +6,10 @@
     "paths": {
       "angular-components": ["./dist/angular-components"],
       "component-library": ["dist/component-library"],
-      "@angular-components/*": ["./projects/angular-components/src/lib/*"]
+      "@angular-components/*": ["./projects/angular-components/src/lib/*"],
+      "@andersseen/icon-library": ["../icon-library/src/index.ts"],
+      "@andersseen/headless-core": ["../headless-core/src/index.ts"],
+      "stencil-library": ["../stencil-library/src/index.ts"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

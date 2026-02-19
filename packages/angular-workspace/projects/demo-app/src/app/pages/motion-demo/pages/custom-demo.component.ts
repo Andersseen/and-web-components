@@ -59,7 +59,7 @@ import {
                   max="2000"
                   step="100"
                   [(ngModel)]="customDuration"
-                  class="flex-1 h-2 bg-secondary rounded-lg appearance-none cursor-pointer"
+                  class="flex-1 h-2 bg-secondary accent-primary rounded-lg appearance-none cursor-pointer"
                 />
                 <span class="text-xs font-mono w-12 text-right"
                   >{{ customDuration }}ms</span
@@ -103,7 +103,7 @@ import {
                   max="1000"
                   step="50"
                   [(ngModel)]="customDelay"
-                  class="flex-1 h-2 bg-secondary rounded-lg appearance-none cursor-pointer"
+                  class="flex-1 h-2 bg-secondary accent-primary rounded-lg appearance-none cursor-pointer"
                 />
                 <span class="text-xs font-mono w-12 text-right"
                   >{{ customDelay }}ms</span
@@ -152,9 +152,6 @@ import {
       :host {
         display: block;
         padding-bottom: 4rem;
-      }
-      input[type='range'] {
-        @apply accent-primary;
       }
     `,
   ],

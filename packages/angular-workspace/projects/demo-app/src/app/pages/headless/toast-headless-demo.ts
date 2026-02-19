@@ -11,36 +11,60 @@ import {
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
-      <header class="demo-header">
-        <h1 class="demo-title">Toast / Notifications</h1>
-        <p class="demo-description">
+    <div class="max-w-4xl mx-auto pb-12">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Toast / Notifications
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A succinct message displayed temporarily to provide feedback. Manages
           queue, auto-dismiss timers, and ARIA live region semantics.
         </p>
       </header>
 
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="preview-area">
-            <div class="btn-grid">
-              <button class="toast-btn default" (click)="show('default')">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div
+          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
+        >
+          <div class="p-12 flex items-center justify-center min-h-[200px]">
+            <div class="flex flex-wrap gap-3 justify-center">
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-secondary text-secondary-foreground border border-border"
+                (click)="show('default')"
+              >
                 Default
               </button>
-              <button class="toast-btn success" (click)="show('success')">
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-green-600 text-white border-0"
+                (click)="show('success')"
+              >
                 ✓ Success
               </button>
-              <button class="toast-btn error" (click)="show('error')">
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-destructive text-destructive-foreground border-0"
+                (click)="show('error')"
+              >
                 ✕ Error
               </button>
-              <button class="toast-btn warning" (click)="show('warning')">
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-amber-500 text-white border-0"
+                (click)="show('warning')"
+              >
                 ⚠ Warning
               </button>
-              <button class="toast-btn info" (click)="show('info')">
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-blue-500 text-white border-0"
+                (click)="show('info')"
+              >
                 ℹ Info
               </button>
-              <button class="toast-btn dismiss" (click)="clearAll()">
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-transparent text-muted-foreground border border-border"
+                (click)="clearAll()"
+              >
                 Dismiss All
               </button>
             </div>
@@ -48,24 +72,41 @@ import {
         </div>
 
         <div
-          class="toast-container"
+          class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 w-full max-w-sm pointer-events-none"
           role="region"
           aria-label="Notifications"
           aria-live="polite"
         >
           @for (t of list(); track t.id) {
-            <div [class]="'toast-item ' + t.type" role="alert">
-              <span class="toast-message">{{ t.message }}</span>
-              <button class="toast-x" (click)="remove(t.id)">✕</button>
+            <div
+              [class]="
+                'pointer-events-auto flex items-center gap-3 p-4 rounded-lg bg-card border border-border shadow-lg animate-in slide-in-from-right-full duration-300 ' +
+                getToastClasses(t.type)
+              "
+              role="alert"
+            >
+              <span class="flex-1 text-sm font-medium">{{ t.message }}</span>
+              <button
+                class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded border-0 bg-transparent text-current opacity-50 hover:opacity-100 cursor-pointer text-xs"
+                (click)="remove(t.id)"
+              >
+                ✕
+              </button>
             </div>
           }
         </div>
       </section>
 
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createToastManager {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createToastManager {{ '}' }} from '@andersseen/headless-core';
 
 const toasts = createToastManager({{ '{' }}
     defaultDuration: 3000,
@@ -80,15 +121,24 @@ toasts.destroy();</code></pre>
         </div>
       </section>
 
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
-        <p class="demo-description" style="margin-bottom:1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           The headless core manages the toast queue, timers, and auto-dismiss.
         </p>
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           <button (click)="showRaw()">Add Raw Toast</button>
           <button (click)="clearRaw()" style="margin-left:8px;">Clear</button>
           <div style="margin-top:12px;">
@@ -105,220 +155,7 @@ toasts.destroy();</code></pre>
       </section>
     </div>
   `,
-  styles: [
-    `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-      .preview-area {
-        padding: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 200px;
-      }
-      .btn-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        justify-content: center;
-      }
-      .toast-btn {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.5rem;
-        padding: 0 1rem;
-        border: 1px solid transparent;
-        cursor: pointer;
-        transition: opacity 0.15s;
-      }
-      .toast-btn.default {
-        background: hsl(var(--secondary));
-        color: hsl(var(--secondary-foreground));
-        border-color: hsl(var(--border));
-      }
-      .toast-btn.success {
-        background: hsl(142, 76%, 36%);
-        color: white;
-      }
-      .toast-btn.error {
-        background: hsl(var(--destructive));
-        color: hsl(var(--destructive-foreground));
-      }
-      .toast-btn.warning {
-        background: hsl(38, 92%, 50%);
-        color: white;
-      }
-      .toast-btn.info {
-        background: hsl(217, 91%, 60%);
-        color: white;
-      }
-      .toast-btn.dismiss {
-        background: transparent;
-        color: hsl(var(--muted-foreground));
-        border-color: hsl(var(--border));
-      }
-      .toast-btn:hover {
-        opacity: 0.85;
-      }
-      .toast-container {
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        z-index: 100;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
-        max-width: 24rem;
-        pointer-events: none;
-      }
-      .toast-item {
-        pointer-events: auto;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.875rem 1rem;
-        border-radius: 0.5rem;
-        border: 1px solid;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        animation: slideIn 0.3s ease;
-        font-size: 0.875rem;
-      }
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateX(100%);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-      .toast-item.default {
-        background: hsl(var(--card));
-        color: hsl(var(--foreground));
-        border-color: hsl(var(--border));
-      }
-      .toast-item.success {
-        background: hsl(142, 76%, 96%);
-        color: hsl(142, 76%, 26%);
-        border-color: hsl(142, 76%, 80%);
-      }
-      .toast-item.error {
-        background: hsl(0, 84%, 96%);
-        color: hsl(0, 84%, 32%);
-        border-color: hsl(0, 84%, 80%);
-      }
-      .toast-item.warning {
-        background: hsl(38, 92%, 96%);
-        color: hsl(38, 70%, 30%);
-        border-color: hsl(38, 92%, 75%);
-      }
-      .toast-item.info {
-        background: hsl(217, 91%, 96%);
-        color: hsl(217, 91%, 35%);
-        border-color: hsl(217, 91%, 80%);
-      }
-      .toast-message {
-        flex: 1;
-        font-weight: 500;
-      }
-      .toast-x {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        background: none;
-        border-radius: 0.25rem;
-        color: inherit;
-        opacity: 0.5;
-        cursor: pointer;
-        font-size: 0.75rem;
-      }
-      .toast-x:hover {
-        opacity: 1;
-      }
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-      }
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family: 'SF Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-      }
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class ToastHeadlessDemo implements OnDestroy {
   private _msgs: Record<ToastType, string> = {
@@ -346,6 +183,22 @@ export default class ToastHeadlessDemo implements OnDestroy {
   show(type: ToastType) {
     this._mgr.actions.present(this._msgs[type], type);
   }
+
+  getToastClasses(type: ToastType) {
+    switch (type) {
+      case 'success':
+        return 'bg-green-50 text-green-900 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800';
+      case 'error':
+        return 'bg-red-50 text-red-900 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800';
+      case 'warning':
+        return 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800';
+      case 'info':
+        return 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800';
+      default:
+        return 'bg-card text-foreground border-border';
+    }
+  }
+
   remove(id: number) {
     this._mgr.actions.dismiss(id);
   }

@@ -16,6 +16,8 @@ export * from "./tooltip";
 export * from "./toast";
 export * from "./drawer";
 export * from "./alert";
+export * from "./navbar";
+export * from "./sidebar";
 
 // Export common types and utilities
 export * from "./types/common";

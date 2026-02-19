@@ -1,11 +1,11 @@
 import {
+  MyButton,
+  MyDropdown,
+  MyIcon,
   MyNavbar,
   MySidebar,
-  MyDropdown,
-  MyButton,
-  MyIcon,
 } from '@angular-components/stencil-generated/components';
-import { Component, signal, effect } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -157,7 +157,9 @@ export class MainLayoutComponent {
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
     { id: 'input', label: 'Input', icon: 'file-text' },
     { id: 'modal', label: 'Modal', icon: 'layout' },
+    { id: 'navbar', label: 'Navbar', icon: 'layout' },
     { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
+    { id: 'sidebar', label: 'Sidebar', icon: 'layout' },
     { id: 'tabs', label: 'Tabs', icon: 'file-text' },
     { id: 'toast', label: 'Toast', icon: 'bell' },
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
@@ -170,6 +172,8 @@ export class MainLayoutComponent {
     { id: 'tabs', label: 'Tabs', icon: 'file-text' },
     { id: 'accordion', label: 'Accordion', icon: 'layers' },
     { id: 'modal', label: 'Modal', icon: 'layout' },
+    { id: 'navbar', label: 'Navbar', icon: 'layout' },
+    { id: 'sidebar', label: 'Sidebar', icon: 'layout' },
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
     { id: 'toast', label: 'Toast', icon: 'bell' },
     { id: 'drawer', label: 'Drawer', icon: 'layout' },

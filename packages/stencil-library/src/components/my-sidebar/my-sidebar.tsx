@@ -1,7 +1,8 @@
-import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { IconName } from '../my-icon/icons';
+import { IconName } from '@andersseen/icon-library';
+import { createSidebar, SidebarReturn } from '@andersseen/headless-core';
 
 export type SidebarItem = {
   id: string;
@@ -54,10 +55,12 @@ export type SidebarProps = VariantProps<typeof sidebarVariants>;
   shadow: true,
 })
 export class MySidebar {
+  private sidebar: SidebarReturn;
+
   /**
    * The active navigation item ID
    */
-  @Prop() activeItem: string = 'home';
+  @Prop({ mutable: true }) activeItem: string = 'home';
 
   /**
    * Navigation items to display
@@ -88,47 +91,74 @@ export class MySidebar {
    */
   @Event() sidebarToggle: EventEmitter<boolean>;
 
-  private handleItemClick(itemId: string) {
-    this.sidebarItemClick.emit(itemId);
+  componentWillLoad() {
+    this.sidebar = createSidebar({
+      defaultActiveItem: this.activeItem,
+      onActiveItemChange: id => {
+        this.activeItem = id;
+        this.sidebarItemClick.emit(id);
+      },
+      defaultCollapsed: this.collapsed,
+      onCollapsedChange: collapsed => {
+        this.collapsed = collapsed;
+        this.sidebarToggle.emit(collapsed);
+      },
+    });
   }
 
-  private toggleSidebar() {
-    this.collapsed = !this.collapsed;
-    this.sidebarToggle.emit(this.collapsed);
+  @Watch('activeItem')
+  handleActiveItemChange(newValue: string) {
+    this.sidebar.actions.setActiveItem(newValue);
+  }
+
+  @Watch('collapsed')
+  handleCollapsedChange(newValue: boolean) {
+    this.sidebar.actions.setCollapsed(newValue);
+  }
+
+  private handleToggle() {
+    this.sidebar.actions.toggleCollapse();
   }
 
   render() {
+    const containerProps = this.sidebar.getContainerProps();
+    const toggleProps = this.sidebar.getToggleProps();
+
     return (
-      <Host>
-        <aside class={cn(sidebarVariants({ variant: this.variant, collapsed: this.collapsed }))}>
+      <Host {...containerProps}>
+        <aside class={cn(sidebarVariants({ variant: this.variant, collapsed: this.sidebar.queries.isCollapsed() }))}>
           <div class="sidebar-header">
-            <slot name="header">{!this.collapsed && <span class="sidebar-title">Navigation</span>}</slot>
-            <button class="sidebar-toggle" onClick={() => this.toggleSidebar()} aria-label="Toggle sidebar">
-              <my-icon name={this.collapsed ? 'chevron-right' : 'chevron-left'} class="icon" />
+            <slot name="header">{!this.sidebar.queries.isCollapsed() && <span class="sidebar-title">Navigation</span>}</slot>
+            <button {...toggleProps} class="sidebar-toggle" onClick={() => this.handleToggle()} aria-label="Toggle sidebar">
+              <my-icon name={this.sidebar.queries.isCollapsed() ? 'chevron-right' : 'chevron-left'} class="icon" />
             </button>
           </div>
           <nav class="sidebar-nav">
-            {this.items.map(item => (
-              <button
-                key={item.id}
-                class={cn(
-                  sidebarItemVariants({
-                    active: this.activeItem === item.id,
-                    collapsed: this.collapsed,
-                  }),
-                  'bg-transparent border-none cursor-pointer text-left',
-                )}
-                onClick={() => this.handleItemClick(item.id)}
-                title={this.collapsed ? item.label : undefined}
-              >
-                {item.icon && (
-                  <span class="item-icon">
-                    <my-icon name={item.icon} class="h-4 w-4" />
-                  </span>
-                )}
-                {!this.collapsed && <span class="item-label">{item.label}</span>}
-              </button>
-            ))}
+            {this.items.map(item => {
+              const itemProps = this.sidebar.getItemProps(item.id);
+              return (
+                <button
+                  key={item.id}
+                  {...itemProps}
+                  class={cn(
+                    sidebarItemVariants({
+                      active: this.sidebar.queries.isActive(item.id),
+                      collapsed: this.sidebar.queries.isCollapsed(),
+                    }),
+                    'bg-transparent border-none cursor-pointer text-left',
+                  )}
+                  onClick={() => this.sidebar.actions.setActiveItem(item.id)}
+                  title={this.sidebar.queries.isCollapsed() ? item.label : undefined}
+                >
+                  {item.icon && (
+                    <span class="item-icon">
+                      <my-icon name={item.icon} class="h-4 w-4" />
+                    </span>
+                  )}
+                  {!this.sidebar.queries.isCollapsed() && <span class="item-label">{item.label}</span>}
+                </button>
+              );
+            })}
           </nav>
           <div class="sidebar-footer">
             <slot name="footer"></slot>

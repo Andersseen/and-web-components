@@ -6,20 +6,26 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="overview-page">
+    <div class="max-w-4xl mx-auto pb-12">
       <!-- Hero -->
-      <div class="hero">
-        <h2 class="hero-title">Headless UI</h2>
-        <p class="hero-desc">
+      <div class="mb-12">
+        <h2 class="text-4xl font-bold tracking-tight text-foreground m-0">
+          Headless UI
+        </h2>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Unstyled, accessible UI primitives for building robust design systems.
-          <strong>You bring the styles, we handle the logic.</strong>
+          <strong class="text-foreground"
+            >You bring the styles, we handle the logic.</strong
+          >
         </p>
       </div>
 
       <!-- Benefits Grid -->
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-icon" style="color: hsl(239, 84%, 67%);">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+        <div
+          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
+        >
+          <div class="mb-4 text-[#6366f1]">
             <svg
               width="32"
               height="32"
@@ -35,16 +41,20 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="benefit-title">Total Control</h3>
-          <p class="benefit-desc">
+          <h3 class="text-base font-semibold text-foreground mb-2">
+            Total Control
+          </h3>
+          <p class="text-sm text-muted-foreground leading-relaxed m-0">
             No Shadow DOM, no style overrides. You have direct access to every
             DOM element and can style them with Tailwind, CSS Modules, or
             anything else.
           </p>
         </div>
 
-        <div class="benefit-card">
-          <div class="benefit-icon" style="color: hsl(160, 84%, 39%);">
+        <div
+          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
+        >
+          <div class="mb-4 text-[#10b981]">
             <svg
               width="32"
               height="32"
@@ -60,15 +70,19 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="benefit-title">Accessible by Default</h3>
-          <p class="benefit-desc">
+          <h3 class="text-base font-semibold text-foreground mb-2">
+            Accessible by Default
+          </h3>
+          <p class="text-sm text-muted-foreground leading-relaxed m-0">
             We handle the hard parts: ARIA attributes, keyboard navigation,
             focus management, and state logic.
           </p>
         </div>
 
-        <div class="benefit-card">
-          <div class="benefit-icon" style="color: hsl(25, 95%, 53%);">
+        <div
+          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
+        >
+          <div class="mb-4 text-[#f97316]">
             <svg
               width="32"
               height="32"
@@ -84,15 +98,19 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="benefit-title">Framework Agnostic</h3>
-          <p class="benefit-desc">
+          <h3 class="text-base font-semibold text-foreground mb-2">
+            Framework Agnostic
+          </h3>
+          <p class="text-sm text-muted-foreground leading-relaxed m-0">
             Pure JavaScript core — works with Angular, React, Vue, or vanilla
             JS. No framework lock-in.
           </p>
         </div>
 
-        <div class="benefit-card">
-          <div class="benefit-icon" style="color: hsl(280, 67%, 55%);">
+        <div
+          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
+        >
+          <div class="mb-4 text-[#a855f7]">
             <svg
               width="32"
               height="32"
@@ -108,8 +126,10 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="benefit-title">Type Safe</h3>
-          <p class="benefit-desc">
+          <h3 class="text-base font-semibold text-foreground mb-2">
+            Type Safe
+          </h3>
+          <p class="text-sm text-muted-foreground leading-relaxed m-0">
             Full TypeScript support with strongly typed state, actions, and
             configuration options.
           </p>
@@ -117,307 +137,129 @@ import { CommonModule } from '@angular/common';
       </div>
 
       <!-- How it Works -->
-      <div class="how-section">
-        <h3 class="how-title">How it works</h3>
-        <div class="how-card">
-          <div class="steps-col">
-            <div class="step">
-              <span class="step-number">1</span>
+      <div class="mb-12">
+        <h3 class="text-xl font-semibold text-foreground mb-5">How it works</h3>
+        <div
+          class="rounded-xl border border-border bg-muted/30 p-6 grid grid-cols-1 sm:grid-cols-2 gap-8 items-center"
+        >
+          <div class="flex flex-col gap-5">
+            <div class="flex gap-3">
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold"
+                >1</span
+              >
               <div>
-                <p class="step-title">Initialize Logic</p>
-                <p class="step-desc">
+                <p class="text-sm font-medium text-foreground m-0">
+                  Initialize Logic
+                </p>
+                <p class="text-xs text-muted-foreground mt-1 m-0">
                   Create the component logic with a simple function call.
                 </p>
               </div>
             </div>
-            <div class="step">
-              <span class="step-number">2</span>
+            <div class="flex gap-3">
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold"
+                >2</span
+              >
               <div>
-                <p class="step-title">Connect to UI</p>
-                <p class="step-desc">
+                <p class="text-sm font-medium text-foreground m-0">
+                  Connect to UI
+                </p>
+                <p class="text-xs text-muted-foreground mt-1 m-0">
                   Bind state and actions to your native HTML elements.
                 </p>
               </div>
             </div>
-            <div class="step">
-              <span class="step-number">3</span>
+            <div class="flex gap-3">
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold"
+                >3</span
+              >
               <div>
-                <p class="step-title">Style Away</p>
-                <p class="step-desc">
+                <p class="text-sm font-medium text-foreground m-0">
+                  Style Away
+                </p>
+                <p class="text-xs text-muted-foreground mt-1 m-0">
                   Apply your classes dynamically based on the state.
                 </p>
               </div>
             </div>
           </div>
 
-          <div class="code-col">
-            <pre><code><span style="color: #c084fc;">const</span> btn = <span style="color: #93c5fd;">createButton</span>();
+          <div class="rounded-lg bg-[#0a0a0a] p-4 overflow-x-auto shadow-sm">
+            <pre
+              class="m-0 font-mono text-xs leading-relaxed text-blue-200"
+            ><code><span class="text-purple-400">const</span> btn = <span class="text-blue-300">createButton</span>();
 
-<span style="color: #64748b;">// Your native button</span>
-&lt;<span style="color: #f472b6;">button</span>
-  <span style="color: #86efac;">class</span>="bg-blue-500 text-white ..."
-  [<span style="color: #fde68a;">disabled</span>]="btn.state.disabled"
-  (<span style="color: #fde68a;">click</span>)="btn.actions.click()"
+<span class="text-slate-500">// Your native button</span>
+&lt;<span class="text-pink-400">button</span>
+  <span class="text-green-300">class</span>="bg-blue-500 text-white ..."
+  [<span class="text-amber-200">disabled</span>]="btn.state.disabled"
+  (<span class="text-amber-200">click</span>)="btn.actions.click()"
 &gt;
   My Custom Button
-&lt;/<span style="color: #f472b6;">button</span>&gt;</code></pre>
+&lt;/<span class="text-pink-400">button</span>&gt;</code></pre>
           </div>
         </div>
       </div>
 
       <!-- Available Components -->
-      <div class="components-section">
-        <h3 class="how-title">Available Components</h3>
-        <div class="components-grid">
-          <a class="component-card" href="/headless/button">
-            <span class="component-icon">🔘</span>
-            <span class="component-name">Button</span>
-            <span class="component-desc"
+      <div class="mb-12">
+        <h3 class="text-xl font-semibold text-foreground mb-5">
+          Available Components
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <a
+            class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
+            href="/headless/button"
+          >
+            <span class="text-3xl mb-3">🔘</span>
+            <span class="text-sm font-semibold text-foreground mb-1"
+              >Button</span
+            >
+            <span class="text-[11px] text-muted-foreground leading-snug"
               >Loading, disabled, click handling</span
             >
           </a>
-          <a class="component-card" href="/headless/dropdown">
-            <span class="component-icon">📋</span>
-            <span class="component-name">Dropdown</span>
-            <span class="component-desc"
+          <a
+            class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
+            href="/headless/dropdown"
+          >
+            <span class="text-3xl mb-3">📋</span>
+            <span class="text-sm font-semibold text-foreground mb-1"
+              >Dropdown</span
+            >
+            <span class="text-[11px] text-muted-foreground leading-snug"
               >Menu, keyboard nav, outside click</span
             >
           </a>
-          <a class="component-card" href="/headless/tabs">
-            <span class="component-icon">📑</span>
-            <span class="component-name">Tabs</span>
-            <span class="component-desc"
+          <a
+            class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
+            href="/headless/tabs"
+          >
+            <span class="text-3xl mb-3">📑</span>
+            <span class="text-sm font-semibold text-foreground mb-1">Tabs</span>
+            <span class="text-[11px] text-muted-foreground leading-snug"
               >Tab panels, ARIA, keyboard support</span
             >
           </a>
-          <a class="component-card" href="/headless/accordion">
-            <span class="component-icon">🪗</span>
-            <span class="component-name">Accordion</span>
-            <span class="component-desc">Expand/collapse, multi-select</span>
+          <a
+            class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
+            href="/headless/accordion"
+          >
+            <span class="text-3xl mb-3">🪗</span>
+            <span class="text-sm font-semibold text-foreground mb-1"
+              >Accordion</span
+            >
+            <span class="text-[11px] text-muted-foreground leading-snug"
+              >Expand/collapse, multi-select</span
+            >
           </a>
         </div>
       </div>
     </div>
   `,
-  styles: [
-    `
-      .overview-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-
-      /* Hero */
-      .hero {
-        margin-bottom: 3rem;
-      }
-
-      .hero-title {
-        font-size: 2.25rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .hero-desc {
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 36rem;
-        line-height: 1.7;
-        margin-top: 1rem;
-      }
-
-      .hero-desc strong {
-        color: hsl(var(--foreground));
-      }
-
-      /* Benefits Grid */
-      .benefits-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-bottom: 3rem;
-      }
-
-      @media (max-width: 640px) {
-        .benefits-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .benefit-card {
-        padding: 1.5rem;
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        transition:
-          box-shadow 0.2s ease,
-          border-color 0.2s ease;
-      }
-
-      .benefit-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        border-color: hsl(var(--ring));
-      }
-
-      .benefit-icon {
-        margin-bottom: 1rem;
-      }
-
-      .benefit-title {
-        font-size: 0.9375rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0 0 0.5rem 0;
-      }
-
-      .benefit-desc {
-        font-size: 0.8125rem;
-        color: hsl(var(--muted-foreground));
-        line-height: 1.6;
-        margin: 0;
-      }
-
-      /* How it Works */
-      .how-section {
-        margin-bottom: 3rem;
-      }
-
-      .how-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-
-      .how-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--muted) / 0.3);
-        padding: 1.5rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        align-items: center;
-      }
-
-      @media (max-width: 640px) {
-        .how-card {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .steps-col {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-
-      .step {
-        display: flex;
-        gap: 0.75rem;
-      }
-
-      .step-number {
-        display: flex;
-        height: 1.5rem;
-        width: 1.5rem;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        border-radius: 9999px;
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        font-size: 0.625rem;
-        font-weight: 700;
-      }
-
-      .step-title {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .step-desc {
-        font-size: 0.75rem;
-        color: hsl(var(--muted-foreground));
-        margin: 0.25rem 0 0 0;
-      }
-
-      .code-col {
-        border-radius: 0.5rem;
-        background: #0a0a0a;
-        padding: 1rem;
-        overflow-x: auto;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      }
-
-      .code-col pre {
-        margin: 0;
-        font-family: 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
-        font-size: 0.75rem;
-        line-height: 1.7;
-        color: #dbeafe;
-      }
-
-      /* Available Components */
-      .components-section {
-        margin-bottom: 3rem;
-      }
-
-      .components-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.75rem;
-      }
-
-      @media (max-width: 640px) {
-        .components-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      .component-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 1.5rem 1rem;
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        text-decoration: none;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-
-      .component-card:hover {
-        border-color: hsl(var(--primary));
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        transform: translateY(-2px);
-      }
-
-      .component-icon {
-        font-size: 1.75rem;
-        margin-bottom: 0.75rem;
-      }
-
-      .component-name {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin-bottom: 0.25rem;
-      }
-
-      .component-desc {
-        font-size: 0.6875rem;
-        color: hsl(var(--muted-foreground));
-        line-height: 1.4;
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class OverviewDemo {}

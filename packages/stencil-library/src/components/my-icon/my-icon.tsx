@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host } from '@stencil/core';
-import { icons, IconName } from './icons';
+import { getIcon, IconName } from '@andersseen/icon-library';
 
 @Component({
   tag: 'my-icon',
@@ -27,11 +27,24 @@ export class MyIcon {
    */
   @Prop() strokeWidth: string | number = 2;
 
+  private element?: SVGElement;
+
+  componentDidRender() {
+    console.log(`[MyIcon] componentDidRender for "${this.name}"`);
+    if (this.element && this.name) {
+      const iconContent = getIcon(this.name);
+      if (iconContent) {
+        this.element.innerHTML = iconContent;
+      }
+    }
+  }
+
   render() {
-    const iconContent = icons[this.name];
+    console.log(`[MyIcon] rendering "${this.name}"`);
+    const iconContent = getIcon(this.name);
 
     if (!iconContent) {
-      console.warn(`Icon "${this.name}\" not found.`);
+      console.warn(`[MyIcon] Icon "${this.name}" not found in registry.`);
       return null;
     }
 
@@ -50,7 +63,7 @@ export class MyIcon {
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          {iconContent}
+          <g ref={el => (this.element = el as SVGElement)}></g>
         </svg>
       </Host>
     );
