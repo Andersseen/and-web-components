@@ -3,6 +3,7 @@ import {
   MyIcon,
 } from '@angular-components/stencil-generated/components';
 import { Component } from '@angular/core';
+import { registerIcons, ALL_ICONS } from '@andersseen/icon-library';
 
 @Component({
   selector: 'app-icons-demo',

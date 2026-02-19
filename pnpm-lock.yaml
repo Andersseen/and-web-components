@@ -24,8 +24,11 @@ importers:
   packages/angular-workspace:
     dependencies:
       '@andersseen/headless-core':
-        specifier: file:../headless-core
+        specifier: workspace:*
         version: link:../headless-core
+      '@andersseen/icon-library':
+        specifier: workspace:*
+        version: link:../icon-library
       '@angular/animations':
         specifier: ^21.1.3
         version: 21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0))
@@ -59,12 +62,21 @@ importers:
       '@my-lib/motion-core':
         specifier: workspace:*
         version: link:../motion-core
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
       stencil-library:
-        specifier: file:../stencil-library
+        specifier: workspace:*
         version: link:../stencil-library
+      tailwind-merge:
+        specifier: ^3.4.0
+        version: 3.4.0
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
@@ -157,10 +169,10 @@ importers:
   packages/stencil-library:
     dependencies:
       '@andersseen/headless-core':
-        specifier: file:../headless-core
+        specifier: workspace:*
         version: link:../headless-core
       '@andersseen/icon-library':
-        specifier: file:../icon-library
+        specifier: workspace:*
         version: link:../icon-library
       '@babel/runtime':
         specifier: ^7.26.0

@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host } from '@stencil/core';
-import { icons, IconName } from '@andersseen/icon-library';
+import { getIcon, IconName } from '@andersseen/icon-library';
 
 @Component({
   tag: 'my-icon',
@@ -30,8 +30,9 @@ export class MyIcon {
   private element?: SVGElement;
 
   componentDidRender() {
+    console.log(`[MyIcon] componentDidRender for "${this.name}"`);
     if (this.element && this.name) {
-      const iconContent = icons[this.name];
+      const iconContent = getIcon(this.name);
       if (iconContent) {
         this.element.innerHTML = iconContent;
       }
@@ -39,10 +40,11 @@ export class MyIcon {
   }
 
   render() {
-    const iconContent = icons[this.name];
+    console.log(`[MyIcon] rendering "${this.name}"`);
+    const iconContent = getIcon(this.name);
 
     if (!iconContent) {
-      console.warn(`Icon "${this.name}" not found.`);
+      console.warn(`[MyIcon] Icon "${this.name}" not found in registry.`);
       return null;
     }
 

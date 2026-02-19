@@ -1,11 +1,11 @@
 import {
+  MyButton,
+  MyDropdown,
+  MyIcon,
   MyNavbar,
   MySidebar,
-  MyDropdown,
-  MyButton,
-  MyIcon,
 } from '@angular-components/stencil-generated/components';
-import { Component, signal, effect } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 

@@ -1,3 +1,4 @@
+// Basic icons
 export const CLOSE = '<g><path d="M18 6 6 18" /><path d="m6 6 12 12" /></g>';
 export const CHEVRON_DOWN = '<path d="m6 9 6 6 6-6" />';
 export const CHEVRON_LEFT = '<path d="m15 18-6-6 6-6" />';
@@ -5,10 +6,22 @@ export const CHEVRON_RIGHT = '<path d="m9 18 6-6-6-6" />';
 export const CHEVRON_UP = '<path d="m18 15-6-6-6 6" />';
 export const ARROW_UP =
   '<g><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></g>';
+export const ARROW_DOWN =
+  '<g><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></g>';
+export const ARROW_LEFT =
+  '<g><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></g>';
+export const ARROW_RIGHT =
+  '<g><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></g>';
+
 export const INFO =
   '<g><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></g>';
 export const ERROR =
   '<g><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></g>';
+export const SUCCESS =
+  '<g><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></g>';
+export const WARNING =
+  '<g><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></g>';
+
 export const LOADER = '<path d="M21 12a9 9 0 1 1-6.219-8.56" />';
 export const HOME =
   '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />';
@@ -40,12 +53,7 @@ export const MESSAGE_SQUARE =
 export const SUN =
   '<g><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></g>';
 export const MOON = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />';
-export const ARROW_DOWN =
-  '<line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>';
-export const ARROW_LEFT =
-  '<line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>';
-export const ARROW_RIGHT =
-  '<line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>';
+
 export const MAXIMIZE =
   '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>';
 export const MINIMIZE =
@@ -64,7 +72,7 @@ export const EYE_OFF =
 export const ACCESSIBILITY =
   '<circle cx="12" cy="4" r="1.5"></circle><path d="M4 8v16M20 8v16M16 8v3a6 6 0 0 1-8 0V8"></path><path d="M4 11h16"></path>';
 
-// New icons for Motion Demo
+// Motion icons
 export const MOVE_HORIZONTAL =
   '<polyline points="18 8 22 12 18 16"></polyline><polyline points="6 8 2 12 6 16"></polyline><line x1="2" y1="12" x2="22" y2="12"></line>';
 export const MOUSE_POINTER =
@@ -78,15 +86,61 @@ export const LIST =
 export const CODE =
   '<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>';
 
-export const icons = {
+// Additional common icons
+export const SEARCH =
+  '<circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />';
+export const PLUS = '<path d="M5 12h14" /><path d="M12 5v14" />';
+export const MINUS = '<path d="M5 12h14" />';
+export const CHECK = '<path d="m20 6-11 11-5-5" />';
+export const TRASH =
+  '<path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />';
+export const EDIT =
+  '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />';
+export const EXTERNAL_LINK =
+  '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />';
+export const GITHUB =
+  '<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" />';
+export const MAIL =
+  '<rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />';
+export const HEART =
+  '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />';
+export const SHARE =
+  '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" />';
+export const COPY =
+  '<rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />';
+export const DOWNLOAD =
+  '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />';
+export const UPLOAD =
+  '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />';
+export const REFRESH_CW =
+  '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M3 21v-5h5" />';
+export const FILTER =
+  '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />';
+export const TERMINAL =
+  '<polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" />';
+export const MONITOR =
+  '<rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />';
+export const SMARTPHONE =
+  '<rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />';
+
+/**
+ * A comprehensive map of all available icons.
+ * Importing this will prevent tree-shaking. Use individual exports instead.
+ */
+export const ALL_ICONS = {
   close: CLOSE,
   "chevron-down": CHEVRON_DOWN,
   "chevron-left": CHEVRON_LEFT,
   "chevron-right": CHEVRON_RIGHT,
   "chevron-up": CHEVRON_UP,
   "arrow-up": ARROW_UP,
+  "arrow-down": ARROW_DOWN,
+  "arrow-left": ARROW_LEFT,
+  "arrow-right": ARROW_RIGHT,
   info: INFO,
   error: ERROR,
+  success: SUCCESS,
+  warning: WARNING,
   loader: LOADER,
   home: HOME,
   layout: LAYOUT,
@@ -105,9 +159,6 @@ export const icons = {
   "message-square": MESSAGE_SQUARE,
   sun: SUN,
   moon: MOON,
-  "arrow-down": ARROW_DOWN,
-  "arrow-left": ARROW_LEFT,
-  "arrow-right": ARROW_RIGHT,
   maximize: MAXIMIZE,
   minimize: MINIMIZE,
   activity: ACTIVITY,
@@ -123,7 +174,25 @@ export const icons = {
   sliders: SLIDERS,
   list: LIST,
   code: CODE,
+  search: SEARCH,
+  plus: PLUS,
+  minus: MINUS,
+  check: CHECK,
+  trash: TRASH,
+  edit: EDIT,
+  "external-link": EXTERNAL_LINK,
+  github: GITHUB,
+  mail: MAIL,
+  heart: HEART,
+  share: SHARE,
+  copy: COPY,
+  download: DOWNLOAD,
+  upload: UPLOAD,
+  "refresh-cw": REFRESH_CW,
+  filter: FILTER,
+  terminal: TERMINAL,
+  monitor: MONITOR,
+  smartphone: SMARTPHONE,
 };
 
-export type IconName = keyof typeof icons;
-export const iconNames = Object.keys(icons) as IconName[];
+export type IconName = keyof typeof ALL_ICONS | (string & {});
