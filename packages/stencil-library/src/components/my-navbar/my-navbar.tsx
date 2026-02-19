@@ -1,6 +1,7 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
+import { createNavbar, NavbarReturn } from '@andersseen/headless-core';
 
 export type NavItem = {
   id: string;
@@ -43,10 +44,12 @@ export type NavbarProps = VariantProps<typeof navbarVariants>;
   shadow: true,
 })
 export class MyNavbar {
+  private navbar: NavbarReturn;
+
   /**
    * The active navigation item ID
    */
-  @Prop() activeItem: string = 'home';
+  @Prop({ mutable: true }) activeItem: string = 'home';
 
   /**
    * Navigation items to display
@@ -70,18 +73,39 @@ export class MyNavbar {
 
   @State() mobileMenuOpen: boolean = false;
 
-  private handleNavClick(itemId: string) {
-    this.navItemClick.emit(itemId);
-    this.mobileMenuOpen = false;
+  componentWillLoad() {
+    this.navbar = createNavbar({
+      defaultActiveItem: this.activeItem,
+      onActiveItemChange: id => {
+        this.activeItem = id;
+        this.navItemClick.emit(id);
+      },
+      mobileMenuOpen: this.mobileMenuOpen,
+      onMobileMenuChange: open => {
+        this.mobileMenuOpen = open;
+      },
+    });
   }
 
-  private toggleMobileMenu() {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
+  @Watch('activeItem')
+  handleActiveItemChange(newValue: string) {
+    this.navbar.actions.setActiveItem(newValue);
+  }
+
+  private handleToggle() {
+    this.navbar.actions.toggleMobileMenu();
+  }
+
+  private handleClose() {
+    this.navbar.actions.closeMobileMenu();
   }
 
   render() {
+    const containerProps = this.navbar.getContainerProps();
+    const toggleProps = this.navbar.getToggleProps();
+
     return (
-      <Host>
+      <Host {...containerProps}>
         <nav class={cn(navbarVariants({ variant: this.variant }))}>
           <div class="navbar-container">
             <div class="navbar-brand">
@@ -92,15 +116,19 @@ export class MyNavbar {
 
             {/* Desktop Menu */}
             <div class="navbar-menu hidden md:flex">
-              {this.items.map(item => (
-                <button
-                  key={item.id}
-                  class={cn(navItemVariants({ active: this.activeItem === item.id }), 'bg-transparent border-none cursor-pointer')}
-                  onClick={() => this.handleNavClick(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {this.items.map(item => {
+                const itemProps = this.navbar.getItemProps(item.id);
+                return (
+                  <button
+                    key={item.id}
+                    {...itemProps}
+                    class={cn(navItemVariants({ active: this.navbar.queries.isActive(item.id) }), 'bg-transparent border-none cursor-pointer')}
+                    onClick={() => this.navbar.actions.setActiveItem(item.id)}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
 
             <div class="navbar-actions hidden md:flex">
@@ -110,31 +138,38 @@ export class MyNavbar {
             {/* Mobile Menu Toggle */}
             <div class="flex md:hidden">
               <button
+                {...toggleProps}
                 class="p-2 -mr-2 text-foreground bg-transparent border-none cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md"
-                onClick={() => this.toggleMobileMenu()}
-                aria-label="Toggle menu"
+                onClick={() => this.handleToggle()}
               >
-                <my-icon name="menu" class="h-6 w-6" />
+                <my-icon name={this.mobileMenuOpen ? 'close' : 'menu'} class="h-6 w-6" />
               </button>
             </div>
           </div>
         </nav>
 
         {/* Mobile Drawer */}
-        <my-drawer open={this.mobileMenuOpen} placement="right" onMyClose={() => (this.mobileMenuOpen = false)} class="md:hidden">
+        <my-drawer open={this.mobileMenuOpen} placement="right" onMyClose={() => this.handleClose()} class="md:hidden">
           <div slot="header" class="font-bold text-lg">
             Menu
           </div>
           <div class="flex flex-col gap-2 mt-2">
-            {this.items.map(item => (
-              <button
-                key={item.id}
-                class={cn(navItemVariants({ active: this.activeItem === item.id }), 'bg-transparent border-none cursor-pointer w-full text-left px-4 py-3 text-base')}
-                onClick={() => this.handleNavClick(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
+            {this.items.map(item => {
+              const itemProps = this.navbar.getItemProps(item.id);
+              return (
+                <button
+                  key={item.id}
+                  {...itemProps}
+                  class={cn(navItemVariants({ active: this.navbar.queries.isActive(item.id) }), 'bg-transparent border-none cursor-pointer w-full text-left px-4 py-3 text-base')}
+                  onClick={() => {
+                    this.navbar.actions.setActiveItem(item.id);
+                    this.handleClose();
+                  }}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
             <div class="mt-4 pt-4 border-t px-4">
               <slot name="actions"></slot>
             </div>

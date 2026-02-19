@@ -46,6 +46,14 @@ const headlessRoutes: Routes = [
     path: 'alert',
     loadComponent: () => import('./pages/headless/alert-headless-demo'),
   },
+  {
+    path: 'navbar',
+    loadComponent: () => import('./pages/headless/navbar-headless-demo'),
+  },
+  {
+    path: 'sidebar',
+    loadComponent: () => import('./pages/headless/sidebar-headless-demo'),
+  },
 ];
 
 export default headlessRoutes;
