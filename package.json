@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "build:headless": "pnpm -C packages/headless-core build",
+    "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
     "build:stencil": "pnpm build:headless && pnpm -C packages/stencil-library build",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace start",

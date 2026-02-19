@@ -1,8 +1,0 @@
-.DS_Store
-node_modules/
-dist/
-dist-cjs/
-*.log
-*.tgz
-.vscode/
-.idea/

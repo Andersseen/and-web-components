@@ -63,7 +63,7 @@
   "license": "MIT",
   "dependencies": {
     "@andersseen/headless-core": "file:../headless-core",
-    "@andersseen/icon-library": "workspace:*",
+    "@andersseen/icon-library": "file:../icon-library",
     "@babel/runtime": "^7.26.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
