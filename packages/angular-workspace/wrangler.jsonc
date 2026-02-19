@@ -1,5 +1,5 @@
 {
   "name": "and-web-components-demo",
-  "pages_build_output_dir": "dist/demo-app",
+  "pages_build_output_dir": "dist/demo-app/browser",
   "compatibility_date": "2025-02-07",
 }
