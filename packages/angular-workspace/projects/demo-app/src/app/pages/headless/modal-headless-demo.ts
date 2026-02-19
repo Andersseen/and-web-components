@@ -7,22 +7,31 @@ import { createModal } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
+    <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
-      <header class="demo-header">
-        <h1 class="demo-title">Modal / Dialog</h1>
-        <p class="demo-description">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Modal / Dialog
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A window overlaid on the primary content. Manages focus trapping,
           keyboard navigation, and ARIA dialog semantics.
         </p>
       </header>
 
       <!-- Preview Section -->
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="preview-area">
-            <button class="trigger-btn" (click)="openModal()">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div
+          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
+        >
+          <div class="p-12 flex items-center justify-center min-h-[200px]">
+            <button
+              class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-5 bg-primary text-primary-foreground border-0 cursor-pointer transition-opacity hover:opacity-90"
+              (click)="openModal()"
+            >
               Open Modal
             </button>
           </div>
@@ -31,35 +40,45 @@ import { createModal } from '@andersseen/headless-core';
         <!-- Modal Overlay + Content -->
         @if (isOpen()) {
           <div
-            class="modal-overlay"
+            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in"
             (click)="onOverlayClick()"
             [attr.data-state]="isOpen() ? 'open' : 'closed'"
           ></div>
-          <div class="modal-container">
+          <div
+            class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+          >
             <div
-              class="modal-content"
+              class="relative w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-2xl pointer-events-auto animate-scale-in"
               role="dialog"
               aria-modal="true"
               [attr.data-state]="isOpen() ? 'open' : 'closed'"
               tabindex="-1"
             >
-              <div class="modal-header">
-                <h3 class="modal-title">Are you sure?</h3>
-                <p class="modal-desc">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold text-foreground m-0 mb-2">
+                  Are you sure?
+                </h3>
+                <p class="text-sm text-muted-foreground leading-relaxed m-0">
                   This action cannot be undone. This will permanently delete
                   your account and remove your data from our servers.
                 </p>
               </div>
-              <div class="modal-footer">
-                <button class="btn-cancel" (click)="closeModal()">
+              <div class="flex justify-end gap-2">
+                <button
+                  class="px-4 py-2 rounded-md text-sm font-medium bg-transparent text-foreground border border-border cursor-pointer transition-colors hover:bg-accent"
+                  (click)="closeModal()"
+                >
                   Cancel
                 </button>
-                <button class="btn-confirm" (click)="confirm()">
+                <button
+                  class="px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground border-0 cursor-pointer transition-opacity hover:opacity-90"
+                  (click)="confirm()"
+                >
                   Continue
                 </button>
               </div>
               <button
-                class="btn-close"
+                class="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded bg-transparent border-0 text-muted-foreground cursor-pointer text-sm transition-all hover:bg-accent hover:text-foreground"
                 aria-label="Close"
                 (click)="closeModal()"
               >
@@ -71,10 +90,16 @@ import { createModal } from '@andersseen/headless-core';
       </section>
 
       <!-- Usage Code -->
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createModal {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createModal {{ '}' }} from '@andersseen/headless-core';
 
 const modal = createModal({{ '{' }}
     closeOnEscape: true,
@@ -98,16 +123,25 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
       </section>
 
       <!-- Headless Raw Example -->
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
-        <p class="demo-description" style="margin-bottom: 1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           The headless core manages open/close state, Escape key, and overlay
           click. You just render the elements.
         </p>
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           <button (click)="openRaw()">Open Raw Modal</button>
 
           @if (isRawOpen()) {
@@ -136,117 +170,6 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
   `,
   styles: [
     `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-
-      .preview-area {
-        padding: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 200px;
-      }
-
-      /* Trigger */
-      .trigger-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.5rem;
-        padding: 0 1.25rem;
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        border: none;
-        cursor: pointer;
-        transition: all 0.15s ease;
-      }
-
-      .trigger-btn:hover {
-        opacity: 0.9;
-      }
-
-      /* Modal */
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 50;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(4px);
-        animation: fadeIn 0.2s ease;
-      }
-
-      .modal-container {
-        position: fixed;
-        inset: 0;
-        z-index: 51;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none;
-      }
-
-      .modal-content {
-        position: relative;
-        width: 100%;
-        max-width: 28rem;
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        padding: 1.5rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-        pointer-events: auto;
-        animation: scaleIn 0.2s ease;
-      }
-
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -254,6 +177,9 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
         to {
           opacity: 1;
         }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.2s ease;
       }
 
       @keyframes scaleIn {
@@ -266,131 +192,8 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
           transform: scale(1);
         }
       }
-
-      .modal-header {
-        margin-bottom: 1.5rem;
-      }
-
-      .modal-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0 0 0.5rem 0;
-      }
-
-      .modal-desc {
-        font-size: 0.875rem;
-        color: hsl(var(--muted-foreground));
-        line-height: 1.6;
-        margin: 0;
-      }
-
-      .modal-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: 0.5rem;
-      }
-
-      .btn-cancel {
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        background: transparent;
-        color: hsl(var(--foreground));
-        border: 1px solid hsl(var(--border));
-        cursor: pointer;
-        transition: background 0.15s ease;
-      }
-
-      .btn-cancel:hover {
-        background: hsl(var(--accent));
-      }
-
-      .btn-confirm {
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        border: none;
-        cursor: pointer;
-        transition: opacity 0.15s ease;
-      }
-
-      .btn-confirm:hover {
-        opacity: 0.9;
-      }
-
-      .btn-close {
-        position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
-        width: 1.75rem;
-        height: 1.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.25rem;
-        background: none;
-        border: none;
-        color: hsl(var(--muted-foreground));
-        cursor: pointer;
-        font-size: 0.875rem;
-        transition: all 0.15s ease;
-      }
-
-      .btn-close:hover {
-        background: hsl(var(--accent));
-        color: hsl(var(--foreground));
-      }
-
-      /* Code block */
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family:
-          'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-
-      /* Headless section */
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-        letter-spacing: 0.025em;
-      }
-
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
+      .animate-scale-in {
+        animation: scaleIn 0.2s ease;
       }
     `,
   ],

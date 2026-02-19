@@ -7,34 +7,47 @@ import { createTooltip } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
+    <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
-      <header class="demo-header">
-        <h1 class="demo-title">Tooltip</h1>
-        <p class="demo-description">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Tooltip
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A popup that displays information related to an element when the
           element receives keyboard focus or the mouse hovers over it.
         </p>
       </header>
 
       <!-- Preview Section -->
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="preview-area">
-            <div class="tooltip-grid">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div
+          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
+        >
+          <div class="p-12 flex items-center justify-center min-h-[300px]">
+            <div class="grid grid-cols-2 gap-8">
               <!-- Top -->
               <div
-                class="tooltip-wrapper"
+                class="relative inline-flex justify-center"
                 (mouseenter)="showTop()"
                 (mouseleave)="hideTop()"
                 (focusin)="showTop()"
                 (focusout)="hideTop()"
               >
-                <button class="trigger-btn" tabindex="0">Hover me (Top)</button>
+                <button
+                  class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                  tabindex="0"
+                >
+                  Hover me (Top)
+                </button>
                 <div
-                  class="tooltip-content tooltip-top"
-                  [class.is-visible]="isTopVisible()"
+                  class="absolute z-50 px-3 py-1.5 rounded-md bg-popover text-popover-foreground border border-border text-[13px] shadow-md pointer-events-none whitespace-nowrap opacity-0 invisible transition-all duration-150 bottom-full left-1/2 -translate-x-1/2 translate-y-1 mb-2"
+                  [class.opacity-100]="isTopVisible()"
+                  [class.visible]="isTopVisible()"
+                  [class.translate-y-0]="isTopVisible()"
                   role="tooltip"
                 >
                   <span>Add to library</span>
@@ -43,18 +56,23 @@ import { createTooltip } from '@andersseen/headless-core';
 
               <!-- Bottom -->
               <div
-                class="tooltip-wrapper"
+                class="relative inline-flex justify-center"
                 (mouseenter)="showBottom()"
                 (mouseleave)="hideBottom()"
                 (focusin)="showBottom()"
                 (focusout)="hideBottom()"
               >
-                <button class="trigger-btn" tabindex="0">
+                <button
+                  class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                  tabindex="0"
+                >
                   Hover me (Bottom)
                 </button>
                 <div
-                  class="tooltip-content tooltip-bottom"
-                  [class.is-visible]="isBottomVisible()"
+                  class="absolute z-50 px-3 py-1.5 rounded-md bg-popover text-popover-foreground border border-border text-[13px] shadow-md pointer-events-none whitespace-nowrap opacity-0 invisible transition-all duration-150 top-full left-1/2 -translate-x-1/2 -translate-y-1 mt-2"
+                  [class.opacity-100]="isBottomVisible()"
+                  [class.visible]="isBottomVisible()"
+                  [class.translate-y-0]="isBottomVisible()"
                   role="tooltip"
                 >
                   <span>View details</span>
@@ -63,18 +81,23 @@ import { createTooltip } from '@andersseen/headless-core';
 
               <!-- Left -->
               <div
-                class="tooltip-wrapper"
+                class="relative inline-flex justify-center"
                 (mouseenter)="showLeft()"
                 (mouseleave)="hideLeft()"
                 (focusin)="showLeft()"
                 (focusout)="hideLeft()"
               >
-                <button class="trigger-btn" tabindex="0">
+                <button
+                  class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                  tabindex="0"
+                >
                   Hover me (Left)
                 </button>
                 <div
-                  class="tooltip-content tooltip-left"
-                  [class.is-visible]="isLeftVisible()"
+                  class="absolute z-50 px-3 py-1.5 rounded-md bg-popover text-popover-foreground border border-border text-[13px] shadow-md pointer-events-none whitespace-nowrap opacity-0 invisible transition-all duration-150 right-full top-1/2 -translate-y-1/2 translate-x-1 mr-2"
+                  [class.opacity-100]="isLeftVisible()"
+                  [class.visible]="isLeftVisible()"
+                  [class.translate-x-0]="isLeftVisible()"
                   role="tooltip"
                 >
                   <span>Edit item</span>
@@ -83,18 +106,23 @@ import { createTooltip } from '@andersseen/headless-core';
 
               <!-- Right -->
               <div
-                class="tooltip-wrapper"
+                class="relative inline-flex justify-center"
                 (mouseenter)="showRight()"
                 (mouseleave)="hideRight()"
                 (focusin)="showRight()"
                 (focusout)="hideRight()"
               >
-                <button class="trigger-btn" tabindex="0">
+                <button
+                  class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                  tabindex="0"
+                >
                   Hover me (Right)
                 </button>
                 <div
-                  class="tooltip-content tooltip-right"
-                  [class.is-visible]="isRightVisible()"
+                  class="absolute z-50 px-3 py-1.5 rounded-md bg-popover text-popover-foreground border border-border text-[13px] shadow-md pointer-events-none whitespace-nowrap opacity-0 invisible transition-all duration-150 left-full top-1/2 -translate-y-1/2 -translate-x-1 ml-2"
+                  [class.opacity-100]="isRightVisible()"
+                  [class.visible]="isRightVisible()"
+                  [class.translate-x-0]="isRightVisible()"
                   role="tooltip"
                 >
                   <span>Share link</span>
@@ -106,10 +134,16 @@ import { createTooltip } from '@andersseen/headless-core';
       </section>
 
       <!-- Usage Code -->
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createTooltip {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createTooltip {{ '}' }} from '@andersseen/headless-core';
 
 const tooltip = createTooltip({{ '{' }}
     placement: 'top',
@@ -134,16 +168,25 @@ tooltip.destroy();</code></pre>
       </section>
 
       <!-- Headless Raw Example -->
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
-        <p class="demo-description" style="margin-bottom: 1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           The headless core manages visibility with configurable delays. You
           just render the tooltip element.
         </p>
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           <span
             (mouseenter)="showRaw()"
             (mouseleave)="hideRaw()"
@@ -164,219 +207,7 @@ tooltip.destroy();</code></pre>
       </section>
     </div>
   `,
-  styles: [
-    `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-
-      .preview-area {
-        padding: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 300px;
-      }
-
-      .tooltip-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-
-      .tooltip-wrapper {
-        position: relative;
-        display: inline-flex;
-        justify-content: center;
-      }
-
-      .trigger-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.5rem;
-        padding: 0 1rem;
-        background: transparent;
-        color: hsl(var(--foreground));
-        border: 1px solid hsl(var(--border));
-        cursor: pointer;
-        transition: all 0.15s ease;
-      }
-
-      .trigger-btn:hover {
-        background: hsl(var(--accent));
-        color: hsl(var(--accent-foreground));
-      }
-
-      .trigger-btn:focus-visible {
-        outline: 2px solid hsl(var(--ring));
-        outline-offset: 2px;
-      }
-
-      /* Tooltip content */
-      .tooltip-content {
-        position: absolute;
-        z-index: 50;
-        padding: 0.375rem 0.75rem;
-        border-radius: 0.375rem;
-        background: hsl(var(--popover));
-        color: hsl(var(--popover-foreground));
-        border: 1px solid hsl(var(--border));
-        font-size: 0.8125rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        pointer-events: none;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition:
-          opacity 0.15s ease,
-          visibility 0.15s ease,
-          transform 0.15s ease;
-      }
-
-      .tooltip-content.is-visible {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .tooltip-top {
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%) translateY(4px);
-        margin-bottom: 0.5rem;
-      }
-
-      .tooltip-top.is-visible {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      .tooltip-bottom {
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-4px);
-        margin-top: 0.5rem;
-      }
-
-      .tooltip-bottom.is-visible {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      .tooltip-left {
-        right: 100%;
-        top: 50%;
-        transform: translateY(-50%) translateX(4px);
-        margin-right: 0.5rem;
-      }
-
-      .tooltip-left.is-visible {
-        transform: translateY(-50%) translateX(0);
-      }
-
-      .tooltip-right {
-        left: 100%;
-        top: 50%;
-        transform: translateY(-50%) translateX(-4px);
-        margin-left: 0.5rem;
-      }
-
-      .tooltip-right.is-visible {
-        transform: translateY(-50%) translateX(0);
-      }
-
-      /* Code block */
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family:
-          'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-
-      /* Headless section */
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-        letter-spacing: 0.025em;
-      }
-
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class TooltipHeadlessDemo implements OnDestroy {
   private _top = createTooltip({

@@ -7,32 +7,38 @@ import { createAccordion } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
+    <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
-      <header class="demo-header">
-        <h1 class="demo-title">Accordion</h1>
-        <p class="demo-description">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Accordion
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A vertically stacked set of interactive headings that each reveal a
           section of content.
         </p>
       </header>
 
       <!-- Preview Section -->
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="accordion-root">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div
+          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8"
+        >
+          <div class="max-w-xl mx-auto">
             @for (item of faqItems; track item.id) {
-              <div class="accordion-item">
+              <div class="border-b border-border">
                 <button
-                  class="accordion-trigger"
+                  class="flex w-full items-center justify-between py-4 text-[15px] font-medium bg-transparent border-0 text-foreground cursor-pointer text-left hover:underline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 focus-visible:rounded"
                   [attr.aria-expanded]="isExpanded(item.id)"
                   (click)="toggleItem(item.id)"
                 >
                   <span>{{ item.question }}</span>
                   <svg
-                    class="chevron"
-                    [class.is-open]="isExpanded(item.id)"
+                    class="shrink-0 text-muted-foreground transition-transform duration-200"
+                    [class.rotate-180]="isExpanded(item.id)"
                     width="16"
                     height="16"
                     viewBox="0 0 24 24"
@@ -46,8 +52,12 @@ import { createAccordion } from '@andersseen/headless-core';
                   </svg>
                 </button>
                 @if (isExpanded(item.id)) {
-                  <div class="accordion-content">
-                    <p>{{ item.answer }}</p>
+                  <div class="overflow-hidden animate-slide-down">
+                    <p
+                      class="m-0 pb-4 text-sm text-muted-foreground leading-relaxed"
+                    >
+                      {{ item.answer }}
+                    </p>
                   </div>
                 }
               </div>
@@ -57,10 +67,16 @@ import { createAccordion } from '@andersseen/headless-core';
       </section>
 
       <!-- Usage Code -->
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createAccordion {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createAccordion {{ '}' }} from '@andersseen/headless-core';
 
 const accordion = createAccordion();
 
@@ -76,21 +92,30 @@ accordion.state.expandedItems; // Set</code></pre>
       </section>
 
       <!-- Raw Example -->
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
 
-        <p class="demo-description" style="margin-bottom: 1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           Manages expand/collapse state, ARIA attributes, and multi-item logic.
           No visual opinions.
         </p>
 
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           <div>
             @for (item of faqItems; track item.id; let i = $index) {
-              <div style="margin-bottom: 4px;">
+              <div class="mb-1">
                 <button
                   (click)="toggleItem(item.id)"
                   [style.font-weight]="isExpanded(item.id) ? 'bold' : 'normal'"
@@ -98,9 +123,7 @@ accordion.state.expandedItems; // Set</code></pre>
                   {{ item.question }}
                 </button>
                 @if (isExpanded(item.id)) {
-                  <div
-                    style="padding: 8px 0 8px 16px; border-left: 2px solid #ccc;"
-                  >
+                  <div class="py-2 pl-4 border-l-2 border-[#ccc]">
                     {{ item.answer }}
                   </div>
                 }
@@ -113,115 +136,6 @@ accordion.state.expandedItems; // Set</code></pre>
   `,
   styles: [
     `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-        padding: 2rem;
-      }
-
-      /* Accordion */
-      .accordion-root {
-        max-width: 32rem;
-        margin: 0 auto;
-      }
-
-      .accordion-item {
-        border-bottom: 1px solid hsl(var(--border));
-      }
-
-      .accordion-trigger {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem 0;
-        font-size: 0.9375rem;
-        font-weight: 500;
-        font-family: inherit;
-        background: none;
-        border: none;
-        color: hsl(var(--foreground));
-        cursor: pointer;
-        text-align: left;
-        transition: color 0.15s ease;
-      }
-
-      .accordion-trigger:hover {
-        text-decoration: underline;
-      }
-
-      .accordion-trigger:focus-visible {
-        outline: 2px solid hsl(var(--ring));
-        outline-offset: 2px;
-        border-radius: 0.25rem;
-      }
-
-      .chevron {
-        transition: transform 0.2s ease;
-        flex-shrink: 0;
-        color: hsl(var(--muted-foreground));
-      }
-
-      .chevron.is-open {
-        transform: rotate(180deg);
-      }
-
-      .accordion-content {
-        overflow: hidden;
-        animation: slideDown 0.2s ease;
-      }
-
-      .accordion-content p {
-        margin: 0;
-        padding: 0 0 1rem 0;
-        font-size: 0.875rem;
-        color: hsl(var(--muted-foreground));
-        line-height: 1.6;
-      }
-
       @keyframes slideDown {
         from {
           opacity: 0;
@@ -232,50 +146,8 @@ accordion.state.expandedItems; // Set</code></pre>
           max-height: 200px;
         }
       }
-
-      /* Code block */
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family:
-          'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-
-      /* Headless section */
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-        letter-spacing: 0.025em;
-      }
-
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
+      .animate-slide-down {
+        animation: slideDown 0.2s ease;
       }
     `,
   ],

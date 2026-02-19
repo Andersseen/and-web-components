@@ -7,38 +7,45 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
-      <header class="demo-header">
-        <h1 class="demo-title">Alert</h1>
-        <p class="demo-description">
+    <div class="max-w-4xl mx-auto pb-12">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Alert
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Displays a callout for user attention. Manages variants, dismissible
           state, and ARIA alert/status semantics based on urgency.
         </p>
       </header>
 
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="preview-area">
-            <div class="alert-stack">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div class="rounded-xl border border-border bg-card shadow-sm">
+          <div class="p-8">
+            <div class="flex flex-col gap-3">
               @for (a of alerts; track a.name) {
                 @if (a.instance.state.visible) {
                   <div
-                    [class]="'alert alert--' + a.variant"
+                    [class]="
+                      'flex items-start gap-3 p-4 rounded-lg border text-sm animate-fade-in ' +
+                      getVariantClasses(a.variant)
+                    "
                     [attr.role]="
                       a.variant === 'destructive' || a.variant === 'warning'
                         ? 'alert'
                         : 'status'
                     "
                   >
-                    <div class="alert-icon">{{ a.icon }}</div>
-                    <div class="alert-content">
-                      <div class="alert-title">{{ a.title }}</div>
-                      <div class="alert-desc">{{ a.desc }}</div>
+                    <div class="text-lg shrink-0 mt-0.5">{{ a.icon }}</div>
+                    <div class="flex-1">
+                      <div class="font-semibold mb-1">{{ a.title }}</div>
+                      <div class="opacity-90 leading-relaxed">{{ a.desc }}</div>
                     </div>
                     @if (a.dismissible) {
                       <button
-                        class="alert-dismiss"
+                        class="shrink-0 w-6 h-6 flex items-center justify-center border-0 bg-transparent rounded text-inherit opacity-50 cursor-pointer text-xs hover:opacity-100 transition-opacity"
                         aria-label="Dismiss alert"
                         (click)="dismissAlert(a)"
                       >
@@ -49,9 +56,8 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-core';
                 }
               }
               <button
-                class="trigger-btn"
+                class="inline-flex items-center rounded-md text-sm font-medium h-10 px-4 bg-transparent text-foreground border border-border cursor-pointer hover:bg-accent hover:text-accent-foreground mt-4 w-fit"
                 (click)="resetAll()"
-                style="margin-top:1rem;"
               >
                 Reset All
               </button>
@@ -60,10 +66,16 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-core';
         </div>
       </section>
 
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createAlert {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createAlert {{ '}' }} from '@andersseen/headless-core';
 
 const alert = createAlert({{ '{' }}
     variant: 'destructive',
@@ -81,15 +93,24 @@ alert.actions.setVariant('success');</code></pre>
         </div>
       </section>
 
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
-        <p class="demo-description" style="margin-bottom:1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           The headless core manages variant, visibility, and ARIA semantics.
         </p>
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           @if (rawVisible()) {
             <div
               role="alert"
@@ -107,63 +128,6 @@ alert.actions.setVariant('success');</code></pre>
   `,
   styles: [
     `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-      .preview-area {
-        padding: 2rem;
-      }
-      .alert-stack {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-      .alert {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border: 1px solid;
-        font-size: 0.875rem;
-        animation: fadeIn 0.2s ease;
-      }
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -174,116 +138,8 @@ alert.actions.setVariant('success');</code></pre>
           transform: translateY(0);
         }
       }
-      .alert--default {
-        background: hsl(var(--card));
-        color: hsl(var(--foreground));
-        border-color: hsl(var(--border));
-      }
-      .alert--destructive {
-        background: hsl(0, 84%, 96%);
-        color: hsl(0, 84%, 32%);
-        border-color: hsl(0, 84%, 80%);
-      }
-      .alert--success {
-        background: hsl(142, 76%, 96%);
-        color: hsl(142, 76%, 26%);
-        border-color: hsl(142, 76%, 80%);
-      }
-      .alert--warning {
-        background: hsl(38, 92%, 96%);
-        color: hsl(38, 70%, 30%);
-        border-color: hsl(38, 92%, 75%);
-      }
-      .alert--info {
-        background: hsl(217, 91%, 96%);
-        color: hsl(217, 91%, 35%);
-        border-color: hsl(217, 91%, 80%);
-      }
-      .alert-icon {
-        font-size: 1.125rem;
-        flex-shrink: 0;
-        margin-top: 0.125rem;
-      }
-      .alert-content {
-        flex: 1;
-      }
-      .alert-title {
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-      }
-      .alert-desc {
-        opacity: 0.85;
-        line-height: 1.5;
-      }
-      .alert-dismiss {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        background: none;
-        border-radius: 0.25rem;
-        color: inherit;
-        opacity: 0.5;
-        cursor: pointer;
-        font-size: 0.75rem;
-      }
-      .alert-dismiss:hover {
-        opacity: 1;
-      }
-      .trigger-btn {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.5rem;
-        padding: 0 1rem;
-        background: transparent;
-        color: hsl(var(--foreground));
-        border: 1px solid hsl(var(--border));
-        cursor: pointer;
-      }
-      .trigger-btn:hover {
-        background: hsl(var(--accent));
-      }
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-      }
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family: 'SF Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-      }
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
+      .animate-fade-in {
+        animation: fadeIn 0.2s ease;
       }
     `,
   ],
@@ -339,6 +195,21 @@ export default class AlertHeadlessDemo {
 
   private _rawAlert = createAlert({ variant: 'warning', dismissible: true });
   rawVisible = signal(this._rawAlert.state.visible);
+
+  getVariantClasses(variant: string): string {
+    switch (variant) {
+      case 'destructive':
+        return 'bg-red-50 text-red-900 border-red-200 dark:bg-red-900/10 dark:text-red-200 dark:border-red-900/50';
+      case 'success':
+        return 'bg-green-50 text-green-900 border-green-200 dark:bg-green-900/10 dark:text-green-200 dark:border-green-900/50';
+      case 'warning':
+        return 'bg-yellow-50 text-yellow-900 border-yellow-200 dark:bg-yellow-900/10 dark:text-yellow-200 dark:border-yellow-900/50';
+      case 'info':
+        return 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-900/10 dark:text-blue-200 dark:border-blue-900/50';
+      default:
+        return 'bg-card text-foreground border-border';
+    }
+  }
 
   dismissAlert(a: (typeof this.alerts)[0]) {
     a.instance.actions.dismiss();

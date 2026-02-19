@@ -5,7 +5,8 @@
     "build:headless": "pnpm -C packages/headless-core build",
     "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
-    "build:stencil": "pnpm build:headless && pnpm -C packages/stencil-library build",
+    "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/stencil-library build",
+    "start:dev": "concurrently \"pnpm run build:stencil --watch\" \"pnpm -C packages/angular-workspace start\"",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace start",
     "build:demo": "pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace build demo-app",
     "deploy:cloudflare": "pnpm build:demo && pnpm -C packages/angular-workspace exec wrangler pages deploy"
@@ -13,6 +14,7 @@
   "devDependencies": {
     "@types/node": "^25.2.1",
     "lerna": "^9.0.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "concurrently": "^9.2.1"
   }
 }

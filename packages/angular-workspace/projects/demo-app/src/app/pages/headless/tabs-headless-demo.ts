@@ -7,101 +7,173 @@ import { createTabs } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
+    <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
-      <header class="demo-header">
-        <h1 class="demo-title">Tabs</h1>
-        <p class="demo-description">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Tabs
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A set of layered sections of content — known as tab panels — that are
           displayed one at a time.
         </p>
       </header>
 
       <!-- Preview Section -->
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="tabs-root">
-            <!-- Tab List -->
-            <div class="tabs-list">
-              <button
-                class="tab-trigger"
-                [class.is-active]="activeTab() === 'account'"
-                (click)="selectTab('account')"
-              >
-                Account
-              </button>
-              <button
-                class="tab-trigger"
-                [class.is-active]="activeTab() === 'password'"
-                (click)="selectTab('password')"
-              >
-                Password
-              </button>
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div
+          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8"
+        >
+          <div class="max-w-md mx-auto">
+            <!-- Tabs Root -->
+            <div>
+              <!-- Tab List -->
+              <div class="flex p-1 bg-muted rounded-lg">
+                <button
+                  class="flex-1 inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium transition-all rounded-md cursor-pointer border-0"
+                  [class.bg-background]="activeTab() === 'account'"
+                  [class.text-foreground]="activeTab() === 'account'"
+                  [class.shadow-sm]="activeTab() === 'account'"
+                  [class.text-muted-foreground]="activeTab() !== 'account'"
+                  [class.hover:text-foreground]="activeTab() !== 'account'"
+                  (click)="selectTab('account')"
+                >
+                  Account
+                </button>
+                <button
+                  class="flex-1 inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium transition-all rounded-md cursor-pointer border-0"
+                  [class.bg-background]="activeTab() === 'password'"
+                  [class.text-foreground]="activeTab() === 'password'"
+                  [class.shadow-sm]="activeTab() === 'password'"
+                  [class.text-muted-foreground]="activeTab() !== 'password'"
+                  [class.hover:text-foreground]="activeTab() !== 'password'"
+                  (click)="selectTab('password')"
+                >
+                  Password
+                </button>
+              </div>
+
+              <!-- Account Panel -->
+              @if (activeTab() === 'account') {
+                <div
+                  class="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
+                >
+                  <h3 class="text-lg font-semibold text-foreground mb-1">
+                    Account
+                  </h3>
+                  <p class="text-sm text-muted-foreground mb-5 leading-relaxed">
+                    Make changes to your account here. Click save when you're
+                    done.
+                  </p>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-sm font-medium text-foreground mb-1.5"
+                      >Name</label
+                    >
+                    <input
+                      class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      type="text"
+                      value="Pedro Duarte"
+                    />
+                  </div>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-sm font-medium text-foreground mb-1.5"
+                      >Username</label
+                    >
+                    <input
+                      class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      type="text"
+                      value="@peduarte"
+                    />
+                  </div>
+
+                  <div class="mt-5">
+                    <button
+                      class="inline-flex items-center justify-center h-9 px-4 rounded-md text-sm font-medium bg-primary text-primary-foreground border-0 cursor-pointer transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              }
+
+              <!-- Password Panel -->
+              @if (activeTab() === 'password') {
+                <div
+                  class="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
+                >
+                  <h3 class="text-lg font-semibold text-foreground mb-1">
+                    Password
+                  </h3>
+                  <p class="text-sm text-muted-foreground mb-5 leading-relaxed">
+                    Change your password here. After saving, you'll be logged
+                    out.
+                  </p>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-sm font-medium text-foreground mb-1.5"
+                      >Current password</label
+                    >
+                    <input
+                      class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      type="password"
+                    />
+                  </div>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-sm font-medium text-foreground mb-1.5"
+                      >New password</label
+                    >
+                    <input
+                      class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      type="password"
+                    />
+                  </div>
+
+                  <div class="mb-4">
+                    <label
+                      class="block text-sm font-medium text-foreground mb-1.5"
+                      >Confirm password</label
+                    >
+                    <input
+                      class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      type="password"
+                    />
+                  </div>
+
+                  <div class="mt-5">
+                    <button
+                      class="inline-flex items-center justify-center h-9 px-4 rounded-md text-sm font-medium bg-primary text-primary-foreground border-0 cursor-pointer transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                    >
+                      Update password
+                    </button>
+                  </div>
+                </div>
+              }
             </div>
-
-            <!-- Account Panel -->
-            @if (activeTab() === 'account') {
-              <div class="tab-content">
-                <h3 class="tab-content-title">Account</h3>
-                <p class="tab-content-desc">
-                  Make changes to your account here. Click save when you're
-                  done.
-                </p>
-
-                <div class="form-group">
-                  <label class="form-label">Name</label>
-                  <input class="form-input" type="text" value="Pedro Duarte" />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">Username</label>
-                  <input class="form-input" type="text" value="@peduarte" />
-                </div>
-
-                <div class="form-actions">
-                  <button class="btn-save">Save changes</button>
-                </div>
-              </div>
-            }
-
-            <!-- Password Panel -->
-            @if (activeTab() === 'password') {
-              <div class="tab-content">
-                <h3 class="tab-content-title">Password</h3>
-                <p class="tab-content-desc">
-                  Change your password here. After saving, you'll be logged out.
-                </p>
-
-                <div class="form-group">
-                  <label class="form-label">Current password</label>
-                  <input class="form-input" type="password" />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">New password</label>
-                  <input class="form-input" type="password" />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">Confirm password</label>
-                  <input class="form-input" type="password" />
-                </div>
-
-                <div class="form-actions">
-                  <button class="btn-save">Update password</button>
-                </div>
-              </div>
-            }
           </div>
         </div>
       </section>
 
       <!-- Usage Code -->
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createTabs {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createTabs {{ '}' }} from '@andersseen/headless-core';
 
 const tabs = createTabs({{ '{' }}
     defaultValue: 'account'
@@ -116,18 +188,27 @@ tabs.queries.isSelected('account'); // true</code></pre>
       </section>
 
       <!-- Raw Example -->
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
 
-        <p class="demo-description" style="margin-bottom: 1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           Manages tab selection, ARIA roles, and keyboard navigation — you
           control the rendering.
         </p>
 
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           <div>
             <div style="display: flex; gap: 4px; margin-bottom: 8px;">
               <button
@@ -160,223 +241,7 @@ tabs.queries.isSelected('account'); // true</code></pre>
       </section>
     </div>
   `,
-  styles: [
-    `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-        padding: 2rem;
-      }
-
-      /* Tabs */
-      .tabs-root {
-        max-width: 28rem;
-        margin: 0 auto;
-      }
-
-      .tabs-list {
-        display: flex;
-        background: hsl(var(--muted));
-        border-radius: 0.5rem;
-        padding: 0.25rem;
-      }
-
-      .tab-trigger {
-        flex: 1;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem 0.75rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        border: none;
-        border-radius: 0.375rem;
-        background: transparent;
-        color: hsl(var(--muted-foreground));
-        cursor: pointer;
-        transition: all 0.15s ease;
-      }
-
-      .tab-trigger:hover {
-        color: hsl(var(--foreground));
-      }
-
-      .tab-trigger.is-active {
-        background: hsl(var(--background));
-        color: hsl(var(--foreground));
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      }
-
-      .tab-content {
-        margin-top: 1.5rem;
-      }
-
-      .tab-content-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0 0 0.25rem 0;
-      }
-
-      .tab-content-desc {
-        font-size: 0.875rem;
-        color: hsl(var(--muted-foreground));
-        margin: 0 0 1.25rem 0;
-        line-height: 1.5;
-      }
-
-      .form-group {
-        margin-bottom: 1rem;
-      }
-
-      .form-label {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: hsl(var(--foreground));
-        margin-bottom: 0.375rem;
-      }
-
-      .form-input {
-        width: 100%;
-        height: 2.25rem;
-        padding: 0 0.75rem;
-        border: 1px solid hsl(var(--input));
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-family: inherit;
-        background: transparent;
-        color: hsl(var(--foreground));
-        box-sizing: border-box;
-        transition: border-color 0.15s ease;
-      }
-
-      .form-input:focus {
-        outline: 2px solid hsl(var(--ring));
-        outline-offset: -1px;
-        border-color: transparent;
-      }
-
-      .form-actions {
-        margin-top: 1.25rem;
-      }
-
-      .btn-save {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.25rem;
-        padding: 0 1rem;
-        border: none;
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        cursor: pointer;
-        transition: opacity 0.15s ease;
-      }
-
-      .btn-save:hover {
-        opacity: 0.9;
-      }
-
-      .btn-save:focus-visible {
-        outline: 2px solid hsl(var(--ring));
-        outline-offset: 2px;
-      }
-
-      /* Code block */
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family:
-          'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-
-      /* Headless section */
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-        letter-spacing: 0.025em;
-      }
-
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
-      }
-    `,
-  ],
+  styles: [],
 })
 export default class TabsHeadlessDemo {
   private _tabs = createTabs({ defaultValue: 'account' });

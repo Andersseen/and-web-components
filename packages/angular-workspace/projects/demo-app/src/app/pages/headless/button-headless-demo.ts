@@ -7,36 +7,44 @@ import { createButton } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
+    <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
-      <header class="demo-header">
-        <h1 class="demo-title">Button</h1>
-        <p class="demo-description">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Button
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Displays a button or a component that looks like a button. Handles
           loading states, disabled states, and accessibility automatically.
         </p>
       </header>
 
       <!-- Preview Section -->
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="preview-area">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div
+          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
+        >
+          <div
+            class="p-10 flex flex-wrap items-center justify-center gap-3 min-h-[160px]"
+          >
             <!-- Primary -->
             <button
-              class="btn btn-primary"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border-0 cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-primary text-primary-foreground hover:opacity-90"
               [disabled]="loading()"
               (click)="handleClick('Primary')"
             >
               @if (loading()) {
                 <svg
-                  class="spinner"
+                  class="w-4 h-4 animate-spin"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
                   <circle
-                    class="spinner-track"
+                    class="opacity-25"
                     cx="12"
                     cy="12"
                     r="10"
@@ -44,7 +52,7 @@ import { createButton } from '@andersseen/headless-core';
                     stroke-width="4"
                   ></circle>
                   <path
-                    class="spinner-head"
+                    class="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
@@ -55,7 +63,7 @@ import { createButton } from '@andersseen/headless-core';
 
             <!-- Secondary -->
             <button
-              class="btn btn-secondary"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border-0 cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-secondary text-secondary-foreground hover:opacity-80"
               (click)="handleClick('Secondary')"
             >
               Secondary
@@ -63,28 +71,39 @@ import { createButton } from '@andersseen/headless-core';
 
             <!-- Destructive -->
             <button
-              class="btn btn-destructive"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border-0 cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-destructive text-destructive-foreground hover:opacity-90"
               (click)="handleClick('Destructive')"
             >
               Destructive
             </button>
 
             <!-- Outline -->
-            <button class="btn btn-outline" (click)="handleClick('Outline')">
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-transparent text-foreground border border-border hover:bg-accent hover:text-accent-foreground"
+              (click)="handleClick('Outline')"
+            >
               Outline
             </button>
 
             <!-- Ghost -->
-            <button class="btn btn-ghost" (click)="handleClick('Ghost')">
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border-0 cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground"
+              (click)="handleClick('Ghost')"
+            >
               Ghost
             </button>
           </div>
 
           <!-- Controls -->
-          <div class="preview-controls">
-            <label class="control-label">
+          <div
+            class="border-t border-border bg-muted px-6 py-4 flex justify-center"
+          >
+            <label
+              class="flex items-center gap-2 text-sm text-foreground cursor-pointer"
+            >
               <input
                 type="checkbox"
+                class="accent-primary"
                 [checked]="loading()"
                 (change)="toggleLoading()"
               />
@@ -95,10 +114,16 @@ import { createButton } from '@andersseen/headless-core';
       </section>
 
       <!-- Usage Code -->
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createButton {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createButton {{ '}' }} from '@andersseen/headless-core';
 
 const btn = createButton({{ '{' }}
   disabled: false,
@@ -115,21 +140,28 @@ btn.actions.setDisabled(true);</code></pre>
       </section>
 
       <!-- Raw Example -->
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
 
-        <p class="demo-description" style="margin-bottom: 1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           This is the naked, unstyled behavior. It handles state logic (like
           disabled attributes) but doesn't prescribe any look.
         </p>
 
-        <div class="headless-area">
-          <div
-            style="display: flex; flex-direction: column; gap: 12px; max-width: 300px;"
-          >
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
+          <div class="flex flex-col gap-3 max-w-[300px]">
             <button
               type="button"
               [attr.disabled]="btnState().disabled ? '' : null"
@@ -146,233 +178,6 @@ btn.actions.setDisabled(true);</code></pre>
       </section>
     </div>
   `,
-  styles: [
-    `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-
-      .preview-area {
-        padding: 2.5rem;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        min-height: 160px;
-      }
-
-      .preview-controls {
-        border-top: 1px solid hsl(var(--border));
-        background: hsl(var(--muted));
-        padding: 1rem 1.5rem;
-        display: flex;
-        justify-content: center;
-      }
-
-      .control-label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.875rem;
-        color: hsl(var(--foreground));
-        cursor: pointer;
-      }
-
-      .control-label input[type='checkbox'] {
-        accent-color: hsl(var(--primary));
-      }
-
-      /* Button styles */
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        white-space: nowrap;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.5rem;
-        padding: 0 1rem;
-        border: none;
-        cursor: pointer;
-        transition: all 0.15s ease;
-        outline: none;
-      }
-
-      .btn:focus-visible {
-        outline: 2px solid hsl(var(--ring));
-        outline-offset: 2px;
-      }
-
-      .btn:disabled {
-        opacity: 0.5;
-        pointer-events: none;
-      }
-
-      .btn-primary {
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-      }
-
-      .btn-primary:hover {
-        opacity: 0.9;
-      }
-
-      .btn-secondary {
-        background: hsl(var(--secondary));
-        color: hsl(var(--secondary-foreground));
-      }
-
-      .btn-secondary:hover {
-        opacity: 0.8;
-      }
-
-      .btn-destructive {
-        background: hsl(var(--destructive));
-        color: hsl(var(--destructive-foreground));
-      }
-
-      .btn-destructive:hover {
-        opacity: 0.9;
-      }
-
-      .btn-outline {
-        background: transparent;
-        color: hsl(var(--foreground));
-        border: 1px solid hsl(var(--border));
-      }
-
-      .btn-outline:hover {
-        background: hsl(var(--accent));
-        color: hsl(var(--accent-foreground));
-      }
-
-      .btn-ghost {
-        background: transparent;
-        color: hsl(var(--foreground));
-      }
-
-      .btn-ghost:hover {
-        background: hsl(var(--accent));
-        color: hsl(var(--accent-foreground));
-      }
-
-      .spinner {
-        width: 1rem;
-        height: 1rem;
-        animation: spin 1s linear infinite;
-      }
-
-      .spinner-track {
-        opacity: 0.25;
-      }
-
-      .spinner-head {
-        opacity: 0.75;
-      }
-
-      @keyframes spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Code block */
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family:
-          'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-
-      /* Headless section */
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-        letter-spacing: 0.025em;
-      }
-
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
-      }
-    `,
-  ],
 })
 export default class ButtonHeadlessDemo {
   loading = signal(false);

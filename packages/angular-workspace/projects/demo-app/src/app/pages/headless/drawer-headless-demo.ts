@@ -7,30 +7,46 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="demo-page">
-      <header class="demo-header">
-        <h1 class="demo-title">Drawer / Sheet</h1>
-        <p class="demo-description">
+    <div class="max-w-4xl mx-auto pb-12">
+      <header class="mb-10 border-b border-border pb-10">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
+          Drawer / Sheet
+        </h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A panel that slides out from the edge of the screen. Manages
           open/close state, keyboard navigation, and ARIA dialog semantics.
         </p>
       </header>
 
-      <section class="demo-section">
-        <h2 class="section-title">Preview</h2>
-        <div class="preview-card">
-          <div class="preview-area">
-            <div class="btn-grid">
-              <button class="trigger-btn" (click)="openDrawer('left')">
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Preview
+        </h2>
+        <div class="rounded-xl border border-border bg-card shadow-sm">
+          <div class="p-12 flex items-center justify-center min-h-[200px]">
+            <div class="flex flex-wrap gap-3 justify-center">
+              <button
+                class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground"
+                (click)="openDrawer('left')"
+              >
                 ← Left
               </button>
-              <button class="trigger-btn" (click)="openDrawer('right')">
+              <button
+                class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground"
+                (click)="openDrawer('right')"
+              >
                 Right →
               </button>
-              <button class="trigger-btn" (click)="openDrawer('top')">
+              <button
+                class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground"
+                (click)="openDrawer('top')"
+              >
                 ↑ Top
               </button>
-              <button class="trigger-btn" (click)="openDrawer('bottom')">
+              <button
+                class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 py-2 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground"
+                (click)="openDrawer('bottom')"
+              >
                 ↓ Bottom
               </button>
             </div>
@@ -38,40 +54,64 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
         </div>
 
         @if (isOpen()) {
-          <div class="drawer-overlay" (click)="onOverlayClick()"></div>
           <div
-            [class]="'drawer-panel drawer-' + placement()"
+            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in"
+            (click)="onOverlayClick()"
+          ></div>
+          <div
+            [class]="
+              'fixed z-50 bg-card border border-border flex flex-col shadow-2xl transition-transform ease-in-out duration-300 ' +
+              getPlacementClasses(placement())
+            "
             role="dialog"
             aria-modal="true"
             tabindex="-1"
           >
-            <div class="drawer-header">
-              <h3 class="drawer-title">Drawer ({{ placement() }})</h3>
+            <div
+              class="flex items-center justify-between p-5 border-b border-border"
+            >
+              <h3 class="text-lg font-semibold text-foreground m-0">
+                Drawer ({{ placement() }})
+              </h3>
               <button
-                class="drawer-close"
+                class="w-7 h-7 flex items-center justify-center rounded bg-transparent border-0 text-muted-foreground cursor-pointer hover:bg-accent hover:text-foreground text-sm"
                 aria-label="Close"
                 (click)="closeDrawer()"
               >
                 ✕
               </button>
             </div>
-            <div class="drawer-body">
+            <div
+              class="flex-1 p-6 overflow-y-auto text-muted-foreground text-sm leading-relaxed"
+            >
               <p>
                 This drawer slides in from the <strong>{{ placement() }}</strong
                 >. Press <kbd>Escape</kbd> or click the overlay to close.
               </p>
-              <div class="drawer-feature-list">
-                <div class="feature-item">✓ Escape key to close</div>
-                <div class="feature-item">✓ Overlay click to close</div>
-                <div class="feature-item">✓ ARIA dialog role</div>
-                <div class="feature-item">✓ 4 placements</div>
+              <div class="mt-4 grid gap-2">
+                <div class="text-[13px] text-foreground">
+                  ✓ Escape key to close
+                </div>
+                <div class="text-[13px] text-foreground">
+                  ✓ Overlay click to close
+                </div>
+                <div class="text-[13px] text-foreground">
+                  ✓ ARIA dialog role
+                </div>
+                <div class="text-[13px] text-foreground">✓ 4 placements</div>
               </div>
             </div>
-            <div class="drawer-footer">
-              <button class="btn-secondary" (click)="closeDrawer()">
+            <div class="flex justify-end gap-2 p-5 border-t border-border">
+              <button
+                class="px-4 py-2 rounded-md text-sm font-medium bg-transparent text-foreground border border-border cursor-pointer hover:bg-accent"
+                (click)="closeDrawer()"
+              >
                 Cancel
               </button>
-              <button class="btn-primary" (click)="closeDrawer()">
+              <button
+                class="px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground border-0 cursor-pointer hover:opacity-90"
+                (click)="closeDrawer()"
+              >
                 Save Changes
               </button>
             </div>
@@ -79,10 +119,16 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
         }
       </section>
 
-      <section class="demo-section">
-        <h2 class="section-title">Usage</h2>
-        <div class="code-block">
-          <pre><code>import {{ '{' }} createDrawer {{ '}' }} from '@andersseen/headless-core';
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Usage
+        </h2>
+        <div
+          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+        >
+          <pre
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+          ><code>import {{ '{' }} createDrawer {{ '}' }} from '@andersseen/headless-core';
 
 const drawer = createDrawer({{ '{' }}
     placement: 'left',
@@ -96,15 +142,24 @@ drawer.actions.setPlacement('right');</code></pre>
         </div>
       </section>
 
-      <section class="demo-section">
-        <div class="headless-header">
-          <h2 class="section-title">Headless Implementation</h2>
-          <span class="badge">Zero Styles</span>
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
+            Headless Implementation
+          </h2>
+          <span
+            class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
+            >Zero Styles</span
+          >
         </div>
-        <p class="demo-description" style="margin-bottom:1.5rem;">
+        <p
+          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
+        >
           The headless core manages open/close, Escape key, and overlay click.
         </p>
-        <div class="headless-area">
+        <div
+          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
+        >
           <button (click)="openRaw()">Open Raw Drawer</button>
           @if (isRawOpen()) {
             <div
@@ -127,87 +182,6 @@ drawer.actions.setPlacement('right');</code></pre>
   `,
   styles: [
     `
-      .demo-page {
-        max-width: 56rem;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-      }
-      .demo-header {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-        padding-bottom: 2.5rem;
-      }
-      .demo-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-      .demo-description {
-        margin-top: 1rem;
-        font-size: 1.125rem;
-        color: hsl(var(--muted-foreground));
-        max-width: 42rem;
-        line-height: 1.7;
-      }
-      .demo-section {
-        margin-bottom: 3rem;
-      }
-      .section-title {
-        font-size: 1.375rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0 0 1.25rem 0;
-      }
-      .preview-card {
-        border-radius: 0.75rem;
-        border: 1px solid hsl(var(--border));
-        background: hsl(var(--card));
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-      .preview-area {
-        padding: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 200px;
-      }
-      .btn-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        justify-content: center;
-      }
-      .trigger-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        height: 2.5rem;
-        padding: 0 1rem;
-        background: transparent;
-        color: hsl(var(--foreground));
-        border: 1px solid hsl(var(--border));
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-      .trigger-btn:hover {
-        background: hsl(var(--accent));
-        color: hsl(var(--accent-foreground));
-      }
-
-      .drawer-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 50;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(4px);
-        animation: fadeIn 0.2s ease;
-      }
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -216,44 +190,10 @@ drawer.actions.setPlacement('right');</code></pre>
           opacity: 1;
         }
       }
+      .animate-fade-in {
+        animation: fadeIn 0.2s ease;
+      }
 
-      .drawer-panel {
-        position: fixed;
-        z-index: 51;
-        background: hsl(var(--card));
-        border: 1px solid hsl(var(--border));
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-      }
-      .drawer-left {
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 24rem;
-        animation: slideLeft 0.3s ease;
-      }
-      .drawer-right {
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 24rem;
-        animation: slideRight 0.3s ease;
-      }
-      .drawer-top {
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 20rem;
-        animation: slideTop 0.3s ease;
-      }
-      .drawer-bottom {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 20rem;
-        animation: slideBottom 0.3s ease;
-      }
       @keyframes slideLeft {
         from {
           transform: translateX(-100%);
@@ -262,6 +202,10 @@ drawer.actions.setPlacement('right');</code></pre>
           transform: translateX(0);
         }
       }
+      .animate-slide-left {
+        animation: slideLeft 0.3s ease;
+      }
+
       @keyframes slideRight {
         from {
           transform: translateX(100%);
@@ -270,6 +214,10 @@ drawer.actions.setPlacement('right');</code></pre>
           transform: translateX(0);
         }
       }
+      .animate-slide-right {
+        animation: slideRight 0.3s ease;
+      }
+
       @keyframes slideTop {
         from {
           transform: translateY(-100%);
@@ -278,6 +226,10 @@ drawer.actions.setPlacement('right');</code></pre>
           transform: translateY(0);
         }
       }
+      .animate-slide-top {
+        animation: slideTop 0.3s ease;
+      }
+
       @keyframes slideBottom {
         from {
           transform: translateY(100%);
@@ -286,124 +238,8 @@ drawer.actions.setPlacement('right');</code></pre>
           transform: translateY(0);
         }
       }
-
-      .drawer-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid hsl(var(--border));
-      }
-      .drawer-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: hsl(var(--foreground));
-        margin: 0;
-      }
-      .drawer-close {
-        width: 1.75rem;
-        height: 1.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.25rem;
-        background: none;
-        border: none;
-        color: hsl(var(--muted-foreground));
-        cursor: pointer;
-        font-size: 0.875rem;
-      }
-      .drawer-close:hover {
-        background: hsl(var(--accent));
-        color: hsl(var(--foreground));
-      }
-      .drawer-body {
-        flex: 1;
-        padding: 1.5rem;
-        overflow-y: auto;
-        color: hsl(var(--muted-foreground));
-        font-size: 0.875rem;
-        line-height: 1.7;
-      }
-      .drawer-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: 0.5rem;
-        padding: 1.25rem 1.5rem;
-        border-top: 1px solid hsl(var(--border));
-      }
-      .drawer-feature-list {
-        margin-top: 1rem;
-        display: grid;
-        gap: 0.5rem;
-      }
-      .feature-item {
-        font-size: 0.8125rem;
-        color: hsl(var(--foreground));
-      }
-      .btn-secondary {
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        background: transparent;
-        color: hsl(var(--foreground));
-        border: 1px solid hsl(var(--border));
-        cursor: pointer;
-      }
-      .btn-secondary:hover {
-        background: hsl(var(--accent));
-      }
-      .btn-primary {
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        font-family: inherit;
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        border: none;
-        cursor: pointer;
-      }
-      .btn-primary:hover {
-        opacity: 0.9;
-      }
-
-      .code-block {
-        border-radius: 0.75rem;
-        background: #0a0a0a;
-        border: 1px solid #27272a;
-        overflow-x: auto;
-      }
-      .code-block pre {
-        margin: 0;
-        padding: 1.25rem 1.5rem;
-        font-family: 'SF Mono', Menlo, Consolas, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: #e4e4e7;
-      }
-      .headless-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background: hsl(var(--muted));
-        color: hsl(var(--muted-foreground));
-        border: 1px solid hsl(var(--border));
-      }
-      .headless-area {
-        border-radius: 0.75rem;
-        border: 2px dashed hsl(var(--border));
-        padding: 2rem;
-        background: hsl(var(--muted) / 0.3);
+      .animate-slide-bottom {
+        animation: slideBottom 0.3s ease;
       }
     `,
   ],
@@ -432,6 +268,21 @@ export default class DrawerHeadlessDemo {
   }
   isRawOpen() {
     return this.rawState().isOpen;
+  }
+
+  getPlacementClasses(placement: string): string {
+    switch (placement) {
+      case 'left':
+        return 'top-0 left-0 bottom-0 w-96 animate-slide-left border-r';
+      case 'right':
+        return 'top-0 right-0 bottom-0 w-96 animate-slide-right border-l';
+      case 'top':
+        return 'top-0 left-0 right-0 h-80 animate-slide-top border-b';
+      case 'bottom':
+        return 'bottom-0 left-0 right-0 h-80 animate-slide-bottom border-t';
+      default:
+        return '';
+    }
   }
 
   openDrawer(side: DrawerPlacement) {
