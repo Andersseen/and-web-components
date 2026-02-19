@@ -8,13 +8,13 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
 import { ButtonProps } from "./components/my-button/my-button";
 import { DropdownItem } from "./components/my-dropdown/my-dropdown";
-import { IconName } from "./components/my-icon/icons";
+import { IconName } from "@andersseen/icon-library";
 import { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 import { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
 export { ButtonProps } from "./components/my-button/my-button";
 export { DropdownItem } from "./components/my-dropdown/my-dropdown";
-export { IconName } from "./components/my-icon/icons";
+export { IconName } from "@andersseen/icon-library";
 export { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
 export { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
 export namespace Components {

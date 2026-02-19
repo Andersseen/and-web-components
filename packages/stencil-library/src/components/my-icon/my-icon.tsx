@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host } from '@stencil/core';
-import { icons, IconName } from './icons';
+import { icons, IconName } from '@andersseen/icon-library';
 
 @Component({
   tag: 'my-icon',
@@ -31,7 +31,7 @@ export class MyIcon {
     const iconContent = icons[this.name];
 
     if (!iconContent) {
-      console.warn(`Icon "${this.name}\" not found.`);
+      console.warn(`Icon "${this.name}" not found.`);
       return null;
     }
 
@@ -49,9 +49,9 @@ export class MyIcon {
           stroke-width={this.strokeWidth}
           stroke-linecap="round"
           stroke-linejoin="round"
-        >
-          {iconContent}
-        </svg>
+          // @ts-ignore
+          innerHTML={iconContent}
+        ></svg>
       </Host>
     );
   }

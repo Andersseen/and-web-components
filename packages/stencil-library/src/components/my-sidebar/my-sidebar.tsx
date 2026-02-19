@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { IconName } from '../my-icon/icons';
+import { IconName } from '@andersseen/icon-library';
 
 export type SidebarItem = {
   id: string;

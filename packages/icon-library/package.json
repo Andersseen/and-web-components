@@ -1,0 +1,29 @@
+{
+  "name": "@andersseen/icon-library",
+  "version": "0.0.1",
+  "description": "Shared icon library for Andersseen web components",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "web-components"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
