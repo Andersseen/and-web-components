@@ -27,6 +27,17 @@ export class MyIcon {
    */
   @Prop() strokeWidth: string | number = 2;
 
+  private element?: SVGElement;
+
+  componentDidRender() {
+    if (this.element && this.name) {
+      const iconContent = icons[this.name];
+      if (iconContent) {
+        this.element.innerHTML = iconContent;
+      }
+    }
+  }
+
   render() {
     const iconContent = icons[this.name];
 
@@ -49,9 +60,9 @@ export class MyIcon {
           stroke-width={this.strokeWidth}
           stroke-linecap="round"
           stroke-linejoin="round"
-          // @ts-ignore
-          innerHTML={iconContent}
-        ></svg>
+        >
+          <g ref={el => (this.element = el as SVGElement)}></g>
+        </svg>
       </Host>
     );
   }
