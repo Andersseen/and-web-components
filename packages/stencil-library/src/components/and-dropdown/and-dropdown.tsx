@@ -4,7 +4,7 @@ import { cn } from '../../utils/utils';
 import { createDropdown, DropdownReturn } from '@andersseen/headless-core';
 
 const dropdownTriggerVariants = cva(
-  'inline-flex w-full items-center justify-between gap-x-t-gap-sm rounded-md px-t-gap py-t-gap-sm text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  'inline-flex w-full items-center justify-between gap-x-2 rounded-md px-3 py-3 sm:py-2 text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
   {
     variants: {
       variant: {
@@ -135,7 +135,8 @@ export class MyDropdown {
                 <div
                   {...itemProps}
                   class={cn(
-                    'relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
+                    'relative flex w-full cursor-pointer select-none items-center rounded-sm text-sm outline-none transition-colors',
+                    'px-3 py-3 sm:py-1.5', // Mobile first sizing
                     'hover:bg-background/10 hover:text-foreground',
                     item.disabled && 'pointer-events-none opacity-50',
                   )}

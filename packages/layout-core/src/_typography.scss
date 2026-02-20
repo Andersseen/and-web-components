@@ -1,0 +1,81 @@
+@use "sass:map";
+@use "variables" as *;
+@use "mixins" as *;
+
+// Typography Scale
+$text-styles: (
+  "h1": (
+    "font-size": map.get($font-sizes, "6xl"),
+    "font-weight": map.get($font-weights, "bold"),
+    "line-height": 1.1,
+  ),
+  "h2": (
+    "font-size": map.get($font-sizes, "5xl"),
+    "font-weight": map.get($font-weights, "bold"),
+    "line-height": 1.1,
+  ),
+  "h3": (
+    "font-size": map.get($font-sizes, "4xl"),
+    "font-weight": map.get($font-weights, "semibold"),
+    "line-height": 1.2,
+  ),
+  "h4": (
+    "font-size": map.get($font-sizes, "3xl"),
+    "font-weight": map.get($font-weights, "semibold"),
+    "line-height": 1.2,
+  ),
+  "h5": (
+    "font-size": map.get($font-sizes, "2xl"),
+    "font-weight": map.get($font-weights, "medium"),
+    "line-height": 1.3,
+  ),
+  "h6": (
+    "font-size": map.get($font-sizes, "xl"),
+    "font-weight": map.get($font-weights, "medium"),
+    "line-height": 1.3,
+  ),
+  "p": (
+    "font-size": map.get($font-sizes, "base"),
+    "font-weight": map.get($font-weights, "normal"),
+    "line-height": 1.5,
+  ),
+  "p-sm": (
+    "font-size": map.get($font-sizes, "sm"),
+    "font-weight": map.get($font-weights, "normal"),
+    "line-height": 1.5,
+  ),
+  "p-xs": (
+    "font-size": map.get($font-sizes, "xs"),
+    "font-weight": map.get($font-weights, "normal"),
+    "line-height": 1.5,
+  ),
+  "caption": (
+    "font-size": map.get($font-sizes, "xs"),
+    "font-weight": map.get($font-weights, "normal"),
+    "color": map.get($colors, "muted"),
+  ),
+);
+
+@each $name, $styles in $text-styles {
+  [and-text~="#{$name}"] {
+    @each $prop, $val in $styles {
+      #{$prop}: $val;
+    }
+  }
+}
+
+// Alignment Utilities
+$text-align: (
+  "left": left,
+  "center": center,
+  "right": right,
+  "justify": justify,
+);
+
+@include generate-responsive("and-text", "align", $text-align, "text-align");
+
+// Weight Utilities
+@include generate-responsive("and-text", "weight", $font-weights, "font-weight");
+
+// Color Utilities (text color)
+@include generate-responsive("and-text", "color", $colors, "color");

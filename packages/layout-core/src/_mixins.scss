@@ -1,0 +1,63 @@
+@use "sass:map";
+@use "variables" as *;
+
+// Breakpoint Mixin
+@mixin mq($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint #{$breakpoint} not found in $breakpoints map.";
+  }
+}
+
+// Helper to generate responsive classes
+// $attr: Attribute name (e.g. 'and-layout')
+// $prop-name: Property name in attribute (e.g. 'gap')
+// $prop-map: Map of values (e.g. $spacing)
+// $css-prop: Actual CSS property (e.g. 'gap')
+// $loop-breakpoints: Whether to generate responsive variants
+@mixin generate-responsive($attr, $prop-name, $prop-map, $css-prop, $loop-breakpoints: true) {
+  // Base styles: prop:val
+  @each $key, $val in $prop-map {
+    [#{$attr}~="#{$prop-name}:#{$key}"] {
+      #{$css-prop}: $val;
+    }
+  }
+
+  @if $loop-breakpoints {
+    @each $bp-name, $bp-width in $breakpoints {
+      @media (min-width: #{$bp-width}) {
+        @each $key, $val in $prop-map {
+          // prop@bp:val
+          [#{$attr}~="#{$prop-name}@#{$bp-name}:#{$key}"] {
+            #{$css-prop}: $val;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Helper for generic responsive modifiers (not map-based)
+// e.g. [and-layout~="vertical@md"]
+@mixin responsive-modifier($attr, $name, $css-rules, $loop-breakpoints: true) {
+    [#{$attr}~="#{$name}"] {
+        @each $prop, $val in $css-rules {
+            #{$prop}: $val;
+        }
+    }
+
+    @if $loop-breakpoints {
+        @each $bp-name, $bp-width in $breakpoints {
+            @media (min-width: #{$bp-width}) {
+                [#{$attr}~="#{$name}@#{$bp-name}"] {
+                    @each $prop, $val in $css-rules {
+                        #{$prop}: $val;
+                    }
+                }
+            }
+        }
+    }
+}

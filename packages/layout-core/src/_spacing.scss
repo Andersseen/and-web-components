@@ -1,0 +1,75 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// Padding Utilities
+@include generate-responsive("and-layout", "p", $spacing, "padding");
+@include generate-responsive("and-layout", "p-t", $spacing, "padding-top");
+@include generate-responsive("and-layout", "p-b", $spacing, "padding-bottom");
+@include generate-responsive("and-layout", "p-l", $spacing, "padding-left");
+@include generate-responsive("and-layout", "p-r", $spacing, "padding-right");
+
+// X/Y Padding (Using logical properties or shorthand? User might expect physical properties or logical like 'start/end'. I'll stick to physical for now or implement logical aliases)
+// p-x -> left + right
+// p-y -> top + bottom
+@each $key, $val in $spacing {
+  [and-layout~="p-x:#{$key}"] {
+    padding-left: $val;
+    padding-right: $val;
+  }
+  [and-layout~="p-y:#{$key}"] {
+    padding-top: $val;
+    padding-bottom: $val;
+  }
+}
+
+// Responsive X/Y
+@each $bp-name, $bp-width in $breakpoints {
+  @include mq($bp-name) {
+    @each $key, $val in $spacing {
+      [and-layout~="p-x@#{$bp-name}:#{$key}"] {
+        padding-left: $val;
+        padding-right: $val;
+      }
+      [and-layout~="p-y@#{$bp-name}:#{$key}"] {
+        padding-top: $val;
+        padding-bottom: $val;
+      }
+    }
+  }
+}
+
+
+// Margin Utilities
+@include generate-responsive("and-layout", "m", $spacing, "margin");
+@include generate-responsive("and-layout", "m-t", $spacing, "margin-top");
+@include generate-responsive("and-layout", "m-b", $spacing, "margin-bottom");
+@include generate-responsive("and-layout", "m-l", $spacing, "margin-left");
+@include generate-responsive("and-layout", "m-r", $spacing, "margin-right");
+
+// X/Y Margin
+@each $key, $val in $spacing {
+  [and-layout~="m-x:#{$key}"] {
+    margin-left: $val;
+    margin-right: $val;
+  }
+  [and-layout~="m-y:#{$key}"] {
+    margin-top: $val;
+    margin-bottom: $val;
+  }
+}
+
+// Responsive X/Y Margin
+@each $bp-name, $bp-width in $breakpoints {
+  @include mq($bp-name) {
+    @each $key, $val in $spacing {
+      [and-layout~="m-x@#{$bp-name}:#{$key}"] {
+        margin-left: $val;
+        margin-right: $val;
+      }
+      [and-layout~="m-y@#{$bp-name}:#{$key}"] {
+        margin-top: $val;
+        margin-bottom: $val;
+      }
+    }
+  }
+}

@@ -139,7 +139,7 @@ export class MyNavbar {
             <div class="flex md:hidden">
               <button
                 {...toggleProps}
-                class="p-2 -mr-2 text-foreground bg-transparent border-none cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md"
+                class="inline-flex h-11 w-11 items-center justify-center -mr-2 text-foreground bg-transparent border-none cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md"
                 onClick={() => this.handleToggle()}
               >
                 <and-icon name={this.mobileMenuOpen ? 'close' : 'menu'} class="h-6 w-6" />

@@ -28,7 +28,7 @@ const sidebarVariants = cva('flex h-full flex-col border-r transition-all durati
 });
 
 const sidebarItemVariants = cva(
-  'flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  'flex w-full items-center gap-3 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
   {
     variants: {
       active: {
@@ -36,8 +36,8 @@ const sidebarItemVariants = cva(
         false: 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
       },
       collapsed: {
-        true: 'justify-center px-2',
-        false: '',
+        true: 'justify-center px-2 py-3 sm:py-2',
+        false: 'px-3 py-3 sm:py-2',
       },
     },
     defaultVariants: {

@@ -27,6 +27,10 @@ export const routes: Routes = [
         path: 'motion',
         loadChildren: () => import('./motion.routes'),
       },
+      {
+        path: 'layout',
+        loadChildren: () => import('./layout.routes'),
+      },
     ],
   },
 ];

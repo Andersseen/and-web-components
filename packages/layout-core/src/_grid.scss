@@ -1,0 +1,37 @@
+@use "sass:map";
+@use "sass:string";
+@use "variables" as *;
+@use "mixins" as *;
+
+// Base Grid Layout
+[and-layout~="grid"] {
+  display: grid;
+}
+
+// Generate Grid Columns (cols:1 to cols:12)
+$grid-cols: ();
+@for $i from 1 through 12 {
+  $grid-cols: map.merge($grid-cols, (#{$i}: repeat($i, minmax(0, 1fr))));
+}
+
+// Generate Grid Spans (span:1 to span:12)
+$grid-spans: ();
+@for $i from 1 through 12 {
+  $grid-spans: map.merge($grid-spans, (#{$i}: span $i / span $i));
+}
+$grid-spans: map.merge($grid-spans, ("full": string.unquote("1 / -1")));
+
+// Generate Classes
+@include generate-responsive("and-layout", "cols", $grid-cols, "grid-template-columns");
+@include generate-responsive("and-layout", "span", $grid-spans, "grid-column");
+
+// Start/End Utilities (optional but useful)
+// col-start:1
+$grid-starts: ();
+@for $i from 1 through 13 {
+  $grid-starts: map.merge($grid-starts, (#{$i}: $i));
+}
+$grid-starts: map.merge($grid-starts, ("auto": auto));
+
+@include generate-responsive("and-layout", "col-start", $grid-starts, "grid-column-start");
+@include generate-responsive("and-layout", "col-end", $grid-starts, "grid-column-end");

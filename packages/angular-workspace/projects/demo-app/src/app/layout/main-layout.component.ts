@@ -20,7 +20,7 @@ interface SidebarItem {
   imports: [RouterOutlet, AndNavbar, AndSidebar, AndDropdown, AndButton, AndIcon],
   schemas: [],
   template: `
-    <div class="app-container">
+    <div class="app-container" and-layout="vertical">
       <!-- Navbar -->
       <and-navbar
         class="bg-background"
@@ -75,7 +75,7 @@ interface SidebarItem {
         </div>
       </and-navbar>
 
-      <div class="main-content">
+      <div class="main-content" and-layout="horizontal">
         @if (activeSection() === 'components') {
           <and-sidebar
             class="bg-background"
@@ -103,9 +103,18 @@ interface SidebarItem {
           >
           </and-sidebar>
         }
+        @if (activeSection() === 'layout') {
+          <and-sidebar
+            class="bg-background"
+            [items]="layoutItems"
+            [activeItem]="activeLayout()"
+            (sidebarItemClick)="onLayoutItemClick($event)"
+          >
+          </and-sidebar>
+        }
 
         <!-- Content Area -->
-        <div class="content-area">
+        <div class="content-area" and-layout="p:xl">
           <router-outlet></router-outlet>
         </div>
       </div>
@@ -114,8 +123,6 @@ interface SidebarItem {
   styles: [
     `
       .app-container {
-        display: flex;
-        flex-direction: column;
         height: 100vh;
         overflow: hidden;
         background-color: var(--background);
@@ -123,7 +130,6 @@ interface SidebarItem {
       }
 
       .main-content {
-        display: flex;
         flex: 1;
         overflow: hidden;
       }
@@ -131,7 +137,6 @@ interface SidebarItem {
       .content-area {
         flex: 1;
         overflow-y: auto;
-        padding: 2rem;
         background: var(--background);
         color: var(--foreground);
       }
@@ -144,6 +149,7 @@ export class MainLayoutComponent {
     { id: 'headless', label: 'Headless' },
     { id: 'icons', label: 'Icons' },
     { id: 'motion', label: 'Motion' },
+    { id: 'layout', label: 'Layout' },
   ];
 
   componentItems: SidebarItem[] = [
@@ -190,6 +196,15 @@ export class MainLayoutComponent {
     { id: 'attribute', label: 'Attribute API', icon: 'code' },
   ];
 
+  layoutItems: SidebarItem[] = [
+    { id: 'overview', label: 'Overview', icon: 'compass' },
+    { id: 'flex', label: 'Flexbox', icon: 'columns' },
+    { id: 'grid', label: 'Grid', icon: 'layout' },
+    { id: 'spacing', label: 'Spacing', icon: 'move' },
+    { id: 'typography', label: 'Typography', icon: 'type' },
+    { id: 'responsive', label: 'Responsive', icon: 'monitor' },
+  ];
+
   themeOptions = [
     { text: 'Modern', value: 'default' },
     { text: 'Compact', value: 'compact' },
@@ -209,10 +224,11 @@ export class MainLayoutComponent {
   activeComponent = signal<string>('accordion');
   activeHeadless = signal<string>('overview');
   activeSection = signal<
-    'components' | 'icons' | 'themes' | 'headless' | 'motion'
+    'components' | 'icons' | 'themes' | 'headless' | 'motion' | 'layout'
   >('components');
 
   activeMotion = signal<string>('fade');
+  activeLayout = signal<string>('overview');
   isDark = signal<boolean>(false);
 
   constructor(private router: Router) {
@@ -231,6 +247,12 @@ export class MainLayoutComponent {
           const motionId = url.split('/').pop();
           if (motionId && motionId !== 'motion') {
             this.activeMotion.set(motionId);
+          }
+        } else if (url.includes('/layout')) {
+          this.activeSection.set('layout');
+          const layoutId = url.split('/').pop();
+          if (layoutId && layoutId !== 'layout') {
+            this.activeLayout.set(layoutId);
           }
         } else {
           this.activeSection.set('components');
@@ -251,7 +273,8 @@ export class MainLayoutComponent {
       | 'icons'
       | 'headless'
       | 'themes'
-      | 'motion';
+      | 'motion'
+      | 'layout';
     this.activeSection.set(section);
     if (section === 'icons') {
       this.router.navigate(['/icons']);
@@ -261,6 +284,8 @@ export class MainLayoutComponent {
       this.router.navigate(['/themes']);
     } else if (section === 'motion') {
       this.router.navigate(['/motion']);
+    } else if (section === 'layout') {
+      this.router.navigate(['/layout']);
     } else {
       this.router.navigate(['/components']);
     }
@@ -301,5 +326,11 @@ export class MainLayoutComponent {
     const motionId = event.detail;
     this.activeMotion.set(motionId);
     this.router.navigate(['/motion', motionId]);
+  }
+
+  onLayoutItemClick(event: any) {
+    const layoutId = event.detail;
+    this.activeLayout.set(layoutId);
+    this.router.navigate(['/layout', layoutId]);
   }
 }
