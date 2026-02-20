@@ -63,7 +63,7 @@ import { createDropdown } from '@andersseen/headless-core';
                 <div class="px-2 py-1.5 text-sm font-semibold text-foreground">
                   My Account
                 </div>
-                <div class="-mx-1 my-1 h-px bg-muted"></div>
+                <div class="-mx-1 and-1 h-px bg-muted"></div>
 
                 @for (item of items; track item.id) {
                   <button
@@ -86,7 +86,7 @@ import { createDropdown } from '@andersseen/headless-core';
                   </button>
                 }
 
-                <div class="-mx-1 my-1 h-px bg-muted"></div>
+                <div class="-mx-1 and-1 h-px bg-muted"></div>
                 <button
                   class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none bg-transparent border-0 text-destructive hover:bg-destructive hover:text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground"
                   role="menuitem"

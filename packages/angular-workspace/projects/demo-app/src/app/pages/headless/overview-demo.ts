@@ -194,7 +194,7 @@ import { CommonModule } from '@angular/common';
 
 <span class="text-slate-500">// Your native button</span>
 &lt;<span class="text-pink-400">button</span>
-  <span class="text-green-300">class</span>="bg-blue-500 text-white ..."
+  <span class="text-green-300">class</span>="bg-primary text-primary-foreground ..."
   [<span class="text-amber-200">disabled</span>]="btn.state.disabled"
   (<span class="text-amber-200">click</span>)="btn.actions.click()"
 &gt;

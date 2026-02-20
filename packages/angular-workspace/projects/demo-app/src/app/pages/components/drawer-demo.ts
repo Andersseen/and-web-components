@@ -1,27 +1,27 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MyDrawer,
-  MyButton,
+  AndDrawer,
+  AndButton,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-drawer-demo',
   standalone: true,
-  imports: [CommonModule, MyDrawer, MyButton],
+  imports: [CommonModule, AndDrawer, AndButton],
   template: `
     <div class="demo-section">
       <h2>Drawer</h2>
       <p>Slide-out panel from the side of the screen</p>
 
       <div class="flex gap-2 flex-wrap">
-        <my-button (click)="openDrawer('left')">Left</my-button>
-        <my-button (click)="openDrawer('right')">Right</my-button>
-        <my-button (click)="openDrawer('top')">Top</my-button>
-        <my-button (click)="openDrawer('bottom')">Bottom</my-button>
+        <and-button (click)="openDrawer('left')">Left</and-button>
+        <and-button (click)="openDrawer('right')">Right</and-button>
+        <and-button (click)="openDrawer('top')">Top</and-button>
+        <and-button (click)="openDrawer('bottom')">Bottom</and-button>
       </div>
 
-      <my-drawer
+      <and-drawer
         [open]="drawerOpen()"
         [placement]="placement()"
         (myClose)="closeDrawer()"
@@ -31,7 +31,7 @@ import {
           <p>This is the drawer content. You can put any content here.</p>
           <p>It slides in from the {{ placement() }} side of the screen.</p>
         </div>
-      </my-drawer>
+      </and-drawer>
     </div>
   `,
 })

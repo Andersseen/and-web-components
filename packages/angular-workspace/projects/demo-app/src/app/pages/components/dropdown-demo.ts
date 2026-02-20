@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import {
-  MyButton,
-  MyDropdown,
+  AndButton,
+  AndDropdown,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-dropdown-demo',
-  imports: [MyDropdown, MyButton],
+  imports: [AndDropdown, AndButton],
   template: `
     <div class="demo-section">
       <h2>Dropdown</h2>
       <p>Dropdown menu with selectable items</p>
-      <my-dropdown [items]="dropdownItems">
-        <my-button slot="trigger">Open Menu</my-button>
-      </my-dropdown>
+      <and-dropdown [items]="dropdownItems">
+        <and-button slot="trigger">Open Menu</and-button>
+      </and-dropdown>
     </div>
   `,
 })

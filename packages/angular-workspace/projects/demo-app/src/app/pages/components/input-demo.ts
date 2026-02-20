@@ -1,18 +1,18 @@
-import { MyInput } from '@angular-components/stencil-generated/components';
+import { AndInput } from '@angular-components/stencil-generated/components';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-input-demo',
-  imports: [MyInput],
+  imports: [AndInput],
   template: `
     <div class="demo-section">
       <h2>Input</h2>
       <p>Form input fields</p>
       <div class="flex flex-col gap-4 max-w-sm">
-        <my-input placeholder="Default Input" type="text"></my-input>
-        <my-input placeholder="Disabled Input" disabled="true"></my-input>
-        <my-input placeholder="Email Input" type="email"></my-input>
-        <my-input placeholder="Password Input" type="password"></my-input>
+        <and-input placeholder="Default Input" type="text"></and-input>
+        <and-input placeholder="Disabled Input" disabled="true"></and-input>
+        <and-input placeholder="Email Input" type="email"></and-input>
+        <and-input placeholder="Password Input" type="password"></and-input>
       </div>
     </div>
   `,

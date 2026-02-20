@@ -28,7 +28,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"
                 ></span>
                 <span
-                  class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"
+                  class="relative inline-flex rounded-full h-2 w-2 bg-primary"
                 ></span>
               </span>
               Framework Agnostic • Accessible • Type-Safe
@@ -52,10 +52,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               class="flex flex-wrap justify-center gap-4 animate-slide-up"
               style="animation-delay: 0.2s"
             >
-              <my-button variant="default" size="lg"> Get Started </my-button>
-              <my-button variant="outline" size="lg">
+              <and-button variant="default" size="lg"> Get Started </and-button>
+              <and-button variant="outline" size="lg">
                 View on GitHub
-              </my-button>
+              </and-button>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
             >
               <div class="text-4xl mb-3">🎨</div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              <h3 class="text-lg font-bold text-gray-900 dark:text-primary-foreground mb-2">
                 Fully Customizable
               </h3>
               <p class="text-gray-600 dark:text-gray-300 text-sm">
@@ -80,7 +80,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
             >
               <div class="text-4xl mb-3">♿</div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              <h3 class="text-lg font-bold text-gray-900 dark:text-primary-foreground mb-2">
                 Accessible by Default
               </h3>
               <p class="text-gray-600 dark:text-gray-300 text-sm">
@@ -92,7 +92,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
             >
               <div class="text-4xl mb-3">🔄</div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              <h3 class="text-lg font-bold text-gray-900 dark:text-primary-foreground mb-2">
                 Framework Agnostic
               </h3>
               <p class="text-gray-600 dark:text-gray-300 text-sm">
@@ -108,73 +108,73 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         <!-- Interactive Demo Tabs -->
         <div class="mb-16">
           <h2
-            class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center"
+            class="text-3xl font-bold text-gray-900 dark:text-primary-foreground mb-8 text-center"
           >
             Live Interactive Examples
           </h2>
 
-          <my-tabs
+          <and-tabs
             [value]="activeDemo()"
             (valueChange)="activeDemo.set($event.detail)"
             class="block"
           >
-            <my-tabs-list class="flex justify-center mb-8">
-              <my-tabs-trigger value="button">Button</my-tabs-trigger>
-              <my-tabs-trigger value="dropdown">Dropdown</my-tabs-trigger>
-              <my-tabs-trigger value="tabs">Tabs</my-tabs-trigger>
-              <my-tabs-trigger value="accordion">Accordion</my-tabs-trigger>
-            </my-tabs-list>
+            <and-tabs-list class="flex justify-center mb-8">
+              <and-tabs-trigger value="button">Button</and-tabs-trigger>
+              <and-tabs-trigger value="dropdown">Dropdown</and-tabs-trigger>
+              <and-tabs-trigger value="tabs">Tabs</and-tabs-trigger>
+              <and-tabs-trigger value="accordion">Accordion</and-tabs-trigger>
+            </and-tabs-list>
 
             <!-- Button Demo -->
-            <my-tabs-content value="button">
+            <and-tabs-content value="button">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
                   class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-white mb-6"
+                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-accent"></span>
                       Preview
                     </span>
                   </h3>
 
                   <div class="space-y-4">
                     <div class="flex flex-wrap gap-3">
-                      <my-button
+                      <and-button
                         variant="default"
                         (buttonClick)="showToast('Default clicked!')"
                       >
                         Default
-                      </my-button>
-                      <my-button variant="secondary">Secondary</my-button>
-                      <my-button variant="destructive">Destructive</my-button>
-                      <my-button variant="outline">Outline</my-button>
-                      <my-button variant="ghost">Ghost</my-button>
+                      </and-button>
+                      <and-button variant="secondary">Secondary</and-button>
+                      <and-button variant="destructive">Destructive</and-button>
+                      <and-button variant="outline">Outline</and-button>
+                      <and-button variant="ghost">Ghost</and-button>
                     </div>
 
                     <div class="h-px bg-gray-200 dark:bg-gray-700"></div>
 
                     <div class="flex flex-wrap gap-3">
-                      <my-button variant="default" size="sm">Small</my-button>
-                      <my-button variant="default">Default</my-button>
-                      <my-button variant="default" size="lg">Large</my-button>
+                      <and-button variant="default" size="sm">Small</and-button>
+                      <and-button variant="default">Default</and-button>
+                      <and-button variant="default" size="lg">Large</and-button>
                     </div>
 
                     <div class="h-px bg-gray-200 dark:bg-gray-700"></div>
 
                     <div class="flex flex-wrap gap-3">
-                      <my-button
+                      <and-button
                         variant="default"
                         [loading]="buttonLoading()"
                         (buttonClick)="toggleButtonLoading()"
                       >
                         {{ buttonLoading() ? 'Loading...' : 'Click to Load' }}
-                      </my-button>
-                      <my-button variant="outline" [disabled]="true">
+                      </and-button>
+                      <and-button variant="outline" [disabled]="true">
                         Disabled
-                      </my-button>
+                      </and-button>
                     </div>
 
                     <div
@@ -200,7 +200,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 <div
                   class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
                 >
-                  <h3 class="text-xl font-bold text-white mb-6">
+                  <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-purple-500"></span>
                       Code
@@ -211,19 +211,19 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   ><code>{{ buttonCode }}</code></pre>
                 </div>
               </div>
-            </my-tabs-content>
+            </and-tabs-content>
 
             <!-- Dropdown Demo -->
-            <my-tabs-content value="dropdown">
+            <and-tabs-content value="dropdown">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
                   class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-white mb-6"
+                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-accent"></span>
                       Preview
                     </span>
                   </h3>
@@ -235,12 +235,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                       >
                         Select an option
                       </label>
-                      <my-dropdown
+                      <and-dropdown
                         label="Choose..."
                         [items]="dropdownItems"
                         (dropdownSelect)="onDropdownSelect($event)"
                       >
-                      </my-dropdown>
+                      </and-dropdown>
 
                       <div
                         *ngIf="selectedItem()"
@@ -250,7 +250,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                           <span class="text-2xl">✓</span>
                           <div>
                             <div
-                              class="text-sm font-medium text-gray-900 dark:text-white"
+                              class="text-sm font-medium text-gray-900 dark:text-primary-foreground"
                             >
                               Selected:
                             </div>
@@ -317,7 +317,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 <div
                   class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
                 >
-                  <h3 class="text-xl font-bold text-white mb-6">
+                  <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-purple-500"></span>
                       Code
@@ -328,45 +328,45 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   ><code>{{ dropdownCode }}</code></pre>
                 </div>
               </div>
-            </my-tabs-content>
+            </and-tabs-content>
 
             <!-- Tabs Demo -->
-            <my-tabs-content value="tabs">
+            <and-tabs-content value="tabs">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
                   class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-white mb-6"
+                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-accent"></span>
                       Preview
                     </span>
                   </h3>
 
-                  <my-tabs
+                  <and-tabs
                     value="tab1"
                     (valueChange)="currentTab.set($event.detail)"
                   >
-                    <my-tabs-list>
-                      <my-tabs-trigger value="tab1">Dashboard</my-tabs-trigger>
-                      <my-tabs-trigger value="tab2">Analytics</my-tabs-trigger>
-                      <my-tabs-trigger value="tab3">Settings</my-tabs-trigger>
-                    </my-tabs-list>
+                    <and-tabs-list>
+                      <and-tabs-trigger value="tab1">Dashboard</and-tabs-trigger>
+                      <and-tabs-trigger value="tab2">Analytics</and-tabs-trigger>
+                      <and-tabs-trigger value="tab3">Settings</and-tabs-trigger>
+                    </and-tabs-list>
 
-                    <my-tabs-content value="tab1">
+                    <and-tabs-content value="tab1">
                       <div
                         class="mt-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
                       >
                         <div class="flex items-center gap-3 mb-3">
                           <div
-                            class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white text-2xl"
+                            class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
                           >
                             📊
                           </div>
                           <div>
-                            <h4 class="font-bold text-gray-900 dark:text-white">
+                            <h4 class="font-bold text-gray-900 dark:text-primary-foreground">
                               Dashboard
                             </h4>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -407,20 +407,20 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                           </div>
                         </div>
                       </div>
-                    </my-tabs-content>
+                    </and-tabs-content>
 
-                    <my-tabs-content value="tab2">
+                    <and-tabs-content value="tab2">
                       <div
                         class="mt-6 p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800"
                       >
                         <div class="flex items-center gap-3">
                           <div
-                            class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-white text-2xl"
+                            class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
                           >
                             📈
                           </div>
                           <div>
-                            <h4 class="font-bold text-gray-900 dark:text-white">
+                            <h4 class="font-bold text-gray-900 dark:text-primary-foreground">
                               Analytics Content
                             </h4>
                             <p class="text-gray-600 dark:text-gray-400">
@@ -429,20 +429,20 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                           </div>
                         </div>
                       </div>
-                    </my-tabs-content>
+                    </and-tabs-content>
 
-                    <my-tabs-content value="tab3">
+                    <and-tabs-content value="tab3">
                       <div
                         class="mt-6 p-6 bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-900/20 dark:to-slate-900/20 rounded-xl border border-gray-200 dark:border-gray-800"
                       >
                         <div class="flex items-center gap-3">
                           <div
-                            class="w-12 h-12 bg-gray-500 rounded-xl flex items-center justify-center text-white text-2xl"
+                            class="w-12 h-12 bg-gray-500 rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
                           >
                             ⚙️
                           </div>
                           <div>
-                            <h4 class="font-bold text-gray-900 dark:text-white">
+                            <h4 class="font-bold text-gray-900 dark:text-primary-foreground">
                               Settings
                             </h4>
                             <p class="text-gray-600 dark:text-gray-400">
@@ -451,8 +451,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                           </div>
                         </div>
                       </div>
-                    </my-tabs-content>
-                  </my-tabs>
+                    </and-tabs-content>
+                  </and-tabs>
 
                   <div
                     class="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg"
@@ -496,7 +496,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 <div
                   class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
                 >
-                  <h3 class="text-xl font-bold text-white mb-6">
+                  <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-purple-500"></span>
                       Code
@@ -507,31 +507,31 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   ><code>{{ tabsCode }}</code></pre>
                 </div>
               </div>
-            </my-tabs-content>
+            </and-tabs-content>
 
             <!-- Accordion Demo -->
-            <my-tabs-content value="accordion">
+            <and-tabs-content value="accordion">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
                   class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-white mb-6"
+                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-accent"></span>
                       Preview
                     </span>
                   </h3>
 
-                  <my-accordion>
-                    <my-accordion-item value="q1">
-                      <my-accordion-trigger value="q1">
+                  <and-accordion>
+                    <and-accordion-item value="q1">
+                      <and-accordion-trigger value="q1">
                         <span class="font-semibold"
                           >What is a headless component?</span
                         >
-                      </my-accordion-trigger>
-                      <my-accordion-content value="q1">
+                      </and-accordion-trigger>
+                      <and-accordion-content value="q1">
                         <div
                           class="text-gray-600 dark:text-gray-300 leading-relaxed"
                         >
@@ -541,16 +541,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                           management, keyboard navigation, and accessibility
                           from the UI layer.
                         </div>
-                      </my-accordion-content>
-                    </my-accordion-item>
+                      </and-accordion-content>
+                    </and-accordion-item>
 
-                    <my-accordion-item value="q2">
-                      <my-accordion-trigger value="q2">
+                    <and-accordion-item value="q2">
+                      <and-accordion-trigger value="q2">
                         <span class="font-semibold"
                           >Why use headless components?</span
                         >
-                      </my-accordion-trigger>
-                      <my-accordion-content value="q2">
+                      </and-accordion-trigger>
+                      <and-accordion-content value="q2">
                         <div
                           class="text-gray-600 dark:text-gray-300 leading-relaxed space-y-2"
                         >
@@ -571,14 +571,14 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                             independently
                           </p>
                         </div>
-                      </my-accordion-content>
-                    </my-accordion-item>
+                      </and-accordion-content>
+                    </and-accordion-item>
 
-                    <my-accordion-item value="q3">
-                      <my-accordion-trigger value="q3">
+                    <and-accordion-item value="q3">
+                      <and-accordion-trigger value="q3">
                         <span class="font-semibold">How does it work?</span>
-                      </my-accordion-trigger>
-                      <my-accordion-content value="q3">
+                      </and-accordion-trigger>
+                      <and-accordion-content value="q3">
                         <div
                           class="text-gray-600 dark:text-gray-300 leading-relaxed"
                         >
@@ -591,9 +591,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                           that return state, actions, and prop getters. Stencil
                           components consume this logic and render the UI.
                         </div>
-                      </my-accordion-content>
-                    </my-accordion-item>
-                  </my-accordion>
+                      </and-accordion-content>
+                    </and-accordion-item>
+                  </and-accordion>
 
                   <div
                     class="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg"
@@ -617,7 +617,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 <div
                   class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
                 >
-                  <h3 class="text-xl font-bold text-white mb-6">
+                  <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-purple-500"></span>
                       Code
@@ -628,14 +628,14 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   ><code>{{ accordionCode }}</code></pre>
                 </div>
               </div>
-            </my-tabs-content>
-          </my-tabs>
+            </and-tabs-content>
+          </and-tabs>
         </div>
 
         <!-- Architecture Section -->
         <div class="mb-16">
           <h2
-            class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center"
+            class="text-3xl font-bold text-gray-900 dark:text-primary-foreground mb-8 text-center"
           >
             How It Works
           </h2>
@@ -647,10 +647,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               <!-- Layer 1 -->
               <div class="relative">
                 <div
-                  class="absolute -top-4 -left-4 w-16 h-16 bg-blue-500 rounded-2xl opacity-10 animate-pulse"
+                  class="absolute -top-4 -left-4 w-16 h-16 bg-primary rounded-2xl opacity-10 animate-pulse"
                 ></div>
                 <div
-                  class="relative bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-xl"
+                  class="relative bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
                 >
                   <div class="text-4xl mb-4">🎯</div>
                   <h3 class="text-xl font-bold mb-3">Headless Core</h3>
@@ -701,7 +701,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   style="animation-delay: 0.2s"
                 ></div>
                 <div
-                  class="relative bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white shadow-xl"
+                  class="relative bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
                 >
                   <div class="text-4xl mb-4">🎨</div>
                   <h3 class="text-xl font-bold mb-3">Stencil Components</h3>
@@ -712,17 +712,17 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                     <div
                       class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
                     >
-                      &lt;my-button&gt;
+                      &lt;and-button&gt;
                     </div>
                     <div
                       class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
                     >
-                      &lt;my-tabs&gt;
+                      &lt;and-tabs&gt;
                     </div>
                     <div
                       class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
                     >
-                      &lt;my-dropdown&gt;
+                      &lt;and-dropdown&gt;
                     </div>
                   </div>
                 </div>
@@ -732,7 +732,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             <div
               class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
             >
-              <h4 class="font-bold text-gray-900 dark:text-white mb-3">
+              <h4 class="font-bold text-gray-900 dark:text-primary-foreground mb-3">
                 💡 The Result
               </h4>
               <p
@@ -751,25 +751,25 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         <!-- Stats -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
           <div
-            class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-xl"
+            class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">4</div>
             <div class="text-blue-100 text-sm">Components Integrated</div>
           </div>
           <div
-            class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl"
+            class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">100%</div>
             <div class="text-purple-100 text-sm">Type Safe</div>
           </div>
           <div
-            class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl p-6 text-white shadow-xl"
+            class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">0</div>
             <div class="text-pink-100 text-sm">Runtime Dependencies</div>
           </div>
           <div
-            class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-6 text-white shadow-xl"
+            class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">∞</div>
             <div class="text-indigo-100 text-sm">Framework Support</div>
@@ -909,16 +909,16 @@ const accordion = createAccordion({
 });
 
 // Usage
-<my-accordion>
-  <my-accordion-item value="item-1">
-    <my-accordion-trigger value="item-1">
+<and-accordion>
+  <and-accordion-item value="item-1">
+    <and-accordion-trigger value="item-1">
       Question 1
-    </my-accordion-trigger>
-    <my-accordion-content value="item-1">
+    </and-accordion-trigger>
+    <and-accordion-content value="item-1">
       Answer 1
-    </my-accordion-content>
-  </my-accordion-item>
-</my-accordion>`;
+    </and-accordion-content>
+  </and-accordion-item>
+</and-accordion>`;
 
   toggleButtonLoading() {
     this.buttonLoading.set(true);

@@ -6,30 +6,30 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
-import { ButtonProps } from "./components/my-button/my-button";
-import { DropdownItem } from "./components/my-dropdown/my-dropdown";
+import { ButtonProps } from "./components/and-button/and-button";
+import { DropdownItem } from "./components/and-dropdown/and-dropdown";
 import { IconName } from "@andersseen/icon-library";
-import { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
-import { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
+import { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
+import { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
-export { ButtonProps } from "./components/my-button/my-button";
-export { DropdownItem } from "./components/my-dropdown/my-dropdown";
+export { ButtonProps } from "./components/and-button/and-button";
+export { DropdownItem } from "./components/and-dropdown/and-dropdown";
 export { IconName } from "@andersseen/icon-library";
-export { NavbarProps, NavItem } from "./components/my-navbar/my-navbar";
-export { SidebarItem, SidebarProps } from "./components/my-sidebar/my-sidebar";
+export { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
+export { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
     /**
      * Accordion container component using headless logic
      * @example ```html
-     * <my-accordion allow-multiple="true">
-     *   <my-accordion-item value="item-1">
-     *     <my-accordion-trigger>Item 1</my-accordion-trigger>
-     *     <my-accordion-content>Content 1</my-accordion-content>
-     *   </my-accordion-item>
-     * </my-accordion>
+     * <and-accordion allow-multiple="true">
+     *   <and-accordion-item value="item-1">
+     *     <and-accordion-trigger>Item 1</and-accordion-trigger>
+     *     <and-accordion-content>Content 1</and-accordion-content>
+     *   </and-accordion-item>
+     * </and-accordion>
      * ```
      */
-    interface MyAccordion {
+    interface AndAccordion {
         /**
           * Allow multiple items to be expanded simultaneously
           * @default false
@@ -53,7 +53,7 @@ export namespace Components {
     /**
      * Accordion content/panel component
      */
-    interface MyAccordionContent {
+    interface AndAccordionContent {
         /**
           * Set item properties from parent
          */
@@ -62,7 +62,7 @@ export namespace Components {
     /**
      * Accordion item component
      */
-    interface MyAccordionItem {
+    interface AndAccordionItem {
         /**
           * Whether this item is disabled
           * @default false
@@ -80,13 +80,13 @@ export namespace Components {
     /**
      * Accordion trigger/header component
      */
-    interface MyAccordionTrigger {
+    interface AndAccordionTrigger {
         /**
           * Set item properties from parent
          */
         "setItemProps": (props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }) => Promise<void>;
     }
-    interface MyAlert {
+    interface AndAlert {
         /**
           * @default false
          */
@@ -96,13 +96,13 @@ export namespace Components {
          */
         "variant": AlertVariant;
     }
-    interface MyBadge {
+    interface AndBadge {
         /**
           * @default 'default'
          */
         "variant": 'default' | 'secondary' | 'destructive' | 'outline';
     }
-    interface MyButton {
+    interface AndButton {
         "customClass": string;
         /**
           * @default false
@@ -125,13 +125,13 @@ export namespace Components {
          */
         "variant": ButtonProps['variant'];
     }
-    interface MyCard {
+    interface AndCard {
         /**
           * @default 'default'
          */
         "variant": 'default' | 'destructive';
     }
-    interface MyCarousel {
+    interface AndCarousel {
         /**
           * @default false
          */
@@ -141,9 +141,9 @@ export namespace Components {
          */
         "interval": number;
     }
-    interface MyCarouselItem {
+    interface AndCarouselItem {
     }
-    interface MyDrawer {
+    interface AndDrawer {
         /**
           * Whether the drawer is open.
           * @default false
@@ -155,7 +155,7 @@ export namespace Components {
          */
         "placement": DrawerPlacement;
     }
-    interface MyDropdown {
+    interface AndDropdown {
         /**
           * @default true
          */
@@ -177,7 +177,7 @@ export namespace Components {
          */
         "variant": any;
     }
-    interface MyIcon {
+    interface AndIcon {
         /**
           * The color of the icon (default: currentColor)
           * @default 'currentColor'
@@ -198,7 +198,7 @@ export namespace Components {
          */
         "strokeWidth": string | number;
     }
-    interface MyInput {
+    interface AndInput {
         "class": string;
         /**
           * @default false
@@ -211,13 +211,13 @@ export namespace Components {
         "type": string;
         "value": string;
     }
-    interface MyModal {
+    interface AndModal {
         /**
           * @default false
          */
         "open": boolean;
     }
-    interface MyNavbar {
+    interface AndNavbar {
         /**
           * The active navigation item ID
           * @default 'home'
@@ -234,7 +234,7 @@ export namespace Components {
          */
         "variant": NavbarProps['variant'];
     }
-    interface MyPagination {
+    interface AndPagination {
         /**
           * current page number
           * @default 1
@@ -246,7 +246,7 @@ export namespace Components {
          */
         "totalPages": number;
     }
-    interface MySidebar {
+    interface AndSidebar {
         /**
           * The active navigation item ID
           * @default 'home'
@@ -268,7 +268,7 @@ export namespace Components {
          */
         "variant": SidebarProps['variant'];
     }
-    interface MyTabs {
+    interface AndTabs {
         /**
           * @default 'automatic'
          */
@@ -280,20 +280,20 @@ export namespace Components {
         "orientation": 'horizontal' | 'vertical';
         "value": string;
     }
-    interface MyTabsContent {
+    interface AndTabsContent {
         /**
           * @default false
          */
         "selected": boolean;
         "value": string;
     }
-    interface MyTabsList {
+    interface AndTabsList {
         /**
           * @default 'horizontal'
          */
         "orientation": 'horizontal' | 'vertical';
     }
-    interface MyTabsTrigger {
+    interface AndTabsTrigger {
         /**
           * @default false
          */
@@ -305,13 +305,13 @@ export namespace Components {
         "tabsLogic": TabsReturn;
         "value": string;
     }
-    interface MyToast {
+    interface AndToast {
         /**
           * Present a new toast
          */
         "present": (message: string, type?: ToastType, duration?: number) => Promise<any>;
     }
-    interface MyTooltip {
+    interface AndTooltip {
         /**
           * @default 0
          */
@@ -327,347 +327,347 @@ export namespace Components {
         "placement": TooltipPlacement;
     }
 }
-export interface MyAlertCustomEvent<T> extends CustomEvent<T> {
+export interface AndAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyAlertElement;
+    target: HTMLAndAlertElement;
 }
-export interface MyDrawerCustomEvent<T> extends CustomEvent<T> {
+export interface AndDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyDrawerElement;
+    target: HTMLAndDrawerElement;
 }
-export interface MyDropdownCustomEvent<T> extends CustomEvent<T> {
+export interface AndDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyDropdownElement;
+    target: HTMLAndDropdownElement;
 }
-export interface MyInputCustomEvent<T> extends CustomEvent<T> {
+export interface AndInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyInputElement;
+    target: HTMLAndInputElement;
 }
-export interface MyModalCustomEvent<T> extends CustomEvent<T> {
+export interface AndModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyModalElement;
+    target: HTMLAndModalElement;
 }
-export interface MyNavbarCustomEvent<T> extends CustomEvent<T> {
+export interface AndNavbarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyNavbarElement;
+    target: HTMLAndNavbarElement;
 }
-export interface MyPaginationCustomEvent<T> extends CustomEvent<T> {
+export interface AndPaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyPaginationElement;
+    target: HTMLAndPaginationElement;
 }
-export interface MySidebarCustomEvent<T> extends CustomEvent<T> {
+export interface AndSidebarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMySidebarElement;
+    target: HTMLAndSidebarElement;
 }
-export interface MyTabsCustomEvent<T> extends CustomEvent<T> {
+export interface AndTabsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyTabsElement;
+    target: HTMLAndTabsElement;
 }
-export interface MyTabsTriggerCustomEvent<T> extends CustomEvent<T> {
+export interface AndTabsTriggerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMyTabsTriggerElement;
+    target: HTMLAndTabsTriggerElement;
 }
 declare global {
     /**
      * Accordion container component using headless logic
      * @example ```html
-     * <my-accordion allow-multiple="true">
-     *   <my-accordion-item value="item-1">
-     *     <my-accordion-trigger>Item 1</my-accordion-trigger>
-     *     <my-accordion-content>Content 1</my-accordion-content>
-     *   </my-accordion-item>
-     * </my-accordion>
+     * <and-accordion allow-multiple="true">
+     *   <and-accordion-item value="item-1">
+     *     <and-accordion-trigger>Item 1</and-accordion-trigger>
+     *     <and-accordion-content>Content 1</and-accordion-content>
+     *   </and-accordion-item>
+     * </and-accordion>
      * ```
      */
-    interface HTMLMyAccordionElement extends Components.MyAccordion, HTMLStencilElement {
+    interface HTMLAndAccordionElement extends Components.AndAccordion, HTMLStencilElement {
     }
-    var HTMLMyAccordionElement: {
-        prototype: HTMLMyAccordionElement;
-        new (): HTMLMyAccordionElement;
+    var HTMLAndAccordionElement: {
+        prototype: HTMLAndAccordionElement;
+        new (): HTMLAndAccordionElement;
     };
     /**
      * Accordion content/panel component
      */
-    interface HTMLMyAccordionContentElement extends Components.MyAccordionContent, HTMLStencilElement {
+    interface HTMLAndAccordionContentElement extends Components.AndAccordionContent, HTMLStencilElement {
     }
-    var HTMLMyAccordionContentElement: {
-        prototype: HTMLMyAccordionContentElement;
-        new (): HTMLMyAccordionContentElement;
+    var HTMLAndAccordionContentElement: {
+        prototype: HTMLAndAccordionContentElement;
+        new (): HTMLAndAccordionContentElement;
     };
     /**
      * Accordion item component
      */
-    interface HTMLMyAccordionItemElement extends Components.MyAccordionItem, HTMLStencilElement {
+    interface HTMLAndAccordionItemElement extends Components.AndAccordionItem, HTMLStencilElement {
     }
-    var HTMLMyAccordionItemElement: {
-        prototype: HTMLMyAccordionItemElement;
-        new (): HTMLMyAccordionItemElement;
+    var HTMLAndAccordionItemElement: {
+        prototype: HTMLAndAccordionItemElement;
+        new (): HTMLAndAccordionItemElement;
     };
     /**
      * Accordion trigger/header component
      */
-    interface HTMLMyAccordionTriggerElement extends Components.MyAccordionTrigger, HTMLStencilElement {
+    interface HTMLAndAccordionTriggerElement extends Components.AndAccordionTrigger, HTMLStencilElement {
     }
-    var HTMLMyAccordionTriggerElement: {
-        prototype: HTMLMyAccordionTriggerElement;
-        new (): HTMLMyAccordionTriggerElement;
+    var HTMLAndAccordionTriggerElement: {
+        prototype: HTMLAndAccordionTriggerElement;
+        new (): HTMLAndAccordionTriggerElement;
     };
-    interface HTMLMyAlertElementEventMap {
+    interface HTMLAndAlertElementEventMap {
         "myDismiss": void;
     }
-    interface HTMLMyAlertElement extends Components.MyAlert, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyAlertElementEventMap>(type: K, listener: (this: HTMLMyAlertElement, ev: MyAlertCustomEvent<HTMLMyAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndAlertElement extends Components.AndAlert, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndAlertElementEventMap>(type: K, listener: (this: HTMLAndAlertElement, ev: AndAlertCustomEvent<HTMLAndAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyAlertElementEventMap>(type: K, listener: (this: HTMLMyAlertElement, ev: MyAlertCustomEvent<HTMLMyAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndAlertElementEventMap>(type: K, listener: (this: HTMLAndAlertElement, ev: AndAlertCustomEvent<HTMLAndAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyAlertElement: {
-        prototype: HTMLMyAlertElement;
-        new (): HTMLMyAlertElement;
+    var HTMLAndAlertElement: {
+        prototype: HTMLAndAlertElement;
+        new (): HTMLAndAlertElement;
     };
-    interface HTMLMyBadgeElement extends Components.MyBadge, HTMLStencilElement {
+    interface HTMLAndBadgeElement extends Components.AndBadge, HTMLStencilElement {
     }
-    var HTMLMyBadgeElement: {
-        prototype: HTMLMyBadgeElement;
-        new (): HTMLMyBadgeElement;
+    var HTMLAndBadgeElement: {
+        prototype: HTMLAndBadgeElement;
+        new (): HTMLAndBadgeElement;
     };
-    interface HTMLMyButtonElement extends Components.MyButton, HTMLStencilElement {
+    interface HTMLAndButtonElement extends Components.AndButton, HTMLStencilElement {
     }
-    var HTMLMyButtonElement: {
-        prototype: HTMLMyButtonElement;
-        new (): HTMLMyButtonElement;
+    var HTMLAndButtonElement: {
+        prototype: HTMLAndButtonElement;
+        new (): HTMLAndButtonElement;
     };
-    interface HTMLMyCardElement extends Components.MyCard, HTMLStencilElement {
+    interface HTMLAndCardElement extends Components.AndCard, HTMLStencilElement {
     }
-    var HTMLMyCardElement: {
-        prototype: HTMLMyCardElement;
-        new (): HTMLMyCardElement;
+    var HTMLAndCardElement: {
+        prototype: HTMLAndCardElement;
+        new (): HTMLAndCardElement;
     };
-    interface HTMLMyCarouselElement extends Components.MyCarousel, HTMLStencilElement {
+    interface HTMLAndCarouselElement extends Components.AndCarousel, HTMLStencilElement {
     }
-    var HTMLMyCarouselElement: {
-        prototype: HTMLMyCarouselElement;
-        new (): HTMLMyCarouselElement;
+    var HTMLAndCarouselElement: {
+        prototype: HTMLAndCarouselElement;
+        new (): HTMLAndCarouselElement;
     };
-    interface HTMLMyCarouselItemElement extends Components.MyCarouselItem, HTMLStencilElement {
+    interface HTMLAndCarouselItemElement extends Components.AndCarouselItem, HTMLStencilElement {
     }
-    var HTMLMyCarouselItemElement: {
-        prototype: HTMLMyCarouselItemElement;
-        new (): HTMLMyCarouselItemElement;
+    var HTMLAndCarouselItemElement: {
+        prototype: HTMLAndCarouselItemElement;
+        new (): HTMLAndCarouselItemElement;
     };
-    interface HTMLMyDrawerElementEventMap {
+    interface HTMLAndDrawerElementEventMap {
         "myClose": void;
     }
-    interface HTMLMyDrawerElement extends Components.MyDrawer, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyDrawerElementEventMap>(type: K, listener: (this: HTMLMyDrawerElement, ev: MyDrawerCustomEvent<HTMLMyDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndDrawerElement extends Components.AndDrawer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndDrawerElementEventMap>(type: K, listener: (this: HTMLAndDrawerElement, ev: AndDrawerCustomEvent<HTMLAndDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyDrawerElementEventMap>(type: K, listener: (this: HTMLMyDrawerElement, ev: MyDrawerCustomEvent<HTMLMyDrawerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndDrawerElementEventMap>(type: K, listener: (this: HTMLAndDrawerElement, ev: AndDrawerCustomEvent<HTMLAndDrawerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyDrawerElement: {
-        prototype: HTMLMyDrawerElement;
-        new (): HTMLMyDrawerElement;
+    var HTMLAndDrawerElement: {
+        prototype: HTMLAndDrawerElement;
+        new (): HTMLAndDrawerElement;
     };
-    interface HTMLMyDropdownElementEventMap {
+    interface HTMLAndDropdownElementEventMap {
         "dropdownSelect": string;
     }
-    interface HTMLMyDropdownElement extends Components.MyDropdown, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyDropdownElementEventMap>(type: K, listener: (this: HTMLMyDropdownElement, ev: MyDropdownCustomEvent<HTMLMyDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndDropdownElement extends Components.AndDropdown, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndDropdownElementEventMap>(type: K, listener: (this: HTMLAndDropdownElement, ev: AndDropdownCustomEvent<HTMLAndDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyDropdownElementEventMap>(type: K, listener: (this: HTMLMyDropdownElement, ev: MyDropdownCustomEvent<HTMLMyDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndDropdownElementEventMap>(type: K, listener: (this: HTMLAndDropdownElement, ev: AndDropdownCustomEvent<HTMLAndDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyDropdownElement: {
-        prototype: HTMLMyDropdownElement;
-        new (): HTMLMyDropdownElement;
+    var HTMLAndDropdownElement: {
+        prototype: HTMLAndDropdownElement;
+        new (): HTMLAndDropdownElement;
     };
-    interface HTMLMyIconElement extends Components.MyIcon, HTMLStencilElement {
+    interface HTMLAndIconElement extends Components.AndIcon, HTMLStencilElement {
     }
-    var HTMLMyIconElement: {
-        prototype: HTMLMyIconElement;
-        new (): HTMLMyIconElement;
+    var HTMLAndIconElement: {
+        prototype: HTMLAndIconElement;
+        new (): HTMLAndIconElement;
     };
-    interface HTMLMyInputElementEventMap {
+    interface HTMLAndInputElementEventMap {
         "myInput": string;
     }
-    interface HTMLMyInputElement extends Components.MyInput, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyInputElementEventMap>(type: K, listener: (this: HTMLMyInputElement, ev: MyInputCustomEvent<HTMLMyInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndInputElement extends Components.AndInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndInputElementEventMap>(type: K, listener: (this: HTMLAndInputElement, ev: AndInputCustomEvent<HTMLAndInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyInputElementEventMap>(type: K, listener: (this: HTMLMyInputElement, ev: MyInputCustomEvent<HTMLMyInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndInputElementEventMap>(type: K, listener: (this: HTMLAndInputElement, ev: AndInputCustomEvent<HTMLAndInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyInputElement: {
-        prototype: HTMLMyInputElement;
-        new (): HTMLMyInputElement;
+    var HTMLAndInputElement: {
+        prototype: HTMLAndInputElement;
+        new (): HTMLAndInputElement;
     };
-    interface HTMLMyModalElementEventMap {
+    interface HTMLAndModalElementEventMap {
         "myClose": void;
     }
-    interface HTMLMyModalElement extends Components.MyModal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyModalElementEventMap>(type: K, listener: (this: HTMLMyModalElement, ev: MyModalCustomEvent<HTMLMyModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndModalElement extends Components.AndModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndModalElementEventMap>(type: K, listener: (this: HTMLAndModalElement, ev: AndModalCustomEvent<HTMLAndModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyModalElementEventMap>(type: K, listener: (this: HTMLMyModalElement, ev: MyModalCustomEvent<HTMLMyModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndModalElementEventMap>(type: K, listener: (this: HTMLAndModalElement, ev: AndModalCustomEvent<HTMLAndModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyModalElement: {
-        prototype: HTMLMyModalElement;
-        new (): HTMLMyModalElement;
+    var HTMLAndModalElement: {
+        prototype: HTMLAndModalElement;
+        new (): HTMLAndModalElement;
     };
-    interface HTMLMyNavbarElementEventMap {
+    interface HTMLAndNavbarElementEventMap {
         "navItemClick": string;
     }
-    interface HTMLMyNavbarElement extends Components.MyNavbar, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyNavbarElementEventMap>(type: K, listener: (this: HTMLMyNavbarElement, ev: MyNavbarCustomEvent<HTMLMyNavbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndNavbarElement extends Components.AndNavbar, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndNavbarElementEventMap>(type: K, listener: (this: HTMLAndNavbarElement, ev: AndNavbarCustomEvent<HTMLAndNavbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyNavbarElementEventMap>(type: K, listener: (this: HTMLMyNavbarElement, ev: MyNavbarCustomEvent<HTMLMyNavbarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndNavbarElementEventMap>(type: K, listener: (this: HTMLAndNavbarElement, ev: AndNavbarCustomEvent<HTMLAndNavbarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyNavbarElement: {
-        prototype: HTMLMyNavbarElement;
-        new (): HTMLMyNavbarElement;
+    var HTMLAndNavbarElement: {
+        prototype: HTMLAndNavbarElement;
+        new (): HTMLAndNavbarElement;
     };
-    interface HTMLMyPaginationElementEventMap {
+    interface HTMLAndPaginationElementEventMap {
         "pageChange": number;
     }
-    interface HTMLMyPaginationElement extends Components.MyPagination, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyPaginationElementEventMap>(type: K, listener: (this: HTMLMyPaginationElement, ev: MyPaginationCustomEvent<HTMLMyPaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndPaginationElement extends Components.AndPagination, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndPaginationElementEventMap>(type: K, listener: (this: HTMLAndPaginationElement, ev: AndPaginationCustomEvent<HTMLAndPaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyPaginationElementEventMap>(type: K, listener: (this: HTMLMyPaginationElement, ev: MyPaginationCustomEvent<HTMLMyPaginationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndPaginationElementEventMap>(type: K, listener: (this: HTMLAndPaginationElement, ev: AndPaginationCustomEvent<HTMLAndPaginationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyPaginationElement: {
-        prototype: HTMLMyPaginationElement;
-        new (): HTMLMyPaginationElement;
+    var HTMLAndPaginationElement: {
+        prototype: HTMLAndPaginationElement;
+        new (): HTMLAndPaginationElement;
     };
-    interface HTMLMySidebarElementEventMap {
+    interface HTMLAndSidebarElementEventMap {
         "sidebarItemClick": string;
         "sidebarToggle": boolean;
     }
-    interface HTMLMySidebarElement extends Components.MySidebar, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMySidebarElementEventMap>(type: K, listener: (this: HTMLMySidebarElement, ev: MySidebarCustomEvent<HTMLMySidebarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndSidebarElement extends Components.AndSidebar, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndSidebarElementEventMap>(type: K, listener: (this: HTMLAndSidebarElement, ev: AndSidebarCustomEvent<HTMLAndSidebarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMySidebarElementEventMap>(type: K, listener: (this: HTMLMySidebarElement, ev: MySidebarCustomEvent<HTMLMySidebarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndSidebarElementEventMap>(type: K, listener: (this: HTMLAndSidebarElement, ev: AndSidebarCustomEvent<HTMLAndSidebarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMySidebarElement: {
-        prototype: HTMLMySidebarElement;
-        new (): HTMLMySidebarElement;
+    var HTMLAndSidebarElement: {
+        prototype: HTMLAndSidebarElement;
+        new (): HTMLAndSidebarElement;
     };
-    interface HTMLMyTabsElementEventMap {
+    interface HTMLAndTabsElementEventMap {
         "valueChange": string;
     }
-    interface HTMLMyTabsElement extends Components.MyTabs, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyTabsElementEventMap>(type: K, listener: (this: HTMLMyTabsElement, ev: MyTabsCustomEvent<HTMLMyTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndTabsElement extends Components.AndTabs, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndTabsElementEventMap>(type: K, listener: (this: HTMLAndTabsElement, ev: AndTabsCustomEvent<HTMLAndTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyTabsElementEventMap>(type: K, listener: (this: HTMLMyTabsElement, ev: MyTabsCustomEvent<HTMLMyTabsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndTabsElementEventMap>(type: K, listener: (this: HTMLAndTabsElement, ev: AndTabsCustomEvent<HTMLAndTabsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyTabsElement: {
-        prototype: HTMLMyTabsElement;
-        new (): HTMLMyTabsElement;
+    var HTMLAndTabsElement: {
+        prototype: HTMLAndTabsElement;
+        new (): HTMLAndTabsElement;
     };
-    interface HTMLMyTabsContentElement extends Components.MyTabsContent, HTMLStencilElement {
+    interface HTMLAndTabsContentElement extends Components.AndTabsContent, HTMLStencilElement {
     }
-    var HTMLMyTabsContentElement: {
-        prototype: HTMLMyTabsContentElement;
-        new (): HTMLMyTabsContentElement;
+    var HTMLAndTabsContentElement: {
+        prototype: HTMLAndTabsContentElement;
+        new (): HTMLAndTabsContentElement;
     };
-    interface HTMLMyTabsListElement extends Components.MyTabsList, HTMLStencilElement {
+    interface HTMLAndTabsListElement extends Components.AndTabsList, HTMLStencilElement {
     }
-    var HTMLMyTabsListElement: {
-        prototype: HTMLMyTabsListElement;
-        new (): HTMLMyTabsListElement;
+    var HTMLAndTabsListElement: {
+        prototype: HTMLAndTabsListElement;
+        new (): HTMLAndTabsListElement;
     };
-    interface HTMLMyTabsTriggerElementEventMap {
+    interface HTMLAndTabsTriggerElementEventMap {
         "tabTriggerClick": string;
     }
-    interface HTMLMyTabsTriggerElement extends Components.MyTabsTrigger, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLMyTabsTriggerElementEventMap>(type: K, listener: (this: HTMLMyTabsTriggerElement, ev: MyTabsTriggerCustomEvent<HTMLMyTabsTriggerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLAndTabsTriggerElement extends Components.AndTabsTrigger, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndTabsTriggerElementEventMap>(type: K, listener: (this: HTMLAndTabsTriggerElement, ev: AndTabsTriggerCustomEvent<HTMLAndTabsTriggerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLMyTabsTriggerElementEventMap>(type: K, listener: (this: HTMLMyTabsTriggerElement, ev: MyTabsTriggerCustomEvent<HTMLMyTabsTriggerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndTabsTriggerElementEventMap>(type: K, listener: (this: HTMLAndTabsTriggerElement, ev: AndTabsTriggerCustomEvent<HTMLAndTabsTriggerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLMyTabsTriggerElement: {
-        prototype: HTMLMyTabsTriggerElement;
-        new (): HTMLMyTabsTriggerElement;
+    var HTMLAndTabsTriggerElement: {
+        prototype: HTMLAndTabsTriggerElement;
+        new (): HTMLAndTabsTriggerElement;
     };
-    interface HTMLMyToastElement extends Components.MyToast, HTMLStencilElement {
+    interface HTMLAndToastElement extends Components.AndToast, HTMLStencilElement {
     }
-    var HTMLMyToastElement: {
-        prototype: HTMLMyToastElement;
-        new (): HTMLMyToastElement;
+    var HTMLAndToastElement: {
+        prototype: HTMLAndToastElement;
+        new (): HTMLAndToastElement;
     };
-    interface HTMLMyTooltipElement extends Components.MyTooltip, HTMLStencilElement {
+    interface HTMLAndTooltipElement extends Components.AndTooltip, HTMLStencilElement {
     }
-    var HTMLMyTooltipElement: {
-        prototype: HTMLMyTooltipElement;
-        new (): HTMLMyTooltipElement;
+    var HTMLAndTooltipElement: {
+        prototype: HTMLAndTooltipElement;
+        new (): HTMLAndTooltipElement;
     };
     interface HTMLElementTagNameMap {
-        "my-accordion": HTMLMyAccordionElement;
-        "my-accordion-content": HTMLMyAccordionContentElement;
-        "my-accordion-item": HTMLMyAccordionItemElement;
-        "my-accordion-trigger": HTMLMyAccordionTriggerElement;
-        "my-alert": HTMLMyAlertElement;
-        "my-badge": HTMLMyBadgeElement;
-        "my-button": HTMLMyButtonElement;
-        "my-card": HTMLMyCardElement;
-        "my-carousel": HTMLMyCarouselElement;
-        "my-carousel-item": HTMLMyCarouselItemElement;
-        "my-drawer": HTMLMyDrawerElement;
-        "my-dropdown": HTMLMyDropdownElement;
-        "my-icon": HTMLMyIconElement;
-        "my-input": HTMLMyInputElement;
-        "my-modal": HTMLMyModalElement;
-        "my-navbar": HTMLMyNavbarElement;
-        "my-pagination": HTMLMyPaginationElement;
-        "my-sidebar": HTMLMySidebarElement;
-        "my-tabs": HTMLMyTabsElement;
-        "my-tabs-content": HTMLMyTabsContentElement;
-        "my-tabs-list": HTMLMyTabsListElement;
-        "my-tabs-trigger": HTMLMyTabsTriggerElement;
-        "my-toast": HTMLMyToastElement;
-        "my-tooltip": HTMLMyTooltipElement;
+        "and-accordion": HTMLAndAccordionElement;
+        "and-accordion-content": HTMLAndAccordionContentElement;
+        "and-accordion-item": HTMLAndAccordionItemElement;
+        "and-accordion-trigger": HTMLAndAccordionTriggerElement;
+        "and-alert": HTMLAndAlertElement;
+        "and-badge": HTMLAndBadgeElement;
+        "and-button": HTMLAndButtonElement;
+        "and-card": HTMLAndCardElement;
+        "and-carousel": HTMLAndCarouselElement;
+        "and-carousel-item": HTMLAndCarouselItemElement;
+        "and-drawer": HTMLAndDrawerElement;
+        "and-dropdown": HTMLAndDropdownElement;
+        "and-icon": HTMLAndIconElement;
+        "and-input": HTMLAndInputElement;
+        "and-modal": HTMLAndModalElement;
+        "and-navbar": HTMLAndNavbarElement;
+        "and-pagination": HTMLAndPaginationElement;
+        "and-sidebar": HTMLAndSidebarElement;
+        "and-tabs": HTMLAndTabsElement;
+        "and-tabs-content": HTMLAndTabsContentElement;
+        "and-tabs-list": HTMLAndTabsListElement;
+        "and-tabs-trigger": HTMLAndTabsTriggerElement;
+        "and-toast": HTMLAndToastElement;
+        "and-tooltip": HTMLAndTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -676,15 +676,15 @@ declare namespace LocalJSX {
     /**
      * Accordion container component using headless logic
      * @example ```html
-     * <my-accordion allow-multiple="true">
-     *   <my-accordion-item value="item-1">
-     *     <my-accordion-trigger>Item 1</my-accordion-trigger>
-     *     <my-accordion-content>Content 1</my-accordion-content>
-     *   </my-accordion-item>
-     * </my-accordion>
+     * <and-accordion allow-multiple="true">
+     *   <and-accordion-item value="item-1">
+     *     <and-accordion-trigger>Item 1</and-accordion-trigger>
+     *     <and-accordion-content>Content 1</and-accordion-content>
+     *   </and-accordion-item>
+     * </and-accordion>
      * ```
      */
-    interface MyAccordion {
+    interface AndAccordion {
         /**
           * Allow multiple items to be expanded simultaneously
           * @default false
@@ -708,12 +708,12 @@ declare namespace LocalJSX {
     /**
      * Accordion content/panel component
      */
-    interface MyAccordionContent {
+    interface AndAccordionContent {
     }
     /**
      * Accordion item component
      */
-    interface MyAccordionItem {
+    interface AndAccordionItem {
         /**
           * Whether this item is disabled
           * @default false
@@ -727,26 +727,26 @@ declare namespace LocalJSX {
     /**
      * Accordion trigger/header component
      */
-    interface MyAccordionTrigger {
+    interface AndAccordionTrigger {
     }
-    interface MyAlert {
+    interface AndAlert {
         /**
           * @default false
          */
         "dismissible"?: boolean;
-        "onMyDismiss"?: (event: MyAlertCustomEvent<void>) => void;
+        "onMyDismiss"?: (event: AndAlertCustomEvent<void>) => void;
         /**
           * @default 'default'
          */
         "variant"?: AlertVariant;
     }
-    interface MyBadge {
+    interface AndBadge {
         /**
           * @default 'default'
          */
         "variant"?: 'default' | 'secondary' | 'destructive' | 'outline';
     }
-    interface MyButton {
+    interface AndButton {
         "customClass"?: string;
         /**
           * @default false
@@ -769,13 +769,13 @@ declare namespace LocalJSX {
          */
         "variant"?: ButtonProps['variant'];
     }
-    interface MyCard {
+    interface AndCard {
         /**
           * @default 'default'
          */
         "variant"?: 'default' | 'destructive';
     }
-    interface MyCarousel {
+    interface AndCarousel {
         /**
           * @default false
          */
@@ -785,13 +785,13 @@ declare namespace LocalJSX {
          */
         "interval"?: number;
     }
-    interface MyCarouselItem {
+    interface AndCarouselItem {
     }
-    interface MyDrawer {
+    interface AndDrawer {
         /**
           * Emitted when the drawer is closed (backdrop click or close button).
          */
-        "onMyClose"?: (event: MyDrawerCustomEvent<void>) => void;
+        "onMyClose"?: (event: AndDrawerCustomEvent<void>) => void;
         /**
           * Whether the drawer is open.
           * @default false
@@ -803,7 +803,7 @@ declare namespace LocalJSX {
          */
         "placement"?: DrawerPlacement;
     }
-    interface MyDropdown {
+    interface AndDropdown {
         /**
           * @default true
          */
@@ -816,7 +816,7 @@ declare namespace LocalJSX {
           * @default 'Options'
          */
         "label"?: string;
-        "onDropdownSelect"?: (event: MyDropdownCustomEvent<string>) => void;
+        "onDropdownSelect"?: (event: AndDropdownCustomEvent<string>) => void;
         /**
           * @default 'bottom'
          */
@@ -826,7 +826,7 @@ declare namespace LocalJSX {
          */
         "variant"?: any;
     }
-    interface MyIcon {
+    interface AndIcon {
         /**
           * The color of the icon (default: currentColor)
           * @default 'currentColor'
@@ -847,13 +847,13 @@ declare namespace LocalJSX {
          */
         "strokeWidth"?: string | number;
     }
-    interface MyInput {
+    interface AndInput {
         "class"?: string;
         /**
           * @default false
          */
         "disabled"?: boolean;
-        "onMyInput"?: (event: MyInputCustomEvent<string>) => void;
+        "onMyInput"?: (event: AndInputCustomEvent<string>) => void;
         "placeholder"?: string;
         /**
           * @default 'text'
@@ -861,14 +861,14 @@ declare namespace LocalJSX {
         "type"?: string;
         "value"?: string;
     }
-    interface MyModal {
-        "onMyClose"?: (event: MyModalCustomEvent<void>) => void;
+    interface AndModal {
+        "onMyClose"?: (event: AndModalCustomEvent<void>) => void;
         /**
           * @default false
          */
         "open"?: boolean;
     }
-    interface MyNavbar {
+    interface AndNavbar {
         /**
           * The active navigation item ID
           * @default 'home'
@@ -882,14 +882,14 @@ declare namespace LocalJSX {
         /**
           * Emitted when a navigation item is clicked
          */
-        "onNavItemClick"?: (event: MyNavbarCustomEvent<string>) => void;
+        "onNavItemClick"?: (event: AndNavbarCustomEvent<string>) => void;
         /**
           * Variant of the navbar
           * @default 'default'
          */
         "variant"?: NavbarProps['variant'];
     }
-    interface MyPagination {
+    interface AndPagination {
         /**
           * current page number
           * @default 1
@@ -898,14 +898,14 @@ declare namespace LocalJSX {
         /**
           * Emitted when page changes
          */
-        "onPageChange"?: (event: MyPaginationCustomEvent<number>) => void;
+        "onPageChange"?: (event: AndPaginationCustomEvent<number>) => void;
         /**
           * total number of pages
           * @default 1
          */
         "totalPages"?: number;
     }
-    interface MySidebar {
+    interface AndSidebar {
         /**
           * The active navigation item ID
           * @default 'home'
@@ -924,49 +924,49 @@ declare namespace LocalJSX {
         /**
           * Emitted when a navigation item is clicked
          */
-        "onSidebarItemClick"?: (event: MySidebarCustomEvent<string>) => void;
+        "onSidebarItemClick"?: (event: AndSidebarCustomEvent<string>) => void;
         /**
           * Emitted when the sidebar collapse state changes
          */
-        "onSidebarToggle"?: (event: MySidebarCustomEvent<boolean>) => void;
+        "onSidebarToggle"?: (event: AndSidebarCustomEvent<boolean>) => void;
         /**
           * Variant of the sidebar
           * @default 'default'
          */
         "variant"?: SidebarProps['variant'];
     }
-    interface MyTabs {
+    interface AndTabs {
         /**
           * @default 'automatic'
          */
         "activationMode"?: 'automatic' | 'manual';
         "defaultValue"?: string;
-        "onValueChange"?: (event: MyTabsCustomEvent<string>) => void;
+        "onValueChange"?: (event: AndTabsCustomEvent<string>) => void;
         /**
           * @default 'horizontal'
          */
         "orientation"?: 'horizontal' | 'vertical';
         "value"?: string;
     }
-    interface MyTabsContent {
+    interface AndTabsContent {
         /**
           * @default false
          */
         "selected"?: boolean;
         "value"?: string;
     }
-    interface MyTabsList {
+    interface AndTabsList {
         /**
           * @default 'horizontal'
          */
         "orientation"?: 'horizontal' | 'vertical';
     }
-    interface MyTabsTrigger {
+    interface AndTabsTrigger {
         /**
           * @default false
          */
         "disabled"?: boolean;
-        "onTabTriggerClick"?: (event: MyTabsTriggerCustomEvent<string>) => void;
+        "onTabTriggerClick"?: (event: AndTabsTriggerCustomEvent<string>) => void;
         /**
           * @default false
          */
@@ -974,9 +974,9 @@ declare namespace LocalJSX {
         "tabsLogic"?: TabsReturn;
         "value"?: string;
     }
-    interface MyToast {
+    interface AndToast {
     }
-    interface MyTooltip {
+    interface AndTooltip {
         /**
           * @default 0
          */
@@ -992,23 +992,23 @@ declare namespace LocalJSX {
         "placement"?: TooltipPlacement;
     }
 
-    interface MyAccordionAttributes {
+    interface AndAccordionAttributes {
         "allowMultiple": boolean;
         "orientation": 'horizontal' | 'vertical';
         "disabled": boolean;
     }
-    interface MyAccordionItemAttributes {
+    interface AndAccordionItemAttributes {
         "value": string;
         "disabled": boolean;
     }
-    interface MyAlertAttributes {
+    interface AndAlertAttributes {
         "variant": AlertVariant;
         "dismissible": boolean;
     }
-    interface MyBadgeAttributes {
+    interface AndBadgeAttributes {
         "variant": 'default' | 'secondary' | 'destructive' | 'outline';
     }
-    interface MyButtonAttributes {
+    interface AndButtonAttributes {
         "variant": ButtonProps['variant'];
         "size": ButtonProps['size'];
         "type": 'button' | 'submit' | 'reset';
@@ -1016,71 +1016,71 @@ declare namespace LocalJSX {
         "loading": boolean;
         "customClass": string;
     }
-    interface MyCardAttributes {
+    interface AndCardAttributes {
         "variant": 'default' | 'destructive';
     }
-    interface MyCarouselAttributes {
+    interface AndCarouselAttributes {
         "autoplay": boolean;
         "interval": number;
     }
-    interface MyDrawerAttributes {
+    interface AndDrawerAttributes {
         "open": boolean;
         "placement": DrawerPlacement;
     }
-    interface MyDropdownAttributes {
+    interface AndDropdownAttributes {
         "variant": string;
         "label": string;
         "placement": 'top' | 'bottom' | 'left' | 'right';
         "closeOnSelect": boolean;
     }
-    interface MyIconAttributes {
+    interface AndIconAttributes {
         "name": IconName;
         "size": string;
         "color": string;
         "strokeWidth": string;
     }
-    interface MyInputAttributes {
+    interface AndInputAttributes {
         "placeholder": string;
         "value": string;
         "type": string;
         "disabled": boolean;
         "class": string;
     }
-    interface MyModalAttributes {
+    interface AndModalAttributes {
         "open": boolean;
     }
-    interface MyNavbarAttributes {
+    interface AndNavbarAttributes {
         "activeItem": string;
         "variant": NavbarProps['variant'];
     }
-    interface MyPaginationAttributes {
+    interface AndPaginationAttributes {
         "totalPages": number;
         "currentPage": number;
     }
-    interface MySidebarAttributes {
+    interface AndSidebarAttributes {
         "activeItem": string;
         "collapsed": boolean;
         "variant": SidebarProps['variant'];
     }
-    interface MyTabsAttributes {
+    interface AndTabsAttributes {
         "value": string;
         "defaultValue": string;
         "orientation": 'horizontal' | 'vertical';
         "activationMode": 'automatic' | 'manual';
     }
-    interface MyTabsContentAttributes {
+    interface AndTabsContentAttributes {
         "value": string;
         "selected": boolean;
     }
-    interface MyTabsListAttributes {
+    interface AndTabsListAttributes {
         "orientation": 'horizontal' | 'vertical';
     }
-    interface MyTabsTriggerAttributes {
+    interface AndTabsTriggerAttributes {
         "value": string;
         "disabled": boolean;
         "selected": boolean;
     }
-    interface MyTooltipAttributes {
+    interface AndTooltipAttributes {
         "content": string;
         "placement": TooltipPlacement;
         "openDelay": number;
@@ -1088,30 +1088,30 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
-        "my-accordion": Omit<MyAccordion, keyof MyAccordionAttributes> & { [K in keyof MyAccordion & keyof MyAccordionAttributes]?: MyAccordion[K] } & { [K in keyof MyAccordion & keyof MyAccordionAttributes as `attr:${K}`]?: MyAccordionAttributes[K] } & { [K in keyof MyAccordion & keyof MyAccordionAttributes as `prop:${K}`]?: MyAccordion[K] };
-        "my-accordion-content": MyAccordionContent;
-        "my-accordion-item": Omit<MyAccordionItem, keyof MyAccordionItemAttributes> & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes]?: MyAccordionItem[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `attr:${K}`]?: MyAccordionItemAttributes[K] } & { [K in keyof MyAccordionItem & keyof MyAccordionItemAttributes as `prop:${K}`]?: MyAccordionItem[K] } & OneOf<"value", MyAccordionItem["value"]>;
-        "my-accordion-trigger": MyAccordionTrigger;
-        "my-alert": Omit<MyAlert, keyof MyAlertAttributes> & { [K in keyof MyAlert & keyof MyAlertAttributes]?: MyAlert[K] } & { [K in keyof MyAlert & keyof MyAlertAttributes as `attr:${K}`]?: MyAlertAttributes[K] } & { [K in keyof MyAlert & keyof MyAlertAttributes as `prop:${K}`]?: MyAlert[K] };
-        "my-badge": Omit<MyBadge, keyof MyBadgeAttributes> & { [K in keyof MyBadge & keyof MyBadgeAttributes]?: MyBadge[K] } & { [K in keyof MyBadge & keyof MyBadgeAttributes as `attr:${K}`]?: MyBadgeAttributes[K] } & { [K in keyof MyBadge & keyof MyBadgeAttributes as `prop:${K}`]?: MyBadge[K] };
-        "my-button": Omit<MyButton, keyof MyButtonAttributes> & { [K in keyof MyButton & keyof MyButtonAttributes]?: MyButton[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `attr:${K}`]?: MyButtonAttributes[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `prop:${K}`]?: MyButton[K] };
-        "my-card": Omit<MyCard, keyof MyCardAttributes> & { [K in keyof MyCard & keyof MyCardAttributes]?: MyCard[K] } & { [K in keyof MyCard & keyof MyCardAttributes as `attr:${K}`]?: MyCardAttributes[K] } & { [K in keyof MyCard & keyof MyCardAttributes as `prop:${K}`]?: MyCard[K] };
-        "my-carousel": Omit<MyCarousel, keyof MyCarouselAttributes> & { [K in keyof MyCarousel & keyof MyCarouselAttributes]?: MyCarousel[K] } & { [K in keyof MyCarousel & keyof MyCarouselAttributes as `attr:${K}`]?: MyCarouselAttributes[K] } & { [K in keyof MyCarousel & keyof MyCarouselAttributes as `prop:${K}`]?: MyCarousel[K] };
-        "my-carousel-item": MyCarouselItem;
-        "my-drawer": Omit<MyDrawer, keyof MyDrawerAttributes> & { [K in keyof MyDrawer & keyof MyDrawerAttributes]?: MyDrawer[K] } & { [K in keyof MyDrawer & keyof MyDrawerAttributes as `attr:${K}`]?: MyDrawerAttributes[K] } & { [K in keyof MyDrawer & keyof MyDrawerAttributes as `prop:${K}`]?: MyDrawer[K] };
-        "my-dropdown": Omit<MyDropdown, keyof MyDropdownAttributes> & { [K in keyof MyDropdown & keyof MyDropdownAttributes]?: MyDropdown[K] } & { [K in keyof MyDropdown & keyof MyDropdownAttributes as `attr:${K}`]?: MyDropdownAttributes[K] } & { [K in keyof MyDropdown & keyof MyDropdownAttributes as `prop:${K}`]?: MyDropdown[K] };
-        "my-icon": Omit<MyIcon, keyof MyIconAttributes> & { [K in keyof MyIcon & keyof MyIconAttributes]?: MyIcon[K] } & { [K in keyof MyIcon & keyof MyIconAttributes as `attr:${K}`]?: MyIconAttributes[K] } & { [K in keyof MyIcon & keyof MyIconAttributes as `prop:${K}`]?: MyIcon[K] };
-        "my-input": Omit<MyInput, keyof MyInputAttributes> & { [K in keyof MyInput & keyof MyInputAttributes]?: MyInput[K] } & { [K in keyof MyInput & keyof MyInputAttributes as `attr:${K}`]?: MyInputAttributes[K] } & { [K in keyof MyInput & keyof MyInputAttributes as `prop:${K}`]?: MyInput[K] };
-        "my-modal": Omit<MyModal, keyof MyModalAttributes> & { [K in keyof MyModal & keyof MyModalAttributes]?: MyModal[K] } & { [K in keyof MyModal & keyof MyModalAttributes as `attr:${K}`]?: MyModalAttributes[K] } & { [K in keyof MyModal & keyof MyModalAttributes as `prop:${K}`]?: MyModal[K] };
-        "my-navbar": Omit<MyNavbar, keyof MyNavbarAttributes> & { [K in keyof MyNavbar & keyof MyNavbarAttributes]?: MyNavbar[K] } & { [K in keyof MyNavbar & keyof MyNavbarAttributes as `attr:${K}`]?: MyNavbarAttributes[K] } & { [K in keyof MyNavbar & keyof MyNavbarAttributes as `prop:${K}`]?: MyNavbar[K] };
-        "my-pagination": Omit<MyPagination, keyof MyPaginationAttributes> & { [K in keyof MyPagination & keyof MyPaginationAttributes]?: MyPagination[K] } & { [K in keyof MyPagination & keyof MyPaginationAttributes as `attr:${K}`]?: MyPaginationAttributes[K] } & { [K in keyof MyPagination & keyof MyPaginationAttributes as `prop:${K}`]?: MyPagination[K] };
-        "my-sidebar": Omit<MySidebar, keyof MySidebarAttributes> & { [K in keyof MySidebar & keyof MySidebarAttributes]?: MySidebar[K] } & { [K in keyof MySidebar & keyof MySidebarAttributes as `attr:${K}`]?: MySidebarAttributes[K] } & { [K in keyof MySidebar & keyof MySidebarAttributes as `prop:${K}`]?: MySidebar[K] };
-        "my-tabs": Omit<MyTabs, keyof MyTabsAttributes> & { [K in keyof MyTabs & keyof MyTabsAttributes]?: MyTabs[K] } & { [K in keyof MyTabs & keyof MyTabsAttributes as `attr:${K}`]?: MyTabsAttributes[K] } & { [K in keyof MyTabs & keyof MyTabsAttributes as `prop:${K}`]?: MyTabs[K] };
-        "my-tabs-content": Omit<MyTabsContent, keyof MyTabsContentAttributes> & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes]?: MyTabsContent[K] } & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes as `attr:${K}`]?: MyTabsContentAttributes[K] } & { [K in keyof MyTabsContent & keyof MyTabsContentAttributes as `prop:${K}`]?: MyTabsContent[K] };
-        "my-tabs-list": Omit<MyTabsList, keyof MyTabsListAttributes> & { [K in keyof MyTabsList & keyof MyTabsListAttributes]?: MyTabsList[K] } & { [K in keyof MyTabsList & keyof MyTabsListAttributes as `attr:${K}`]?: MyTabsListAttributes[K] } & { [K in keyof MyTabsList & keyof MyTabsListAttributes as `prop:${K}`]?: MyTabsList[K] };
-        "my-tabs-trigger": Omit<MyTabsTrigger, keyof MyTabsTriggerAttributes> & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes]?: MyTabsTrigger[K] } & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes as `attr:${K}`]?: MyTabsTriggerAttributes[K] } & { [K in keyof MyTabsTrigger & keyof MyTabsTriggerAttributes as `prop:${K}`]?: MyTabsTrigger[K] };
-        "my-toast": MyToast;
-        "my-tooltip": Omit<MyTooltip, keyof MyTooltipAttributes> & { [K in keyof MyTooltip & keyof MyTooltipAttributes]?: MyTooltip[K] } & { [K in keyof MyTooltip & keyof MyTooltipAttributes as `attr:${K}`]?: MyTooltipAttributes[K] } & { [K in keyof MyTooltip & keyof MyTooltipAttributes as `prop:${K}`]?: MyTooltip[K] };
+        "and-accordion": Omit<AndAccordion, keyof AndAccordionAttributes> & { [K in keyof AndAccordion & keyof AndAccordionAttributes]?: AndAccordion[K] } & { [K in keyof AndAccordion & keyof AndAccordionAttributes as `attr:${K}`]?: AndAccordionAttributes[K] } & { [K in keyof AndAccordion & keyof AndAccordionAttributes as `prop:${K}`]?: AndAccordion[K] };
+        "and-accordion-content": AndAccordionContent;
+        "and-accordion-item": Omit<AndAccordionItem, keyof AndAccordionItemAttributes> & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes]?: AndAccordionItem[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `attr:${K}`]?: AndAccordionItemAttributes[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `prop:${K}`]?: AndAccordionItem[K] } & OneOf<"value", AndAccordionItem["value"]>;
+        "and-accordion-trigger": AndAccordionTrigger;
+        "and-alert": Omit<AndAlert, keyof AndAlertAttributes> & { [K in keyof AndAlert & keyof AndAlertAttributes]?: AndAlert[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `attr:${K}`]?: AndAlertAttributes[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `prop:${K}`]?: AndAlert[K] };
+        "and-badge": Omit<AndBadge, keyof AndBadgeAttributes> & { [K in keyof AndBadge & keyof AndBadgeAttributes]?: AndBadge[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `attr:${K}`]?: AndBadgeAttributes[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `prop:${K}`]?: AndBadge[K] };
+        "and-button": Omit<AndButton, keyof AndButtonAttributes> & { [K in keyof AndButton & keyof AndButtonAttributes]?: AndButton[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `attr:${K}`]?: AndButtonAttributes[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `prop:${K}`]?: AndButton[K] };
+        "and-card": Omit<AndCard, keyof AndCardAttributes> & { [K in keyof AndCard & keyof AndCardAttributes]?: AndCard[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `attr:${K}`]?: AndCardAttributes[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `prop:${K}`]?: AndCard[K] };
+        "and-carousel": Omit<AndCarousel, keyof AndCarouselAttributes> & { [K in keyof AndCarousel & keyof AndCarouselAttributes]?: AndCarousel[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `attr:${K}`]?: AndCarouselAttributes[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `prop:${K}`]?: AndCarousel[K] };
+        "and-carousel-item": AndCarouselItem;
+        "and-drawer": Omit<AndDrawer, keyof AndDrawerAttributes> & { [K in keyof AndDrawer & keyof AndDrawerAttributes]?: AndDrawer[K] } & { [K in keyof AndDrawer & keyof AndDrawerAttributes as `attr:${K}`]?: AndDrawerAttributes[K] } & { [K in keyof AndDrawer & keyof AndDrawerAttributes as `prop:${K}`]?: AndDrawer[K] };
+        "and-dropdown": Omit<AndDropdown, keyof AndDropdownAttributes> & { [K in keyof AndDropdown & keyof AndDropdownAttributes]?: AndDropdown[K] } & { [K in keyof AndDropdown & keyof AndDropdownAttributes as `attr:${K}`]?: AndDropdownAttributes[K] } & { [K in keyof AndDropdown & keyof AndDropdownAttributes as `prop:${K}`]?: AndDropdown[K] };
+        "and-icon": Omit<AndIcon, keyof AndIconAttributes> & { [K in keyof AndIcon & keyof AndIconAttributes]?: AndIcon[K] } & { [K in keyof AndIcon & keyof AndIconAttributes as `attr:${K}`]?: AndIconAttributes[K] } & { [K in keyof AndIcon & keyof AndIconAttributes as `prop:${K}`]?: AndIcon[K] };
+        "and-input": Omit<AndInput, keyof AndInputAttributes> & { [K in keyof AndInput & keyof AndInputAttributes]?: AndInput[K] } & { [K in keyof AndInput & keyof AndInputAttributes as `attr:${K}`]?: AndInputAttributes[K] } & { [K in keyof AndInput & keyof AndInputAttributes as `prop:${K}`]?: AndInput[K] };
+        "and-modal": Omit<AndModal, keyof AndModalAttributes> & { [K in keyof AndModal & keyof AndModalAttributes]?: AndModal[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `attr:${K}`]?: AndModalAttributes[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `prop:${K}`]?: AndModal[K] };
+        "and-navbar": Omit<AndNavbar, keyof AndNavbarAttributes> & { [K in keyof AndNavbar & keyof AndNavbarAttributes]?: AndNavbar[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `attr:${K}`]?: AndNavbarAttributes[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `prop:${K}`]?: AndNavbar[K] };
+        "and-pagination": Omit<AndPagination, keyof AndPaginationAttributes> & { [K in keyof AndPagination & keyof AndPaginationAttributes]?: AndPagination[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `attr:${K}`]?: AndPaginationAttributes[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `prop:${K}`]?: AndPagination[K] };
+        "and-sidebar": Omit<AndSidebar, keyof AndSidebarAttributes> & { [K in keyof AndSidebar & keyof AndSidebarAttributes]?: AndSidebar[K] } & { [K in keyof AndSidebar & keyof AndSidebarAttributes as `attr:${K}`]?: AndSidebarAttributes[K] } & { [K in keyof AndSidebar & keyof AndSidebarAttributes as `prop:${K}`]?: AndSidebar[K] };
+        "and-tabs": Omit<AndTabs, keyof AndTabsAttributes> & { [K in keyof AndTabs & keyof AndTabsAttributes]?: AndTabs[K] } & { [K in keyof AndTabs & keyof AndTabsAttributes as `attr:${K}`]?: AndTabsAttributes[K] } & { [K in keyof AndTabs & keyof AndTabsAttributes as `prop:${K}`]?: AndTabs[K] };
+        "and-tabs-content": Omit<AndTabsContent, keyof AndTabsContentAttributes> & { [K in keyof AndTabsContent & keyof AndTabsContentAttributes]?: AndTabsContent[K] } & { [K in keyof AndTabsContent & keyof AndTabsContentAttributes as `attr:${K}`]?: AndTabsContentAttributes[K] } & { [K in keyof AndTabsContent & keyof AndTabsContentAttributes as `prop:${K}`]?: AndTabsContent[K] };
+        "and-tabs-list": Omit<AndTabsList, keyof AndTabsListAttributes> & { [K in keyof AndTabsList & keyof AndTabsListAttributes]?: AndTabsList[K] } & { [K in keyof AndTabsList & keyof AndTabsListAttributes as `attr:${K}`]?: AndTabsListAttributes[K] } & { [K in keyof AndTabsList & keyof AndTabsListAttributes as `prop:${K}`]?: AndTabsList[K] };
+        "and-tabs-trigger": Omit<AndTabsTrigger, keyof AndTabsTriggerAttributes> & { [K in keyof AndTabsTrigger & keyof AndTabsTriggerAttributes]?: AndTabsTrigger[K] } & { [K in keyof AndTabsTrigger & keyof AndTabsTriggerAttributes as `attr:${K}`]?: AndTabsTriggerAttributes[K] } & { [K in keyof AndTabsTrigger & keyof AndTabsTriggerAttributes as `prop:${K}`]?: AndTabsTrigger[K] };
+        "and-toast": AndToast;
+        "and-tooltip": Omit<AndTooltip, keyof AndTooltipAttributes> & { [K in keyof AndTooltip & keyof AndTooltipAttributes]?: AndTooltip[K] } & { [K in keyof AndTooltip & keyof AndTooltipAttributes as `attr:${K}`]?: AndTooltipAttributes[K] } & { [K in keyof AndTooltip & keyof AndTooltipAttributes as `prop:${K}`]?: AndTooltip[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -1121,47 +1121,47 @@ declare module "@stencil/core" {
             /**
              * Accordion container component using headless logic
              * @example ```html
-             * <my-accordion allow-multiple="true">
-             *   <my-accordion-item value="item-1">
-             *     <my-accordion-trigger>Item 1</my-accordion-trigger>
-             *     <my-accordion-content>Content 1</my-accordion-content>
-             *   </my-accordion-item>
-             * </my-accordion>
+             * <and-accordion allow-multiple="true">
+             *   <and-accordion-item value="item-1">
+             *     <and-accordion-trigger>Item 1</and-accordion-trigger>
+             *     <and-accordion-content>Content 1</and-accordion-content>
+             *   </and-accordion-item>
+             * </and-accordion>
              * ```
              */
-            "my-accordion": LocalJSX.IntrinsicElements["my-accordion"] & JSXBase.HTMLAttributes<HTMLMyAccordionElement>;
+            "and-accordion": LocalJSX.IntrinsicElements["and-accordion"] & JSXBase.HTMLAttributes<HTMLAndAccordionElement>;
             /**
              * Accordion content/panel component
              */
-            "my-accordion-content": LocalJSX.IntrinsicElements["my-accordion-content"] & JSXBase.HTMLAttributes<HTMLMyAccordionContentElement>;
+            "and-accordion-content": LocalJSX.IntrinsicElements["and-accordion-content"] & JSXBase.HTMLAttributes<HTMLAndAccordionContentElement>;
             /**
              * Accordion item component
              */
-            "my-accordion-item": LocalJSX.IntrinsicElements["my-accordion-item"] & JSXBase.HTMLAttributes<HTMLMyAccordionItemElement>;
+            "and-accordion-item": LocalJSX.IntrinsicElements["and-accordion-item"] & JSXBase.HTMLAttributes<HTMLAndAccordionItemElement>;
             /**
              * Accordion trigger/header component
              */
-            "my-accordion-trigger": LocalJSX.IntrinsicElements["my-accordion-trigger"] & JSXBase.HTMLAttributes<HTMLMyAccordionTriggerElement>;
-            "my-alert": LocalJSX.IntrinsicElements["my-alert"] & JSXBase.HTMLAttributes<HTMLMyAlertElement>;
-            "my-badge": LocalJSX.IntrinsicElements["my-badge"] & JSXBase.HTMLAttributes<HTMLMyBadgeElement>;
-            "my-button": LocalJSX.IntrinsicElements["my-button"] & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
-            "my-card": LocalJSX.IntrinsicElements["my-card"] & JSXBase.HTMLAttributes<HTMLMyCardElement>;
-            "my-carousel": LocalJSX.IntrinsicElements["my-carousel"] & JSXBase.HTMLAttributes<HTMLMyCarouselElement>;
-            "my-carousel-item": LocalJSX.IntrinsicElements["my-carousel-item"] & JSXBase.HTMLAttributes<HTMLMyCarouselItemElement>;
-            "my-drawer": LocalJSX.IntrinsicElements["my-drawer"] & JSXBase.HTMLAttributes<HTMLMyDrawerElement>;
-            "my-dropdown": LocalJSX.IntrinsicElements["my-dropdown"] & JSXBase.HTMLAttributes<HTMLMyDropdownElement>;
-            "my-icon": LocalJSX.IntrinsicElements["my-icon"] & JSXBase.HTMLAttributes<HTMLMyIconElement>;
-            "my-input": LocalJSX.IntrinsicElements["my-input"] & JSXBase.HTMLAttributes<HTMLMyInputElement>;
-            "my-modal": LocalJSX.IntrinsicElements["my-modal"] & JSXBase.HTMLAttributes<HTMLMyModalElement>;
-            "my-navbar": LocalJSX.IntrinsicElements["my-navbar"] & JSXBase.HTMLAttributes<HTMLMyNavbarElement>;
-            "my-pagination": LocalJSX.IntrinsicElements["my-pagination"] & JSXBase.HTMLAttributes<HTMLMyPaginationElement>;
-            "my-sidebar": LocalJSX.IntrinsicElements["my-sidebar"] & JSXBase.HTMLAttributes<HTMLMySidebarElement>;
-            "my-tabs": LocalJSX.IntrinsicElements["my-tabs"] & JSXBase.HTMLAttributes<HTMLMyTabsElement>;
-            "my-tabs-content": LocalJSX.IntrinsicElements["my-tabs-content"] & JSXBase.HTMLAttributes<HTMLMyTabsContentElement>;
-            "my-tabs-list": LocalJSX.IntrinsicElements["my-tabs-list"] & JSXBase.HTMLAttributes<HTMLMyTabsListElement>;
-            "my-tabs-trigger": LocalJSX.IntrinsicElements["my-tabs-trigger"] & JSXBase.HTMLAttributes<HTMLMyTabsTriggerElement>;
-            "my-toast": LocalJSX.IntrinsicElements["my-toast"] & JSXBase.HTMLAttributes<HTMLMyToastElement>;
-            "my-tooltip": LocalJSX.IntrinsicElements["my-tooltip"] & JSXBase.HTMLAttributes<HTMLMyTooltipElement>;
+            "and-accordion-trigger": LocalJSX.IntrinsicElements["and-accordion-trigger"] & JSXBase.HTMLAttributes<HTMLAndAccordionTriggerElement>;
+            "and-alert": LocalJSX.IntrinsicElements["and-alert"] & JSXBase.HTMLAttributes<HTMLAndAlertElement>;
+            "and-badge": LocalJSX.IntrinsicElements["and-badge"] & JSXBase.HTMLAttributes<HTMLAndBadgeElement>;
+            "and-button": LocalJSX.IntrinsicElements["and-button"] & JSXBase.HTMLAttributes<HTMLAndButtonElement>;
+            "and-card": LocalJSX.IntrinsicElements["and-card"] & JSXBase.HTMLAttributes<HTMLAndCardElement>;
+            "and-carousel": LocalJSX.IntrinsicElements["and-carousel"] & JSXBase.HTMLAttributes<HTMLAndCarouselElement>;
+            "and-carousel-item": LocalJSX.IntrinsicElements["and-carousel-item"] & JSXBase.HTMLAttributes<HTMLAndCarouselItemElement>;
+            "and-drawer": LocalJSX.IntrinsicElements["and-drawer"] & JSXBase.HTMLAttributes<HTMLAndDrawerElement>;
+            "and-dropdown": LocalJSX.IntrinsicElements["and-dropdown"] & JSXBase.HTMLAttributes<HTMLAndDropdownElement>;
+            "and-icon": LocalJSX.IntrinsicElements["and-icon"] & JSXBase.HTMLAttributes<HTMLAndIconElement>;
+            "and-input": LocalJSX.IntrinsicElements["and-input"] & JSXBase.HTMLAttributes<HTMLAndInputElement>;
+            "and-modal": LocalJSX.IntrinsicElements["and-modal"] & JSXBase.HTMLAttributes<HTMLAndModalElement>;
+            "and-navbar": LocalJSX.IntrinsicElements["and-navbar"] & JSXBase.HTMLAttributes<HTMLAndNavbarElement>;
+            "and-pagination": LocalJSX.IntrinsicElements["and-pagination"] & JSXBase.HTMLAttributes<HTMLAndPaginationElement>;
+            "and-sidebar": LocalJSX.IntrinsicElements["and-sidebar"] & JSXBase.HTMLAttributes<HTMLAndSidebarElement>;
+            "and-tabs": LocalJSX.IntrinsicElements["and-tabs"] & JSXBase.HTMLAttributes<HTMLAndTabsElement>;
+            "and-tabs-content": LocalJSX.IntrinsicElements["and-tabs-content"] & JSXBase.HTMLAttributes<HTMLAndTabsContentElement>;
+            "and-tabs-list": LocalJSX.IntrinsicElements["and-tabs-list"] & JSXBase.HTMLAttributes<HTMLAndTabsListElement>;
+            "and-tabs-trigger": LocalJSX.IntrinsicElements["and-tabs-trigger"] & JSXBase.HTMLAttributes<HTMLAndTabsTriggerElement>;
+            "and-toast": LocalJSX.IntrinsicElements["and-toast"] & JSXBase.HTMLAttributes<HTMLAndToastElement>;
+            "and-tooltip": LocalJSX.IntrinsicElements["and-tooltip"] & JSXBase.HTMLAttributes<HTMLAndTooltipElement>;
         }
     }
 }

@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 import {
-  MyAlert,
-  MyIcon,
+  AndAlert,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-alert-demo',
   standalone: true,
-  imports: [MyAlert, MyIcon],
+  imports: [AndAlert, AndIcon],
   template: `
     <div class="demo-section">
       <h2>Alert</h2>
       <p>Display important messages to users</p>
       <div style="display: flex; flex-direction: column; gap: 1rem">
-        <my-alert variant="default">
-          <my-icon slot="icon" name="info" size="18"></my-icon>
+        <and-alert variant="default">
+          <and-icon slot="icon" name="info" size="18"></and-icon>
           This is a default alert message.
-        </my-alert>
-        <my-alert variant="destructive">
-          <my-icon slot="icon" name="alert-circle" size="18"></my-icon>
+        </and-alert>
+        <and-alert variant="destructive">
+          <and-icon slot="icon" name="alert-circle" size="18"></and-icon>
           This is a destructive alert message.
-        </my-alert>
-        <my-alert variant="default" dismissible>
-          <my-icon slot="icon" name="info" size="18"></my-icon>
+        </and-alert>
+        <and-alert variant="default" dismissible>
+          <and-icon slot="icon" name="info" size="18"></and-icon>
           This is a dismissible alert. Click the X to close.
-        </my-alert>
+        </and-alert>
       </div>
     </div>
   `,

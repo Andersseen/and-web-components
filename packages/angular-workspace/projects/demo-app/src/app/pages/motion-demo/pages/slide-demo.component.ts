@@ -1,16 +1,16 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import { Motion, MotionAnimations } from '@andersseen/motion-core';
 import {
-  MyButton,
-  MyCard,
-  MyBadge,
-  MyIcon,
+  AndButton,
+  AndCard,
+  AndBadge,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-slide-demo',
-  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
+  imports: [CommonModule, AndButton, AndCard, AndBadge, AndIcon],
   template: `
     <div class="demo-page">
       <!-- Hero -->
@@ -23,12 +23,12 @@ import {
       </div>
 
       <!-- Main Demo -->
-      <my-card class="block mb-8">
+      <and-card class="block mb-8">
         <div class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <div class="flex items-center gap-2 mb-2">
-                <my-badge variant="secondary">Directional</my-badge>
+                <and-badge variant="secondary">Directional</and-badge>
                 <span class="text-sm text-muted-foreground">Translate</span>
               </div>
               <h2 class="text-lg font-semibold">Slide In & Out</h2>
@@ -47,22 +47,22 @@ import {
                 >Slide In</span
               >
               <div class="grid grid-cols-2 gap-2">
-                <my-button size="sm" (click)="slideIn('top')">
-                  <my-icon name="arrow-down" class="mr-2" size="14"></my-icon>
+                <and-button size="sm" (click)="slideIn('top')">
+                  <and-icon name="arrow-down" class="mr-2" size="14"></and-icon>
                   From Top
-                </my-button>
-                <my-button size="sm" (click)="slideIn('bottom')">
-                  <my-icon name="arrow-up" class="mr-2" size="14"></my-icon>
+                </and-button>
+                <and-button size="sm" (click)="slideIn('bottom')">
+                  <and-icon name="arrow-up" class="mr-2" size="14"></and-icon>
                   From Bottom
-                </my-button>
-                <my-button size="sm" (click)="slideIn('left')">
-                  <my-icon name="arrow-right" class="mr-2" size="14"></my-icon>
+                </and-button>
+                <and-button size="sm" (click)="slideIn('left')">
+                  <and-icon name="arrow-right" class="mr-2" size="14"></and-icon>
                   From Left
-                </my-button>
-                <my-button size="sm" (click)="slideIn('right')">
-                  <my-icon name="arrow-left" class="mr-2" size="14"></my-icon>
+                </and-button>
+                <and-button size="sm" (click)="slideIn('right')">
+                  <and-icon name="arrow-left" class="mr-2" size="14"></and-icon>
                   From Right
-                </my-button>
+                </and-button>
               </div>
             </div>
 
@@ -73,38 +73,38 @@ import {
                 >Slide Out</span
               >
               <div class="grid grid-cols-2 gap-2">
-                <my-button
+                <and-button
                   size="sm"
                   variant="outline"
                   (click)="slideOut('top')"
                 >
-                  <my-icon name="arrow-up" class="mr-2" size="14"></my-icon>
+                  <and-icon name="arrow-up" class="mr-2" size="14"></and-icon>
                   To Top
-                </my-button>
-                <my-button
+                </and-button>
+                <and-button
                   size="sm"
                   variant="outline"
                   (click)="slideOut('bottom')"
                 >
-                  <my-icon name="arrow-down" class="mr-2" size="14"></my-icon>
+                  <and-icon name="arrow-down" class="mr-2" size="14"></and-icon>
                   To Bottom
-                </my-button>
-                <my-button
+                </and-button>
+                <and-button
                   size="sm"
                   variant="outline"
                   (click)="slideOut('left')"
                 >
-                  <my-icon name="arrow-left" class="mr-2" size="14"></my-icon>
+                  <and-icon name="arrow-left" class="mr-2" size="14"></and-icon>
                   To Left
-                </my-button>
-                <my-button
+                </and-button>
+                <and-button
                   size="sm"
                   variant="outline"
                   (click)="slideOut('right')"
                 >
-                  <my-icon name="arrow-right" class="mr-2" size="14"></my-icon>
+                  <and-icon name="arrow-right" class="mr-2" size="14"></and-icon>
                   To Right
-                </my-button>
+                </and-button>
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ import {
           >
             <div
               #slideBox
-              class="w-32 h-32 bg-green-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-white gap-2"
+              class="w-32 h-32 bg-accent rounded-xl shadow-lg flex flex-col items-center justify-center text-primary-foreground gap-2"
               style="display: none;"
             >
               <span class="text-4xl">🚀</span>
@@ -131,7 +131,7 @@ import {
             </code>
           </div>
         </div>
-      </my-card>
+      </and-card>
     </div>
   `,
   styles: [

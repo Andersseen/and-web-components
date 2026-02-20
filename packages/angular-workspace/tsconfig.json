@@ -9,7 +9,8 @@
       "@angular-components/*": ["./projects/angular-components/src/lib/*"],
       "@andersseen/icon-library": ["../icon-library/src/index.ts"],
       "@andersseen/headless-core": ["../headless-core/src/index.ts"],
-      "stencil-library": ["../stencil-library/src/index.ts"]
+      "@andersseen/motion-core": ["../motion-core/src/index.ts"],
+      "@andersseen/stencil-library": ["../stencil-library/src/index.ts"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

@@ -1,9 +1,9 @@
 import {
-  MyButton,
-  MyDropdown,
-  MyIcon,
-  MyNavbar,
-  MySidebar,
+  AndButton,
+  AndDropdown,
+  AndIcon,
+  AndNavbar,
+  AndSidebar,
 } from '@angular-components/stencil-generated/components';
 import { Component, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
@@ -17,19 +17,19 @@ interface SidebarItem {
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, MyNavbar, MySidebar, MyDropdown, MyButton, MyIcon],
+  imports: [RouterOutlet, AndNavbar, AndSidebar, AndDropdown, AndButton, AndIcon],
   schemas: [],
   template: `
     <div class="app-container">
       <!-- Navbar -->
-      <my-navbar
+      <and-navbar
         class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
         (navItemClick)="onNavItemClick($event)"
       >
         <span slot="brand">
-          <my-icon name="layout"></my-icon>
+          <and-icon name="layout"></and-icon>
           And Web Components UI
         </span>
 
@@ -39,69 +39,69 @@ interface SidebarItem {
         >
           <!-- Theme Preset -->
           <div style="width: 140px;">
-            <my-dropdown
+            <and-dropdown
               label="Theme"
               [items]="themeOptions"
               (dropdownSelect)="onThemeSelect($event)"
-            ></my-dropdown>
+            ></and-dropdown>
           </div>
 
           <!-- Color Palette -->
           <div style="width: 140px;">
-            <my-dropdown
+            <and-dropdown
               label="Color"
               [items]="colorOptions"
               (dropdownSelect)="onColorSelect($event)"
-            ></my-dropdown>
+            ></and-dropdown>
           </div>
 
           <!-- Dark Mode Toggle -->
-          <my-button
+          <and-button
             variant="ghost"
             size="icon"
             (click)="toggleDarkMode()"
             title="Toggle Dark Mode"
           >
-            <my-icon [name]="isDark() ? 'sun' : 'moon'"></my-icon>
-          </my-button>
+            <and-icon [name]="isDark() ? 'sun' : 'moon'"></and-icon>
+          </and-button>
 
-          <my-button
+          <and-button
             variant="outline"
             size="sm"
             onclick="window.open('https://github.com', '_blank')"
           >
             GitHub
-          </my-button>
+          </and-button>
         </div>
-      </my-navbar>
+      </and-navbar>
 
       <div class="main-content">
         @if (activeSection() === 'components') {
-          <my-sidebar
+          <and-sidebar
             class="bg-background"
             [items]="componentItems"
             [activeItem]="activeComponent()"
             (sidebarItemClick)="onSidebarItemClick($event)"
           >
-          </my-sidebar>
+          </and-sidebar>
         }
         @if (activeSection() === 'headless') {
-          <my-sidebar
+          <and-sidebar
             class="bg-background"
             [items]="headlessItems"
             [activeItem]="activeHeadless()"
             (sidebarItemClick)="onHeadlessSidebarItemClick($event)"
           >
-          </my-sidebar>
+          </and-sidebar>
         }
         @if (activeSection() === 'motion') {
-          <my-sidebar
+          <and-sidebar
             class="bg-background"
             [items]="motionItems"
             [activeItem]="activeMotion()"
             (sidebarItemClick)="onMotionItemClick($event)"
           >
-          </my-sidebar>
+          </and-sidebar>
         }
 
         <!-- Content Area -->

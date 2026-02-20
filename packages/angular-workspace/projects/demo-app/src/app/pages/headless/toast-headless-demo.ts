@@ -38,7 +38,7 @@ import {
                 Default
               </button>
               <button
-                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-green-600 text-white border-0"
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-green-600 text-primary-foreground border-0"
                 (click)="show('success')"
               >
                 ✓ Success
@@ -50,13 +50,13 @@ import {
                 ✕ Error
               </button>
               <button
-                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-amber-500 text-white border-0"
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-amber-500 text-primary-foreground border-0"
                 (click)="show('warning')"
               >
                 ⚠ Warning
               </button>
               <button
-                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-blue-500 text-white border-0"
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-primary text-primary-foreground border-0"
                 (click)="show('info')"
               >
                 ℹ Info

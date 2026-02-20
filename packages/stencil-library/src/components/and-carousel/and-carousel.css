@@ -1,0 +1,72 @@
+:host {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-track-container {
+  overflow: hidden;
+  border-radius: var(--radius, 0.5rem);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+::slotted(and-carousel-item) {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+/* Controls */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: hsla(var(--background), 0.8);
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.2s,
+    background-color 0.2s;
+}
+
+:host(:hover) .carousel-control {
+  opacity: 1;
+}
+
+.carousel-control:hover {
+  background-color: hsl(var(--background));
+}
+
+.carousel-control.prev {
+  left: 1rem;
+}
+
+.carousel-control.next {
+  right: 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

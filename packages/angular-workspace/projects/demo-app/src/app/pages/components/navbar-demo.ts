@@ -1,37 +1,37 @@
 import {
-  MyCard,
-  MyButton,
-  MyNavbar,
-  MyIcon,
+  AndCard,
+  AndButton,
+  AndNavbar,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navbar-demo',
-  imports: [MyCard, MyButton, MyIcon, MyNavbar],
+  imports: [AndCard, AndButton, AndIcon, AndNavbar],
   template: `
     <div class="demo-section">
       <h2>Navbar</h2>
       <p>Top navigation bar (you're using it now!)</p>
 
-      <my-navbar class="mb-8 border rounded-lg overflow-hidden">
+      <and-navbar class="mb-8 border rounded-lg overflow-hidden">
         <div slot="brand" class="flex items-center gap-2">
-          <my-icon name="box" class="h-6 w-6"></my-icon>
+          <and-icon name="box" class="h-6 w-6"></and-icon>
           <span class="font-bold text-lg">Brand</span>
         </div>
         <div slot="actions" class="flex items-center gap-2">
-          <my-button variant="ghost" size="sm">Log In</my-button>
-          <my-button size="sm">Sign Up</my-button>
+          <and-button variant="ghost" size="sm">Log In</and-button>
+          <and-button size="sm">Sign Up</and-button>
         </div>
-      </my-navbar>
+      </and-navbar>
 
-      <my-card class="p-4">
+      <and-card class="p-4">
         <p style="margin: 0; color: #6b7280">
           The navbar above demonstrates the responsive behavior. Resize your
           browser window to see the mobile menu toggle appear. Clicking it will
           open the drawer menu.
         </p>
-      </my-card>
+      </and-card>
     </div>
   `,
 })

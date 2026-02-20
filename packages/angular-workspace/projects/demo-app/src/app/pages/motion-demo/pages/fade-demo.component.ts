@@ -1,16 +1,16 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import { Motion, MotionAnimations } from '@andersseen/motion-core';
 import {
-  MyButton,
-  MyCard,
-  MyBadge,
-  MyIcon,
+  AndButton,
+  AndCard,
+  AndBadge,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-fade-demo',
-  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
+  imports: [CommonModule, AndButton, AndCard, AndBadge, AndIcon],
   template: `
     <div class="demo-page">
       <!-- Hero -->
@@ -23,12 +23,12 @@ import {
       </div>
 
       <!-- Main Demo -->
-      <my-card class="block mb-8">
+      <and-card class="block mb-8">
         <div class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <div class="flex items-center gap-2 mb-2">
-                <my-badge variant="secondary">Enter / Leave</my-badge>
+                <and-badge variant="secondary">Enter / Leave</and-badge>
                 <span class="text-sm text-muted-foreground">Opacity</span>
               </div>
               <h2 class="text-lg font-semibold">Basic Fade</h2>
@@ -37,14 +37,14 @@ import {
               </p>
             </div>
             <div class="flex gap-2">
-              <my-button (click)="enterBox()" size="sm">
-                <my-icon name="eye" class="mr-2" size="14"></my-icon>
+              <and-button (click)="enterBox()" size="sm">
+                <and-icon name="eye" class="mr-2" size="14"></and-icon>
                 Fade In
-              </my-button>
-              <my-button variant="outline" (click)="leaveBox()" size="sm">
-                <my-icon name="eye-off" class="mr-2" size="14"></my-icon>
+              </and-button>
+              <and-button variant="outline" (click)="leaveBox()" size="sm">
+                <and-icon name="eye-off" class="mr-2" size="14"></and-icon>
                 Fade Out
-              </my-button>
+              </and-button>
             </div>
           </div>
 
@@ -54,7 +54,7 @@ import {
           >
             <div
               #fadeBox
-              class="w-32 h-32 bg-blue-500 rounded-xl shadow-lg flex items-center justify-center text-white"
+              class="w-32 h-32 bg-primary rounded-xl shadow-lg flex items-center justify-center text-primary-foreground"
               style="display: none;"
             >
               <span class="text-3xl">👋</span>
@@ -71,7 +71,7 @@ import {
             </code>
           </div>
         </div>
-      </my-card>
+      </and-card>
 
       <!-- Accessibility Info -->
       <div
@@ -80,7 +80,7 @@ import {
         <div
           class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full text-blue-600 dark:text-blue-400"
         >
-          <my-icon name="accessibility" size="20"></my-icon>
+          <and-icon name="accessibility" size="20"></and-icon>
         </div>
         <div>
           <h3 class="font-medium text-blue-900 dark:text-blue-100 mb-1">

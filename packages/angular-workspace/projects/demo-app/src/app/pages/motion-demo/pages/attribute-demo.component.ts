@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MotionDirective } from '@my-lib/motion-core';
+import { MotionDirective } from '@andersseen/motion-core';
 
 @Component({
   selector: 'app-attribute-demo',
@@ -34,7 +34,7 @@ import { MotionDirective } from '@my-lib/motion-core';
           <h2 class="text-xl font-bold mb-1">Scroll Into View</h2>
           <p class="text-sm text-zinc-500">
             Elements animate automatically when they enter the viewport. Added
-            <code>my-motion-repeat</code> to demo repeating animations.
+            <code>and-motion-repeat</code> to demo repeating animations.
           </p>
         </div>
 
@@ -43,33 +43,33 @@ import { MotionDirective } from '@my-lib/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              my-motion="fade-in"
-              my-motion-repeat
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-blue-500 to-blue-700"
+              and-motion="fade-in"
+              and-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-blue-500 to-blue-700"
             >
               <span class="text-2xl">👋</span>
               <span>Fade</span>
             </div>
             <div
-              my-motion="scale-in"
-              my-motion-repeat
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-violet-500 to-violet-700"
+              and-motion="scale-in"
+              and-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-violet-500 to-violet-700"
             >
               <span class="text-2xl">✨</span>
               <span>Scale</span>
             </div>
             <div
-              my-motion="bounce-in"
-              my-motion-repeat
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-green-500 to-green-700"
+              and-motion="bounce-in"
+              and-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-green-500 to-green-700"
             >
               <span class="text-2xl">🎉</span>
               <span>Bounce</span>
             </div>
             <div
-              my-motion="rotate-in"
-              my-motion-repeat
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-amber-500 to-amber-700"
+              and-motion="rotate-in"
+              and-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-amber-500 to-amber-700"
             >
               <span class="text-2xl">🔄</span>
               <span>Rotate</span>
@@ -81,8 +81,8 @@ import { MotionDirective } from '@my-lib/motion-core';
           class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;div my-motion="fade-in"
-            my-motion-repeat&gt;Hello&lt;/div&gt;</code
+            >&lt;div and-motion="fade-in"
+            and-motion-repeat&gt;Hello&lt;/div&gt;</code
           >
         </div>
       </section>
@@ -107,20 +107,20 @@ import { MotionDirective } from '@my-lib/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              my-motion="scale-in"
-              my-motion-trigger="hover"
-              my-motion-leave="scale-out"
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 to-teal-700"
+              and-motion="scale-in"
+              and-motion-trigger="hover"
+              and-motion-leave="scale-out"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 to-teal-700"
             >
               <span class="text-2xl">🎯</span>
               <span>Scale</span>
             </div>
             <div
-              my-motion="rotate-in"
-              my-motion-trigger="hover"
-              my-motion-leave="scale-out"
-              my-motion-duration="250"
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-rose-500 to-rose-700"
+              and-motion="rotate-in"
+              and-motion-trigger="hover"
+              and-motion-leave="scale-out"
+              and-motion-duration="250"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-rose-500 to-rose-700"
             >
               <span class="text-2xl">🔄</span>
               <span>Rotate</span>
@@ -132,8 +132,8 @@ import { MotionDirective } from '@my-lib/motion-core';
           class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;div my-motion="scale-in" my-motion-trigger="hover"
-            my-motion-leave="scale-out"&gt;Card&lt;/div&gt;</code
+            >&lt;div and-motion="scale-in" and-motion-trigger="hover"
+            and-motion-leave="scale-out"&gt;Card&lt;/div&gt;</code
           >
         </div>
       </section>
@@ -159,27 +159,27 @@ import { MotionDirective } from '@my-lib/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              my-motion="bounce-in"
-              my-motion-trigger="tap"
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-blue-500 to-blue-700"
+              and-motion="bounce-in"
+              and-motion-trigger="tap"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-blue-500 to-blue-700"
             >
               <span class="text-2xl">💥</span>
               <span>Bounce</span>
             </div>
             <div
-              my-motion="scale-in"
-              my-motion-trigger="tap"
-              my-motion-duration="150"
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-violet-500 to-violet-700"
+              and-motion="scale-in"
+              and-motion-trigger="tap"
+              and-motion-duration="150"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-violet-500 to-violet-700"
             >
               <span class="text-2xl">🎯</span>
               <span>Scale</span>
             </div>
             <div
-              my-motion="rotate-in"
-              my-motion-trigger="tap"
-              my-motion-duration="250"
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-green-500 to-green-700"
+              and-motion="rotate-in"
+              and-motion-trigger="tap"
+              and-motion-duration="250"
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-green-500 to-green-700"
             >
               <span class="text-2xl">🌀</span>
               <span>Rotate</span>
@@ -191,7 +191,7 @@ import { MotionDirective } from '@my-lib/motion-core';
           class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;button my-motion="bounce-in" my-motion-trigger="tap"&gt;Click
+            >&lt;button and-motion="bounce-in" and-motion-trigger="tap"&gt;Click
             me&lt;/button&gt;</code
           >
         </div>
@@ -219,21 +219,21 @@ import { MotionDirective } from '@my-lib/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              my-motion="slide-in-left"
-              my-motion-duration="800"
-              my-motion-easing="ease-in-out"
-              my-motion-repeat
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-rose-500 to-rose-700"
+              and-motion="slide-in-left"
+              and-motion-duration="800"
+              and-motion-easing="ease-in-out"
+              and-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-rose-500 to-rose-700"
             >
               <span class="text-2xl">⚙️</span>
               <span>Slow</span>
             </div>
             <div
-              my-motion="slide-in-right"
-              my-motion-duration="300"
-              my-motion-delay="400"
-              my-motion-repeat
-              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-teal-500 to-teal-700"
+              and-motion="slide-in-right"
+              and-motion-duration="300"
+              and-motion-delay="400"
+              and-motion-repeat
+              class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-teal-500 to-teal-700"
             >
               <span class="text-2xl">⏱</span>
               <span>Delayed</span>
@@ -245,8 +245,8 @@ import { MotionDirective } from '@my-lib/motion-core';
           class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;div my-motion="slide-in-left" my-motion-duration="800"
-            my-motion-easing="ease-in-out"&gt;...&lt;/div&gt;</code
+            >&lt;div and-motion="slide-in-left" and-motion-duration="800"
+            and-motion-easing="ease-in-out"&gt;...&lt;/div&gt;</code
           >
         </div>
       </section>
@@ -262,7 +262,7 @@ import { MotionDirective } from '@my-lib/motion-core';
           >
           <h2 class="text-xl font-bold mb-1">Stagger</h2>
           <p class="text-sm text-zinc-500">
-            Add <code>my-motion-stagger</code> on the parent to cascade children
+            Add <code>and-motion-stagger</code> on the parent to cascade children
             with incremental delays.
           </p>
         </div>
@@ -272,11 +272,11 @@ import { MotionDirective } from '@my-lib/motion-core';
         >
           <div
             class="flex flex-col gap-2 w-full max-w-sm"
-            my-motion-stagger="100"
+            and-motion-stagger="100"
           >
             <div
-              my-motion="slide-in-left"
-              my-motion-repeat
+              and-motion="slide-in-left"
+              and-motion-repeat
               class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
             >
               <div
@@ -285,8 +285,8 @@ import { MotionDirective } from '@my-lib/motion-core';
               <span>Item 1</span>
             </div>
             <div
-              my-motion="slide-in-left"
-              my-motion-repeat
+              and-motion="slide-in-left"
+              and-motion-repeat
               class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
             >
               <div
@@ -295,8 +295,8 @@ import { MotionDirective } from '@my-lib/motion-core';
               <span>Item 2</span>
             </div>
             <div
-              my-motion="slide-in-left"
-              my-motion-repeat
+              and-motion="slide-in-left"
+              and-motion-repeat
               class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
             >
               <div
@@ -305,8 +305,8 @@ import { MotionDirective } from '@my-lib/motion-core';
               <span>Item 3</span>
             </div>
             <div
-              my-motion="slide-in-left"
-              my-motion-repeat
+              and-motion="slide-in-left"
+              and-motion-repeat
               class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
             >
               <div
@@ -315,8 +315,8 @@ import { MotionDirective } from '@my-lib/motion-core';
               <span>Item 4</span>
             </div>
             <div
-              my-motion="slide-in-left"
-              my-motion-repeat
+              and-motion="slide-in-left"
+              and-motion-repeat
               class="flex items-center gap-3 p-3 rounded-lg bg-white border border-zinc-200 font-medium text-zinc-900"
             >
               <div
@@ -331,8 +331,8 @@ import { MotionDirective } from '@my-lib/motion-core';
           class="bg-zinc-100 border border-zinc-200 rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;ul my-motion-stagger="100"&gt; &lt;li
-            my-motion="slide-in-left"&gt;Item&lt;/li&gt; ... &lt;/ul&gt;</code
+            >&lt;ul and-motion-stagger="100"&gt; &lt;li
+            and-motion="slide-in-left"&gt;Item&lt;/li&gt; ... &lt;/ul&gt;</code
           >
         </div>
       </section>

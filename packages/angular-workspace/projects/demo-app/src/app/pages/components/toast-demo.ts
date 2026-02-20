@@ -1,31 +1,31 @@
 import {
-  MyButton,
-  MyToast,
+  AndButton,
+  AndToast,
 } from '@angular-components/stencil-generated/components';
 import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-toast-demo',
-  imports: [MyToast, MyButton],
+  imports: [AndToast, AndButton],
   template: `
     <div class="demo-section">
       <h2>Toast</h2>
       <p>Temporary notification messages</p>
       <div class="flex gap-2">
-        <my-button (click)="showToast('default')">Default</my-button>
-        <my-button (click)="showToast('success')" variant="outline"
-          >Success</my-button
+        <and-button (click)="showToast('default')">Default</and-button>
+        <and-button (click)="showToast('success')" variant="outline"
+          >Success</and-button
         >
-        <my-button (click)="showToast('error')" variant="destructive"
-          >Error</my-button
+        <and-button (click)="showToast('error')" variant="destructive"
+          >Error</and-button
         >
       </div>
-      <my-toast #toast></my-toast>
+      <and-toast #toast></and-toast>
     </div>
   `,
 })
 export default class ToastDemo {
-  @ViewChild('toast') toastElement!: MyToast;
+  @ViewChild('toast') toastElement!: AndToast;
 
   async showToast(type: string = 'default') {
     if (this.toastElement) {

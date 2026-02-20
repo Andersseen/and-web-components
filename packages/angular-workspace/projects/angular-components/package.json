@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^21.1.0",
     "@angular/core": "^21.1.0",
-    "stencil-library": "*"
+    "@andersseen/stencil-library": "*"
   },
   "dependencies": {
     "tslib": "^2.3.0"

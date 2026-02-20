@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MyCarousel,
-  MyCarouselItem,
+  AndCarousel,
+  AndCarouselItem,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-carousel-demo',
-  imports: [CommonModule, MyCarousel, MyCarouselItem],
+  imports: [CommonModule, AndCarousel, AndCarouselItem],
   template: `
     <div class="demo-section">
       <h2>Carousel</h2>
       <p>Slide through multiple items</p>
-      <my-carousel autoplay="true">
-        <my-carousel-item>
+      <and-carousel autoplay="true">
+        <and-carousel-item>
           <div
             style="
               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -28,8 +28,8 @@ import {
           >
             Slide 1
           </div>
-        </my-carousel-item>
-        <my-carousel-item>
+        </and-carousel-item>
+        <and-carousel-item>
           <div
             style="
               background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -44,8 +44,8 @@ import {
           >
             Slide 2
           </div>
-        </my-carousel-item>
-        <my-carousel-item>
+        </and-carousel-item>
+        <and-carousel-item>
           <div
             style="
               background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -60,8 +60,8 @@ import {
           >
             Slide 3
           </div>
-        </my-carousel-item>
-      </my-carousel>
+        </and-carousel-item>
+      </and-carousel>
     </div>
   `,
 })

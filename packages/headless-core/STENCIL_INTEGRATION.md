@@ -33,7 +33,7 @@ pnpm add @andersseen/headless-core
 
 ### Pattern 1: Simple Component (Button)
 
-**File: `src/components/my-button/my-button.tsx`**
+**File: `src/components/and-button/and-button.tsx`**
 
 ```tsx
 import { Component, Prop, State, h } from "@stencil/core";
@@ -41,8 +41,8 @@ import { createButton, ButtonReturn } from "@andersseen/headless-core/button";
 import { cn } from "../../utils/cn"; // tailwind-merge utility
 
 @Component({
-  tag: "my-button",
-  styleUrl: "my-button.css",
+  tag: "and-button",
+  styleUrl: "and-button.css",
   shadow: true,
 })
 export class MyButton {
@@ -150,7 +150,7 @@ export class MyButton {
 
 ### Pattern 2: Complex Component (Accordion)
 
-**File: `src/components/my-accordion/my-accordion.tsx`**
+**File: `src/components/and-accordion/and-accordion.tsx`**
 
 ```tsx
 import { Component, Prop, State, h } from "@stencil/core";
@@ -160,8 +160,8 @@ import {
 } from "@andersseen/headless-core/accordion";
 
 @Component({
-  tag: "my-accordion",
-  styleUrl: "my-accordion.css",
+  tag: "and-accordion",
+  styleUrl: "and-accordion.css",
   shadow: true,
 })
 export class MyAccordion {
@@ -211,15 +211,15 @@ export class MyAccordion {
 }
 ```
 
-**File: `src/components/my-accordion-item/my-accordion-item.tsx`**
+**File: `src/components/and-accordion-item/and-accordion-item.tsx`**
 
 ```tsx
 import { Component, Prop, Element, State, h } from "@stencil/core";
 import { AccordionReturn } from "@andersseen/headless-core/accordion";
 
 @Component({
-  tag: "my-accordion-item",
-  styleUrl: "my-accordion-item.css",
+  tag: "and-accordion-item",
+  styleUrl: "and-accordion-item.css",
   shadow: true,
 })
 export class MyAccordionItem {
@@ -243,7 +243,7 @@ export class MyAccordionItem {
 
   componentWillLoad() {
     // Get accordion logic from parent
-    const parent = this.el.closest("my-accordion") as any;
+    const parent = this.el.closest("and-accordion") as any;
     if (parent && parent.accordionLogic) {
       this.accordionLogic = parent.accordionLogic;
       this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
@@ -303,15 +303,15 @@ export class MyAccordionItem {
 
 ### Pattern 3: Container + Items (Tabs)
 
-**File: `src/components/my-tabs/my-tabs.tsx`**
+**File: `src/components/and-tabs/and-tabs.tsx`**
 
 ```tsx
 import { Component, Prop, State, h } from "@stencil/core";
 import { createTabs, TabsReturn } from "@andersseen/headless-core/tabs";
 
 @Component({
-  tag: "my-tabs",
-  styleUrl: "my-tabs.css",
+  tag: "and-tabs",
+  styleUrl: "and-tabs.css",
   shadow: true,
 })
 export class MyTabs {
@@ -347,7 +347,7 @@ export class MyTabs {
 
 ## 🎨 CSS Integration
 
-**File: `src/components/my-button/my-button.css`**
+**File: `src/components/and-button/and-button.css`**
 
 ```css
 @tailwind components;

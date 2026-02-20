@@ -1,16 +1,16 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import { Motion, MotionAnimations } from '@andersseen/motion-core';
 import {
-  MyButton,
-  MyCard,
-  MyBadge,
-  MyIcon,
+  AndButton,
+  AndCard,
+  AndBadge,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-stagger-demo',
-  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
+  imports: [CommonModule, AndButton, AndCard, AndBadge, AndIcon],
   template: `
     <div class="demo-page">
       <!-- Hero -->
@@ -25,12 +25,12 @@ import {
       </div>
 
       <!-- Main Demo -->
-      <my-card class="block mb-8">
+      <and-card class="block mb-8">
         <div class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <div class="flex items-center gap-2 mb-2">
-                <my-badge variant="secondary">Pattern</my-badge>
+                <and-badge variant="secondary">Pattern</and-badge>
                 <span class="text-sm text-muted-foreground"
                   >List Animation</span
                 >
@@ -44,14 +44,14 @@ import {
 
           <!-- Controls -->
           <div class="flex flex-wrap gap-2 mb-6">
-            <my-button (click)="playStagger()">
-              <my-icon name="play" class="mr-2" size="14"></my-icon>
+            <and-button (click)="playStagger()">
+              <and-icon name="play" class="mr-2" size="14"></and-icon>
               Play Stagger
-            </my-button>
-            <my-button variant="outline" (click)="resetStagger()">
-              <my-icon name="rotate-ccw" class="mr-2" size="14"></my-icon>
+            </and-button>
+            <and-button variant="outline" (click)="resetStagger()">
+              <and-icon name="rotate-ccw" class="mr-2" size="14"></and-icon>
               Reset
-            </my-button>
+            </and-button>
           </div>
 
           <!-- Preview Area -->
@@ -65,7 +65,7 @@ import {
                 style="display: none;"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex-shrink-0 bg-blue-500 flex items-center justify-center text-white"
+                  class="w-8 h-8 rounded-full flex-shrink-0 bg-primary flex items-center justify-center text-primary-foreground"
                 >
                   1
                 </div>
@@ -84,7 +84,7 @@ import {
                 style="display: none;"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex-shrink-0 bg-violet-500 flex items-center justify-center text-white"
+                  class="w-8 h-8 rounded-full flex-shrink-0 bg-violet-500 flex items-center justify-center text-primary-foreground"
                 >
                   2
                 </div>
@@ -103,7 +103,7 @@ import {
                 style="display: none;"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex-shrink-0 bg-green-500 flex items-center justify-center text-white"
+                  class="w-8 h-8 rounded-full flex-shrink-0 bg-accent flex items-center justify-center text-primary-foreground"
                 >
                   3
                 </div>
@@ -122,7 +122,7 @@ import {
                 style="display: none;"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex-shrink-0 bg-amber-500 flex items-center justify-center text-white"
+                  class="w-8 h-8 rounded-full flex-shrink-0 bg-amber-500 flex items-center justify-center text-primary-foreground"
                 >
                   4
                 </div>
@@ -141,7 +141,7 @@ import {
                 style="display: none;"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex-shrink-0 bg-rose-500 flex items-center justify-center text-white"
+                  class="w-8 h-8 rounded-full flex-shrink-0 bg-rose-500 flex items-center justify-center text-primary-foreground"
                 >
                   5
                 </div>
@@ -165,7 +165,7 @@ import {
             </code>
           </div>
         </div>
-      </my-card>
+      </and-card>
     </div>
   `,
   styles: [

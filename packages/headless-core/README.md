@@ -176,8 +176,8 @@ import { Component, State, h } from "@stencil/core";
 import { createButton, ButtonReturn } from "@andersseen/headless-core/button";
 
 @Component({
-  tag: "my-button",
-  styleUrl: "my-button.css",
+  tag: "and-button",
+  styleUrl: "and-button.css",
   shadow: true,
 })
 export class MyButton {
@@ -199,7 +199,7 @@ export class MyButton {
     return (
       <button
         {...props}
-        class="px-4 py-2 bg-blue-500 text-white rounded-lg"
+        class="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
         onClick={(e) => this.buttonLogic.actions.click(e)}
       >
         <slot />
@@ -223,7 +223,7 @@ import { createButton, ButtonReturn } from "@andersseen/headless-core/button";
       [disabled]="props.disabled"
       [attr.aria-disabled]="props['aria-disabled']"
       (click)="button.actions.click($event)"
-      class="px-4 py-2 bg-blue-500 text-white rounded-lg"
+      class="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
     >
       <ng-content></ng-content>
     </button>

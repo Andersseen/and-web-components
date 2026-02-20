@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 import {
-  MyTabs,
-  MyTabsContent,
-  MyTabsList,
-  MyTabsTrigger,
+  AndTabs,
+  AndTabsContent,
+  AndTabsList,
+  AndTabsTrigger,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tabs-demo',
-  imports: [MyTabs, MyTabsContent, MyTabsList, MyTabsTrigger],
+  imports: [AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger],
   template: `
     <div class="demo-section">
-      <my-tabs value="tab1">
-        <my-tabs-list>
-          <my-tabs-trigger value="tab1">Profile</my-tabs-trigger>
-          <my-tabs-trigger value="tab2">Settings</my-tabs-trigger>
-          <my-tabs-trigger value="tab3">Messages</my-tabs-trigger>
-        </my-tabs-list>
-        <my-tabs-content value="tab1"
+      <and-tabs value="tab1">
+        <and-tabs-list>
+          <and-tabs-trigger value="tab1">Profile</and-tabs-trigger>
+          <and-tabs-trigger value="tab2">Settings</and-tabs-trigger>
+          <and-tabs-trigger value="tab3">Messages</and-tabs-trigger>
+        </and-tabs-list>
+        <and-tabs-content value="tab1"
           >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate
-          aperiam</my-tabs-content
+          aperiam</and-tabs-content
         >
-        <my-tabs-content value="tab2"
+        <and-tabs-content value="tab2"
           >Labore, rerum, voluptatem doloremque quod repellendus dolorem nisi
           explicabo odit voluptatibus. Doloremque, sint. Quas consequatur,
-          labore</my-tabs-content
+          labore</and-tabs-content
         >
-        <my-tabs-content value="tab3"
+        <and-tabs-content value="tab3"
           >Rerum, voluptatem doloremque quod repellendus dolorem nisi explicabo
-          odit voluptatibus</my-tabs-content
+          odit voluptatibus</and-tabs-content
         >
-      </my-tabs>
+      </and-tabs>
     </div>
   `,
 })

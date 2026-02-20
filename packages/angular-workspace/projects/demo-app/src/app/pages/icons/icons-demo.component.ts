@@ -1,6 +1,6 @@
 import {
-  MyCard,
-  MyIcon,
+  AndCard,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 import { Component } from '@angular/core';
 import { registerIcons, ALL_ICONS } from '@andersseen/icon-library';
@@ -8,7 +8,7 @@ import { registerIcons, ALL_ICONS } from '@andersseen/icon-library';
 @Component({
   selector: 'app-icons-demo',
 
-  imports: [MyCard, MyIcon],
+  imports: [AndCard, AndIcon],
   schemas: [],
   template: `
     <div class="demo-section">
@@ -17,18 +17,18 @@ import { registerIcons, ALL_ICONS } from '@andersseen/icon-library';
         All available icons in the library (future separate package)
       </p>
 
-      <my-card class="p-6">
+      <and-card class="p-6">
         <div class="icons-grid">
           @for (icon of icons; track icon) {
             <div class="icon-item">
-              <my-icon [name]="icon" size="24"></my-icon>
+              <and-icon [name]="icon" size="24"></and-icon>
               <span class="icon-name">{{ icon }}</span>
             </div>
           }
         </div>
-      </my-card>
+      </and-card>
 
-      <my-card class="p-6" style="margin-top: 2rem">
+      <and-card class="p-6" style="margin-top: 2rem">
         <h3 style="margin: 0 0 1rem 0; font-size: 1.25rem; font-weight: 600">
           Future Separate Package
         </h3>
@@ -48,7 +48,7 @@ import { registerIcons, ALL_ICONS } from '@andersseen/icon-library';
         >
           <code style="color: #1f2937">npm install @your-org/icons</code>
         </div>
-      </my-card>
+      </and-card>
     </div>
   `,
   styles: [

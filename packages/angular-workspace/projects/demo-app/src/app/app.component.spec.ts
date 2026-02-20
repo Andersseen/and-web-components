@@ -25,6 +25,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('my-navbar')).toBeTruthy();
+    expect(compiled.querySelector('and-navbar')).toBeTruthy();
   });
 });
