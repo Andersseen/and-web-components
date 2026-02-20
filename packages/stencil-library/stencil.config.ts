@@ -26,7 +26,7 @@ export const config: Config = {
       serviceWorker: null,
     },
     angularOutputTarget({
-      componentCorePackage: 'stencil-library',
+      componentCorePackage: '@andersseen/stencil-library',
       outputType: 'standalone',
       directivesProxyFile: '../angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
       directivesArrayFile: '../angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',

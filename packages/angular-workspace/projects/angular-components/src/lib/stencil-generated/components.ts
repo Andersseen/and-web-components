@@ -4,32 +4,32 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Even
 
 import { ProxyCmp } from './angular-component-lib/utils';
 
-import type { Components } from 'stencil-library/components';
+import type { Components } from '@andersseen/stencil-library/components';
 
-import { defineCustomElement as defineAndAccordion } from 'stencil-library/components/and-accordion.js';
-import { defineCustomElement as defineAndAccordionContent } from 'stencil-library/components/and-accordion-content.js';
-import { defineCustomElement as defineAndAccordionItem } from 'stencil-library/components/and-accordion-item.js';
-import { defineCustomElement as defineAndAccordionTrigger } from 'stencil-library/components/and-accordion-trigger.js';
-import { defineCustomElement as defineAndAlert } from 'stencil-library/components/and-alert.js';
-import { defineCustomElement as defineAndBadge } from 'stencil-library/components/and-badge.js';
-import { defineCustomElement as defineAndButton } from 'stencil-library/components/and-button.js';
-import { defineCustomElement as defineAndCard } from 'stencil-library/components/and-card.js';
-import { defineCustomElement as defineAndCarousel } from 'stencil-library/components/and-carousel.js';
-import { defineCustomElement as defineAndCarouselItem } from 'stencil-library/components/and-carousel-item.js';
-import { defineCustomElement as defineAndDrawer } from 'stencil-library/components/and-drawer.js';
-import { defineCustomElement as defineAndDropdown } from 'stencil-library/components/and-dropdown.js';
-import { defineCustomElement as defineAndIcon } from 'stencil-library/components/and-icon.js';
-import { defineCustomElement as defineAndInput } from 'stencil-library/components/and-input.js';
-import { defineCustomElement as defineAndModal } from 'stencil-library/components/and-modal.js';
-import { defineCustomElement as defineAndNavbar } from 'stencil-library/components/and-navbar.js';
-import { defineCustomElement as defineAndPagination } from 'stencil-library/components/and-pagination.js';
-import { defineCustomElement as defineAndSidebar } from 'stencil-library/components/and-sidebar.js';
-import { defineCustomElement as defineAndTabs } from 'stencil-library/components/and-tabs.js';
-import { defineCustomElement as defineAndTabsContent } from 'stencil-library/components/and-tabs-content.js';
-import { defineCustomElement as defineAndTabsList } from 'stencil-library/components/and-tabs-list.js';
-import { defineCustomElement as defineAndTabsTrigger } from 'stencil-library/components/and-tabs-trigger.js';
-import { defineCustomElement as defineAndToast } from 'stencil-library/components/and-toast.js';
-import { defineCustomElement as defineAndTooltip } from 'stencil-library/components/and-tooltip.js';
+import { defineCustomElement as defineAndAccordion } from '@andersseen/stencil-library/components/and-accordion.js';
+import { defineCustomElement as defineAndAccordionContent } from '@andersseen/stencil-library/components/and-accordion-content.js';
+import { defineCustomElement as defineAndAccordionItem } from '@andersseen/stencil-library/components/and-accordion-item.js';
+import { defineCustomElement as defineAndAccordionTrigger } from '@andersseen/stencil-library/components/and-accordion-trigger.js';
+import { defineCustomElement as defineAndAlert } from '@andersseen/stencil-library/components/and-alert.js';
+import { defineCustomElement as defineAndBadge } from '@andersseen/stencil-library/components/and-badge.js';
+import { defineCustomElement as defineAndButton } from '@andersseen/stencil-library/components/and-button.js';
+import { defineCustomElement as defineAndCard } from '@andersseen/stencil-library/components/and-card.js';
+import { defineCustomElement as defineAndCarousel } from '@andersseen/stencil-library/components/and-carousel.js';
+import { defineCustomElement as defineAndCarouselItem } from '@andersseen/stencil-library/components/and-carousel-item.js';
+import { defineCustomElement as defineAndDrawer } from '@andersseen/stencil-library/components/and-drawer.js';
+import { defineCustomElement as defineAndDropdown } from '@andersseen/stencil-library/components/and-dropdown.js';
+import { defineCustomElement as defineAndIcon } from '@andersseen/stencil-library/components/and-icon.js';
+import { defineCustomElement as defineAndInput } from '@andersseen/stencil-library/components/and-input.js';
+import { defineCustomElement as defineAndModal } from '@andersseen/stencil-library/components/and-modal.js';
+import { defineCustomElement as defineAndNavbar } from '@andersseen/stencil-library/components/and-navbar.js';
+import { defineCustomElement as defineAndPagination } from '@andersseen/stencil-library/components/and-pagination.js';
+import { defineCustomElement as defineAndSidebar } from '@andersseen/stencil-library/components/and-sidebar.js';
+import { defineCustomElement as defineAndTabs } from '@andersseen/stencil-library/components/and-tabs.js';
+import { defineCustomElement as defineAndTabsContent } from '@andersseen/stencil-library/components/and-tabs-content.js';
+import { defineCustomElement as defineAndTabsList } from '@andersseen/stencil-library/components/and-tabs-list.js';
+import { defineCustomElement as defineAndTabsTrigger } from '@andersseen/stencil-library/components/and-tabs-trigger.js';
+import { defineCustomElement as defineAndToast } from '@andersseen/stencil-library/components/and-toast.js';
+import { defineCustomElement as defineAndTooltip } from '@andersseen/stencil-library/components/and-tooltip.js';
 @ProxyCmp({
   defineCustomElementFn: defineAndAccordion,
   inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation']
