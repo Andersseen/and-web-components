@@ -1,0 +1,32 @@
+{
+  "name": "@andersseen/layout-core",
+  "version": "0.0.1",
+  "description": "Pure CSS layout and typography library driven by HTML attributes",
+  "main": "dist/layout-core.css",
+  "style": "dist/layout-core.css",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "sass src/index.scss dist/layout-core.css && sass src/index.scss dist/layout-core.min.css --style compressed",
+    "watch": "sass --watch src/index.scss:dist/layout-core.css"
+  },
+  "exports": {
+    ".": "./dist/layout-core.css",
+    "./dist/layout-core.css": "./dist/layout-core.css",
+    "./dist/layout-core.min.css": "./dist/layout-core.min.css"
+  },
+  "keywords": [
+    "css",
+    "layout",
+    "typography",
+    "attribute-driven",
+    "scss"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.71.0"
+  }
+}
