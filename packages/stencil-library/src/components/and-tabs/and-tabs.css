@@ -1,0 +1,20 @@
+:host(and-tabs) {
+  display: flex;
+  width: 100%;
+}
+
+:host(and-tabs-list) {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+:host(and-tabs-trigger) {
+  display: flex;
+  flex: 1;
+}
+
+:host(and-tabs-content) {
+  display: block;
+  width: 100%;
+}

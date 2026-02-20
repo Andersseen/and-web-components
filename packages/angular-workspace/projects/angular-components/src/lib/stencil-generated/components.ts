@@ -6,43 +6,43 @@ import { ProxyCmp } from './angular-component-lib/utils';
 
 import type { Components } from 'stencil-library/components';
 
-import { defineCustomElement as defineMyAccordion } from 'stencil-library/components/my-accordion.js';
-import { defineCustomElement as defineMyAccordionContent } from 'stencil-library/components/my-accordion-content.js';
-import { defineCustomElement as defineMyAccordionItem } from 'stencil-library/components/my-accordion-item.js';
-import { defineCustomElement as defineMyAccordionTrigger } from 'stencil-library/components/my-accordion-trigger.js';
-import { defineCustomElement as defineMyAlert } from 'stencil-library/components/my-alert.js';
-import { defineCustomElement as defineMyBadge } from 'stencil-library/components/my-badge.js';
-import { defineCustomElement as defineMyButton } from 'stencil-library/components/my-button.js';
-import { defineCustomElement as defineMyCard } from 'stencil-library/components/my-card.js';
-import { defineCustomElement as defineMyCarousel } from 'stencil-library/components/my-carousel.js';
-import { defineCustomElement as defineMyCarouselItem } from 'stencil-library/components/my-carousel-item.js';
-import { defineCustomElement as defineMyDrawer } from 'stencil-library/components/my-drawer.js';
-import { defineCustomElement as defineMyDropdown } from 'stencil-library/components/my-dropdown.js';
-import { defineCustomElement as defineMyIcon } from 'stencil-library/components/my-icon.js';
-import { defineCustomElement as defineMyInput } from 'stencil-library/components/my-input.js';
-import { defineCustomElement as defineMyModal } from 'stencil-library/components/my-modal.js';
-import { defineCustomElement as defineMyNavbar } from 'stencil-library/components/my-navbar.js';
-import { defineCustomElement as defineMyPagination } from 'stencil-library/components/my-pagination.js';
-import { defineCustomElement as defineMySidebar } from 'stencil-library/components/my-sidebar.js';
-import { defineCustomElement as defineMyTabs } from 'stencil-library/components/my-tabs.js';
-import { defineCustomElement as defineMyTabsContent } from 'stencil-library/components/my-tabs-content.js';
-import { defineCustomElement as defineMyTabsList } from 'stencil-library/components/my-tabs-list.js';
-import { defineCustomElement as defineMyTabsTrigger } from 'stencil-library/components/my-tabs-trigger.js';
-import { defineCustomElement as defineMyToast } from 'stencil-library/components/my-toast.js';
-import { defineCustomElement as defineMyTooltip } from 'stencil-library/components/my-tooltip.js';
+import { defineCustomElement as defineAndAccordion } from 'stencil-library/components/and-accordion.js';
+import { defineCustomElement as defineAndAccordionContent } from 'stencil-library/components/and-accordion-content.js';
+import { defineCustomElement as defineAndAccordionItem } from 'stencil-library/components/and-accordion-item.js';
+import { defineCustomElement as defineAndAccordionTrigger } from 'stencil-library/components/and-accordion-trigger.js';
+import { defineCustomElement as defineAndAlert } from 'stencil-library/components/and-alert.js';
+import { defineCustomElement as defineAndBadge } from 'stencil-library/components/and-badge.js';
+import { defineCustomElement as defineAndButton } from 'stencil-library/components/and-button.js';
+import { defineCustomElement as defineAndCard } from 'stencil-library/components/and-card.js';
+import { defineCustomElement as defineAndCarousel } from 'stencil-library/components/and-carousel.js';
+import { defineCustomElement as defineAndCarouselItem } from 'stencil-library/components/and-carousel-item.js';
+import { defineCustomElement as defineAndDrawer } from 'stencil-library/components/and-drawer.js';
+import { defineCustomElement as defineAndDropdown } from 'stencil-library/components/and-dropdown.js';
+import { defineCustomElement as defineAndIcon } from 'stencil-library/components/and-icon.js';
+import { defineCustomElement as defineAndInput } from 'stencil-library/components/and-input.js';
+import { defineCustomElement as defineAndModal } from 'stencil-library/components/and-modal.js';
+import { defineCustomElement as defineAndNavbar } from 'stencil-library/components/and-navbar.js';
+import { defineCustomElement as defineAndPagination } from 'stencil-library/components/and-pagination.js';
+import { defineCustomElement as defineAndSidebar } from 'stencil-library/components/and-sidebar.js';
+import { defineCustomElement as defineAndTabs } from 'stencil-library/components/and-tabs.js';
+import { defineCustomElement as defineAndTabsContent } from 'stencil-library/components/and-tabs-content.js';
+import { defineCustomElement as defineAndTabsList } from 'stencil-library/components/and-tabs-list.js';
+import { defineCustomElement as defineAndTabsTrigger } from 'stencil-library/components/and-tabs-trigger.js';
+import { defineCustomElement as defineAndToast } from 'stencil-library/components/and-toast.js';
+import { defineCustomElement as defineAndTooltip } from 'stencil-library/components/and-tooltip.js';
 @ProxyCmp({
-  defineCustomElementFn: defineMyAccordion,
+  defineCustomElementFn: defineAndAccordion,
   inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation']
 })
 @Component({
-  selector: 'my-accordion',
+  selector: 'and-accordion',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation'],
 })
-export class MyAccordion {
-  protected el: HTMLMyAccordionElement;
+export class AndAccordion {
+  protected el: HTMLAndAccordionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -50,22 +50,22 @@ export class MyAccordion {
 }
 
 
-export declare interface MyAccordion extends Components.MyAccordion {}
+export declare interface AndAccordion extends Components.AndAccordion {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyAccordionContent,
+  defineCustomElementFn: defineAndAccordionContent,
   methods: ['setItemProps']
 })
 @Component({
-  selector: 'my-accordion-content',
+  selector: 'and-accordion-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
 })
-export class MyAccordionContent {
-  protected el: HTMLMyAccordionContentElement;
+export class AndAccordionContent {
+  protected el: HTMLAndAccordionContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -73,23 +73,23 @@ export class MyAccordionContent {
 }
 
 
-export declare interface MyAccordionContent extends Components.MyAccordionContent {}
+export declare interface AndAccordionContent extends Components.AndAccordionContent {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyAccordionItem,
+  defineCustomElementFn: defineAndAccordionItem,
   inputs: ['disabled', 'value'],
   methods: ['setAccordionLogic']
 })
 @Component({
-  selector: 'my-accordion-item',
+  selector: 'and-accordion-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', { name: 'value', required: true }],
 })
-export class MyAccordionItem {
-  protected el: HTMLMyAccordionItemElement;
+export class AndAccordionItem {
+  protected el: HTMLAndAccordionItemElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -97,22 +97,22 @@ export class MyAccordionItem {
 }
 
 
-export declare interface MyAccordionItem extends Components.MyAccordionItem {}
+export declare interface AndAccordionItem extends Components.AndAccordionItem {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyAccordionTrigger,
+  defineCustomElementFn: defineAndAccordionTrigger,
   methods: ['setItemProps']
 })
 @Component({
-  selector: 'my-accordion-trigger',
+  selector: 'and-accordion-trigger',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
 })
-export class MyAccordionTrigger {
-  protected el: HTMLMyAccordionTriggerElement;
+export class AndAccordionTrigger {
+  protected el: HTMLAndAccordionTriggerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -120,23 +120,23 @@ export class MyAccordionTrigger {
 }
 
 
-export declare interface MyAccordionTrigger extends Components.MyAccordionTrigger {}
+export declare interface AndAccordionTrigger extends Components.AndAccordionTrigger {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyAlert,
+  defineCustomElementFn: defineAndAlert,
   inputs: ['dismissible', 'variant']
 })
 @Component({
-  selector: 'my-alert',
+  selector: 'and-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['dismissible', 'variant'],
   outputs: ['myDismiss'],
 })
-export class MyAlert {
-  protected el: HTMLMyAlertElement;
+export class AndAlert {
+  protected el: HTMLAndAlertElement;
   @Output() myDismiss = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -145,25 +145,25 @@ export class MyAlert {
 }
 
 
-export declare interface MyAlert extends Components.MyAlert {
+export declare interface AndAlert extends Components.AndAlert {
 
   myDismiss: EventEmitter<CustomEvent<void>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyBadge,
+  defineCustomElementFn: defineAndBadge,
   inputs: ['variant']
 })
 @Component({
-  selector: 'my-badge',
+  selector: 'and-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['variant'],
 })
-export class MyBadge {
-  protected el: HTMLMyBadgeElement;
+export class AndBadge {
+  protected el: HTMLAndBadgeElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -171,22 +171,22 @@ export class MyBadge {
 }
 
 
-export declare interface MyBadge extends Components.MyBadge {}
+export declare interface AndBadge extends Components.AndBadge {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyButton,
+  defineCustomElementFn: defineAndButton,
   inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant']
 })
 @Component({
-  selector: 'my-button',
+  selector: 'and-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant'],
 })
-export class MyButton {
-  protected el: HTMLMyButtonElement;
+export class AndButton {
+  protected el: HTMLAndButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -194,22 +194,22 @@ export class MyButton {
 }
 
 
-export declare interface MyButton extends Components.MyButton {}
+export declare interface AndButton extends Components.AndButton {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyCard,
+  defineCustomElementFn: defineAndCard,
   inputs: ['variant']
 })
 @Component({
-  selector: 'my-card',
+  selector: 'and-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['variant'],
 })
-export class MyCard {
-  protected el: HTMLMyCardElement;
+export class AndCard {
+  protected el: HTMLAndCardElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -217,22 +217,22 @@ export class MyCard {
 }
 
 
-export declare interface MyCard extends Components.MyCard {}
+export declare interface AndCard extends Components.AndCard {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyCarousel,
+  defineCustomElementFn: defineAndCarousel,
   inputs: ['autoplay', 'interval']
 })
 @Component({
-  selector: 'my-carousel',
+  selector: 'and-carousel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['autoplay', 'interval'],
 })
-export class MyCarousel {
-  protected el: HTMLMyCarouselElement;
+export class AndCarousel {
+  protected el: HTMLAndCarouselElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -240,21 +240,21 @@ export class MyCarousel {
 }
 
 
-export declare interface MyCarousel extends Components.MyCarousel {}
+export declare interface AndCarousel extends Components.AndCarousel {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyCarouselItem
+  defineCustomElementFn: defineAndCarouselItem
 })
 @Component({
-  selector: 'my-carousel-item',
+  selector: 'and-carousel-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
 })
-export class MyCarouselItem {
-  protected el: HTMLMyCarouselItemElement;
+export class AndCarouselItem {
+  protected el: HTMLAndCarouselItemElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -262,23 +262,23 @@ export class MyCarouselItem {
 }
 
 
-export declare interface MyCarouselItem extends Components.MyCarouselItem {}
+export declare interface AndCarouselItem extends Components.AndCarouselItem {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyDrawer,
+  defineCustomElementFn: defineAndDrawer,
   inputs: ['open', 'placement']
 })
 @Component({
-  selector: 'my-drawer',
+  selector: 'and-drawer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['open', 'placement'],
   outputs: ['myClose'],
 })
-export class MyDrawer {
-  protected el: HTMLMyDrawerElement;
+export class AndDrawer {
+  protected el: HTMLAndDrawerElement;
   @Output() myClose = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -287,7 +287,7 @@ export class MyDrawer {
 }
 
 
-export declare interface MyDrawer extends Components.MyDrawer {
+export declare interface AndDrawer extends Components.AndDrawer {
   /**
    * Emitted when the drawer is closed (backdrop click or close button).
    */
@@ -296,19 +296,19 @@ export declare interface MyDrawer extends Components.MyDrawer {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyDropdown,
+  defineCustomElementFn: defineAndDropdown,
   inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant']
 })
 @Component({
-  selector: 'my-dropdown',
+  selector: 'and-dropdown',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant'],
   outputs: ['dropdownSelect'],
 })
-export class MyDropdown {
-  protected el: HTMLMyDropdownElement;
+export class AndDropdown {
+  protected el: HTMLAndDropdownElement;
   @Output() dropdownSelect = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -317,25 +317,25 @@ export class MyDropdown {
 }
 
 
-export declare interface MyDropdown extends Components.MyDropdown {
+export declare interface AndDropdown extends Components.AndDropdown {
 
   dropdownSelect: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyIcon,
+  defineCustomElementFn: defineAndIcon,
   inputs: ['color', 'name', 'size', 'strokeWidth']
 })
 @Component({
-  selector: 'my-icon',
+  selector: 'and-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'name', 'size', 'strokeWidth'],
 })
-export class MyIcon {
-  protected el: HTMLMyIconElement;
+export class AndIcon {
+  protected el: HTMLAndIconElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -343,23 +343,23 @@ export class MyIcon {
 }
 
 
-export declare interface MyIcon extends Components.MyIcon {}
+export declare interface AndIcon extends Components.AndIcon {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyInput,
+  defineCustomElementFn: defineAndInput,
   inputs: ['class', 'disabled', 'placeholder', 'type', 'value']
 })
 @Component({
-  selector: 'my-input',
+  selector: 'and-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['class', 'disabled', 'placeholder', 'type', 'value'],
   outputs: ['myInput'],
 })
-export class MyInput {
-  protected el: HTMLMyInputElement;
+export class AndInput {
+  protected el: HTMLAndInputElement;
   @Output() myInput = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -368,26 +368,26 @@ export class MyInput {
 }
 
 
-export declare interface MyInput extends Components.MyInput {
+export declare interface AndInput extends Components.AndInput {
 
   myInput: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyModal,
+  defineCustomElementFn: defineAndModal,
   inputs: ['open']
 })
 @Component({
-  selector: 'my-modal',
+  selector: 'and-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['open'],
   outputs: ['myClose'],
 })
-export class MyModal {
-  protected el: HTMLMyModalElement;
+export class AndModal {
+  protected el: HTMLAndModalElement;
   @Output() myClose = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -396,26 +396,26 @@ export class MyModal {
 }
 
 
-export declare interface MyModal extends Components.MyModal {
+export declare interface AndModal extends Components.AndModal {
 
   myClose: EventEmitter<CustomEvent<void>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyNavbar,
+  defineCustomElementFn: defineAndNavbar,
   inputs: ['activeItem', 'items', 'variant']
 })
 @Component({
-  selector: 'my-navbar',
+  selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activeItem', 'items', 'variant'],
   outputs: ['navItemClick'],
 })
-export class MyNavbar {
-  protected el: HTMLMyNavbarElement;
+export class AndNavbar {
+  protected el: HTMLAndNavbarElement;
   @Output() navItemClick = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -424,7 +424,7 @@ export class MyNavbar {
 }
 
 
-export declare interface MyNavbar extends Components.MyNavbar {
+export declare interface AndNavbar extends Components.AndNavbar {
   /**
    * Emitted when a navigation item is clicked
    */
@@ -433,19 +433,19 @@ export declare interface MyNavbar extends Components.MyNavbar {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyPagination,
+  defineCustomElementFn: defineAndPagination,
   inputs: ['currentPage', 'totalPages']
 })
 @Component({
-  selector: 'my-pagination',
+  selector: 'and-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['currentPage', 'totalPages'],
   outputs: ['pageChange'],
 })
-export class MyPagination {
-  protected el: HTMLMyPaginationElement;
+export class AndPagination {
+  protected el: HTMLAndPaginationElement;
   @Output() pageChange = new EventEmitter<CustomEvent<number>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -454,7 +454,7 @@ export class MyPagination {
 }
 
 
-export declare interface MyPagination extends Components.MyPagination {
+export declare interface AndPagination extends Components.AndPagination {
   /**
    * Emitted when page changes
    */
@@ -463,19 +463,19 @@ export declare interface MyPagination extends Components.MyPagination {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMySidebar,
+  defineCustomElementFn: defineAndSidebar,
   inputs: ['activeItem', 'collapsed', 'items', 'variant']
 })
 @Component({
-  selector: 'my-sidebar',
+  selector: 'and-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activeItem', 'collapsed', 'items', 'variant'],
   outputs: ['sidebarItemClick', 'sidebarToggle'],
 })
-export class MySidebar {
-  protected el: HTMLMySidebarElement;
+export class AndSidebar {
+  protected el: HTMLAndSidebarElement;
   @Output() sidebarItemClick = new EventEmitter<CustomEvent<string>>();
   @Output() sidebarToggle = new EventEmitter<CustomEvent<boolean>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -485,7 +485,7 @@ export class MySidebar {
 }
 
 
-export declare interface MySidebar extends Components.MySidebar {
+export declare interface AndSidebar extends Components.AndSidebar {
   /**
    * Emitted when a navigation item is clicked
    */
@@ -498,19 +498,19 @@ export declare interface MySidebar extends Components.MySidebar {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTabs,
+  defineCustomElementFn: defineAndTabs,
   inputs: ['activationMode', 'defaultValue', 'orientation', 'value']
 })
 @Component({
-  selector: 'my-tabs',
+  selector: 'and-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activationMode', 'defaultValue', 'orientation', 'value'],
   outputs: ['valueChange'],
 })
-export class MyTabs {
-  protected el: HTMLMyTabsElement;
+export class AndTabs {
+  protected el: HTMLAndTabsElement;
   @Output() valueChange = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -519,25 +519,25 @@ export class MyTabs {
 }
 
 
-export declare interface MyTabs extends Components.MyTabs {
+export declare interface AndTabs extends Components.AndTabs {
 
   valueChange: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTabsContent,
+  defineCustomElementFn: defineAndTabsContent,
   inputs: ['selected', 'value']
 })
 @Component({
-  selector: 'my-tabs-content',
+  selector: 'and-tabs-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['selected', 'value'],
 })
-export class MyTabsContent {
-  protected el: HTMLMyTabsContentElement;
+export class AndTabsContent {
+  protected el: HTMLAndTabsContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -545,22 +545,22 @@ export class MyTabsContent {
 }
 
 
-export declare interface MyTabsContent extends Components.MyTabsContent {}
+export declare interface AndTabsContent extends Components.AndTabsContent {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTabsList,
+  defineCustomElementFn: defineAndTabsList,
   inputs: ['orientation']
 })
 @Component({
-  selector: 'my-tabs-list',
+  selector: 'and-tabs-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['orientation'],
 })
-export class MyTabsList {
-  protected el: HTMLMyTabsListElement;
+export class AndTabsList {
+  protected el: HTMLAndTabsListElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -568,23 +568,23 @@ export class MyTabsList {
 }
 
 
-export declare interface MyTabsList extends Components.MyTabsList {}
+export declare interface AndTabsList extends Components.AndTabsList {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTabsTrigger,
+  defineCustomElementFn: defineAndTabsTrigger,
   inputs: ['disabled', 'selected', 'tabsLogic', 'value']
 })
 @Component({
-  selector: 'my-tabs-trigger',
+  selector: 'and-tabs-trigger',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', 'selected', 'tabsLogic', 'value'],
   outputs: ['tabTriggerClick'],
 })
-export class MyTabsTrigger {
-  protected el: HTMLMyTabsTriggerElement;
+export class AndTabsTrigger {
+  protected el: HTMLAndTabsTriggerElement;
   @Output() tabTriggerClick = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -593,25 +593,25 @@ export class MyTabsTrigger {
 }
 
 
-export declare interface MyTabsTrigger extends Components.MyTabsTrigger {
+export declare interface AndTabsTrigger extends Components.AndTabsTrigger {
 
   tabTriggerClick: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyToast,
+  defineCustomElementFn: defineAndToast,
   methods: ['present']
 })
 @Component({
-  selector: 'my-toast',
+  selector: 'and-toast',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
 })
-export class MyToast {
-  protected el: HTMLMyToastElement;
+export class AndToast {
+  protected el: HTMLAndToastElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -619,22 +619,22 @@ export class MyToast {
 }
 
 
-export declare interface MyToast extends Components.MyToast {}
+export declare interface AndToast extends Components.AndToast {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMyTooltip,
+  defineCustomElementFn: defineAndTooltip,
   inputs: ['closeDelay', 'content', 'openDelay', 'placement']
 })
 @Component({
-  selector: 'my-tooltip',
+  selector: 'and-tooltip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['closeDelay', 'content', 'openDelay', 'placement'],
 })
-export class MyTooltip {
-  protected el: HTMLMyTooltipElement;
+export class AndTooltip {
+  protected el: HTMLAndTooltipElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -642,6 +642,6 @@ export class MyTooltip {
 }
 
 
-export declare interface MyTooltip extends Components.MyTooltip {}
+export declare interface AndTooltip extends Components.AndTooltip {}
 
 

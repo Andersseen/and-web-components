@@ -1,17 +1,17 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import { Motion, MotionAnimations } from '@andersseen/motion-core';
 import {
-  MyButton,
-  MyCard,
-  MyBadge,
-  MyIcon,
+  AndButton,
+  AndCard,
+  AndBadge,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-custom-demo',
-  imports: [CommonModule, FormsModule, MyButton, MyCard, MyBadge, MyIcon],
+  imports: [CommonModule, FormsModule, AndButton, AndCard, AndBadge, AndIcon],
   template: `
     <div class="demo-page">
       <!-- Hero -->
@@ -24,12 +24,12 @@ import {
       </div>
 
       <!-- Main Demo -->
-      <my-card class="block mb-8">
+      <and-card class="block mb-8">
         <div class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <div class="flex items-center gap-2 mb-2">
-                <my-badge variant="secondary">Configuration</my-badge>
+                <and-badge variant="secondary">Configuration</and-badge>
                 <span class="text-sm text-muted-foreground"
                   >Timing & Easing</span
                 >
@@ -113,10 +113,10 @@ import {
           </div>
 
           <div class="flex flex-wrap gap-2 mb-6">
-            <my-button (click)="playCustom()">
-              <my-icon name="play" class="mr-2" size="14"></my-icon>
+            <and-button (click)="playCustom()">
+              <and-icon name="play" class="mr-2" size="14"></and-icon>
               Play Animation
-            </my-button>
+            </and-button>
           </div>
 
           <!-- Preview Area -->
@@ -125,7 +125,7 @@ import {
           >
             <div
               #customBox
-              class="w-24 h-24 bg-rose-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-white gap-2"
+              class="w-24 h-24 bg-rose-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-primary-foreground gap-2"
               style="display: none;"
             >
               <span class="text-3xl">⚙️</span>
@@ -144,7 +144,7 @@ import {
             </code>
           </div>
         </div>
-      </my-card>
+      </and-card>
     </div>
   `,
   styles: [

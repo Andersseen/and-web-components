@@ -15,6 +15,8 @@ export const ARROW_RIGHT =
 
 export const INFO =
   '<g><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></g>';
+export const ALERT_CIRCLE =
+  '<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></g>';
 export const ERROR =
   '<g><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></g>';
 export const SUCCESS =
@@ -123,11 +125,49 @@ export const MONITOR =
 export const SMARTPHONE =
   '<rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />';
 
+// UI / Layout icons
+export const PANEL_LEFT =
+  '<g><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /></g>';
+export const PANEL_LEFT_OPEN =
+  '<g><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /><path d="m14 9 3 3-3 3" /></g>';
+export const PANEL_TOP =
+  '<g><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18" /></g>';
+export const APP_WINDOW =
+  '<g><rect width="20" height="16" x="2" y="4" rx="2" /><path d="M10 4v4" /><path d="M2 8h20" /><path d="M6 4v4" /></g>';
+export const CREDIT_CARD =
+  '<g><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" y1="10" x2="22" y2="10" /></g>';
+export const GALLERY =
+  '<g><rect width="18" height="18" x="3" y="3" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></g>';
+export const TEXT_CURSOR =
+  '<g><path d="M17 22h-1a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h1" /><path d="M7 22h1a4 4 0 0 0 4-4V6a4 4 0 0 0-4-4H7" /><line x1="9" y1="12" x2="15" y2="12" /></g>';
+export const FOLDER_OPEN =
+  '<g><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2" /></g>';
+export const AWARD =
+  '<g><circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" /></g>';
+export const COMPASS =
+  '<g><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></g>';
+export const ZAP =
+  '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />';
+export const HASH =
+  '<g><line x1="4" y1="9" x2="20" y2="9" /><line x1="4" y1="15" x2="20" y2="15" /><line x1="10" y1="3" x2="8" y2="21" /><line x1="16" y1="3" x2="14" y2="21" /></g>';
+export const BOOK_OPEN =
+  '<g><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></g>';
+export const CIRCLE_DOT =
+  '<g><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="1" /></g>';
+
 /**
  * A comprehensive map of all available icons.
- * Importing this will prevent tree-shaking. Use individual exports instead.
+ *
+ * **WARNING:** Importing `ALL_ICONS` bundles every icon and defeats tree-shaking.
+ * For production apps, import individual icon constants instead:
+ *
+ * ```ts
+ * import { CLOSE, CHEVRON_DOWN } from '@andersseen/icon-library';
+ * ```
+ *
+ * Use `registerAllIcons()` only in demo apps or when you truly need every icon.
  */
-export const ALL_ICONS = {
+export const ALL_ICONS: Record<string, string> = {
   close: CLOSE,
   "chevron-down": CHEVRON_DOWN,
   "chevron-left": CHEVRON_LEFT,
@@ -138,6 +178,7 @@ export const ALL_ICONS = {
   "arrow-left": ARROW_LEFT,
   "arrow-right": ARROW_RIGHT,
   info: INFO,
+  "alert-circle": ALERT_CIRCLE,
   error: ERROR,
   success: SUCCESS,
   warning: WARNING,
@@ -193,6 +234,40 @@ export const ALL_ICONS = {
   terminal: TERMINAL,
   monitor: MONITOR,
   smartphone: SMARTPHONE,
+  "panel-left": PANEL_LEFT,
+  "panel-left-open": PANEL_LEFT_OPEN,
+  "panel-top": PANEL_TOP,
+  "app-window": APP_WINDOW,
+  "credit-card": CREDIT_CARD,
+  gallery: GALLERY,
+  "text-cursor": TEXT_CURSOR,
+  "folder-open": FOLDER_OPEN,
+  award: AWARD,
+  compass: COMPASS,
+  zap: ZAP,
+  hash: HASH,
+  "book-open": BOOK_OPEN,
+  "circle-dot": CIRCLE_DOT,
 };
 
+/** All recognized icon names. Accepts any string for custom registered icons. */
 export type IconName = keyof typeof ALL_ICONS | (string & {});
+
+/**
+ * Icons required internally by `@andersseen/stencil-library` components.
+ * Register these at minimum for internal component rendering.
+ *
+ * ```ts
+ * import { registerIcons } from '@andersseen/icon-library';
+ * import { COMPONENT_ICONS } from '@andersseen/icon-library';
+ * registerIcons(COMPONENT_ICONS);
+ * ```
+ */
+export const COMPONENT_ICONS: Record<string, string> = {
+  close: CLOSE,
+  'chevron-down': CHEVRON_DOWN,
+  'chevron-up': CHEVRON_UP,
+  'chevron-left': CHEVRON_LEFT,
+  'chevron-right': CHEVRON_RIGHT,
+  menu: MENU,
+};

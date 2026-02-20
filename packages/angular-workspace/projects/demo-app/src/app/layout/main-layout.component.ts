@@ -1,9 +1,9 @@
 import {
-  MyButton,
-  MyDropdown,
-  MyIcon,
-  MyNavbar,
-  MySidebar,
+  AndButton,
+  AndDropdown,
+  AndIcon,
+  AndNavbar,
+  AndSidebar,
 } from '@angular-components/stencil-generated/components';
 import { Component, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
@@ -17,19 +17,19 @@ interface SidebarItem {
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, MyNavbar, MySidebar, MyDropdown, MyButton, MyIcon],
+  imports: [RouterOutlet, AndNavbar, AndSidebar, AndDropdown, AndButton, AndIcon],
   schemas: [],
   template: `
     <div class="app-container">
       <!-- Navbar -->
-      <my-navbar
+      <and-navbar
         class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
         (navItemClick)="onNavItemClick($event)"
       >
         <span slot="brand">
-          <my-icon name="layout"></my-icon>
+          <and-icon name="layout"></and-icon>
           And Web Components UI
         </span>
 
@@ -39,69 +39,69 @@ interface SidebarItem {
         >
           <!-- Theme Preset -->
           <div style="width: 140px;">
-            <my-dropdown
+            <and-dropdown
               label="Theme"
               [items]="themeOptions"
               (dropdownSelect)="onThemeSelect($event)"
-            ></my-dropdown>
+            ></and-dropdown>
           </div>
 
           <!-- Color Palette -->
           <div style="width: 140px;">
-            <my-dropdown
+            <and-dropdown
               label="Color"
               [items]="colorOptions"
               (dropdownSelect)="onColorSelect($event)"
-            ></my-dropdown>
+            ></and-dropdown>
           </div>
 
           <!-- Dark Mode Toggle -->
-          <my-button
+          <and-button
             variant="ghost"
             size="icon"
             (click)="toggleDarkMode()"
             title="Toggle Dark Mode"
           >
-            <my-icon [name]="isDark() ? 'sun' : 'moon'"></my-icon>
-          </my-button>
+            <and-icon [name]="isDark() ? 'sun' : 'moon'"></and-icon>
+          </and-button>
 
-          <my-button
+          <and-button
             variant="outline"
             size="sm"
             onclick="window.open('https://github.com', '_blank')"
           >
             GitHub
-          </my-button>
+          </and-button>
         </div>
-      </my-navbar>
+      </and-navbar>
 
       <div class="main-content">
         @if (activeSection() === 'components') {
-          <my-sidebar
+          <and-sidebar
             class="bg-background"
             [items]="componentItems"
             [activeItem]="activeComponent()"
             (sidebarItemClick)="onSidebarItemClick($event)"
           >
-          </my-sidebar>
+          </and-sidebar>
         }
         @if (activeSection() === 'headless') {
-          <my-sidebar
+          <and-sidebar
             class="bg-background"
             [items]="headlessItems"
             [activeItem]="activeHeadless()"
             (sidebarItemClick)="onHeadlessSidebarItemClick($event)"
           >
-          </my-sidebar>
+          </and-sidebar>
         }
         @if (activeSection() === 'motion') {
-          <my-sidebar
+          <and-sidebar
             class="bg-background"
             [items]="motionItems"
             [activeItem]="activeMotion()"
             (sidebarItemClick)="onMotionItemClick($event)"
           >
-          </my-sidebar>
+          </and-sidebar>
         }
 
         <!-- Content Area -->
@@ -148,36 +148,36 @@ export class MainLayoutComponent {
 
   componentItems: SidebarItem[] = [
     { id: 'accordion', label: 'Accordion', icon: 'layers' },
-    { id: 'alert', label: 'Alert', icon: 'info' },
-    { id: 'badge', label: 'Badge', icon: 'star' },
-    { id: 'button', label: 'Button', icon: 'box' },
-    { id: 'card', label: 'Card', icon: 'layout' },
-    { id: 'carousel', label: 'Carousel', icon: 'image' },
-    { id: 'drawer', label: 'Drawer', icon: 'layout' },
+    { id: 'alert', label: 'Alert', icon: 'alert-circle' },
+    { id: 'badge', label: 'Badge', icon: 'award' },
+    { id: 'button', label: 'Button', icon: 'circle-dot' },
+    { id: 'card', label: 'Card', icon: 'credit-card' },
+    { id: 'carousel', label: 'Carousel', icon: 'gallery' },
+    { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
-    { id: 'input', label: 'Input', icon: 'file-text' },
-    { id: 'modal', label: 'Modal', icon: 'layout' },
-    { id: 'navbar', label: 'Navbar', icon: 'layout' },
+    { id: 'input', label: 'Input', icon: 'text-cursor' },
+    { id: 'modal', label: 'Modal', icon: 'app-window' },
+    { id: 'navbar', label: 'Navbar', icon: 'panel-top' },
     { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
-    { id: 'sidebar', label: 'Sidebar', icon: 'layout' },
-    { id: 'tabs', label: 'Tabs', icon: 'file-text' },
+    { id: 'sidebar', label: 'Sidebar', icon: 'panel-left-open' },
+    { id: 'tabs', label: 'Tabs', icon: 'folder-open' },
     { id: 'toast', label: 'Toast', icon: 'bell' },
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
   ];
 
   headlessItems: SidebarItem[] = [
-    { id: 'overview', label: 'Overview', icon: 'info' },
-    { id: 'button', label: 'Button', icon: 'box' },
+    { id: 'overview', label: 'Overview', icon: 'compass' },
+    { id: 'button', label: 'Button', icon: 'circle-dot' },
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
-    { id: 'tabs', label: 'Tabs', icon: 'file-text' },
+    { id: 'tabs', label: 'Tabs', icon: 'folder-open' },
     { id: 'accordion', label: 'Accordion', icon: 'layers' },
-    { id: 'modal', label: 'Modal', icon: 'layout' },
-    { id: 'navbar', label: 'Navbar', icon: 'layout' },
-    { id: 'sidebar', label: 'Sidebar', icon: 'layout' },
+    { id: 'modal', label: 'Modal', icon: 'app-window' },
+    { id: 'navbar', label: 'Navbar', icon: 'panel-top' },
+    { id: 'sidebar', label: 'Sidebar', icon: 'panel-left-open' },
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
     { id: 'toast', label: 'Toast', icon: 'bell' },
-    { id: 'drawer', label: 'Drawer', icon: 'layout' },
-    { id: 'alert', label: 'Alert', icon: 'info' },
+    { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
+    { id: 'alert', label: 'Alert', icon: 'alert-circle' },
   ];
   motionItems: SidebarItem[] = [
     { id: 'fade', label: 'Fade', icon: 'eye' },

@@ -3,20 +3,20 @@ import type { MotionOptions } from "./types.js";
 
 /** Attribute names used by the declarative API. */
 const ATTR = {
-  MOTION: "my-motion",
-  TRIGGER: "my-motion-trigger",
-  LEAVE: "my-motion-leave",
-  DURATION: "my-motion-duration",
-  EASING: "my-motion-easing",
-  DELAY: "my-motion-delay",
-  STAGGER: "my-motion-stagger",
-  REPEAT: "my-motion-repeat",
+  MOTION: "and-motion",
+  TRIGGER: "and-motion-trigger",
+  LEAVE: "and-motion-leave",
+  DURATION: "and-motion-duration",
+  EASING: "and-motion-easing",
+  DELAY: "and-motion-delay",
+  STAGGER: "and-motion-stagger",
+  REPEAT: "and-motion-repeat",
 } as const;
 
 /** Supported trigger modes. */
 type MotionTrigger = "enter" | "hover" | "tap";
 
-/** Selector for all elements with [my-motion]. */
+/** Selector for all elements with [and-motion]. */
 const SELECTOR = `[${ATTR.MOTION}]`;
 
 /**
@@ -28,7 +28,7 @@ function resolveAnimation(name: string): string {
 }
 
 /**
- * Reads `my-motion-*` attributes from an element and returns `MotionOptions`.
+ * Reads `and-motion-*` attributes from an element and returns `MotionOptions`.
  */
 function parseOptions(el: HTMLElement): MotionOptions {
   const opts: MotionOptions = {};
@@ -48,31 +48,31 @@ function parseOptions(el: HTMLElement): MotionOptions {
 /**
  * Declarative attribute-based animation controller.
  *
- * Scans the DOM for elements with `[my-motion]` and automatically applies
+ * Scans the DOM for elements with `[and-motion]` and automatically applies
  * animations based on HTML attributes — zero TypeScript required.
  *
  * @example
  * ```html
  * <!-- Animate on enter (scroll into view) -->
- * <div my-motion="fade-in">Hello</div>
+ * <div and-motion="fade-in">Hello</div>
  *
  * <!-- Hover trigger with enter/leave -->
- * <div my-motion="scale-in" my-motion-trigger="hover" my-motion-leave="scale-out">
+ * <div and-motion="scale-in" and-motion-trigger="hover" and-motion-leave="scale-out">
  *   Card
  * </div>
  *
  * <!-- Tap trigger -->
- * <button my-motion="bounce-in" my-motion-trigger="tap">Click me</button>
+ * <button and-motion="bounce-in" and-motion-trigger="tap">Click me</button>
  *
  * <!-- Custom options -->
- * <div my-motion="slide-in-left" my-motion-duration="800" my-motion-delay="200">
+ * <div and-motion="slide-in-left" and-motion-duration="800" and-motion-delay="200">
  *   Delayed slide
  * </div>
  *
  * <!-- Stagger children -->
- * <ul my-motion-stagger="80">
- *   <li my-motion="slide-in-left">Item 1</li>
- *   <li my-motion="slide-in-left">Item 2</li>
+ * <ul and-motion-stagger="80">
+ *   <li and-motion="slide-in-left">Item 1</li>
+ *   <li and-motion="slide-in-left">Item 2</li>
  * </ul>
  * ```
  *
@@ -100,7 +100,7 @@ export class MotionDirective {
 
   /**
    * Initializes the directive system.
-   * Scans all current `[my-motion]` elements and watches for new ones.
+   * Scans all current `[and-motion]` elements and watches for new ones.
    *
    * @param root - Optional root element to observe. Defaults to `document.body`.
    */
@@ -177,7 +177,7 @@ export class MotionDirective {
   }
 
   /**
-   * Re-scans the DOM for new `[my-motion]` elements.
+   * Re-scans the DOM for new `[and-motion]` elements.
    * Useful after dynamic content changes in frameworks that don't trigger
    * MutationObserver (e.g. some virtual DOM implementations).
    *
@@ -189,7 +189,7 @@ export class MotionDirective {
   }
 
   /**
-   * Processes a single `[my-motion]` element based on its trigger.
+   * Processes a single `[and-motion]` element based on its trigger.
    */
   private static processElement(el: HTMLElement): void {
     // Skip if already processed
@@ -224,7 +224,7 @@ export class MotionDirective {
 
   /**
    * Animates an element when it enters the viewport.
-   * Handles stagger if the parent has `[my-motion-stagger]`.
+   * Handles stagger if the parent has `[and-motion-stagger]`.
    */
   private static animateEnter(el: HTMLElement): void {
     const animationName = el.getAttribute(ATTR.MOTION);

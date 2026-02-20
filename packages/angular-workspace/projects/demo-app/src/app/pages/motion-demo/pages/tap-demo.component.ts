@@ -6,16 +6,16 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import { Motion, MotionAnimations } from '@andersseen/motion-core';
 import {
-  MyCard,
-  MyBadge,
-  MyIcon,
+  AndCard,
+  AndBadge,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tap-demo',
-  imports: [CommonModule, MyCard, MyBadge, MyIcon],
+  imports: [CommonModule, AndCard, AndBadge, AndIcon],
   template: `
     <div class="demo-page">
       <!-- Hero -->
@@ -28,12 +28,12 @@ import {
       </div>
 
       <!-- Main Demo -->
-      <my-card class="block mb-8">
+      <and-card class="block mb-8">
         <div class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <div class="flex items-center gap-2 mb-2">
-                <my-badge variant="secondary">Interaction</my-badge>
+                <and-badge variant="secondary">Interaction</and-badge>
                 <span class="text-sm text-muted-foreground"
                   >Click/Tap Events</span
                 >
@@ -52,23 +52,23 @@ import {
             <div class="flex gap-4 justify-center flex-wrap">
               <div
                 #tapBox1
-                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md bg-blue-500"
+                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-primary-foreground font-semibold text-sm cursor-pointer select-none shadow-md bg-primary"
               >
-                <my-icon name="maximize" size="24"></my-icon>
+                <and-icon name="maximize" size="24"></and-icon>
                 <span>Scale</span>
               </div>
               <div
                 #tapBox2
-                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md bg-violet-500"
+                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-primary-foreground font-semibold text-sm cursor-pointer select-none shadow-md bg-violet-500"
               >
-                <my-icon name="activity" size="24"></my-icon>
+                <and-icon name="activity" size="24"></and-icon>
                 <span>Bounce</span>
               </div>
               <div
                 #tapBox3
-                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-white font-semibold text-sm cursor-pointer select-none shadow-md bg-green-500"
+                class="flex flex-col items-center justify-center gap-2 w-24 h-24 rounded-xl text-primary-foreground font-semibold text-sm cursor-pointer select-none shadow-md bg-accent"
               >
-                <my-icon name="rotate-ccw" size="24"></my-icon>
+                <and-icon name="rotate-ccw" size="24"></and-icon>
                 <span>Rotate</span>
               </div>
             </div>
@@ -83,7 +83,7 @@ import {
             </code>
           </div>
         </div>
-      </my-card>
+      </and-card>
     </div>
   `,
   styles: [

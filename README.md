@@ -16,7 +16,7 @@ A modern, high-performance web component library built with [StencilJS](https://
 and-web-components/
 ├── packages/
 │   ├── stencil-library/       # The core Web Component library
-│   │   ├── src/components/    # Source code for components (my-card, my-button, etc.)
+│   │   ├── src/components/    # Source code for components (and-card, and-button, etc.)
 │   │   └── stencil.config.ts  # Stencil configuration
 │   └── angular-workspace/     # Angular demo application & wrapper library
 │       ├── projects/

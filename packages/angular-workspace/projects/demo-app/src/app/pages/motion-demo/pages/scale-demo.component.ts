@@ -1,16 +1,16 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Motion, MotionAnimations } from '@my-lib/motion-core';
+import { Motion, MotionAnimations } from '@andersseen/motion-core';
 import {
-  MyButton,
-  MyCard,
-  MyBadge,
-  MyIcon,
+  AndButton,
+  AndCard,
+  AndBadge,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-scale-demo',
-  imports: [CommonModule, MyButton, MyCard, MyBadge, MyIcon],
+  imports: [CommonModule, AndButton, AndCard, AndBadge, AndIcon],
   template: `
     <div class="demo-page">
       <!-- Hero -->
@@ -23,12 +23,12 @@ import {
       </div>
 
       <!-- Main Demo -->
-      <my-card class="block mb-8">
+      <and-card class="block mb-8">
         <div class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <div class="flex items-center gap-2 mb-2">
-                <my-badge variant="secondary">Transform</my-badge>
+                <and-badge variant="secondary">Transform</and-badge>
                 <span class="text-sm text-muted-foreground"
                   >Scale / Rotate</span
                 >
@@ -42,23 +42,23 @@ import {
 
           <!-- Controls -->
           <div class="flex flex-wrap gap-2 mb-6">
-            <my-button (click)="playScaleIn()" size="sm">
-              <my-icon name="maximize" class="mr-2" size="14"></my-icon>
+            <and-button (click)="playScaleIn()" size="sm">
+              <and-icon name="maximize" class="mr-2" size="14"></and-icon>
               Scale In
-            </my-button>
-            <my-button (click)="playBounceIn()" size="sm">
-              <my-icon name="activity" class="mr-2" size="14"></my-icon>
+            </and-button>
+            <and-button (click)="playBounceIn()" size="sm">
+              <and-icon name="activity" class="mr-2" size="14"></and-icon>
               Bounce In
-            </my-button>
-            <my-button (click)="playRotateIn()" size="sm">
-              <my-icon name="rotate-cw" class="mr-2" size="14"></my-icon>
+            </and-button>
+            <and-button (click)="playRotateIn()" size="sm">
+              <and-icon name="rotate-cw" class="mr-2" size="14"></and-icon>
               Rotate In
-            </my-button>
+            </and-button>
             <div class="w-px h-8 bg-border mx-2"></div>
-            <my-button variant="outline" (click)="playScaleOut()" size="sm">
-              <my-icon name="minimize" class="mr-2" size="14"></my-icon>
+            <and-button variant="outline" (click)="playScaleOut()" size="sm">
+              <and-icon name="minimize" class="mr-2" size="14"></and-icon>
               Scale Out
-            </my-button>
+            </and-button>
           </div>
 
           <!-- Preview Area -->
@@ -67,7 +67,7 @@ import {
           >
             <div
               #scaleBox
-              class="w-32 h-32 bg-violet-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-white gap-2"
+              class="w-32 h-32 bg-violet-500 rounded-xl shadow-lg flex flex-col items-center justify-center text-primary-foreground gap-2"
               style="display: none;"
             >
               <span class="text-4xl">✨</span>
@@ -83,7 +83,7 @@ import {
             </code>
           </div>
         </div>
-      </my-card>
+      </and-card>
     </div>
   `,
   styles: [
