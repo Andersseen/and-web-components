@@ -1,0 +1,19 @@
+
+> @andersseen/astro-landing@0.0.1 dev /app/packages/astro-landing
+> astro dev --port 4321
+
+22:31:58 [types] Generated 2ms
+
+ astro  v4.16.19 ready in 486 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+22:31:58 watching for file changes...
+
+ update  ▶ New version of Astro available: 5.17.3
+  Run pnpm dlx @astrojs/upgrade to update
+
+22:32:43 [200] / 21ms
+22:33:45 [200] / 11ms
+22:34:11 [200] / 6ms

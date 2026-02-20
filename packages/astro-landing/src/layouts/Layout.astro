@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+import "@andersseen/stencil-library/dist/stencil-library/stencil-library.css";
+import "@andersseen/motion-core/style.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro Landing Page" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-background text-foreground antialiased min-h-screen font-sans">
+    <slot />
+    <script>
+      import { defineCustomElements } from "@andersseen/stencil-library/loader";
+      import { initMotion } from "@andersseen/motion-core";
+      import { registerAllIcons } from "@andersseen/icon-library";
+
+      defineCustomElements(window);
+      registerAllIcons();
+
+      // Initialize motion library on load
+      document.addEventListener('DOMContentLoaded', () => {
+        initMotion();
+      });
+    </script>
+  </body>
+</html>
