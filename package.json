@@ -10,6 +10,7 @@
     "build:angular": "pnpm -C packages/angular-workspace ng build angular-components && pnpm -C packages/angular-workspace ng build demo-app",
     "build:all": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular",
     "start:dev": "concurrently \"pnpm run build:stencil --watch\" \"pnpm -C packages/angular-workspace start\"",
+    "start:astro": "pnpm build:stencil && pnpm build:motion && pnpm -C packages/astro-landing dev",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C packages/angular-workspace start",
     "build:demo": "pnpm build:all",
     "deploy:cloudflare": "pnpm build:all && pnpm -C packages/angular-workspace exec wrangler pages deploy"
@@ -19,5 +20,8 @@
     "lerna": "^9.0.3",
     "typescript": "^5.9.3",
     "concurrently": "^9.2.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp"]
   }
 }

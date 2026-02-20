@@ -13,13 +13,12 @@
     "@andersseen/icon-library": "workspace:*",
     "@andersseen/motion-core": "workspace:*",
     "@andersseen/stencil-library": "workspace:*",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.16.8",
-    "tailwindcss": "^3.4.1"
+    "astro": "^5.7.10"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^22.10.2",
-    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.7.2"
   }
 }
