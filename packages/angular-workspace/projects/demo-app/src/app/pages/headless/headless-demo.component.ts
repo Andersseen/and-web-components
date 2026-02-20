@@ -9,7 +9,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div
-      class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950"
+      class="min-h-screen bg-gradient-to-br from-background via-primary-50/30 to-primary-100/20 dark:from-background dark:via-primary-950/30 dark:to-primary-900/10"
     >
       <!-- Hero Section -->
       <div class="relative overflow-hidden">
@@ -21,11 +21,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         >
           <div class="text-center">
             <div
-              class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium animate-fade-in"
+              class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium animate-fade-in"
             >
               <span class="relative flex h-2 w-2">
                 <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"
                 ></span>
                 <span
                   class="relative inline-flex rounded-full h-2 w-2 bg-primary"
@@ -35,13 +35,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             </div>
 
             <h1
-              class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 mb-6 animate-slide-up"
+              class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-600 to-secondary-600 dark:from-primary-400 dark:via-primary dark:to-secondary-400 mb-6 animate-slide-up"
             >
               Headless Components
             </h1>
 
             <p
-              class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 animate-slide-up"
+              class="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-slide-up"
               style="animation-delay: 0.1s"
             >
               Build accessible, customizable UI components with
@@ -65,37 +65,37 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             style="animation-delay: 0.3s"
           >
             <div
-              class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+              class="group relative bg-card/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-border"
             >
               <div class="text-4xl mb-3">🎨</div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-primary-foreground mb-2">
+              <h3 class="text-lg font-bold text-foreground mb-2">
                 Fully Customizable
               </h3>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">
+              <p class="text-muted-foreground text-sm">
                 Complete control over styling and appearance
               </p>
             </div>
 
             <div
-              class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+              class="group relative bg-card/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-border"
             >
               <div class="text-4xl mb-3">♿</div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-primary-foreground mb-2">
+              <h3 class="text-lg font-bold text-foreground mb-2">
                 Accessible by Default
               </h3>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">
+              <p class="text-muted-foreground text-sm">
                 ARIA attributes and keyboard navigation built-in
               </p>
             </div>
 
             <div
-              class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+              class="group relative bg-card/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-border"
             >
               <div class="text-4xl mb-3">🔄</div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-primary-foreground mb-2">
+              <h3 class="text-lg font-bold text-foreground mb-2">
                 Framework Agnostic
               </h3>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">
+              <p class="text-muted-foreground text-sm">
                 Works with React, Vue, Angular, or vanilla JS
               </p>
             </div>
@@ -108,7 +108,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         <!-- Interactive Demo Tabs -->
         <div class="mb-16">
           <h2
-            class="text-3xl font-bold text-gray-900 dark:text-primary-foreground mb-8 text-center"
+            class="text-3xl font-bold text-foreground mb-8 text-center"
           >
             Live Interactive Examples
           </h2>
@@ -129,10 +129,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             <and-tabs-content value="button">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
+                  class="bg-muted rounded-2xl p-8 shadow-xl border border-border"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
+                    class="text-xl font-bold text-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-accent"></span>
@@ -154,7 +154,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                       <and-button variant="ghost">Ghost</and-button>
                     </div>
 
-                    <div class="h-px bg-gray-200 dark:bg-gray-700"></div>
+                    <div class="h-px bg-border"></div>
 
                     <div class="flex flex-wrap gap-3">
                       <and-button variant="default" size="sm">Small</and-button>
@@ -162,7 +162,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                       <and-button variant="default" size="lg">Large</and-button>
                     </div>
 
-                    <div class="h-px bg-gray-200 dark:bg-gray-700"></div>
+                    <div class="h-px bg-border"></div>
 
                     <div class="flex flex-wrap gap-3">
                       <and-button
@@ -178,15 +178,15 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                     </div>
 
                     <div
-                      class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg"
+                      class="mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg"
                     >
                       <div
-                        class="text-sm font-medium text-blue-900 dark:text-blue-200 mb-2"
+                        class="text-sm font-medium text-primary-900 dark:text-primary-200 mb-2"
                       >
                         ✨ Features:
                       </div>
                       <ul
-                        class="text-xs text-blue-700 dark:text-blue-300 space-y-1"
+                        class="text-xs text-primary-700 dark:text-primary-300 space-y-1"
                       >
                         <li>• <code>aria-busy</code> during loading state</li>
                         <li>• <code>aria-disabled</code> when disabled</li>
@@ -198,16 +198,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 </div>
 
                 <div
-                  class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
+                  class="bg-primary-950 rounded-2xl p-8 shadow-xl border border-primary-900 overflow-hidden"
                 >
                   <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-secondary"></span>
                       Code
                     </span>
                   </h3>
                   <pre
-                    class="text-sm text-gray-300 overflow-x-auto"
+                    class="text-sm text-primary-200 overflow-x-auto"
                   ><code>{{ buttonCode }}</code></pre>
                 </div>
               </div>
@@ -217,10 +217,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             <and-tabs-content value="dropdown">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
+                  class="bg-muted rounded-2xl p-8 shadow-xl border border-border"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
+                    class="text-xl font-bold text-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-accent"></span>
@@ -231,7 +231,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   <div class="space-y-6">
                     <div>
                       <label
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                        class="block text-sm font-medium text-muted-foreground mb-2"
                       >
                         Select an option
                       </label>
@@ -244,18 +244,18 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
                       <div
                         *ngIf="selectedItem()"
-                        class="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800 animate-slide-up"
+                        class="mt-4 p-4 bg-gradient-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/10 rounded-lg border border-primary-200 dark:border-primary-800 animate-slide-up"
                       >
                         <div class="flex items-center gap-2">
                           <span class="text-2xl">✓</span>
                           <div>
                             <div
-                              class="text-sm font-medium text-gray-900 dark:text-primary-foreground"
+                              class="text-sm font-medium text-foreground"
                             >
                               Selected:
                             </div>
                             <div
-                              class="text-lg font-bold text-blue-600 dark:text-blue-400"
+                              class="text-lg font-bold text-primary dark:text-primary"
                             >
                               {{ selectedItem() }}
                             </div>
@@ -265,25 +265,25 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                     </div>
 
                     <div
-                      class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg"
+                      class="p-4 bg-secondary-50 dark:bg-secondary-900/20 rounded-lg"
                     >
                       <div
-                        class="text-sm font-medium text-purple-900 dark:text-purple-200 mb-2"
+                        class="text-sm font-medium text-secondary-900 dark:text-secondary-200 mb-2"
                       >
                         ⌨️ Keyboard Navigation:
                       </div>
                       <ul
-                        class="text-xs text-purple-700 dark:text-purple-300 space-y-1"
+                        class="text-xs text-secondary-700 dark:text-secondary-300 space-y-1"
                       >
                         <li>
                           •
                           <kbd
-                            class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                            class="px-2 py-1 bg-muted rounded"
                             >Enter</kbd
                           >
                           /
                           <kbd
-                            class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                            class="px-2 py-1 bg-muted rounded"
                             >Space</kbd
                           >
                           to open
@@ -291,7 +291,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                         <li>
                           •
                           <kbd
-                            class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                            class="px-2 py-1 bg-muted rounded"
                             >Esc</kbd
                           >
                           to close
@@ -299,11 +299,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                         <li>
                           •
                           <kbd
-                            class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                            class="px-2 py-1 bg-muted rounded"
                             >↑</kbd
                           >
                           <kbd
-                            class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                            class="px-2 py-1 bg-muted rounded"
                             >↓</kbd
                           >
                           to navigate items
@@ -315,16 +315,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 </div>
 
                 <div
-                  class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
+                  class="bg-primary-950 rounded-2xl p-8 shadow-xl border border-primary-900 overflow-hidden"
                 >
                   <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-secondary"></span>
                       Code
                     </span>
                   </h3>
                   <pre
-                    class="text-sm text-gray-300 overflow-x-auto"
+                    class="text-sm text-primary-200 overflow-x-auto"
                   ><code>{{ dropdownCode }}</code></pre>
                 </div>
               </div>
@@ -334,10 +334,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             <and-tabs-content value="tabs">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
+                  class="bg-muted rounded-2xl p-8 shadow-xl border border-border"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
+                    class="text-xl font-bold text-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-accent"></span>
@@ -357,7 +357,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
                     <and-tabs-content value="tab1">
                       <div
-                        class="mt-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
+                        class="mt-6 p-6 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/10 rounded-xl border border-primary-200 dark:border-primary-800"
                       >
                         <div class="flex items-center gap-3 mb-3">
                           <div
@@ -366,41 +366,41 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                             📊
                           </div>
                           <div>
-                            <h4 class="font-bold text-gray-900 dark:text-primary-foreground">
+                            <h4 class="font-bold text-foreground">
                               Dashboard
                             </h4>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <p class="text-sm text-muted-foreground">
                               Overview of your metrics
                             </p>
                           </div>
                         </div>
                         <div class="grid grid-cols-3 gap-4 mt-4">
-                          <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
-                            <div class="text-2xl font-bold text-blue-600">
+                          <div class="bg-card p-3 rounded-lg">
+                            <div class="text-2xl font-bold text-primary">
                               127
                             </div>
                             <div
-                              class="text-xs text-gray-600 dark:text-gray-400"
+                              class="text-xs text-muted-foreground"
                             >
                               Views
                             </div>
                           </div>
-                          <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
-                            <div class="text-2xl font-bold text-green-600">
+                          <div class="bg-card p-3 rounded-lg">
+                            <div class="text-2xl font-bold text-success">
                               94%
                             </div>
                             <div
-                              class="text-xs text-gray-600 dark:text-gray-400"
+                              class="text-xs text-muted-foreground"
                             >
                               Success
                             </div>
                           </div>
-                          <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
-                            <div class="text-2xl font-bold text-purple-600">
+                          <div class="bg-card p-3 rounded-lg">
+                            <div class="text-2xl font-bold text-secondary-foreground">
                               1.2s
                             </div>
                             <div
-                              class="text-xs text-gray-600 dark:text-gray-400"
+                              class="text-xs text-muted-foreground"
                             >
                               Avg Time
                             </div>
@@ -411,19 +411,19 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
                     <and-tabs-content value="tab2">
                       <div
-                        class="mt-6 p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800"
+                        class="mt-6 p-6 bg-gradient-to-br from-secondary-50 to-secondary-100 dark:from-secondary-900/20 dark:to-secondary-900/10 rounded-xl border border-secondary-200 dark:border-secondary-800"
                       >
                         <div class="flex items-center gap-3">
                           <div
-                            class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
+                            class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
                           >
                             📈
                           </div>
                           <div>
-                            <h4 class="font-bold text-gray-900 dark:text-primary-foreground">
+                            <h4 class="font-bold text-foreground">
                               Analytics Content
                             </h4>
-                            <p class="text-gray-600 dark:text-gray-400">
+                            <p class="text-muted-foreground">
                               Detailed analytics and insights
                             </p>
                           </div>
@@ -433,19 +433,19 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
                     <and-tabs-content value="tab3">
                       <div
-                        class="mt-6 p-6 bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-900/20 dark:to-slate-900/20 rounded-xl border border-gray-200 dark:border-gray-800"
+                        class="mt-6 p-6 bg-gradient-to-br from-muted to-muted dark:from-muted dark:to-muted rounded-xl border border-border"
                       >
                         <div class="flex items-center gap-3">
                           <div
-                            class="w-12 h-12 bg-gray-500 rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
+                            class="w-12 h-12 bg-muted-foreground rounded-xl flex items-center justify-center text-primary-foreground text-2xl"
                           >
                             ⚙️
                           </div>
                           <div>
-                            <h4 class="font-bold text-gray-900 dark:text-primary-foreground">
+                            <h4 class="font-bold text-foreground">
                               Settings
                             </h4>
-                            <p class="text-gray-600 dark:text-gray-400">
+                            <p class="text-muted-foreground">
                               Configure your preferences
                             </p>
                           </div>
@@ -455,36 +455,36 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   </and-tabs>
 
                   <div
-                    class="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg"
+                    class="mt-6 p-4 bg-primary-100 dark:bg-primary-900/20 rounded-lg"
                   >
                     <div
-                      class="text-sm font-medium text-indigo-900 dark:text-indigo-200 mb-2"
+                      class="text-sm font-medium text-primary-900 dark:text-primary-200 mb-2"
                     >
                       ⌨️ Keyboard:
                     </div>
                     <ul
-                      class="text-xs text-indigo-700 dark:text-indigo-300 space-y-1"
+                      class="text-xs text-primary-700 dark:text-primary-300 space-y-1"
                     >
                       <li>
                         •
-                        <kbd class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                        <kbd class="px-2 py-1 bg-muted rounded"
                           >←</kbd
                         >
-                        <kbd class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                        <kbd class="px-2 py-1 bg-muted rounded"
                           >→</kbd
                         >
                         Navigate tabs
                       </li>
                       <li>
                         •
-                        <kbd class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                        <kbd class="px-2 py-1 bg-muted rounded"
                           >Home</kbd
                         >
                         First tab
                       </li>
                       <li>
                         •
-                        <kbd class="px-2 py-1 bg-white dark:bg-gray-800 rounded"
+                        <kbd class="px-2 py-1 bg-muted rounded"
                           >End</kbd
                         >
                         Last tab
@@ -494,16 +494,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 </div>
 
                 <div
-                  class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
+                  class="bg-primary-950 rounded-2xl p-8 shadow-xl border border-primary-900 overflow-hidden"
                 >
                   <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-secondary"></span>
                       Code
                     </span>
                   </h3>
                   <pre
-                    class="text-sm text-gray-300 overflow-x-auto"
+                    class="text-sm text-primary-200 overflow-x-auto"
                   ><code>{{ tabsCode }}</code></pre>
                 </div>
               </div>
@@ -513,10 +513,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             <and-tabs-content value="accordion">
               <div class="grid md:grid-cols-2 gap-8">
                 <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700"
+                  class="bg-muted rounded-2xl p-8 shadow-xl border border-border"
                 >
                   <h3
-                    class="text-xl font-bold text-gray-900 dark:text-primary-foreground mb-6"
+                    class="text-xl font-bold text-foreground mb-6"
                   >
                     <span class="inline-flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-accent"></span>
@@ -533,7 +533,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                       </and-accordion-trigger>
                       <and-accordion-content value="q1">
                         <div
-                          class="text-gray-600 dark:text-gray-300 leading-relaxed"
+                          class="text-muted-foreground leading-relaxed"
                         >
                           A headless component provides the
                           <strong>logic and behavior</strong> without dictating
@@ -552,7 +552,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                       </and-accordion-trigger>
                       <and-accordion-content value="q2">
                         <div
-                          class="text-gray-600 dark:text-gray-300 leading-relaxed space-y-2"
+                          class="text-muted-foreground leading-relaxed space-y-2"
                         >
                           <p>
                             <strong>✓ Framework Agnostic:</strong> Works in
@@ -580,12 +580,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                       </and-accordion-trigger>
                       <and-accordion-content value="q3">
                         <div
-                          class="text-gray-600 dark:text-gray-300 leading-relaxed"
+                          class="text-muted-foreground leading-relaxed"
                         >
                           The headless-core library provides factory functions
                           like
                           <code
-                            class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded"
+                            class="px-2 py-1 bg-muted rounded"
                             >createButton()</code
                           >
                           that return state, actions, and prop getters. Stencil
@@ -596,15 +596,15 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   </and-accordion>
 
                   <div
-                    class="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg"
+                    class="mt-6 p-4 bg-success/10 dark:bg-success/20 rounded-lg"
                   >
                     <div
-                      class="text-sm font-medium text-green-900 dark:text-green-200 mb-2"
+                      class="text-sm font-medium text-success dark:text-success mb-2"
                     >
                       ✨ Features:
                     </div>
                     <ul
-                      class="text-xs text-green-700 dark:text-green-300 space-y-1"
+                      class="text-xs text-success dark:text-success space-y-1"
                     >
                       <li>• Smooth expand/collapse animations</li>
                       <li>• Proper ARIA attributes for screen readers</li>
@@ -615,16 +615,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                 </div>
 
                 <div
-                  class="bg-gray-900 rounded-2xl p-8 shadow-xl border border-gray-700 overflow-hidden"
+                  class="bg-primary-950 rounded-2xl p-8 shadow-xl border border-primary-900 overflow-hidden"
                 >
                   <h3 class="text-xl font-bold text-primary-foreground mb-6">
                     <span class="inline-flex items-center gap-2">
-                      <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                      <span class="w-2 h-2 rounded-full bg-secondary"></span>
                       Code
                     </span>
                   </h3>
                   <pre
-                    class="text-sm text-gray-300 overflow-x-auto"
+                    class="text-sm text-primary-200 overflow-x-auto"
                   ><code>{{ accordionCode }}</code></pre>
                 </div>
               </div>
@@ -635,13 +635,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         <!-- Architecture Section -->
         <div class="mb-16">
           <h2
-            class="text-3xl font-bold text-gray-900 dark:text-primary-foreground mb-8 text-center"
+            class="text-3xl font-bold text-foreground mb-8 text-center"
           >
             How It Works
           </h2>
 
           <div
-            class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl border border-gray-200 dark:border-gray-700"
+            class="bg-muted rounded-3xl p-8 shadow-2xl border border-border"
           >
             <div class="grid md:grid-cols-3 gap-8">
               <!-- Layer 1 -->
@@ -650,26 +650,26 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
                   class="absolute -top-4 -left-4 w-16 h-16 bg-primary rounded-2xl opacity-10 animate-pulse"
                 ></div>
                 <div
-                  class="relative bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
+                  class="relative bg-gradient-to-br from-primary to-primary-700 rounded-2xl p-6 text-primary-foreground shadow-xl"
                 >
                   <div class="text-4xl mb-4">🎯</div>
                   <h3 class="text-xl font-bold mb-3">Headless Core</h3>
-                  <p class="text-blue-100 text-sm mb-4">
+                  <p class="text-primary-100 text-sm mb-4">
                     Pure TypeScript logic with no UI dependencies
                   </p>
                   <div class="space-y-2">
                     <div
-                      class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
+                      class="text-xs bg-primary-foreground/20 rounded px-2 py-1 font-mono"
                     >
                       createButton()
                     </div>
                     <div
-                      class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
+                      class="text-xs bg-primary-foreground/20 rounded px-2 py-1 font-mono"
                     >
                       createTabs()
                     </div>
                     <div
-                      class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
+                      class="text-xs bg-primary-foreground/20 rounded px-2 py-1 font-mono"
                     >
                       createDropdown()
                     </div>
@@ -680,7 +680,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               <!-- Arrow -->
               <div class="hidden md:flex items-center justify-center">
                 <svg
-                  class="w-12 h-12 text-gray-400"
+                  class="w-12 h-12 text-muted-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -697,30 +697,30 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
               <!-- Layer 2 -->
               <div class="relative">
                 <div
-                  class="absolute -top-4 -right-4 w-16 h-16 bg-purple-500 rounded-2xl opacity-10 animate-pulse"
+                  class="absolute -top-4 -right-4 w-16 h-16 bg-secondary rounded-2xl opacity-10 animate-pulse"
                   style="animation-delay: 0.2s"
                 ></div>
                 <div
-                  class="relative bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
+                  class="relative bg-gradient-to-br from-secondary to-secondary-700 rounded-2xl p-6 text-primary-foreground shadow-xl"
                 >
                   <div class="text-4xl mb-4">🎨</div>
                   <h3 class="text-xl font-bold mb-3">Stencil Components</h3>
-                  <p class="text-purple-100 text-sm mb-4">
+                  <p class="text-secondary-100 text-sm mb-4">
                     Web Components with visual presentation
                   </p>
                   <div class="space-y-2">
                     <div
-                      class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
+                      class="text-xs bg-primary-foreground/20 rounded px-2 py-1 font-mono"
                     >
                       &lt;and-button&gt;
                     </div>
                     <div
-                      class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
+                      class="text-xs bg-primary-foreground/20 rounded px-2 py-1 font-mono"
                     >
                       &lt;and-tabs&gt;
                     </div>
                     <div
-                      class="text-xs bg-white/20 rounded px-2 py-1 font-mono"
+                      class="text-xs bg-primary-foreground/20 rounded px-2 py-1 font-mono"
                     >
                       &lt;and-dropdown&gt;
                     </div>
@@ -730,13 +730,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
             </div>
 
             <div
-              class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
+              class="mt-8 p-6 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl border border-primary-200 dark:border-primary-800"
             >
-              <h4 class="font-bold text-gray-900 dark:text-primary-foreground mb-3">
+              <h4 class="font-bold text-foreground mb-3">
                 💡 The Result
               </h4>
               <p
-                class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed"
+                class="text-muted-foreground text-sm leading-relaxed"
               >
                 The headless core handles all the complex logic, state
                 management, and accessibility concerns. Stencil components
@@ -751,28 +751,28 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         <!-- Stats -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
           <div
-            class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
+            class="bg-gradient-to-br from-primary to-primary-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">4</div>
-            <div class="text-blue-100 text-sm">Components Integrated</div>
+            <div class="text-primary-100 text-sm">Components Integrated</div>
           </div>
           <div
-            class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
+            class="bg-gradient-to-br from-secondary to-secondary-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">100%</div>
-            <div class="text-purple-100 text-sm">Type Safe</div>
+            <div class="text-secondary-100 text-sm">Type Safe</div>
           </div>
           <div
-            class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
+            class="bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">0</div>
-            <div class="text-pink-100 text-sm">Runtime Dependencies</div>
+            <div class="text-secondary-100 text-sm">Runtime Dependencies</div>
           </div>
           <div
-            class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
+            class="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-6 text-primary-foreground shadow-xl"
           >
             <div class="text-4xl font-bold mb-2">∞</div>
-            <div class="text-indigo-100 text-sm">Framework Support</div>
+            <div class="text-primary-100 text-sm">Framework Support</div>
           </div>
         </div>
       </div>

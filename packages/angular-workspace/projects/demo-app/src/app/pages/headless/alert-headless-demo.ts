@@ -71,10 +71,10 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-core';
           Usage
         </h2>
         <div
-          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
         >
           <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createAlert {{ '}' }} from '@andersseen/headless-core';
 
 const alert = createAlert({{ '{' }}
@@ -199,13 +199,13 @@ export default class AlertHeadlessDemo {
   getVariantClasses(variant: string): string {
     switch (variant) {
       case 'destructive':
-        return 'bg-red-50 text-red-900 border-red-200 dark:bg-red-900/10 dark:text-red-200 dark:border-red-900/50';
+        return 'bg-destructive/10 text-destructive border-destructive/30 dark:bg-destructive/20 dark:text-destructive-foreground dark:border-destructive/40';
       case 'success':
-        return 'bg-green-50 text-green-900 border-green-200 dark:bg-green-900/10 dark:text-green-200 dark:border-green-900/50';
+        return 'bg-success/10 text-success border-success/30 dark:bg-success/20 dark:text-success-foreground dark:border-success/40';
       case 'warning':
-        return 'bg-yellow-50 text-yellow-900 border-yellow-200 dark:bg-yellow-900/10 dark:text-yellow-200 dark:border-yellow-900/50';
+        return 'bg-warning/10 text-warning border-warning/30 dark:bg-warning/20 dark:text-warning-foreground dark:border-warning/40';
       case 'info':
-        return 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-900/10 dark:text-blue-200 dark:border-blue-900/50';
+        return 'bg-info/10 text-info border-info/30 dark:bg-info/20 dark:text-info-foreground dark:border-info/40';
       default:
         return 'bg-card text-foreground border-border';
     }

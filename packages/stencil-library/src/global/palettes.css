@@ -8,8 +8,9 @@
    Architecture:
    - Primary scale (50–950): main brand color used for CTAs, links, focus rings
    - Secondary scale (50–950): complementary accent for badges, highlights, tags
-   - Surface tokens: background, foreground, card, popover, muted, accent
+   - Surface tokens: tinted background/foreground, card, popover, muted, accent
    - Interactive tokens: border, input, ring, destructive
+   - Status tokens: success, warning, info (consistent across palettes)
    - Dark mode: per-palette overrides with primary-tinted dark backgrounds
    ========================================================================== */
 
@@ -46,29 +47,37 @@
     --secondary-900: 342 76% 30%;
     --secondary-950: 343 88% 16%;
 
-    /* Semantic Tokens — Light */
+    /* Semantic Tokens — Light (Indigo-tinted surfaces) */
     --primary: 243 75% 59%;
     --primary-foreground: 0 0% 100%;
     --secondary: 356 100% 95%;
     --secondary-foreground: 345 83% 41%;
 
-    --background: 0 0% 100%;
+    --background: 226 30% 98%;
     --foreground: 224 71% 4%;
-    --card: 0 0% 100%;
+    --card: 226 40% 99%;
     --card-foreground: 224 71% 4%;
-    --popover: 0 0% 100%;
+    --popover: 226 40% 99%;
     --popover-foreground: 224 71% 4%;
 
-    --muted: 220 14% 96%;
+    --muted: 226 25% 93%;
     --muted-foreground: 220 9% 46%;
     --accent: 226 100% 94%;
     --accent-foreground: 244 47% 20%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 226 20% 89%;
+    --input: 226 20% 89%;
     --ring: 243 75% 59%;
+
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
   }
 
   [data-color='indigo-rose'].dark,
@@ -95,6 +104,13 @@
     --border: 230 25% 18%;
     --input: 230 25% 18%;
     --ring: 234 89% 74%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
   }
 
   /* =========================================================================
@@ -128,29 +144,36 @@
     --secondary-900: 22 78% 26%;
     --secondary-950: 21 92% 14%;
 
-    /* Semantic Tokens — Light */
+    /* Semantic Tokens — Light (Slate-tinted surfaces) */
     --primary: 222 47% 11%;
     --primary-foreground: 210 40% 98%;
     --secondary: 48 96% 89%;
     --secondary-foreground: 26 90% 37%;
 
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --foreground: 229 84% 5%;
-    --card: 0 0% 100%;
+    --card: 210 25% 99%;
     --card-foreground: 229 84% 5%;
-    --popover: 0 0% 100%;
+    --popover: 210 25% 99%;
     --popover-foreground: 229 84% 5%;
 
-    --muted: 210 40% 96%;
+    --muted: 214 18% 93%;
     --muted-foreground: 215 16% 47%;
     --accent: 48 96% 89%;
     --accent-foreground: 22 78% 26%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
+    --border: 214 18% 88%;
+    --input: 214 18% 88%;
     --ring: 222 47% 11%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
   }
 
   [data-color='slate-amber'].dark,
@@ -177,6 +200,13 @@
     --border: 217 25% 18%;
     --input: 217 25% 18%;
     --ring: 213 27% 84%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
   }
 
   /* =========================================================================
@@ -210,29 +240,36 @@
     --secondary-900: 15 75% 28%;
     --secondary-950: 13 81% 15%;
 
-    /* Semantic Tokens — Light */
+    /* Semantic Tokens — Light (Emerald-tinted surfaces) */
     --primary: 161 94% 30%;
     --primary-foreground: 0 0% 100%;
     --secondary: 34 100% 92%;
     --secondary-foreground: 17 88% 40%;
 
-    --background: 0 0% 100%;
+    --background: 152 25% 97%;
     --foreground: 166 91% 9%;
-    --card: 0 0% 100%;
+    --card: 152 30% 98%;
     --card-foreground: 166 91% 9%;
-    --popover: 0 0% 100%;
+    --popover: 152 30% 98%;
     --popover-foreground: 166 91% 9%;
 
-    --muted: 152 40% 96%;
+    --muted: 152 20% 93%;
     --muted-foreground: 160 10% 44%;
     --accent: 149 80% 90%;
     --accent-foreground: 164 86% 16%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 152 20% 90%;
-    --input: 152 20% 90%;
+    --border: 152 15% 88%;
+    --input: 152 15% 88%;
     --ring: 161 94% 30%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
   }
 
   [data-color='emerald-orange'].dark,
@@ -259,6 +296,13 @@
     --border: 163 25% 16%;
     --input: 163 25% 16%;
     --ring: 158 64% 52%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
   }
 
   /* =========================================================================
@@ -292,29 +336,36 @@
     --secondary-900: 196 64% 24%;
     --secondary-950: 197 79% 15%;
 
-    /* Semantic Tokens — Light */
+    /* Semantic Tokens — Light (Violet-tinted surfaces) */
     --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
     --secondary: 185 96% 90%;
     --secondary-foreground: 193 82% 31%;
 
-    --background: 0 0% 100%;
+    --background: 250 30% 98%;
     --foreground: 261 73% 10%;
-    --card: 0 0% 100%;
+    --card: 250 35% 99%;
     --card-foreground: 261 73% 10%;
-    --popover: 0 0% 100%;
+    --popover: 250 35% 99%;
     --popover-foreground: 261 73% 10%;
 
-    --muted: 250 30% 96%;
+    --muted: 250 22% 93%;
     --muted-foreground: 255 10% 46%;
     --accent: 251 91% 95%;
     --accent-foreground: 261 73% 23%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 250 20% 91%;
-    --input: 250 20% 91%;
+    --border: 250 18% 89%;
+    --input: 250 18% 89%;
     --ring: 262 83% 58%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
   }
 
   [data-color='violet-cyan'].dark,
@@ -341,6 +392,13 @@
     --border: 262 25% 17%;
     --input: 262 25% 17%;
     --ring: 255 92% 76%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
   }
 
   /* =========================================================================
@@ -374,29 +432,36 @@
     --secondary-900: 176 61% 19%;
     --secondary-950: 179 84% 10%;
 
-    /* Semantic Tokens — Light */
+    /* Semantic Tokens — Light (Rose-tinted surfaces) */
     --primary: 347 77% 50%;
     --primary-foreground: 0 0% 100%;
     --secondary: 167 85% 89%;
     --secondary-foreground: 175 77% 26%;
 
-    --background: 0 0% 100%;
+    --background: 356 25% 98%;
     --foreground: 343 40% 8%;
-    --card: 0 0% 100%;
+    --card: 356 30% 99%;
     --card-foreground: 343 40% 8%;
-    --popover: 0 0% 100%;
+    --popover: 356 30% 99%;
     --popover-foreground: 343 40% 8%;
 
-    --muted: 356 30% 96%;
+    --muted: 356 20% 93%;
     --muted-foreground: 350 10% 46%;
     --accent: 356 100% 95%;
     --accent-foreground: 343 88% 16%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 350 15% 90%;
-    --input: 350 15% 90%;
+    --border: 350 15% 88%;
+    --input: 350 15% 88%;
     --ring: 347 77% 50%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
   }
 
   [data-color='rose-teal'].dark,
@@ -423,5 +488,12 @@
     --border: 343 20% 17%;
     --input: 343 20% 17%;
     --ring: 351 95% 71%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
   }
 }
