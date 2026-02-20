@@ -1,0 +1,55 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// Base Flex Layout
+[and-layout~="horizontal"],
+[and-layout~="vertical"] {
+  display: flex;
+}
+
+[and-layout~="horizontal"] {
+  flex-direction: row;
+}
+
+[and-layout~="vertical"] {
+  flex-direction: column;
+}
+
+// Alignment Maps
+$align-items: (
+  "start": flex-start,
+  "end": flex-end,
+  "center": center,
+  "baseline": baseline,
+  "stretch": stretch,
+);
+
+$justify-content: (
+  "start": flex-start,
+  "end": flex-end,
+  "center": center,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly,
+);
+
+$flex-wrap: (
+  "nowrap": nowrap,
+  "wrap": wrap,
+  "wrap-reverse": wrap-reverse,
+);
+
+// Generate Responsive Alignment Modifiers
+// align:center -> align-items: center
+@include generate-responsive("and-layout", "align", $align-items, "align-items");
+
+// justify:center -> justify-content: center
+@include generate-responsive("and-layout", "justify", $justify-content, "justify-content");
+
+// wrap:wrap -> flex-wrap: wrap
+@include generate-responsive("and-layout", "wrap", $flex-wrap, "flex-wrap");
+
+// Gap Utilities (shared with Flex and Grid)
+@include generate-responsive("and-layout", "gap", $spacing, "gap");
+@include generate-responsive("and-layout", "gap-x", $spacing, "column-gap");
+@include generate-responsive("and-layout", "gap-y", $spacing, "row-gap");

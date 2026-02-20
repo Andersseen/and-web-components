@@ -20,7 +20,7 @@ interface SidebarItem {
   imports: [RouterOutlet, AndNavbar, AndSidebar, AndDropdown, AndButton, AndIcon],
   schemas: [],
   template: `
-    <div class="app-container">
+    <div class="app-container" and-layout="vertical">
       <!-- Navbar -->
       <and-navbar
         class="bg-background"
@@ -75,7 +75,7 @@ interface SidebarItem {
         </div>
       </and-navbar>
 
-      <div class="main-content">
+      <div class="main-content" and-layout="horizontal">
         @if (activeSection() === 'components') {
           <and-sidebar
             class="bg-background"
@@ -105,7 +105,7 @@ interface SidebarItem {
         }
 
         <!-- Content Area -->
-        <div class="content-area">
+        <div class="content-area" and-layout="p:xl">
           <router-outlet></router-outlet>
         </div>
       </div>
@@ -114,8 +114,6 @@ interface SidebarItem {
   styles: [
     `
       .app-container {
-        display: flex;
-        flex-direction: column;
         height: 100vh;
         overflow: hidden;
         background-color: var(--background);
@@ -123,7 +121,6 @@ interface SidebarItem {
       }
 
       .main-content {
-        display: flex;
         flex: 1;
         overflow: hidden;
       }
@@ -131,7 +128,6 @@ interface SidebarItem {
       .content-area {
         flex: 1;
         overflow-y: auto;
-        padding: 2rem;
         background: var(--background);
         color: var(--foreground);
       }

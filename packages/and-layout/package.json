@@ -1,0 +1,32 @@
+{
+  "name": "@andersseen/and-layout",
+  "version": "0.0.1",
+  "description": "Pure CSS layout and typography library driven by HTML attributes",
+  "main": "dist/and-layout.css",
+  "style": "dist/and-layout.css",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "sass src/index.scss dist/and-layout.css && sass src/index.scss dist/and-layout.min.css --style compressed",
+    "watch": "sass --watch src/index.scss:dist/and-layout.css"
+  },
+  "exports": {
+    ".": "./dist/and-layout.css",
+    "./dist/and-layout.css": "./dist/and-layout.css",
+    "./dist/and-layout.min.css": "./dist/and-layout.min.css"
+  },
+  "keywords": [
+    "css",
+    "layout",
+    "typography",
+    "attribute-driven",
+    "scss"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.71.0"
+  }
+}
