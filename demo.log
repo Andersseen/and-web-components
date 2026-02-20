@@ -1,0 +1,1673 @@
+
+> and-web-components@ start:demo /app
+> pnpm build:stencil && pnpm build:motion && pnpm -C packages/angular-workspace start
+
+
+> and-web-components@ build:stencil /app
+> pnpm build:headless && pnpm build:icons && pnpm -C packages/stencil-library build
+
+
+> and-web-components@ build:headless /app
+> pnpm -C packages/headless-core build
+
+
+> @andersseen/headless-core@0.1.0 build /app/packages/headless-core
+> rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json
+
+
+> and-web-components@ build:icons /app
+> pnpm -C packages/icon-library build
+
+
+> @andersseen/icon-library@0.0.1 build /app/packages/icon-library
+> tsc
+
+
+> @andersseen/stencil-library@0.0.1 build /app/packages/stencil-library
+> stencil build
+
+[2m[05:32.0][22m  [36m@stencil/core[39m
+[2m[05:32.7][22m  [36mv4.42.0[39m 🚑
+[2m[05:35.5][22m  build, stencil-library, prod mode, started [2m...[22m
+[2m[05:35.6][22m  transpile started [2m...[22m
+[2m[05:39.3][22m  transpile finished [2min 3.66 s[22m
+[2m[05:39.6][22m  generate custom elements started [2m...[22m
+[2m[05:39.6][22m  generate lazy started [2m...[22m
+[2m[05:46.0][22m  generate custom elements finished [2min 6.46 s[22m
+[2m[05:46.0][22m  generate lazy finished [2min 6.46 s[22m
+[2m[05:46.0][22m  copy started [2m...[22m
+[2m[05:46.1][22m  generating angular-library started [2m...[22m
+[2m[05:46.1][22m  updated readme docs: and-accordion
+[2m[05:46.1][22m  updated readme docs: and-accordion-content
+[2m[05:46.1][22m  updated readme docs: and-accordion-item
+[2m[05:46.1][22m  updated readme docs: and-accordion-trigger
+[2m[05:46.1][22m  updated readme docs: and-carousel
+[2m[05:46.1][22m  updated readme docs: and-carousel-item
+[2m[05:46.1][22m  updated readme docs: and-tabs
+[2m[05:46.1][22m  updated readme docs: and-tabs-content
+[2m[05:46.1][22m  updated readme docs: and-tabs-list
+[2m[05:46.1][22m  updated readme docs: and-tabs-trigger
+[2m[05:46.1][22m  copy finished (0 files) [2min 88 ms[22m
+[2m[05:46.1][22m  generate angular-library finished [2min 16 ms[22m
+[2m[05:46.2][22m  [1m[32mbuild finished[39m[22m [2min 10.68 s[22m
+
+
+> and-web-components@ build:motion /app
+> pnpm -C packages/motion-core build
+
+
+> @andersseen/motion-core@0.1.0 build /app/packages/motion-core
+> rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cat src/css/base.css src/css/fade.css src/css/scale.css src/css/bounce.css src/css/rotate.css src/css/slide-in.css src/css/slide-out.css src/css/a11y.css > dist/style.css && cp -r src/css dist/css
+
+
+> angular-workspace@0.0.0 start /app/packages/angular-workspace
+> ng serve
+
+❯ Building...
+✔ Building...
+Application bundle generation failed. [5.047 seconds] - 2026-02-20T16:05:57.485Z
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:7:32:
+[37m      7 │ import type { Components } from [32m'stencil-library/components'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:9:58:
+[37m      9 │ ...eAndAccordion } from [32m'stencil-library/components/and-accordion.js'[37m;
+        ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:10:65:
+[37m      10 │ ...tent } from [32m'stencil-library/components/and-accordion-content.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:11:62:
+[37m      11 │ ...ionItem } from [32m'stencil-library/components/and-accordion-item.js'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:12:65:
+[37m      12 │ ...gger } from [32m'stencil-library/components/and-accordion-trigger.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-alert.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:13:54:
+[37m      13 │ ...s defineAndAlert } from [32m'stencil-library/components/and-alert.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-badge.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:14:54:
+[37m      14 │ ...s defineAndBadge } from [32m'stencil-library/components/and-badge.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-button.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:15:55:
+[37m      15 │ ...defineAndButton } from [32m'stencil-library/components/and-button.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-card.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:16:53:
+[37m      16 │ ... as defineAndCard } from [32m'stencil-library/components/and-card.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:17:57:
+[37m      17 │ ...neAndCarousel } from [32m'stencil-library/components/and-carousel.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:18:61:
+[37m      18 │ ...uselItem } from [32m'stencil-library/components/and-carousel-item.js'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-drawer.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:19:55:
+[37m      19 │ ...defineAndDrawer } from [32m'stencil-library/components/and-drawer.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-dropdown.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:20:57:
+[37m      20 │ ...neAndDropdown } from [32m'stencil-library/components/and-dropdown.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-icon.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:21:53:
+[37m      21 │ ... as defineAndIcon } from [32m'stencil-library/components/and-icon.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-input.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:22:54:
+[37m      22 │ ...s defineAndInput } from [32m'stencil-library/components/and-input.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-modal.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:23:54:
+[37m      23 │ ...s defineAndModal } from [32m'stencil-library/components/and-modal.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-navbar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:24:55:
+[37m      24 │ ...defineAndNavbar } from [32m'stencil-library/components/and-navbar.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-pagination.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:25:59:
+[37m      25 │ ...dPagination } from [32m'stencil-library/components/and-pagination.js'[37m;
+         ╵                       [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-sidebar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:26:56:
+[37m      26 │ ...fineAndSidebar } from [32m'stencil-library/components/and-sidebar.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:27:53:
+[37m      27 │ ... as defineAndTabs } from [32m'stencil-library/components/and-tabs.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:28:60:
+[37m      28 │ ...bsContent } from [32m'stencil-library/components/and-tabs-content.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-list.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:29:57:
+[37m      29 │ ...eAndTabsList } from [32m'stencil-library/components/and-tabs-list.js'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:30:60:
+[37m      30 │ ...bsTrigger } from [32m'stencil-library/components/and-tabs-trigger.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-toast.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:31:54:
+[37m      31 │ ...s defineAndToast } from [32m'stencil-library/components/and-toast.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tooltip.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:32:56:
+[37m      32 │ ...fineAndTooltip } from [32m'stencil-library/components/and-tooltip.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAccordionElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:45:16:
+[37m      45 │   protected el: [32mHTMLAndAccordionElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:68:16:
+[37m      68 │   protected el: [32mHTMLAndAccordionContentElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:92:16:
+[37m      92 │   protected el: [32mHTMLAndAccordionItemElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:115:16:
+[37m      115 │   protected el: [32mHTMLAndAccordionTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAlertElement'. Did you mean 'HTMLDataElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:139:16:
+[37m      139 │   protected el: [32mHTMLAndAlertElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLDataElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13517:12:
+[37m      13517 │ declare var [32mHTMLDataElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndBadgeElement'. Did you mean 'HTMLBaseElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:166:16:
+[37m      166 │   protected el: [32mHTMLAndBadgeElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLBaseElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13220:12:
+[37m      13220 │ declare var [32mHTMLBaseElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndButtonElement'. Did you mean 'HTMLButtonElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:189:16:
+[37m      189 │   protected el: [32mHTMLAndButtonElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLButtonElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13371:12:
+[37m      13371 │ declare var [32mHTMLButtonElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndCardElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:212:16:
+[37m      212 │   protected el: [32mHTMLAndCardElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:235:16:
+[37m      235 │   protected el: [32mHTMLAndCarouselElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:257:16:
+[37m      257 │   protected el: [32mHTMLAndCarouselItemElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDrawerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:281:16:
+[37m      281 │   protected el: [32mHTMLAndDrawerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDropdownElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:311:16:
+[37m      311 │   protected el: [32mHTMLAndDropdownElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndIconElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:338:16:
+[37m      338 │   protected el: [32mHTMLAndIconElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndInputElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:362:16:
+[37m      362 │   protected el: [32mHTMLAndInputElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndModalElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:390:16:
+[37m      390 │   protected el: [32mHTMLAndModalElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndNavbarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:418:16:
+[37m      418 │   protected el: [32mHTMLAndNavbarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndPaginationElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:448:16:
+[37m      448 │   protected el: [32mHTMLAndPaginationElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndSidebarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:478:16:
+[37m      478 │   protected el: [32mHTMLAndSidebarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:513:16:
+[37m      513 │   protected el: [32mHTMLAndTabsElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:540:16:
+[37m      540 │   protected el: [32mHTMLAndTabsContentElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsListElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:563:16:
+[37m      563 │   protected el: [32mHTMLAndTabsListElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:587:16:
+[37m      587 │   protected el: [32mHTMLAndTabsTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndToastElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:614:16:
+[37m      614 │   protected el: [32mHTMLAndToastElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTooltipElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:637:16:
+[37m      637 │   protected el: [32mHTMLAndTooltipElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'present' does not exist on type 'AndToast'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/demo-app/src/app/pages/components/toast-demo.ts:141:30:
+[37m      141 │       await this.toastElement.[32mpresent[37m(
+          ╵                               [32m~~~~~~~[0m
+
+
+Watch mode enabled. Watching for file changes...
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files                  | Names                    |  Raw size
+styles.css                           | styles                   | 120.66 kB |
+chunk-IXPOMI3E.js                    | -                        |  65.36 kB |
+main.js                              | main                     |  20.98 kB |
+chunk-RA6QM5MM.js                    | -                        |  13.02 kB |
+chunk-Y5RQAIA6.js                    | -                        |   1.50 kB |
+polyfills.js                         | polyfills                |  95 bytes |
+
+                                     | Initial total            | 221.63 kB
+
+Lazy chunk files                     | Names                    |  Raw size
+attribute-demo.component-O7ZDTTXF.js | attribute-demo-component |  33.64 kB |
+chunk-ODDDPCMJ.js                    | -                        |  26.19 kB |
+drawer-headless-demo-NOVAD4YE.js     | drawer-headless-demo     |  25.60 kB |
+tooltip-headless-demo-VFMOIRNB.js    | tooltip-headless-demo    |  25.05 kB |
+overview-demo-P5N3X7HR.js            | overview-demo            |  24.34 kB |
+dropdown-headless-demo-WNF4NMYU.js   | dropdown-headless-demo   |  23.05 kB |
+tabs-headless-demo-2UPVGES3.js       | tabs-headless-demo       |  22.93 kB |
+icons-demo.component-B2THKO2A.js     | icons-demo-component     |  21.98 kB |
+modal-headless-demo-ZEGPHHK2.js      | modal-headless-demo      |  21.59 kB |
+toast-headless-demo-3BTLF2UI.js      | toast-headless-demo      |  20.41 kB |
+button-headless-demo-SYULFBBI.js     | button-headless-demo     |  19.96 kB |
+sidebar-headless-demo-AFDM2JW4.js    | sidebar-headless-demo    |  19.63 kB |
+alert-headless-demo-Q4FCM2YG.js      | alert-headless-demo      |  19.24 kB |
+custom-demo.component-4J3GKBT4.js    | custom-demo-component    |  18.58 kB |
+stagger-demo.component-HSQPKKJH.js   | stagger-demo-component   |  17.90 kB |
+...and 25 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [7.163 seconds] - 2026-02-20T16:07:40.521Z
+
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+An unhandled exception occurred: Port 4200 is already in use
+See "/tmp/ng-8cdgQ5/angular-errors.log" for further details.
+ ELIFECYCLE  Command failed.
+ ELIFECYCLE  Command failed with exit code 1.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Application bundle generation failed. [2.579 seconds] - 2026-02-20T16:05:49.061Z
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:7:32:
+[37m      7 │ import type { Components } from [32m'stencil-library/components'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:9:58:
+[37m      9 │ ...eAndAccordion } from [32m'stencil-library/components/and-accordion.js'[37m;
+        ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:10:65:
+[37m      10 │ ...tent } from [32m'stencil-library/components/and-accordion-content.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:11:62:
+[37m      11 │ ...ionItem } from [32m'stencil-library/components/and-accordion-item.js'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:12:65:
+[37m      12 │ ...gger } from [32m'stencil-library/components/and-accordion-trigger.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-alert.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:13:54:
+[37m      13 │ ...s defineAndAlert } from [32m'stencil-library/components/and-alert.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-badge.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:14:54:
+[37m      14 │ ...s defineAndBadge } from [32m'stencil-library/components/and-badge.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-button.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:15:55:
+[37m      15 │ ...defineAndButton } from [32m'stencil-library/components/and-button.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-card.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:16:53:
+[37m      16 │ ... as defineAndCard } from [32m'stencil-library/components/and-card.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:17:57:
+[37m      17 │ ...neAndCarousel } from [32m'stencil-library/components/and-carousel.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:18:61:
+[37m      18 │ ...uselItem } from [32m'stencil-library/components/and-carousel-item.js'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-drawer.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:19:55:
+[37m      19 │ ...defineAndDrawer } from [32m'stencil-library/components/and-drawer.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-dropdown.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:20:57:
+[37m      20 │ ...neAndDropdown } from [32m'stencil-library/components/and-dropdown.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-icon.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:21:53:
+[37m      21 │ ... as defineAndIcon } from [32m'stencil-library/components/and-icon.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-input.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:22:54:
+[37m      22 │ ...s defineAndInput } from [32m'stencil-library/components/and-input.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-modal.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:23:54:
+[37m      23 │ ...s defineAndModal } from [32m'stencil-library/components/and-modal.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-navbar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:24:55:
+[37m      24 │ ...defineAndNavbar } from [32m'stencil-library/components/and-navbar.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-pagination.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:25:59:
+[37m      25 │ ...dPagination } from [32m'stencil-library/components/and-pagination.js'[37m;
+         ╵                       [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-sidebar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:26:56:
+[37m      26 │ ...fineAndSidebar } from [32m'stencil-library/components/and-sidebar.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:27:53:
+[37m      27 │ ... as defineAndTabs } from [32m'stencil-library/components/and-tabs.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:28:60:
+[37m      28 │ ...bsContent } from [32m'stencil-library/components/and-tabs-content.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-list.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:29:57:
+[37m      29 │ ...eAndTabsList } from [32m'stencil-library/components/and-tabs-list.js'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:30:60:
+[37m      30 │ ...bsTrigger } from [32m'stencil-library/components/and-tabs-trigger.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-toast.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:31:54:
+[37m      31 │ ...s defineAndToast } from [32m'stencil-library/components/and-toast.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tooltip.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:32:56:
+[37m      32 │ ...fineAndTooltip } from [32m'stencil-library/components/and-tooltip.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAccordionElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:45:16:
+[37m      45 │   protected el: [32mHTMLAndAccordionElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:68:16:
+[37m      68 │   protected el: [32mHTMLAndAccordionContentElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:92:16:
+[37m      92 │   protected el: [32mHTMLAndAccordionItemElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:115:16:
+[37m      115 │   protected el: [32mHTMLAndAccordionTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAlertElement'. Did you mean 'HTMLDataElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:139:16:
+[37m      139 │   protected el: [32mHTMLAndAlertElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLDataElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13517:12:
+[37m      13517 │ declare var [32mHTMLDataElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndBadgeElement'. Did you mean 'HTMLBaseElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:166:16:
+[37m      166 │   protected el: [32mHTMLAndBadgeElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLBaseElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13220:12:
+[37m      13220 │ declare var [32mHTMLBaseElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndButtonElement'. Did you mean 'HTMLButtonElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:189:16:
+[37m      189 │   protected el: [32mHTMLAndButtonElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLButtonElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13371:12:
+[37m      13371 │ declare var [32mHTMLButtonElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndCardElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:212:16:
+[37m      212 │   protected el: [32mHTMLAndCardElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:235:16:
+[37m      235 │   protected el: [32mHTMLAndCarouselElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:257:16:
+[37m      257 │   protected el: [32mHTMLAndCarouselItemElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDrawerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:281:16:
+[37m      281 │   protected el: [32mHTMLAndDrawerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDropdownElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:311:16:
+[37m      311 │   protected el: [32mHTMLAndDropdownElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndIconElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:338:16:
+[37m      338 │   protected el: [32mHTMLAndIconElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndInputElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:362:16:
+[37m      362 │   protected el: [32mHTMLAndInputElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndModalElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:390:16:
+[37m      390 │   protected el: [32mHTMLAndModalElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndNavbarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:418:16:
+[37m      418 │   protected el: [32mHTMLAndNavbarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndPaginationElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:448:16:
+[37m      448 │   protected el: [32mHTMLAndPaginationElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndSidebarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:478:16:
+[37m      478 │   protected el: [32mHTMLAndSidebarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:513:16:
+[37m      513 │   protected el: [32mHTMLAndTabsElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:540:16:
+[37m      540 │   protected el: [32mHTMLAndTabsContentElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsListElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:563:16:
+[37m      563 │   protected el: [32mHTMLAndTabsListElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:587:16:
+[37m      587 │   protected el: [32mHTMLAndTabsTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndToastElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:614:16:
+[37m      614 │   protected el: [32mHTMLAndToastElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTooltipElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:637:16:
+[37m      637 │   protected el: [32mHTMLAndTooltipElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'present' does not exist on type 'AndToast'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/demo-app/src/app/pages/components/toast-demo.ts:141:30:
+[37m      141 │       await this.toastElement.[32mpresent[37m(
+          ╵                               [32m~~~~~~~[0m
+
+
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Application bundle generation failed. [0.151 seconds] - 2026-02-20T16:05:49.218Z
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:7:32:
+[37m      7 │ import type { Components } from [32m'stencil-library/components'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:9:58:
+[37m      9 │ ...eAndAccordion } from [32m'stencil-library/components/and-accordion.js'[37m;
+        ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:10:65:
+[37m      10 │ ...tent } from [32m'stencil-library/components/and-accordion-content.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:11:62:
+[37m      11 │ ...ionItem } from [32m'stencil-library/components/and-accordion-item.js'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:12:65:
+[37m      12 │ ...gger } from [32m'stencil-library/components/and-accordion-trigger.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-alert.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:13:54:
+[37m      13 │ ...s defineAndAlert } from [32m'stencil-library/components/and-alert.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-badge.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:14:54:
+[37m      14 │ ...s defineAndBadge } from [32m'stencil-library/components/and-badge.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-button.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:15:55:
+[37m      15 │ ...defineAndButton } from [32m'stencil-library/components/and-button.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-card.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:16:53:
+[37m      16 │ ... as defineAndCard } from [32m'stencil-library/components/and-card.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:17:57:
+[37m      17 │ ...neAndCarousel } from [32m'stencil-library/components/and-carousel.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:18:61:
+[37m      18 │ ...uselItem } from [32m'stencil-library/components/and-carousel-item.js'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-drawer.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:19:55:
+[37m      19 │ ...defineAndDrawer } from [32m'stencil-library/components/and-drawer.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-dropdown.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:20:57:
+[37m      20 │ ...neAndDropdown } from [32m'stencil-library/components/and-dropdown.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-icon.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:21:53:
+[37m      21 │ ... as defineAndIcon } from [32m'stencil-library/components/and-icon.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-input.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:22:54:
+[37m      22 │ ...s defineAndInput } from [32m'stencil-library/components/and-input.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-modal.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:23:54:
+[37m      23 │ ...s defineAndModal } from [32m'stencil-library/components/and-modal.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-navbar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:24:55:
+[37m      24 │ ...defineAndNavbar } from [32m'stencil-library/components/and-navbar.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-pagination.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:25:59:
+[37m      25 │ ...dPagination } from [32m'stencil-library/components/and-pagination.js'[37m;
+         ╵                       [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-sidebar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:26:56:
+[37m      26 │ ...fineAndSidebar } from [32m'stencil-library/components/and-sidebar.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:27:53:
+[37m      27 │ ... as defineAndTabs } from [32m'stencil-library/components/and-tabs.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:28:60:
+[37m      28 │ ...bsContent } from [32m'stencil-library/components/and-tabs-content.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-list.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:29:57:
+[37m      29 │ ...eAndTabsList } from [32m'stencil-library/components/and-tabs-list.js'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:30:60:
+[37m      30 │ ...bsTrigger } from [32m'stencil-library/components/and-tabs-trigger.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-toast.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:31:54:
+[37m      31 │ ...s defineAndToast } from [32m'stencil-library/components/and-toast.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tooltip.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:32:56:
+[37m      32 │ ...fineAndTooltip } from [32m'stencil-library/components/and-tooltip.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAccordionElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:45:16:
+[37m      45 │   protected el: [32mHTMLAndAccordionElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:68:16:
+[37m      68 │   protected el: [32mHTMLAndAccordionContentElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:92:16:
+[37m      92 │   protected el: [32mHTMLAndAccordionItemElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:115:16:
+[37m      115 │   protected el: [32mHTMLAndAccordionTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAlertElement'. Did you mean 'HTMLDataElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:139:16:
+[37m      139 │   protected el: [32mHTMLAndAlertElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLDataElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13517:12:
+[37m      13517 │ declare var [32mHTMLDataElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndBadgeElement'. Did you mean 'HTMLBaseElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:166:16:
+[37m      166 │   protected el: [32mHTMLAndBadgeElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLBaseElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13220:12:
+[37m      13220 │ declare var [32mHTMLBaseElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndButtonElement'. Did you mean 'HTMLButtonElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:189:16:
+[37m      189 │   protected el: [32mHTMLAndButtonElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLButtonElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13371:12:
+[37m      13371 │ declare var [32mHTMLButtonElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndCardElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:212:16:
+[37m      212 │   protected el: [32mHTMLAndCardElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:235:16:
+[37m      235 │   protected el: [32mHTMLAndCarouselElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:257:16:
+[37m      257 │   protected el: [32mHTMLAndCarouselItemElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDrawerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:281:16:
+[37m      281 │   protected el: [32mHTMLAndDrawerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDropdownElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:311:16:
+[37m      311 │   protected el: [32mHTMLAndDropdownElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndIconElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:338:16:
+[37m      338 │   protected el: [32mHTMLAndIconElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndInputElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:362:16:
+[37m      362 │   protected el: [32mHTMLAndInputElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndModalElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:390:16:
+[37m      390 │   protected el: [32mHTMLAndModalElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndNavbarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:418:16:
+[37m      418 │   protected el: [32mHTMLAndNavbarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndPaginationElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:448:16:
+[37m      448 │   protected el: [32mHTMLAndPaginationElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndSidebarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:478:16:
+[37m      478 │   protected el: [32mHTMLAndSidebarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:513:16:
+[37m      513 │   protected el: [32mHTMLAndTabsElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:540:16:
+[37m      540 │   protected el: [32mHTMLAndTabsContentElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsListElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:563:16:
+[37m      563 │   protected el: [32mHTMLAndTabsListElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:587:16:
+[37m      587 │   protected el: [32mHTMLAndTabsTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndToastElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:614:16:
+[37m      614 │   protected el: [32mHTMLAndToastElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTooltipElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:637:16:
+[37m      637 │   protected el: [32mHTMLAndTooltipElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'present' does not exist on type 'AndToast'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/demo-app/src/app/pages/components/toast-demo.ts:141:30:
+[37m      141 │       await this.toastElement.[32mpresent[37m(
+          ╵                               [32m~~~~~~~[0m
+
+
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Application bundle generation failed. [0.276 seconds] - 2026-02-20T16:05:50.968Z
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:7:32:
+[37m      7 │ import type { Components } from [32m'stencil-library/components'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:9:58:
+[37m      9 │ ...eAndAccordion } from [32m'stencil-library/components/and-accordion.js'[37m;
+        ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:10:65:
+[37m      10 │ ...tent } from [32m'stencil-library/components/and-accordion-content.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:11:62:
+[37m      11 │ ...ionItem } from [32m'stencil-library/components/and-accordion-item.js'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-accordion-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:12:65:
+[37m      12 │ ...gger } from [32m'stencil-library/components/and-accordion-trigger.js'[37m;
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-alert.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:13:54:
+[37m      13 │ ...s defineAndAlert } from [32m'stencil-library/components/and-alert.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-badge.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:14:54:
+[37m      14 │ ...s defineAndBadge } from [32m'stencil-library/components/and-badge.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-button.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:15:55:
+[37m      15 │ ...defineAndButton } from [32m'stencil-library/components/and-button.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-card.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:16:53:
+[37m      16 │ ... as defineAndCard } from [32m'stencil-library/components/and-card.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:17:57:
+[37m      17 │ ...neAndCarousel } from [32m'stencil-library/components/and-carousel.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-carousel-item.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:18:61:
+[37m      18 │ ...uselItem } from [32m'stencil-library/components/and-carousel-item.js'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-drawer.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:19:55:
+[37m      19 │ ...defineAndDrawer } from [32m'stencil-library/components/and-drawer.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-dropdown.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:20:57:
+[37m      20 │ ...neAndDropdown } from [32m'stencil-library/components/and-dropdown.js'[37m;
+         ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-icon.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:21:53:
+[37m      21 │ ... as defineAndIcon } from [32m'stencil-library/components/and-icon.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-input.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:22:54:
+[37m      22 │ ...s defineAndInput } from [32m'stencil-library/components/and-input.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-modal.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:23:54:
+[37m      23 │ ...s defineAndModal } from [32m'stencil-library/components/and-modal.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-navbar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:24:55:
+[37m      24 │ ...defineAndNavbar } from [32m'stencil-library/components/and-navbar.js'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-pagination.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:25:59:
+[37m      25 │ ...dPagination } from [32m'stencil-library/components/and-pagination.js'[37m;
+         ╵                       [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-sidebar.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:26:56:
+[37m      26 │ ...fineAndSidebar } from [32m'stencil-library/components/and-sidebar.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:27:53:
+[37m      27 │ ... as defineAndTabs } from [32m'stencil-library/components/and-tabs.js'[37m;
+         ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-content.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:28:60:
+[37m      28 │ ...bsContent } from [32m'stencil-library/components/and-tabs-content.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-list.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:29:57:
+[37m      29 │ ...eAndTabsList } from [32m'stencil-library/components/and-tabs-list.js'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tabs-trigger.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:30:60:
+[37m      30 │ ...bsTrigger } from [32m'stencil-library/components/and-tabs-trigger.js'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-toast.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:31:54:
+[37m      31 │ ...s defineAndToast } from [32m'stencil-library/components/and-toast.js'[37m;
+         ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'stencil-library/components/and-tooltip.js' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:32:56:
+[37m      32 │ ...fineAndTooltip } from [32m'stencil-library/components/and-tooltip.js'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAccordionElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:45:16:
+[37m      45 │   protected el: [32mHTMLAndAccordionElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:68:16:
+[37m      68 │   protected el: [32mHTMLAndAccordionContentElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:92:16:
+[37m      92 │   protected el: [32mHTMLAndAccordionItemElement[37m;
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndAccordionTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:115:16:
+[37m      115 │   protected el: [32mHTMLAndAccordionTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndAlertElement'. Did you mean 'HTMLDataElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:139:16:
+[37m      139 │   protected el: [32mHTMLAndAlertElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLDataElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13517:12:
+[37m      13517 │ declare var [32mHTMLDataElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndBadgeElement'. Did you mean 'HTMLBaseElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:166:16:
+[37m      166 │   protected el: [32mHTMLAndBadgeElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLBaseElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13220:12:
+[37m      13220 │ declare var [32mHTMLBaseElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndButtonElement'. Did you mean 'HTMLButtonElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:189:16:
+[37m      189 │   protected el: [32mHTMLAndButtonElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLButtonElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13371:12:
+[37m      13371 │ declare var [32mHTMLButtonElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'HTMLAndCardElement'. Did you mean 'HTMLAnchorElement'?[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:212:16:
+[37m      212 │   protected el: [32mHTMLAndCardElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+  'HTMLAnchorElement' is declared here.
+
+    ../../node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:13081:12:
+[37m      13081 │ declare var [32mHTMLAnchorElement[37m: {
+            ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:235:16:
+[37m      235 │   protected el: [32mHTMLAndCarouselElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndCarouselItemElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:257:16:
+[37m      257 │   protected el: [32mHTMLAndCarouselItemElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDrawerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:281:16:
+[37m      281 │   protected el: [32mHTMLAndDrawerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndDropdownElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:311:16:
+[37m      311 │   protected el: [32mHTMLAndDropdownElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndIconElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:338:16:
+[37m      338 │   protected el: [32mHTMLAndIconElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndInputElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:362:16:
+[37m      362 │   protected el: [32mHTMLAndInputElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndModalElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:390:16:
+[37m      390 │   protected el: [32mHTMLAndModalElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndNavbarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:418:16:
+[37m      418 │   protected el: [32mHTMLAndNavbarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndPaginationElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:448:16:
+[37m      448 │   protected el: [32mHTMLAndPaginationElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndSidebarElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:478:16:
+[37m      478 │   protected el: [32mHTMLAndSidebarElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:513:16:
+[37m      513 │   protected el: [32mHTMLAndTabsElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsContentElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:540:16:
+[37m      540 │   protected el: [32mHTMLAndTabsContentElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsListElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:563:16:
+[37m      563 │   protected el: [32mHTMLAndTabsListElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTabsTriggerElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:587:16:
+[37m      587 │   protected el: [32mHTMLAndTabsTriggerElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndToastElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:614:16:
+[37m      614 │   protected el: [32mHTMLAndToastElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HTMLAndTooltipElement'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/angular-components/src/lib/stencil-generated/components.ts:637:16:
+[37m      637 │   protected el: [32mHTMLAndTooltipElement[37m;
+          ╵                 [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'present' does not exist on type 'AndToast'.[0m [1m[35m[plugin angular-compiler][0m
+
+    projects/demo-app/src/app/pages/components/toast-demo.ts:141:30:
+[37m      141 │       await this.toastElement.[32mpresent[37m(
+          ╵                               [32m~~~~~~~[0m
+
+
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+Initial chunk files                  | Names                    |  Raw size
+styles.css                           | styles                   | 120.66 kB |
+chunk-IXPOMI3E.js                    | -                        |  65.36 kB |
+main.js                              | main                     |  20.98 kB |
+chunk-RA6QM5MM.js                    | -                        |  13.02 kB |
+chunk-Y5RQAIA6.js                    | -                        |   1.50 kB |
+polyfills.js                         | polyfills                |  95 bytes |
+
+                                     | Initial total            | 221.63 kB
+
+Lazy chunk files                     | Names                    |  Raw size
+attribute-demo.component-O7ZDTTXF.js | attribute-demo-component |  33.64 kB |
+chunk-ODDDPCMJ.js                    | -                        |  26.19 kB |
+drawer-headless-demo-NOVAD4YE.js     | drawer-headless-demo     |  25.60 kB |
+tooltip-headless-demo-VFMOIRNB.js    | tooltip-headless-demo    |  25.05 kB |
+overview-demo-P5N3X7HR.js            | overview-demo            |  24.34 kB |
+dropdown-headless-demo-WNF4NMYU.js   | dropdown-headless-demo   |  23.05 kB |
+tabs-headless-demo-2UPVGES3.js       | tabs-headless-demo       |  22.93 kB |
+icons-demo.component-B2THKO2A.js     | icons-demo-component     |  21.98 kB |
+modal-headless-demo-ZEGPHHK2.js      | modal-headless-demo      |  21.59 kB |
+toast-headless-demo-3BTLF2UI.js      | toast-headless-demo      |  20.41 kB |
+button-headless-demo-SYULFBBI.js     | button-headless-demo     |  19.96 kB |
+sidebar-headless-demo-AFDM2JW4.js    | sidebar-headless-demo    |  19.63 kB |
+alert-headless-demo-Q4FCM2YG.js      | alert-headless-demo      |  19.24 kB |
+custom-demo.component-4J3GKBT4.js    | custom-demo-component    |  18.58 kB |
+stagger-demo.component-HSQPKKJH.js   | stagger-demo-component   |  17.90 kB |
+...and 25 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [6.289 seconds] - 2026-02-20T16:07:39.638Z
+
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  ➜  Local:   http://localhost:4200/

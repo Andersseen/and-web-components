@@ -2,7 +2,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/utils';
 
-const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow p-t-gap', {
+const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow-md transition-shadow duration-normal p-t-gap', {
   variants: {
     variant: {
       default: '',
