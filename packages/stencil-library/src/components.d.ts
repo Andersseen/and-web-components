@@ -184,11 +184,11 @@ export namespace Components {
          */
         "color": string;
         /**
-          * The name of the icon to render
+          * The name of the icon to render. Must be previously registered via `registerIcons()`.
          */
         "name": IconName;
         /**
-          * The size of the icon (default: 24)
+          * The size of the icon in pixels (default: 24)
           * @default 24
          */
         "size": string | number;
@@ -833,11 +833,11 @@ declare namespace LocalJSX {
          */
         "color"?: string;
         /**
-          * The name of the icon to render
+          * The name of the icon to render. Must be previously registered via `registerIcons()`.
          */
         "name"?: IconName;
         /**
-          * The size of the icon (default: 24)
+          * The size of the icon in pixels (default: 24)
           * @default 24
          */
         "size"?: string | number;

@@ -1,5 +1,5 @@
-import { Component, Prop, h, Host } from '@stencil/core';
-import { getIcon, IconName } from '@andersseen/icon-library';
+import { Component, Prop, h, Host, Watch, State, Element } from '@stencil/core';
+import { getIcon, type IconName } from '@andersseen/icon-library';
 
 @Component({
   tag: 'and-icon',
@@ -7,13 +7,16 @@ import { getIcon, IconName } from '@andersseen/icon-library';
   shadow: true,
 })
 export class MyIcon {
+  @Element() el: HTMLElement;
+
   /**
-   * The name of the icon to render
+   * The name of the icon to render.
+   * Must be previously registered via `registerIcons()`.
    */
   @Prop() name: IconName;
 
   /**
-   * The size of the icon (default: 24)
+   * The size of the icon in pixels (default: 24)
    */
   @Prop() size: string | number = 24;
 
@@ -27,44 +30,48 @@ export class MyIcon {
    */
   @Prop() strokeWidth: string | number = 2;
 
-  private element?: SVGElement;
+  @State() private svgContent: string | undefined;
+
+  componentWillLoad() {
+    this.loadIcon();
+  }
+
+  @Watch('name')
+  nameChanged() {
+    this.loadIcon();
+  }
 
   componentDidRender() {
-    console.log(`[MyIcon] componentDidRender for "${this.name}"`);
-    if (this.element && this.name) {
-      const iconContent = getIcon(this.name);
-      if (iconContent) {
-        this.element.innerHTML = iconContent;
-      }
+    const svg = this.el.shadowRoot?.querySelector('svg');
+    if (svg && this.svgContent) {
+      svg.innerHTML = this.svgContent;
     }
   }
 
-  render() {
-    console.log(`[MyIcon] rendering "${this.name}"`);
-    const iconContent = getIcon(this.name);
+  private loadIcon() {
+    this.svgContent = this.name ? getIcon(this.name) : undefined;
+  }
 
-    if (!iconContent) {
-      console.warn(`[MyIcon] Icon "${this.name}" not found in registry.`);
-      return null;
+  render() {
+    if (!this.svgContent) {
+      return <Host aria-hidden="true"></Host>;
     }
 
-    const sizeInPx = typeof this.size === 'number' ? `${this.size}px` : this.size;
+    const size = typeof this.size === 'number' ? this.size : parseInt(this.size, 10) || 24;
 
     return (
-      <Host>
+      <Host aria-hidden="true">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={sizeInPx}
-          height={sizeInPx}
+          width={size}
+          height={size}
           viewBox="0 0 24 24"
           fill="none"
           stroke={this.color}
           stroke-width={this.strokeWidth}
           stroke-linecap="round"
           stroke-linejoin="round"
-        >
-          <g ref={el => (this.element = el as SVGElement)}></g>
-        </svg>
+        />
       </Host>
     );
   }

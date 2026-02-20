@@ -10,26 +10,47 @@ const getGlobalRegistry = (): Map<string, string> => {
 
 /**
  * Registers one or more icons to the global icon registry.
+ *
+ * @example
+ * ```ts
+ * import { registerIcons, CLOSE, CHEVRON_DOWN } from '@andersseen/icon-library';
+ *
+ * // Register only the icons you need (tree-shakeable)
+ * registerIcons({ close: CLOSE, 'chevron-down': CHEVRON_DOWN });
+ * ```
  */
 export const registerIcons = (icons: Record<string, string>): void => {
   const registry = getGlobalRegistry();
-  Object.entries(icons).forEach(([name, content]) => {
+  for (const [name, content] of Object.entries(icons)) {
     registry.set(name, content);
-  });
-  console.log(
-    `[IconLibrary] Registered ${Object.keys(icons).length} icons. Total: ${registry.size}`,
-  );
+  }
 };
 
 /**
- * Retrieves an icon from the registry by its name.
+ * Retrieves an icon SVG content from the registry by name.
+ * Returns `undefined` if the icon has not been registered.
  */
 export const getIcon = (name: string): string | undefined => {
-  const icon = getGlobalRegistry().get(name);
-  if (!icon) {
-    console.warn(
-      `[IconLibrary] Icon "${name}" requested but not found in registry.`,
-    );
-  }
-  return icon;
+  return getGlobalRegistry().get(name);
+};
+
+/**
+ * Check if an icon is registered.
+ */
+export const hasIcon = (name: string): boolean => {
+  return getGlobalRegistry().has(name);
+};
+
+/**
+ * Returns an array of all registered icon names.
+ */
+export const getRegisteredIconNames = (): string[] => {
+  return Array.from(getGlobalRegistry().keys());
+};
+
+/**
+ * Returns the total number of registered icons.
+ */
+export const getRegisteredIconCount = (): number => {
+  return getGlobalRegistry().size;
 };

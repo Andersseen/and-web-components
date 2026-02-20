@@ -15,6 +15,8 @@ export const ARROW_RIGHT =
 
 export const INFO =
   '<g><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></g>';
+export const ALERT_CIRCLE =
+  '<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></g>';
 export const ERROR =
   '<g><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></g>';
 export const SUCCESS =
@@ -125,9 +127,17 @@ export const SMARTPHONE =
 
 /**
  * A comprehensive map of all available icons.
- * Importing this will prevent tree-shaking. Use individual exports instead.
+ *
+ * **WARNING:** Importing `ALL_ICONS` bundles every icon and defeats tree-shaking.
+ * For production apps, import individual icon constants instead:
+ *
+ * ```ts
+ * import { CLOSE, CHEVRON_DOWN } from '@andersseen/icon-library';
+ * ```
+ *
+ * Use `registerAllIcons()` only in demo apps or when you truly need every icon.
  */
-export const ALL_ICONS = {
+export const ALL_ICONS: Record<string, string> = {
   close: CLOSE,
   "chevron-down": CHEVRON_DOWN,
   "chevron-left": CHEVRON_LEFT,
@@ -138,6 +148,7 @@ export const ALL_ICONS = {
   "arrow-left": ARROW_LEFT,
   "arrow-right": ARROW_RIGHT,
   info: INFO,
+  "alert-circle": ALERT_CIRCLE,
   error: ERROR,
   success: SUCCESS,
   warning: WARNING,
@@ -195,4 +206,24 @@ export const ALL_ICONS = {
   smartphone: SMARTPHONE,
 };
 
+/** All recognized icon names. Accepts any string for custom registered icons. */
 export type IconName = keyof typeof ALL_ICONS | (string & {});
+
+/**
+ * Icons required internally by `@andersseen/stencil-library` components.
+ * Register these at minimum for internal component rendering.
+ *
+ * ```ts
+ * import { registerIcons } from '@andersseen/icon-library';
+ * import { COMPONENT_ICONS } from '@andersseen/icon-library';
+ * registerIcons(COMPONENT_ICONS);
+ * ```
+ */
+export const COMPONENT_ICONS: Record<string, string> = {
+  close: CLOSE,
+  'chevron-down': CHEVRON_DOWN,
+  'chevron-up': CHEVRON_UP,
+  'chevron-left': CHEVRON_LEFT,
+  'chevron-right': CHEVRON_RIGHT,
+  menu: MENU,
+};
