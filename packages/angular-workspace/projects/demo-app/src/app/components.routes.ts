@@ -48,7 +48,7 @@ const componentsRoutes: Routes = [
   },
   // {
   //   path: 'navbar',
-  //   loadComponent: () => import('./pages/components/navbar-demo.component'),
+  //   loadComponent: () => import('./pages/components/navbar-demo'),
   // },
   {
     path: 'pagination',
@@ -56,7 +56,7 @@ const componentsRoutes: Routes = [
   },
   // {
   //   path: 'sidebar',
-  //   loadComponent: () => import('./pages/components/sidebar-demo.component'),
+  //   loadComponent: () => import('./pages/components/sidebar-demo'),
   // },
   {
     path: 'tabs',

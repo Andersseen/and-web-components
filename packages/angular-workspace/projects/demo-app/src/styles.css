@@ -66,32 +66,6 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* Component Demo Sections */
-.demo-section {
-  border-radius: 8px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.demo-section h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--foreground);
-}
-
-.demo-section p {
-  margin: 0 0 1.5rem 0;
-  color: var(--foreground);
-}
-
-.demo-examples {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
 /* Icons Grid */
 .icons-grid {
   display: grid;
@@ -106,33 +80,21 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  border: 1px solid var(--foreground);
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
   transition: all 0.2s;
   cursor: pointer;
+  background: var(--color-card);
 }
 
 .icon-item:hover {
-  border-color: var(--foreground);
-  background: var(--foreground);
+  border-color: var(--color-ring);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
 .icon-name {
-  font-size: 0.875rem;
-  color: var(--foreground);
+  font-size: 0.75rem;
+  color: var(--color-muted-foreground);
   text-align: center;
-}
-
-.section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--foreground);
-}
-
-.section-description {
-  font-size: 1.125rem;
-  color: var(--foreground);
-  margin-bottom: 2rem;
 }
