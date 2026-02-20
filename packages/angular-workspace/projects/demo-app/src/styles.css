@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "@fontsource/inter";
-@import "stencil-library/dist/stencil-library/stencil-library.css";
+@import "@andersseen/stencil-library/dist/stencil-library/stencil-library.css";
 @import "../../../../motion-core/dist/style.css";
 
 @theme {

@@ -20,7 +20,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cat src/css/base.css src/css/fade.css src/css/scale.css src/css/bounce.css src/css/rotate.css src/css/slide-in.css src/css/slide-out.css src/css/a11y.css > dist/style.css && cp -r src/css dist/css",
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cp src/core.css dist/style.css",
     "dev": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext .ts",
