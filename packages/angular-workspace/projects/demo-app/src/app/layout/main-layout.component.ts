@@ -199,11 +199,11 @@ export class MainLayoutComponent {
   ];
 
   colorOptions = [
-    { text: 'Neutral', value: 'zinc' },
-    { text: 'Rose', value: 'rose' },
-    { text: 'Sky', value: 'sky' },
-    { text: 'Emerald', value: 'emerald' },
-    { text: 'Amber', value: 'amber' },
+    { text: 'Indigo & Rose', value: 'indigo-rose' },
+    { text: 'Slate & Amber', value: 'slate-amber' },
+    { text: 'Emerald & Orange', value: 'emerald-orange' },
+    { text: 'Violet & Cyan', value: 'violet-cyan' },
+    { text: 'Rose & Teal', value: 'rose-teal' },
   ];
 
   activeComponent = signal<string>('accordion');
@@ -242,7 +242,7 @@ export class MainLayoutComponent {
       });
 
     // Initialize theme if needed
-    document.documentElement.setAttribute('data-color', 'zinc');
+    document.documentElement.setAttribute('data-color', 'indigo-rose');
   }
 
   onNavItemClick(event: any) {
