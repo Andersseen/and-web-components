@@ -1,0 +1,107 @@
+:root {
+  --and-motion-default-duration: 250ms;
+  --and-motion-default-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-and-motion] {
+  animation-duration: var(--and-motion-duration, var(--and-motion-default-duration));
+  animation-timing-function: var(--and-motion-easing, var(--and-motion-default-easing));
+  animation-delay: var(--and-motion-delay, 0s);
+  animation-fill-mode: both;
+}
+
+/* --- Entrance Animations --- */
+
+[data-and-motion="fade-in"][data-and-motion-state="active"] {
+  animation-name: and-fade-in;
+}
+
+[data-and-motion="fade-out"][data-and-motion-state="active"] {
+  animation-name: and-fade-out;
+}
+
+[data-and-motion="slide-up"][data-and-motion-state="active"] {
+  animation-name: and-slide-up;
+}
+
+[data-and-motion="zoom-in"][data-and-motion-state="active"] {
+  animation-name: and-zoom-in;
+}
+
+[data-and-motion="zoom-out"][data-and-motion-state="active"] {
+  animation-name: and-zoom-out;
+}
+
+[data-and-motion="slide-in-left"][data-and-motion-state="active"] {
+  animation-name: and-slide-in-left;
+}
+
+[data-and-motion="slide-in-right"][data-and-motion-state="active"] {
+  animation-name: and-slide-in-right;
+}
+
+/* --- Interaction Animations --- */
+
+[data-and-motion="bounce"][data-and-motion-state="active"] {
+  animation-name: and-bounce;
+}
+
+[data-and-motion="scale-up"][data-and-motion-state="active"] {
+  animation-name: and-scale-up;
+}
+
+[data-and-motion="scale-down"][data-and-motion-state="active"] {
+  animation-name: and-scale-down;
+}
+
+/* --- Keyframes --- */
+
+@keyframes and-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes and-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes and-slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes and-zoom-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes and-zoom-out {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(0.95); opacity: 0; }
+}
+
+@keyframes and-slide-in-left {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes and-slide-in-right {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes and-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes and-scale-up {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+@keyframes and-scale-down {
+  from { transform: scale(1); }
+  to { transform: scale(0.95); }
+}
