@@ -5,7 +5,7 @@
     "build:headless": "pnpm -C packages/headless-core build",
     "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
-    "build:layout": "pnpm -C packages/and-layout build",
+    "build:layout": "pnpm -C packages/layout-core build",
     "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/stencil-library build",
     "build:angular": "pnpm -C packages/angular-workspace ng build angular-components && pnpm -C packages/angular-workspace ng build demo-app",
     "build:all": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular",
