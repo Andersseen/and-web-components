@@ -10,9 +10,9 @@
   "unpkg": "dist/stencil-library/stencil-library.esm.js",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/stencil-library/stencil-library.esm.js",
-      "require": "./dist/stencil-library/stencil-library.cjs.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/stencil-library/stencil-library.cjs.js"
     },
     "./components": {
       "types": "./dist/types/components.d.ts",
@@ -21,9 +21,9 @@
     "./components/*.js": "./dist/components/*.js",
     "./components/*": "./dist/components/*.js",
     "./loader": {
+      "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
-      "require": "./loader/index.cjs",
-      "types": "./loader/index.d.ts"
+      "require": "./loader/index.cjs"
     },
     "./dist/stencil-library/stencil-library.css": "./dist/stencil-library/stencil-library.css"
   },
