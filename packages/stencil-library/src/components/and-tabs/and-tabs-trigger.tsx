@@ -48,7 +48,8 @@ export class MyTabsTrigger {
         onKeyDown={this.handleKeyDown}
         tabIndex={this.selected ? 0 : -1}
         class={cn(
-          'flex flex-1 items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium transition-all cursor-pointer ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          'flex flex-1 items-center justify-center rounded-sm text-sm font-medium transition-all cursor-pointer ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          'px-4 py-3 sm:px-3 sm:py-1.5', // Mobile first sizing
           this.selected ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
           this.disabled && 'opacity-50 pointer-events-none',
         )}
