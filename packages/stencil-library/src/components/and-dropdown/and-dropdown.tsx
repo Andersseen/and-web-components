@@ -8,11 +8,11 @@ const dropdownTriggerVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground ring-slate-300 hover:bg-slate-50',
-        primary: 'bg-primary text-foreground ring-primary hover:bg-primary/80',
+        default: 'bg-background text-foreground ring-border hover:bg-accent',
+        primary: 'bg-primary text-primary-foreground ring-primary hover:bg-primary/80',
         secondary: 'bg-secondary text-secondary-foreground ring-secondary hover:bg-secondary/80',
-        ghost: 'bg-transparent text-foreground ring-transparent hover:bg-slate-100',
-        outline: 'border border-slate-300 bg-foreground hover:bg-slate-50',
+        ghost: 'bg-transparent text-foreground ring-transparent hover:bg-accent',
+        outline: 'border border-border bg-background text-foreground hover:bg-accent',
       },
     },
     defaultVariants: {

@@ -111,7 +111,7 @@ import { ALL_ICONS } from '@andersseen/icon-library';
           <div class="p-8 flex items-center justify-center gap-6">
             <and-icon name="heart" size="28" class="text-destructive"></and-icon>
             <and-icon name="check" size="28" class="text-primary"></and-icon>
-            <and-icon name="star" size="28" class="text-yellow-500"></and-icon>
+            <and-icon name="star" size="28" class="text-warning"></and-icon>
             <and-icon
               name="info"
               size="28"
@@ -173,7 +173,7 @@ registerIcons(COMPONENT_ICONS);</code></pre>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
           ><code>&lt;and-icon name="home" size="24"&gt;&lt;/and-icon&gt;
-&lt;and-icon name="star" size="20" class="text-yellow-500"&gt;&lt;/and-icon&gt;
+&lt;and-icon name="star" size="20" class="text-warning"&gt;&lt;/and-icon&gt;
 &lt;and-icon name="close" size="16"&gt;&lt;/and-icon&gt;</code></pre>
         </div>
       </section>

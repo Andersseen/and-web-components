@@ -38,7 +38,7 @@ import {
                 Default
               </button>
               <button
-                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-green-600 text-primary-foreground border-0"
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-success text-primary-foreground border-0"
                 (click)="show('success')"
               >
                 ✓ Success
@@ -50,7 +50,7 @@ import {
                 ✕ Error
               </button>
               <button
-                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-amber-500 text-primary-foreground border-0"
+                class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer bg-warning text-primary-foreground border-0"
                 (click)="show('warning')"
               >
                 ⚠ Warning
@@ -102,10 +102,10 @@ import {
           Usage
         </h2>
         <div
-          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
         >
           <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createToastManager {{ '}' }} from '@andersseen/headless-core';
 
 const toasts = createToastManager({{ '{' }}
@@ -187,13 +187,13 @@ export default class ToastHeadlessDemo implements OnDestroy {
   getToastClasses(type: ToastType) {
     switch (type) {
       case 'success':
-        return 'bg-green-50 text-green-900 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800';
+        return 'bg-success/10 text-success border-success/30 dark:bg-success/20 dark:text-success-foreground dark:border-success/40';
       case 'error':
-        return 'bg-red-50 text-red-900 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800';
+        return 'bg-destructive/10 text-destructive border-destructive/30 dark:bg-destructive/20 dark:text-destructive-foreground dark:border-destructive/40';
       case 'warning':
-        return 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800';
+        return 'bg-warning/10 text-warning border-warning/30 dark:bg-warning/20 dark:text-warning-foreground dark:border-warning/40';
       case 'info':
-        return 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800';
+        return 'bg-info/10 text-info border-info/30 dark:bg-info/20 dark:text-info-foreground dark:border-info/40';
       default:
         return 'bg-card text-foreground border-border';
     }

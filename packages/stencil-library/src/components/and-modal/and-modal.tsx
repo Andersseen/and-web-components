@@ -49,7 +49,7 @@ export class MyModal {
     return (
       <Host>
         {/* Backdrop */}
-        <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200" {...overlayProps} onClick={() => this.modalLogic.handleOverlayClick()} />
+        <div class="fixed inset-0 z-50 bg-foreground/80 backdrop-blur-sm animate-in fade-in duration-200" {...overlayProps} onClick={() => this.modalLogic.handleOverlayClick()} />
 
         {/* Modal Container */}
         <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">

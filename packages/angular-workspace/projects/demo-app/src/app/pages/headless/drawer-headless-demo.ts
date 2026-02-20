@@ -55,7 +55,7 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
 
         @if (isOpen()) {
           <div
-            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in"
+            class="fixed inset-0 z-50 bg-foreground/60 backdrop-blur-sm animate-fade-in"
             (click)="onOverlayClick()"
           ></div>
           <div
@@ -124,10 +124,10 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
           Usage
         </h2>
         <div
-          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
         >
           <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createDrawer {{ '}' }} from '@andersseen/headless-core';
 
 const drawer = createDrawer({{ '{' }}
@@ -164,7 +164,7 @@ drawer.actions.setPlacement('right');</code></pre>
           @if (isRawOpen()) {
             <div
               (click)="closeRaw()"
-              style="position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:100;"
+              style="position:fixed;inset:0;background:hsl(var(--foreground) / 0.3);z-index:100;"
             ></div>
             <div
               style="position:fixed;top:0;left:0;bottom:0;width:280px;background:white;border-right:1px solid #999;z-index:101;padding:16px;"

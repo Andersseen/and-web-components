@@ -40,7 +40,7 @@ import { createModal } from '@andersseen/headless-core';
         <!-- Modal Overlay + Content -->
         @if (isOpen()) {
           <div
-            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in"
+            class="fixed inset-0 z-50 bg-foreground/60 backdrop-blur-sm animate-fade-in"
             (click)="onOverlayClick()"
             [attr.data-state]="isOpen() ? 'open' : 'closed'"
           ></div>
@@ -95,10 +95,10 @@ import { createModal } from '@andersseen/headless-core';
           Usage
         </h2>
         <div
-          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
         >
           <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createModal {{ '}' }} from '@andersseen/headless-core';
 
 const modal = createModal({{ '{' }}
@@ -147,7 +147,7 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
           @if (isRawOpen()) {
             <div
               (click)="closeRaw()"
-              style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;"
+              style="position:fixed;inset:0;background:hsl(var(--foreground) / 0.4);z-index:100;"
             ></div>
             <div
               style="position:fixed;inset:0;z-index:101;display:flex;align-items:center;justify-content:center;pointer-events:none;"

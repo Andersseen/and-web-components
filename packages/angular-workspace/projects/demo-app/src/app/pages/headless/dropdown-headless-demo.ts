@@ -110,10 +110,10 @@ import { createDropdown } from '@andersseen/headless-core';
           Usage
         </h2>
         <div
-          class="rounded-xl bg-[#0a0a0a] border border-zinc-800 overflow-x-auto shadow-sm"
+          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
         >
           <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-zinc-200"
+            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createDropdown {{ '}' }} from '@andersseen/headless-core';
 
 const dropdown = createDropdown({{ '{' }}

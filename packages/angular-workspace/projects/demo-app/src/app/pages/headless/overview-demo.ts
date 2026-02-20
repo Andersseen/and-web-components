@@ -187,7 +187,7 @@ import { CommonModule } from '@angular/common';
             </div>
           </div>
 
-          <div class="rounded-lg bg-[#0a0a0a] p-4 overflow-x-auto shadow-sm">
+          <div class="rounded-lg bg-primary-950 p-4 overflow-x-auto shadow-sm">
             <pre
               class="m-0 font-mono text-xs leading-relaxed text-blue-200"
             ><code><span class="text-purple-400">const</span> btn = <span class="text-blue-300">createButton</span>();
