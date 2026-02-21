@@ -225,7 +225,7 @@ export namespace Components {
         "activeItem": string;
         /**
           * Navigation items to display
-          * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },     { id: 'icons', label: 'Icons' },   ]
+          * @default []
          */
         "items": NavItem[];
         /**
@@ -876,7 +876,7 @@ declare namespace LocalJSX {
         "activeItem"?: string;
         /**
           * Navigation items to display
-          * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },     { id: 'icons', label: 'Icons' },   ]
+          * @default []
          */
         "items"?: NavItem[];
         /**

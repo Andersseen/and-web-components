@@ -1,0 +1,95 @@
+---
+import SectionHeader from '../components/SectionHeader.astro';
+import PackageCard from '../components/PackageCard.astro';
+
+const packages = [
+  {
+    icon: 'box',
+    name: '@andersseen/stencil-library',
+    subtitle: 'Web Components',
+    description: '24+ production-ready web components: buttons, modals, drawers, dropdowns, carousels, tabs, toast, tooltips, and more.',
+    tags: ['StencilJS', 'Tailwind CSS', 'A11y'],
+    delay: '0ms',
+  },
+  {
+    icon: 'layout',
+    name: '@andersseen/layout-core',
+    subtitle: 'CSS Layouts',
+    description: 'Attribute-driven layout system with responsive grid, flex, spacing, and typography. Zero JS — pure CSS.',
+    tags: ['SCSS', 'Responsive', 'Attribute API'],
+    delay: '100ms',
+  },
+  {
+    icon: 'activity',
+    name: '@andersseen/motion-core',
+    subtitle: 'Animations',
+    description: 'Declarative CSS animations triggered by IntersectionObserver. 10 animation types with configurable duration, delay, and easing.',
+    tags: ['CSS Keyframes', 'IntersectionObserver', '~1KB'],
+    delay: '200ms',
+  },
+  {
+    icon: 'star',
+    name: '@andersseen/icon-library',
+    subtitle: 'SVG Icons',
+    description: '70+ hand-crafted SVG icons, tree-shakeable ESM exports, global registry for on-demand loading.',
+    tags: ['Tree-shakeable', 'SVG', 'Registry'],
+    delay: '300ms',
+  },
+];
+---
+
+<section id="ecosystem" class="bg-muted/30 border-y">
+  <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+    <SectionHeader
+      badge="Ecosystem"
+      title="Modular By Design"
+      description="Pick only what you need. Each package is independent with zero cross-dependencies."
+    />
+
+    <!-- Package Cards -->
+    <div and-layout="grid cols:1 cols@md:2 gap:lg">
+      {packages.map((pkg) => (
+        <PackageCard
+          icon={pkg.icon}
+          name={pkg.name}
+          subtitle={pkg.subtitle}
+          description={pkg.description}
+          tags={pkg.tags}
+          delay={pkg.delay}
+        />
+      ))}
+    </div>
+
+    <!-- CTA Final -->
+    <div
+      and-layout="vertical align:center gap:lg p:xxl"
+      class="rounded-2xl bg-primary/5 border border-primary/10"
+      data-and-motion="zoom-in"
+      data-and-motion-trigger="enter"
+      data-and-motion-duration="800ms"
+    >
+      <div class="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+        <and-icon name="zap" size="32"></and-icon>
+      </div>
+      <h3 and-text="h3 align:center weight:bold" class="tracking-tight">
+        Ready to Build?
+      </h3>
+      <p and-text="p align:center" class="text-muted-foreground max-w-[500px]">
+        Start using the full Andersseen ecosystem in your project — works with any framework, zero lock-in.
+      </p>
+      <div and-layout="horizontal gap:md align:center wrap:wrap justify:center">
+        <and-button size="lg">
+          <and-icon name="download" size="18"></and-icon>
+          Install Now
+        </and-button>
+        <and-button variant="outline" size="lg">
+          <and-icon name="github" size="18"></and-icon>
+          View on GitHub
+        </and-button>
+      </div>
+      <code class="text-sm bg-muted/80 px-4 py-2 rounded-lg border">npm install @andersseen/stencil-library @andersseen/layout-core @andersseen/motion-core @andersseen/icon-library</code>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+const navLinks = [
+  { href: '#hero', label: 'Home' },
+  { href: '#features', label: 'Features' },
+  { href: '#showcase', label: 'Showcase' },
+  { href: '#ecosystem', label: 'Ecosystem' },
+];
+---
+
+<and-navbar   class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div slot="brand" class="font-bold text-xl flex items-center gap-2">
+    <and-icon name="layers" size="24"></and-icon>
+    <span>Andersseen</span>
+  </div>
+  <nav slot="actions" class="hidden md:flex items-center gap-6">
+    {navLinks.map(({ href, label }) => (
+      <a href={href} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+        {label}
+      </a>
+    ))}
+    <and-button size="sm" variant="outline">
+      <and-icon name="github" size="16"></and-icon>
+      GitHub
+    </and-button>
+  </nav>
+</and-navbar>

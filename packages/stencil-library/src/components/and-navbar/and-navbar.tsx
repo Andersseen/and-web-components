@@ -54,12 +54,7 @@ export class MyNavbar {
   /**
    * Navigation items to display
    */
-  @Prop() items: NavItem[] = [
-    { id: 'home', label: 'Home' },
-    { id: 'docs', label: 'Docs' },
-    { id: 'components', label: 'Components' },
-    { id: 'icons', label: 'Icons' },
-  ];
+  @Prop() items: NavItem[] = [];
 
   /**
    * Variant of the navbar

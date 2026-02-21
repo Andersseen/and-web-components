@@ -1,0 +1,28 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  motion?: 'slide-in-left' | 'slide-in-right' | 'zoom-in';
+  motionDuration?: string;
+}
+
+const {
+  icon,
+  title,
+  description,
+  motion = 'slide-in-left',
+  motionDuration = '700ms',
+} = Astro.props;
+---
+
+<and-card data-and-motion={motion} data-and-motion-trigger="enter" data-and-motion-duration={motionDuration}>
+  <div and-layout="vertical gap:md p:lg">
+    <div and-layout="horizontal align:center gap:xs">
+      <and-icon name={icon} size="18" class="text-primary"></and-icon>
+      <h3 and-text="h5 weight:bold">{title}</h3>
+    </div>
+    <p and-text="p-sm" class="text-muted-foreground">{description}</p>
+    <slot />
+  </div>
+</and-card>
