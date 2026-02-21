@@ -7,13 +7,14 @@ const { title } = Astro.props;
 import "../styles/global.css";
 import "@andersseen/stencil-library/dist/stencil-library/stencil-library.css";
 import "@andersseen/motion-core/style.css";
+import "@andersseen/layout-core/dist/layout-core.css";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro Landing Page" />
+    <meta name="description" content="Andersseen — A powerful, framework-agnostic web component ecosystem" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -29,7 +30,6 @@ import "@andersseen/motion-core/style.css";
       defineCustomElements(window);
       registerAllIcons();
 
-      // Initialize motion library on load
       document.addEventListener('DOMContentLoaded', () => {
         initMotion();
       });

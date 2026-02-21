@@ -82,6 +82,17 @@
   to { height: 0; }
 }
 
+/* Smooth scroll offset for sticky navbar */
+html {
+  scroll-padding-top: 4rem;
+}
+
+/* Selection color */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;

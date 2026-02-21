@@ -147,6 +147,9 @@ importers:
       '@andersseen/icon-library':
         specifier: workspace:*
         version: link:../../packages/icon-library
+      '@andersseen/layout-core':
+        specifier: workspace:*
+        version: link:../../packages/layout-core
       '@andersseen/motion-core':
         specifier: workspace:*
         version: link:../../packages/motion-core

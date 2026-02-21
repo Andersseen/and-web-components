@@ -2,119 +2,768 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Welcome to Andersseen">
+<Layout title="Andersseen — Web Component Ecosystem">
   <main class="w-full">
-    <!-- Navbar -->
+
+    <!-- ═══════════════════════════════════════════════════════
+         NAVBAR — Sticky with scroll-to-section links
+    ════════════════════════════════════════════════════════ -->
     <and-navbar class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div slot="brand" class="font-bold text-xl flex items-center gap-2">
-        <and-icon name="layers" class="h-6 w-6"></and-icon>
-        Andersseen
+        <and-icon name="layers" size="24"></and-icon>
+        <span>Andersseen</span>
       </div>
-      <div slot="actions" class="flex gap-4">
-        <and-button variant="ghost" size="sm">Log in</and-button>
-        <and-button size="sm">Sign up</and-button>
-      </div>
+      <nav slot="actions" class="hidden md:flex items-center gap-6">
+        <a href="#hero" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Home</a>
+        <a href="#features" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</a>
+        <a href="#showcase" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Showcase</a>
+        <a href="#ecosystem" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Ecosystem</a>
+        <and-button size="sm" variant="outline">
+          <and-icon name="github" size="16"></and-icon>
+          GitHub
+        </and-button>
+      </nav>
     </and-navbar>
 
-    <!-- Hero Section -->
-    <section class="container flex flex-col items-center justify-center gap-6 py-24 md:py-32 text-center">
-      <h1
-        class="text-4xl font-extrabold tracking-tight lg:text-5xl"
-        data-and-motion="slide-up"
-        data-and-motion-trigger="enter"
-        data-and-motion-duration="800ms"
-      >
-        Building the Future with <span class="text-primary">Web Components</span>
-      </h1>
-      <p
-        class="text-xl text-muted-foreground max-w-[700px]"
-        data-and-motion="fade-in"
-        data-and-motion-trigger="enter"
-        data-and-motion-delay="200ms"
-      >
-        A powerful, framework-agnostic component library designed for modern web applications.
-      </p>
-      <div
-        class="flex gap-4"
-        data-and-motion="zoom-in"
-        data-and-motion-trigger="enter"
-        data-and-motion-delay="400ms"
-      >
-        <and-button size="lg">Get Started</and-button>
-        <and-button variant="outline" size="lg">Documentation</and-button>
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 1 — HERO
+    ════════════════════════════════════════════════════════ -->
+    <section id="hero" class="relative overflow-hidden">
+      <!-- Gradient background decoration -->
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-3xl"></div>
       </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="container py-24">
-      <h2
-        class="text-3xl font-bold tracking-tight text-center mb-12"
-        data-and-motion="fade-in"
-      >
-        Features
-      </h2>
-      <div class="grid gap-8 md:grid-cols-3">
-        <!-- Feature 1 -->
-        <and-card
-          class="h-full"
+      <div and-layout="vertical align:center gap:xl p-x:lg p-y:xxxl" class="max-w-[1200px] mx-auto min-h-[85vh] justify-center">
+        <!-- Badge -->
+        <div
+          data-and-motion="fade-in"
+          data-and-motion-trigger="enter"
+          data-and-motion-duration="600ms"
+        >
+          <and-badge variant="secondary" class="text-sm">
+            <and-icon name="zap" size="14"></and-icon>
+            Framework Agnostic · Built with Stencil
+          </and-badge>
+        </div>
+
+        <!-- Heading -->
+        <h1
+          and-text="h1 align:center weight:extrabold"
+          class="max-w-[900px] tracking-tight"
           data-and-motion="slide-up"
           data-and-motion-trigger="enter"
+          data-and-motion-duration="800ms"
           data-and-motion-delay="100ms"
         >
-          <div class="p-6">
-             <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-               <and-icon name="zap" class="h-6 w-6"></and-icon>
-             </div>
-             <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
-             <p class="text-muted-foreground">Built on top of StencilJS for optimal performance and small bundle sizes.</p>
-          </div>
-        </and-card>
+          Build Modern UIs with<br/>
+          <span class="text-primary">Web Components</span>
+        </h1>
 
-        <!-- Feature 2 -->
-        <and-card
-          class="h-full"
-          data-and-motion="slide-up"
-          data-and-motion-trigger="enter"
-          data-and-motion-delay="200ms"
-        >
-          <div class="p-6">
-             <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-               <and-icon name="layers" class="h-6 w-6"></and-icon>
-             </div>
-             <h3 class="text-xl font-bold mb-2">Themable</h3>
-             <p class="text-muted-foreground">Easily customizable with CSS variables and Tailwind CSS integration.</p>
-          </div>
-        </and-card>
-
-        <!-- Feature 3 -->
-        <and-card
-          class="h-full"
-          data-and-motion="slide-up"
+        <!-- Subtitle -->
+        <p
+          and-text="p align:center"
+          class="text-muted-foreground max-w-[600px] text-lg"
+          data-and-motion="fade-in"
           data-and-motion-trigger="enter"
           data-and-motion-delay="300ms"
         >
-          <div class="p-6">
-             <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-               <and-icon name="box" class="h-6 w-6"></and-icon>
-             </div>
-             <h3 class="text-xl font-bold mb-2">Composable</h3>
-             <p class="text-muted-foreground">Build complex interfaces by combining atomic components.</p>
+          A complete ecosystem of design tokens, layout primitives, animations, icons,
+          and 24+ accessible web components — ready for any framework.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div
+          and-layout="horizontal align:center gap:md"
+          data-and-motion="zoom-in"
+          data-and-motion-trigger="enter"
+          data-and-motion-delay="500ms"
+        >
+          <and-button size="lg">
+            <and-icon name="play" size="18"></and-icon>
+            Get Started
+          </and-button>
+          <and-button variant="outline" size="lg">
+            <and-icon name="book-open" size="18"></and-icon>
+            Documentation
+          </and-button>
+        </div>
+
+        <!-- Tech Stats -->
+        <div
+          and-layout="horizontal gap:xxl align:center justify:center wrap:wrap"
+          class="mt-8"
+          data-and-motion="slide-up"
+          data-and-motion-trigger="enter"
+          data-and-motion-delay="700ms"
+        >
+          <div and-layout="vertical align:center gap:xxs">
+            <span class="text-3xl font-bold text-primary">24+</span>
+            <span and-text="p-sm" class="text-muted-foreground">Components</span>
           </div>
-        </and-card>
+          <div class="w-px h-10 bg-border"></div>
+          <div and-layout="vertical align:center gap:xxs">
+            <span class="text-3xl font-bold text-primary">70+</span>
+            <span and-text="p-sm" class="text-muted-foreground">Icons</span>
+          </div>
+          <div class="w-px h-10 bg-border"></div>
+          <div and-layout="vertical align:center gap:xxs">
+            <span class="text-3xl font-bold text-primary">10</span>
+            <span and-text="p-sm" class="text-muted-foreground">Animations</span>
+          </div>
+          <div class="w-px h-10 bg-border"></div>
+          <div and-layout="vertical align:center gap:xxs">
+            <span class="text-3xl font-bold text-primary">0</span>
+            <span and-text="p-sm" class="text-muted-foreground">Dependencies</span>
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="mt-12 animate-bounce" data-and-motion="fade-in" data-and-motion-trigger="enter" data-and-motion-delay="1000ms">
+          <a href="#features" class="text-muted-foreground hover:text-foreground transition-colors">
+            <and-icon name="chevron-down" size="28"></and-icon>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t py-12 bg-muted/50">
-      <div class="container flex flex-col items-center justify-between gap-4 md:flex-row">
-        <p class="text-center text-sm leading-loose text-muted-foreground md:text-left">
-          &copy; 2024 Andersseen. All rights reserved.
-        </p>
-        <div class="flex gap-4">
-          <a href="#" class="text-sm font-medium underline underline-offset-4 hover:text-primary">Privacy Policy</a>
-          <a href="#" class="text-sm font-medium underline underline-offset-4 hover:text-primary">Terms of Service</a>
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 2 — FEATURES
+    ════════════════════════════════════════════════════════ -->
+    <section id="features" class="bg-muted/30 border-y">
+      <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+        <!-- Section Header -->
+        <div and-layout="vertical align:center gap:sm" data-and-motion="fade-in" data-and-motion-trigger="enter">
+          <and-badge variant="outline">Features</and-badge>
+          <h2 and-text="h2 align:center weight:bold" class="tracking-tight">
+            Everything You Need
+          </h2>
+          <p and-text="p align:center" class="text-muted-foreground max-w-[600px]">
+            From layout primitives to complex interactive components — our ecosystem covers the full spectrum of modern UI development.
+          </p>
+        </div>
+
+        <!-- Features Grid - using and-layout grid -->
+        <div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">
+
+          <!-- Feature Card 1 -->
+          <and-card
+            class="h-full"
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="0ms"
+          >
+            <div and-layout="vertical gap:sm p:lg">
+              <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <and-icon name="box" size="24"></and-icon>
+              </div>
+              <h3 and-text="h5 weight:bold">Web Components</h3>
+              <p and-text="p-sm" class="text-muted-foreground">
+                24+ accessible components built with StencilJS. Works in React, Angular, Vue, Svelte, or vanilla HTML.
+              </p>
+            </div>
+          </and-card>
+
+          <!-- Feature Card 2 -->
+          <and-card
+            class="h-full"
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="100ms"
+          >
+            <div and-layout="vertical gap:sm p:lg">
+              <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <and-icon name="layout" size="24"></and-icon>
+              </div>
+              <h3 and-text="h5 weight:bold">Layout System</h3>
+              <p and-text="p-sm" class="text-muted-foreground">
+                Attribute-driven CSS layouts with responsive grid, flex, spacing, and typography — no classes needed.
+              </p>
+            </div>
+          </and-card>
+
+          <!-- Feature Card 3 -->
+          <and-card
+            class="h-full"
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="200ms"
+          >
+            <div and-layout="vertical gap:sm p:lg">
+              <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <and-icon name="activity" size="24"></and-icon>
+              </div>
+              <h3 and-text="h5 weight:bold">Motion Library</h3>
+              <p and-text="p-sm" class="text-muted-foreground">
+                Declarative animations via HTML attributes: fade, slide, zoom, bounce, scale — triggered on enter, hover, or tap.
+              </p>
+            </div>
+          </and-card>
+
+          <!-- Feature Card 4 -->
+          <and-card
+            class="h-full"
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="300ms"
+          >
+            <div and-layout="vertical gap:sm p:lg">
+              <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <and-icon name="star" size="24"></and-icon>
+              </div>
+              <h3 and-text="h5 weight:bold">Icon Library</h3>
+              <p and-text="p-sm" class="text-muted-foreground">
+                70+ SVG icons, tree-shakeable, with a global registry. Use individually or register all at once.
+              </p>
+            </div>
+          </and-card>
+
+          <!-- Feature Card 5 -->
+          <and-card
+            class="h-full"
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="400ms"
+          >
+            <div and-layout="vertical gap:sm p:lg">
+              <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <and-icon name="sliders" size="24"></and-icon>
+              </div>
+              <h3 and-text="h5 weight:bold">Headless Core</h3>
+              <p and-text="p-sm" class="text-muted-foreground">
+                Framework-agnostic state machines for accordion, dropdown, modal, tabs, toast, and more.
+              </p>
+            </div>
+          </and-card>
+
+          <!-- Feature Card 6 -->
+          <and-card
+            class="h-full"
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="500ms"
+          >
+            <div and-layout="vertical gap:sm p:lg">
+              <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <and-icon name="monitor" size="24"></and-icon>
+              </div>
+              <h3 and-text="h5 weight:bold">Responsive First</h3>
+              <p and-text="p-sm" class="text-muted-foreground">
+                Every layout attribute supports responsive breakpoints: <code class="text-xs bg-muted px-1 py-0.5 rounded">cols@md:3</code>, <code class="text-xs bg-muted px-1 py-0.5 rounded">gap@lg:xl</code>
+              </p>
+            </div>
+          </and-card>
+
         </div>
       </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 3 — SHOWCASE (Live Component Demos)
+    ════════════════════════════════════════════════════════ -->
+    <section id="showcase">
+      <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+        <!-- Section Header -->
+        <div and-layout="vertical align:center gap:sm" data-and-motion="fade-in" data-and-motion-trigger="enter">
+          <and-badge variant="outline">Showcase</and-badge>
+          <h2 and-text="h2 align:center weight:bold" class="tracking-tight">
+            See It In Action
+          </h2>
+          <p and-text="p align:center" class="text-muted-foreground max-w-[600px]">
+            Real components, real interactivity. Everything below is powered by our libraries.
+          </p>
+        </div>
+
+        <!-- Showcase Row 1: Buttons & Alerts -->
+        <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+
+          <!-- Buttons Showcase -->
+          <and-card data-and-motion="slide-in-left" data-and-motion-trigger="enter" data-and-motion-duration="700ms">
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center gap:xs">
+                <and-icon name="mouse-pointer" size="18" class="text-primary"></and-icon>
+                <h3 and-text="h5 weight:bold">Buttons</h3>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">Multiple variants and sizes with loading states.</p>
+              <div and-layout="horizontal gap:sm wrap:wrap align:center">
+                <and-button variant="default" size="sm">Default</and-button>
+                <and-button variant="secondary" size="sm">Secondary</and-button>
+                <and-button variant="outline" size="sm">Outline</and-button>
+                <and-button variant="ghost" size="sm">Ghost</and-button>
+                <and-button variant="destructive" size="sm">Destructive</and-button>
+                <and-button variant="default" size="sm" loading>Loading</and-button>
+              </div>
+            </div>
+          </and-card>
+
+          <!-- Alerts Showcase -->
+          <and-card data-and-motion="slide-in-right" data-and-motion-trigger="enter" data-and-motion-duration="700ms">
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center gap:xs">
+                <and-icon name="bell" size="18" class="text-primary"></and-icon>
+                <h3 and-text="h5 weight:bold">Alerts</h3>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">Contextual feedback messages for user actions.</p>
+              <div and-layout="vertical gap:sm">
+                <and-alert variant="default">This is a default informational alert.</and-alert>
+                <and-alert variant="destructive">Something went wrong. Please try again.</and-alert>
+              </div>
+            </div>
+          </and-card>
+        </div>
+
+        <!-- Showcase Row 2: Accordion & Tabs -->
+        <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+
+          <!-- Accordion Showcase -->
+          <and-card data-and-motion="slide-in-left" data-and-motion-trigger="enter" data-and-motion-duration="700ms">
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center gap:xs">
+                <and-icon name="list" size="18" class="text-primary"></and-icon>
+                <h3 and-text="h5 weight:bold">Accordion</h3>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">Collapsible content sections with smooth animations.</p>
+              <and-accordion>
+                <and-accordion-item value="item-1">
+                  <and-accordion-trigger>Is it accessible?</and-accordion-trigger>
+                  <and-accordion-content>
+                    Yes. All components follow WAI-ARIA patterns and support keyboard navigation.
+                  </and-accordion-content>
+                </and-accordion-item>
+                <and-accordion-item value="item-2">
+                  <and-accordion-trigger>Is it framework agnostic?</and-accordion-trigger>
+                  <and-accordion-content>
+                    Absolutely. Built with Stencil, our components work as native custom elements in any framework.
+                  </and-accordion-content>
+                </and-accordion-item>
+                <and-accordion-item value="item-3">
+                  <and-accordion-trigger>Can I customize it?</and-accordion-trigger>
+                  <and-accordion-content>
+                    Yes. All components use CSS custom properties and are fully styleable with Tailwind CSS.
+                  </and-accordion-content>
+                </and-accordion-item>
+              </and-accordion>
+            </div>
+          </and-card>
+
+          <!-- Tabs Showcase -->
+          <and-card data-and-motion="slide-in-right" data-and-motion-trigger="enter" data-and-motion-duration="700ms">
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center gap:xs">
+                <and-icon name="panel-top" size="18" class="text-primary"></and-icon>
+                <h3 and-text="h5 weight:bold">Tabs</h3>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">Organize content into switchable tabbed panels.</p>
+              <and-tabs default-value="overview">
+                <and-tabs-list>
+                  <and-tabs-trigger value="overview">Overview</and-tabs-trigger>
+                  <and-tabs-trigger value="code">Code</and-tabs-trigger>
+                  <and-tabs-trigger value="usage">Usage</and-tabs-trigger>
+                </and-tabs-list>
+                <and-tabs-content value="overview">
+                  <div and-layout="vertical gap:xs p:sm">
+                    <p and-text="p-sm">A complete set of 24+ web components designed for production use. Framework-agnostic, accessible, and beautifully styled.</p>
+                  </div>
+                </and-tabs-content>
+                <and-tabs-content value="code">
+                  <div and-layout="vertical gap:xs p:sm">
+                    <code class="text-sm bg-muted p-3 rounded-lg block">&lt;and-button variant="primary"&gt;Click me&lt;/and-button&gt;</code>
+                  </div>
+                </and-tabs-content>
+                <and-tabs-content value="usage">
+                  <div and-layout="vertical gap:xs p:sm">
+                    <p and-text="p-sm">Import the loader and call <code class="bg-muted px-1 rounded">defineCustomElements()</code>. That's it — use the tags anywhere in your HTML.</p>
+                  </div>
+                </and-tabs-content>
+              </and-tabs>
+            </div>
+          </and-card>
+        </div>
+
+        <!-- Showcase Row 3: Animations & Icons -->
+        <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+
+          <!-- Animations demo -->
+          <and-card data-and-motion="slide-in-left" data-and-motion-trigger="enter" data-and-motion-duration="700ms">
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center gap:xs">
+                <and-icon name="activity" size="18" class="text-primary"></and-icon>
+                <h3 and-text="h5 weight:bold">Animations</h3>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">Hover over the cards below to see motion-core in action.</p>
+              <div and-layout="grid cols:2 cols@md:3 gap:sm">
+                <div
+                  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+                  data-and-motion="bounce"
+                  data-and-motion-trigger="hover"
+                >
+                  <and-icon name="zap" size="20" class="text-primary mx-auto mb-1"></and-icon>
+                  <span and-text="p-xs">Bounce</span>
+                </div>
+                <div
+                  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+                  data-and-motion="scale-up"
+                  data-and-motion-trigger="hover"
+                >
+                  <and-icon name="maximize" size="20" class="text-primary mx-auto mb-1"></and-icon>
+                  <span and-text="p-xs">Scale Up</span>
+                </div>
+                <div
+                  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+                  data-and-motion="scale-down"
+                  data-and-motion-trigger="hover"
+                >
+                  <and-icon name="minimize" size="20" class="text-primary mx-auto mb-1"></and-icon>
+                  <span and-text="p-xs">Scale Down</span>
+                </div>
+                <div
+                  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+                  data-and-motion="slide-up"
+                  data-and-motion-trigger="hover"
+                >
+                  <and-icon name="arrow-up" size="20" class="text-primary mx-auto mb-1"></and-icon>
+                  <span and-text="p-xs">Slide Up</span>
+                </div>
+                <div
+                  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+                  data-and-motion="slide-in-left"
+                  data-and-motion-trigger="hover"
+                >
+                  <and-icon name="arrow-left" size="20" class="text-primary mx-auto mb-1"></and-icon>
+                  <span and-text="p-xs">Slide Left</span>
+                </div>
+                <div
+                  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+                  data-and-motion="slide-in-right"
+                  data-and-motion-trigger="hover"
+                >
+                  <and-icon name="arrow-right" size="20" class="text-primary mx-auto mb-1"></and-icon>
+                  <span and-text="p-xs">Slide Right</span>
+                </div>
+              </div>
+            </div>
+          </and-card>
+
+          <!-- Icons demo -->
+          <and-card data-and-motion="slide-in-right" data-and-motion-trigger="enter" data-and-motion-duration="700ms">
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center gap:xs">
+                <and-icon name="star" size="18" class="text-primary"></and-icon>
+                <h3 and-text="h5 weight:bold">Icon Library</h3>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">70+ crisp SVG icons with customizable size, color, and stroke width.</p>
+              <div and-layout="grid cols:4 cols@md:6 gap:sm">
+                {["home", "search", "heart", "star", "settings", "user", "bell", "mail", "zap", "code", "terminal", "github", "layers", "compass", "award", "eye", "lock", "edit", "share", "download", "upload", "filter", "monitor", "smartphone"].map((icon) => (
+                  <and-tooltip content={icon}>
+                    <div class="bg-muted/50 rounded-lg p-3 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer border hover:border-primary/30">
+                      <and-icon name={icon} size="20"></and-icon>
+                    </div>
+                  </and-tooltip>
+                ))}
+              </div>
+            </div>
+          </and-card>
+        </div>
+
+        <!-- Showcase Row 4: Layout System demo -->
+        <and-card data-and-motion="zoom-in" data-and-motion-trigger="enter" data-and-motion-duration="800ms">
+          <div and-layout="vertical gap:lg p:lg">
+            <div and-layout="horizontal align:center gap:xs">
+              <and-icon name="layout" size="18" class="text-primary"></and-icon>
+              <h3 and-text="h5 weight:bold">Layout System — <code class="text-sm bg-muted px-2 py-0.5 rounded">and-layout</code></h3>
+            </div>
+            <p and-text="p-sm" class="text-muted-foreground">
+              Pure attribute-driven layouts — no CSS classes. Supports responsive breakpoints, flex, grid, spacing, and typography.
+            </p>
+
+            <!-- Layout code example + visual demo side by side -->
+            <div and-layout="grid cols:1 cols@lg:2 gap:lg">
+              <!-- Code -->
+              <div class="bg-muted rounded-xl p-5 overflow-auto">
+                <code class="text-sm leading-relaxed whitespace-pre block text-foreground"><span class="text-muted-foreground">&lt;!-- Responsive Grid --&gt;</span>
+&lt;div <span class="text-primary">and-layout</span>="<span class="text-primary">grid cols:1 cols@md:2 cols@lg:3 gap:md</span>"&gt;
+  &lt;div&gt;Card 1&lt;/div&gt;
+  &lt;div&gt;Card 2&lt;/div&gt;
+  &lt;div&gt;Card 3&lt;/div&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Flex Layout --&gt;</span>
+&lt;div <span class="text-primary">and-layout</span>="<span class="text-primary">horizontal align:center justify:between gap:md</span>"&gt;
+  &lt;span&gt;Left&lt;/span&gt;
+  &lt;span&gt;Right&lt;/span&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Typography --&gt;</span>
+&lt;h2 <span class="text-primary">and-text</span>="<span class="text-primary">h2 weight:bold align:center</span>"&gt;
+  Title
+&lt;/h2&gt;</code>
+              </div>
+
+              <!-- Visual demo -->
+              <div and-layout="vertical gap:md">
+                <div and-layout="vertical gap:xxs">
+                  <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Responsive Grid</span>
+                  <div and-layout="grid cols:3 gap:xs">
+                    <div class="bg-primary/10 text-primary text-center rounded-lg p-3 text-sm font-medium border border-primary/20">1</div>
+                    <div class="bg-primary/10 text-primary text-center rounded-lg p-3 text-sm font-medium border border-primary/20">2</div>
+                    <div class="bg-primary/10 text-primary text-center rounded-lg p-3 text-sm font-medium border border-primary/20">3</div>
+                  </div>
+                </div>
+                <div and-layout="vertical gap:xxs">
+                  <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Flex + Justify Between</span>
+                  <div and-layout="horizontal align:center justify:between gap:md" class="bg-secondary/10 rounded-lg p-3 border border-secondary/20">
+                    <and-badge variant="secondary">Left</and-badge>
+                    <and-badge variant="secondary">Center</and-badge>
+                    <and-badge variant="secondary">Right</and-badge>
+                  </div>
+                </div>
+                <div and-layout="vertical gap:xxs">
+                  <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Spacing & Typography</span>
+                  <div and-layout="vertical gap:xs p:md" class="bg-accent/10 rounded-lg border border-accent/20">
+                    <span and-text="h5 weight:bold">Heading 5</span>
+                    <span and-text="p-sm" class="text-muted-foreground">Body text with <code class="bg-muted px-1 rounded text-xs">and-text="p-sm"</code></span>
+                    <span and-text="caption">Caption text</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </and-card>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 4 — ECOSYSTEM (Packages Overview + CTA)
+    ════════════════════════════════════════════════════════ -->
+    <section id="ecosystem" class="bg-muted/30 border-y">
+      <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+        <!-- Section Header -->
+        <div and-layout="vertical align:center gap:sm" data-and-motion="fade-in" data-and-motion-trigger="enter">
+          <and-badge variant="outline">Ecosystem</and-badge>
+          <h2 and-text="h2 align:center weight:bold" class="tracking-tight">
+            Modular By Design
+          </h2>
+          <p and-text="p align:center" class="text-muted-foreground max-w-[600px]">
+            Pick only what you need. Each package is independent with zero cross-dependencies.
+          </p>
+        </div>
+
+        <!-- Package Cards -->
+        <div and-layout="grid cols:1 cols@md:2 gap:lg">
+
+          <!-- Package 1: stencil-library -->
+          <and-card
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="0ms"
+          >
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center justify:between">
+                <div and-layout="horizontal align:center gap:sm">
+                  <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <and-icon name="box" size="20"></and-icon>
+                  </div>
+                  <div>
+                    <h4 and-text="h6 weight:bold">@andersseen/stencil-library</h4>
+                    <span and-text="p-xs" class="text-muted-foreground">Web Components</span>
+                  </div>
+                </div>
+                <and-badge>v0.0.1</and-badge>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">
+                24+ production-ready web components: buttons, modals, drawers, dropdowns, carousels, tabs, toast, tooltips, and more.
+              </p>
+              <div and-layout="horizontal gap:xs wrap:wrap">
+                <and-badge variant="outline">StencilJS</and-badge>
+                <and-badge variant="outline">Tailwind CSS</and-badge>
+                <and-badge variant="outline">A11y</and-badge>
+              </div>
+            </div>
+          </and-card>
+
+          <!-- Package 2: layout-core -->
+          <and-card
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="100ms"
+          >
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center justify:between">
+                <div and-layout="horizontal align:center gap:sm">
+                  <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <and-icon name="layout" size="20"></and-icon>
+                  </div>
+                  <div>
+                    <h4 and-text="h6 weight:bold">@andersseen/layout-core</h4>
+                    <span and-text="p-xs" class="text-muted-foreground">CSS Layouts</span>
+                  </div>
+                </div>
+                <and-badge>v0.0.1</and-badge>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">
+                Attribute-driven layout system with responsive grid, flex, spacing, and typography. Zero JS — pure CSS.
+              </p>
+              <div and-layout="horizontal gap:xs wrap:wrap">
+                <and-badge variant="outline">SCSS</and-badge>
+                <and-badge variant="outline">Responsive</and-badge>
+                <and-badge variant="outline">Attribute API</and-badge>
+              </div>
+            </div>
+          </and-card>
+
+          <!-- Package 3: motion-core -->
+          <and-card
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="200ms"
+          >
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center justify:between">
+                <div and-layout="horizontal align:center gap:sm">
+                  <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <and-icon name="activity" size="20"></and-icon>
+                  </div>
+                  <div>
+                    <h4 and-text="h6 weight:bold">@andersseen/motion-core</h4>
+                    <span and-text="p-xs" class="text-muted-foreground">Animations</span>
+                  </div>
+                </div>
+                <and-badge>v0.0.1</and-badge>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">
+                Declarative CSS animations triggered by IntersectionObserver. 10 animation types with configurable duration, delay, and easing.
+              </p>
+              <div and-layout="horizontal gap:xs wrap:wrap">
+                <and-badge variant="outline">CSS Keyframes</and-badge>
+                <and-badge variant="outline">IntersectionObserver</and-badge>
+                <and-badge variant="outline">~1KB</and-badge>
+              </div>
+            </div>
+          </and-card>
+
+          <!-- Package 4: icon-library -->
+          <and-card
+            data-and-motion="slide-up"
+            data-and-motion-trigger="enter"
+            data-and-motion-delay="300ms"
+          >
+            <div and-layout="vertical gap:md p:lg">
+              <div and-layout="horizontal align:center justify:between">
+                <div and-layout="horizontal align:center gap:sm">
+                  <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <and-icon name="star" size="20"></and-icon>
+                  </div>
+                  <div>
+                    <h4 and-text="h6 weight:bold">@andersseen/icon-library</h4>
+                    <span and-text="p-xs" class="text-muted-foreground">SVG Icons</span>
+                  </div>
+                </div>
+                <and-badge>v0.0.1</and-badge>
+              </div>
+              <p and-text="p-sm" class="text-muted-foreground">
+                70+ hand-crafted SVG icons, tree-shakeable ESM exports, global registry for on-demand loading.
+              </p>
+              <div and-layout="horizontal gap:xs wrap:wrap">
+                <and-badge variant="outline">Tree-shakeable</and-badge>
+                <and-badge variant="outline">SVG</and-badge>
+                <and-badge variant="outline">Registry</and-badge>
+              </div>
+            </div>
+          </and-card>
+        </div>
+
+        <!-- CTA Final -->
+        <div
+          and-layout="vertical align:center gap:lg p:xxl"
+          class="rounded-2xl bg-primary/5 border border-primary/10"
+          data-and-motion="zoom-in"
+          data-and-motion-trigger="enter"
+          data-and-motion-duration="800ms"
+        >
+          <div class="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+            <and-icon name="zap" size="32"></and-icon>
+          </div>
+          <h3 and-text="h3 align:center weight:bold" class="tracking-tight">
+            Ready to Build?
+          </h3>
+          <p and-text="p align:center" class="text-muted-foreground max-w-[500px]">
+            Start using the full Andersseen ecosystem in your project — works with any framework, zero lock-in.
+          </p>
+          <div and-layout="horizontal gap:md align:center wrap:wrap justify:center">
+            <and-button size="lg">
+              <and-icon name="download" size="18"></and-icon>
+              Install Now
+            </and-button>
+            <and-button variant="outline" size="lg">
+              <and-icon name="github" size="18"></and-icon>
+              View on GitHub
+            </and-button>
+          </div>
+          <code class="text-sm bg-muted/80 px-4 py-2 rounded-lg border">npm install @andersseen/stencil-library @andersseen/layout-core @andersseen/motion-core @andersseen/icon-library</code>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════════════════════ -->
+    <footer class="border-t">
+      <div and-layout="vertical gap:xl p-y:xxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+        <!-- Footer top -->
+        <div and-layout="grid cols:1 cols@md:3 gap:xl">
+          <!-- Brand -->
+          <div and-layout="vertical gap:sm">
+            <div and-layout="horizontal align:center gap:xs">
+              <and-icon name="layers" size="24" class="text-primary"></and-icon>
+              <span class="font-bold text-lg">Andersseen</span>
+            </div>
+            <p and-text="p-sm" class="text-muted-foreground">
+              A modern, framework-agnostic web component ecosystem for building beautiful interfaces.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div and-layout="vertical gap:sm">
+            <h5 and-text="p-sm weight:bold" class="uppercase tracking-wider text-muted-foreground">Resources</h5>
+            <a href="#features" class="text-sm hover:text-primary transition-colors">Features</a>
+            <a href="#showcase" class="text-sm hover:text-primary transition-colors">Showcase</a>
+            <a href="#ecosystem" class="text-sm hover:text-primary transition-colors">Ecosystem</a>
+          </div>
+
+          <!-- Links 2 -->
+          <div and-layout="vertical gap:sm">
+            <h5 and-text="p-sm weight:bold" class="uppercase tracking-wider text-muted-foreground">Community</h5>
+            <a href="#" class="text-sm hover:text-primary transition-colors inline-flex items-center gap-1">
+              <and-icon name="github" size="14"></and-icon> GitHub
+            </a>
+            <a href="#" class="text-sm hover:text-primary transition-colors inline-flex items-center gap-1">
+              <and-icon name="mail" size="14"></and-icon> Contact
+            </a>
+          </div>
+        </div>
+
+        <!-- Footer bottom -->
+        <div class="border-t pt-6">
+          <div and-layout="horizontal align:center justify:between wrap:wrap gap:sm">
+            <p and-text="p-xs" class="text-muted-foreground">
+              &copy; 2026 Andersseen. All rights reserved.
+            </p>
+            <div and-layout="horizontal gap:md">
+              <a href="#" class="text-xs text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+              <a href="#" class="text-xs text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </footer>
+
   </main>
 </Layout>
