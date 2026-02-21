@@ -5,7 +5,6 @@
     "clean:angular": "rm -rf apps/angular-workspace/.angular/cache",
     "clean:stencil": "rm -rf packages/stencil-library/dist packages/stencil-library/www packages/stencil-library/loader",
     "clean": "pnpm clean:angular && pnpm clean:stencil",
-
     "build:headless": "pnpm -C packages/headless-core build",
     "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
@@ -13,11 +12,9 @@
     "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/stencil-library build",
     "build:angular": "pnpm -C apps/angular-workspace ng build angular-components && pnpm -C apps/angular-workspace ng build demo-app",
     "build:all": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular",
-
     "start:demo:dev": "pnpm clean:angular && concurrently \"pnpm run build:stencil --watch\" \"pnpm -C apps/angular-workspace start\"",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm clean:angular && pnpm -C apps/angular-workspace start",
     "start:astro:dev": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",
-
     "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy"
   },
   "devDependencies": {
@@ -27,6 +24,10 @@
     "concurrently": "^9.2.1"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"]
-  }
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }
