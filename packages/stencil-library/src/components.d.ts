@@ -9,22 +9,28 @@ import { ContentItemProps } from "./components/and-accordion/and-accordion-conte
 import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 import { TriggerItemProps } from "./components/and-accordion/and-accordion-trigger";
 import { BadgeVariantProps } from "./components/and-badge/and-badge";
+import { BreadcrumbVariantProps } from "./components/and-breadcrumb/and-breadcrumb";
+import { BreadcrumbItemVariantProps } from "./components/and-breadcrumb/and-breadcrumb-item";
 import { ButtonVariantProps } from "./components/and-button/and-button";
 import { CardVariantProps } from "./components/and-card/and-card";
 import { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./components/and-dropdown/and-dropdown";
 import { IconName } from "@andersseen/icon";
 import { InputType } from "./components/and-input/and-input";
+import { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 import { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
 import { SidebarItem, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export { ContentItemProps } from "./components/and-accordion/and-accordion-content";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 export { TriggerItemProps } from "./components/and-accordion/and-accordion-trigger";
 export { BadgeVariantProps } from "./components/and-badge/and-badge";
+export { BreadcrumbVariantProps } from "./components/and-breadcrumb/and-breadcrumb";
+export { BreadcrumbItemVariantProps } from "./components/and-breadcrumb/and-breadcrumb-item";
 export { ButtonVariantProps } from "./components/and-button/and-button";
 export { CardVariantProps } from "./components/and-card/and-card";
 export { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./components/and-dropdown/and-dropdown";
 export { IconName } from "@andersseen/icon";
 export { InputType } from "./components/and-input/and-input";
+export { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 export { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
 export { SidebarItem, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
@@ -113,6 +119,42 @@ export namespace Components {
          */
         "variant": BadgeVariantProps['variant'];
     }
+    interface AndBreadcrumb {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Size variant for the breadcrumb trail.
+          * @default 'md'
+         */
+        "size": BreadcrumbVariantProps['size'];
+    }
+    interface AndBreadcrumbItem {
+        /**
+          * Marks this item as the current page (adds aria-current).
+          * @default false
+         */
+        "current": boolean;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Hide the leading separator (typically for the first item).
+          * @default false
+         */
+        "hideSeparator": boolean;
+        /**
+          * Optional URL. When set, the item renders as a link.
+         */
+        "href": string;
+        /**
+          * Size variant — should match the parent breadcrumb size.
+          * @default 'md'
+         */
+        "size": BreadcrumbItemVariantProps['size'];
+    }
     interface AndButton {
         /**
           * Additional CSS classes to merge with the internal styles.
@@ -177,6 +219,17 @@ export namespace Components {
           * Accessible label for this slide.
          */
         "label": string;
+    }
+    interface AndContextMenu {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Whether the context menu is currently open (controlled).
+          * @default false
+         */
+        "open": boolean;
     }
     interface AndDrawer {
         /**
@@ -284,6 +337,37 @@ export namespace Components {
           * Current value of the input.
          */
         "value": string;
+    }
+    interface AndMenuItem {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Disables the menu item when true.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Intent variant (default or destructive).
+          * @default 'default'
+         */
+        "intent": MenuItemVariantProps['intent'];
+        /**
+          * Optional value identifier for the item.
+         */
+        "value": string;
+    }
+    interface AndMenuList {
+        /**
+          * Accessible label for the menu.
+          * @default 'Menu'
+         */
+        "ariaMenuLabel": string;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
     }
     interface AndModal {
         /**
@@ -461,6 +545,10 @@ export interface AndCarouselCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndCarouselElement;
 }
+export interface AndContextMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndContextMenuElement;
+}
 export interface AndDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndDrawerElement;
@@ -472,6 +560,10 @@ export interface AndDropdownCustomEvent<T> extends CustomEvent<T> {
 export interface AndInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndInputElement;
+}
+export interface AndMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndMenuItemElement;
 }
 export interface AndModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -559,6 +651,18 @@ declare global {
         prototype: HTMLAndBadgeElement;
         new (): HTMLAndBadgeElement;
     };
+    interface HTMLAndBreadcrumbElement extends Components.AndBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLAndBreadcrumbElement: {
+        prototype: HTMLAndBreadcrumbElement;
+        new (): HTMLAndBreadcrumbElement;
+    };
+    interface HTMLAndBreadcrumbItemElement extends Components.AndBreadcrumbItem, HTMLStencilElement {
+    }
+    var HTMLAndBreadcrumbItemElement: {
+        prototype: HTMLAndBreadcrumbItemElement;
+        new (): HTMLAndBreadcrumbItemElement;
+    };
     interface HTMLAndButtonElementEventMap {
         "andButtonClick": MouseEvent;
     }
@@ -604,6 +708,23 @@ declare global {
     var HTMLAndCarouselItemElement: {
         prototype: HTMLAndCarouselItemElement;
         new (): HTMLAndCarouselItemElement;
+    };
+    interface HTMLAndContextMenuElementEventMap {
+        "andContextMenuOpenChange": boolean;
+    }
+    interface HTMLAndContextMenuElement extends Components.AndContextMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndContextMenuElementEventMap>(type: K, listener: (this: HTMLAndContextMenuElement, ev: AndContextMenuCustomEvent<HTMLAndContextMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndContextMenuElementEventMap>(type: K, listener: (this: HTMLAndContextMenuElement, ev: AndContextMenuCustomEvent<HTMLAndContextMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAndContextMenuElement: {
+        prototype: HTMLAndContextMenuElement;
+        new (): HTMLAndContextMenuElement;
     };
     interface HTMLAndDrawerElementEventMap {
         "andDrawerClose": void;
@@ -664,6 +785,29 @@ declare global {
     var HTMLAndInputElement: {
         prototype: HTMLAndInputElement;
         new (): HTMLAndInputElement;
+    };
+    interface HTMLAndMenuItemElementEventMap {
+        "andMenuItemSelect": string;
+    }
+    interface HTMLAndMenuItemElement extends Components.AndMenuItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndMenuItemElementEventMap>(type: K, listener: (this: HTMLAndMenuItemElement, ev: AndMenuItemCustomEvent<HTMLAndMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndMenuItemElementEventMap>(type: K, listener: (this: HTMLAndMenuItemElement, ev: AndMenuItemCustomEvent<HTMLAndMenuItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAndMenuItemElement: {
+        prototype: HTMLAndMenuItemElement;
+        new (): HTMLAndMenuItemElement;
+    };
+    interface HTMLAndMenuListElement extends Components.AndMenuList, HTMLStencilElement {
+    }
+    var HTMLAndMenuListElement: {
+        prototype: HTMLAndMenuListElement;
+        new (): HTMLAndMenuListElement;
     };
     interface HTMLAndModalElementEventMap {
         "andClose": void;
@@ -801,14 +945,19 @@ declare global {
         "and-accordion-trigger": HTMLAndAccordionTriggerElement;
         "and-alert": HTMLAndAlertElement;
         "and-badge": HTMLAndBadgeElement;
+        "and-breadcrumb": HTMLAndBreadcrumbElement;
+        "and-breadcrumb-item": HTMLAndBreadcrumbItemElement;
         "and-button": HTMLAndButtonElement;
         "and-card": HTMLAndCardElement;
         "and-carousel": HTMLAndCarouselElement;
         "and-carousel-item": HTMLAndCarouselItemElement;
+        "and-context-menu": HTMLAndContextMenuElement;
         "and-drawer": HTMLAndDrawerElement;
         "and-dropdown": HTMLAndDropdownElement;
         "and-icon": HTMLAndIconElement;
         "and-input": HTMLAndInputElement;
+        "and-menu-item": HTMLAndMenuItemElement;
+        "and-menu-list": HTMLAndMenuListElement;
         "and-modal": HTMLAndModalElement;
         "and-navbar": HTMLAndNavbarElement;
         "and-pagination": HTMLAndPaginationElement;
@@ -901,6 +1050,42 @@ declare namespace LocalJSX {
          */
         "variant"?: BadgeVariantProps['variant'];
     }
+    interface AndBreadcrumb {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Size variant for the breadcrumb trail.
+          * @default 'md'
+         */
+        "size"?: BreadcrumbVariantProps['size'];
+    }
+    interface AndBreadcrumbItem {
+        /**
+          * Marks this item as the current page (adds aria-current).
+          * @default false
+         */
+        "current"?: boolean;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Hide the leading separator (typically for the first item).
+          * @default false
+         */
+        "hideSeparator"?: boolean;
+        /**
+          * Optional URL. When set, the item renders as a link.
+         */
+        "href"?: string;
+        /**
+          * Size variant — should match the parent breadcrumb size.
+          * @default 'md'
+         */
+        "size"?: BreadcrumbItemVariantProps['size'];
+    }
     interface AndButton {
         /**
           * Additional CSS classes to merge with the internal styles.
@@ -973,6 +1158,21 @@ declare namespace LocalJSX {
           * Accessible label for this slide.
          */
         "label"?: string;
+    }
+    interface AndContextMenu {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Emitted when the open state changes.
+         */
+        "onAndContextMenuOpenChange"?: (event: AndContextMenuCustomEvent<boolean>) => void;
+        /**
+          * Whether the context menu is currently open (controlled).
+          * @default false
+         */
+        "open"?: boolean;
     }
     interface AndDrawer {
         /**
@@ -1104,6 +1304,41 @@ declare namespace LocalJSX {
           * Current value of the input.
          */
         "value"?: string;
+    }
+    interface AndMenuItem {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Disables the menu item when true.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Intent variant (default or destructive).
+          * @default 'default'
+         */
+        "intent"?: MenuItemVariantProps['intent'];
+        /**
+          * Emitted when the item is selected (clicked or Enter/Space pressed).
+         */
+        "onAndMenuItemSelect"?: (event: AndMenuItemCustomEvent<string>) => void;
+        /**
+          * Optional value identifier for the item.
+         */
+        "value"?: string;
+    }
+    interface AndMenuList {
+        /**
+          * Accessible label for the menu.
+          * @default 'Menu'
+         */
+        "ariaMenuLabel"?: string;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
     }
     interface AndModal {
         /**
@@ -1318,6 +1553,17 @@ declare namespace LocalJSX {
         "variant": BadgeVariantProps['variant'];
         "customClass": string;
     }
+    interface AndBreadcrumbAttributes {
+        "size": BreadcrumbVariantProps['size'];
+        "customClass": string;
+    }
+    interface AndBreadcrumbItemAttributes {
+        "href": string;
+        "current": boolean;
+        "size": BreadcrumbItemVariantProps['size'];
+        "hideSeparator": boolean;
+        "customClass": string;
+    }
     interface AndButtonAttributes {
         "variant": ButtonVariantProps['variant'];
         "size": ButtonVariantProps['size'];
@@ -1337,6 +1583,10 @@ declare namespace LocalJSX {
     }
     interface AndCarouselItemAttributes {
         "label": string;
+    }
+    interface AndContextMenuAttributes {
+        "open": boolean;
+        "customClass": string;
     }
     interface AndDrawerAttributes {
         "open": boolean;
@@ -1364,6 +1614,16 @@ declare namespace LocalJSX {
         "hasError": boolean;
         "label": string;
         "describedBy": string;
+        "customClass": string;
+    }
+    interface AndMenuItemAttributes {
+        "intent": MenuItemVariantProps['intent'];
+        "disabled": boolean;
+        "value": string;
+        "customClass": string;
+    }
+    interface AndMenuListAttributes {
+        "ariaMenuLabel": string;
         "customClass": string;
     }
     interface AndModalAttributes {
@@ -1419,14 +1679,19 @@ declare namespace LocalJSX {
         "and-accordion-trigger": AndAccordionTrigger;
         "and-alert": Omit<AndAlert, keyof AndAlertAttributes> & { [K in keyof AndAlert & keyof AndAlertAttributes]?: AndAlert[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `attr:${K}`]?: AndAlertAttributes[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `prop:${K}`]?: AndAlert[K] };
         "and-badge": Omit<AndBadge, keyof AndBadgeAttributes> & { [K in keyof AndBadge & keyof AndBadgeAttributes]?: AndBadge[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `attr:${K}`]?: AndBadgeAttributes[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `prop:${K}`]?: AndBadge[K] };
+        "and-breadcrumb": Omit<AndBreadcrumb, keyof AndBreadcrumbAttributes> & { [K in keyof AndBreadcrumb & keyof AndBreadcrumbAttributes]?: AndBreadcrumb[K] } & { [K in keyof AndBreadcrumb & keyof AndBreadcrumbAttributes as `attr:${K}`]?: AndBreadcrumbAttributes[K] } & { [K in keyof AndBreadcrumb & keyof AndBreadcrumbAttributes as `prop:${K}`]?: AndBreadcrumb[K] };
+        "and-breadcrumb-item": Omit<AndBreadcrumbItem, keyof AndBreadcrumbItemAttributes> & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes]?: AndBreadcrumbItem[K] } & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes as `attr:${K}`]?: AndBreadcrumbItemAttributes[K] } & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes as `prop:${K}`]?: AndBreadcrumbItem[K] };
         "and-button": Omit<AndButton, keyof AndButtonAttributes> & { [K in keyof AndButton & keyof AndButtonAttributes]?: AndButton[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `attr:${K}`]?: AndButtonAttributes[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `prop:${K}`]?: AndButton[K] };
         "and-card": Omit<AndCard, keyof AndCardAttributes> & { [K in keyof AndCard & keyof AndCardAttributes]?: AndCard[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `attr:${K}`]?: AndCardAttributes[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `prop:${K}`]?: AndCard[K] };
         "and-carousel": Omit<AndCarousel, keyof AndCarouselAttributes> & { [K in keyof AndCarousel & keyof AndCarouselAttributes]?: AndCarousel[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `attr:${K}`]?: AndCarouselAttributes[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `prop:${K}`]?: AndCarousel[K] };
         "and-carousel-item": Omit<AndCarouselItem, keyof AndCarouselItemAttributes> & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes]?: AndCarouselItem[K] } & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes as `attr:${K}`]?: AndCarouselItemAttributes[K] } & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes as `prop:${K}`]?: AndCarouselItem[K] };
+        "and-context-menu": Omit<AndContextMenu, keyof AndContextMenuAttributes> & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes]?: AndContextMenu[K] } & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes as `attr:${K}`]?: AndContextMenuAttributes[K] } & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes as `prop:${K}`]?: AndContextMenu[K] };
         "and-drawer": Omit<AndDrawer, keyof AndDrawerAttributes> & { [K in keyof AndDrawer & keyof AndDrawerAttributes]?: AndDrawer[K] } & { [K in keyof AndDrawer & keyof AndDrawerAttributes as `attr:${K}`]?: AndDrawerAttributes[K] } & { [K in keyof AndDrawer & keyof AndDrawerAttributes as `prop:${K}`]?: AndDrawer[K] };
         "and-dropdown": Omit<AndDropdown, keyof AndDropdownAttributes> & { [K in keyof AndDropdown & keyof AndDropdownAttributes]?: AndDropdown[K] } & { [K in keyof AndDropdown & keyof AndDropdownAttributes as `attr:${K}`]?: AndDropdownAttributes[K] } & { [K in keyof AndDropdown & keyof AndDropdownAttributes as `prop:${K}`]?: AndDropdown[K] };
         "and-icon": Omit<AndIcon, keyof AndIconAttributes> & { [K in keyof AndIcon & keyof AndIconAttributes]?: AndIcon[K] } & { [K in keyof AndIcon & keyof AndIconAttributes as `attr:${K}`]?: AndIconAttributes[K] } & { [K in keyof AndIcon & keyof AndIconAttributes as `prop:${K}`]?: AndIcon[K] };
         "and-input": Omit<AndInput, keyof AndInputAttributes> & { [K in keyof AndInput & keyof AndInputAttributes]?: AndInput[K] } & { [K in keyof AndInput & keyof AndInputAttributes as `attr:${K}`]?: AndInputAttributes[K] } & { [K in keyof AndInput & keyof AndInputAttributes as `prop:${K}`]?: AndInput[K] };
+        "and-menu-item": Omit<AndMenuItem, keyof AndMenuItemAttributes> & { [K in keyof AndMenuItem & keyof AndMenuItemAttributes]?: AndMenuItem[K] } & { [K in keyof AndMenuItem & keyof AndMenuItemAttributes as `attr:${K}`]?: AndMenuItemAttributes[K] } & { [K in keyof AndMenuItem & keyof AndMenuItemAttributes as `prop:${K}`]?: AndMenuItem[K] };
+        "and-menu-list": Omit<AndMenuList, keyof AndMenuListAttributes> & { [K in keyof AndMenuList & keyof AndMenuListAttributes]?: AndMenuList[K] } & { [K in keyof AndMenuList & keyof AndMenuListAttributes as `attr:${K}`]?: AndMenuListAttributes[K] } & { [K in keyof AndMenuList & keyof AndMenuListAttributes as `prop:${K}`]?: AndMenuList[K] };
         "and-modal": Omit<AndModal, keyof AndModalAttributes> & { [K in keyof AndModal & keyof AndModalAttributes]?: AndModal[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `attr:${K}`]?: AndModalAttributes[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `prop:${K}`]?: AndModal[K] };
         "and-navbar": Omit<AndNavbar, keyof AndNavbarAttributes> & { [K in keyof AndNavbar & keyof AndNavbarAttributes]?: AndNavbar[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `attr:${K}`]?: AndNavbarAttributes[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `prop:${K}`]?: AndNavbar[K] };
         "and-pagination": Omit<AndPagination, keyof AndPaginationAttributes> & { [K in keyof AndPagination & keyof AndPaginationAttributes]?: AndPagination[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `attr:${K}`]?: AndPaginationAttributes[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `prop:${K}`]?: AndPagination[K] };
@@ -1463,14 +1728,19 @@ declare module "@stencil/core" {
             "and-accordion-trigger": LocalJSX.IntrinsicElements["and-accordion-trigger"] & JSXBase.HTMLAttributes<HTMLAndAccordionTriggerElement>;
             "and-alert": LocalJSX.IntrinsicElements["and-alert"] & JSXBase.HTMLAttributes<HTMLAndAlertElement>;
             "and-badge": LocalJSX.IntrinsicElements["and-badge"] & JSXBase.HTMLAttributes<HTMLAndBadgeElement>;
+            "and-breadcrumb": LocalJSX.IntrinsicElements["and-breadcrumb"] & JSXBase.HTMLAttributes<HTMLAndBreadcrumbElement>;
+            "and-breadcrumb-item": LocalJSX.IntrinsicElements["and-breadcrumb-item"] & JSXBase.HTMLAttributes<HTMLAndBreadcrumbItemElement>;
             "and-button": LocalJSX.IntrinsicElements["and-button"] & JSXBase.HTMLAttributes<HTMLAndButtonElement>;
             "and-card": LocalJSX.IntrinsicElements["and-card"] & JSXBase.HTMLAttributes<HTMLAndCardElement>;
             "and-carousel": LocalJSX.IntrinsicElements["and-carousel"] & JSXBase.HTMLAttributes<HTMLAndCarouselElement>;
             "and-carousel-item": LocalJSX.IntrinsicElements["and-carousel-item"] & JSXBase.HTMLAttributes<HTMLAndCarouselItemElement>;
+            "and-context-menu": LocalJSX.IntrinsicElements["and-context-menu"] & JSXBase.HTMLAttributes<HTMLAndContextMenuElement>;
             "and-drawer": LocalJSX.IntrinsicElements["and-drawer"] & JSXBase.HTMLAttributes<HTMLAndDrawerElement>;
             "and-dropdown": LocalJSX.IntrinsicElements["and-dropdown"] & JSXBase.HTMLAttributes<HTMLAndDropdownElement>;
             "and-icon": LocalJSX.IntrinsicElements["and-icon"] & JSXBase.HTMLAttributes<HTMLAndIconElement>;
             "and-input": LocalJSX.IntrinsicElements["and-input"] & JSXBase.HTMLAttributes<HTMLAndInputElement>;
+            "and-menu-item": LocalJSX.IntrinsicElements["and-menu-item"] & JSXBase.HTMLAttributes<HTMLAndMenuItemElement>;
+            "and-menu-list": LocalJSX.IntrinsicElements["and-menu-list"] & JSXBase.HTMLAttributes<HTMLAndMenuListElement>;
             "and-modal": LocalJSX.IntrinsicElements["and-modal"] & JSXBase.HTMLAttributes<HTMLAndModalElement>;
             "and-navbar": LocalJSX.IntrinsicElements["and-navbar"] & JSXBase.HTMLAttributes<HTMLAndNavbarElement>;
             "and-pagination": LocalJSX.IntrinsicElements["and-pagination"] & JSXBase.HTMLAttributes<HTMLAndPaginationElement>;

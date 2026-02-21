@@ -1,0 +1,9 @@
+:host(and-breadcrumb) {
+  display: block;
+  width: 100%;
+}
+
+:host(and-breadcrumb-item) {
+  display: inline-flex;
+  align-items: center;
+}

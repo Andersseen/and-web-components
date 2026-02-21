@@ -12,14 +12,19 @@ import { defineCustomElement as defineAndAccordionItem } from '@andersseen/web-c
 import { defineCustomElement as defineAndAccordionTrigger } from '@andersseen/web-components/components/and-accordion-trigger.js';
 import { defineCustomElement as defineAndAlert } from '@andersseen/web-components/components/and-alert.js';
 import { defineCustomElement as defineAndBadge } from '@andersseen/web-components/components/and-badge.js';
+import { defineCustomElement as defineAndBreadcrumb } from '@andersseen/web-components/components/and-breadcrumb.js';
+import { defineCustomElement as defineAndBreadcrumbItem } from '@andersseen/web-components/components/and-breadcrumb-item.js';
 import { defineCustomElement as defineAndButton } from '@andersseen/web-components/components/and-button.js';
 import { defineCustomElement as defineAndCard } from '@andersseen/web-components/components/and-card.js';
 import { defineCustomElement as defineAndCarousel } from '@andersseen/web-components/components/and-carousel.js';
 import { defineCustomElement as defineAndCarouselItem } from '@andersseen/web-components/components/and-carousel-item.js';
+import { defineCustomElement as defineAndContextMenu } from '@andersseen/web-components/components/and-context-menu.js';
 import { defineCustomElement as defineAndDrawer } from '@andersseen/web-components/components/and-drawer.js';
 import { defineCustomElement as defineAndDropdown } from '@andersseen/web-components/components/and-dropdown.js';
 import { defineCustomElement as defineAndIcon } from '@andersseen/web-components/components/and-icon.js';
 import { defineCustomElement as defineAndInput } from '@andersseen/web-components/components/and-input.js';
+import { defineCustomElement as defineAndMenuItem } from '@andersseen/web-components/components/and-menu-item.js';
+import { defineCustomElement as defineAndMenuList } from '@andersseen/web-components/components/and-menu-list.js';
 import { defineCustomElement as defineAndModal } from '@andersseen/web-components/components/and-modal.js';
 import { defineCustomElement as defineAndNavbar } from '@andersseen/web-components/components/and-navbar.js';
 import { defineCustomElement as defineAndPagination } from '@andersseen/web-components/components/and-pagination.js';
@@ -177,6 +182,52 @@ export declare interface AndBadge extends Components.AndBadge {}
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineAndBreadcrumb,
+  inputs: ['customClass', 'size']
+})
+@Component({
+  selector: 'and-breadcrumb',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'size'],
+})
+export class AndBreadcrumb {
+  protected el: HTMLAndBreadcrumbElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndBreadcrumb extends Components.AndBreadcrumb {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndBreadcrumbItem,
+  inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size']
+})
+@Component({
+  selector: 'and-breadcrumb-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size'],
+})
+export class AndBreadcrumbItem {
+  protected el: HTMLAndBreadcrumbItemElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem {}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineAndButton,
   inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant']
 })
@@ -280,6 +331,36 @@ export class AndCarouselItem {
 
 
 export declare interface AndCarouselItem extends Components.AndCarouselItem {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndContextMenu,
+  inputs: ['customClass', 'open']
+})
+@Component({
+  selector: 'and-context-menu',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'open'],
+  outputs: ['andContextMenuOpenChange'],
+})
+export class AndContextMenu {
+  protected el: HTMLAndContextMenuElement;
+  @Output() andContextMenuOpenChange = new EventEmitter<CustomEvent<boolean>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndContextMenu extends Components.AndContextMenu {
+  /**
+   * Emitted when the open state changes.
+   */
+  andContextMenuOpenChange: EventEmitter<CustomEvent<boolean>>;
+}
 
 
 @ProxyCmp({
@@ -408,6 +489,59 @@ export declare interface AndInput extends Components.AndInput {
    */
   andBlur: EventEmitter<CustomEvent<void>>;
 }
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndMenuItem,
+  inputs: ['customClass', 'disabled', 'intent', 'value']
+})
+@Component({
+  selector: 'and-menu-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'disabled', 'intent', 'value'],
+  outputs: ['andMenuItemSelect'],
+})
+export class AndMenuItem {
+  protected el: HTMLAndMenuItemElement;
+  @Output() andMenuItemSelect = new EventEmitter<CustomEvent<string>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndMenuItem extends Components.AndMenuItem {
+  /**
+   * Emitted when the item is selected (clicked or Enter/Space pressed).
+   */
+  andMenuItemSelect: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndMenuList,
+  inputs: ['ariaMenuLabel', 'customClass']
+})
+@Component({
+  selector: 'and-menu-list',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['ariaMenuLabel', 'customClass'],
+})
+export class AndMenuList {
+  protected el: HTMLAndMenuListElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndMenuList extends Components.AndMenuList {}
 
 
 @ProxyCmp({

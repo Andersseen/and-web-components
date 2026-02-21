@@ -19,6 +19,10 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/badge-demo'),
   },
   {
+    path: 'breadcrumb',
+    loadComponent: () => import('./pages/components/breadcrumb-demo'),
+  },
+  {
     path: 'button',
     loadComponent: () => import('./pages/components/button-demo'),
   },
@@ -31,6 +35,10 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/carousel-demo'),
   },
   {
+    path: 'context-menu',
+    loadComponent: () => import('./pages/components/context-menu-demo'),
+  },
+  {
     path: 'drawer',
     loadComponent: () => import('./pages/components/drawer-demo'),
   },
@@ -41,6 +49,10 @@ const componentsRoutes: Routes = [
   {
     path: 'input',
     loadComponent: () => import('./pages/components/input-demo'),
+  },
+  {
+    path: 'menu-list',
+    loadComponent: () => import('./pages/components/menu-list-demo'),
   },
   {
     path: 'modal',
