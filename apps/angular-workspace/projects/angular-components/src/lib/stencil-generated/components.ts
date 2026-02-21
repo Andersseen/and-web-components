@@ -267,19 +267,20 @@ export declare interface AndCarouselItem extends Components.AndCarouselItem {}
 
 @ProxyCmp({
   defineCustomElementFn: defineAndDrawer,
-  inputs: ['open', 'placement']
+  inputs: ['open', 'placement', 'showClose']
 })
 @Component({
   selector: 'and-drawer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['open', 'placement'],
-  outputs: ['myClose'],
+  inputs: ['open', 'placement', 'showClose'],
+  outputs: ['myClose', 'myOpen'],
 })
 export class AndDrawer {
   protected el: HTMLAndDrawerElement;
   @Output() myClose = new EventEmitter<CustomEvent<void>>();
+  @Output() myOpen = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -289,9 +290,13 @@ export class AndDrawer {
 
 export declare interface AndDrawer extends Components.AndDrawer {
   /**
-   * Emitted when the drawer is closed (backdrop click or close button).
+   * Emitted when the drawer is closed (backdrop click, close button, or Escape).
    */
   myClose: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the drawer is opened.
+   */
+  myOpen: EventEmitter<CustomEvent<void>>;
 }
 
 

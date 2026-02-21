@@ -1,13 +1,80 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen } from '@stencil/core';
-import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
-import { cn } from '../../utils/utils';
+import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State } from '@stencil/core';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '../../utils/cn';
+import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-core';
+
+/* ────────────────────────────────────────────────────────────────────
+ * Variants
+ * ──────────────────────────────────────────────────────────────────── */
+
+const overlayVariants = cva(
+  'fixed inset-0 z-[9999] bg-foreground/60 transition-opacity duration-300 ease-out',
+  {
+    variants: {
+      open: {
+        true: 'opacity-100 pointer-events-auto',
+        false: 'opacity-0 pointer-events-none',
+      },
+    },
+    defaultVariants: { open: false },
+  },
+);
+
+const contentVariants = cva(
+  'fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
+  {
+    variants: {
+      placement: {
+        left: 'top-0 left-0 bottom-0 w-[min(85vw,20rem)] border-r border-border',
+        right: 'top-0 right-0 bottom-0 w-[min(85vw,20rem)] border-l border-border',
+        top: 'top-0 left-0 right-0 max-h-[50vh] border-b border-border',
+        bottom: 'bottom-0 left-0 right-0 max-h-[50vh] border-t border-border',
+      },
+      open: {
+        true: 'translate-x-0 translate-y-0',
+        false: '',
+      },
+      animate: {
+        true: 'transition-transform duration-300 ease-out',
+        false: '',
+      },
+    },
+    compoundVariants: [
+      { placement: 'left', open: false, class: '-translate-x-full' },
+      { placement: 'right', open: false, class: 'translate-x-full' },
+      { placement: 'top', open: false, class: '-translate-y-full' },
+      { placement: 'bottom', open: false, class: 'translate-y-full' },
+    ],
+    defaultVariants: {
+      placement: 'left',
+      open: false,
+      animate: true,
+    },
+  },
+);
+
+const closeBtnVariants = cva(
+  [
+    'inline-flex items-center justify-center w-8 h-8 shrink-0',
+    'border-none bg-transparent rounded-md cursor-pointer',
+    'text-muted-foreground transition-colors duration-150',
+    'hover:bg-accent hover:text-foreground',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+  ].join(' '),
+);
+
+export type DrawerVariantProps = VariantProps<typeof contentVariants>;
+
+/* ────────────────────────────────────────────────────────────────────
+ * Component
+ * ──────────────────────────────────────────────────────────────────── */
 
 @Component({
   tag: 'and-drawer',
-  styleUrl: '../../global/global.css',
+  styleUrls: ['and-drawer.css', '../../global/global.css'],
   shadow: true,
 })
-export class MyDrawer {
+export class AndDrawer {
   /**
    * Whether the drawer is open.
    */
@@ -16,95 +83,162 @@ export class MyDrawer {
   /**
    * The direction the drawer slides in from.
    */
-  @Prop() placement: DrawerPlacement = 'left';
+  @Prop({ reflect: true }) placement: DrawerPlacement = 'left';
 
   /**
-   * Emitted when the drawer is closed (backdrop click or close button).
+   * Whether to show the default close button in the header.
+   */
+  @Prop() showClose: boolean = true;
+
+  /**
+   * Emitted when the drawer is closed (backdrop click, close button, or Escape).
    */
   @Event() myClose: EventEmitter<void>;
 
-  private drawerLogic: any;
+  /**
+   * Emitted when the drawer is opened.
+   */
+  @Event() myOpen: EventEmitter<void>;
+
+  @State() private isOpen: boolean = false;
+
+  /**
+   * When true, suppresses the slide transition so placement
+   * changes while closed don't cause a visible cross-slide.
+   */
+  @State() private skipTransition: boolean = false;
+
+  private drawer: DrawerReturn;
+
+  /** Guard against stale rAF callbacks from rapid open/close toggling. */
+  private openSeq: number = 0;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
-    this.drawerLogic = createDrawer({
+    this.drawer = createDrawer({
       defaultOpen: this.open,
       placement: this.placement,
-      onOpenChange: isOpen => {
+      onOpenChange: (isOpen) => {
+        this.isOpen = isOpen;
         this.open = isOpen;
-        if (!isOpen) {
+        if (isOpen) {
+          document.body.style.overflow = 'hidden';
+          this.myOpen.emit();
+        } else {
+          document.body.style.overflow = '';
           this.myClose.emit();
         }
       },
     });
+    this.isOpen = this.open;
   }
 
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
   @Watch('open')
-  openHandler(newValue: boolean) {
+  async openChanged(newValue: boolean) {
+    if (newValue === this.isOpen) return;
+
     if (newValue) {
-      this.drawerLogic.actions.open();
-      document.body.style.overflow = 'hidden';
+      // Phase 1 — position the panel at the correct off-screen spot
+      // with NO transition so it doesn't slide from the old placement.
+      const seq = ++this.openSeq;
+      this.skipTransition = true;
+
+      // Wait two frames so the browser paints the closed position first.
+      await new Promise<void>(r => requestAnimationFrame(() => r()));
+      await new Promise<void>(r => requestAnimationFrame(() => r()));
+
+      // Bail if user already toggled again while we waited.
+      if (seq !== this.openSeq) return;
+
+      // Phase 2 — re-enable the transition and open.
+      this.skipTransition = false;
+      this.drawer.actions.open();
     } else {
-      this.drawerLogic.actions.close();
-      document.body.style.overflow = '';
+      // Close: always animate.
+      this.openSeq++;
+      this.skipTransition = false;
+      this.drawer.actions.close();
     }
   }
 
   @Watch('placement')
-  placementHandler(newValue: DrawerPlacement) {
-    this.drawerLogic.actions.setPlacement(newValue);
+  placementChanged(newValue: DrawerPlacement) {
+    this.drawer.actions.setPlacement(newValue);
+
+    // When placement changes while closed, kill the transition
+    // so the panel jumps to its new off-screen position instantly.
+    if (!this.isOpen) {
+      this.skipTransition = true;
+    }
   }
+
+  /* ── Keyboard ───────────────────────────────────────────────────── */
 
   @Listen('keydown', { target: 'window' })
   handleKeyDown(ev: KeyboardEvent) {
-    this.drawerLogic.handleKeyDown(ev);
+    this.drawer.handleKeyDown(ev);
   }
 
+  /* ── Render ─────────────────────────────────────────────────────── */
+
   render() {
-    const overlayProps = this.drawerLogic.getOverlayProps();
-    const contentProps = this.drawerLogic.getContentProps();
-    const closeButtonProps = this.drawerLogic.getCloseButtonProps();
-
-    const placementClasses = {
-      left: 'top-0 left-0 bottom-0 w-[85vw] sm:w-80 border-r border-border -translate-x-full',
-      right: 'top-0 right-0 bottom-0 w-[85vw] sm:w-80 border-l border-border translate-x-full',
-      top: 'top-0 left-0 right-0 h-auto max-h-[50%] border-b border-border -translate-y-full',
-      bottom: 'bottom-0 left-0 right-0 h-auto max-h-[50%] border-t border-border translate-y-full',
-    };
-
+    const overlayProps = this.drawer.getOverlayProps();
+    const contentProps = this.drawer.getContentProps();
+    const closeButtonProps = this.drawer.getCloseButtonProps();
     return (
-      <Host style={{ display: 'contents' }}>
+      <Host>
+        {/* Overlay */}
         <div
-          class={cn(
-            'fixed inset-0 z-50 bg-foreground/80 opacity-0 pointer-events-none transition-opacity duration-300',
-            this.open ? 'opacity-100 pointer-events-auto' : '',
-          )}
+          class={cn(overlayVariants({ open: this.isOpen }))}
           {...overlayProps}
-          onClick={() => this.drawerLogic.handleOverlayClick()}
+          onClick={() => this.drawer.handleOverlayClick()}
         />
+
+        {/* Content panel */}
         <div
-          class={cn(
-            'fixed z-50 bg-background p-6 shadow-xl transition-transform duration-300 ease-in-out',
-            placementClasses[this.placement],
-            this.open ? 'translate-x-0 translate-y-0' : '',
-          )}
+          class={cn(contentVariants({ placement: this.placement, open: this.isOpen, animate: !this.skipTransition }))}
           {...contentProps}
         >
-          <div class="flex flex-col gap-1.5 text-center sm:text-left">
-            <slot name="header"></slot>
+          {/* Header */}
+          <div class="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
+            <div class="flex flex-col gap-1 min-w-0">
+              <slot name="header" />
+            </div>
+            {this.showClose && (
+              <button
+                class={cn(closeBtnVariants())}
+                onClick={() => this.drawer.actions.close()}
+                {...closeButtonProps}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-4 h-4"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span class="sr-only">Close</span>
+              </button>
+            )}
           </div>
-          <button
-            class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
-            onClick={() => this.drawerLogic.actions.close()}
-            {...closeButtonProps}
-          >
-            <and-icon name="close" class="h-4 w-4" />
-            <span class="sr-only">Close</span>
-          </button>
-          <div class="mt-4">
-            <slot></slot>
+
+          {/* Body */}
+          <div class="flex-1 px-5 py-4 overflow-y-auto">
+            <slot />
           </div>
-          <div class="mt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:gap-2">
-            <slot name="footer"></slot>
+
+          {/* Footer */}
+          <div class="px-5 py-4 border-t border-border shrink-0">
+            <slot name="footer" />
           </div>
         </div>
       </Host>

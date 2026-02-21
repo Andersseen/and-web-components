@@ -27,15 +27,9 @@ const navbarVariants = cva('w-full border-b', {
       ghost: 'bg-transparent border-transparent',
       filled: 'bg-primary text-primary-foreground border-primary',
     },
-    position: {
-      static: '',
-      sticky: 'sticky top-0 z-50',
-      fixed: 'fixed top-0 left-0 right-0 z-50',
-    },
   },
   defaultVariants: {
     variant: 'default',
-    position: 'static',
   },
 });
 
@@ -381,12 +375,24 @@ export class AndNavbar {
     const items = this.parsedItems;
     const hasItems = items.length > 0;
 
+    // Host handles positioning so backdrop-blur stays on <nav>
+    // and doesn't create a containing block that traps the drawer
+    const hostStyle: Record<string, string> =
+      this.position === 'fixed'
+        ? { position: 'fixed', top: '0', left: '0', right: '0', zIndex: '50' }
+        : this.position === 'sticky'
+          ? { position: 'sticky', top: '0', zIndex: '50' }
+          : {};
+
+    const isStuck = this.position === 'sticky' || this.position === 'fixed';
+
     return (
       <Host
         role={containerProps.role}
         aria-label={containerProps['aria-label']}
+        style={hostStyle}
       >
-        <nav class={cn(navbarVariants({ variant: this.variant, position: this.position }))}>
+        <nav class={cn(navbarVariants({ variant: this.variant }), isStuck && 'navbar-blur')}>
           <div class="navbar-container">
             {/* Brand */}
             <div class="navbar-brand">
@@ -460,10 +466,10 @@ export class AndNavbar {
           open={this.mobileMenuOpen}
           placement="right"
           onMyClose={this.handleClose}
-          class="md:hidden"
         >
-          <div slot="header" class="font-bold text-lg">Menu</div>
-          <div class="mobile-menu-content">
+          <span slot="header" class="mobile-menu-title">Menu</span>
+
+          <nav class="mobile-menu-content">
             {/* Items-based mobile menu */}
             {hasItems &&
               items.map(item => this.renderNavItem(item, true))}
@@ -474,10 +480,10 @@ export class AndNavbar {
                 <slot name="nav"></slot>
               </div>
             )}
+          </nav>
 
-            <div class="mobile-menu-actions">
-              <slot name="actions"></slot>
-            </div>
+          <div slot="footer" class="mobile-menu-actions">
+            <slot name="actions"></slot>
           </div>
         </and-drawer>
       </Host>

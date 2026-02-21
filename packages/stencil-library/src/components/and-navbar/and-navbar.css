@@ -50,6 +50,15 @@
   flex-shrink: 0;
 }
 
+/* ── Blur backdrop for sticky / fixed navbars ────────────────────── */
+
+nav.navbar-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: hsl(var(--background) / 0.8);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
+}
+
 .brand-text {
   font-size: 1.25rem;
   font-weight: 700;
@@ -134,27 +143,29 @@
 
 /* ── Mobile menu content ─────────────────────────────────────────── */
 
+.mobile-menu-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  letter-spacing: -0.01em;
+}
+
 .mobile-menu-content {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
+  gap: 0.125rem;
 }
 
 .mobile-menu-slot {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 .mobile-menu-actions {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid hsl(var(--border));
-  padding-left: 1rem;
-  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* ── Mobile active item highlight ────────────────────────────────── */

@@ -154,6 +154,11 @@ export namespace Components {
           * @default 'left'
          */
         "placement": DrawerPlacement;
+        /**
+          * Whether to show the default close button in the header.
+          * @default true
+         */
+        "showClose": boolean;
     }
     interface AndDropdown {
         /**
@@ -481,6 +486,7 @@ declare global {
     };
     interface HTMLAndDrawerElementEventMap {
         "myClose": void;
+        "myOpen": void;
     }
     interface HTMLAndDrawerElement extends Components.AndDrawer, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndDrawerElementEventMap>(type: K, listener: (this: HTMLAndDrawerElement, ev: AndDrawerCustomEvent<HTMLAndDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -811,9 +817,13 @@ declare namespace LocalJSX {
     }
     interface AndDrawer {
         /**
-          * Emitted when the drawer is closed (backdrop click or close button).
+          * Emitted when the drawer is closed (backdrop click, close button, or Escape).
          */
         "onMyClose"?: (event: AndDrawerCustomEvent<void>) => void;
+        /**
+          * Emitted when the drawer is opened.
+         */
+        "onMyOpen"?: (event: AndDrawerCustomEvent<void>) => void;
         /**
           * Whether the drawer is open.
           * @default false
@@ -824,6 +834,11 @@ declare namespace LocalJSX {
           * @default 'left'
          */
         "placement"?: DrawerPlacement;
+        /**
+          * Whether to show the default close button in the header.
+          * @default true
+         */
+        "showClose"?: boolean;
     }
     interface AndDropdown {
         /**
@@ -1076,6 +1091,7 @@ declare namespace LocalJSX {
     interface AndDrawerAttributes {
         "open": boolean;
         "placement": DrawerPlacement;
+        "showClose": boolean;
     }
     interface AndDropdownAttributes {
         "variant": string;

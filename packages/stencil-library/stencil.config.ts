@@ -5,9 +5,12 @@ import { postcss } from '@stencil-community/postcss';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
 
+const isDev = process.argv.includes('--dev') || process.argv.includes('--watch');
+
 export const config: Config = {
   namespace: 'stencil-library',
   globalStyle: 'src/global/global.css',
+  sourceMap: isDev,
   outputTargets: [
     {
       type: 'dist',
