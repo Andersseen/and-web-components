@@ -47,6 +47,18 @@
     "./alert": {
       "types": "./dist/alert/index.d.ts",
       "import": "./dist/alert/index.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/breadcrumb/index.d.ts",
+      "import": "./dist/breadcrumb/index.js"
+    },
+    "./menu-list": {
+      "types": "./dist/menu-list/index.d.ts",
+      "import": "./dist/menu-list/index.js"
+    },
+    "./context-menu": {
+      "types": "./dist/context-menu/index.d.ts",
+      "import": "./dist/context-menu/index.js"
     }
   },
   "files": [
