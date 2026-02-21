@@ -9,7 +9,7 @@ import { createButton, type ButtonReturn } from '@andersseen/headless-components
 
 const buttonVariants = cva(
   [
-    'inline-flex items-center justify-center rounded-lg text-sm font-medium font-sans',
+    'inline-flex items-center justify-center gap-1.5 rounded-lg text-sm font-medium font-sans',
     'transition-all duration-normal',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background',
     'disabled:opacity-50 disabled:pointer-events-none',
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         outline: 'border border-input bg-background shadow-sm hover:shadow-md hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:shadow-md hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        link: 'text-muted-foreground no-underline hover:text-foreground px-2 py-1 h-auto rounded-md hover:bg-accent/50',
       },
       size: {
         default: 'h-11 sm:h-10 py-2 px-4',
@@ -72,6 +72,15 @@ export class AndButton {
   /** Additional CSS classes to merge with the internal styles. */
   @Prop({ attribute: 'class' }) customClass: string;
 
+  /** When set, renders as an anchor (`<a>`) instead of `<button>`. */
+  @Prop({ reflect: true }) href: string;
+
+  /** Target for the anchor (e.g. `_blank`). Only used when `href` is set. */
+  @Prop({ reflect: true }) target: string;
+
+  /** Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`. */
+  @Prop({ reflect: true }) rel: string;
+
   /** Emitted on button click. */
   @Event({ bubbles: true, composed: true }) andButtonClick: EventEmitter<MouseEvent>;
 
@@ -109,16 +118,37 @@ export class AndButton {
     const props = this.buttonLogic?.getButtonProps() || {};
     const classes = cn(buttonVariants({ variant: this.variant, size: this.size }), this.customClass);
 
+    const content = [
+      <slot name="start" />,
+      this.loading && <span class={spinnerClass} aria-hidden="true" />,
+      <slot />,
+      <slot name="end" />,
+    ];
+
+    if (this.href) {
+      const relAttr = this.rel || (this.target === '_blank' ? 'noopener noreferrer' : undefined);
+
+      return (
+        <a
+          href={this.href}
+          target={this.target}
+          rel={relAttr}
+          class={classes}
+          aria-disabled={this.disabled ? 'true' : undefined}
+          tabindex={this.disabled ? '-1' : undefined}
+        >
+          {content}
+        </a>
+      );
+    }
+
     return (
       <button
         {...props}
         onClick={(e: MouseEvent) => this.buttonLogic?.actions.click(e)}
         class={classes}
       >
-        <slot name="start" />
-        {this.loading && <span class={spinnerClass} aria-hidden="true" />}
-        <slot />
-        <slot name="end" />
+        {content}
       </button>
     );
   }

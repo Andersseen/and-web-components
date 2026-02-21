@@ -171,15 +171,27 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * When set, renders as an anchor (`<a>`) instead of `<button>`.
+         */
+        "href": string;
+        /**
           * Shows a loading spinner and disables interaction.
           * @default false
          */
         "loading": boolean;
         /**
+          * Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`.
+         */
+        "rel": string;
+        /**
           * Size of the button.
           * @default 'default'
          */
         "size": ButtonVariantProps['size'];
+        /**
+          * Target for the anchor (e.g. `_blank`). Only used when `href` is set.
+         */
+        "target": string;
         /**
           * HTML button type attribute.
           * @default 'button'
@@ -1126,6 +1138,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * When set, renders as an anchor (`<a>`) instead of `<button>`.
+         */
+        "href"?: string;
+        /**
           * Shows a loading spinner and disables interaction.
           * @default false
          */
@@ -1135,10 +1151,18 @@ declare namespace LocalJSX {
          */
         "onAndButtonClick"?: (event: AndButtonCustomEvent<MouseEvent>) => void;
         /**
+          * Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`.
+         */
+        "rel"?: string;
+        /**
           * Size of the button.
           * @default 'default'
          */
         "size"?: ButtonVariantProps['size'];
+        /**
+          * Target for the anchor (e.g. `_blank`). Only used when `href` is set.
+         */
+        "target"?: string;
         /**
           * HTML button type attribute.
           * @default 'button'
@@ -1601,6 +1625,9 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "loading": boolean;
         "customClass": string;
+        "href": string;
+        "target": string;
+        "rel": string;
     }
     interface AndCardAttributes {
         "variant": CardVariantProps['variant'];

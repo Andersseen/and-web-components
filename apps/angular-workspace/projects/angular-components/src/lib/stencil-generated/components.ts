@@ -236,14 +236,14 @@ export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem 
 
 @ProxyCmp({
   defineCustomElementFn: defineAndButton,
-  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant']
+  inputs: ['customClass', 'disabled', 'href', 'loading', 'rel', 'size', 'target', 'type', 'variant']
 })
 @Component({
   selector: 'and-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant'],
+  inputs: ['customClass', 'disabled', 'href', 'loading', 'rel', 'size', 'target', 'type', 'variant'],
   outputs: ['andButtonClick'],
 })
 export class AndButton {
