@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen } from '@stencil/core';
 import { cn } from '../../utils/cn';
+import { createContextMenu, type ContextMenuReturn } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Base Styles
@@ -36,11 +37,25 @@ export class AndContextMenu {
 
   @State() private posX: number = 0;
   @State() private posY: number = 0;
+  @State() private contextMenuLogic: ContextMenuReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
+  componentWillLoad() {
+    this.contextMenuLogic = createContextMenu({
+      closeOnSelect: true,
+      onOpenChange: (isOpen: boolean) => {
+        this.open = isOpen;
+        this.andContextMenuOpenChange.emit(isOpen);
+      },
+      onPosition: (pos) => {
+        this.posX = pos.x;
+        this.posY = pos.y;
+      },
+    });
+  }
+
   componentDidLoad() {
-    // Listen to the trigger area for right-click
     const triggerSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="trigger"]');
     if (triggerSlot) {
       triggerSlot.addEventListener('slotchange', () => {
@@ -65,7 +80,6 @@ export class AndContextMenu {
     if (slot) {
       this.triggerEls = slot.assignedElements();
     }
-    // Fallback: also listen on the host's light-DOM children
     if (!this.triggerEls.length) {
       this.triggerEls = Array.from(this.el.children).filter(
         el => !el.slot || el.slot === 'trigger',
@@ -87,38 +101,28 @@ export class AndContextMenu {
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleContextMenu = (e: MouseEvent) => {
-    e.preventDefault();
-
     const rect = this.el.getBoundingClientRect();
-    this.posX = e.clientX - rect.left;
-    this.posY = e.clientY - rect.top;
-
-    this.setOpen(true);
+    this.contextMenuLogic?.handleContextMenu(e, rect);
   };
 
   @Listen('click', { target: 'window' })
   handleWindowClick() {
     if (this.open) {
-      this.setOpen(false);
+      this.contextMenuLogic?.actions.close();
     }
   }
 
   @Listen('keydown', { target: 'window' })
   handleKeyDown(e: KeyboardEvent) {
-    if (this.open && e.key === 'Escape') {
-      e.preventDefault();
-      this.setOpen(false);
-    }
-  }
-
-  private setOpen(value: boolean) {
-    this.open = value;
-    this.andContextMenuOpenChange.emit(value);
+    this.contextMenuLogic?.handleKeyDown(e);
   }
 
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
+    const triggerProps = this.contextMenuLogic?.getTriggerProps() || {};
+    const panelProps = this.contextMenuLogic?.getPanelProps('Context menu') || {};
+
     const panelClasses = cn(
       contextMenuPanelClass,
       this.open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none',
@@ -128,15 +132,13 @@ export class AndContextMenu {
     return (
       <Host>
         {/* Trigger area */}
-        <div class="contents">
+        <div class="contents" {...triggerProps}>
           <slot name="trigger" />
         </div>
 
         {/* Floating context-menu panel */}
         <div
-          role="menu"
-          aria-label="Context menu"
-          data-state={this.open ? 'open' : 'closed'}
+          {...panelProps}
           class={panelClasses}
           style={{
             top: `${this.posY}px`,

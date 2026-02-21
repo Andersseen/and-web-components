@@ -1,5 +1,6 @@
-import { Component, h, Host, Prop, Element } from '@stencil/core';
+import { Component, h, Host, Prop, Element, State } from '@stencil/core';
 import { cn } from '../../utils/cn';
+import { createMenuList, type MenuListReturn } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Base Styles
@@ -29,14 +30,29 @@ export class AndMenuList {
   /** Additional CSS classes to merge with internal styles. */
   @Prop({ attribute: 'class' }) customClass: string;
 
+  @State() private menuLogic: MenuListReturn;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.menuLogic = createMenuList({
+      ariaLabel: this.ariaMenuLabel,
+    });
+  }
+
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
+    const menuProps = this.menuLogic?.getMenuProps() || {};
     const classes = cn(menuListBaseClass, this.customClass);
 
     return (
       <Host>
-        <ul role="menu" aria-label={this.ariaMenuLabel} class={classes}>
+        <ul
+          {...menuProps}
+          class={classes}
+          onKeyDown={(e: KeyboardEvent) => this.menuLogic?.handleMenuKeyDown(e)}
+        >
           <slot />
         </ul>
       </Host>

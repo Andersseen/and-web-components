@@ -1,6 +1,7 @@
-import { Component, h, Host, Prop, Element } from '@stencil/core';
+import { Component, h, Host, Prop, Element, State, Event, EventEmitter } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
+import { createBreadcrumb, type BreadcrumbReturn, type BreadcrumbItemConfig } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -57,9 +58,34 @@ export class AndBreadcrumbItem {
   /** Additional CSS classes to merge with internal styles. */
   @Prop({ attribute: 'class' }) customClass: string;
 
+  /** Emitted when a breadcrumb link is activated. */
+  @Event({ bubbles: true, composed: true }) andBreadcrumbNavigate: EventEmitter<string>;
+
+  @State() private itemLogic: BreadcrumbReturn;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.itemLogic = createBreadcrumb({
+      onNavigate: (item: BreadcrumbItemConfig) => {
+        this.andBreadcrumbNavigate.emit(item.href);
+      },
+    });
+  }
+
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
+    const itemConfig: BreadcrumbItemConfig = {
+      id: this.href || 'current',
+      label: '',
+      href: this.href,
+      current: this.current,
+    };
+
+    const itemProps = this.itemLogic?.getItemProps(itemConfig) || {};
+    const linkProps = this.itemLogic?.getLinkProps(itemConfig) || {};
+
     const linkClasses = cn(
       breadcrumbItemVariants({ size: this.size }),
       this.current
@@ -77,7 +103,7 @@ export class AndBreadcrumbItem {
 
     return (
       <Host>
-        <li class="inline-flex items-center">
+        <li class="inline-flex items-center" {...itemProps}>
           {/* Separator */}
           {!this.hideSeparator && (
             <span class={separatorClasses} aria-hidden="true">
@@ -103,8 +129,8 @@ export class AndBreadcrumbItem {
           {/* Content */}
           <Tag
             class={linkClasses}
-            {...(this.href && !this.current ? { href: this.href } : {})}
-            {...(this.current ? { 'aria-current': 'page' } : {})}
+            {...linkProps}
+            onKeyDown={(e: KeyboardEvent) => this.itemLogic?.handleKeyDown(e, itemConfig)}
           >
             <slot />
           </Tag>

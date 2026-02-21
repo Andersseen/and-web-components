@@ -125,6 +125,11 @@ export namespace Components {
          */
         "customClass": string;
         /**
+          * Accessible label for the breadcrumb navigation.
+          * @default 'Breadcrumb'
+         */
+        "navLabel": string;
+        /**
           * Size variant for the breadcrumb trail.
           * @default 'md'
          */
@@ -537,6 +542,10 @@ export interface AndAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndAlertElement;
 }
+export interface AndBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndBreadcrumbItemElement;
+}
 export interface AndButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndButtonElement;
@@ -657,7 +666,18 @@ declare global {
         prototype: HTMLAndBreadcrumbElement;
         new (): HTMLAndBreadcrumbElement;
     };
+    interface HTMLAndBreadcrumbItemElementEventMap {
+        "andBreadcrumbNavigate": string;
+    }
     interface HTMLAndBreadcrumbItemElement extends Components.AndBreadcrumbItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLAndBreadcrumbItemElement, ev: AndBreadcrumbItemCustomEvent<HTMLAndBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLAndBreadcrumbItemElement, ev: AndBreadcrumbItemCustomEvent<HTMLAndBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLAndBreadcrumbItemElement: {
         prototype: HTMLAndBreadcrumbItemElement;
@@ -1056,6 +1076,11 @@ declare namespace LocalJSX {
          */
         "customClass"?: string;
         /**
+          * Accessible label for the breadcrumb navigation.
+          * @default 'Breadcrumb'
+         */
+        "navLabel"?: string;
+        /**
           * Size variant for the breadcrumb trail.
           * @default 'md'
          */
@@ -1080,6 +1105,10 @@ declare namespace LocalJSX {
           * Optional URL. When set, the item renders as a link.
          */
         "href"?: string;
+        /**
+          * Emitted when a breadcrumb link is activated.
+         */
+        "onAndBreadcrumbNavigate"?: (event: AndBreadcrumbItemCustomEvent<string>) => void;
         /**
           * Size variant — should match the parent breadcrumb size.
           * @default 'md'
@@ -1555,6 +1584,7 @@ declare namespace LocalJSX {
     }
     interface AndBreadcrumbAttributes {
         "size": BreadcrumbVariantProps['size'];
+        "navLabel": string;
         "customClass": string;
     }
     interface AndBreadcrumbItemAttributes {

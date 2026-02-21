@@ -1,6 +1,7 @@
-import { Component, h, Host, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Host, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
+import { createMenuList, type MenuListReturn } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -68,26 +69,39 @@ export class AndMenuItem {
   /** Emitted when the item is selected (clicked or Enter/Space pressed). */
   @Event({ bubbles: true, composed: true }) andMenuItemSelect: EventEmitter<string>;
 
+  @State() private menuItemLogic: MenuListReturn;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.menuItemLogic = createMenuList({
+      items: [{ id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled }],
+      onSelect: (id: string) => {
+        this.andMenuItemSelect.emit(id);
+      },
+    });
+  }
+
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleClick = () => {
     if (!this.disabled) {
-      this.andMenuItemSelect.emit(this.value);
+      this.menuItemLogic?.actions.selectItem(this.value);
     }
   };
 
   private handleKeyDown = (e: KeyboardEvent) => {
     if (this.disabled) return;
-
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      this.andMenuItemSelect.emit(this.value);
-    }
+    const itemConfig = { id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled };
+    this.menuItemLogic?.handleItemKeyDown(e, itemConfig);
   };
 
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
+    const itemConfig = { id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled };
+    const itemProps = this.menuItemLogic?.getItemProps(itemConfig, 0) || {};
+
     const classes = cn(
       menuItemVariants({ intent: this.intent, disabled: this.disabled }),
       this.customClass,
@@ -96,9 +110,7 @@ export class AndMenuItem {
     return (
       <Host>
         <li
-          role="menuitem"
-          tabindex={this.disabled ? -1 : 0}
-          aria-disabled={this.disabled ? 'true' : null}
+          {...itemProps}
           class={classes}
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}

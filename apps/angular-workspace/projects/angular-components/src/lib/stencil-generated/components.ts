@@ -183,14 +183,14 @@ export declare interface AndBadge extends Components.AndBadge {}
 
 @ProxyCmp({
   defineCustomElementFn: defineAndBreadcrumb,
-  inputs: ['customClass', 'size']
+  inputs: ['customClass', 'navLabel', 'size']
 })
 @Component({
   selector: 'and-breadcrumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'size'],
+  inputs: ['customClass', 'navLabel', 'size'],
 })
 export class AndBreadcrumb {
   protected el: HTMLAndBreadcrumbElement;
@@ -214,9 +214,11 @@ export declare interface AndBreadcrumb extends Components.AndBreadcrumb {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size'],
+  outputs: ['andBreadcrumbNavigate'],
 })
 export class AndBreadcrumbItem {
   protected el: HTMLAndBreadcrumbItemElement;
+  @Output() andBreadcrumbNavigate = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -224,7 +226,12 @@ export class AndBreadcrumbItem {
 }
 
 
-export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem {}
+export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem {
+  /**
+   * Emitted when a breadcrumb link is activated.
+   */
+  andBreadcrumbNavigate: EventEmitter<CustomEvent<string>>;
+}
 
 
 @ProxyCmp({
