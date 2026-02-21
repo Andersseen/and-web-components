@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen, 
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createDropdown, type DropdownReturn } from '@andersseen/headless-components';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Types
@@ -95,6 +96,7 @@ export class AndDropdown {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.dropdownLogic = createDropdown({
       placement: this.placement,
       closeOnSelect: this.closeOnSelect,
@@ -181,7 +183,8 @@ export class AndDropdown {
           {/* Menu */}
           <div
             {...menuProps}
-            class={cn(menuClass, this.isOpen ? 'opacity-100 visible' : 'opacity-0 invisible')}
+            class={cn(menuClass, 'and-dropdown-menu', this.isOpen ? 'opacity-100 visible' : 'opacity-0 invisible')}
+            data-state={this.isOpen ? 'open' : 'closed'}
             onKeyDown={this.handleMenuKeyDown}
           >
             {this.items.map(item => {

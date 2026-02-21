@@ -13,29 +13,13 @@ dialog {
 dialog::backdrop {
   background-color: hsl(var(--foreground) / 0.5);
   backdrop-filter: blur(4px);
-  animation: fade-in 0.2s ease-out;
 }
 
-dialog[open] {
-  animation: zoom-in 0.3s ease-out;
+/* Animations only when the host has [animated] */
+:host([animated]) dialog::backdrop {
+  animation: and-fade-in 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes zoom-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+:host([animated]) dialog[open] {
+  animation: and-fade-zoom-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
 }

@@ -1,13 +1,14 @@
-import { Component, h, Host, State, Method } from '@stencil/core';
+import { Component, h, Host, State, Method, Element } from '@stencil/core';
 import { type AccordionReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Styles
  * ──────────────────────────────────────────────────────────────────── */
 
 const triggerBaseClass = [
-  'flex flex-1 items-center justify-between py-4 font-medium transition-all',
+  'flex flex-1 items-center justify-between py-4 font-medium',
   'hover:underline',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
 ].join(' ');
@@ -30,10 +31,16 @@ export interface TriggerItemProps {
   shadow: true,
 })
 export class AndAccordionTrigger {
+  @Element() el: HTMLElement;
+
   @State() private itemId: string = '';
   @State() private accordionLogic: AccordionReturn | null = null;
   @State() private disabled: boolean = false;
   @State() private isExpanded: boolean = false;
+
+  connectedCallback() {
+    applyGlobalAnimationFlag(this.el);
+  }
 
   /** Receive item properties from parent accordion-item. */
   @Method()
@@ -100,9 +107,10 @@ export class AndAccordionTrigger {
             name="chevron-down"
             size={16}
             class={cn(
-              'h-4 w-4 shrink-0 transition-transform duration-200 origin-center',
+              'and-chevron h-4 w-4 shrink-0 origin-center',
               this.isExpanded && 'rotate-180',
             )}
+            data-expanded={String(this.isExpanded)}
           />
         </button>
       </Host>

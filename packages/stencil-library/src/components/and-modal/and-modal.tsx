@@ -1,21 +1,20 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch, Element } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { createModal, type ModalReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
 const overlayClass = [
-  'fixed inset-0 z-50 bg-foreground/80 backdrop-blur-sm',
-  'animate-in fade-in duration-200',
+  'and-modal-backdrop fixed inset-0 z-50 bg-foreground/80 backdrop-blur-sm',
 ].join(' ');
 
 const contentVariants = cva(
   [
-    'relative z-50 grid w-full max-w-lg gap-4 border border-border bg-background p-6 shadow-lg pointer-events-auto',
-    'animate-in fade-in zoom-in-95 duration-200',
+    'and-modal-content relative z-50 grid w-full max-w-lg gap-4 border border-border bg-background p-6 shadow-lg pointer-events-auto',
     'rounded-lg',
   ].join(' '),
 );
@@ -38,6 +37,8 @@ const closeButtonClass = [
   shadow: true,
 })
 export class AndModal {
+  @Element() el: HTMLElement;
+
   /** Whether the modal is open. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
@@ -49,6 +50,7 @@ export class AndModal {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.modalLogic = createModal({
       defaultOpen: this.open,
       onOpenChange: (isOpen: boolean) => {
@@ -98,7 +100,7 @@ export class AndModal {
 
         {/* Modal Container */}
         <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
-          <div class={cn(contentVariants())} {...contentProps}>
+          <div class={cn(contentVariants())} data-state="open" {...contentProps}>
             <div class="flex flex-col gap-4">
               <slot />
               <button

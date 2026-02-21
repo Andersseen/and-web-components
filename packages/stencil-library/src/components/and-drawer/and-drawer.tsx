@@ -1,14 +1,15 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State, Element } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-components';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
 const overlayVariants = cva(
-  'fixed inset-0 z-[9999] bg-foreground/60 transition-opacity duration-300 ease-out',
+  'and-drawer-overlay fixed inset-0 z-[9999] bg-foreground/60',
   {
     variants: {
       open: {
@@ -21,7 +22,7 @@ const overlayVariants = cva(
 );
 
 const contentVariants = cva(
-  'fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
+  'and-drawer-content fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
   {
     variants: {
       placement: {
@@ -35,7 +36,7 @@ const contentVariants = cva(
         false: '',
       },
       animate: {
-        true: 'transition-transform duration-300 ease-out',
+        true: '',
         false: '',
       },
     },
@@ -75,6 +76,8 @@ export type DrawerVariantProps = VariantProps<typeof contentVariants>;
   shadow: true,
 })
 export class AndDrawer {
+  @Element() el: HTMLElement;
+
   /**
    * Whether the drawer is open.
    */
@@ -112,6 +115,7 @@ export class AndDrawer {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.drawer = createDrawer({
       defaultOpen: this.open,
       placement: this.placement,

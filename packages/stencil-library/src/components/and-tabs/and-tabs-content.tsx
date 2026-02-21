@@ -1,5 +1,6 @@
 import { Component, h, Host, Prop, Element } from '@stencil/core';
 import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 const contentBaseClass = [
   'mt-2',
@@ -20,6 +21,10 @@ export class AndTabsContent {
   /** Whether this content panel is currently selected (set by parent). */
   @Prop() selected: boolean = false;
 
+  connectedCallback() {
+    applyGlobalAnimationFlag(this.el);
+  }
+
   render() {
     return (
       <Host
@@ -29,8 +34,10 @@ export class AndTabsContent {
         aria-labelledby={this.value ? `tab-${this.value}` : undefined}
         class={cn(
           contentBaseClass,
-          this.selected ? 'block animate-in fade-in-50 zoom-in-95' : 'hidden',
+          'and-tab-content',
+          this.selected ? 'block' : 'hidden',
         )}
+        data-state={this.selected ? 'active' : 'inactive'}
       >
         <slot />
       </Host>

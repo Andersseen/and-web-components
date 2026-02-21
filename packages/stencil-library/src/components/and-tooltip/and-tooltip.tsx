@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Element, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { createTooltip, type TooltipPlacement, type TooltipReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -9,12 +10,8 @@ import { cn } from '../../utils/cn';
 
 const tooltipVariants = cva(
   [
-    'absolute z-50 overflow-hidden rounded-md border border-border',
+    'and-tooltip absolute z-50 overflow-hidden rounded-md border border-border',
     'bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md whitespace-nowrap',
-    'animate-in fade-in-0 zoom-in-95',
-    'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-    'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2',
-    'data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
   ].join(' '),
   {
     variants: {
@@ -67,6 +64,7 @@ export class AndTooltip {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.tooltipLogic = createTooltip({
       placement: this.placement,
       openDelay: this.openDelay,
@@ -111,6 +109,8 @@ export class AndTooltip {
           <div
             class={cn(tooltipVariants({ placement: this.placement, visible: this.isVisible }))}
             role="tooltip"
+            data-state={this.isVisible ? 'open' : 'closed'}
+            data-side={this.placement}
             {...tooltipProps}
           >
             {this.content || <slot name="content" />}

@@ -54,6 +54,67 @@
   animation-name: and-scale-down;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+ * Component-level animation tokens
+ * Used by @andersseen/web-components when `animated` prop is true.
+ * These keyframes are framework-agnostic and can be consumed by
+ * any component library that imports this stylesheet.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* --- Accordion --- */
+@keyframes and-accordion-open {
+  from { height: 0; opacity: 0; }
+  to   { height: var(--and-accordion-content-height, auto); opacity: 1; }
+}
+@keyframes and-accordion-close {
+  from { height: var(--and-accordion-content-height, auto); opacity: 1; }
+  to   { height: 0; opacity: 0; }
+}
+
+/* --- Spinner (button loading) --- */
+@keyframes and-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* --- Slide directions (toast, tooltip, dropdown) --- */
+@keyframes and-slide-in-from-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes and-slide-in-from-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes and-slide-in-from-top {
+  from { transform: translateY(-0.5rem); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes and-slide-in-from-bottom {
+  from { transform: translateY(0.5rem); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* --- Fade + Zoom combo (modal, tooltip, tabs) --- */
+@keyframes and-fade-zoom-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes and-fade-zoom-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.95); }
+}
+
+/* --- Chevron rotation (accordion trigger) --- */
+@keyframes and-rotate-180 {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
+@keyframes and-rotate-180-reverse {
+  from { transform: rotate(180deg); }
+  to   { transform: rotate(0deg); }
+}
+
 /* --- Keyframes --- */
 
 @keyframes and-fade-in {

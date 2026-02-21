@@ -2,6 +2,7 @@ import { Component, Host, h, State, Method, Element } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { createToastManager, type ToastType, type ToastManagerReturn, type ToastItem } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -55,6 +56,7 @@ export class AndToast {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.toastManager = createToastManager({
       onToastsChange: (toasts: ToastItem[]) => {
         this.toasts = toasts;
@@ -98,7 +100,7 @@ export class AndToast {
                 key={toast.id}
                 class={cn(
                   toastVariants({ variant: toast.type }),
-                  'animate-in slide-in-from-right-full fade-in duration-300',
+                  'and-toast-item',
                 )}
                 role="alert"
                 {...toastProps}

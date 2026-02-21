@@ -1,16 +1,13 @@
-import { Component, h, Host, State, Method } from '@stencil/core';
+import { Component, h, Host, State, Method, Element } from '@stencil/core';
 import { type AccordionReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Styles
  * ──────────────────────────────────────────────────────────────────── */
 
-const contentBaseClass = [
-  'overflow-hidden text-sm transition-all',
-  'data-[state=open]:animate-accordion-down',
-  'data-[state=closed]:animate-accordion-up',
-].join(' ');
+const contentBaseClass = 'and-accordion-content overflow-hidden text-sm';
 
 /* ────────────────────────────────────────────────────────────────────
  * Component
@@ -27,9 +24,15 @@ export interface ContentItemProps {
   shadow: true,
 })
 export class AndAccordionContent {
+  @Element() el: HTMLElement;
+
   @State() private itemId: string = '';
   @State() private accordionLogic: AccordionReturn | null = null;
   @State() private isExpanded: boolean = false;
+
+  connectedCallback() {
+    applyGlobalAnimationFlag(this.el);
+  }
 
   /** Receive item properties from parent accordion-item. */
   @Method()

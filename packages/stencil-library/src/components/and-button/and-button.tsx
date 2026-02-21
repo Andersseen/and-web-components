@@ -38,7 +38,7 @@ const buttonVariants = cva(
   },
 );
 
-const spinnerClass = 'mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent';
+const spinnerClass = 'and-spinner mr-2 h-4 w-4 rounded-full border-2 border-current border-t-transparent';
 
 export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
