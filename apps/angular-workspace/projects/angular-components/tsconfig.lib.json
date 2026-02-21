@@ -10,14 +10,14 @@
     "types": [],
     "paths": {
       "@andersseen/stencil-library/components/*": [
-        "../../../stencil-library/dist/components/*"
+        "../../../../packages/stencil-library/dist/components/*"
       ],
-      "@andersseen/stencil-library": ["../../../stencil-library/dist/types/index.d.ts"]
+      "@andersseen/stencil-library": ["../../../../packages/stencil-library/dist/types/index.d.ts"]
     }
   },
   "include": [
     "src/**/*.ts",
-    "../../../stencil-library/dist/types/components.d.ts"
+    "../../../../packages/stencil-library/dist/types/components.d.ts"
   ],
   "exclude": ["**/*.spec.ts"]
 }

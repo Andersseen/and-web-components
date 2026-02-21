@@ -21,23 +21,23 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/angular-workspace:
+  apps/angular-workspace:
     dependencies:
       '@andersseen/headless-core':
         specifier: workspace:*
-        version: link:../headless-core
+        version: link:../../packages/headless-core
       '@andersseen/icon-library':
         specifier: workspace:*
-        version: link:../icon-library
+        version: link:../../packages/icon-library
       '@andersseen/layout-core':
         specifier: workspace:*
-        version: link:../layout-core
+        version: link:../../packages/layout-core
       '@andersseen/motion-core':
         specifier: workspace:*
-        version: link:../motion-core
+        version: link:../../packages/motion-core
       '@andersseen/stencil-library':
         specifier: workspace:*
-        version: link:../stencil-library
+        version: link:../../packages/stencil-library
       '@angular/animations':
         specifier: ^21.1.3
         version: 21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0))
@@ -142,17 +142,17 @@ importers:
         specifier: ^4.0.8
         version: 4.0.18(@types/node@25.2.1)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(lightningcss@1.31.1)(sass@1.97.1)(terser@5.46.0)(yaml@2.8.2)
 
-  packages/astro-landing:
+  apps/astro-landing:
     dependencies:
       '@andersseen/icon-library':
         specifier: workspace:*
-        version: link:../icon-library
+        version: link:../../packages/icon-library
       '@andersseen/motion-core':
         specifier: workspace:*
-        version: link:../motion-core
+        version: link:../../packages/motion-core
       '@andersseen/stencil-library':
         specifier: workspace:*
-        version: link:../stencil-library
+        version: link:../../packages/stencil-library
       astro:
         specifier: ^5.7.10
         version: 5.17.3(@types/node@22.19.9)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(rollup@4.57.1)(sass@1.97.3)(terser@5.46.0)(typescript@5.9.3)(yaml@2.8.2)
@@ -12911,7 +12911,7 @@ snapshots:
 
   compressible@2.0.18:
     dependencies:
-      mime-db: 1.52.0
+      mime-db: 1.54.0
 
   compression@1.8.1:
     dependencies:
@@ -14899,7 +14899,7 @@ snapshots:
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 4.0.1
       istanbul-reports: 3.2.0
-      minimatch: 3.0.5
+      minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
 
@@ -14934,7 +14934,7 @@ snapshots:
       lodash: 4.17.23
       log4js: 6.9.1
       mime: 2.6.0
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       mkdirp: 0.5.6
       qjobs: 1.2.0
       range-parser: 1.2.1
@@ -15940,7 +15940,7 @@ snapshots:
       rollup-plugin-dts: 6.3.0(rollup@4.57.1)(typescript@5.9.3)
       rxjs: 7.8.2
       sass: 1.97.3
-      tinyglobby: 0.2.12
+      tinyglobby: 0.2.15
       tslib: 2.8.1
       typescript: 5.9.3
     optionalDependencies:
@@ -16066,7 +16066,7 @@ snapshots:
     dependencies:
       npm-install-checks: 8.0.0
       npm-normalize-package-bin: 5.0.0
-      npm-package-arg: 13.0.1
+      npm-package-arg: 13.0.2
       semver: 7.7.4
 
   npm-registry-fetch@19.1.0:
@@ -16396,7 +16396,7 @@ snapshots:
       cacache: 20.0.3
       fs-minipass: 3.0.3
       minipass: 7.1.2
-      npm-package-arg: 13.0.1
+      npm-package-arg: 13.0.2
       npm-packlist: 10.0.3
       npm-pick-manifest: 11.0.3
       npm-registry-fetch: 19.1.0
@@ -17714,7 +17714,7 @@ snapshots:
     dependencies:
       '@istanbuljs/schema': 0.1.3
       glob: 7.2.3
-      minimatch: 3.0.5
+      minimatch: 3.1.2
 
   text-decoder@1.2.3:
     dependencies:
