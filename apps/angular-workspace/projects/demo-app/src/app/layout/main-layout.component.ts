@@ -187,6 +187,9 @@ export class MainLayoutComponent {
     { id: 'toast', label: 'Toast', icon: 'bell' },
     { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
     { id: 'alert', label: 'Alert', icon: 'alert-circle' },
+    { id: 'breadcrumb', label: 'Breadcrumb', icon: 'chevron-right' },
+    { id: 'menu-list', label: 'Menu List', icon: 'list' },
+    { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
   ];
   motionItems: SidebarItem[] = [
     { id: 'attribute', label: 'Attribute API', icon: 'code' },
