@@ -15,7 +15,8 @@
     "start:demo:dev": "pnpm clean:angular && concurrently \"pnpm run build:stencil --watch\" \"pnpm -C apps/angular-workspace start\"",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm clean:angular && pnpm -C apps/angular-workspace start",
     "start:astro:dev": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",
-    "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy"
+    "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy",
+    "deploy:cloudflare:actions": "pnpm build:all && npx wrangler pages deploy apps/angular-workspace/dist/demo-app/browser"
   },
   "devDependencies": {
     "@types/node": "^25.2.1",
