@@ -28,9 +28,14 @@
 
  - [and-navbar](../and-navbar)
 
+### Depends on
+
+- [and-icon](../and-icon)
+
 ### Graph
 ```mermaid
 graph TD;
+  and-drawer --> and-icon
   and-navbar --> and-drawer
   style and-drawer fill:#f9f,stroke:#333,stroke-width:4px
 ```

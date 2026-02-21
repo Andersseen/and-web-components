@@ -39,6 +39,7 @@
 graph TD;
   and-navbar --> and-icon
   and-navbar --> and-drawer
+  and-drawer --> and-icon
   style and-navbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

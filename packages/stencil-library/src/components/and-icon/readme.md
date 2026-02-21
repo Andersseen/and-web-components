@@ -22,6 +22,7 @@
  - [and-accordion-trigger](../and-accordion)
  - [and-alert](../and-alert)
  - [and-carousel](../and-carousel)
+ - [and-drawer](../and-drawer)
  - [and-dropdown](../and-dropdown)
  - [and-modal](../and-modal)
  - [and-navbar](../and-navbar)
@@ -35,6 +36,7 @@ graph TD;
   and-accordion-trigger --> and-icon
   and-alert --> and-icon
   and-carousel --> and-icon
+  and-drawer --> and-icon
   and-dropdown --> and-icon
   and-modal --> and-icon
   and-navbar --> and-icon

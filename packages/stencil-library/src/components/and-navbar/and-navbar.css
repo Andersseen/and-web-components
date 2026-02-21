@@ -135,6 +135,9 @@ nav.navbar-blur {
 }
 
 .mobile-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 200ms ease;
 }
 .mobile-toggle-icon--open {
