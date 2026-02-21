@@ -404,19 +404,21 @@ export declare interface AndModal extends Components.AndModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndNavbar,
-  inputs: ['activeItem', 'items', 'variant']
+  inputs: ['activeItem', 'ariaNavLabel', 'items', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
 })
 @Component({
   selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'items', 'variant'],
-  outputs: ['navItemClick'],
+  inputs: ['activeItem', 'ariaNavLabel', 'items', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
+  outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange'],
 })
 export class AndNavbar {
   protected el: HTMLAndNavbarElement;
   @Output() navItemClick = new EventEmitter<CustomEvent<string>>();
+  @Output() navLinkClick = new EventEmitter<CustomEvent<{ id: string; href: string }>>();
+  @Output() mobileMenuChange = new EventEmitter<CustomEvent<boolean>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -426,9 +428,17 @@ export class AndNavbar {
 
 export declare interface AndNavbar extends Components.AndNavbar {
   /**
-   * Emitted when a navigation item is clicked
+   * Emitted when active item changes
    */
   navItemClick: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when a navigation link is clicked
+   */
+  navLinkClick: EventEmitter<CustomEvent<{ id: string; href: string }>>;
+  /**
+   * Emitted when mobile menu state changes
+   */
+  mobileMenuChange: EventEmitter<CustomEvent<boolean>>;
 }
 
 

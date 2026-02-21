@@ -19,6 +19,13 @@ import "@andersseen/layout-core/dist/layout-core.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Clear stale hash on fresh page load so the page always starts at Home -->
+    <script is:inline>
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+        window.scrollTo(0, 0);
+      }
+    </script>
   </head>
   <body class="bg-background text-foreground antialiased min-h-screen font-sans">
     <slot />

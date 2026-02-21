@@ -191,13 +191,9 @@ export class AndNavbar {
   componentDidLoad() {
     if (this.scrollSpy) {
       this.setupScrollSpy();
-      // Use actual scroll position to determine the initial active section
-      // instead of URL hash, which may be stale from a previous visit
-      this.navbar.actions.updateActiveFromScroll();
-    } else {
-      // Without scroll-spy, fall back to hash detection
-      this.navbar.actions.updateActiveFromHash();
     }
+    // Try to detect initial active from hash
+    this.navbar.actions.updateActiveFromHash();
   }
 
   disconnectedCallback() {
@@ -371,10 +367,6 @@ export class AndNavbar {
   /* ── Main render ────────────────────────────────────────────────── */
 
   render() {
-    if (!this.navbar) {
-      return <Host><div style={{padding: '1rem', background: 'red', color: 'white'}}>Navbar: headless not initialized</div></Host>;
-    }
-
     const containerProps = this.navbar.getContainerProps();
     const toggleProps = this.navbar.getToggleProps();
     const navListProps = this.navbar.getNavListProps();

@@ -1,26 +1,31 @@
 ---
-const navLinks = [
-  { href: '#hero', label: 'Home' },
-  { href: '#features', label: 'Features' },
-  { href: '#showcase', label: 'Showcase' },
-  { href: '#ecosystem', label: 'Ecosystem' },
+const navItems = [
+  { id: 'home', label: 'Home', href: '#hero' },
+  { id: 'features', label: 'Features', href: '#features' },
+  { id: 'showcase', label: 'Showcase', href: '#showcase' },
+  { id: 'ecosystem', label: 'Ecosystem', href: '#ecosystem' },
 ];
 ---
 
-<and-navbar   class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+<and-navbar
+  variant="default"
+  position="sticky"
+  items={JSON.stringify(navItems)}
+  active-item="home"
+  scroll-spy
+  scroll-spy-offset="120"
+  aria-nav-label="Main navigation"
+  class="w-full backdrop-blur supports-[backdrop-filter]:bg-background/60 fixed top-0 z-50 shadow-md"
+
+>
   <div slot="brand" class="font-bold text-xl flex items-center gap-2">
     <and-icon name="layers" size="24"></and-icon>
     <span>Andersseen</span>
   </div>
-  <nav slot="actions" class="hidden md:flex items-center gap-6">
-    {navLinks.map(({ href, label }) => (
-      <a href={href} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-        {label}
-      </a>
-    ))}
+  <div slot="actions">
     <and-button size="sm" variant="outline">
       <and-icon name="github" size="16"></and-icon>
       GitHub
     </and-button>
-  </nav>
+  </div>
 </and-navbar>

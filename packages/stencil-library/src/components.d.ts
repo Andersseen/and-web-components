@@ -219,17 +219,37 @@ export namespace Components {
     }
     interface AndNavbar {
         /**
-          * The active navigation item ID
-          * @default 'home'
+          * The active navigation item ID. Reflects the headless‐core state.
+          * @default ''
          */
         "activeItem": string;
         /**
-          * Navigation items to display
+          * ARIA label for the navigation
+          * @default 'Main navigation'
+         */
+        "ariaNavLabel": string;
+        /**
+          * Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content.
           * @default []
          */
-        "items": NavItem[];
+        "items": NavItem[] | string;
         /**
-          * Variant of the navbar
+          * Positioning behaviour
+          * @default 'static'
+         */
+        "position": 'static' | 'sticky' | 'fixed';
+        /**
+          * Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.
+          * @default false
+         */
+        "scrollSpy": boolean;
+        /**
+          * Scroll-spy offset from the top of viewport (px).
+          * @default 100
+         */
+        "scrollSpyOffset": number;
+        /**
+          * Visual variant
           * @default 'default'
          */
         "variant": NavbarProps['variant'];
@@ -535,6 +555,8 @@ declare global {
     };
     interface HTMLAndNavbarElementEventMap {
         "navItemClick": string;
+        "navLinkClick": { id: string; href: string };
+        "mobileMenuChange": boolean;
     }
     interface HTMLAndNavbarElement extends Components.AndNavbar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndNavbarElementEventMap>(type: K, listener: (this: HTMLAndNavbarElement, ev: AndNavbarCustomEvent<HTMLAndNavbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -870,21 +892,49 @@ declare namespace LocalJSX {
     }
     interface AndNavbar {
         /**
-          * The active navigation item ID
-          * @default 'home'
+          * The active navigation item ID. Reflects the headless‐core state.
+          * @default ''
          */
         "activeItem"?: string;
         /**
-          * Navigation items to display
+          * ARIA label for the navigation
+          * @default 'Main navigation'
+         */
+        "ariaNavLabel"?: string;
+        /**
+          * Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content.
           * @default []
          */
-        "items"?: NavItem[];
+        "items"?: NavItem[] | string;
         /**
-          * Emitted when a navigation item is clicked
+          * Emitted when mobile menu state changes
+         */
+        "onMobileMenuChange"?: (event: AndNavbarCustomEvent<boolean>) => void;
+        /**
+          * Emitted when active item changes
          */
         "onNavItemClick"?: (event: AndNavbarCustomEvent<string>) => void;
         /**
-          * Variant of the navbar
+          * Emitted when a navigation link is clicked
+         */
+        "onNavLinkClick"?: (event: AndNavbarCustomEvent<{ id: string; href: string }>) => void;
+        /**
+          * Positioning behaviour
+          * @default 'static'
+         */
+        "position"?: 'static' | 'sticky' | 'fixed';
+        /**
+          * Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.
+          * @default false
+         */
+        "scrollSpy"?: boolean;
+        /**
+          * Scroll-spy offset from the top of viewport (px).
+          * @default 100
+         */
+        "scrollSpyOffset"?: number;
+        /**
+          * Visual variant
           * @default 'default'
          */
         "variant"?: NavbarProps['variant'];
@@ -1051,7 +1101,12 @@ declare namespace LocalJSX {
     }
     interface AndNavbarAttributes {
         "activeItem": string;
+        "items": NavItem[] | string;
         "variant": NavbarProps['variant'];
+        "position": 'static' | 'sticky' | 'fixed';
+        "scrollSpy": boolean;
+        "scrollSpyOffset": number;
+        "ariaNavLabel": string;
     }
     interface AndPaginationAttributes {
         "totalPages": number;
