@@ -1,28 +1,185 @@
+/* ────────────────────────────────────────────────────────────────────
+ * and-navbar   —   CSS custom properties + layout + active indicator
+ * ──────────────────────────────────────────────────────────────────── */
+
+/* ── Custom Properties (override from the outside) ───────────────── */
 :host {
+  --navbar-height: 4rem; /* 64px */
+  --navbar-max-width: 80rem; /* 1280px */
+  --navbar-px: 1rem;
+  --navbar-indicator-color: hsl(var(--primary));
+  --navbar-indicator-height: 2px;
+  --navbar-indicator-radius: 9999px;
+  --navbar-item-gap: 0.25rem;
+  --navbar-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
   display: block;
 }
 
+/* ── Layout ──────────────────────────────────────────────────────── */
+
 .navbar-container {
-  @apply mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--navbar-height);
+  max-width: var(--navbar-max-width);
+  padding-left: var(--navbar-px);
+  padding-right: var(--navbar-px);
+}
+
+@media (min-width: 640px) {
+  .navbar-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .navbar-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .navbar-brand {
-  @apply flex items-center gap-2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ── Blur backdrop for sticky / fixed navbars ────────────────────── */
+
+nav.navbar-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: hsl(var(--background) / 0.8);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
 }
 
 .brand-text {
-  @apply text-xl font-bold tracking-tight text-foreground;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: hsl(var(--foreground));
 }
 
-.navbar-menu {
-  @apply flex items-center gap-1;
+/* ── Nav items container ─────────────────────────────────────────── */
+
+.navbar-menu,
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--navbar-item-gap);
 }
 
 .navbar-actions {
-  @apply flex items-center gap-2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
-/* Responsive Utilities for Shadow DOM */
+/* ── Active indicator (underline bar) ────────────────────────────── */
+
+.nav-item-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  width: 0;
+  height: var(--navbar-indicator-height);
+  background: var(--navbar-indicator-color);
+  border-radius: var(--navbar-indicator-radius);
+  transform: translateX(-50%);
+  transition:
+    width var(--navbar-transition),
+    opacity var(--navbar-transition);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-item-indicator--active {
+  width: 60%;
+  opacity: 1;
+}
+
+/* ── Mobile toggle ───────────────────────────────────────────────── */
+
+.navbar-mobile-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: -0.5rem;
+  color: hsl(var(--foreground));
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: background var(--navbar-transition);
+}
+.mobile-toggle-btn:hover {
+  background: hsl(var(--accent));
+}
+.mobile-toggle-btn:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+.mobile-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 200ms ease;
+}
+.mobile-toggle-icon--open {
+  transform: rotate(90deg);
+}
+
+/* ── Mobile menu content ─────────────────────────────────────────── */
+
+.mobile-menu-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  letter-spacing: -0.01em;
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.mobile-menu-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── Mobile active item highlight ────────────────────────────────── */
+
+:host [data-state="active"][role="menuitem"] {
+  background: hsl(var(--accent));
+  color: hsl(var(--foreground));
+}
+
+/* ── Responsive helpers (shadow DOM) ─────────────────────────────── */
+
 .hidden {
   display: none !important;
 }
@@ -40,3 +197,4 @@
     display: none !important;
   }
 }
+

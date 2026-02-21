@@ -1,21 +1,21 @@
 {
-  "name": "@andersseen/layout-core",
+  "name": "@andersseen/layout",
   "version": "0.0.1",
   "description": "Pure CSS layout and typography library driven by HTML attributes",
-  "main": "dist/layout-core.css",
-  "style": "dist/layout-core.css",
+  "main": "dist/layout.css",
+  "style": "dist/layout.css",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "sass src/index.scss dist/layout-core.css && sass src/index.scss dist/layout-core.min.css --style compressed",
-    "watch": "sass --watch src/index.scss:dist/layout-core.css"
+    "build": "sass src/index.scss dist/layout.css && sass src/index.scss dist/layout.min.css --style compressed",
+    "watch": "sass --watch src/index.scss:dist/layout.css"
   },
   "exports": {
-    ".": "./dist/layout-core.css",
-    "./dist/layout-core.css": "./dist/layout-core.css",
-    "./dist/layout-core.min.css": "./dist/layout-core.min.css"
+    ".": "./dist/layout.css",
+    "./dist/layout.css": "./dist/layout.css",
+    "./dist/layout.min.css": "./dist/layout.min.css"
   },
   "keywords": [
     "css",

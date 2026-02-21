@@ -4,32 +4,32 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Even
 
 import { ProxyCmp } from './angular-component-lib/utils';
 
-import type { Components } from '@andersseen/stencil-library/components';
+import type { Components } from '@andersseen/web-components/components';
 
-import { defineCustomElement as defineAndAccordion } from '@andersseen/stencil-library/components/and-accordion.js';
-import { defineCustomElement as defineAndAccordionContent } from '@andersseen/stencil-library/components/and-accordion-content.js';
-import { defineCustomElement as defineAndAccordionItem } from '@andersseen/stencil-library/components/and-accordion-item.js';
-import { defineCustomElement as defineAndAccordionTrigger } from '@andersseen/stencil-library/components/and-accordion-trigger.js';
-import { defineCustomElement as defineAndAlert } from '@andersseen/stencil-library/components/and-alert.js';
-import { defineCustomElement as defineAndBadge } from '@andersseen/stencil-library/components/and-badge.js';
-import { defineCustomElement as defineAndButton } from '@andersseen/stencil-library/components/and-button.js';
-import { defineCustomElement as defineAndCard } from '@andersseen/stencil-library/components/and-card.js';
-import { defineCustomElement as defineAndCarousel } from '@andersseen/stencil-library/components/and-carousel.js';
-import { defineCustomElement as defineAndCarouselItem } from '@andersseen/stencil-library/components/and-carousel-item.js';
-import { defineCustomElement as defineAndDrawer } from '@andersseen/stencil-library/components/and-drawer.js';
-import { defineCustomElement as defineAndDropdown } from '@andersseen/stencil-library/components/and-dropdown.js';
-import { defineCustomElement as defineAndIcon } from '@andersseen/stencil-library/components/and-icon.js';
-import { defineCustomElement as defineAndInput } from '@andersseen/stencil-library/components/and-input.js';
-import { defineCustomElement as defineAndModal } from '@andersseen/stencil-library/components/and-modal.js';
-import { defineCustomElement as defineAndNavbar } from '@andersseen/stencil-library/components/and-navbar.js';
-import { defineCustomElement as defineAndPagination } from '@andersseen/stencil-library/components/and-pagination.js';
-import { defineCustomElement as defineAndSidebar } from '@andersseen/stencil-library/components/and-sidebar.js';
-import { defineCustomElement as defineAndTabs } from '@andersseen/stencil-library/components/and-tabs.js';
-import { defineCustomElement as defineAndTabsContent } from '@andersseen/stencil-library/components/and-tabs-content.js';
-import { defineCustomElement as defineAndTabsList } from '@andersseen/stencil-library/components/and-tabs-list.js';
-import { defineCustomElement as defineAndTabsTrigger } from '@andersseen/stencil-library/components/and-tabs-trigger.js';
-import { defineCustomElement as defineAndToast } from '@andersseen/stencil-library/components/and-toast.js';
-import { defineCustomElement as defineAndTooltip } from '@andersseen/stencil-library/components/and-tooltip.js';
+import { defineCustomElement as defineAndAccordion } from '@andersseen/web-components/components/and-accordion.js';
+import { defineCustomElement as defineAndAccordionContent } from '@andersseen/web-components/components/and-accordion-content.js';
+import { defineCustomElement as defineAndAccordionItem } from '@andersseen/web-components/components/and-accordion-item.js';
+import { defineCustomElement as defineAndAccordionTrigger } from '@andersseen/web-components/components/and-accordion-trigger.js';
+import { defineCustomElement as defineAndAlert } from '@andersseen/web-components/components/and-alert.js';
+import { defineCustomElement as defineAndBadge } from '@andersseen/web-components/components/and-badge.js';
+import { defineCustomElement as defineAndButton } from '@andersseen/web-components/components/and-button.js';
+import { defineCustomElement as defineAndCard } from '@andersseen/web-components/components/and-card.js';
+import { defineCustomElement as defineAndCarousel } from '@andersseen/web-components/components/and-carousel.js';
+import { defineCustomElement as defineAndCarouselItem } from '@andersseen/web-components/components/and-carousel-item.js';
+import { defineCustomElement as defineAndDrawer } from '@andersseen/web-components/components/and-drawer.js';
+import { defineCustomElement as defineAndDropdown } from '@andersseen/web-components/components/and-dropdown.js';
+import { defineCustomElement as defineAndIcon } from '@andersseen/web-components/components/and-icon.js';
+import { defineCustomElement as defineAndInput } from '@andersseen/web-components/components/and-input.js';
+import { defineCustomElement as defineAndModal } from '@andersseen/web-components/components/and-modal.js';
+import { defineCustomElement as defineAndNavbar } from '@andersseen/web-components/components/and-navbar.js';
+import { defineCustomElement as defineAndPagination } from '@andersseen/web-components/components/and-pagination.js';
+import { defineCustomElement as defineAndSidebar } from '@andersseen/web-components/components/and-sidebar.js';
+import { defineCustomElement as defineAndTabs } from '@andersseen/web-components/components/and-tabs.js';
+import { defineCustomElement as defineAndTabsContent } from '@andersseen/web-components/components/and-tabs-content.js';
+import { defineCustomElement as defineAndTabsList } from '@andersseen/web-components/components/and-tabs-list.js';
+import { defineCustomElement as defineAndTabsTrigger } from '@andersseen/web-components/components/and-tabs-trigger.js';
+import { defineCustomElement as defineAndToast } from '@andersseen/web-components/components/and-toast.js';
+import { defineCustomElement as defineAndTooltip } from '@andersseen/web-components/components/and-tooltip.js';
 @ProxyCmp({
   defineCustomElementFn: defineAndAccordion,
   inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation']
@@ -267,19 +267,20 @@ export declare interface AndCarouselItem extends Components.AndCarouselItem {}
 
 @ProxyCmp({
   defineCustomElementFn: defineAndDrawer,
-  inputs: ['open', 'placement']
+  inputs: ['open', 'placement', 'showClose']
 })
 @Component({
   selector: 'and-drawer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['open', 'placement'],
-  outputs: ['myClose'],
+  inputs: ['open', 'placement', 'showClose'],
+  outputs: ['myClose', 'myOpen'],
 })
 export class AndDrawer {
   protected el: HTMLAndDrawerElement;
   @Output() myClose = new EventEmitter<CustomEvent<void>>();
+  @Output() myOpen = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -289,9 +290,13 @@ export class AndDrawer {
 
 export declare interface AndDrawer extends Components.AndDrawer {
   /**
-   * Emitted when the drawer is closed (backdrop click or close button).
+   * Emitted when the drawer is closed (backdrop click, close button, or Escape).
    */
   myClose: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the drawer is opened.
+   */
+  myOpen: EventEmitter<CustomEvent<void>>;
 }
 
 
@@ -404,19 +409,21 @@ export declare interface AndModal extends Components.AndModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndNavbar,
-  inputs: ['activeItem', 'items', 'variant']
+  inputs: ['activeItem', 'ariaNavLabel', 'items', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
 })
 @Component({
   selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'items', 'variant'],
-  outputs: ['navItemClick'],
+  inputs: ['activeItem', 'ariaNavLabel', 'items', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
+  outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange'],
 })
 export class AndNavbar {
   protected el: HTMLAndNavbarElement;
   @Output() navItemClick = new EventEmitter<CustomEvent<string>>();
+  @Output() navLinkClick = new EventEmitter<CustomEvent<{ id: string; href: string }>>();
+  @Output() mobileMenuChange = new EventEmitter<CustomEvent<boolean>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -426,9 +433,17 @@ export class AndNavbar {
 
 export declare interface AndNavbar extends Components.AndNavbar {
   /**
-   * Emitted when a navigation item is clicked
+   * Emitted when active item changes
    */
   navItemClick: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when a navigation link is clicked
+   */
+  navLinkClick: EventEmitter<CustomEvent<{ id: string; href: string }>>;
+  /**
+   * Emitted when mobile menu state changes
+   */
+  mobileMenuChange: EventEmitter<CustomEvent<boolean>>;
 }
 
 

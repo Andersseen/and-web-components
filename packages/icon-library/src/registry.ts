@@ -13,7 +13,7 @@ const getGlobalRegistry = (): Map<string, string> => {
  *
  * @example
  * ```ts
- * import { registerIcons, CLOSE, CHEVRON_DOWN } from '@andersseen/icon-library';
+ * import { registerIcons, CLOSE, CHEVRON_DOWN } from '@andersseen/icon';
  *
  * // Register only the icons you need (tree-shakeable)
  * registerIcons({ close: CLOSE, 'chevron-down': CHEVRON_DOWN });

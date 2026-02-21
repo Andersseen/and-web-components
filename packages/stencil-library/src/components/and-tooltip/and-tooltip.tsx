@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Element, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
-import { createTooltip, type TooltipPlacement } from '@andersseen/headless-core';
+import { createTooltip, type TooltipPlacement } from '@andersseen/headless-components';
 import { cn } from '../../utils/utils';
 
 const tooltipVariants = cva(

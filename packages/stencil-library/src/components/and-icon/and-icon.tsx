@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, Watch, State, Element } from '@stencil/core';
-import { getIcon, type IconName } from '@andersseen/icon-library';
+import { getIcon, type IconName } from '@andersseen/icon';
 
 @Component({
   tag: 'and-icon',

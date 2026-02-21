@@ -186,13 +186,6 @@ export class MainLayoutComponent {
     { id: 'alert', label: 'Alert', icon: 'alert-circle' },
   ];
   motionItems: SidebarItem[] = [
-    { id: 'fade', label: 'Fade', icon: 'eye' },
-    { id: 'scale', label: 'Scale & Bounce', icon: 'maximize' },
-    { id: 'slide', label: 'Slide', icon: 'move-horizontal' },
-    { id: 'hover', label: 'Hover Effects', icon: 'mouse-pointer' },
-    { id: 'tap', label: 'Tap Effects', icon: 'pointer' },
-    { id: 'custom', label: 'Custom Options', icon: 'sliders' },
-    { id: 'stagger', label: 'Stagger', icon: 'list' },
     { id: 'attribute', label: 'Attribute API', icon: 'code' },
   ];
 
@@ -227,7 +220,7 @@ export class MainLayoutComponent {
     'components' | 'icons' | 'themes' | 'headless' | 'motion' | 'layout'
   >('components');
 
-  activeMotion = signal<string>('fade');
+  activeMotion = signal<string>('attribute');
   activeLayout = signal<string>('overview');
   isDark = signal<boolean>(false);
 

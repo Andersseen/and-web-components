@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createModal } from '@andersseen/headless-core';
+import { createModal } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-modal-headless-demo',
@@ -99,7 +99,7 @@ import { createModal } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createModal {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createModal {{ '}' }} from '@andersseen/headless-components';
 
 const modal = createModal({{ '{' }}
     closeOnEscape: true,

@@ -7,18 +7,24 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                   | Type                   | Default                                                                                                                                                           |
-| ------------ | ------------- | ----------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `activeItem` | `active-item` | The active navigation item ID | `string`               | `'home'`                                                                                                                                                          |
-| `items`      | --            | Navigation items to display   | `NavItem[]`            | `[     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },     { id: 'icons', label: 'Icons' },   ]` |
-| `variant`    | `variant`     | Variant of the navbar         | `"default" \| "ghost"` | `'default'`                                                                                                                                                       |
+| Property          | Attribute           | Description                                                                                                                                                                                           | Type                               | Default             |
+| ----------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------- |
+| `activeItem`      | `active-item`       | The active navigation item ID. Reflects the headless‐core state.                                                                                                                                      | `string`                           | `''`                |
+| `ariaNavLabel`    | `aria-nav-label`    | ARIA label for the navigation                                                                                                                                                                         | `string`                           | `'Main navigation'` |
+| `items`           | `items`             | Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content. | `NavItem[] \| string`              | `[]`                |
+| `position`        | `position`          | Positioning behaviour                                                                                                                                                                                 | `"fixed" \| "static" \| "sticky"`  | `'static'`          |
+| `scrollSpy`       | `scroll-spy`        | Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.                                                                                          | `boolean`                          | `false`             |
+| `scrollSpyOffset` | `scroll-spy-offset` | Scroll-spy offset from the top of viewport (px).                                                                                                                                                      | `number`                           | `100`               |
+| `variant`         | `variant`           | Visual variant                                                                                                                                                                                        | `"default" \| "filled" \| "ghost"` | `'default'`         |
 
 
 ## Events
 
-| Event          | Description                               | Type                  |
-| -------------- | ----------------------------------------- | --------------------- |
-| `navItemClick` | Emitted when a navigation item is clicked | `CustomEvent<string>` |
+| Event              | Description                               | Type                                         |
+| ------------------ | ----------------------------------------- | -------------------------------------------- |
+| `mobileMenuChange` | Emitted when mobile menu state changes    | `CustomEvent<boolean>`                       |
+| `navItemClick`     | Emitted when active item changes          | `CustomEvent<string>`                        |
+| `navLinkClick`     | Emitted when a navigation link is clicked | `CustomEvent<{ id: string; href: string; }>` |
 
 
 ## Dependencies

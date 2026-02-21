@@ -1,16 +1,16 @@
 const ATTR = {
-  MOTION: "data-and-motion",
-  TRIGGER: "data-and-motion-trigger",
-  DURATION: "data-and-motion-duration",
-  DELAY: "data-and-motion-delay",
-  STATE: "data-and-motion-state",
+  MOTION: "and-motion",
+  TRIGGER: "and-motion-trigger",
+  DURATION: "and-motion-duration",
+  DELAY: "and-motion-delay",
+  STATE: "and-motion-state",
 } as const;
 
 type TriggerType = "enter" | "leave" | "hover" | "tap";
 
 /**
  * Initializes the motion library.
- * Scans for elements with `data-and-motion` and sets up the appropriate triggers.
+ * Scans for elements with `and-motion` and sets up the appropriate triggers.
  *
  * @param root - The root element to scan (defaults to document.body).
  * @returns A cleanup function to disconnect observers and remove event listeners.

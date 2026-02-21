@@ -5,9 +5,12 @@ import { postcss } from '@stencil-community/postcss';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
 
+const isDev = process.argv.includes('--dev') || process.argv.includes('--watch');
+
 export const config: Config = {
-  namespace: 'stencil-library',
+  namespace: 'web-components',
   globalStyle: 'src/global/global.css',
+  sourceMap: isDev,
   outputTargets: [
     {
       type: 'dist',
@@ -26,7 +29,7 @@ export const config: Config = {
       serviceWorker: null,
     },
     angularOutputTarget({
-      componentCorePackage: '@andersseen/stencil-library',
+      componentCorePackage: '@andersseen/web-components',
       outputType: 'standalone',
       directivesProxyFile: '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
       directivesArrayFile: '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
@@ -40,7 +43,7 @@ export const config: Config = {
   testing: {
     browserHeadless: 'shell',
     moduleNameMapper: {
-      '^@andersseen/icon-library$': '<rootDir>/../icon-library/dist/index.js',
+      '^@andersseen/icon$': '<rootDir>/../icon-library/dist/index.js',
     },
   },
 };

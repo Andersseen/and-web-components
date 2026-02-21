@@ -1,7 +1,7 @@
 import { Component, h, Prop, Element, State, Watch } from '@stencil/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { createButton, ButtonReturn } from '@andersseen/headless-core';
+import { createButton, ButtonReturn } from '@andersseen/headless-components';
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center rounded-lg text-sm font-medium font-sans transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white',

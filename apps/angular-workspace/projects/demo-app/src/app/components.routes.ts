@@ -46,18 +46,18 @@ const componentsRoutes: Routes = [
     path: 'modal',
     loadComponent: () => import('./pages/components/modal-demo'),
   },
-  // {
-  //   path: 'navbar',
-  //   loadComponent: () => import('./pages/components/navbar-demo'),
-  // },
+  {
+    path: 'navbar',
+    loadComponent: () => import('./pages/components/navbar-demo'),
+  },
   {
     path: 'pagination',
     loadComponent: () => import('./pages/components/pagination-demo'),
   },
-  // {
-  //   path: 'sidebar',
-  //   loadComponent: () => import('./pages/components/sidebar-demo'),
-  // },
+  {
+    path: 'sidebar',
+    loadComponent: () => import('./pages/components/sidebar-demo'),
+  },
   {
     path: 'tabs',
     loadComponent: () => import('./pages/components/tabs-demo'),

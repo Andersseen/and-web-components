@@ -5,16 +5,16 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
+import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 import { ButtonProps } from "./components/and-button/and-button";
 import { DropdownItem } from "./components/and-dropdown/and-dropdown";
-import { IconName } from "@andersseen/icon-library";
+import { IconName } from "@andersseen/icon";
 import { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
 import { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
-export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
+export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 export { ButtonProps } from "./components/and-button/and-button";
 export { DropdownItem } from "./components/and-dropdown/and-dropdown";
-export { IconName } from "@andersseen/icon-library";
+export { IconName } from "@andersseen/icon";
 export { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
 export { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
@@ -154,6 +154,11 @@ export namespace Components {
           * @default 'left'
          */
         "placement": DrawerPlacement;
+        /**
+          * Whether to show the default close button in the header.
+          * @default true
+         */
+        "showClose": boolean;
     }
     interface AndDropdown {
         /**
@@ -219,17 +224,37 @@ export namespace Components {
     }
     interface AndNavbar {
         /**
-          * The active navigation item ID
-          * @default 'home'
+          * The active navigation item ID. Reflects the headless‐core state.
+          * @default ''
          */
         "activeItem": string;
         /**
-          * Navigation items to display
-          * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },     { id: 'icons', label: 'Icons' },   ]
+          * ARIA label for the navigation
+          * @default 'Main navigation'
          */
-        "items": NavItem[];
+        "ariaNavLabel": string;
         /**
-          * Variant of the navbar
+          * Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content.
+          * @default []
+         */
+        "items": NavItem[] | string;
+        /**
+          * Positioning behaviour
+          * @default 'static'
+         */
+        "position": 'static' | 'sticky' | 'fixed';
+        /**
+          * Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.
+          * @default false
+         */
+        "scrollSpy": boolean;
+        /**
+          * Scroll-spy offset from the top of viewport (px).
+          * @default 100
+         */
+        "scrollSpyOffset": number;
+        /**
+          * Visual variant
           * @default 'default'
          */
         "variant": NavbarProps['variant'];
@@ -461,6 +486,7 @@ declare global {
     };
     interface HTMLAndDrawerElementEventMap {
         "myClose": void;
+        "myOpen": void;
     }
     interface HTMLAndDrawerElement extends Components.AndDrawer, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndDrawerElementEventMap>(type: K, listener: (this: HTMLAndDrawerElement, ev: AndDrawerCustomEvent<HTMLAndDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -535,6 +561,8 @@ declare global {
     };
     interface HTMLAndNavbarElementEventMap {
         "navItemClick": string;
+        "navLinkClick": { id: string; href: string };
+        "mobileMenuChange": boolean;
     }
     interface HTMLAndNavbarElement extends Components.AndNavbar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndNavbarElementEventMap>(type: K, listener: (this: HTMLAndNavbarElement, ev: AndNavbarCustomEvent<HTMLAndNavbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -789,9 +817,13 @@ declare namespace LocalJSX {
     }
     interface AndDrawer {
         /**
-          * Emitted when the drawer is closed (backdrop click or close button).
+          * Emitted when the drawer is closed (backdrop click, close button, or Escape).
          */
         "onMyClose"?: (event: AndDrawerCustomEvent<void>) => void;
+        /**
+          * Emitted when the drawer is opened.
+         */
+        "onMyOpen"?: (event: AndDrawerCustomEvent<void>) => void;
         /**
           * Whether the drawer is open.
           * @default false
@@ -802,6 +834,11 @@ declare namespace LocalJSX {
           * @default 'left'
          */
         "placement"?: DrawerPlacement;
+        /**
+          * Whether to show the default close button in the header.
+          * @default true
+         */
+        "showClose"?: boolean;
     }
     interface AndDropdown {
         /**
@@ -870,21 +907,49 @@ declare namespace LocalJSX {
     }
     interface AndNavbar {
         /**
-          * The active navigation item ID
-          * @default 'home'
+          * The active navigation item ID. Reflects the headless‐core state.
+          * @default ''
          */
         "activeItem"?: string;
         /**
-          * Navigation items to display
-          * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },     { id: 'icons', label: 'Icons' },   ]
+          * ARIA label for the navigation
+          * @default 'Main navigation'
          */
-        "items"?: NavItem[];
+        "ariaNavLabel"?: string;
         /**
-          * Emitted when a navigation item is clicked
+          * Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content.
+          * @default []
+         */
+        "items"?: NavItem[] | string;
+        /**
+          * Emitted when mobile menu state changes
+         */
+        "onMobileMenuChange"?: (event: AndNavbarCustomEvent<boolean>) => void;
+        /**
+          * Emitted when active item changes
          */
         "onNavItemClick"?: (event: AndNavbarCustomEvent<string>) => void;
         /**
-          * Variant of the navbar
+          * Emitted when a navigation link is clicked
+         */
+        "onNavLinkClick"?: (event: AndNavbarCustomEvent<{ id: string; href: string }>) => void;
+        /**
+          * Positioning behaviour
+          * @default 'static'
+         */
+        "position"?: 'static' | 'sticky' | 'fixed';
+        /**
+          * Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.
+          * @default false
+         */
+        "scrollSpy"?: boolean;
+        /**
+          * Scroll-spy offset from the top of viewport (px).
+          * @default 100
+         */
+        "scrollSpyOffset"?: number;
+        /**
+          * Visual variant
           * @default 'default'
          */
         "variant"?: NavbarProps['variant'];
@@ -1026,6 +1091,7 @@ declare namespace LocalJSX {
     interface AndDrawerAttributes {
         "open": boolean;
         "placement": DrawerPlacement;
+        "showClose": boolean;
     }
     interface AndDropdownAttributes {
         "variant": string;
@@ -1051,7 +1117,12 @@ declare namespace LocalJSX {
     }
     interface AndNavbarAttributes {
         "activeItem": string;
+        "items": NavItem[] | string;
         "variant": NavbarProps['variant'];
+        "position": 'static' | 'sticky' | 'fixed';
+        "scrollSpy": boolean;
+        "scrollSpyOffset": number;
+        "ariaNavLabel": string;
     }
     interface AndPaginationAttributes {
         "totalPages": number;

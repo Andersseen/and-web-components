@@ -1,0 +1,42 @@
+---
+interface Props {
+  icon: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  version?: string;
+  tags: string[];
+  delay?: string;
+}
+
+const { icon, name, subtitle, description, version = 'v0.0.1', tags, delay = '0ms' } = Astro.props;
+---
+
+<and-card
+  and-motion="slide-up"
+  and-motion-trigger="enter"
+  and-motion-delay={delay}
+>
+  <div and-layout="vertical gap:md p:lg">
+    <div and-layout="horizontal align:center justify:between">
+      <div and-layout="horizontal align:center gap:sm">
+        <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+          <and-icon name={icon} size="20"></and-icon>
+        </div>
+        <div>
+          <h4 and-text="h6 weight:bold">{name}</h4>
+          <span and-text="p-xs" class="text-muted-foreground">{subtitle}</span>
+        </div>
+      </div>
+      <and-badge>{version}</and-badge>
+    </div>
+    <p and-text="p-sm" class="text-muted-foreground">
+      {description}
+    </p>
+    <div and-layout="horizontal gap:xs wrap:wrap">
+      {tags.map((tag) => (
+        <and-badge variant="outline">{tag}</and-badge>
+      ))}
+    </div>
+  </div>
+</and-card>

@@ -1,0 +1,72 @@
+---
+import SectionHeader from '../components/SectionHeader.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+
+const features = [
+  {
+    icon: 'box',
+    title: 'Web Components',
+    description: '24+ accessible components built with StencilJS. Works in React, Angular, Vue, Svelte, or vanilla HTML.',
+    delay: '0ms',
+  },
+  {
+    icon: 'layout',
+    title: 'Layout System',
+    description: 'Attribute-driven CSS layouts with responsive grid, flex, spacing, and typography — no classes needed.',
+    delay: '100ms',
+  },
+  {
+    icon: 'activity',
+    title: 'Motion Library',
+    description: 'Declarative animations via HTML attributes: fade, slide, zoom, bounce, scale — triggered on enter, hover, or tap.',
+    delay: '200ms',
+  },
+  {
+    icon: 'star',
+    title: 'Icon Library',
+    description: '70+ SVG icons, tree-shakeable, with a global registry. Use individually or register all at once.',
+    delay: '300ms',
+  },
+  {
+    icon: 'sliders',
+    title: 'Headless Core',
+    description: 'Framework-agnostic state machines for accordion, dropdown, modal, tabs, toast, and more.',
+    delay: '400ms',
+  },
+  {
+    icon: 'monitor',
+    title: 'Responsive First',
+    description: '',
+    delay: '500ms',
+  },
+];
+---
+
+<section id="features" class="bg-muted/30 border-y">
+  <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+    <SectionHeader
+      badge="Features"
+      title="Everything You Need"
+      description="From layout primitives to complex interactive components — our ecosystem covers the full spectrum of modern UI development."
+    />
+
+    <div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">
+      {features.map((feature) => (
+        <FeatureCard
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+          delay={feature.delay}
+        >
+          {feature.icon === 'monitor' && (
+            <Fragment>
+              Every layout attribute supports responsive breakpoints: <code class="text-xs bg-muted px-1 py-0.5 rounded">cols@md:3</code>, <code class="text-xs bg-muted px-1 py-0.5 rounded">gap@lg:xl</code>
+            </Fragment>
+          )}
+        </FeatureCard>
+      ))}
+    </div>
+
+  </div>
+</section>

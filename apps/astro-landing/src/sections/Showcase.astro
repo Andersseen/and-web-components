@@ -1,0 +1,222 @@
+---
+import SectionHeader from '../components/SectionHeader.astro';
+import ShowcaseCard from '../components/ShowcaseCard.astro';
+import MotionDemo from '../components/MotionDemo.astro';
+
+const animations = [
+  { icon: 'zap', label: 'Bounce', animation: 'bounce' },
+  { icon: 'maximize', label: 'Scale Up', animation: 'scale-up' },
+  { icon: 'minimize', label: 'Scale Down', animation: 'scale-down' },
+  { icon: 'arrow-up', label: 'Slide Up', animation: 'slide-up' },
+  { icon: 'arrow-left', label: 'Slide Left', animation: 'slide-in-left' },
+  { icon: 'arrow-right', label: 'Slide Right', animation: 'slide-in-right' },
+];
+
+const icons = [
+  'home', 'search', 'heart', 'star', 'settings', 'user',
+  'bell', 'mail', 'zap', 'code', 'terminal', 'github',
+  'layers', 'compass', 'award', 'eye', 'lock', 'edit',
+  'share', 'download', 'upload', 'filter', 'monitor', 'smartphone',
+];
+---
+
+<section id="showcase">
+  <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+
+    <SectionHeader
+      badge="Showcase"
+      title="See It In Action"
+      description="Real components, real interactivity. Everything below is powered by our libraries."
+    />
+
+    <!-- Row 1: Buttons & Alerts -->
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+      <ShowcaseCard
+        icon="mouse-pointer"
+        title="Buttons"
+        description="Multiple variants and sizes with loading states."
+        motion="slide-in-left"
+      >
+        <div and-layout="horizontal gap:sm wrap:wrap align:center">
+          <and-button variant="default" size="sm">Default</and-button>
+          <and-button variant="secondary" size="sm">Secondary</and-button>
+          <and-button variant="outline" size="sm">Outline</and-button>
+          <and-button variant="ghost" size="sm">Ghost</and-button>
+          <and-button variant="destructive" size="sm">Destructive</and-button>
+          <and-button variant="default" size="sm" loading>Loading</and-button>
+        </div>
+      </ShowcaseCard>
+
+      <ShowcaseCard
+        icon="bell"
+        title="Alerts"
+        description="Contextual feedback messages for user actions."
+        motion="slide-in-right"
+      >
+        <div and-layout="vertical gap:sm">
+          <and-alert variant="default">This is a default informational alert.</and-alert>
+          <and-alert variant="destructive">Something went wrong. Please try again.</and-alert>
+        </div>
+      </ShowcaseCard>
+    </div>
+
+    <!-- Row 2: Accordion & Tabs -->
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+      <ShowcaseCard
+        icon="list"
+        title="Accordion"
+        description="Collapsible content sections with smooth animations."
+        motion="slide-in-left"
+      >
+        <and-accordion>
+          <and-accordion-item value="item-1">
+            <and-accordion-trigger>Is it accessible?</and-accordion-trigger>
+            <and-accordion-content>
+              Yes. All components follow WAI-ARIA patterns and support keyboard navigation.
+            </and-accordion-content>
+          </and-accordion-item>
+          <and-accordion-item value="item-2">
+            <and-accordion-trigger>Is it framework agnostic?</and-accordion-trigger>
+            <and-accordion-content>
+              Absolutely. Built with Stencil, our components work as native custom elements in any framework.
+            </and-accordion-content>
+          </and-accordion-item>
+          <and-accordion-item value="item-3">
+            <and-accordion-trigger>Can I customize it?</and-accordion-trigger>
+            <and-accordion-content>
+              Yes. All components use CSS custom properties and are fully styleable with Tailwind CSS.
+            </and-accordion-content>
+          </and-accordion-item>
+        </and-accordion>
+      </ShowcaseCard>
+
+      <ShowcaseCard
+        icon="panel-top"
+        title="Tabs"
+        description="Organize content into switchable tabbed panels."
+        motion="slide-in-right"
+      >
+        <and-tabs default-value="overview">
+          <and-tabs-list>
+            <and-tabs-trigger value="overview">Overview</and-tabs-trigger>
+            <and-tabs-trigger value="code">Code</and-tabs-trigger>
+            <and-tabs-trigger value="usage">Usage</and-tabs-trigger>
+          </and-tabs-list>
+          <and-tabs-content value="overview">
+            <div and-layout="vertical gap:xs p:sm">
+              <p and-text="p-sm">A complete set of 24+ web components designed for production use. Framework-agnostic, accessible, and beautifully styled.</p>
+            </div>
+          </and-tabs-content>
+          <and-tabs-content value="code">
+            <div and-layout="vertical gap:xs p:sm">
+              <code class="text-sm bg-muted p-3 rounded-lg block">&lt;and-button variant="primary"&gt;Click me&lt;/and-button&gt;</code>
+            </div>
+          </and-tabs-content>
+          <and-tabs-content value="usage">
+            <div and-layout="vertical gap:xs p:sm">
+              <p and-text="p-sm">Import the loader and call <code class="bg-muted px-1 rounded">defineCustomElements()</code>. That's it — use the tags anywhere in your HTML.</p>
+            </div>
+          </and-tabs-content>
+        </and-tabs>
+      </ShowcaseCard>
+    </div>
+
+    <!-- Row 3: Animations & Icons -->
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+      <ShowcaseCard
+        icon="activity"
+        title="Animations"
+        description="Hover over the cards below to see motion-core in action."
+        motion="slide-in-left"
+      >
+        <div and-layout="grid cols:2 cols@md:3 gap:sm">
+          {animations.map((item) => (
+            <MotionDemo icon={item.icon} label={item.label} animation={item.animation} />
+          ))}
+        </div>
+      </ShowcaseCard>
+
+      <ShowcaseCard
+        icon="star"
+        title="Icon Library"
+        description="70+ crisp SVG icons with customizable size, color, and stroke width."
+        motion="slide-in-right"
+      >
+        <div and-layout="grid cols:4 cols@md:6 gap:sm">
+          {icons.map((icon) => (
+            <and-tooltip content={icon}>
+              <div class="bg-muted/50 rounded-lg p-3 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer border hover:border-primary/30">
+                <and-icon name={icon} size="20"></and-icon>
+              </div>
+            </and-tooltip>
+          ))}
+        </div>
+      </ShowcaseCard>
+    </div>
+
+    <!-- Row 4: Layout System -->
+    <and-card and-motion="zoom-in" and-motion-trigger="enter" and-motion-duration="800ms">
+      <div and-layout="vertical gap:lg p:lg">
+        <div and-layout="horizontal align:center gap:xs">
+          <and-icon name="layout" size="18" class="text-primary"></and-icon>
+          <h3 and-text="h5 weight:bold">Layout System — <code class="text-sm bg-muted px-2 py-0.5 rounded">and-layout</code></h3>
+        </div>
+        <p and-text="p-sm" class="text-muted-foreground">
+          Pure attribute-driven layouts — no CSS classes. Supports responsive breakpoints, flex, grid, spacing, and typography.
+        </p>
+
+        <div and-layout="grid cols:1 cols@lg:2 gap:lg">
+          <!-- Code -->
+          <div class="bg-muted rounded-xl p-5 overflow-auto">
+            <code class="text-sm leading-relaxed whitespace-pre block text-foreground"><span class="text-muted-foreground">&lt;!-- Responsive Grid --&gt;</span>
+&lt;div <span class="text-primary">and-layout</span>="<span class="text-primary">grid cols:1 cols@md:2 cols@lg:3 gap:md</span>"&gt;
+  &lt;div&gt;Card 1&lt;/div&gt;
+  &lt;div&gt;Card 2&lt;/div&gt;
+  &lt;div&gt;Card 3&lt;/div&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Flex Layout --&gt;</span>
+&lt;div <span class="text-primary">and-layout</span>="<span class="text-primary">horizontal align:center justify:between gap:md</span>"&gt;
+  &lt;span&gt;Left&lt;/span&gt;
+  &lt;span&gt;Right&lt;/span&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Typography --&gt;</span>
+&lt;h2 <span class="text-primary">and-text</span>="<span class="text-primary">h2 weight:bold align:center</span>"&gt;
+  Title
+&lt;/h2&gt;</code>
+          </div>
+
+          <!-- Visual demo -->
+          <div and-layout="vertical gap:md">
+            <div and-layout="vertical gap:xxs">
+              <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Responsive Grid</span>
+              <div and-layout="grid cols:3 gap:xs">
+                <div class="bg-primary/10 text-primary text-center rounded-lg p-3 text-sm font-medium border border-primary/20">1</div>
+                <div class="bg-primary/10 text-primary text-center rounded-lg p-3 text-sm font-medium border border-primary/20">2</div>
+                <div class="bg-primary/10 text-primary text-center rounded-lg p-3 text-sm font-medium border border-primary/20">3</div>
+              </div>
+            </div>
+            <div and-layout="vertical gap:xxs">
+              <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Flex + Justify Between</span>
+              <div and-layout="horizontal align:center justify:between gap:md" class="bg-secondary/10 rounded-lg p-3 border border-secondary/20">
+                <and-badge variant="secondary">Left</and-badge>
+                <and-badge variant="secondary">Center</and-badge>
+                <and-badge variant="secondary">Right</and-badge>
+              </div>
+            </div>
+            <div and-layout="vertical gap:xxs">
+              <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Spacing & Typography</span>
+              <div and-layout="vertical gap:xs p:md" class="bg-accent/10 rounded-lg border border-accent/20">
+                <span and-text="h5 weight:bold">Heading 5</span>
+                <span and-text="p-sm" class="text-muted-foreground">Body text with <code class="bg-muted px-1 rounded text-xs">and-text="p-sm"</code></span>
+                <span and-text="caption">Caption text</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </and-card>
+
+  </div>
+</section>

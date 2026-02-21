@@ -1,8 +1,8 @@
 import { Component, Host, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { IconName } from '@andersseen/icon-library';
-import { createSidebar, SidebarReturn } from '@andersseen/headless-core';
+import { IconName } from '@andersseen/icon';
+import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
 
 export type SidebarItem = {
   id: string;

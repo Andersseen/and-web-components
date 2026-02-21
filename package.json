@@ -2,6 +2,10 @@
   "name": "and-web-components",
   "private": false,
   "scripts": {
+    "clean:angular": "rm -rf apps/angular-workspace/.angular/cache",
+    "clean:stencil": "rm -rf packages/stencil-library/dist packages/stencil-library/www packages/stencil-library/loader",
+    "clean": "pnpm clean:angular && pnpm clean:stencil",
+
     "build:headless": "pnpm -C packages/headless-core build",
     "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
@@ -9,10 +13,11 @@
     "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/stencil-library build",
     "build:angular": "pnpm -C apps/angular-workspace ng build angular-components && pnpm -C apps/angular-workspace ng build demo-app",
     "build:all": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular",
-    "start:dev": "concurrently \"pnpm run build:stencil --watch\" \"pnpm -C apps/angular-workspace start\"",
-    "start:astro": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",
-    "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C apps/angular-workspace start",
-    "build:demo": "pnpm build:all",
+
+    "start:demo:dev": "pnpm clean:angular && concurrently \"pnpm run build:stencil --watch\" \"pnpm -C apps/angular-workspace start\"",
+    "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm clean:angular && pnpm -C apps/angular-workspace start",
+    "start:astro:dev": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",
+
     "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy"
   },
   "devDependencies": {

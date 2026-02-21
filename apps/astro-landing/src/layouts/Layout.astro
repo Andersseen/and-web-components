@@ -5,31 +5,38 @@ interface Props {
 
 const { title } = Astro.props;
 import "../styles/global.css";
-import "@andersseen/stencil-library/dist/stencil-library/stencil-library.css";
-import "@andersseen/motion-core/style.css";
+import "@andersseen/web-components/dist/web-components/web-components.css";
+import "@andersseen/motion/style.css";
+import "@andersseen/layout/dist/layout.css";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro Landing Page" />
+    <meta name="description" content="Andersseen — A powerful, framework-agnostic web component ecosystem" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Clear stale hash on fresh page load so the page always starts at Home -->
+    <script is:inline>
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+        window.scrollTo(0, 0);
+      }
+    </script>
   </head>
   <body class="bg-background text-foreground antialiased min-h-screen font-sans">
     <slot />
     <script>
-      import { defineCustomElements } from "@andersseen/stencil-library/loader";
-      import { initMotion } from "@andersseen/motion-core";
-      import { registerAllIcons } from "@andersseen/icon-library";
+      import { defineCustomElements } from "@andersseen/web-components/loader";
+      import { initMotion } from "@andersseen/motion";
+      import { registerAllIcons } from "@andersseen/icon";
 
       defineCustomElements(window);
       registerAllIcons();
 
-      // Initialize motion library on load
       document.addEventListener('DOMContentLoaded', () => {
         initMotion();
       });

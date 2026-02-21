@@ -1,0 +1,97 @@
+---
+import StatItem from '../components/StatItem.astro';
+
+const stats = [
+  { value: '24+', label: 'Components' },
+  { value: '70+', label: 'Icons' },
+  { value: '10', label: 'Animations' },
+  { value: '0', label: 'Dependencies' },
+];
+---
+
+<section id="hero" class="relative overflow-hidden mt-8">
+  <!-- Gradient background decoration -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-3xl"></div>
+  </div>
+
+  <div and-layout="vertical align:center gap:xl p-x:lg p-y:xxxl" class="max-w-[1200px] mx-auto min-h-[85vh] justify-center">
+    <!-- Badge -->
+    <div
+      and-motion="fade-in"
+      and-motion-trigger="enter"
+      and-motion-duration="600ms"
+    >
+      <and-badge variant="secondary" class="text-sm">
+        <and-icon name="zap" size="14"></and-icon>
+        Framework Agnostic · Built with Stencil
+      </and-badge>
+    </div>
+
+    <!-- Heading -->
+    <h1
+      and-text="h1 align:center weight:extrabold"
+      class="max-w-[900px] tracking-tight"
+      and-motion="slide-up"
+      and-motion-trigger="enter"
+      and-motion-duration="800ms"
+      and-motion-delay="100ms"
+    >
+      Build Modern UIs with<br/>
+      <span class="text-primary">Web Components</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p
+      and-text="p align:center"
+      class="text-muted-foreground max-w-[600px] text-lg"
+      and-motion="fade-in"
+      and-motion-trigger="enter"
+      and-motion-delay="300ms"
+    >
+      A complete ecosystem of design tokens, layout primitives, animations, icons,
+      and 24+ accessible web components — ready for any framework.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div
+      and-layout="horizontal align:center gap:md"
+      and-motion="zoom-in"
+      and-motion-trigger="enter"
+      and-motion-delay="500ms"
+    >
+      <and-button size="lg">
+        <and-icon name="play" size="18"></and-icon>
+        Get Started
+      </and-button>
+      <and-button variant="outline" size="lg">
+        <and-icon name="book-open" size="18"></and-icon>
+        Documentation
+      </and-button>
+    </div>
+
+    <!-- Tech Stats -->
+    <div
+      and-layout="horizontal gap:xxl align:center justify:center wrap:wrap"
+      class="mt-8"
+      and-motion="slide-up"
+      and-motion-trigger="enter"
+      and-motion-delay="700ms"
+    >
+      {stats.map((stat, i) => (
+        <>
+          {i > 0 && <div class="w-px h-10 bg-border"></div>}
+          <StatItem value={stat.value} label={stat.label} />
+        </>
+      ))}
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="mt-12 animate-bounce" and-motion="fade-in" and-motion-trigger="enter" and-motion-delay="1000ms">
+      <a href="#features" class="text-muted-foreground hover:text-foreground transition-colors">
+        <and-icon name="chevron-down" size="28"></and-icon>
+      </a>
+    </div>
+  </div>
+</section>

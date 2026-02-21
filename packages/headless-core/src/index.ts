@@ -1,5 +1,5 @@
 /**
- * @andersseen/headless-core
+ * @andersseen/headless-components
  *
  * Framework-agnostic headless UI components for Web Components.
  * Provides state management, accessibility, and keyboard navigation

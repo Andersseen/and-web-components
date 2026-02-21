@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
+import { createDrawer, type DrawerPlacement } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-drawer-headless-demo',
@@ -128,7 +128,7 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createDrawer {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createDrawer {{ '}' }} from '@andersseen/headless-components';
 
 const drawer = createDrawer({{ '{' }}
     placement: 'left',

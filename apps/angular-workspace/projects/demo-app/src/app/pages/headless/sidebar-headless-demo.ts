@@ -1,6 +1,6 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createSidebar, SidebarReturn } from '@andersseen/headless-core';
+import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-sidebar-headless-demo',
@@ -160,7 +160,7 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createSidebar {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createSidebar {{ '}' }} from '@andersseen/headless-components';
 
 // Initialize
 const sidebar = createSidebar({{ '{' }}

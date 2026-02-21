@@ -1,6 +1,6 @@
 import { Component, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createTooltip } from '@andersseen/headless-core';
+import { createTooltip } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-tooltip-headless-demo',
@@ -143,7 +143,7 @@ import { createTooltip } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createTooltip {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createTooltip {{ '}' }} from '@andersseen/headless-components';
 
 const tooltip = createTooltip({{ '{' }}
     placement: 'top',

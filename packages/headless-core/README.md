@@ -1,4 +1,4 @@
-# @andersseen/headless-core
+# @andersseen/headless-components
 
 > Framework-agnostic headless UI components for Web Components
 
@@ -17,7 +17,7 @@ This library provides **headless** (unstyled, logic-only) UI components that:
 ## 📦 Installation
 
 ```bash
-pnpm add @andersseen/headless-core
+pnpm add @andersseen/headless-components
 ```
 
 ## 🚀 Quick Start
@@ -25,7 +25,7 @@ pnpm add @andersseen/headless-core
 Each component follows the same pattern:
 
 ```ts
-import { createButton } from "@andersseen/headless-core";
+import { createButton } from "@andersseen/headless-components";
 
 const button = createButton({
   disabled: false,
@@ -58,7 +58,7 @@ button.actions.setLoading(true);
 ### Button
 
 ```ts
-import { createButton } from '@andersseen/headless-core/button';
+import { createButton } from '@andersseen/headless-components/button';
 
 const button = createButton({
   disabled: false,
@@ -84,7 +84,7 @@ button.getButtonProps();
 ### Accordion
 
 ```ts
-import { createAccordion } from "@andersseen/headless-core/accordion";
+import { createAccordion } from "@andersseen/headless-components/accordion";
 
 const accordion = createAccordion({
   allowMultiple: true,
@@ -114,7 +114,7 @@ accordion.handleTriggerKeyDown(event, "item-1");
 ### Tabs
 
 ```ts
-import { createTabs } from "@andersseen/headless-core/tabs";
+import { createTabs } from "@andersseen/headless-components/tabs";
 
 const tabs = createTabs({
   defaultValue: "tab-1",
@@ -142,7 +142,7 @@ tabs.handleTabKeyDown(event, "tab-1", ["tab-1", "tab-2", "tab-3"]);
 ### Dropdown
 
 ```ts
-import { createDropdown } from "@andersseen/headless-core/dropdown";
+import { createDropdown } from "@andersseen/headless-components/dropdown";
 
 const dropdown = createDropdown({
   placement: "bottom",
@@ -173,7 +173,7 @@ dropdown.handleMenuKeyDown(event, ["item-1", "item-2"]);
 
 ```tsx
 import { Component, State, h } from "@stencil/core";
-import { createButton, ButtonReturn } from "@andersseen/headless-core/button";
+import { createButton, ButtonReturn } from "@andersseen/headless-components/button";
 
 @Component({
   tag: "and-button",
@@ -213,7 +213,7 @@ export class MyButton {
 
 ```ts
 import { Component, OnInit } from "@angular/core";
-import { createButton, ButtonReturn } from "@andersseen/headless-core/button";
+import { createButton, ButtonReturn } from "@andersseen/headless-components/button";
 
 @Component({
   selector: "app-button",
@@ -283,7 +283,7 @@ import type {
   ButtonConfig,
   ButtonState,
   ButtonReturn,
-} from "@andersseen/headless-core/button";
+} from "@andersseen/headless-components/button";
 ```
 
 ## 📝 License

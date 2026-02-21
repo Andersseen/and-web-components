@@ -4,7 +4,7 @@ import {
   createToastManager,
   type ToastItem,
   type ToastType,
-} from '@andersseen/headless-core';
+} from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-toast-headless-demo',
@@ -106,7 +106,7 @@ import {
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createToastManager {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createToastManager {{ '}' }} from '@andersseen/headless-components';
 
 const toasts = createToastManager({{ '{' }}
     defaultDuration: 3000,

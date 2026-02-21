@@ -1,4 +1,4 @@
-import { registerAllIcons } from '@andersseen/icon-library';
+import { registerAllIcons } from '@andersseen/icon';
 
 /**
  * Registers all icons for the demo application.
@@ -6,7 +6,7 @@ import { registerAllIcons } from '@andersseen/icon-library';
  * In a production app, you would import only the icons you need:
  *
  * ```ts
- * import { registerIcons, COMPONENT_ICONS, CLOSE, HOME } from '@andersseen/icon-library';
+ * import { registerIcons, COMPONENT_ICONS, CLOSE, HOME } from '@andersseen/icon';
  *
  * // Register icons required by stencil components
  * registerIcons(COMPONENT_ICONS);

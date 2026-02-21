@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createAccordion } from '@andersseen/headless-core';
+import { createAccordion } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-accordion-headless-demo',
@@ -76,7 +76,7 @@ import { createAccordion } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createAccordion {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createAccordion {{ '}' }} from '@andersseen/headless-components';
 
 const accordion = createAccordion();
 

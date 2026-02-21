@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { initMotion } from '@andersseen/motion-core';
+import { initMotion } from '@andersseen/motion';
 
 @Component({
   selector: 'app-attribute-demo',
@@ -42,21 +42,21 @@ import { initMotion } from '@andersseen/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              data-and-motion="fade-in"
+              and-motion="fade-in"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-primary to-primary-700"
             >
               <span class="text-2xl">👋</span>
               <span>Fade</span>
             </div>
             <div
-              data-and-motion="zoom-in"
+              and-motion="zoom-in"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-secondary to-secondary-700"
             >
               <span class="text-2xl">✨</span>
               <span>Zoom</span>
             </div>
             <div
-              data-and-motion="slide-up"
+              and-motion="slide-up"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-success to-success"
             >
               <span class="text-2xl">⬆️</span>
@@ -69,7 +69,7 @@ import { initMotion } from '@andersseen/motion-core';
           class="bg-muted border border-border rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;div data-and-motion="fade-in"&gt;Hello&lt;/div&gt;</code
+            >&lt;div and-motion="fade-in"&gt;Hello&lt;/div&gt;</code
           >
         </div>
       </section>
@@ -94,8 +94,8 @@ import { initMotion } from '@andersseen/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              data-and-motion="scale-up"
-              data-and-motion-trigger="hover"
+              and-motion="scale-up"
+              and-motion-trigger="hover"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-200 hover:shadow-xl cursor-pointer bg-gradient-to-br from-primary-500 to-primary-700"
             >
               <span class="text-2xl">🎯</span>
@@ -108,7 +108,7 @@ import { initMotion } from '@andersseen/motion-core';
           class="bg-muted border border-border rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;div data-and-motion="scale-up" data-and-motion-trigger="hover"&gt;Card&lt;/div&gt;</code
+            >&lt;div and-motion="scale-up" and-motion-trigger="hover"&gt;Card&lt;/div&gt;</code
           >
         </div>
       </section>
@@ -133,17 +133,17 @@ import { initMotion } from '@andersseen/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              data-and-motion="bounce"
-              data-and-motion-trigger="tap"
+              and-motion="bounce"
+              and-motion-trigger="tap"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-primary to-primary-700"
             >
               <span class="text-2xl">💥</span>
               <span>Bounce</span>
             </div>
             <div
-              data-and-motion="scale-down"
-              data-and-motion-trigger="tap"
-              data-and-motion-duration="150"
+              and-motion="scale-down"
+              and-motion-trigger="tap"
+              and-motion-duration="150"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-md transition-shadow duration-150 select-none active:shadow-sm cursor-pointer bg-gradient-to-br from-secondary to-secondary-700"
             >
               <span class="text-2xl">🔽</span>
@@ -156,7 +156,7 @@ import { initMotion } from '@andersseen/motion-core';
           class="bg-muted border border-border rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;button data-and-motion="bounce" data-and-motion-trigger="tap"&gt;Click
+            >&lt;button and-motion="bounce" and-motion-trigger="tap"&gt;Click
             me&lt;/button&gt;</code
           >
         </div>
@@ -184,17 +184,17 @@ import { initMotion } from '@andersseen/motion-core';
         >
           <div class="flex gap-4 justify-center flex-wrap">
             <div
-              data-and-motion="slide-in-left"
-              data-and-motion-duration="800ms"
+              and-motion="slide-in-left"
+              and-motion-duration="800ms"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-secondary-500 to-secondary-700"
             >
               <span class="text-2xl">⚙️</span>
               <span>Slow</span>
             </div>
             <div
-              data-and-motion="slide-in-right"
-              data-and-motion-duration="300ms"
-              data-and-motion-delay="400ms"
+              and-motion="slide-in-right"
+              and-motion-duration="300ms"
+              and-motion-delay="400ms"
               class="flex flex-col items-center justify-center gap-1 w-[100px] h-[100px] rounded-xl text-primary-foreground font-semibold text-sm shadow-lg bg-gradient-to-br from-primary-500 to-primary-700"
             >
               <span class="text-2xl">⏱</span>
@@ -207,7 +207,7 @@ import { initMotion } from '@andersseen/motion-core';
           class="bg-muted border border-border rounded-lg p-3 overflow-x-auto"
         >
           <code class="text-xs font-mono whitespace-nowrap"
-            >&lt;div data-and-motion="slide-in-left" data-and-motion-duration="800ms"&gt;...&lt;/div&gt;</code
+            >&lt;div and-motion="slide-in-left" and-motion-duration="800ms"&gt;...&lt;/div&gt;</code
           >
         </div>
       </section>
