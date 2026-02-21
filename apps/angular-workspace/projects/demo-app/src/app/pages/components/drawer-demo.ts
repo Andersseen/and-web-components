@@ -53,7 +53,7 @@ import {
       <and-drawer
         [open]="drawerOpen()"
         [placement]="placement()"
-        (myClose)="closeDrawer()"
+        (andDrawerClose)="closeDrawer()"
       >
         <h3 slot="header">Drawer Panel</h3>
         <div class="flex flex-col gap-3">
@@ -111,7 +111,7 @@ import {
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
           ><code>&lt;and-button (click)="isOpen = true"&gt;Open&lt;/and-button&gt;
 
-&lt;and-drawer [open]="isOpen" placement="right" (myClose)="isOpen = false"&gt;
+&lt;and-drawer [open]="isOpen" placement="right" (andDrawerClose)="isOpen = false"&gt;
   &lt;h3 slot="header"&gt;Drawer Title&lt;/h3&gt;
   &lt;p&gt;Drawer content goes here.&lt;/p&gt;
 &lt;/and-drawer&gt;</code></pre>

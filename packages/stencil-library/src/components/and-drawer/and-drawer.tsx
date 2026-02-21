@@ -193,6 +193,7 @@ export class AndDrawer {
         {/* Overlay */}
         <div
           class={cn(overlayVariants({ open: this.isOpen }))}
+          style={this.skipTransition ? { transition: 'none' } : undefined}
           {...overlayProps}
           onClick={() => this.drawer.handleOverlayClick()}
         />
@@ -200,6 +201,7 @@ export class AndDrawer {
         {/* Content panel */}
         <div
           class={cn(contentVariants({ placement: this.placement, open: this.isOpen, animate: !this.skipTransition }))}
+          style={this.skipTransition ? { transition: 'none' } : undefined}
           {...contentProps}
         >
           {/* Header */}
