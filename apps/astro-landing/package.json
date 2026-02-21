@@ -1,0 +1,24 @@
+{
+  "name": "@andersseen/astro-landing",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@andersseen/icon-library": "workspace:*",
+    "@andersseen/motion-core": "workspace:*",
+    "@andersseen/stencil-library": "workspace:*",
+    "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/node": "^22.10.2",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.7.2"
+  }
+}

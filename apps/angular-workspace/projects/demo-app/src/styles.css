@@ -2,7 +2,7 @@
 @import "@fontsource/inter";
 @import "@andersseen/stencil-library/dist/stencil-library/stencil-library.css";
 @import "@andersseen/layout-core/dist/layout-core.css";
-@import "../../../../motion-core/dist/style.css";
+@import "../../../../../packages/motion-core/dist/style.css";
 
 @theme {
   --font-sans: var(--font-family, "Inter", sans-serif);

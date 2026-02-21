@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Welcome to Andersseen">
+  <main class="w-full">
+    <!-- Navbar -->
+    <and-navbar class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div slot="brand" class="font-bold text-xl flex items-center gap-2">
+        <and-icon name="layers" class="h-6 w-6"></and-icon>
+        Andersseen
+      </div>
+      <div slot="actions" class="flex gap-4">
+        <and-button variant="ghost" size="sm">Log in</and-button>
+        <and-button size="sm">Sign up</and-button>
+      </div>
+    </and-navbar>
+
+    <!-- Hero Section -->
+    <section class="container flex flex-col items-center justify-center gap-6 py-24 md:py-32 text-center">
+      <h1
+        class="text-4xl font-extrabold tracking-tight lg:text-5xl"
+        data-and-motion="slide-up"
+        data-and-motion-trigger="enter"
+        data-and-motion-duration="800ms"
+      >
+        Building the Future with <span class="text-primary">Web Components</span>
+      </h1>
+      <p
+        class="text-xl text-muted-foreground max-w-[700px]"
+        data-and-motion="fade-in"
+        data-and-motion-trigger="enter"
+        data-and-motion-delay="200ms"
+      >
+        A powerful, framework-agnostic component library designed for modern web applications.
+      </p>
+      <div
+        class="flex gap-4"
+        data-and-motion="zoom-in"
+        data-and-motion-trigger="enter"
+        data-and-motion-delay="400ms"
+      >
+        <and-button size="lg">Get Started</and-button>
+        <and-button variant="outline" size="lg">Documentation</and-button>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container py-24">
+      <h2
+        class="text-3xl font-bold tracking-tight text-center mb-12"
+        data-and-motion="fade-in"
+      >
+        Features
+      </h2>
+      <div class="grid gap-8 md:grid-cols-3">
+        <!-- Feature 1 -->
+        <and-card
+          class="h-full"
+          data-and-motion="slide-up"
+          data-and-motion-trigger="enter"
+          data-and-motion-delay="100ms"
+        >
+          <div class="p-6">
+             <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+               <and-icon name="zap" class="h-6 w-6"></and-icon>
+             </div>
+             <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
+             <p class="text-muted-foreground">Built on top of StencilJS for optimal performance and small bundle sizes.</p>
+          </div>
+        </and-card>
+
+        <!-- Feature 2 -->
+        <and-card
+          class="h-full"
+          data-and-motion="slide-up"
+          data-and-motion-trigger="enter"
+          data-and-motion-delay="200ms"
+        >
+          <div class="p-6">
+             <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+               <and-icon name="layers" class="h-6 w-6"></and-icon>
+             </div>
+             <h3 class="text-xl font-bold mb-2">Themable</h3>
+             <p class="text-muted-foreground">Easily customizable with CSS variables and Tailwind CSS integration.</p>
+          </div>
+        </and-card>
+
+        <!-- Feature 3 -->
+        <and-card
+          class="h-full"
+          data-and-motion="slide-up"
+          data-and-motion-trigger="enter"
+          data-and-motion-delay="300ms"
+        >
+          <div class="p-6">
+             <div class="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+               <and-icon name="box" class="h-6 w-6"></and-icon>
+             </div>
+             <h3 class="text-xl font-bold mb-2">Composable</h3>
+             <p class="text-muted-foreground">Build complex interfaces by combining atomic components.</p>
+          </div>
+        </and-card>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t py-12 bg-muted/50">
+      <div class="container flex flex-col items-center justify-between gap-4 md:flex-row">
+        <p class="text-center text-sm leading-loose text-muted-foreground md:text-left">
+          &copy; 2024 Andersseen. All rights reserved.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" class="text-sm font-medium underline underline-offset-4 hover:text-primary">Privacy Policy</a>
+          <a href="#" class="text-sm font-medium underline underline-offset-4 hover:text-primary">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</Layout>

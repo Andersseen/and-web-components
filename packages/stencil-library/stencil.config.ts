@@ -28,8 +28,8 @@ export const config: Config = {
     angularOutputTarget({
       componentCorePackage: '@andersseen/stencil-library',
       outputType: 'standalone',
-      directivesProxyFile: '../angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
-      directivesArrayFile: '../angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
+      directivesProxyFile: '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
+      directivesArrayFile: '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
     }),
   ],
   plugins: [
