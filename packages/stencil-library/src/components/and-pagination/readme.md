@@ -7,17 +7,17 @@
 
 ## Properties
 
-| Property      | Attribute      | Description           | Type     | Default |
-| ------------- | -------------- | --------------------- | -------- | ------- |
-| `currentPage` | `current-page` | current page number   | `number` | `1`     |
-| `totalPages`  | `total-pages`  | total number of pages | `number` | `1`     |
+| Property      | Attribute      | Description                    | Type     | Default |
+| ------------- | -------------- | ------------------------------ | -------- | ------- |
+| `currentPage` | `current-page` | Current active page (1-based). | `number` | `1`     |
+| `totalPages`  | `total-pages`  | Total number of pages.         | `number` | `1`     |
 
 
 ## Events
 
-| Event        | Description               | Type                  |
-| ------------ | ------------------------- | --------------------- |
-| `pageChange` | Emitted when page changes | `CustomEvent<number>` |
+| Event           | Description                    | Type                  |
+| --------------- | ------------------------------ | --------------------- |
+| `andPageChange` | Emitted when the page changes. | `CustomEvent<number>` |
 
 
 ## Dependencies

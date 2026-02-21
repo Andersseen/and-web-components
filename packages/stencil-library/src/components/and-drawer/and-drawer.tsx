@@ -90,15 +90,11 @@ export class AndDrawer {
    */
   @Prop() showClose: boolean = true;
 
-  /**
-   * Emitted when the drawer is closed (backdrop click, close button, or Escape).
-   */
-  @Event() myClose: EventEmitter<void>;
+  /** Emitted when the drawer is closed (backdrop click, close button, or Escape). */
+  @Event({ bubbles: true, composed: true }) andDrawerClose: EventEmitter<void>;
 
-  /**
-   * Emitted when the drawer is opened.
-   */
-  @Event() myOpen: EventEmitter<void>;
+  /** Emitted when the drawer is opened. */
+  @Event({ bubbles: true, composed: true }) andDrawerOpen: EventEmitter<void>;
 
   @State() private isOpen: boolean = false;
 
@@ -124,10 +120,10 @@ export class AndDrawer {
         this.open = isOpen;
         if (isOpen) {
           document.body.style.overflow = 'hidden';
-          this.myOpen.emit();
+          this.andDrawerOpen.emit();
         } else {
           document.body.style.overflow = '';
-          this.myClose.emit();
+          this.andDrawerClose.emit();
         }
       },
     });

@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                                                     | Default     |
-| --------- | --------- | ----------- | -------------------------------------------------------- | ----------- |
-| `variant` | `variant` |             | `"default" \| "destructive" \| "outline" \| "secondary"` | `'default'` |
+| Property      | Attribute | Description                               | Type                                                     | Default     |
+| ------------- | --------- | ----------------------------------------- | -------------------------------------------------------- | ----------- |
+| `customClass` | `class`   | Additional CSS classes from the consumer. | `string`                                                 | `undefined` |
+| `variant`     | `variant` | Visual variant of the badge.              | `"default" \| "destructive" \| "outline" \| "secondary"` | `'default'` |
 
 
 ----------------------------------------------

@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                         | Default     |
-| --------- | --------- | ----------- | ---------------------------- | ----------- |
-| `variant` | `variant` |             | `"default" \| "destructive"` | `'default'` |
+| Property      | Attribute | Description                               | Type                                       | Default     |
+| ------------- | --------- | ----------------------------------------- | ------------------------------------------ | ----------- |
+| `customClass` | `class`   | Additional CSS classes from the consumer. | `string`                                   | `undefined` |
+| `variant`     | `variant` | Visual variant of the card.               | `"default" \| "destructive" \| "elevated"` | `'default'` |
 
 
 ----------------------------------------------

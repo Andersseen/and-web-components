@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type                                     | Default     |
-| ------------ | ------------- | ----------- | ---------------------------------------- | ----------- |
-| `closeDelay` | `close-delay` |             | `number`                                 | `0`         |
-| `content`    | `content`     |             | `string`                                 | `undefined` |
-| `openDelay`  | `open-delay`  |             | `number`                                 | `0`         |
-| `placement`  | `placement`   |             | `"bottom" \| "left" \| "right" \| "top"` | `'top'`     |
+| Property     | Attribute     | Description                                                        | Type                                     | Default     |
+| ------------ | ------------- | ------------------------------------------------------------------ | ---------------------------------------- | ----------- |
+| `closeDelay` | `close-delay` | Delay in ms before hiding the tooltip.                             | `number`                                 | `0`         |
+| `content`    | `content`     | Text content of the tooltip (alternative: use the `content` slot). | `string`                                 | `undefined` |
+| `openDelay`  | `open-delay`  | Delay in ms before showing the tooltip.                            | `number`                                 | `0`         |
+| `placement`  | `placement`   | Preferred placement of the tooltip relative to its trigger.        | `"bottom" \| "left" \| "right" \| "top"` | `'top'`     |
 
 
 ----------------------------------------------

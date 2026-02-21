@@ -1,53 +1,41 @@
 import { Component, Prop, State, h, Host, Element, Method } from '@stencil/core';
 import { type AccordionReturn } from '@andersseen/headless-components';
-import { cn } from '../../utils/utils';
+import { cn } from '../../utils/cn';
 
-interface AndAccordion extends HTMLElement {
+interface AndAccordionElement extends HTMLElement {
   getAccordionLogic?: () => AccordionReturn;
 }
 
-interface AndAccordionChild extends HTMLElement {
-  setItemProps?: (props: any) => void;
+interface AndAccordionChildElement extends HTMLElement {
+  setItemProps?: (props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean }) => void;
 }
 
 /**
- * Accordion item component
+ * Accordion item component.
  */
 @Component({
   tag: 'and-accordion-item',
   styleUrl: '../../global/global.css',
   shadow: true,
 })
-export class MyAccordionItem {
+export class AndAccordionItem {
   @Element() el: HTMLElement;
 
-  /**
-   * Unique value for this accordion item
-   */
-  @Prop() value!: string;
+  /** Unique value for this accordion item. */
+  @Prop({ reflect: true }) value!: string;
 
-  /**
-   * Whether this item is disabled
-   */
-  @Prop() disabled: boolean = false;
+  /** Whether this item is disabled. */
+  @Prop({ reflect: true }) disabled: boolean = false;
 
-  /**
-   * Reference to parent accordion logic
-   */
   @State() private accordionLogic: AccordionReturn | null = null;
-
-  /**
-   * Track if this item is expanded
-   */
   @State() private isExpanded: boolean = false;
 
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
   componentWillLoad() {
-    // Generate value if not provided
     if (!this.value) {
       this.value = `accordion-item-${Math.random().toString(36).substr(2, 9)}`;
     }
-
-    // Try to get logic from parent
     this.findParentAccordion();
   }
 
@@ -55,71 +43,64 @@ export class MyAccordionItem {
     // Delay to ensure parent is ready
     setTimeout(() => {
       this.findParentAccordion();
-      this.updateState();
+      this.syncState();
     }, 0);
   }
 
-  /**
-   * Find and connect to parent accordion
-   */
+  /* ── Parent discovery ───────────────────────────────────────────── */
+
   private findParentAccordion() {
-    const parent = this.el.closest('and-accordion') as AndAccordion | null;
-    if (parent?.getAccordionLogic) {
-      this.accordionLogic = parent.getAccordionLogic();
-      this.updateState();
-    }
+    const parent = this.el.closest('and-accordion') as AndAccordionElement | null;
+    if (!parent?.getAccordionLogic) return;
+
+    this.accordionLogic = parent.getAccordionLogic();
+    this.syncState();
   }
 
-  /**
-   * Method for parent to pass accordion logic
-   */
+  /** Called by parent accordion to inject the headless logic. */
   @Method()
   async setAccordionLogic(logic: AccordionReturn) {
     this.accordionLogic = logic;
-    this.updateState();
+    this.syncState();
   }
 
-  /**
-   * Update local state from headless logic
-   */
-  private updateState() {
-    if (this.accordionLogic) {
-      this.isExpanded = this.accordionLogic.queries.isExpanded(this.value);
-      this.updateChildren();
-    }
+  /* ── State sync ─────────────────────────────────────────────────── */
+
+  private syncState() {
+    if (!this.accordionLogic) return;
+
+    this.isExpanded = this.accordionLogic.queries.isExpanded(this.value);
+    this.propagateToChildren();
   }
 
-  /**
-   * Pass props to child trigger and content
-   */
-  private updateChildren() {
-    const trigger = this.el.querySelector('and-accordion-trigger') as AndAccordionChild | null;
-    const content = this.el.querySelector('and-accordion-content') as AndAccordionChild | null;
+  private propagateToChildren() {
+    if (!this.accordionLogic) return;
 
-    if (trigger?.setItemProps && this.accordionLogic) {
-      trigger.setItemProps({
-        itemId: this.value,
-        accordionLogic: this.accordionLogic,
-        disabled: this.disabled,
-      });
-    }
+    const trigger = this.el.querySelector('and-accordion-trigger') as AndAccordionChildElement | null;
+    const content = this.el.querySelector('and-accordion-content') as AndAccordionChildElement | null;
 
-    if (content?.setItemProps && this.accordionLogic) {
-      content.setItemProps({
-        itemId: this.value,
-        accordionLogic: this.accordionLogic,
-      });
-    }
+    trigger?.setItemProps?.({
+      itemId: this.value,
+      accordionLogic: this.accordionLogic,
+      disabled: this.disabled,
+    });
+
+    content?.setItemProps?.({
+      itemId: this.value,
+      accordionLogic: this.accordionLogic,
+    });
   }
+
+  /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
     return (
       <Host
-        class={cn('border-b border-border', this.disabled ? 'opacity-50 pointer-events-none' : '')}
+        class={cn('border-b border-border', this.disabled && 'opacity-50 pointer-events-none')}
         data-state={this.isExpanded ? 'open' : 'closed'}
         data-disabled={this.disabled ? '' : undefined}
       >
-        <slot></slot>
+        <slot />
       </Host>
     );
   }

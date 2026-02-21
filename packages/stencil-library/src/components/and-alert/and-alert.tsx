@@ -1,18 +1,26 @@
 import { Component, Prop, h, Host, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { createAlert, type AlertVariant, type AlertReturn } from '@andersseen/headless-components';
-import { cn } from '../../utils/utils';
+import { cn } from '../../utils/cn';
+
+/* ────────────────────────────────────────────────────────────────────
+ * Variants
+ * ──────────────────────────────────────────────────────────────────── */
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border p-t-gap [&>svg~*]:pl-t-gap-lg [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-t-gap [&>svg]:top-t-gap [&>svg]:text-foreground',
+  [
+    'relative w-full rounded-lg border p-t-gap',
+    '[&>svg~*]:pl-t-gap-lg [&>svg+div]:translate-y-[-3px]',
+    '[&>svg]:absolute [&>svg]:left-t-gap [&>svg]:top-t-gap [&>svg]:text-foreground',
+  ].join(' '),
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground',
+        default: 'bg-background text-foreground border-border',
         destructive: 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
-        success: 'border-accent/50 text-accent dark:border-accent [&>svg]:text-accent',
-        warning: 'border-secondary/50 text-secondary dark:border-secondary [&>svg]:text-secondary',
-        info: 'border-primary/50 text-primary dark:border-primary [&>svg]:text-primary',
+        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success',
+        warning: 'border-warning/50 text-warning dark:border-warning [&>svg]:text-warning',
+        info: 'border-info/50 text-info dark:border-info [&>svg]:text-info',
       },
     },
     defaultVariants: {
@@ -21,43 +29,63 @@ const alertVariants = cva(
   },
 );
 
+const dismissButtonClass = [
+  'absolute right-t-gap top-t-gap rounded-sm opacity-70',
+  'ring-offset-background transition-opacity',
+  'hover:opacity-100',
+  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+].join(' ');
+
+/* ────────────────────────────────────────────────────────────────────
+ * Component
+ * ──────────────────────────────────────────────────────────────────── */
+
 @Component({
   tag: 'and-alert',
   styleUrls: ['and-alert.css', '../../global/global.css'],
   shadow: true,
 })
-export class MyAlert {
+export class AndAlert {
+  /** Visual variant of the alert. */
   @Prop({ reflect: true }) variant: AlertVariant = 'default';
-  @Prop() dismissible: boolean = false;
-  @Event() myDismiss: EventEmitter<void>;
 
-  @State() visible: boolean = true;
+  /** Whether the alert can be dismissed. */
+  @Prop({ reflect: true }) dismissible: boolean = false;
+
+  /** Emitted when the alert is dismissed. */
+  @Event({ bubbles: true, composed: true }) andDismiss: EventEmitter<void>;
+
+  @State() private visible: boolean = true;
 
   private alertLogic: AlertReturn;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
     this.alertLogic = createAlert({
       variant: this.variant,
       dismissible: this.dismissible,
       defaultVisible: true,
-      onDismiss: () => {
-        this.myDismiss.emit();
-      },
-      onVisibilityChange: visible => {
-        this.visible = visible;
+      onDismiss: () => this.andDismiss.emit(),
+      onVisibilityChange: (isVisible: boolean) => {
+        this.visible = isVisible;
       },
     });
   }
 
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
   @Watch('variant')
-  variantHandler(newValue: AlertVariant) {
+  variantChanged(newValue: AlertVariant) {
     this.alertLogic.actions.setVariant(newValue);
   }
 
   @Watch('dismissible')
-  dismissibleHandler(newValue: boolean) {
+  dismissibleChanged(newValue: boolean) {
     this.alertLogic.actions.setDismissible(newValue);
   }
+
+  /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
     if (!this.visible) return null;
@@ -66,14 +94,18 @@ export class MyAlert {
     const dismissButtonProps = this.alertLogic.getDismissButtonProps();
 
     return (
-      <Host class={cn(alertVariants({ variant: this.variant }))} {...alertProps}>
-        <slot name="icon"></slot>
+      <Host
+        class={cn(alertVariants({ variant: this.variant }))}
+        role="alert"
+        {...alertProps}
+      >
+        <slot name="icon" />
         <div class="text-sm [&_p]:leading-relaxed">
-          <slot></slot>
+          <slot />
         </div>
         {this.dismissible && (
           <button
-            class="absolute right-t-gap top-t-gap rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            class={dismissButtonClass}
             onClick={() => this.alertLogic.actions.dismiss()}
             {...dismissButtonProps}
           >

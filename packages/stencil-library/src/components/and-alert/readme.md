@@ -7,17 +7,17 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type                                                             | Default     |
-| ------------- | ------------- | ----------- | ---------------------------------------------------------------- | ----------- |
-| `dismissible` | `dismissible` |             | `boolean`                                                        | `false`     |
-| `variant`     | `variant`     |             | `"default" \| "destructive" \| "info" \| "success" \| "warning"` | `'default'` |
+| Property      | Attribute     | Description                         | Type                                                             | Default     |
+| ------------- | ------------- | ----------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `dismissible` | `dismissible` | Whether the alert can be dismissed. | `boolean`                                                        | `false`     |
+| `variant`     | `variant`     | Visual variant of the alert.        | `"default" \| "destructive" \| "info" \| "success" \| "warning"` | `'default'` |
 
 
 ## Events
 
-| Event       | Description | Type                |
-| ----------- | ----------- | ------------------- |
-| `myDismiss` |             | `CustomEvent<void>` |
+| Event        | Description                          | Type                |
+| ------------ | ------------------------------------ | ------------------- |
+| `andDismiss` | Emitted when the alert is dismissed. | `CustomEvent<void>` |
 
 
 ## Dependencies

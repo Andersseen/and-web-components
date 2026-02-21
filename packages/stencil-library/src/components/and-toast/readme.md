@@ -7,9 +7,9 @@
 
 ## Methods
 
-### `present(message: string, type?: ToastType, duration?: number) => Promise<any>`
+### `present(message: string, type?: ToastType, duration?: number) => Promise<number>`
 
-Present a new toast
+Present a new toast notification.
 
 #### Parameters
 
@@ -21,7 +21,7 @@ Present a new toast
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<number>`
 
 
 

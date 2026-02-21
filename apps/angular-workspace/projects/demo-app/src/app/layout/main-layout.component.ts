@@ -42,7 +42,7 @@ interface SidebarItem {
             <and-dropdown
               label="Theme"
               [items]="themeOptions"
-              (dropdownSelect)="onThemeSelect($event)"
+              (andDropdownSelect)="onThemeSelect($event)"
             ></and-dropdown>
           </div>
 
@@ -51,7 +51,7 @@ interface SidebarItem {
             <and-dropdown
               label="Color"
               [items]="colorOptions"
-              (dropdownSelect)="onColorSelect($event)"
+              (andDropdownSelect)="onColorSelect($event)"
             ></and-dropdown>
           </div>
 
@@ -81,7 +81,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="componentItems"
             [activeItem]="activeComponent()"
-            (sidebarItemClick)="onSidebarItemClick($event)"
+            (andSidebarItemClick)="onSidebarItemClick($event)"
           >
           </and-sidebar>
         }
@@ -90,7 +90,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="headlessItems"
             [activeItem]="activeHeadless()"
-            (sidebarItemClick)="onHeadlessSidebarItemClick($event)"
+            (andSidebarItemClick)="onHeadlessSidebarItemClick($event)"
           >
           </and-sidebar>
         }
@@ -99,7 +99,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="motionItems"
             [activeItem]="activeMotion()"
-            (sidebarItemClick)="onMotionItemClick($event)"
+            (andSidebarItemClick)="onMotionItemClick($event)"
           >
           </and-sidebar>
         }
@@ -108,7 +108,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="layoutItems"
             [activeItem]="activeLayout()"
-            (sidebarItemClick)="onLayoutItemClick($event)"
+            (andSidebarItemClick)="onLayoutItemClick($event)"
           >
           </and-sidebar>
         }

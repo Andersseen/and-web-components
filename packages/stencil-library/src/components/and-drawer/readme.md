@@ -16,10 +16,10 @@
 
 ## Events
 
-| Event     | Description                                                                  | Type                |
-| --------- | ---------------------------------------------------------------------------- | ------------------- |
-| `myClose` | Emitted when the drawer is closed (backdrop click, close button, or Escape). | `CustomEvent<void>` |
-| `myOpen`  | Emitted when the drawer is opened.                                           | `CustomEvent<void>` |
+| Event            | Description                                                                  | Type                |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------- |
+| `andDrawerClose` | Emitted when the drawer is closed (backdrop click, close button, or Escape). | `CustomEvent<void>` |
+| `andDrawerOpen`  | Emitted when the drawer is opened.                                           | `CustomEvent<void>` |
 
 
 ## Dependencies
