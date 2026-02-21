@@ -9,10 +9,10 @@
     "composite": true,
     "types": [],
     "paths": {
-      "@andersseen/stencil-library/components/*": [
+      "@andersseen/web-components/components/*": [
         "../../../../packages/stencil-library/dist/components/*"
       ],
-      "@andersseen/stencil-library": ["../../../../packages/stencil-library/dist/types/index.d.ts"]
+      "@andersseen/web-components": ["../../../../packages/stencil-library/dist/types/index.d.ts"]
     }
   },
   "include": [

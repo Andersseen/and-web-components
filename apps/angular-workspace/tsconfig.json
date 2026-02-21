@@ -7,12 +7,12 @@
       "angular-components": ["./dist/angular-components"],
       "component-library": ["dist/component-library"],
       "@angular-components/*": ["./projects/angular-components/src/lib/*"],
-      "@andersseen/icon-library": ["../icon-library/src/index.ts"],
-      "@andersseen/headless-core": ["../headless-core/src/index.ts"],
-      "@andersseen/motion-core": ["../motion-core/src/index.ts"],
-      "@andersseen/stencil-library": ["../stencil-library/src/index.ts"],
-      "@andersseen/stencil-library/components": ["../stencil-library/dist/types/components.d.ts"],
-      "@andersseen/stencil-library/components/*": ["../stencil-library/dist/components/*"]
+      "@andersseen/icon": ["../icon-library/src/index.ts"],
+      "@andersseen/headless-components": ["../headless-core/src/index.ts"],
+      "@andersseen/motion": ["../motion-core/src/index.ts"],
+      "@andersseen/web-components": ["../stencil-library/src/index.ts"],
+      "@andersseen/web-components/components": ["../stencil-library/dist/types/components.d.ts"],
+      "@andersseen/web-components/components/*": ["../stencil-library/dist/components/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

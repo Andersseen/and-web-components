@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Event, EventEmitter, State, Watch, Element, Listen } from '@stencil/core';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { createNavbar, NavbarReturn, NavbarItem as HeadlessNavbarItem } from '@andersseen/headless-core';
+import { createNavbar, NavbarReturn, NavbarItem as HeadlessNavbarItem } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Types

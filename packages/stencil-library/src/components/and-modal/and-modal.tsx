@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch } from '@stencil/core';
-import { createModal } from '@andersseen/headless-core';
+import { createModal } from '@andersseen/headless-components';
 import { cn } from '../../utils/utils';
 
 @Component({

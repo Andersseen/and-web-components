@@ -1,6 +1,6 @@
 import { Component, signal, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createDropdown } from '@andersseen/headless-core';
+import { createDropdown } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-dropdown-headless-demo',
@@ -114,7 +114,7 @@ import { createDropdown } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createDropdown {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createDropdown {{ '}' }} from '@andersseen/headless-components';
 
 const dropdown = createDropdown({{ '{' }}
     closeOnSelect: true

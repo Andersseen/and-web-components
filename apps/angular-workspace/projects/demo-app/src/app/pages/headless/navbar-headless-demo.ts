@@ -1,6 +1,6 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-core';
+import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-navbar-headless-demo',

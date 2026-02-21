@@ -1,7 +1,7 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-core';
+import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants

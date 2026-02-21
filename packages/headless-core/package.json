@@ -1,5 +1,5 @@
 {
-  "name": "@andersseen/headless-core",
+  "name": "@andersseen/headless-components",
   "version": "0.1.0",
   "description": "Headless UI components for Web Components - Framework agnostic state machines and logic",
   "type": "module",

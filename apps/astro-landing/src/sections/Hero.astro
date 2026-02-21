@@ -19,9 +19,9 @@ const stats = [
   <div and-layout="vertical align:center gap:xl p-x:lg p-y:xxxl" class="max-w-[1200px] mx-auto min-h-[85vh] justify-center">
     <!-- Badge -->
     <div
-      data-and-motion="fade-in"
-      data-and-motion-trigger="enter"
-      data-and-motion-duration="600ms"
+      and-motion="fade-in"
+      and-motion-trigger="enter"
+      and-motion-duration="600ms"
     >
       <and-badge variant="secondary" class="text-sm">
         <and-icon name="zap" size="14"></and-icon>
@@ -33,10 +33,10 @@ const stats = [
     <h1
       and-text="h1 align:center weight:extrabold"
       class="max-w-[900px] tracking-tight"
-      data-and-motion="slide-up"
-      data-and-motion-trigger="enter"
-      data-and-motion-duration="800ms"
-      data-and-motion-delay="100ms"
+      and-motion="slide-up"
+      and-motion-trigger="enter"
+      and-motion-duration="800ms"
+      and-motion-delay="100ms"
     >
       Build Modern UIs with<br/>
       <span class="text-primary">Web Components</span>
@@ -46,9 +46,9 @@ const stats = [
     <p
       and-text="p align:center"
       class="text-muted-foreground max-w-[600px] text-lg"
-      data-and-motion="fade-in"
-      data-and-motion-trigger="enter"
-      data-and-motion-delay="300ms"
+      and-motion="fade-in"
+      and-motion-trigger="enter"
+      and-motion-delay="300ms"
     >
       A complete ecosystem of design tokens, layout primitives, animations, icons,
       and 24+ accessible web components — ready for any framework.
@@ -57,9 +57,9 @@ const stats = [
     <!-- CTA Buttons -->
     <div
       and-layout="horizontal align:center gap:md"
-      data-and-motion="zoom-in"
-      data-and-motion-trigger="enter"
-      data-and-motion-delay="500ms"
+      and-motion="zoom-in"
+      and-motion-trigger="enter"
+      and-motion-delay="500ms"
     >
       <and-button size="lg">
         <and-icon name="play" size="18"></and-icon>
@@ -75,9 +75,9 @@ const stats = [
     <div
       and-layout="horizontal gap:xxl align:center justify:center wrap:wrap"
       class="mt-8"
-      data-and-motion="slide-up"
-      data-and-motion-trigger="enter"
-      data-and-motion-delay="700ms"
+      and-motion="slide-up"
+      and-motion-trigger="enter"
+      and-motion-delay="700ms"
     >
       {stats.map((stat, i) => (
         <>
@@ -88,7 +88,7 @@ const stats = [
     </div>
 
     <!-- Scroll indicator -->
-    <div class="mt-12 animate-bounce" data-and-motion="fade-in" data-and-motion-trigger="enter" data-and-motion-delay="1000ms">
+    <div class="mt-12 animate-bounce" and-motion="fade-in" and-motion-trigger="enter" and-motion-delay="1000ms">
       <a href="#features" class="text-muted-foreground hover:text-foreground transition-colors">
         <and-icon name="chevron-down" size="28"></and-icon>
       </a>

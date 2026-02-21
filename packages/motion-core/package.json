@@ -1,5 +1,5 @@
 {
-  "name": "@andersseen/motion-core",
+  "name": "@andersseen/motion",
   "version": "0.1.0",
   "description": "Framework-agnostic animation library for TypeScript and CSS",
   "type": "module",

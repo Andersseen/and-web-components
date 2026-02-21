@@ -10,8 +10,8 @@ const { icon, label, animation } = Astro.props;
 
 <div
   class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
-  data-and-motion={animation}
-  data-and-motion-trigger="hover"
+  and-motion={animation}
+  and-motion-trigger="hover"
 >
   <and-icon name={icon} size="20" class="text-primary mx-auto mb-1"></and-icon>
   <span and-text="p-xs">{label}</span>

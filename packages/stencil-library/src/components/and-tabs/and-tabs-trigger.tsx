@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { cn } from '../../utils/utils';
-import type { TabsReturn } from '@andersseen/headless-core';
+import type { TabsReturn } from '@andersseen/headless-components';
 
 @Component({
   tag: 'and-tabs-trigger',

@@ -5,16 +5,16 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
+import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 import { ButtonProps } from "./components/and-button/and-button";
 import { DropdownItem } from "./components/and-dropdown/and-dropdown";
-import { IconName } from "@andersseen/icon-library";
+import { IconName } from "@andersseen/icon";
 import { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
 import { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
-export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-core";
+export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 export { ButtonProps } from "./components/and-button/and-button";
 export { DropdownItem } from "./components/and-dropdown/and-dropdown";
-export { IconName } from "@andersseen/icon-library";
+export { IconName } from "@andersseen/icon";
 export { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
 export { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {

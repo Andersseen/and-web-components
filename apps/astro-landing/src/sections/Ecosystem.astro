@@ -5,7 +5,7 @@ import PackageCard from '../components/PackageCard.astro';
 const packages = [
   {
     icon: 'box',
-    name: '@andersseen/stencil-library',
+    name: '@andersseen/web-components',
     subtitle: 'Web Components',
     description: '24+ production-ready web components: buttons, modals, drawers, dropdowns, carousels, tabs, toast, tooltips, and more.',
     tags: ['StencilJS', 'Tailwind CSS', 'A11y'],
@@ -13,7 +13,7 @@ const packages = [
   },
   {
     icon: 'layout',
-    name: '@andersseen/layout-core',
+    name: '@andersseen/layout',
     subtitle: 'CSS Layouts',
     description: 'Attribute-driven layout system with responsive grid, flex, spacing, and typography. Zero JS — pure CSS.',
     tags: ['SCSS', 'Responsive', 'Attribute API'],
@@ -21,7 +21,7 @@ const packages = [
   },
   {
     icon: 'activity',
-    name: '@andersseen/motion-core',
+    name: '@andersseen/motion',
     subtitle: 'Animations',
     description: 'Declarative CSS animations triggered by IntersectionObserver. 10 animation types with configurable duration, delay, and easing.',
     tags: ['CSS Keyframes', 'IntersectionObserver', '~1KB'],
@@ -29,7 +29,7 @@ const packages = [
   },
   {
     icon: 'star',
-    name: '@andersseen/icon-library',
+    name: '@andersseen/icon',
     subtitle: 'SVG Icons',
     description: '70+ hand-crafted SVG icons, tree-shakeable ESM exports, global registry for on-demand loading.',
     tags: ['Tree-shakeable', 'SVG', 'Registry'],
@@ -65,9 +65,9 @@ const packages = [
     <div
       and-layout="vertical align:center gap:lg p:xxl"
       class="rounded-2xl bg-primary/5 border border-primary/10"
-      data-and-motion="zoom-in"
-      data-and-motion-trigger="enter"
-      data-and-motion-duration="800ms"
+      and-motion="zoom-in"
+      and-motion-trigger="enter"
+      and-motion-duration="800ms"
     >
       <div class="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
         <and-icon name="zap" size="32"></and-icon>
@@ -88,7 +88,7 @@ const packages = [
           View on GitHub
         </and-button>
       </div>
-      <code class="text-sm bg-muted/80 px-4 py-2 rounded-lg border">npm install @andersseen/stencil-library @andersseen/layout-core @andersseen/motion-core @andersseen/icon-library</code>
+      <code class="text-sm bg-muted/80 px-4 py-2 rounded-lg border">npm install @andersseen/web-components @andersseen/layout @andersseen/motion @andersseen/icon</code>
     </div>
 
   </div>

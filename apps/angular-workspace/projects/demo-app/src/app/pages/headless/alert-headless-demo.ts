@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createAlert, type AlertVariant } from '@andersseen/headless-core';
+import { createAlert, type AlertVariant } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-alert-headless-demo',
@@ -75,7 +75,7 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createAlert {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createAlert {{ '}' }} from '@andersseen/headless-components';
 
 const alert = createAlert({{ '{' }}
     variant: 'destructive',

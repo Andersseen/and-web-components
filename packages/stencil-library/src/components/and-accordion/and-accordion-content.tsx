@@ -1,5 +1,5 @@
 import { Component, h, Host, State, Method } from '@stencil/core';
-import { type AccordionReturn } from '@andersseen/headless-core';
+import { type AccordionReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/utils';
 
 /**

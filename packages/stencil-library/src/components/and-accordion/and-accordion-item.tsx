@@ -1,5 +1,5 @@
 import { Component, Prop, State, h, Host, Element, Method } from '@stencil/core';
-import { type AccordionReturn } from '@andersseen/headless-core';
+import { type AccordionReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/utils';
 
 interface AndAccordion extends HTMLElement {

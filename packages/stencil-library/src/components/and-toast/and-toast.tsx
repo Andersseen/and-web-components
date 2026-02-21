@@ -1,6 +1,6 @@
 import { Component, Host, h, State, Method, Element } from '@stencil/core';
 import { cva } from 'class-variance-authority';
-import { createToastManager, type ToastType } from '@andersseen/headless-core';
+import { createToastManager, type ToastType } from '@andersseen/headless-components';
 import { cn } from '../../utils/utils';
 
 const toastVariants = cva(

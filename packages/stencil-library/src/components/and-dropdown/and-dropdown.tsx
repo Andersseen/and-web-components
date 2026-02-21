@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/utils';
-import { createDropdown, DropdownReturn } from '@andersseen/headless-core';
+import { createDropdown, DropdownReturn } from '@andersseen/headless-components';
 
 const dropdownTriggerVariants = cva(
   'inline-flex w-full items-center justify-between gap-x-2 rounded-md px-3 py-3 sm:py-2 text-sm font-medium shadow-sm ring-1 ring-inset transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',

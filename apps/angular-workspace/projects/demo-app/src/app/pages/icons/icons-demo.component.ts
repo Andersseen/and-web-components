@@ -1,6 +1,6 @@
 import { AndIcon } from '@angular-components/stencil-generated/components';
 import { Component } from '@angular/core';
-import { ALL_ICONS } from '@andersseen/icon-library';
+import { ALL_ICONS } from '@andersseen/icon';
 
 @Component({
   selector: 'app-icons-demo',
@@ -223,7 +223,7 @@ export default class IconsDemoPage {
       icon: 'box',
       title: 'Standalone Package',
       description:
-        'Install @andersseen/icon-library independently. No dependency on stencil or any framework.',
+        'Install @andersseen/icon independently. No dependency on stencil or any framework.',
     },
     {
       icon: 'sliders',

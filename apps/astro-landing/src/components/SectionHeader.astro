@@ -8,7 +8,7 @@ interface Props {
 const { badge, title, description } = Astro.props;
 ---
 
-<div and-layout="vertical align:center gap:sm" data-and-motion="fade-in" data-and-motion-trigger="enter">
+<div and-layout="vertical align:center gap:sm" and-motion="fade-in" and-motion-trigger="enter">
   <and-badge variant="outline">{badge}</and-badge>
   <h2 and-text="h2 align:center weight:bold" class="tracking-tight">
     {title}

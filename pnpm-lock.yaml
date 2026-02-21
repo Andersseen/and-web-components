@@ -23,19 +23,19 @@ importers:
 
   apps/angular-workspace:
     dependencies:
-      '@andersseen/headless-core':
+      '@andersseen/headless-components':
         specifier: workspace:*
         version: link:../../packages/headless-core
-      '@andersseen/icon-library':
+      '@andersseen/icon':
         specifier: workspace:*
         version: link:../../packages/icon-library
-      '@andersseen/layout-core':
+      '@andersseen/layout':
         specifier: workspace:*
         version: link:../../packages/layout-core
-      '@andersseen/motion-core':
+      '@andersseen/motion':
         specifier: workspace:*
         version: link:../../packages/motion-core
-      '@andersseen/stencil-library':
+      '@andersseen/web-components':
         specifier: workspace:*
         version: link:../../packages/stencil-library
       '@angular/animations':
@@ -144,16 +144,16 @@ importers:
 
   apps/astro-landing:
     dependencies:
-      '@andersseen/icon-library':
+      '@andersseen/icon':
         specifier: workspace:*
         version: link:../../packages/icon-library
-      '@andersseen/layout-core':
+      '@andersseen/layout':
         specifier: workspace:*
         version: link:../../packages/layout-core
-      '@andersseen/motion-core':
+      '@andersseen/motion':
         specifier: workspace:*
         version: link:../../packages/motion-core
-      '@andersseen/stencil-library':
+      '@andersseen/web-components':
         specifier: workspace:*
         version: link:../../packages/stencil-library
       astro:
@@ -208,10 +208,10 @@ importers:
 
   packages/stencil-library:
     dependencies:
-      '@andersseen/headless-core':
+      '@andersseen/headless-components':
         specifier: workspace:*
         version: link:../headless-core
-      '@andersseen/icon-library':
+      '@andersseen/icon':
         specifier: workspace:*
         version: link:../icon-library
       '@babel/runtime':

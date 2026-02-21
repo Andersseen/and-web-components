@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createTabs } from '@andersseen/headless-core';
+import { createTabs } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-tabs-headless-demo',
@@ -173,7 +173,7 @@ import { createTabs } from '@andersseen/headless-core';
         >
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
-          ><code>import {{ '{' }} createTabs {{ '}' }} from '@andersseen/headless-core';
+          ><code>import {{ '{' }} createTabs {{ '}' }} from '@andersseen/headless-components';
 
 const tabs = createTabs({{ '{' }}
     defaultValue: 'account'

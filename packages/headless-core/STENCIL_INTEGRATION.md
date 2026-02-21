@@ -1,6 +1,6 @@
 # Integrating Headless Components with Stencil
 
-This guide shows how to use `@andersseen/headless-core` components in your Stencil Web Components.
+This guide shows how to use `@andersseen/headless-components` components in your Stencil Web Components.
 
 ## 🎯 Architecture Overview
 
@@ -26,7 +26,7 @@ First, add the headless library as a dependency to your Stencil package:
 
 ```bash
 cd packages/stencil-library
-pnpm add @andersseen/headless-core
+pnpm add @andersseen/headless-components
 ```
 
 ## 🔧 Integration Patterns
@@ -37,7 +37,7 @@ pnpm add @andersseen/headless-core
 
 ```tsx
 import { Component, Prop, State, h } from "@stencil/core";
-import { createButton, ButtonReturn } from "@andersseen/headless-core/button";
+import { createButton, ButtonReturn } from "@andersseen/headless-components/button";
 import { cn } from "../../utils/cn"; // tailwind-merge utility
 
 @Component({
@@ -157,7 +157,7 @@ import { Component, Prop, State, h } from "@stencil/core";
 import {
   createAccordion,
   AccordionReturn,
-} from "@andersseen/headless-core/accordion";
+} from "@andersseen/headless-components/accordion";
 
 @Component({
   tag: "and-accordion",
@@ -215,7 +215,7 @@ export class MyAccordion {
 
 ```tsx
 import { Component, Prop, Element, State, h } from "@stencil/core";
-import { AccordionReturn } from "@andersseen/headless-core/accordion";
+import { AccordionReturn } from "@andersseen/headless-components/accordion";
 
 @Component({
   tag: "and-accordion-item",
@@ -307,7 +307,7 @@ export class MyAccordionItem {
 
 ```tsx
 import { Component, Prop, State, h } from "@stencil/core";
-import { createTabs, TabsReturn } from "@andersseen/headless-core/tabs";
+import { createTabs, TabsReturn } from "@andersseen/headless-components/tabs";
 
 @Component({
   tag: "and-tabs",

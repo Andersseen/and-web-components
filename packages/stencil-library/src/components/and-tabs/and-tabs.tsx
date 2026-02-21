@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop, Element, Event, EventEmitter, Listen, Watch, State } from '@stencil/core';
 import { cn } from '../../utils/utils';
-import { createTabs, TabsReturn } from '@andersseen/headless-core';
+import { createTabs, TabsReturn } from '@andersseen/headless-components';
 
 @Component({
   tag: 'and-tabs',

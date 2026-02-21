@@ -1,6 +1,6 @@
 import { Component, Prop, h, Host, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
-import { createAlert, type AlertVariant, type AlertReturn } from '@andersseen/headless-core';
+import { createAlert, type AlertVariant, type AlertReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/utils';
 
 const alertVariants = cva(

@@ -10,10 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@andersseen/icon-library": "workspace:*",
-    "@andersseen/layout-core": "workspace:*",
-    "@andersseen/motion-core": "workspace:*",
-    "@andersseen/stencil-library": "workspace:*",
+    "@andersseen/icon": "workspace:*",
+    "@andersseen/layout": "workspace:*",
+    "@andersseen/motion": "workspace:*",
+    "@andersseen/web-components": "workspace:*",
     "astro": "^5.7.10"
   },
   "devDependencies": {

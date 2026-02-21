@@ -163,7 +163,7 @@ export const CIRCLE_DOT =
  * For production apps, import individual icon constants instead:
  *
  * ```ts
- * import { CLOSE, CHEVRON_DOWN } from '@andersseen/icon-library';
+ * import { CLOSE, CHEVRON_DOWN } from '@andersseen/icon';
  * ```
  *
  * Use `registerAllIcons()` only in demo apps or when you truly need every icon.
@@ -255,12 +255,12 @@ export const ALL_ICONS: Record<string, string> = {
 export type IconName = keyof typeof ALL_ICONS | (string & {});
 
 /**
- * Icons required internally by `@andersseen/stencil-library` components.
+ * Icons required internally by `@andersseen/web-components` components.
  * Register these at minimum for internal component rendering.
  *
  * ```ts
- * import { registerIcons } from '@andersseen/icon-library';
- * import { COMPONENT_ICONS } from '@andersseen/icon-library';
+ * import { registerIcons } from '@andersseen/icon';
+ * import { COMPONENT_ICONS } from '@andersseen/icon';
  * registerIcons(COMPONENT_ICONS);
  * ```
  */
