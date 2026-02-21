@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type      | Default |
-| -------- | --------- | ----------- | --------- | ------- |
-| `open`   | `open`    |             | `boolean` | `false` |
+| Property | Attribute | Description                | Type      | Default |
+| -------- | --------- | -------------------------- | --------- | ------- |
+| `open`   | `open`    | Whether the modal is open. | `boolean` | `false` |
 
 
 ## Events
 
-| Event     | Description | Type                |
-| --------- | ----------- | ------------------- |
-| `myClose` |             | `CustomEvent<void>` |
+| Event      | Description                       | Type                |
+| ---------- | --------------------------------- | ------------------- |
+| `andClose` | Emitted when the modal is closed. | `CustomEvent<void>` |
 
 
 ## Dependencies

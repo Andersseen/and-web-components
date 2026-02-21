@@ -18,6 +18,9 @@ export * from "./drawer";
 export * from "./alert";
 export * from "./navbar";
 export * from "./sidebar";
+export * from "./breadcrumb";
+export * from "./menu-list";
+export * from "./context-menu";
 
 // Export common types and utilities
 export * from "./types/common";

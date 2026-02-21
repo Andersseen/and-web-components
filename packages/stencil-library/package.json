@@ -11,6 +11,10 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./lazy": {
       "import": "./dist/web-components/web-components.esm.js",
       "require": "./dist/web-components/web-components.cjs.js"
     },
@@ -57,13 +61,13 @@
     "jest-cli": "^29.7.0",
     "postcss": "^8.5.6",
     "puppeteer": "^24.3.0",
-    "tailwindcss": "^3.4.19",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss": "^3.4.19"
   },
   "license": "MIT",
   "dependencies": {
     "@andersseen/headless-components": "workspace:*",
     "@andersseen/icon": "workspace:*",
+    "@andersseen/motion": "workspace:*",
     "@babel/runtime": "^7.26.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

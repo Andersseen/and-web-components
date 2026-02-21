@@ -7,20 +7,20 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                      | Type                   | Default                                                                                                                      |
-| ------------ | ------------- | -------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `activeItem` | `active-item` | The active navigation item ID    | `string`               | `'home'`                                                                                                                     |
-| `collapsed`  | `collapsed`   | Whether the sidebar is collapsed | `boolean`              | `false`                                                                                                                      |
-| `items`      | --            | Navigation items to display      | `SidebarItem[]`        | `[     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]` |
-| `variant`    | `variant`     | Variant of the sidebar           | `"default" \| "ghost"` | `'default'`                                                                                                                  |
+| Property     | Attribute     | Description                       | Type                   | Default                                                                                                                      |
+| ------------ | ------------- | --------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `activeItem` | `active-item` | The active navigation item ID.    | `string`               | `'home'`                                                                                                                     |
+| `collapsed`  | `collapsed`   | Whether the sidebar is collapsed. | `boolean`              | `false`                                                                                                                      |
+| `items`      | --            | Navigation items to display.      | `SidebarItem[]`        | `[     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]` |
+| `variant`    | `variant`     | Visual variant of the sidebar.    | `"default" \| "ghost"` | `'default'`                                                                                                                  |
 
 
 ## Events
 
-| Event              | Description                                     | Type                   |
-| ------------------ | ----------------------------------------------- | ---------------------- |
-| `sidebarItemClick` | Emitted when a navigation item is clicked       | `CustomEvent<string>`  |
-| `sidebarToggle`    | Emitted when the sidebar collapse state changes | `CustomEvent<boolean>` |
+| Event                 | Description                                      | Type                   |
+| --------------------- | ------------------------------------------------ | ---------------------- |
+| `andSidebarItemClick` | Emitted when a navigation item is clicked.       | `CustomEvent<string>`  |
+| `andSidebarToggle`    | Emitted when the sidebar collapse state changes. | `CustomEvent<boolean>` |
 
 
 ## Dependencies

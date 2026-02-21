@@ -5,21 +5,37 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ContentItemProps } from "./components/and-accordion/and-accordion-content";
 import { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
-import { ButtonProps } from "./components/and-button/and-button";
-import { DropdownItem } from "./components/and-dropdown/and-dropdown";
+import { TriggerItemProps } from "./components/and-accordion/and-accordion-trigger";
+import { BadgeVariantProps } from "./components/and-badge/and-badge";
+import { BreadcrumbVariantProps } from "./components/and-breadcrumb/and-breadcrumb";
+import { BreadcrumbItemVariantProps } from "./components/and-breadcrumb/and-breadcrumb-item";
+import { ButtonVariantProps } from "./components/and-button/and-button";
+import { CardVariantProps } from "./components/and-card/and-card";
+import { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./components/and-dropdown/and-dropdown";
 import { IconName } from "@andersseen/icon";
+import { InputType } from "./components/and-input/and-input";
+import { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 import { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
-import { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
+import { SidebarItem, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
+export { ContentItemProps } from "./components/and-accordion/and-accordion-content";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
-export { ButtonProps } from "./components/and-button/and-button";
-export { DropdownItem } from "./components/and-dropdown/and-dropdown";
+export { TriggerItemProps } from "./components/and-accordion/and-accordion-trigger";
+export { BadgeVariantProps } from "./components/and-badge/and-badge";
+export { BreadcrumbVariantProps } from "./components/and-breadcrumb/and-breadcrumb";
+export { BreadcrumbItemVariantProps } from "./components/and-breadcrumb/and-breadcrumb-item";
+export { ButtonVariantProps } from "./components/and-button/and-button";
+export { CardVariantProps } from "./components/and-card/and-card";
+export { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./components/and-dropdown/and-dropdown";
 export { IconName } from "@andersseen/icon";
+export { InputType } from "./components/and-input/and-input";
+export { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 export { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
-export { SidebarItem, SidebarProps } from "./components/and-sidebar/and-sidebar";
+export { SidebarItem, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
     /**
-     * Accordion container component using headless logic
+     * Accordion container component using headless logic.
      * @example ```html
      * <and-accordion allow-multiple="true">
      *   <and-accordion-item value="item-1">
@@ -31,117 +47,206 @@ export namespace Components {
      */
     interface AndAccordion {
         /**
-          * Allow multiple items to be expanded simultaneously
+          * Allow multiple items to be expanded simultaneously.
           * @default false
          */
         "allowMultiple": boolean;
         /**
-          * Default expanded item values
+          * Default expanded item values.
          */
         "defaultValue"?: string[];
         /**
-          * Whether the accordion is disabled
+          * Whether the accordion is disabled.
           * @default false
          */
         "disabled": boolean;
         /**
-          * Orientation of the accordion
+          * Orientation of the accordion.
           * @default 'vertical'
          */
         "orientation": 'horizontal' | 'vertical';
     }
-    /**
-     * Accordion content/panel component
-     */
     interface AndAccordionContent {
         /**
-          * Set item properties from parent
+          * Receive item properties from parent accordion-item.
          */
-        "setItemProps": (props: { itemId: string; accordionLogic: AccordionReturn; }) => Promise<void>;
+        "setItemProps": (props: ContentItemProps) => Promise<void>;
     }
     /**
-     * Accordion item component
+     * Accordion item component.
      */
     interface AndAccordionItem {
         /**
-          * Whether this item is disabled
+          * Whether this item is disabled.
           * @default false
          */
         "disabled": boolean;
         /**
-          * Method for parent to pass accordion logic
+          * Called by parent accordion to inject the headless logic.
          */
         "setAccordionLogic": (logic: AccordionReturn) => Promise<void>;
         /**
-          * Unique value for this accordion item
+          * Unique value for this accordion item.
          */
         "value": string;
     }
-    /**
-     * Accordion trigger/header component
-     */
     interface AndAccordionTrigger {
         /**
-          * Set item properties from parent
+          * Receive item properties from parent accordion-item.
          */
-        "setItemProps": (props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }) => Promise<void>;
+        "setItemProps": (props: TriggerItemProps) => Promise<void>;
     }
     interface AndAlert {
         /**
+          * Whether the alert can be dismissed.
           * @default false
          */
         "dismissible": boolean;
         /**
+          * Visual variant of the alert.
           * @default 'default'
          */
         "variant": AlertVariant;
     }
     interface AndBadge {
         /**
-          * @default 'default'
+          * Additional CSS classes from the consumer.
          */
-        "variant": 'default' | 'secondary' | 'destructive' | 'outline';
-    }
-    interface AndButton {
         "customClass": string;
         /**
+          * Visual variant of the badge.
+          * @default 'default'
+         */
+        "variant": BadgeVariantProps['variant'];
+    }
+    interface AndBreadcrumb {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Accessible label for the breadcrumb navigation.
+          * @default 'Breadcrumb'
+         */
+        "navLabel": string;
+        /**
+          * Size variant for the breadcrumb trail.
+          * @default 'md'
+         */
+        "size": BreadcrumbVariantProps['size'];
+    }
+    interface AndBreadcrumbItem {
+        /**
+          * Marks this item as the current page (adds aria-current).
+          * @default false
+         */
+        "current": boolean;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Hide the leading separator (typically for the first item).
+          * @default false
+         */
+        "hideSeparator": boolean;
+        /**
+          * Optional URL. When set, the item renders as a link.
+         */
+        "href": string;
+        /**
+          * Size variant — should match the parent breadcrumb size.
+          * @default 'md'
+         */
+        "size": BreadcrumbItemVariantProps['size'];
+    }
+    interface AndButton {
+        /**
+          * Additional CSS classes to merge with the internal styles.
+         */
+        "customClass": string;
+        /**
+          * Disables the button when true.
           * @default false
          */
         "disabled": boolean;
         /**
+          * When set, renders as an anchor (`<a>`) instead of `<button>`.
+         */
+        "href": string;
+        /**
+          * Shows a loading spinner and disables interaction.
           * @default false
          */
         "loading": boolean;
         /**
+          * Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`.
+         */
+        "rel": string;
+        /**
+          * Size of the button.
           * @default 'default'
          */
-        "size": ButtonProps['size'];
+        "size": ButtonVariantProps['size'];
         /**
+          * Target for the anchor (e.g. `_blank`). Only used when `href` is set.
+         */
+        "target": string;
+        /**
+          * HTML button type attribute.
           * @default 'button'
          */
         "type": 'button' | 'submit' | 'reset';
         /**
+          * Visual variant of the button.
           * @default 'default'
          */
-        "variant": ButtonProps['variant'];
+        "variant": ButtonVariantProps['variant'];
     }
     interface AndCard {
         /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+        /**
+          * Visual variant of the card.
           * @default 'default'
          */
-        "variant": 'default' | 'destructive';
+        "variant": CardVariantProps['variant'];
     }
     interface AndCarousel {
         /**
+          * Whether the carousel auto-advances.
           * @default false
          */
         "autoplay": boolean;
         /**
+          * Interval in ms between auto-advances.
           * @default 3000
          */
         "interval": number;
+        /**
+          * ARIA label for the carousel region.
+          * @default 'Carousel'
+         */
+        "label": string;
     }
     interface AndCarouselItem {
+        /**
+          * Accessible label for this slide.
+         */
+        "label": string;
+    }
+    interface AndContextMenu {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Whether the context menu is currently open (controlled).
+          * @default false
+         */
+        "open": boolean;
     }
     interface AndDrawer {
         /**
@@ -162,62 +267,128 @@ export namespace Components {
     }
     interface AndDropdown {
         /**
+          * Whether to close the menu after an item is selected.
           * @default true
          */
         "closeOnSelect": boolean;
         /**
+          * Items to render in the dropdown menu.
           * @default []
          */
         "items": DropdownItem[];
         /**
+          * Accessible label for the dropdown trigger.
           * @default 'Options'
          */
         "label": string;
         /**
+          * Preferred placement of the dropdown menu.
           * @default 'bottom'
          */
-        "placement": 'top' | 'bottom' | 'left' | 'right';
+        "placement": DropdownPlacement;
         /**
+          * Visual variant of the trigger button.
           * @default 'default'
          */
-        "variant": any;
+        "variant": DropdownVariantProps['variant'];
     }
     interface AndIcon {
         /**
-          * The color of the icon (default: currentColor)
+          * The stroke/fill color (defaults to currentColor for theme inheritance).
           * @default 'currentColor'
          */
         "color": string;
         /**
-          * The name of the icon to render. Must be previously registered via `registerIcons()`.
+          * The name of the icon to render (must be registered via `registerIcons()`).
          */
         "name": IconName;
         /**
-          * The size of the icon in pixels (default: 24)
+          * The size of the icon in pixels.
           * @default 24
          */
         "size": string | number;
         /**
-          * Stroke width (default: 2)
+          * SVG stroke width.
           * @default 2
          */
         "strokeWidth": string | number;
     }
     interface AndInput {
-        "class": string;
         /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+        /**
+          * ID of the element that describes this input (e.g. error message).
+         */
+        "describedBy": string;
+        /**
+          * Disables interaction when true.
           * @default false
          */
         "disabled": boolean;
+        /**
+          * Whether the input is in an error state.
+          * @default false
+         */
+        "hasError": boolean;
+        /**
+          * Accessible label for the input (used when no visible label exists).
+         */
+        "label": string;
+        /**
+          * Placeholder text for the input.
+         */
         "placeholder": string;
         /**
+          * Marks the input as required.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * HTML input type.
           * @default 'text'
          */
-        "type": string;
+        "type": InputType;
+        /**
+          * Current value of the input.
+         */
         "value": string;
+    }
+    interface AndMenuItem {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
+        /**
+          * Disables the menu item when true.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Intent variant (default or destructive).
+          * @default 'default'
+         */
+        "intent": MenuItemVariantProps['intent'];
+        /**
+          * Optional value identifier for the item.
+         */
+        "value": string;
+    }
+    interface AndMenuList {
+        /**
+          * Accessible label for the menu.
+          * @default 'Menu'
+         */
+        "ariaMenuLabel": string;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass": string;
     }
     interface AndModal {
         /**
+          * Whether the modal is open.
           * @default false
          */
         "open": boolean;
@@ -261,92 +432,119 @@ export namespace Components {
     }
     interface AndPagination {
         /**
-          * current page number
+          * Current active page (1-based).
           * @default 1
          */
         "currentPage": number;
         /**
-          * total number of pages
+          * Total number of pages.
           * @default 1
          */
         "totalPages": number;
     }
     interface AndSidebar {
         /**
-          * The active navigation item ID
+          * The active navigation item ID.
           * @default 'home'
          */
         "activeItem": string;
         /**
-          * Whether the sidebar is collapsed
+          * Whether the sidebar is collapsed.
           * @default false
          */
         "collapsed": boolean;
         /**
-          * Navigation items to display
+          * Navigation items to display.
           * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]
          */
         "items": SidebarItem[];
         /**
-          * Variant of the sidebar
+          * Visual variant of the sidebar.
           * @default 'default'
          */
-        "variant": SidebarProps['variant'];
+        "variant": SidebarVariantProps['variant'];
     }
     interface AndTabs {
         /**
+          * How tabs are activated (on focus or on click).
           * @default 'automatic'
          */
         "activationMode": 'automatic' | 'manual';
+        /**
+          * The initial tab value when uncontrolled.
+         */
         "defaultValue": string;
         /**
+          * Orientation of the tab list.
           * @default 'horizontal'
          */
         "orientation": 'horizontal' | 'vertical';
+        /**
+          * The currently selected tab value.
+         */
         "value": string;
     }
     interface AndTabsContent {
         /**
+          * Whether this content panel is currently selected (set by parent).
           * @default false
          */
         "selected": boolean;
+        /**
+          * The value that identifies which tab this content belongs to.
+         */
         "value": string;
     }
     interface AndTabsList {
         /**
+          * Orientation of the tab list.
           * @default 'horizontal'
          */
         "orientation": 'horizontal' | 'vertical';
     }
     interface AndTabsTrigger {
         /**
+          * Whether this tab trigger is disabled.
           * @default false
          */
         "disabled": boolean;
         /**
+          * Whether this tab is currently selected (set by parent).
           * @default false
          */
         "selected": boolean;
+        /**
+          * Reference to the parent tabs headless logic (set by parent).
+         */
         "tabsLogic": TabsReturn;
+        /**
+          * The value that identifies this tab.
+         */
         "value": string;
     }
     interface AndToast {
         /**
-          * Present a new toast
+          * Present a new toast notification.
          */
-        "present": (message: string, type?: ToastType, duration?: number) => Promise<any>;
+        "present": (message: string, type?: ToastType, duration?: number) => Promise<number>;
     }
     interface AndTooltip {
         /**
+          * Delay in ms before hiding the tooltip.
           * @default 0
          */
         "closeDelay": number;
+        /**
+          * Text content of the tooltip (alternative: use the `content` slot).
+         */
         "content": string;
         /**
+          * Delay in ms before showing the tooltip.
           * @default 0
          */
         "openDelay": number;
         /**
+          * Preferred placement of the tooltip relative to its trigger.
           * @default 'top'
          */
         "placement": TooltipPlacement;
@@ -355,6 +553,22 @@ export namespace Components {
 export interface AndAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndAlertElement;
+}
+export interface AndBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndBreadcrumbItemElement;
+}
+export interface AndButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndButtonElement;
+}
+export interface AndCarouselCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndCarouselElement;
+}
+export interface AndContextMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndContextMenuElement;
 }
 export interface AndDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -367,6 +581,10 @@ export interface AndDropdownCustomEvent<T> extends CustomEvent<T> {
 export interface AndInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndInputElement;
+}
+export interface AndMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndMenuItemElement;
 }
 export interface AndModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -394,7 +612,7 @@ export interface AndTabsTriggerCustomEvent<T> extends CustomEvent<T> {
 }
 declare global {
     /**
-     * Accordion container component using headless logic
+     * Accordion container component using headless logic.
      * @example ```html
      * <and-accordion allow-multiple="true">
      *   <and-accordion-item value="item-1">
@@ -410,9 +628,6 @@ declare global {
         prototype: HTMLAndAccordionElement;
         new (): HTMLAndAccordionElement;
     };
-    /**
-     * Accordion content/panel component
-     */
     interface HTMLAndAccordionContentElement extends Components.AndAccordionContent, HTMLStencilElement {
     }
     var HTMLAndAccordionContentElement: {
@@ -420,7 +635,7 @@ declare global {
         new (): HTMLAndAccordionContentElement;
     };
     /**
-     * Accordion item component
+     * Accordion item component.
      */
     interface HTMLAndAccordionItemElement extends Components.AndAccordionItem, HTMLStencilElement {
     }
@@ -428,9 +643,6 @@ declare global {
         prototype: HTMLAndAccordionItemElement;
         new (): HTMLAndAccordionItemElement;
     };
-    /**
-     * Accordion trigger/header component
-     */
     interface HTMLAndAccordionTriggerElement extends Components.AndAccordionTrigger, HTMLStencilElement {
     }
     var HTMLAndAccordionTriggerElement: {
@@ -438,7 +650,7 @@ declare global {
         new (): HTMLAndAccordionTriggerElement;
     };
     interface HTMLAndAlertElementEventMap {
-        "myDismiss": void;
+        "andDismiss": void;
     }
     interface HTMLAndAlertElement extends Components.AndAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndAlertElementEventMap>(type: K, listener: (this: HTMLAndAlertElement, ev: AndAlertCustomEvent<HTMLAndAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -460,7 +672,41 @@ declare global {
         prototype: HTMLAndBadgeElement;
         new (): HTMLAndBadgeElement;
     };
+    interface HTMLAndBreadcrumbElement extends Components.AndBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLAndBreadcrumbElement: {
+        prototype: HTMLAndBreadcrumbElement;
+        new (): HTMLAndBreadcrumbElement;
+    };
+    interface HTMLAndBreadcrumbItemElementEventMap {
+        "andBreadcrumbNavigate": string;
+    }
+    interface HTMLAndBreadcrumbItemElement extends Components.AndBreadcrumbItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLAndBreadcrumbItemElement, ev: AndBreadcrumbItemCustomEvent<HTMLAndBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLAndBreadcrumbItemElement, ev: AndBreadcrumbItemCustomEvent<HTMLAndBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAndBreadcrumbItemElement: {
+        prototype: HTMLAndBreadcrumbItemElement;
+        new (): HTMLAndBreadcrumbItemElement;
+    };
+    interface HTMLAndButtonElementEventMap {
+        "andButtonClick": MouseEvent;
+    }
     interface HTMLAndButtonElement extends Components.AndButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndButtonElementEventMap>(type: K, listener: (this: HTMLAndButtonElement, ev: AndButtonCustomEvent<HTMLAndButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndButtonElementEventMap>(type: K, listener: (this: HTMLAndButtonElement, ev: AndButtonCustomEvent<HTMLAndButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLAndButtonElement: {
         prototype: HTMLAndButtonElement;
@@ -472,7 +718,18 @@ declare global {
         prototype: HTMLAndCardElement;
         new (): HTMLAndCardElement;
     };
+    interface HTMLAndCarouselElementEventMap {
+        "andSlideChange": number;
+    }
     interface HTMLAndCarouselElement extends Components.AndCarousel, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndCarouselElementEventMap>(type: K, listener: (this: HTMLAndCarouselElement, ev: AndCarouselCustomEvent<HTMLAndCarouselElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndCarouselElementEventMap>(type: K, listener: (this: HTMLAndCarouselElement, ev: AndCarouselCustomEvent<HTMLAndCarouselElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLAndCarouselElement: {
         prototype: HTMLAndCarouselElement;
@@ -484,9 +741,26 @@ declare global {
         prototype: HTMLAndCarouselItemElement;
         new (): HTMLAndCarouselItemElement;
     };
+    interface HTMLAndContextMenuElementEventMap {
+        "andContextMenuOpenChange": boolean;
+    }
+    interface HTMLAndContextMenuElement extends Components.AndContextMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndContextMenuElementEventMap>(type: K, listener: (this: HTMLAndContextMenuElement, ev: AndContextMenuCustomEvent<HTMLAndContextMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndContextMenuElementEventMap>(type: K, listener: (this: HTMLAndContextMenuElement, ev: AndContextMenuCustomEvent<HTMLAndContextMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAndContextMenuElement: {
+        prototype: HTMLAndContextMenuElement;
+        new (): HTMLAndContextMenuElement;
+    };
     interface HTMLAndDrawerElementEventMap {
-        "myClose": void;
-        "myOpen": void;
+        "andDrawerClose": void;
+        "andDrawerOpen": void;
     }
     interface HTMLAndDrawerElement extends Components.AndDrawer, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndDrawerElementEventMap>(type: K, listener: (this: HTMLAndDrawerElement, ev: AndDrawerCustomEvent<HTMLAndDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -503,7 +777,8 @@ declare global {
         new (): HTMLAndDrawerElement;
     };
     interface HTMLAndDropdownElementEventMap {
-        "dropdownSelect": string;
+        "andDropdownSelect": string;
+        "andDropdownOpenChange": boolean;
     }
     interface HTMLAndDropdownElement extends Components.AndDropdown, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndDropdownElementEventMap>(type: K, listener: (this: HTMLAndDropdownElement, ev: AndDropdownCustomEvent<HTMLAndDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -526,7 +801,8 @@ declare global {
         new (): HTMLAndIconElement;
     };
     interface HTMLAndInputElementEventMap {
-        "myInput": string;
+        "andInput": string;
+        "andBlur": void;
     }
     interface HTMLAndInputElement extends Components.AndInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndInputElementEventMap>(type: K, listener: (this: HTMLAndInputElement, ev: AndInputCustomEvent<HTMLAndInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -542,8 +818,31 @@ declare global {
         prototype: HTMLAndInputElement;
         new (): HTMLAndInputElement;
     };
+    interface HTMLAndMenuItemElementEventMap {
+        "andMenuItemSelect": string;
+    }
+    interface HTMLAndMenuItemElement extends Components.AndMenuItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndMenuItemElementEventMap>(type: K, listener: (this: HTMLAndMenuItemElement, ev: AndMenuItemCustomEvent<HTMLAndMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndMenuItemElementEventMap>(type: K, listener: (this: HTMLAndMenuItemElement, ev: AndMenuItemCustomEvent<HTMLAndMenuItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAndMenuItemElement: {
+        prototype: HTMLAndMenuItemElement;
+        new (): HTMLAndMenuItemElement;
+    };
+    interface HTMLAndMenuListElement extends Components.AndMenuList, HTMLStencilElement {
+    }
+    var HTMLAndMenuListElement: {
+        prototype: HTMLAndMenuListElement;
+        new (): HTMLAndMenuListElement;
+    };
     interface HTMLAndModalElementEventMap {
-        "myClose": void;
+        "andClose": void;
     }
     interface HTMLAndModalElement extends Components.AndModal, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndModalElementEventMap>(type: K, listener: (this: HTMLAndModalElement, ev: AndModalCustomEvent<HTMLAndModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -579,7 +878,7 @@ declare global {
         new (): HTMLAndNavbarElement;
     };
     interface HTMLAndPaginationElementEventMap {
-        "pageChange": number;
+        "andPageChange": number;
     }
     interface HTMLAndPaginationElement extends Components.AndPagination, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndPaginationElementEventMap>(type: K, listener: (this: HTMLAndPaginationElement, ev: AndPaginationCustomEvent<HTMLAndPaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -596,8 +895,8 @@ declare global {
         new (): HTMLAndPaginationElement;
     };
     interface HTMLAndSidebarElementEventMap {
-        "sidebarItemClick": string;
-        "sidebarToggle": boolean;
+        "andSidebarItemClick": string;
+        "andSidebarToggle": boolean;
     }
     interface HTMLAndSidebarElement extends Components.AndSidebar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndSidebarElementEventMap>(type: K, listener: (this: HTMLAndSidebarElement, ev: AndSidebarCustomEvent<HTMLAndSidebarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -614,7 +913,7 @@ declare global {
         new (): HTMLAndSidebarElement;
     };
     interface HTMLAndTabsElementEventMap {
-        "valueChange": string;
+        "andTabChange": string;
     }
     interface HTMLAndTabsElement extends Components.AndTabs, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndTabsElementEventMap>(type: K, listener: (this: HTMLAndTabsElement, ev: AndTabsCustomEvent<HTMLAndTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -678,14 +977,19 @@ declare global {
         "and-accordion-trigger": HTMLAndAccordionTriggerElement;
         "and-alert": HTMLAndAlertElement;
         "and-badge": HTMLAndBadgeElement;
+        "and-breadcrumb": HTMLAndBreadcrumbElement;
+        "and-breadcrumb-item": HTMLAndBreadcrumbItemElement;
         "and-button": HTMLAndButtonElement;
         "and-card": HTMLAndCardElement;
         "and-carousel": HTMLAndCarouselElement;
         "and-carousel-item": HTMLAndCarouselItemElement;
+        "and-context-menu": HTMLAndContextMenuElement;
         "and-drawer": HTMLAndDrawerElement;
         "and-dropdown": HTMLAndDropdownElement;
         "and-icon": HTMLAndIconElement;
         "and-input": HTMLAndInputElement;
+        "and-menu-item": HTMLAndMenuItemElement;
+        "and-menu-list": HTMLAndMenuListElement;
         "and-modal": HTMLAndModalElement;
         "and-navbar": HTMLAndNavbarElement;
         "and-pagination": HTMLAndPaginationElement;
@@ -702,7 +1006,7 @@ declare namespace LocalJSX {
     type OneOf<K extends string, T> = { [P in K]: T } | { [P in `attr:${K}`]: T } | { [P in `prop:${K}`]: T };
 
     /**
-     * Accordion container component using headless logic
+     * Accordion container component using headless logic.
      * @example ```html
      * <and-accordion allow-multiple="true">
      *   <and-accordion-item value="item-1">
@@ -714,116 +1018,224 @@ declare namespace LocalJSX {
      */
     interface AndAccordion {
         /**
-          * Allow multiple items to be expanded simultaneously
+          * Allow multiple items to be expanded simultaneously.
           * @default false
          */
         "allowMultiple"?: boolean;
         /**
-          * Default expanded item values
+          * Default expanded item values.
          */
         "defaultValue"?: string[];
         /**
-          * Whether the accordion is disabled
+          * Whether the accordion is disabled.
           * @default false
          */
         "disabled"?: boolean;
         /**
-          * Orientation of the accordion
+          * Orientation of the accordion.
           * @default 'vertical'
          */
         "orientation"?: 'horizontal' | 'vertical';
     }
-    /**
-     * Accordion content/panel component
-     */
     interface AndAccordionContent {
     }
     /**
-     * Accordion item component
+     * Accordion item component.
      */
     interface AndAccordionItem {
         /**
-          * Whether this item is disabled
+          * Whether this item is disabled.
           * @default false
          */
         "disabled"?: boolean;
         /**
-          * Unique value for this accordion item
+          * Unique value for this accordion item.
          */
         "value": string;
     }
-    /**
-     * Accordion trigger/header component
-     */
     interface AndAccordionTrigger {
     }
     interface AndAlert {
         /**
+          * Whether the alert can be dismissed.
           * @default false
          */
         "dismissible"?: boolean;
-        "onMyDismiss"?: (event: AndAlertCustomEvent<void>) => void;
         /**
+          * Emitted when the alert is dismissed.
+         */
+        "onAndDismiss"?: (event: AndAlertCustomEvent<void>) => void;
+        /**
+          * Visual variant of the alert.
           * @default 'default'
          */
         "variant"?: AlertVariant;
     }
     interface AndBadge {
         /**
-          * @default 'default'
+          * Additional CSS classes from the consumer.
          */
-        "variant"?: 'default' | 'secondary' | 'destructive' | 'outline';
-    }
-    interface AndButton {
         "customClass"?: string;
         /**
+          * Visual variant of the badge.
+          * @default 'default'
+         */
+        "variant"?: BadgeVariantProps['variant'];
+    }
+    interface AndBreadcrumb {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Accessible label for the breadcrumb navigation.
+          * @default 'Breadcrumb'
+         */
+        "navLabel"?: string;
+        /**
+          * Size variant for the breadcrumb trail.
+          * @default 'md'
+         */
+        "size"?: BreadcrumbVariantProps['size'];
+    }
+    interface AndBreadcrumbItem {
+        /**
+          * Marks this item as the current page (adds aria-current).
+          * @default false
+         */
+        "current"?: boolean;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Hide the leading separator (typically for the first item).
+          * @default false
+         */
+        "hideSeparator"?: boolean;
+        /**
+          * Optional URL. When set, the item renders as a link.
+         */
+        "href"?: string;
+        /**
+          * Emitted when a breadcrumb link is activated.
+         */
+        "onAndBreadcrumbNavigate"?: (event: AndBreadcrumbItemCustomEvent<string>) => void;
+        /**
+          * Size variant — should match the parent breadcrumb size.
+          * @default 'md'
+         */
+        "size"?: BreadcrumbItemVariantProps['size'];
+    }
+    interface AndButton {
+        /**
+          * Additional CSS classes to merge with the internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Disables the button when true.
           * @default false
          */
         "disabled"?: boolean;
         /**
+          * When set, renders as an anchor (`<a>`) instead of `<button>`.
+         */
+        "href"?: string;
+        /**
+          * Shows a loading spinner and disables interaction.
           * @default false
          */
         "loading"?: boolean;
         /**
+          * Emitted on button click.
+         */
+        "onAndButtonClick"?: (event: AndButtonCustomEvent<MouseEvent>) => void;
+        /**
+          * Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`.
+         */
+        "rel"?: string;
+        /**
+          * Size of the button.
           * @default 'default'
          */
-        "size"?: ButtonProps['size'];
+        "size"?: ButtonVariantProps['size'];
         /**
+          * Target for the anchor (e.g. `_blank`). Only used when `href` is set.
+         */
+        "target"?: string;
+        /**
+          * HTML button type attribute.
           * @default 'button'
          */
         "type"?: 'button' | 'submit' | 'reset';
         /**
+          * Visual variant of the button.
           * @default 'default'
          */
-        "variant"?: ButtonProps['variant'];
+        "variant"?: ButtonVariantProps['variant'];
     }
     interface AndCard {
         /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+        /**
+          * Visual variant of the card.
           * @default 'default'
          */
-        "variant"?: 'default' | 'destructive';
+        "variant"?: CardVariantProps['variant'];
     }
     interface AndCarousel {
         /**
+          * Whether the carousel auto-advances.
           * @default false
          */
         "autoplay"?: boolean;
         /**
+          * Interval in ms between auto-advances.
           * @default 3000
          */
         "interval"?: number;
+        /**
+          * ARIA label for the carousel region.
+          * @default 'Carousel'
+         */
+        "label"?: string;
+        /**
+          * Emitted when the active slide changes.
+         */
+        "onAndSlideChange"?: (event: AndCarouselCustomEvent<number>) => void;
     }
     interface AndCarouselItem {
+        /**
+          * Accessible label for this slide.
+         */
+        "label"?: string;
+    }
+    interface AndContextMenu {
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Emitted when the open state changes.
+         */
+        "onAndContextMenuOpenChange"?: (event: AndContextMenuCustomEvent<boolean>) => void;
+        /**
+          * Whether the context menu is currently open (controlled).
+          * @default false
+         */
+        "open"?: boolean;
     }
     interface AndDrawer {
         /**
           * Emitted when the drawer is closed (backdrop click, close button, or Escape).
          */
-        "onMyClose"?: (event: AndDrawerCustomEvent<void>) => void;
+        "onAndDrawerClose"?: (event: AndDrawerCustomEvent<void>) => void;
         /**
           * Emitted when the drawer is opened.
          */
-        "onMyOpen"?: (event: AndDrawerCustomEvent<void>) => void;
+        "onAndDrawerOpen"?: (event: AndDrawerCustomEvent<void>) => void;
         /**
           * Whether the drawer is open.
           * @default false
@@ -842,65 +1254,152 @@ declare namespace LocalJSX {
     }
     interface AndDropdown {
         /**
+          * Whether to close the menu after an item is selected.
           * @default true
          */
         "closeOnSelect"?: boolean;
         /**
+          * Items to render in the dropdown menu.
           * @default []
          */
         "items"?: DropdownItem[];
         /**
+          * Accessible label for the dropdown trigger.
           * @default 'Options'
          */
         "label"?: string;
-        "onDropdownSelect"?: (event: AndDropdownCustomEvent<string>) => void;
         /**
+          * Emitted when the dropdown open state changes.
+         */
+        "onAndDropdownOpenChange"?: (event: AndDropdownCustomEvent<boolean>) => void;
+        /**
+          * Emitted when an item is selected.
+         */
+        "onAndDropdownSelect"?: (event: AndDropdownCustomEvent<string>) => void;
+        /**
+          * Preferred placement of the dropdown menu.
           * @default 'bottom'
          */
-        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        "placement"?: DropdownPlacement;
         /**
+          * Visual variant of the trigger button.
           * @default 'default'
          */
-        "variant"?: any;
+        "variant"?: DropdownVariantProps['variant'];
     }
     interface AndIcon {
         /**
-          * The color of the icon (default: currentColor)
+          * The stroke/fill color (defaults to currentColor for theme inheritance).
           * @default 'currentColor'
          */
         "color"?: string;
         /**
-          * The name of the icon to render. Must be previously registered via `registerIcons()`.
+          * The name of the icon to render (must be registered via `registerIcons()`).
          */
         "name"?: IconName;
         /**
-          * The size of the icon in pixels (default: 24)
+          * The size of the icon in pixels.
           * @default 24
          */
         "size"?: string | number;
         /**
-          * Stroke width (default: 2)
+          * SVG stroke width.
           * @default 2
          */
         "strokeWidth"?: string | number;
     }
     interface AndInput {
-        "class"?: string;
         /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+        /**
+          * ID of the element that describes this input (e.g. error message).
+         */
+        "describedBy"?: string;
+        /**
+          * Disables interaction when true.
           * @default false
          */
         "disabled"?: boolean;
-        "onMyInput"?: (event: AndInputCustomEvent<string>) => void;
+        /**
+          * Whether the input is in an error state.
+          * @default false
+         */
+        "hasError"?: boolean;
+        /**
+          * Accessible label for the input (used when no visible label exists).
+         */
+        "label"?: string;
+        /**
+          * Emitted when the input loses focus.
+         */
+        "onAndBlur"?: (event: AndInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the input value changes.
+         */
+        "onAndInput"?: (event: AndInputCustomEvent<string>) => void;
+        /**
+          * Placeholder text for the input.
+         */
         "placeholder"?: string;
         /**
+          * Marks the input as required.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * HTML input type.
           * @default 'text'
          */
-        "type"?: string;
+        "type"?: InputType;
+        /**
+          * Current value of the input.
+         */
         "value"?: string;
     }
-    interface AndModal {
-        "onMyClose"?: (event: AndModalCustomEvent<void>) => void;
+    interface AndMenuItem {
         /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+        /**
+          * Disables the menu item when true.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Intent variant (default or destructive).
+          * @default 'default'
+         */
+        "intent"?: MenuItemVariantProps['intent'];
+        /**
+          * Emitted when the item is selected (clicked or Enter/Space pressed).
+         */
+        "onAndMenuItemSelect"?: (event: AndMenuItemCustomEvent<string>) => void;
+        /**
+          * Optional value identifier for the item.
+         */
+        "value"?: string;
+    }
+    interface AndMenuList {
+        /**
+          * Accessible label for the menu.
+          * @default 'Menu'
+         */
+        "ariaMenuLabel"?: string;
+        /**
+          * Additional CSS classes to merge with internal styles.
+         */
+        "customClass"?: string;
+    }
+    interface AndModal {
+        /**
+          * Emitted when the modal is closed.
+         */
+        "onAndClose"?: (event: AndModalCustomEvent<void>) => void;
+        /**
+          * Whether the modal is open.
           * @default false
          */
         "open"?: boolean;
@@ -956,102 +1455,135 @@ declare namespace LocalJSX {
     }
     interface AndPagination {
         /**
-          * current page number
+          * Current active page (1-based).
           * @default 1
          */
         "currentPage"?: number;
         /**
-          * Emitted when page changes
+          * Emitted when the page changes.
          */
-        "onPageChange"?: (event: AndPaginationCustomEvent<number>) => void;
+        "onAndPageChange"?: (event: AndPaginationCustomEvent<number>) => void;
         /**
-          * total number of pages
+          * Total number of pages.
           * @default 1
          */
         "totalPages"?: number;
     }
     interface AndSidebar {
         /**
-          * The active navigation item ID
+          * The active navigation item ID.
           * @default 'home'
          */
         "activeItem"?: string;
         /**
-          * Whether the sidebar is collapsed
+          * Whether the sidebar is collapsed.
           * @default false
          */
         "collapsed"?: boolean;
         /**
-          * Navigation items to display
+          * Navigation items to display.
           * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]
          */
         "items"?: SidebarItem[];
         /**
-          * Emitted when a navigation item is clicked
+          * Emitted when a navigation item is clicked.
          */
-        "onSidebarItemClick"?: (event: AndSidebarCustomEvent<string>) => void;
+        "onAndSidebarItemClick"?: (event: AndSidebarCustomEvent<string>) => void;
         /**
-          * Emitted when the sidebar collapse state changes
+          * Emitted when the sidebar collapse state changes.
          */
-        "onSidebarToggle"?: (event: AndSidebarCustomEvent<boolean>) => void;
+        "onAndSidebarToggle"?: (event: AndSidebarCustomEvent<boolean>) => void;
         /**
-          * Variant of the sidebar
+          * Visual variant of the sidebar.
           * @default 'default'
          */
-        "variant"?: SidebarProps['variant'];
+        "variant"?: SidebarVariantProps['variant'];
     }
     interface AndTabs {
         /**
+          * How tabs are activated (on focus or on click).
           * @default 'automatic'
          */
         "activationMode"?: 'automatic' | 'manual';
-        "defaultValue"?: string;
-        "onValueChange"?: (event: AndTabsCustomEvent<string>) => void;
         /**
+          * The initial tab value when uncontrolled.
+         */
+        "defaultValue"?: string;
+        /**
+          * Emitted when the selected tab changes.
+         */
+        "onAndTabChange"?: (event: AndTabsCustomEvent<string>) => void;
+        /**
+          * Orientation of the tab list.
           * @default 'horizontal'
          */
         "orientation"?: 'horizontal' | 'vertical';
+        /**
+          * The currently selected tab value.
+         */
         "value"?: string;
     }
     interface AndTabsContent {
         /**
+          * Whether this content panel is currently selected (set by parent).
           * @default false
          */
         "selected"?: boolean;
+        /**
+          * The value that identifies which tab this content belongs to.
+         */
         "value"?: string;
     }
     interface AndTabsList {
         /**
+          * Orientation of the tab list.
           * @default 'horizontal'
          */
         "orientation"?: 'horizontal' | 'vertical';
     }
     interface AndTabsTrigger {
         /**
+          * Whether this tab trigger is disabled.
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * Emitted when this trigger is clicked.
+         */
         "onTabTriggerClick"?: (event: AndTabsTriggerCustomEvent<string>) => void;
         /**
+          * Whether this tab is currently selected (set by parent).
           * @default false
          */
         "selected"?: boolean;
+        /**
+          * Reference to the parent tabs headless logic (set by parent).
+         */
         "tabsLogic"?: TabsReturn;
+        /**
+          * The value that identifies this tab.
+         */
         "value"?: string;
     }
     interface AndToast {
     }
     interface AndTooltip {
         /**
+          * Delay in ms before hiding the tooltip.
           * @default 0
          */
         "closeDelay"?: number;
+        /**
+          * Text content of the tooltip (alternative: use the `content` slot).
+         */
         "content"?: string;
         /**
+          * Delay in ms before showing the tooltip.
           * @default 0
          */
         "openDelay"?: number;
         /**
+          * Preferred placement of the tooltip relative to its trigger.
           * @default 'top'
          */
         "placement"?: TooltipPlacement;
@@ -1071,22 +1603,47 @@ declare namespace LocalJSX {
         "dismissible": boolean;
     }
     interface AndBadgeAttributes {
-        "variant": 'default' | 'secondary' | 'destructive' | 'outline';
+        "variant": BadgeVariantProps['variant'];
+        "customClass": string;
+    }
+    interface AndBreadcrumbAttributes {
+        "size": BreadcrumbVariantProps['size'];
+        "navLabel": string;
+        "customClass": string;
+    }
+    interface AndBreadcrumbItemAttributes {
+        "href": string;
+        "current": boolean;
+        "size": BreadcrumbItemVariantProps['size'];
+        "hideSeparator": boolean;
+        "customClass": string;
     }
     interface AndButtonAttributes {
-        "variant": ButtonProps['variant'];
-        "size": ButtonProps['size'];
+        "variant": ButtonVariantProps['variant'];
+        "size": ButtonVariantProps['size'];
         "type": 'button' | 'submit' | 'reset';
         "disabled": boolean;
         "loading": boolean;
         "customClass": string;
+        "href": string;
+        "target": string;
+        "rel": string;
     }
     interface AndCardAttributes {
-        "variant": 'default' | 'destructive';
+        "variant": CardVariantProps['variant'];
+        "customClass": string;
     }
     interface AndCarouselAttributes {
         "autoplay": boolean;
         "interval": number;
+        "label": string;
+    }
+    interface AndCarouselItemAttributes {
+        "label": string;
+    }
+    interface AndContextMenuAttributes {
+        "open": boolean;
+        "customClass": string;
     }
     interface AndDrawerAttributes {
         "open": boolean;
@@ -1094,9 +1651,9 @@ declare namespace LocalJSX {
         "showClose": boolean;
     }
     interface AndDropdownAttributes {
-        "variant": string;
+        "variant": DropdownVariantProps['variant'];
         "label": string;
-        "placement": 'top' | 'bottom' | 'left' | 'right';
+        "placement": DropdownPlacement;
         "closeOnSelect": boolean;
     }
     interface AndIconAttributes {
@@ -1108,9 +1665,23 @@ declare namespace LocalJSX {
     interface AndInputAttributes {
         "placeholder": string;
         "value": string;
-        "type": string;
+        "type": InputType;
         "disabled": boolean;
-        "class": string;
+        "required": boolean;
+        "hasError": boolean;
+        "label": string;
+        "describedBy": string;
+        "customClass": string;
+    }
+    interface AndMenuItemAttributes {
+        "intent": MenuItemVariantProps['intent'];
+        "disabled": boolean;
+        "value": string;
+        "customClass": string;
+    }
+    interface AndMenuListAttributes {
+        "ariaMenuLabel": string;
+        "customClass": string;
     }
     interface AndModalAttributes {
         "open": boolean;
@@ -1131,7 +1702,7 @@ declare namespace LocalJSX {
     interface AndSidebarAttributes {
         "activeItem": string;
         "collapsed": boolean;
-        "variant": SidebarProps['variant'];
+        "variant": SidebarVariantProps['variant'];
     }
     interface AndTabsAttributes {
         "value": string;
@@ -1165,14 +1736,19 @@ declare namespace LocalJSX {
         "and-accordion-trigger": AndAccordionTrigger;
         "and-alert": Omit<AndAlert, keyof AndAlertAttributes> & { [K in keyof AndAlert & keyof AndAlertAttributes]?: AndAlert[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `attr:${K}`]?: AndAlertAttributes[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `prop:${K}`]?: AndAlert[K] };
         "and-badge": Omit<AndBadge, keyof AndBadgeAttributes> & { [K in keyof AndBadge & keyof AndBadgeAttributes]?: AndBadge[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `attr:${K}`]?: AndBadgeAttributes[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `prop:${K}`]?: AndBadge[K] };
+        "and-breadcrumb": Omit<AndBreadcrumb, keyof AndBreadcrumbAttributes> & { [K in keyof AndBreadcrumb & keyof AndBreadcrumbAttributes]?: AndBreadcrumb[K] } & { [K in keyof AndBreadcrumb & keyof AndBreadcrumbAttributes as `attr:${K}`]?: AndBreadcrumbAttributes[K] } & { [K in keyof AndBreadcrumb & keyof AndBreadcrumbAttributes as `prop:${K}`]?: AndBreadcrumb[K] };
+        "and-breadcrumb-item": Omit<AndBreadcrumbItem, keyof AndBreadcrumbItemAttributes> & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes]?: AndBreadcrumbItem[K] } & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes as `attr:${K}`]?: AndBreadcrumbItemAttributes[K] } & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes as `prop:${K}`]?: AndBreadcrumbItem[K] };
         "and-button": Omit<AndButton, keyof AndButtonAttributes> & { [K in keyof AndButton & keyof AndButtonAttributes]?: AndButton[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `attr:${K}`]?: AndButtonAttributes[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `prop:${K}`]?: AndButton[K] };
         "and-card": Omit<AndCard, keyof AndCardAttributes> & { [K in keyof AndCard & keyof AndCardAttributes]?: AndCard[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `attr:${K}`]?: AndCardAttributes[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `prop:${K}`]?: AndCard[K] };
         "and-carousel": Omit<AndCarousel, keyof AndCarouselAttributes> & { [K in keyof AndCarousel & keyof AndCarouselAttributes]?: AndCarousel[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `attr:${K}`]?: AndCarouselAttributes[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `prop:${K}`]?: AndCarousel[K] };
-        "and-carousel-item": AndCarouselItem;
+        "and-carousel-item": Omit<AndCarouselItem, keyof AndCarouselItemAttributes> & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes]?: AndCarouselItem[K] } & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes as `attr:${K}`]?: AndCarouselItemAttributes[K] } & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes as `prop:${K}`]?: AndCarouselItem[K] };
+        "and-context-menu": Omit<AndContextMenu, keyof AndContextMenuAttributes> & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes]?: AndContextMenu[K] } & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes as `attr:${K}`]?: AndContextMenuAttributes[K] } & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes as `prop:${K}`]?: AndContextMenu[K] };
         "and-drawer": Omit<AndDrawer, keyof AndDrawerAttributes> & { [K in keyof AndDrawer & keyof AndDrawerAttributes]?: AndDrawer[K] } & { [K in keyof AndDrawer & keyof AndDrawerAttributes as `attr:${K}`]?: AndDrawerAttributes[K] } & { [K in keyof AndDrawer & keyof AndDrawerAttributes as `prop:${K}`]?: AndDrawer[K] };
         "and-dropdown": Omit<AndDropdown, keyof AndDropdownAttributes> & { [K in keyof AndDropdown & keyof AndDropdownAttributes]?: AndDropdown[K] } & { [K in keyof AndDropdown & keyof AndDropdownAttributes as `attr:${K}`]?: AndDropdownAttributes[K] } & { [K in keyof AndDropdown & keyof AndDropdownAttributes as `prop:${K}`]?: AndDropdown[K] };
         "and-icon": Omit<AndIcon, keyof AndIconAttributes> & { [K in keyof AndIcon & keyof AndIconAttributes]?: AndIcon[K] } & { [K in keyof AndIcon & keyof AndIconAttributes as `attr:${K}`]?: AndIconAttributes[K] } & { [K in keyof AndIcon & keyof AndIconAttributes as `prop:${K}`]?: AndIcon[K] };
         "and-input": Omit<AndInput, keyof AndInputAttributes> & { [K in keyof AndInput & keyof AndInputAttributes]?: AndInput[K] } & { [K in keyof AndInput & keyof AndInputAttributes as `attr:${K}`]?: AndInputAttributes[K] } & { [K in keyof AndInput & keyof AndInputAttributes as `prop:${K}`]?: AndInput[K] };
+        "and-menu-item": Omit<AndMenuItem, keyof AndMenuItemAttributes> & { [K in keyof AndMenuItem & keyof AndMenuItemAttributes]?: AndMenuItem[K] } & { [K in keyof AndMenuItem & keyof AndMenuItemAttributes as `attr:${K}`]?: AndMenuItemAttributes[K] } & { [K in keyof AndMenuItem & keyof AndMenuItemAttributes as `prop:${K}`]?: AndMenuItem[K] };
+        "and-menu-list": Omit<AndMenuList, keyof AndMenuListAttributes> & { [K in keyof AndMenuList & keyof AndMenuListAttributes]?: AndMenuList[K] } & { [K in keyof AndMenuList & keyof AndMenuListAttributes as `attr:${K}`]?: AndMenuListAttributes[K] } & { [K in keyof AndMenuList & keyof AndMenuListAttributes as `prop:${K}`]?: AndMenuList[K] };
         "and-modal": Omit<AndModal, keyof AndModalAttributes> & { [K in keyof AndModal & keyof AndModalAttributes]?: AndModal[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `attr:${K}`]?: AndModalAttributes[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `prop:${K}`]?: AndModal[K] };
         "and-navbar": Omit<AndNavbar, keyof AndNavbarAttributes> & { [K in keyof AndNavbar & keyof AndNavbarAttributes]?: AndNavbar[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `attr:${K}`]?: AndNavbarAttributes[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `prop:${K}`]?: AndNavbar[K] };
         "and-pagination": Omit<AndPagination, keyof AndPaginationAttributes> & { [K in keyof AndPagination & keyof AndPaginationAttributes]?: AndPagination[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `attr:${K}`]?: AndPaginationAttributes[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `prop:${K}`]?: AndPagination[K] };
@@ -1190,7 +1766,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             /**
-             * Accordion container component using headless logic
+             * Accordion container component using headless logic.
              * @example ```html
              * <and-accordion allow-multiple="true">
              *   <and-accordion-item value="item-1">
@@ -1201,28 +1777,27 @@ declare module "@stencil/core" {
              * ```
              */
             "and-accordion": LocalJSX.IntrinsicElements["and-accordion"] & JSXBase.HTMLAttributes<HTMLAndAccordionElement>;
-            /**
-             * Accordion content/panel component
-             */
             "and-accordion-content": LocalJSX.IntrinsicElements["and-accordion-content"] & JSXBase.HTMLAttributes<HTMLAndAccordionContentElement>;
             /**
-             * Accordion item component
+             * Accordion item component.
              */
             "and-accordion-item": LocalJSX.IntrinsicElements["and-accordion-item"] & JSXBase.HTMLAttributes<HTMLAndAccordionItemElement>;
-            /**
-             * Accordion trigger/header component
-             */
             "and-accordion-trigger": LocalJSX.IntrinsicElements["and-accordion-trigger"] & JSXBase.HTMLAttributes<HTMLAndAccordionTriggerElement>;
             "and-alert": LocalJSX.IntrinsicElements["and-alert"] & JSXBase.HTMLAttributes<HTMLAndAlertElement>;
             "and-badge": LocalJSX.IntrinsicElements["and-badge"] & JSXBase.HTMLAttributes<HTMLAndBadgeElement>;
+            "and-breadcrumb": LocalJSX.IntrinsicElements["and-breadcrumb"] & JSXBase.HTMLAttributes<HTMLAndBreadcrumbElement>;
+            "and-breadcrumb-item": LocalJSX.IntrinsicElements["and-breadcrumb-item"] & JSXBase.HTMLAttributes<HTMLAndBreadcrumbItemElement>;
             "and-button": LocalJSX.IntrinsicElements["and-button"] & JSXBase.HTMLAttributes<HTMLAndButtonElement>;
             "and-card": LocalJSX.IntrinsicElements["and-card"] & JSXBase.HTMLAttributes<HTMLAndCardElement>;
             "and-carousel": LocalJSX.IntrinsicElements["and-carousel"] & JSXBase.HTMLAttributes<HTMLAndCarouselElement>;
             "and-carousel-item": LocalJSX.IntrinsicElements["and-carousel-item"] & JSXBase.HTMLAttributes<HTMLAndCarouselItemElement>;
+            "and-context-menu": LocalJSX.IntrinsicElements["and-context-menu"] & JSXBase.HTMLAttributes<HTMLAndContextMenuElement>;
             "and-drawer": LocalJSX.IntrinsicElements["and-drawer"] & JSXBase.HTMLAttributes<HTMLAndDrawerElement>;
             "and-dropdown": LocalJSX.IntrinsicElements["and-dropdown"] & JSXBase.HTMLAttributes<HTMLAndDropdownElement>;
             "and-icon": LocalJSX.IntrinsicElements["and-icon"] & JSXBase.HTMLAttributes<HTMLAndIconElement>;
             "and-input": LocalJSX.IntrinsicElements["and-input"] & JSXBase.HTMLAttributes<HTMLAndInputElement>;
+            "and-menu-item": LocalJSX.IntrinsicElements["and-menu-item"] & JSXBase.HTMLAttributes<HTMLAndMenuItemElement>;
+            "and-menu-list": LocalJSX.IntrinsicElements["and-menu-list"] & JSXBase.HTMLAttributes<HTMLAndMenuListElement>;
             "and-modal": LocalJSX.IntrinsicElements["and-modal"] & JSXBase.HTMLAttributes<HTMLAndModalElement>;
             "and-navbar": LocalJSX.IntrinsicElements["and-navbar"] & JSXBase.HTMLAttributes<HTMLAndNavbarElement>;
             "and-pagination": LocalJSX.IntrinsicElements["and-pagination"] & JSXBase.HTMLAttributes<HTMLAndPaginationElement>;

@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * Component animation layer — powered by @andersseen/motion
+ *
+ * Animations are ONLY applied when the host element has the
+ * `animated` attribute.  Without it every component is static.
+ *
+ * Keyframes live in @andersseen/motion (core.css).  We duplicate
+ * the subset needed by components here so PostCSS can inline them
+ * inside the Shadow DOM global stylesheet.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Keyframes (from @andersseen/motion) ──────────────────────────── */
+
+@keyframes and-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes and-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes and-fade-zoom-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes and-fade-zoom-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.95); }
+}
+@keyframes and-slide-in-from-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes and-slide-in-from-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes and-slide-in-from-top {
+  from { transform: translateY(-0.5rem); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes and-slide-in-from-bottom {
+  from { transform: translateY(0.5rem); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes and-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Shared variables ─────────────────────────────────────────────── */
+:host([animated]) {
+  --and-anim-duration-fast: 150ms;
+  --and-anim-duration: 200ms;
+  --and-anim-duration-slow: 300ms;
+  --and-anim-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═════════════  Accordion  ═══════════════════════════════════════════ */
+
+/* Content expand / collapse */
+:host([animated]) .and-accordion-content[data-state="open"] {
+  animation: and-fade-in var(--and-anim-duration) var(--and-anim-easing) both;
+}
+:host([animated]) .and-accordion-content[data-state="closed"] {
+  animation: and-fade-out var(--and-anim-duration) var(--and-anim-easing) both;
+}
+
+/* Chevron rotation */
+:host([animated]) .and-chevron {
+  transition: transform var(--and-anim-duration) var(--and-anim-easing);
+}
+:host([animated]) .and-chevron[data-expanded="true"] {
+  transform: rotate(180deg);
+}
+
+/* ═════════════  Modal  ═══════════════════════════════════════════════ */
+
+:host([animated]) .and-modal-backdrop {
+  animation: and-fade-in var(--and-anim-duration) var(--and-anim-easing) both;
+}
+:host([animated]) .and-modal-content[data-state="open"] {
+  animation: and-fade-zoom-in var(--and-anim-duration-slow) var(--and-anim-easing) both;
+}
+
+/* ═════════════  Drawer  ══════════════════════════════════════════════ */
+
+:host([animated]) .and-drawer-overlay {
+  transition: opacity var(--and-anim-duration-slow) var(--and-anim-easing);
+}
+:host([animated]) .and-drawer-content {
+  transition: transform var(--and-anim-duration-slow) var(--and-anim-easing);
+}
+
+/* ═════════════  Toast  ═══════════════════════════════════════════════ */
+
+:host([animated]) .and-toast-item {
+  animation: and-slide-in-from-right var(--and-anim-duration-slow) var(--and-anim-easing) both;
+}
+
+/* ═════════════  Tooltip ══════════════════════════════════════════════ */
+
+:host([animated]) .and-tooltip[data-state="open"][data-side="top"] {
+  animation: and-slide-in-from-bottom var(--and-anim-duration-fast) var(--and-anim-easing) both;
+}
+:host([animated]) .and-tooltip[data-state="open"][data-side="bottom"] {
+  animation: and-slide-in-from-top var(--and-anim-duration-fast) var(--and-anim-easing) both;
+}
+:host([animated]) .and-tooltip[data-state="open"][data-side="left"] {
+  animation: and-slide-in-from-right var(--and-anim-duration-fast) var(--and-anim-easing) both;
+}
+:host([animated]) .and-tooltip[data-state="open"][data-side="right"] {
+  animation: and-slide-in-from-left var(--and-anim-duration-fast) var(--and-anim-easing) both;
+}
+:host([animated]) .and-tooltip[data-state="closed"] {
+  animation: and-fade-zoom-out var(--and-anim-duration-fast) var(--and-anim-easing) both;
+}
+
+/* ═════════════  Tabs  ════════════════════════════════════════════════ */
+
+:host([animated]) .and-tab-content[data-state="active"] {
+  animation: and-fade-zoom-in var(--and-anim-duration) var(--and-anim-easing) both;
+}
+
+/* ═════════════  Button spinner  ══════════════════════════════════════ */
+
+:host([animated]) .and-spinner,
+.and-spinner {
+  animation: and-spin 1s linear infinite;
+}
+
+/* ═════════════  Dropdown  ════════════════════════════════════════════ */
+
+:host([animated]) .and-dropdown-menu[data-state="open"] {
+  animation: and-fade-zoom-in var(--and-anim-duration) var(--and-anim-easing) both;
+}
+:host([animated]) .and-dropdown-menu[data-state="closed"] {
+  animation: and-fade-zoom-out var(--and-anim-duration-fast) var(--and-anim-easing) both;
+}

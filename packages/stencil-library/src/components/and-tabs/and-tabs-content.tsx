@@ -1,15 +1,29 @@
 import { Component, h, Host, Prop, Element } from '@stencil/core';
-import { cn } from '../../utils/utils';
+import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+
+const contentBaseClass = [
+  'mt-2',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+].join(' ');
 
 @Component({
   tag: 'and-tabs-content',
   styleUrl: 'and-tabs.css',
   shadow: true,
 })
-export class MyTabsContent {
+export class AndTabsContent {
   @Element() el: HTMLElement;
-  @Prop() value: string;
+
+  /** The value that identifies which tab this content belongs to. */
+  @Prop({ reflect: true }) value: string;
+
+  /** Whether this content panel is currently selected (set by parent). */
   @Prop() selected: boolean = false;
+
+  connectedCallback() {
+    applyGlobalAnimationFlag(this.el);
+  }
 
   render() {
     return (
@@ -17,9 +31,15 @@ export class MyTabsContent {
         role="tabpanel"
         hidden={!this.selected}
         tabIndex={0}
-        class={cn('mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', this.selected ? 'block animate-in fade-in-50 zoom-in-95' : 'hidden')}
+        aria-labelledby={this.value ? `tab-${this.value}` : undefined}
+        class={cn(
+          contentBaseClass,
+          'and-tab-content',
+          this.selected ? 'block' : 'hidden',
+        )}
+        data-state={this.selected ? 'active' : 'inactive'}
       >
-        <slot></slot>
+        <slot />
       </Host>
     );
   }

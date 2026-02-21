@@ -1,0 +1,7 @@
+:host(and-menu-list) {
+  display: block;
+}
+
+:host(and-menu-item) {
+  display: block;
+}

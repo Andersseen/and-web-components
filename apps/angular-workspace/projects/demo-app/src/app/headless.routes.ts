@@ -54,6 +54,21 @@ const headlessRoutes: Routes = [
     path: 'sidebar',
     loadComponent: () => import('./pages/headless/sidebar-headless-demo'),
   },
+  {
+    path: 'breadcrumb',
+    loadComponent: () =>
+      import('./pages/headless/breadcrumb-headless-demo'),
+  },
+  {
+    path: 'menu-list',
+    loadComponent: () =>
+      import('./pages/headless/menu-list-headless-demo'),
+  },
+  {
+    path: 'context-menu',
+    loadComponent: () =>
+      import('./pages/headless/context-menu-headless-demo'),
+  },
 ];
 
 export default headlessRoutes;

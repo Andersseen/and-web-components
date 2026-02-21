@@ -1,10 +1,18 @@
 import { Component, Host, h, Prop, State, Element, Watch } from '@stencil/core';
 import { cva } from 'class-variance-authority';
-import { createTooltip, type TooltipPlacement } from '@andersseen/headless-components';
-import { cn } from '../../utils/utils';
+import { createTooltip, type TooltipPlacement, type TooltipReturn } from '@andersseen/headless-components';
+import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+
+/* ────────────────────────────────────────────────────────────────────
+ * Variants
+ * ──────────────────────────────────────────────────────────────────── */
 
 const tooltipVariants = cva(
-  'absolute z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 whitespace-nowrap',
+  [
+    'and-tooltip absolute z-50 overflow-hidden rounded-md border border-border',
+    'bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md whitespace-nowrap',
+  ].join(' '),
   {
     variants: {
       placement: {
@@ -17,54 +25,68 @@ const tooltipVariants = cva(
         true: 'opacity-100 visible',
         false: 'opacity-0 invisible pointer-events-none',
       },
-      variant: {
-        default: 'bg-popover text-popover-foreground', // Explicit semantic default
-      },
     },
     defaultVariants: {
       placement: 'top',
       visible: false,
-      variant: 'default',
     },
   },
 );
+
+/* ────────────────────────────────────────────────────────────────────
+ * Component
+ * ──────────────────────────────────────────────────────────────────── */
 
 @Component({
   tag: 'and-tooltip',
   styleUrls: ['and-tooltip.css', '../../global/global.css'],
   shadow: true,
 })
-export class MyTooltip {
+export class AndTooltip {
   @Element() el: HTMLElement;
 
+  /** Text content of the tooltip (alternative: use the `content` slot). */
   @Prop() content: string;
-  @Prop() placement: TooltipPlacement = 'top';
+
+  /** Preferred placement of the tooltip relative to its trigger. */
+  @Prop({ reflect: true }) placement: TooltipPlacement = 'top';
+
+  /** Delay in ms before showing the tooltip. */
   @Prop() openDelay: number = 0;
+
+  /** Delay in ms before hiding the tooltip. */
   @Prop() closeDelay: number = 0;
 
-  @State() isVisible = false;
+  @State() private isVisible: boolean = false;
 
-  private tooltipLogic: any;
+  private tooltipLogic: TooltipReturn;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.tooltipLogic = createTooltip({
       placement: this.placement,
       openDelay: this.openDelay,
       closeDelay: this.closeDelay,
-      onVisibilityChange: isVisible => {
+      onVisibilityChange: (isVisible: boolean) => {
         this.isVisible = isVisible;
       },
     });
   }
 
-  @Watch('placement')
-  placementHandler(newValue: TooltipPlacement) {
-    this.tooltipLogic.actions.setPlacement(newValue);
-  }
-
   disconnectedCallback() {
     this.tooltipLogic.destroy();
   }
+
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
+  @Watch('placement')
+  placementChanged(newValue: TooltipPlacement) {
+    this.tooltipLogic.actions.setPlacement(newValue);
+  }
+
+  /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
     const triggerProps = this.tooltipLogic.getTriggerProps();
@@ -80,12 +102,18 @@ export class MyTooltip {
         <div class="relative inline-block">
           {/* Trigger */}
           <div class="inline-block relative" {...triggerProps}>
-            <slot></slot>
+            <slot />
           </div>
 
           {/* Tooltip Content */}
-          <div class={cn(tooltipVariants({ placement: this.placement, visible: this.isVisible }))} {...tooltipProps}>
-            {this.content || <slot name="content"></slot>}
+          <div
+            class={cn(tooltipVariants({ placement: this.placement, visible: this.isVisible }))}
+            role="tooltip"
+            data-state={this.isVisible ? 'open' : 'closed'}
+            data-side={this.placement}
+            {...tooltipProps}
+          >
+            {this.content || <slot name="content" />}
           </div>
         </div>
       </Host>

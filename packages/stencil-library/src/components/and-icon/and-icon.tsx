@@ -6,38 +6,26 @@ import { getIcon, type IconName } from '@andersseen/icon';
   styleUrl: 'and-icon.css',
   shadow: true,
 })
-export class MyIcon {
+export class AndIcon {
   @Element() el: HTMLElement;
 
-  /**
-   * The name of the icon to render.
-   * Must be previously registered via `registerIcons()`.
-   */
-  @Prop() name: IconName;
+  /** The name of the icon to render (must be registered via `registerIcons()`). */
+  @Prop({ reflect: true }) name: IconName;
 
-  /**
-   * The size of the icon in pixels (default: 24)
-   */
-  @Prop() size: string | number = 24;
+  /** The size of the icon in pixels. */
+  @Prop({ reflect: true }) size: string | number = 24;
 
-  /**
-   * The color of the icon (default: currentColor)
-   */
-  @Prop() color: string = 'currentColor';
+  /** The stroke/fill color (defaults to currentColor for theme inheritance). */
+  @Prop({ reflect: true }) color: string = 'currentColor';
 
-  /**
-   * Stroke width (default: 2)
-   */
-  @Prop() strokeWidth: string | number = 2;
+  /** SVG stroke width. */
+  @Prop({ reflect: true }) strokeWidth: string | number = 2;
 
   @State() private svgContent: string | undefined;
 
-  componentWillLoad() {
-    this.loadIcon();
-  }
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
 
-  @Watch('name')
-  nameChanged() {
+  componentWillLoad() {
     this.loadIcon();
   }
 
@@ -48,23 +36,34 @@ export class MyIcon {
     }
   }
 
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
+  @Watch('name')
+  nameChanged() {
+    this.loadIcon();
+  }
+
+  /* ── Helpers ────────────────────────────────────────────────────── */
+
   private loadIcon() {
     this.svgContent = this.name ? getIcon(this.name) : undefined;
   }
 
+  /* ── Render ─────────────────────────────────────────────────────── */
+
   render() {
     if (!this.svgContent) {
-      return <Host aria-hidden="true"></Host>;
+      return <Host aria-hidden="true" role="img" />;
     }
 
-    const size = typeof this.size === 'number' ? this.size : parseInt(this.size, 10) || 24;
+    const resolvedSize = typeof this.size === 'number' ? this.size : parseInt(this.size, 10) || 24;
 
     return (
-      <Host aria-hidden="true">
+      <Host aria-hidden="true" role="img">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={resolvedSize}
+          height={resolvedSize}
           viewBox="0 0 24 24"
           fill="none"
           stroke={this.color}

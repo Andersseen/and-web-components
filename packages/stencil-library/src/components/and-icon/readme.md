@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                          | Type                    | Default          |
-| ------------- | -------------- | ------------------------------------------------------------------------------------ | ----------------------- | ---------------- |
-| `color`       | `color`        | The color of the icon (default: currentColor)                                        | `string`                | `'currentColor'` |
-| `name`        | `name`         | The name of the icon to render. Must be previously registered via `registerIcons()`. | `string \| string & {}` | `undefined`      |
-| `size`        | `size`         | The size of the icon in pixels (default: 24)                                         | `number \| string`      | `24`             |
-| `strokeWidth` | `stroke-width` | Stroke width (default: 2)                                                            | `number \| string`      | `2`              |
+| Property      | Attribute      | Description                                                                | Type                    | Default          |
+| ------------- | -------------- | -------------------------------------------------------------------------- | ----------------------- | ---------------- |
+| `color`       | `color`        | The stroke/fill color (defaults to currentColor for theme inheritance).    | `string`                | `'currentColor'` |
+| `name`        | `name`         | The name of the icon to render (must be registered via `registerIcons()`). | `string \| string & {}` | `undefined`      |
+| `size`        | `size`         | The size of the icon in pixels.                                            | `number \| string`      | `24`             |
+| `strokeWidth` | `stroke-width` | SVG stroke width.                                                          | `number \| string`      | `2`              |
 
 
 ## Dependencies

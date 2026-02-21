@@ -42,7 +42,7 @@ interface SidebarItem {
             <and-dropdown
               label="Theme"
               [items]="themeOptions"
-              (dropdownSelect)="onThemeSelect($event)"
+              (andDropdownSelect)="onThemeSelect($event)"
             ></and-dropdown>
           </div>
 
@@ -51,7 +51,7 @@ interface SidebarItem {
             <and-dropdown
               label="Color"
               [items]="colorOptions"
-              (dropdownSelect)="onColorSelect($event)"
+              (andDropdownSelect)="onColorSelect($event)"
             ></and-dropdown>
           </div>
 
@@ -81,7 +81,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="componentItems"
             [activeItem]="activeComponent()"
-            (sidebarItemClick)="onSidebarItemClick($event)"
+            (andSidebarItemClick)="onSidebarItemClick($event)"
           >
           </and-sidebar>
         }
@@ -90,7 +90,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="headlessItems"
             [activeItem]="activeHeadless()"
-            (sidebarItemClick)="onHeadlessSidebarItemClick($event)"
+            (andSidebarItemClick)="onHeadlessSidebarItemClick($event)"
           >
           </and-sidebar>
         }
@@ -99,7 +99,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="motionItems"
             [activeItem]="activeMotion()"
-            (sidebarItemClick)="onMotionItemClick($event)"
+            (andSidebarItemClick)="onMotionItemClick($event)"
           >
           </and-sidebar>
         }
@@ -108,7 +108,7 @@ interface SidebarItem {
             class="bg-background"
             [items]="layoutItems"
             [activeItem]="activeLayout()"
-            (sidebarItemClick)="onLayoutItemClick($event)"
+            (andSidebarItemClick)="onLayoutItemClick($event)"
           >
           </and-sidebar>
         }
@@ -156,12 +156,15 @@ export class MainLayoutComponent {
     { id: 'accordion', label: 'Accordion', icon: 'layers' },
     { id: 'alert', label: 'Alert', icon: 'alert-circle' },
     { id: 'badge', label: 'Badge', icon: 'award' },
+    { id: 'breadcrumb', label: 'Breadcrumb', icon: 'chevron-right' },
     { id: 'button', label: 'Button', icon: 'circle-dot' },
     { id: 'card', label: 'Card', icon: 'credit-card' },
     { id: 'carousel', label: 'Carousel', icon: 'gallery' },
+    { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
     { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
     { id: 'input', label: 'Input', icon: 'text-cursor' },
+    { id: 'menu-list', label: 'Menu List', icon: 'list' },
     { id: 'modal', label: 'Modal', icon: 'app-window' },
     { id: 'navbar', label: 'Navbar', icon: 'panel-top' },
     { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
@@ -184,6 +187,9 @@ export class MainLayoutComponent {
     { id: 'toast', label: 'Toast', icon: 'bell' },
     { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
     { id: 'alert', label: 'Alert', icon: 'alert-circle' },
+    { id: 'breadcrumb', label: 'Breadcrumb', icon: 'chevron-right' },
+    { id: 'menu-list', label: 'Menu List', icon: 'list' },
+    { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
   ];
   motionItems: SidebarItem[] = [
     { id: 'attribute', label: 'Attribute API', icon: 'code' },

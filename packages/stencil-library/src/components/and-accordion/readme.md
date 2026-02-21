@@ -5,21 +5,17 @@
 <!-- Auto Generated Below -->
 
 
-## Overview
-
-Accordion trigger/header component
-
 ## Methods
 
-### `setItemProps(props: { itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }) => Promise<void>`
+### `setItemProps(props: TriggerItemProps) => Promise<void>`
 
-Set item properties from parent
+Receive item properties from parent accordion-item.
 
 #### Parameters
 
-| Name    | Type                                                                       | Description |
-| ------- | -------------------------------------------------------------------------- | ----------- |
-| `props` | `{ itemId: string; accordionLogic: AccordionReturn; disabled?: boolean; }` |             |
+| Name    | Type               | Description |
+| ------- | ------------------ | ----------- |
+| `props` | `TriggerItemProps` |             |
 
 #### Returns
 

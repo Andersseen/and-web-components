@@ -12,14 +12,19 @@ import { defineCustomElement as defineAndAccordionItem } from '@andersseen/web-c
 import { defineCustomElement as defineAndAccordionTrigger } from '@andersseen/web-components/components/and-accordion-trigger.js';
 import { defineCustomElement as defineAndAlert } from '@andersseen/web-components/components/and-alert.js';
 import { defineCustomElement as defineAndBadge } from '@andersseen/web-components/components/and-badge.js';
+import { defineCustomElement as defineAndBreadcrumb } from '@andersseen/web-components/components/and-breadcrumb.js';
+import { defineCustomElement as defineAndBreadcrumbItem } from '@andersseen/web-components/components/and-breadcrumb-item.js';
 import { defineCustomElement as defineAndButton } from '@andersseen/web-components/components/and-button.js';
 import { defineCustomElement as defineAndCard } from '@andersseen/web-components/components/and-card.js';
 import { defineCustomElement as defineAndCarousel } from '@andersseen/web-components/components/and-carousel.js';
 import { defineCustomElement as defineAndCarouselItem } from '@andersseen/web-components/components/and-carousel-item.js';
+import { defineCustomElement as defineAndContextMenu } from '@andersseen/web-components/components/and-context-menu.js';
 import { defineCustomElement as defineAndDrawer } from '@andersseen/web-components/components/and-drawer.js';
 import { defineCustomElement as defineAndDropdown } from '@andersseen/web-components/components/and-dropdown.js';
 import { defineCustomElement as defineAndIcon } from '@andersseen/web-components/components/and-icon.js';
 import { defineCustomElement as defineAndInput } from '@andersseen/web-components/components/and-input.js';
+import { defineCustomElement as defineAndMenuItem } from '@andersseen/web-components/components/and-menu-item.js';
+import { defineCustomElement as defineAndMenuList } from '@andersseen/web-components/components/and-menu-list.js';
 import { defineCustomElement as defineAndModal } from '@andersseen/web-components/components/and-modal.js';
 import { defineCustomElement as defineAndNavbar } from '@andersseen/web-components/components/and-navbar.js';
 import { defineCustomElement as defineAndPagination } from '@andersseen/web-components/components/and-pagination.js';
@@ -133,11 +138,11 @@ export declare interface AndAccordionTrigger extends Components.AndAccordionTrig
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['dismissible', 'variant'],
-  outputs: ['myDismiss'],
+  outputs: ['andDismiss'],
 })
 export class AndAlert {
   protected el: HTMLAndAlertElement;
-  @Output() myDismiss = new EventEmitter<CustomEvent<void>>();
+  @Output() andDismiss = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -146,21 +151,23 @@ export class AndAlert {
 
 
 export declare interface AndAlert extends Components.AndAlert {
-
-  myDismiss: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the alert is dismissed.
+   */
+  andDismiss: EventEmitter<CustomEvent<void>>;
 }
 
 
 @ProxyCmp({
   defineCustomElementFn: defineAndBadge,
-  inputs: ['variant']
+  inputs: ['customClass', 'variant']
 })
 @Component({
   selector: 'and-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['variant'],
+  inputs: ['customClass', 'variant'],
 })
 export class AndBadge {
   protected el: HTMLAndBadgeElement;
@@ -175,18 +182,18 @@ export declare interface AndBadge extends Components.AndBadge {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineAndButton,
-  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant']
+  defineCustomElementFn: defineAndBreadcrumb,
+  inputs: ['customClass', 'navLabel', 'size']
 })
 @Component({
-  selector: 'and-button',
+  selector: 'and-breadcrumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'disabled', 'loading', 'size', 'type', 'variant'],
+  inputs: ['customClass', 'navLabel', 'size'],
 })
-export class AndButton {
-  protected el: HTMLAndButtonElement;
+export class AndBreadcrumb {
+  protected el: HTMLAndBreadcrumbElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -194,19 +201,79 @@ export class AndButton {
 }
 
 
-export declare interface AndButton extends Components.AndButton {}
+export declare interface AndBreadcrumb extends Components.AndBreadcrumb {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndBreadcrumbItem,
+  inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size']
+})
+@Component({
+  selector: 'and-breadcrumb-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size'],
+  outputs: ['andBreadcrumbNavigate'],
+})
+export class AndBreadcrumbItem {
+  protected el: HTMLAndBreadcrumbItemElement;
+  @Output() andBreadcrumbNavigate = new EventEmitter<CustomEvent<string>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem {
+  /**
+   * Emitted when a breadcrumb link is activated.
+   */
+  andBreadcrumbNavigate: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndButton,
+  inputs: ['customClass', 'disabled', 'href', 'loading', 'rel', 'size', 'target', 'type', 'variant']
+})
+@Component({
+  selector: 'and-button',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'disabled', 'href', 'loading', 'rel', 'size', 'target', 'type', 'variant'],
+  outputs: ['andButtonClick'],
+})
+export class AndButton {
+  protected el: HTMLAndButtonElement;
+  @Output() andButtonClick = new EventEmitter<CustomEvent<MouseEvent>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndButton extends Components.AndButton {
+  /**
+   * Emitted on button click.
+   */
+  andButtonClick: EventEmitter<CustomEvent<MouseEvent>>;
+}
 
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCard,
-  inputs: ['variant']
+  inputs: ['customClass', 'variant']
 })
 @Component({
   selector: 'and-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['variant'],
+  inputs: ['customClass', 'variant'],
 })
 export class AndCard {
   protected el: HTMLAndCardElement;
@@ -222,17 +289,19 @@ export declare interface AndCard extends Components.AndCard {}
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCarousel,
-  inputs: ['autoplay', 'interval']
+  inputs: ['autoplay', 'interval', 'label']
 })
 @Component({
   selector: 'and-carousel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autoplay', 'interval'],
+  inputs: ['autoplay', 'interval', 'label'],
+  outputs: ['andSlideChange'],
 })
 export class AndCarousel {
   protected el: HTMLAndCarouselElement;
+  @Output() andSlideChange = new EventEmitter<CustomEvent<number>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -240,18 +309,24 @@ export class AndCarousel {
 }
 
 
-export declare interface AndCarousel extends Components.AndCarousel {}
+export declare interface AndCarousel extends Components.AndCarousel {
+  /**
+   * Emitted when the active slide changes.
+   */
+  andSlideChange: EventEmitter<CustomEvent<number>>;
+}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineAndCarouselItem
+  defineCustomElementFn: defineAndCarouselItem,
+  inputs: ['label']
 })
 @Component({
   selector: 'and-carousel-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['label'],
 })
 export class AndCarouselItem {
   protected el: HTMLAndCarouselItemElement;
@@ -266,6 +341,36 @@ export declare interface AndCarouselItem extends Components.AndCarouselItem {}
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineAndContextMenu,
+  inputs: ['customClass', 'open']
+})
+@Component({
+  selector: 'and-context-menu',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'open'],
+  outputs: ['andContextMenuOpenChange'],
+})
+export class AndContextMenu {
+  protected el: HTMLAndContextMenuElement;
+  @Output() andContextMenuOpenChange = new EventEmitter<CustomEvent<boolean>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndContextMenu extends Components.AndContextMenu {
+  /**
+   * Emitted when the open state changes.
+   */
+  andContextMenuOpenChange: EventEmitter<CustomEvent<boolean>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineAndDrawer,
   inputs: ['open', 'placement', 'showClose']
 })
@@ -275,12 +380,12 @@ export declare interface AndCarouselItem extends Components.AndCarouselItem {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['open', 'placement', 'showClose'],
-  outputs: ['myClose', 'myOpen'],
+  outputs: ['andDrawerClose', 'andDrawerOpen'],
 })
 export class AndDrawer {
   protected el: HTMLAndDrawerElement;
-  @Output() myClose = new EventEmitter<CustomEvent<void>>();
-  @Output() myOpen = new EventEmitter<CustomEvent<void>>();
+  @Output() andDrawerClose = new EventEmitter<CustomEvent<void>>();
+  @Output() andDrawerOpen = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -292,11 +397,11 @@ export declare interface AndDrawer extends Components.AndDrawer {
   /**
    * Emitted when the drawer is closed (backdrop click, close button, or Escape).
    */
-  myClose: EventEmitter<CustomEvent<void>>;
+  andDrawerClose: EventEmitter<CustomEvent<void>>;
   /**
    * Emitted when the drawer is opened.
    */
-  myOpen: EventEmitter<CustomEvent<void>>;
+  andDrawerOpen: EventEmitter<CustomEvent<void>>;
 }
 
 
@@ -310,11 +415,12 @@ export declare interface AndDrawer extends Components.AndDrawer {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant'],
-  outputs: ['dropdownSelect'],
+  outputs: ['andDropdownSelect', 'andDropdownOpenChange'],
 })
 export class AndDropdown {
   protected el: HTMLAndDropdownElement;
-  @Output() dropdownSelect = new EventEmitter<CustomEvent<string>>();
+  @Output() andDropdownSelect = new EventEmitter<CustomEvent<string>>();
+  @Output() andDropdownOpenChange = new EventEmitter<CustomEvent<boolean>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -323,8 +429,14 @@ export class AndDropdown {
 
 
 export declare interface AndDropdown extends Components.AndDropdown {
-
-  dropdownSelect: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when an item is selected.
+   */
+  andDropdownSelect: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when the dropdown open state changes.
+   */
+  andDropdownOpenChange: EventEmitter<CustomEvent<boolean>>;
 }
 
 
@@ -353,19 +465,20 @@ export declare interface AndIcon extends Components.AndIcon {}
 
 @ProxyCmp({
   defineCustomElementFn: defineAndInput,
-  inputs: ['class', 'disabled', 'placeholder', 'type', 'value']
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'placeholder', 'required', 'type', 'value']
 })
 @Component({
   selector: 'and-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['class', 'disabled', 'placeholder', 'type', 'value'],
-  outputs: ['myInput'],
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'placeholder', 'required', 'type', 'value'],
+  outputs: ['andInput', 'andBlur'],
 })
 export class AndInput {
   protected el: HTMLAndInputElement;
-  @Output() myInput = new EventEmitter<CustomEvent<string>>();
+  @Output() andInput = new EventEmitter<CustomEvent<string>>();
+  @Output() andBlur = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -374,9 +487,68 @@ export class AndInput {
 
 
 export declare interface AndInput extends Components.AndInput {
-
-  myInput: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when the input value changes.
+   */
+  andInput: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when the input loses focus.
+   */
+  andBlur: EventEmitter<CustomEvent<void>>;
 }
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndMenuItem,
+  inputs: ['customClass', 'disabled', 'intent', 'value']
+})
+@Component({
+  selector: 'and-menu-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'disabled', 'intent', 'value'],
+  outputs: ['andMenuItemSelect'],
+})
+export class AndMenuItem {
+  protected el: HTMLAndMenuItemElement;
+  @Output() andMenuItemSelect = new EventEmitter<CustomEvent<string>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndMenuItem extends Components.AndMenuItem {
+  /**
+   * Emitted when the item is selected (clicked or Enter/Space pressed).
+   */
+  andMenuItemSelect: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndMenuList,
+  inputs: ['ariaMenuLabel', 'customClass']
+})
+@Component({
+  selector: 'and-menu-list',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['ariaMenuLabel', 'customClass'],
+})
+export class AndMenuList {
+  protected el: HTMLAndMenuListElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndMenuList extends Components.AndMenuList {}
 
 
 @ProxyCmp({
@@ -389,11 +561,11 @@ export declare interface AndInput extends Components.AndInput {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['open'],
-  outputs: ['myClose'],
+  outputs: ['andClose'],
 })
 export class AndModal {
   protected el: HTMLAndModalElement;
-  @Output() myClose = new EventEmitter<CustomEvent<void>>();
+  @Output() andClose = new EventEmitter<CustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -402,8 +574,10 @@ export class AndModal {
 
 
 export declare interface AndModal extends Components.AndModal {
-
-  myClose: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the modal is closed.
+   */
+  andClose: EventEmitter<CustomEvent<void>>;
 }
 
 
@@ -457,11 +631,11 @@ export declare interface AndNavbar extends Components.AndNavbar {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['currentPage', 'totalPages'],
-  outputs: ['pageChange'],
+  outputs: ['andPageChange'],
 })
 export class AndPagination {
   protected el: HTMLAndPaginationElement;
-  @Output() pageChange = new EventEmitter<CustomEvent<number>>();
+  @Output() andPageChange = new EventEmitter<CustomEvent<number>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -471,9 +645,9 @@ export class AndPagination {
 
 export declare interface AndPagination extends Components.AndPagination {
   /**
-   * Emitted when page changes
+   * Emitted when the page changes.
    */
-  pageChange: EventEmitter<CustomEvent<number>>;
+  andPageChange: EventEmitter<CustomEvent<number>>;
 }
 
 
@@ -487,12 +661,12 @@ export declare interface AndPagination extends Components.AndPagination {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activeItem', 'collapsed', 'items', 'variant'],
-  outputs: ['sidebarItemClick', 'sidebarToggle'],
+  outputs: ['andSidebarItemClick', 'andSidebarToggle'],
 })
 export class AndSidebar {
   protected el: HTMLAndSidebarElement;
-  @Output() sidebarItemClick = new EventEmitter<CustomEvent<string>>();
-  @Output() sidebarToggle = new EventEmitter<CustomEvent<boolean>>();
+  @Output() andSidebarItemClick = new EventEmitter<CustomEvent<string>>();
+  @Output() andSidebarToggle = new EventEmitter<CustomEvent<boolean>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -502,13 +676,13 @@ export class AndSidebar {
 
 export declare interface AndSidebar extends Components.AndSidebar {
   /**
-   * Emitted when a navigation item is clicked
+   * Emitted when a navigation item is clicked.
    */
-  sidebarItemClick: EventEmitter<CustomEvent<string>>;
+  andSidebarItemClick: EventEmitter<CustomEvent<string>>;
   /**
-   * Emitted when the sidebar collapse state changes
+   * Emitted when the sidebar collapse state changes.
    */
-  sidebarToggle: EventEmitter<CustomEvent<boolean>>;
+  andSidebarToggle: EventEmitter<CustomEvent<boolean>>;
 }
 
 
@@ -522,11 +696,11 @@ export declare interface AndSidebar extends Components.AndSidebar {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activationMode', 'defaultValue', 'orientation', 'value'],
-  outputs: ['valueChange'],
+  outputs: ['andTabChange'],
 })
 export class AndTabs {
   protected el: HTMLAndTabsElement;
-  @Output() valueChange = new EventEmitter<CustomEvent<string>>();
+  @Output() andTabChange = new EventEmitter<CustomEvent<string>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -535,8 +709,10 @@ export class AndTabs {
 
 
 export declare interface AndTabs extends Components.AndTabs {
-
-  valueChange: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when the selected tab changes.
+   */
+  andTabChange: EventEmitter<CustomEvent<string>>;
 }
 
 
@@ -609,7 +785,9 @@ export class AndTabsTrigger {
 
 
 export declare interface AndTabsTrigger extends Components.AndTabsTrigger {
-
+  /**
+   * Emitted when this trigger is clicked.
+   */
   tabTriggerClick: EventEmitter<CustomEvent<string>>;
 }
 

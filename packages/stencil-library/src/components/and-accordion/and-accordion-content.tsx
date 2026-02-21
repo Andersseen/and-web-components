@@ -1,57 +1,71 @@
-import { Component, h, Host, State, Method } from '@stencil/core';
+import { Component, h, Host, State, Method, Element } from '@stencil/core';
 import { type AccordionReturn } from '@andersseen/headless-components';
-import { cn } from '../../utils/utils';
+import { cn } from '../../utils/cn';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
-/**
- * Accordion content/panel component
- */
+/* ────────────────────────────────────────────────────────────────────
+ * Styles
+ * ──────────────────────────────────────────────────────────────────── */
+
+const contentBaseClass = 'and-accordion-content overflow-hidden text-sm';
+
+/* ────────────────────────────────────────────────────────────────────
+ * Component
+ * ──────────────────────────────────────────────────────────────────── */
+
+export interface ContentItemProps {
+  itemId: string;
+  accordionLogic: AccordionReturn;
+}
+
 @Component({
   tag: 'and-accordion-content',
   styleUrl: '../../global/global.css',
   shadow: true,
 })
-export class MyAccordionContent {
+export class AndAccordionContent {
+  @Element() el: HTMLElement;
+
   @State() private itemId: string = '';
   @State() private accordionLogic: AccordionReturn | null = null;
   @State() private isExpanded: boolean = false;
 
-  /**
-   * Set item properties from parent
-   */
+  connectedCallback() {
+    applyGlobalAnimationFlag(this.el);
+  }
+
+  /** Receive item properties from parent accordion-item. */
   @Method()
-  async setItemProps(props: { itemId: string; accordionLogic: AccordionReturn }) {
+  async setItemProps(props: ContentItemProps) {
     this.itemId = props.itemId;
     this.accordionLogic = props.accordionLogic;
-    this.updateState();
+    this.syncState();
   }
 
-  /**
-   * Update local expanded state
-   */
-  private updateState() {
-    if (this.accordionLogic && this.itemId) {
-      this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
-    }
+  private syncState() {
+    if (!this.accordionLogic || !this.itemId) return;
+    this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
   }
+
+  /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
+    // Fallback rendering
     if (!this.accordionLogic || !this.itemId) {
-      // Fallback rendering
       return (
         <Host class={cn('overflow-hidden text-sm')}>
           <div class="pb-4 pt-0">
-            <slot></slot>
+            <slot />
           </div>
         </Host>
       );
     }
 
-    // Get accessibility props from headless logic
     const contentProps = this.accordionLogic.getContentProps(this.itemId);
 
     return (
       <Host
-        class={cn('overflow-hidden text-sm transition-all data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up', this.isExpanded ? '' : 'hidden')}
+        class={cn(contentBaseClass, !this.isExpanded && 'hidden')}
         role={contentProps.role}
         id={contentProps.id}
         aria-hidden={contentProps['aria-hidden']}
@@ -59,7 +73,7 @@ export class MyAccordionContent {
         data-state={contentProps['data-state']}
       >
         <div class="pb-4 pt-0">
-          <slot></slot>
+          <slot />
         </div>
       </Host>
     );

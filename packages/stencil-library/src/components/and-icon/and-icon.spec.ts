@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MyIcon } from './and-icon';
+import { AndIcon } from './and-icon';
 
 describe('and-icon', () => {
   it('renders with default values', async () => {
     const page = await newSpecPage({
-      components: [MyIcon],
+      components: [AndIcon],
       html: `<and-icon name="close"></and-icon>`,
     });
 

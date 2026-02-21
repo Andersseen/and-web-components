@@ -1,14 +1,15 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State, Element } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-components';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
 const overlayVariants = cva(
-  'fixed inset-0 z-[9999] bg-foreground/60 transition-opacity duration-300 ease-out',
+  'and-drawer-overlay fixed inset-0 z-[9999] bg-foreground/60',
   {
     variants: {
       open: {
@@ -21,7 +22,7 @@ const overlayVariants = cva(
 );
 
 const contentVariants = cva(
-  'fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
+  'and-drawer-content fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
   {
     variants: {
       placement: {
@@ -35,7 +36,7 @@ const contentVariants = cva(
         false: '',
       },
       animate: {
-        true: 'transition-transform duration-300 ease-out',
+        true: '',
         false: '',
       },
     },
@@ -75,6 +76,8 @@ export type DrawerVariantProps = VariantProps<typeof contentVariants>;
   shadow: true,
 })
 export class AndDrawer {
+  @Element() el: HTMLElement;
+
   /**
    * Whether the drawer is open.
    */
@@ -90,15 +93,11 @@ export class AndDrawer {
    */
   @Prop() showClose: boolean = true;
 
-  /**
-   * Emitted when the drawer is closed (backdrop click, close button, or Escape).
-   */
-  @Event() myClose: EventEmitter<void>;
+  /** Emitted when the drawer is closed (backdrop click, close button, or Escape). */
+  @Event({ bubbles: true, composed: true }) andDrawerClose: EventEmitter<void>;
 
-  /**
-   * Emitted when the drawer is opened.
-   */
-  @Event() myOpen: EventEmitter<void>;
+  /** Emitted when the drawer is opened. */
+  @Event({ bubbles: true, composed: true }) andDrawerOpen: EventEmitter<void>;
 
   @State() private isOpen: boolean = false;
 
@@ -116,6 +115,7 @@ export class AndDrawer {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     this.drawer = createDrawer({
       defaultOpen: this.open,
       placement: this.placement,
@@ -124,10 +124,10 @@ export class AndDrawer {
         this.open = isOpen;
         if (isOpen) {
           document.body.style.overflow = 'hidden';
-          this.myOpen.emit();
+          this.andDrawerOpen.emit();
         } else {
           document.body.style.overflow = '';
-          this.myClose.emit();
+          this.andDrawerClose.emit();
         }
       },
     });
@@ -193,6 +193,7 @@ export class AndDrawer {
         {/* Overlay */}
         <div
           class={cn(overlayVariants({ open: this.isOpen }))}
+          style={this.skipTransition ? { transition: 'none' } : undefined}
           {...overlayProps}
           onClick={() => this.drawer.handleOverlayClick()}
         />
@@ -200,6 +201,7 @@ export class AndDrawer {
         {/* Content panel */}
         <div
           class={cn(contentVariants({ placement: this.placement, open: this.isOpen, animate: !this.skipTransition }))}
+          style={this.skipTransition ? { transition: 'none' } : undefined}
           {...contentProps}
         >
           {/* Header */}

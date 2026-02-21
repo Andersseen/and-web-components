@@ -9,4 +9,5 @@
  */
 
 export { format } from './utils/utils';
+export { enableAnimations, disableAnimations, isAnimationsEnabled } from './utils/animation-config';
 export type * from './components.d.ts';

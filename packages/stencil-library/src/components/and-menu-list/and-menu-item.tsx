@@ -1,0 +1,125 @@
+import { Component, h, Host, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '../../utils/cn';
+import { createMenuList, type MenuListReturn } from '@andersseen/headless-components';
+
+/* ────────────────────────────────────────────────────────────────────
+ * Variants
+ * ──────────────────────────────────────────────────────────────────── */
+
+const menuItemVariants = cva(
+  [
+    'relative flex w-full cursor-pointer select-none items-center',
+    'rounded-md px-2 py-1.5 text-sm font-sans outline-none',
+    'transition-colors duration-normal',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  ].join(' '),
+  {
+    variants: {
+      intent: {
+        default: [
+          'text-foreground',
+          'hover:bg-accent hover:text-accent-foreground',
+          'focus:bg-accent focus:text-accent-foreground',
+        ].join(' '),
+        destructive: [
+          'text-destructive',
+          'hover:bg-destructive/10 hover:text-destructive',
+          'focus:bg-destructive/10 focus:text-destructive',
+        ].join(' '),
+      },
+      disabled: {
+        true: 'opacity-50 pointer-events-none cursor-default',
+        false: '',
+      },
+    },
+    defaultVariants: {
+      intent: 'default',
+      disabled: false,
+    },
+  },
+);
+
+export type MenuItemVariantProps = VariantProps<typeof menuItemVariants>;
+
+/* ────────────────────────────────────────────────────────────────────
+ * Component
+ * ──────────────────────────────────────────────────────────────────── */
+
+@Component({
+  tag: 'and-menu-item',
+  styleUrls: ['and-menu-list.css', '../../global/global.css'],
+  shadow: true,
+})
+export class AndMenuItem {
+  @Element() el: HTMLElement;
+
+  /** Intent variant (default or destructive). */
+  @Prop({ reflect: true }) intent: MenuItemVariantProps['intent'] = 'default';
+
+  /** Disables the menu item when true. */
+  @Prop({ reflect: true }) disabled: boolean = false;
+
+  /** Optional value identifier for the item. */
+  @Prop() value: string;
+
+  /** Additional CSS classes to merge with internal styles. */
+  @Prop({ attribute: 'class' }) customClass: string;
+
+  /** Emitted when the item is selected (clicked or Enter/Space pressed). */
+  @Event({ bubbles: true, composed: true }) andMenuItemSelect: EventEmitter<string>;
+
+  @State() private menuItemLogic: MenuListReturn;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.menuItemLogic = createMenuList({
+      items: [{ id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled }],
+      onSelect: (id: string) => {
+        this.andMenuItemSelect.emit(id);
+      },
+    });
+  }
+
+  /* ── Handlers ───────────────────────────────────────────────────── */
+
+  private handleClick = () => {
+    if (!this.disabled) {
+      this.menuItemLogic?.actions.selectItem(this.value);
+    }
+  };
+
+  private handleKeyDown = (e: KeyboardEvent) => {
+    if (this.disabled) return;
+    const itemConfig = { id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled };
+    this.menuItemLogic?.handleItemKeyDown(e, itemConfig);
+  };
+
+  /* ── Render ─────────────────────────────────────────────────────── */
+
+  render() {
+    const itemConfig = { id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled };
+    const itemProps = this.menuItemLogic?.getItemProps(itemConfig, 0) || {};
+
+    const classes = cn(
+      menuItemVariants({ intent: this.intent, disabled: this.disabled }),
+      this.customClass,
+    );
+
+    return (
+      <Host>
+        <li
+          {...itemProps}
+          class={classes}
+          onClick={this.handleClick}
+          onKeyDown={this.handleKeyDown}
+        >
+          <slot name="start" />
+          <slot />
+          <slot name="end" />
+        </li>
+      </Host>
+    );
+  }
+}

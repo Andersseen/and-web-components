@@ -1,14 +1,22 @@
 import { Component, Host, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { IconName } from '@andersseen/icon';
-import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
+import { type IconName } from '@andersseen/icon';
+import { createSidebar, type SidebarReturn } from '@andersseen/headless-components';
+
+/* ────────────────────────────────────────────────────────────────────
+ * Types
+ * ──────────────────────────────────────────────────────────────────── */
 
 export type SidebarItem = {
   id: string;
   label: string;
   icon?: IconName;
 };
+
+/* ────────────────────────────────────────────────────────────────────
+ * Variants
+ * ──────────────────────────────────────────────────────────────────── */
 
 const sidebarVariants = cva('flex h-full flex-col border-r transition-all duration-300', {
   variants: {
@@ -28,7 +36,11 @@ const sidebarVariants = cva('flex h-full flex-col border-r transition-all durati
 });
 
 const sidebarItemVariants = cva(
-  'flex w-full items-center gap-3 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  [
+    'flex w-full items-center gap-3 rounded-md text-sm font-medium',
+    'transition-colors',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  ].join(' '),
   {
     variants: {
       active: {
@@ -47,121 +59,137 @@ const sidebarItemVariants = cva(
   },
 );
 
-export type SidebarProps = VariantProps<typeof sidebarVariants>;
+export type SidebarVariantProps = VariantProps<typeof sidebarVariants>;
+
+/* ────────────────────────────────────────────────────────────────────
+ * Component
+ * ──────────────────────────────────────────────────────────────────── */
 
 @Component({
   tag: 'and-sidebar',
   styleUrls: ['and-sidebar.css', '../../global/global.css'],
   shadow: true,
 })
-export class MySidebar {
+export class AndSidebar {
   private sidebar: SidebarReturn;
 
-  /**
-   * The active navigation item ID
-   */
-  @Prop({ mutable: true }) activeItem: string = 'home';
+  /** The active navigation item ID. */
+  @Prop({ mutable: true, reflect: true }) activeItem: string = 'home';
 
-  /**
-   * Navigation items to display
-   */
+  /** Navigation items to display. */
   @Prop() items: SidebarItem[] = [
     { id: 'home', label: 'Home' },
     { id: 'docs', label: 'Docs' },
     { id: 'components', label: 'Components' },
   ];
 
-  /**
-   * Whether the sidebar is collapsed
-   */
-  @Prop({ mutable: true }) collapsed: boolean = false;
+  /** Whether the sidebar is collapsed. */
+  @Prop({ mutable: true, reflect: true }) collapsed: boolean = false;
 
-  /**
-   * Variant of the sidebar
-   */
-  @Prop() variant: SidebarProps['variant'] = 'default';
+  /** Visual variant of the sidebar. */
+  @Prop({ reflect: true }) variant: SidebarVariantProps['variant'] = 'default';
 
-  /**
-   * Emitted when a navigation item is clicked
-   */
-  @Event() sidebarItemClick: EventEmitter<string>;
+  /** Emitted when a navigation item is clicked. */
+  @Event({ bubbles: true, composed: true }) andSidebarItemClick: EventEmitter<string>;
 
-  /**
-   * Emitted when the sidebar collapse state changes
-   */
-  @Event() sidebarToggle: EventEmitter<boolean>;
+  /** Emitted when the sidebar collapse state changes. */
+  @Event({ bubbles: true, composed: true }) andSidebarToggle: EventEmitter<boolean>;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
     this.sidebar = createSidebar({
       defaultActiveItem: this.activeItem,
-      onActiveItemChange: id => {
+      onActiveItemChange: (id: string) => {
         this.activeItem = id;
-        this.sidebarItemClick.emit(id);
+        this.andSidebarItemClick.emit(id);
       },
       defaultCollapsed: this.collapsed,
-      onCollapsedChange: collapsed => {
-        this.collapsed = collapsed;
-        this.sidebarToggle.emit(collapsed);
+      onCollapsedChange: (isCollapsed: boolean) => {
+        this.collapsed = isCollapsed;
+        this.andSidebarToggle.emit(isCollapsed);
       },
     });
   }
 
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
   @Watch('activeItem')
-  handleActiveItemChange(newValue: string) {
+  activeItemChanged(newValue: string) {
     this.sidebar.actions.setActiveItem(newValue);
   }
 
   @Watch('collapsed')
-  handleCollapsedChange(newValue: boolean) {
+  collapsedChanged(newValue: boolean) {
     this.sidebar.actions.setCollapsed(newValue);
   }
 
-  private handleToggle() {
+  /* ── Handlers ───────────────────────────────────────────────────── */
+
+  private handleToggle = () => {
     this.sidebar.actions.toggleCollapse();
-  }
+  };
+
+  /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
     const containerProps = this.sidebar.getContainerProps();
     const toggleProps = this.sidebar.getToggleProps();
+    const isCollapsed = this.sidebar.queries.isCollapsed();
 
     return (
       <Host {...containerProps}>
-        <aside class={cn(sidebarVariants({ variant: this.variant, collapsed: this.sidebar.queries.isCollapsed() }))}>
+        <aside
+          class={cn(sidebarVariants({ variant: this.variant, collapsed: isCollapsed }))}
+          aria-label="Sidebar navigation"
+        >
           <div class="sidebar-header">
-            <slot name="header">{!this.sidebar.queries.isCollapsed() && <span class="sidebar-title">Navigation</span>}</slot>
-            <button {...toggleProps} class="sidebar-toggle" onClick={() => this.handleToggle()} aria-label="Toggle sidebar">
-              <and-icon name={this.sidebar.queries.isCollapsed() ? 'chevron-right' : 'chevron-left'} class="icon" />
+            <slot name="header">
+              {!isCollapsed && <span class="sidebar-title">Navigation</span>}
+            </slot>
+            <button
+              {...toggleProps}
+              class="sidebar-toggle"
+              onClick={this.handleToggle}
+              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              <and-icon
+                name={isCollapsed ? 'chevron-right' : 'chevron-left'}
+                class="icon"
+              />
             </button>
           </div>
-          <nav class="sidebar-nav">
+
+          <nav class="sidebar-nav" aria-label="Sidebar">
             {this.items.map(item => {
               const itemProps = this.sidebar.getItemProps(item.id);
+              const isActive = this.sidebar.queries.isActive(item.id);
+
               return (
                 <button
                   key={item.id}
                   {...itemProps}
                   class={cn(
-                    sidebarItemVariants({
-                      active: this.sidebar.queries.isActive(item.id),
-                      collapsed: this.sidebar.queries.isCollapsed(),
-                    }),
+                    sidebarItemVariants({ active: isActive, collapsed: isCollapsed }),
                     'bg-transparent border-none cursor-pointer text-left',
                   )}
                   onClick={() => this.sidebar.actions.setActiveItem(item.id)}
-                  title={this.sidebar.queries.isCollapsed() ? item.label : undefined}
+                  aria-current={isActive ? 'page' : undefined}
+                  title={isCollapsed ? item.label : undefined}
                 >
                   {item.icon && (
                     <span class="item-icon">
                       <and-icon name={item.icon} class="h-4 w-4" />
                     </span>
                   )}
-                  {!this.sidebar.queries.isCollapsed() && <span class="item-label">{item.label}</span>}
+                  {!isCollapsed && <span class="item-label">{item.label}</span>}
                 </button>
               );
             })}
           </nav>
+
           <div class="sidebar-footer">
-            <slot name="footer"></slot>
+            <slot name="footer" />
           </div>
         </aside>
       </Host>

@@ -4,6 +4,7 @@
 
 @import './themes.css';
 @import './palettes.css';
+@import './animations.css';
 
 @layer base {
   /* -----------------------------------------------------------------------

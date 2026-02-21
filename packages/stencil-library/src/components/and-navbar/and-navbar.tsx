@@ -448,7 +448,7 @@ export class AndNavbar {
         <and-drawer
           open={this.mobileMenuOpen}
           placement="right"
-          onMyClose={this.handleClose}
+          onAndDrawerClose={this.handleClose}
         >
           <span slot="header" class="mobile-menu-title">Menu</span>
 
