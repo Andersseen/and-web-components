@@ -1,0 +1,74 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Zooming Entrances & Exits
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="zoom-in"][and-motion-state="active"]        { animation-name: and-zoom-in; }
+[and-motion="zoom-in-down"][and-motion-state="active"]   { animation-name: and-zoom-in-down; }
+[and-motion="zoom-in-left"][and-motion-state="active"]   { animation-name: and-zoom-in-left; }
+[and-motion="zoom-in-right"][and-motion-state="active"]  { animation-name: and-zoom-in-right; }
+[and-motion="zoom-in-up"][and-motion-state="active"]     { animation-name: and-zoom-in-up; }
+[and-motion="zoom-out"][and-motion-state="active"]       { animation-name: and-zoom-out; }
+[and-motion="zoom-out-down"][and-motion-state="active"]  { animation-name: and-zoom-out-down; }
+[and-motion="zoom-out-left"][and-motion-state="active"]  { animation-name: and-zoom-out-left; }
+[and-motion="zoom-out-right"][and-motion-state="active"] { animation-name: and-zoom-out-right; }
+[and-motion="zoom-out-up"][and-motion-state="active"]    { animation-name: and-zoom-out-up; }
+
+/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+
+@keyframes and-zoom-in {
+  from { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+  50%  { opacity: 1; }
+  to   { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+@keyframes and-zoom-in-down {
+  from { opacity: 0; transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  60%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); }
+  to   { opacity: 1; transform: scale3d(1, 1, 1) translate3d(0, 0, 0); }
+}
+
+@keyframes and-zoom-in-left {
+  from { opacity: 0; transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  60%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); }
+  to   { opacity: 1; transform: scale3d(1, 1, 1) translate3d(0, 0, 0); }
+}
+
+@keyframes and-zoom-in-right {
+  from { opacity: 0; transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  60%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); }
+  to   { opacity: 1; transform: scale3d(1, 1, 1) translate3d(0, 0, 0); }
+}
+
+@keyframes and-zoom-in-up {
+  from { opacity: 0; transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  60%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); }
+  to   { opacity: 1; transform: scale3d(1, 1, 1) translate3d(0, 0, 0); }
+}
+
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+
+@keyframes and-zoom-out {
+  from { opacity: 1; transform: scale3d(1, 1, 1); }
+  50%  { opacity: 0; }
+  to   { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+}
+
+@keyframes and-zoom-out-down {
+  40%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  to   { opacity: 0; transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); }
+}
+
+@keyframes and-zoom-out-left {
+  40%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0); }
+  to   { opacity: 0; transform: scale(0.1) translate3d(-2000px, 0, 0); }
+}
+
+@keyframes and-zoom-out-right {
+  40%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0); }
+  to   { opacity: 0; transform: scale(0.1) translate3d(2000px, 0, 0); }
+}
+
+@keyframes and-zoom-out-up {
+  40%  { opacity: 1; transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  to   { opacity: 0; transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); }
+}
