@@ -24,6 +24,7 @@
     },
     "./components/*.js": "./dist/components/*.js",
     "./components/*": "./dist/components/*.js",
+    "./components/all": "./dist/components/all.js",
     "./loader": {
       "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
@@ -43,7 +44,7 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build && node scripts/generate-all-barrel.cjs",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test:spec": "stencil test --spec",
