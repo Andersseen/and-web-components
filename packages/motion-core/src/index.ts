@@ -1,93 +1,37 @@
-const ATTR = {
-  MOTION: "and-motion",
-  TRIGGER: "and-motion-trigger",
-  DURATION: "and-motion-duration",
-  DELAY: "and-motion-delay",
-  STATE: "and-motion-state",
-} as const;
+/* ═══════════════════════════════════════════════════════════════════════════
+ * @andersseen/motion — Public API
+ *
+ * Re-exports the class-based MotionController and provides a convenience
+ * `initMotion()` function for drop-in backwards compatibility.
+ * ═══════════════════════════════════════════════════════════════════════════ */
 
-type TriggerType = "enter" | "leave" | "hover" | "tap";
+export {
+  MotionController,
+  type MotionControllerOptions,
+  type TriggerType,
+} from "./motion-controller";
+
+import { MotionController } from "./motion-controller";
+import type { MotionControllerOptions } from "./motion-controller";
 
 /**
- * Initializes the motion library.
- * Scans for elements with `and-motion` and sets up the appropriate triggers.
+ * One-liner convenience function.
  *
- * @param root - The root element to scan (defaults to document.body).
- * @returns A cleanup function to disconnect observers and remove event listeners.
+ * Scans the given root (defaults to `document.body`) for `[and-motion]`
+ * elements, wires up every trigger, and returns a cleanup function
+ * identical to `MotionController.destroy()`.
+ *
+ * @example
+ * ```ts
+ * const cleanup = initMotion();
+ * // …later, on unmount:
+ * cleanup();
+ * ```
  */
-export function initMotion(root: HTMLElement = document.body) {
-  const elements = root.querySelectorAll<HTMLElement>(`[${ATTR.MOTION}]`);
-  const cleanups: (() => void)[] = [];
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const el = entry.target as HTMLElement;
-      const trigger = (el.getAttribute(ATTR.TRIGGER) || "enter") as TriggerType;
-
-      if (trigger === "enter") {
-        if (entry.isIntersecting) {
-          el.setAttribute(ATTR.STATE, "active");
-        } else {
-          el.removeAttribute(ATTR.STATE);
-        }
-      } else if (trigger === "leave") {
-         if (!entry.isIntersecting) {
-            el.setAttribute(ATTR.STATE, "active");
-         } else {
-            el.removeAttribute(ATTR.STATE);
-         }
-      }
-    });
-  }, { threshold: 0.1 });
-
-  elements.forEach(el => {
-    const trigger = (el.getAttribute(ATTR.TRIGGER) || "enter") as TriggerType;
-
-    // Apply options
-    const duration = el.getAttribute(ATTR.DURATION);
-    if (duration) el.style.setProperty("--and-motion-duration", duration);
-
-    const delay = el.getAttribute(ATTR.DELAY);
-    if (delay) el.style.setProperty("--and-motion-delay", delay);
-
-    // Setup triggers
-    if (trigger === "enter") {
-      // Hide initially for enter animations
-      el.style.opacity = "0";
-      observer.observe(el);
-    } else if (trigger === "leave") {
-      observer.observe(el);
-    } else if (trigger === "hover") {
-      const onEnter = () => el.setAttribute(ATTR.STATE, "active");
-      const onLeave = () => el.removeAttribute(ATTR.STATE);
-
-      el.addEventListener("mouseenter", onEnter);
-      el.addEventListener("mouseleave", onLeave);
-
-      cleanups.push(() => {
-        el.removeEventListener("mouseenter", onEnter);
-        el.removeEventListener("mouseleave", onLeave);
-      });
-    } else if (trigger === "tap") {
-      const onDown = () => el.setAttribute(ATTR.STATE, "active");
-      const onUp = () => el.removeAttribute(ATTR.STATE);
-
-      el.addEventListener("pointerdown", onDown);
-      el.addEventListener("pointerup", onUp);
-      el.addEventListener("pointercancel", onUp);
-      el.addEventListener("pointerleave", onUp);
-
-      cleanups.push(() => {
-        el.removeEventListener("pointerdown", onDown);
-        el.removeEventListener("pointerup", onUp);
-        el.removeEventListener("pointercancel", onUp);
-        el.removeEventListener("pointerleave", onUp);
-      });
-    }
-  });
-
-  return () => {
-    observer.disconnect();
-    cleanups.forEach(fn => fn());
-  };
+export function initMotion(
+  options?: MotionControllerOptions,
+): () => void {
+  const controller = new MotionController(options);
+  return () => controller.destroy();
 }
+
