@@ -735,49 +735,49 @@
 @keyframes and-back-in-down {
   0%   { transform: translateY(-1200px) scale(0.7); opacity: 0.7; }
   80%  { transform: translateY(0) scale(0.7); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 @keyframes and-back-in-left {
   0%   { transform: translateX(-2000px) scale(0.7); opacity: 0.7; }
   80%  { transform: translateX(0) scale(0.7); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
 }
 
 @keyframes and-back-in-right {
   0%   { transform: translateX(2000px) scale(0.7); opacity: 0.7; }
   80%  { transform: translateX(0) scale(0.7); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
 }
 
 @keyframes and-back-in-up {
   0%   { transform: translateY(1200px) scale(0.7); opacity: 0.7; }
   80%  { transform: translateY(0) scale(0.7); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 /* ─── Back Exits ────────────────────────────────────────────────────────── */
 
 @keyframes and-back-out-down {
-  0%   { transform: scale(1); opacity: 1; }
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
   20%  { transform: translateY(0) scale(0.7); opacity: 0.7; }
   100% { transform: translateY(700px) scale(0.7); opacity: 0.7; }
 }
 
 @keyframes and-back-out-left {
-  0%   { transform: scale(1); opacity: 1; }
+  0%   { transform: translateX(0) scale(1); opacity: 1; }
   20%  { transform: translateX(0) scale(0.7); opacity: 0.7; }
   100% { transform: translateX(-2000px) scale(0.7); opacity: 0.7; }
 }
 
 @keyframes and-back-out-right {
-  0%   { transform: scale(1); opacity: 1; }
+  0%   { transform: translateX(0) scale(1); opacity: 1; }
   20%  { transform: translateX(0) scale(0.7); opacity: 0.7; }
   100% { transform: translateX(2000px) scale(0.7); opacity: 0.7; }
 }
 
 @keyframes and-back-out-up {
-  0%   { transform: scale(1); opacity: 1; }
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
   20%  { transform: translateY(0) scale(0.7); opacity: 0.7; }
   100% { transform: translateY(-700px) scale(0.7); opacity: 0.7; }
 }
