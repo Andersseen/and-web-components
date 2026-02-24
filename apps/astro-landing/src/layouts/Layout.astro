@@ -19,6 +19,10 @@ import "@andersseen/layout/dist/layout.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Enable component animations BEFORE web-component registration -->
+    <script is:inline>
+      window.__AND_ANIMATED__ = true;
+    </script>
     <!-- Clear stale hash on fresh page load so the page always starts at Home -->
     <script is:inline>
       if (window.location.hash) {

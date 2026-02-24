@@ -8,7 +8,17 @@
  * Import options:
  *   - All at once:   import "@andersseen/web-components/components/all";
  *   - Tree-shaking:  import "@andersseen/web-components/components/and-navbar.js";
+ *
+ * NOTE: Component animations are opt-in.  The global flag
+ *       `window.__AND_ANIMATED__` is set by an inline <script> in
+ *       Layout.astro BEFORE this module runs so that every component's
+ *       `componentWillLoad` sees the flag during initial upgrade.
+ *       The `enableAnimations()` call here is kept for API correctness.
  */
+
+// ── Enable component animations ──
+import { enableAnimations } from "@andersseen/web-components";
+enableAnimations();
 
 // ── Web Components (register all) ──
 import "@andersseen/web-components/components/all";
