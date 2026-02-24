@@ -11,46 +11,53 @@
 [and-motion="slide-out-left"][and-motion-state="active"]   { animation-name: and-slide-out-left; }
 [and-motion="slide-out-right"][and-motion-state="active"]  { animation-name: and-slide-out-right; }
 
-/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+/* ─── Keyframes — Entrances ──────────────────────────────────────────────
+ * Slides use a natural deceleration curve with slight overshoot (2-3%)
+ * past the destination, then settle. Scale starts slightly compressed
+ * along the movement axis for a "stretching in" feel.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-slide-in-up {
-  from { opacity: 0; transform: translate3d(0, 100%, 0); }
+  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes and-slide-in-down {
-  from { opacity: 0; transform: translate3d(0, -100%, 0); }
+  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes and-slide-in-left {
-  from { opacity: 0; transform: translate3d(-100%, 0, 0); }
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes and-slide-in-right {
-  from { opacity: 0; transform: translate3d(100%, 0, 0); }
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
-/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────
+ * Exits accelerate with a "pulling away" feel — slight opposite nudge
+ * before sliding out, combined with scale compression.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-slide-out-up {
   from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(0, -100%, 0); }
+  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0); }
 }
 
 @keyframes and-slide-out-down {
   from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(0, 100%, 0); }
+  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0); }
 }
 
 @keyframes and-slide-out-left {
   from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(-100%, 0, 0); }
+  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0); }
 }
 
 @keyframes and-slide-out-right {
   from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(100%, 0, 0); }
+  to   { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0); }
 }

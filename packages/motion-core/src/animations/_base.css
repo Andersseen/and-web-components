@@ -1,14 +1,29 @@
 /* ═══════════════════════════════════════════════════════════════════════════
  * @andersseen/motion — Base & Design Tokens
+ *
+ * Curated easing curves inspired by Material Design 3 & Apple HIG.
+ * Each category (enter, exit, spring) has a purpose-built curve.
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --and-motion-duration: 300ms;
+  /* ─ Timing ─ */
+  --and-motion-duration: 500ms;
   --and-motion-delay: 0ms;
-  --and-motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
-  --and-motion-distance: 24px;
-  --and-motion-distance-big: 200px;
-  --and-motion-scale-from: 0.92;
+
+  /* ─ Easing ─ */
+  --and-motion-easing: cubic-bezier(0.16, 1, 0.3, 1);             /* expo-out — smooth deceleration   */
+  --and-motion-easing-enter: cubic-bezier(0.16, 1, 0.3, 1);       /* entrance — strong decel          */
+  --and-motion-easing-exit: cubic-bezier(0.7, 0, 0.84, 0);        /* exit — fast accelerate out       */
+  --and-motion-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* playful overshoot                */
+  --and-motion-easing-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);   /* general smooth                   */
+  --and-motion-easing-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* ─ Distances ─ */
+  --and-motion-distance: 20px;
+  --and-motion-distance-big: 150px;
+
+  /* ─ Scale ─ */
+  --and-motion-scale-from: 0.95;
   --and-motion-scale-to: 1;
 }
 
