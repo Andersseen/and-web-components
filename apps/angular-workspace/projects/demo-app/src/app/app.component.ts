@@ -7,5 +7,5 @@ import { RouterOutlet } from '@angular/router';
   template: '<router-outlet/>',
 })
 export class AppComponent {
-  title = 'Stencil Component Library Demo';
+  title = 'Andersseen Web Components Demo';
 }

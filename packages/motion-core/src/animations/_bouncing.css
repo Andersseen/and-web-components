@@ -1,0 +1,92 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Bouncing Entrances & Exits
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="bounce-in"][and-motion-state="active"]        { animation-name: and-bounce-in; animation-duration: 750ms; }
+[and-motion="bounce-in-down"][and-motion-state="active"]   { animation-name: and-bounce-in-down; }
+[and-motion="bounce-in-left"][and-motion-state="active"]   { animation-name: and-bounce-in-left; }
+[and-motion="bounce-in-right"][and-motion-state="active"]  { animation-name: and-bounce-in-right; }
+[and-motion="bounce-in-up"][and-motion-state="active"]     { animation-name: and-bounce-in-up; }
+[and-motion="bounce-out"][and-motion-state="active"]       { animation-name: and-bounce-out; animation-duration: 750ms; }
+[and-motion="bounce-out-down"][and-motion-state="active"]  { animation-name: and-bounce-out-down; }
+[and-motion="bounce-out-left"][and-motion-state="active"]  { animation-name: and-bounce-out-left; }
+[and-motion="bounce-out-right"][and-motion-state="active"] { animation-name: and-bounce-out-right; }
+[and-motion="bounce-out-up"][and-motion-state="active"]    { animation-name: and-bounce-out-up; }
+
+/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+
+@keyframes and-bounce-in {
+  0%       { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+  20%      { transform: scale3d(1.1, 1.1, 1.1); }
+  40%      { transform: scale3d(0.9, 0.9, 0.9); }
+  60%      { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
+  80%      { transform: scale3d(0.97, 0.97, 0.97); }
+  100%     { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+@keyframes and-bounce-in-down {
+  0%       { opacity: 0; transform: translate3d(0, -3000px, 0) scaleY(3); }
+  60%      { opacity: 1; transform: translate3d(0, 25px, 0) scaleY(0.9); }
+  75%      { transform: translate3d(0, -10px, 0) scaleY(0.95); }
+  90%      { transform: translate3d(0, 5px, 0) scaleY(0.985); }
+  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-bounce-in-left {
+  0%       { opacity: 0; transform: translate3d(-3000px, 0, 0) scaleX(3); }
+  60%      { opacity: 1; transform: translate3d(25px, 0, 0) scaleX(1); }
+  75%      { transform: translate3d(-10px, 0, 0) scaleX(0.98); }
+  90%      { transform: translate3d(5px, 0, 0) scaleX(0.995); }
+  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-bounce-in-right {
+  0%       { opacity: 0; transform: translate3d(3000px, 0, 0) scaleX(3); }
+  60%      { opacity: 1; transform: translate3d(-25px, 0, 0) scaleX(1); }
+  75%      { transform: translate3d(10px, 0, 0) scaleX(0.98); }
+  90%      { transform: translate3d(-5px, 0, 0) scaleX(0.995); }
+  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-bounce-in-up {
+  0%       { opacity: 0; transform: translate3d(0, 3000px, 0) scaleY(5); }
+  60%      { opacity: 1; transform: translate3d(0, -20px, 0) scaleY(0.9); }
+  75%      { transform: translate3d(0, 10px, 0) scaleY(0.95); }
+  90%      { transform: translate3d(0, -5px, 0) scaleY(0.985); }
+  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+
+@keyframes and-bounce-out {
+  0%       { opacity: 1; transform: scale3d(1, 1, 1); }
+  20%      { transform: scale3d(0.9, 0.9, 0.9); }
+  50%, 55% { opacity: 1; transform: scale3d(1.1, 1.1, 1.1); }
+  100%     { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+}
+
+@keyframes and-bounce-out-down {
+  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
+  20%      { transform: translate3d(0, 10px, 0) scaleY(0.985); }
+  40%, 45% { opacity: 1; transform: translate3d(0, -20px, 0) scaleY(0.9); }
+  100%     { opacity: 0; transform: translate3d(0, 2000px, 0) scaleY(3); }
+}
+
+@keyframes and-bounce-out-left {
+  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
+  20%      { opacity: 1; transform: translate3d(20px, 0, 0) scaleX(0.9); }
+  100%     { opacity: 0; transform: translate3d(-2000px, 0, 0) scaleX(2); }
+}
+
+@keyframes and-bounce-out-right {
+  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
+  20%      { opacity: 1; transform: translate3d(-20px, 0, 0) scaleX(0.9); }
+  100%     { opacity: 0; transform: translate3d(2000px, 0, 0) scaleX(2); }
+}
+
+@keyframes and-bounce-out-up {
+  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
+  20%      { transform: translate3d(0, -10px, 0) scaleY(0.985); }
+  40%, 45% { opacity: 1; transform: translate3d(0, 20px, 0) scaleY(0.9); }
+  100%     { opacity: 0; transform: translate3d(0, -2000px, 0) scaleY(3); }
+}

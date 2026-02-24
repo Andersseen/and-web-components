@@ -3,12 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Stencil Component Starter</title>
+    <title>Andersseen Web Components — Dev Preview</title>
 
-    <script type="module" src="/build/stencil-library.esm.js"></script>
-    <script nomodule src="/build/stencil-library.js"></script>
+    <script type="module" src="/build/web-components.esm.js"></script>
+    <script nomodule src="/build/web-components.js"></script>
   </head>
-  <body>
-    <and-component first="Stencil" middle="'Don't call me a framework'" last="JS"></and-component>
+  <body style="padding: 2rem; font-family: system-ui, sans-serif;">
+    <h1>Andersseen Web Components</h1>
+    <p>Development preview — build &amp; serve with <code>pnpm start</code>.</p>
+
+    <h2>Button variants</h2>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <and-button variant="default">Default</and-button>
+      <and-button variant="secondary">Secondary</and-button>
+      <and-button variant="outline">Outline</and-button>
+      <and-button variant="ghost">Ghost</and-button>
+      <and-button variant="destructive">Destructive</and-button>
+      <and-button variant="link">Link</and-button>
+    </div>
+
+    <h2>Badge</h2>
+    <and-badge variant="default">Badge</and-badge>
+    <and-badge variant="secondary">Secondary</and-badge>
+
+    <h2>Accordion</h2>
+    <and-accordion>
+      <and-accordion-item value="1">
+        <and-accordion-trigger>What is this?</and-accordion-trigger>
+        <and-accordion-content>A framework-agnostic web component library.</and-accordion-content>
+      </and-accordion-item>
+    </and-accordion>
   </body>
 </html>

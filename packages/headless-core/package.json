@@ -63,6 +63,7 @@
   },
   "files": [
     "dist",
+    "dist-cjs",
     "README.md"
   ],
   "scripts": {
@@ -91,5 +92,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/headless-core"
   }
 }

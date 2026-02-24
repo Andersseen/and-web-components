@@ -192,7 +192,17 @@ export class MainLayoutComponent {
     { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
   ];
   motionItems: SidebarItem[] = [
-    { id: 'attribute', label: 'Attribute API', icon: 'code' },
+    { id: 'attribute', label: 'Overview', icon: 'code' },
+    { id: 'attention-seekers', label: 'Attention Seekers', icon: 'zap' },
+    { id: 'fading', label: 'Fading', icon: 'eye' },
+    { id: 'sliding', label: 'Sliding', icon: 'arrow-right' },
+    { id: 'zooming', label: 'Zooming', icon: 'search' },
+    { id: 'bouncing', label: 'Bouncing', icon: 'circle' },
+    { id: 'flippers', label: 'Flippers', icon: 'rotate-cw' },
+    { id: 'rotating', label: 'Rotating', icon: 'refresh-cw' },
+    { id: 'lightspeed', label: 'Light Speed', icon: 'zap' },
+    { id: 'back', label: 'Back', icon: 'skip-back' },
+    { id: 'specials', label: 'Specials', icon: 'star' },
   ];
 
   layoutItems: SidebarItem[] = [

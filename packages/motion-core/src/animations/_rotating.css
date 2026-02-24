@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Rotating Entrances & Exits
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="rotate-in"][and-motion-state="active"]                { animation-name: and-rotate-in; }
+[and-motion="rotate-in-down-left"][and-motion-state="active"]      { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
+[and-motion="rotate-in-down-right"][and-motion-state="active"]     { animation-name: and-rotate-in-down-right; transform-origin: right bottom; }
+[and-motion="rotate-in-up-left"][and-motion-state="active"]        { animation-name: and-rotate-in-up-left; transform-origin: left bottom; }
+[and-motion="rotate-in-up-right"][and-motion-state="active"]       { animation-name: and-rotate-in-up-right; transform-origin: right bottom; }
+[and-motion="rotate-out"][and-motion-state="active"]               { animation-name: and-rotate-out; }
+[and-motion="rotate-out-down-left"][and-motion-state="active"]     { animation-name: and-rotate-out-down-left; transform-origin: left bottom; }
+[and-motion="rotate-out-down-right"][and-motion-state="active"]    { animation-name: and-rotate-out-down-right; transform-origin: right bottom; }
+[and-motion="rotate-out-up-left"][and-motion-state="active"]       { animation-name: and-rotate-out-up-left; transform-origin: left bottom; }
+[and-motion="rotate-out-up-right"][and-motion-state="active"]      { animation-name: and-rotate-out-up-right; transform-origin: right bottom; }
+
+/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+
+@keyframes and-rotate-in {
+  from { transform: rotate3d(0, 0, 1, -200deg); opacity: 0; }
+  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+}
+
+@keyframes and-rotate-in-down-left {
+  from { transform: rotate3d(0, 0, 1, -45deg); opacity: 0; }
+  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+}
+
+@keyframes and-rotate-in-down-right {
+  from { transform: rotate3d(0, 0, 1, 45deg); opacity: 0; }
+  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+}
+
+@keyframes and-rotate-in-up-left {
+  from { transform: rotate3d(0, 0, 1, 45deg); opacity: 0; }
+  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+}
+
+@keyframes and-rotate-in-up-right {
+  from { transform: rotate3d(0, 0, 1, -90deg); opacity: 0; }
+  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+}
+
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+
+@keyframes and-rotate-out {
+  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  to   { transform: rotate3d(0, 0, 1, 200deg); opacity: 0; }
+}
+
+@keyframes and-rotate-out-down-left {
+  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  to   { transform: rotate3d(0, 0, 1, 45deg); opacity: 0; }
+}
+
+@keyframes and-rotate-out-down-right {
+  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  to   { transform: rotate3d(0, 0, 1, -45deg); opacity: 0; }
+}
+
+@keyframes and-rotate-out-up-left {
+  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  to   { transform: rotate3d(0, 0, 1, -45deg); opacity: 0; }
+}
+
+@keyframes and-rotate-out-up-right {
+  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  to   { transform: rotate3d(0, 0, 1, 90deg); opacity: 0; }
+}

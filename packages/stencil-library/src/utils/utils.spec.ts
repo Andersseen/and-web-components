@@ -1,19 +1,28 @@
-import { format } from './utils';
+import { cn } from './cn';
+import { normalizeProps } from './utils';
 
-describe('format', () => {
-  it('returns empty string for no names defined', () => {
-    expect(format(undefined, undefined, undefined)).toEqual('');
+describe('cn', () => {
+  it('merges class names', () => {
+    expect(cn('foo', 'bar')).toEqual('foo bar');
   });
 
-  it('formats just first names', () => {
-    expect(format('Joseph', undefined, undefined)).toEqual('Joseph');
+  it('handles conditional classes', () => {
+    expect(cn('base', false && 'hidden', 'extra')).toEqual('base extra');
   });
 
-  it('formats first and last names', () => {
-    expect(format('Joseph', undefined, 'Publique')).toEqual('Joseph Publique');
+  it('resolves tailwind conflicts', () => {
+    expect(cn('p-4', 'p-2')).toEqual('p-2');
+  });
+});
+
+describe('normalizeProps', () => {
+  it('maps className to class', () => {
+    const result = normalizeProps({ className: 'foo', id: 'bar' });
+    expect(result).toEqual({ class: 'foo', id: 'bar' });
   });
 
-  it('formats first, middle and last names', () => {
-    expect(format('Joseph', 'Quincy', 'Publique')).toEqual('Joseph Quincy Publique');
+  it('maps htmlFor to for', () => {
+    const result = normalizeProps({ htmlFor: 'input-1', className: undefined });
+    expect(result).toEqual({ class: undefined, for: 'input-1' });
   });
 });

@@ -30,16 +30,7 @@ import "@andersseen/layout/dist/layout.css";
   <body class="bg-background text-foreground antialiased min-h-screen font-sans">
     <slot />
     <script>
-      import { defineCustomElements } from "@andersseen/web-components/loader";
-      import { initMotion } from "@andersseen/motion";
-      import { registerAllIcons } from "@andersseen/icon";
-
-      defineCustomElements(window);
-      registerAllIcons();
-
-      document.addEventListener('DOMContentLoaded', () => {
-        initMotion();
-      });
+      import "../scripts/init";
     </script>
   </body>
 </html>

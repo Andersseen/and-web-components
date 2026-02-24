@@ -2,4 +2,6 @@ packages:
   - packages/*
   - apps/*
 
-onlyBuiltDependencies: esbuild
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

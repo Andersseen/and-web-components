@@ -13,9 +13,14 @@
     }
   },
   "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist"
+    "build": "rm -rf dist && tsc",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "icons",
@@ -26,5 +31,13 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/icon-library"
   }
 }

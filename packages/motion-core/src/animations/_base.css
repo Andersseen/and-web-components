@@ -1,0 +1,21 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * @andersseen/motion — Base & Design Tokens
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --and-motion-duration: 300ms;
+  --and-motion-delay: 0ms;
+  --and-motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --and-motion-distance: 24px;
+  --and-motion-distance-big: 200px;
+  --and-motion-scale-from: 0.92;
+  --and-motion-scale-to: 1;
+}
+
+[and-motion] {
+  animation-duration: var(--and-motion-duration);
+  animation-timing-function: var(--and-motion-easing);
+  animation-delay: var(--and-motion-delay);
+  animation-fill-mode: both;
+  will-change: opacity, transform;
+}

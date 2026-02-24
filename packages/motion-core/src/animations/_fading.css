@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Fading Entrances & Exits
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Selectors — Entrances ─────────────────────────────────────────────── */
+
+[and-motion="fade-in"][and-motion-state="active"]              { animation-name: and-fade-in; }
+[and-motion="fade-in-down"][and-motion-state="active"]         { animation-name: and-fade-in-down; }
+[and-motion="fade-in-down-big"][and-motion-state="active"]     { animation-name: and-fade-in-down-big; }
+[and-motion="fade-in-left"][and-motion-state="active"]         { animation-name: and-fade-in-left; }
+[and-motion="fade-in-left-big"][and-motion-state="active"]     { animation-name: and-fade-in-left-big; }
+[and-motion="fade-in-right"][and-motion-state="active"]        { animation-name: and-fade-in-right; }
+[and-motion="fade-in-right-big"][and-motion-state="active"]    { animation-name: and-fade-in-right-big; }
+[and-motion="fade-in-up"][and-motion-state="active"]           { animation-name: and-fade-in-up; }
+[and-motion="fade-in-up-big"][and-motion-state="active"]       { animation-name: and-fade-in-up-big; }
+[and-motion="fade-in-top-left"][and-motion-state="active"]     { animation-name: and-fade-in-top-left; }
+[and-motion="fade-in-top-right"][and-motion-state="active"]    { animation-name: and-fade-in-top-right; }
+[and-motion="fade-in-bottom-left"][and-motion-state="active"]  { animation-name: and-fade-in-bottom-left; }
+[and-motion="fade-in-bottom-right"][and-motion-state="active"] { animation-name: and-fade-in-bottom-right; }
+
+/* ─── Selectors — Exits ─────────────────────────────────────────────────── */
+
+[and-motion="fade-out"][and-motion-state="active"]              { animation-name: and-fade-out; }
+[and-motion="fade-out-down"][and-motion-state="active"]         { animation-name: and-fade-out-down; }
+[and-motion="fade-out-down-big"][and-motion-state="active"]     { animation-name: and-fade-out-down-big; }
+[and-motion="fade-out-left"][and-motion-state="active"]         { animation-name: and-fade-out-left; }
+[and-motion="fade-out-left-big"][and-motion-state="active"]     { animation-name: and-fade-out-left-big; }
+[and-motion="fade-out-right"][and-motion-state="active"]        { animation-name: and-fade-out-right; }
+[and-motion="fade-out-right-big"][and-motion-state="active"]    { animation-name: and-fade-out-right-big; }
+[and-motion="fade-out-up"][and-motion-state="active"]           { animation-name: and-fade-out-up; }
+[and-motion="fade-out-up-big"][and-motion-state="active"]       { animation-name: and-fade-out-up-big; }
+
+/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+
+@keyframes and-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes and-fade-in-down {
+  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-down-big {
+  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance-big) * -1), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-left {
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-left-big {
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance-big) * -1), 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-right {
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-right-big {
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance-big), 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-up {
+  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-up-big {
+  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance-big), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-top-left {
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), calc(var(--and-motion-distance) * -1), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-top-right {
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), calc(var(--and-motion-distance) * -1), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-bottom-left {
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), var(--and-motion-distance), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes and-fade-in-bottom-right {
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), var(--and-motion-distance), 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+
+@keyframes and-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes and-fade-out-down {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0); }
+}
+
+@keyframes and-fade-out-down-big {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance-big), 0); }
+}
+
+@keyframes and-fade-out-left {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0); }
+}
+
+@keyframes and-fade-out-left-big {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance-big) * -1), 0, 0); }
+}
+
+@keyframes and-fade-out-right {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0); }
+}
+
+@keyframes and-fade-out-right-big {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(var(--and-motion-distance-big), 0, 0); }
+}
+
+@keyframes and-fade-out-up {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0); }
+}
+
+@keyframes and-fade-out-up-big {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance-big) * -1), 0); }
+}
