@@ -30,116 +30,121 @@
 [and-motion="fade-out-up"][and-motion-state="active"]           { animation-name: and-fade-out-up; }
 [and-motion="fade-out-up-big"][and-motion-state="active"]       { animation-name: and-fade-out-up-big; }
 
-/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+/* ─── Keyframes — Entrances ──────────────────────────────────────────────
+ * Each entrance adds a subtle scale(0.98→1) for a "materializing" feel
+ * and uses a 3-step curve for smoother perceived deceleration.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes and-fade-in-down {
-  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-down-big {
-  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance-big) * -1), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance-big) * -1), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-left {
-  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-left-big {
-  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance-big) * -1), 0, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance-big) * -1), 0, 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-right {
-  from { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-right-big {
-  from { opacity: 0; transform: translate3d(var(--and-motion-distance-big), 0, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance-big), 0, 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-up {
-  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-up-big {
-  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance-big), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(0, var(--and-motion-distance-big), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-top-left {
-  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), calc(var(--and-motion-distance) * -1), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), calc(var(--and-motion-distance) * -1), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-top-right {
-  from { opacity: 0; transform: translate3d(var(--and-motion-distance), calc(var(--and-motion-distance) * -1), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), calc(var(--and-motion-distance) * -1), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-bottom-left {
-  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), var(--and-motion-distance), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), var(--and-motion-distance), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes and-fade-in-bottom-right {
-  from { opacity: 0; transform: translate3d(var(--and-motion-distance), var(--and-motion-distance), 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { opacity: 0; transform: translate3d(var(--and-motion-distance), var(--and-motion-distance), 0) scale(0.98); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
-/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────
+ * Exits accelerate out with a subtle scale-down for a "dissolving" feel.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-fade-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.98); }
 }
 
 @keyframes and-fade-out-down {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance), 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-down-big {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance-big), 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(0, var(--and-motion-distance-big), 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-left {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance) * -1), 0, 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-left-big {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance-big) * -1), 0, 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(calc(var(--and-motion-distance-big) * -1), 0, 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-right {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(var(--and-motion-distance), 0, 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-right-big {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(var(--and-motion-distance-big), 0, 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(var(--and-motion-distance-big), 0, 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-up {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance) * -1), 0) scale(0.98); }
 }
 
 @keyframes and-fade-out-up-big {
-  from { opacity: 1; transform: translate3d(0, 0, 0); }
-  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance-big) * -1), 0); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(0, calc(var(--and-motion-distance-big) * -1), 0) scale(0.98); }
 }

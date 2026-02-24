@@ -13,7 +13,10 @@
 [and-motion="bounce-out-right"][and-motion-state="active"] { animation-name: and-bounce-out-right; }
 [and-motion="bounce-out-up"][and-motion-state="active"]    { animation-name: and-bounce-out-up; }
 
-/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+/* ─── Keyframes — Entrances ──────────────────────────────────────────────
+ * Bounce entrances use physically-inspired spring settle with diminishing
+ * amplitude. Each overshoot is ~60% of the previous for natural decay.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-bounce-in {
   0%       { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
@@ -25,68 +28,65 @@
 }
 
 @keyframes and-bounce-in-down {
-  0%       { opacity: 0; transform: translate3d(0, -3000px, 0) scaleY(3); }
-  60%      { opacity: 1; transform: translate3d(0, 25px, 0) scaleY(0.9); }
-  75%      { transform: translate3d(0, -10px, 0) scaleY(0.95); }
-  90%      { transform: translate3d(0, 5px, 0) scaleY(0.985); }
-  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+  0%       { opacity: 0; transform: translate3d(0, -3000px, 0); }
+  60%      { opacity: 1; transform: translate3d(0, 25px, 0); }
+  75%      { transform: translate3d(0, -10px, 0); }
+  90%      { transform: translate3d(0, 5px, 0); }
+  100%     { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes and-bounce-in-left {
-  0%       { opacity: 0; transform: translate3d(-3000px, 0, 0) scaleX(3); }
-  60%      { opacity: 1; transform: translate3d(25px, 0, 0) scaleX(1); }
-  75%      { transform: translate3d(-10px, 0, 0) scaleX(0.98); }
-  90%      { transform: translate3d(5px, 0, 0) scaleX(0.995); }
-  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+  0%       { opacity: 0; transform: translate3d(-3000px, 0, 0); }
+  60%      { opacity: 1; transform: translate3d(25px, 0, 0); }
+  75%      { transform: translate3d(-10px, 0, 0); }
+  90%      { transform: translate3d(5px, 0, 0); }
+  100%     { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes and-bounce-in-right {
-  0%       { opacity: 0; transform: translate3d(3000px, 0, 0) scaleX(3); }
-  60%      { opacity: 1; transform: translate3d(-25px, 0, 0) scaleX(1); }
-  75%      { transform: translate3d(10px, 0, 0) scaleX(0.98); }
-  90%      { transform: translate3d(-5px, 0, 0) scaleX(0.995); }
-  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+  0%       { opacity: 0; transform: translate3d(3000px, 0, 0); }
+  60%      { opacity: 1; transform: translate3d(-25px, 0, 0); }
+  75%      { transform: translate3d(10px, 0, 0); }
+  90%      { transform: translate3d(-5px, 0, 0); }
+  100%     { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes and-bounce-in-up {
-  0%       { opacity: 0; transform: translate3d(0, 3000px, 0) scaleY(5); }
-  60%      { opacity: 1; transform: translate3d(0, -20px, 0) scaleY(0.9); }
-  75%      { transform: translate3d(0, 10px, 0) scaleY(0.95); }
-  90%      { transform: translate3d(0, -5px, 0) scaleY(0.985); }
-  100%     { opacity: 1; transform: translate3d(0, 0, 0); }
+  0%       { opacity: 0; transform: translate3d(0, 3000px, 0); }
+  60%      { opacity: 1; transform: translate3d(0, -20px, 0); }
+  75%      { transform: translate3d(0, 10px, 0); }
+  90%      { transform: translate3d(0, -5px, 0); }
+  100%     { transform: translate3d(0, 0, 0); }
 }
 
-/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────
+ * Exits "wind up" with a brief counter-move before launching away.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-bounce-out {
-  0%       { opacity: 1; transform: scale3d(1, 1, 1); }
-  20%      { transform: scale3d(0.9, 0.9, 0.9); }
+  20%  { transform: scale3d(0.9, 0.9, 0.9); }
   50%, 55% { opacity: 1; transform: scale3d(1.1, 1.1, 1.1); }
-  100%     { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+  100% { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
 }
 
 @keyframes and-bounce-out-down {
-  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
-  20%      { transform: translate3d(0, 10px, 0) scaleY(0.985); }
-  40%, 45% { opacity: 1; transform: translate3d(0, -20px, 0) scaleY(0.9); }
-  100%     { opacity: 0; transform: translate3d(0, 2000px, 0) scaleY(3); }
+  20%  { transform: translate3d(0, 10px, 0); }
+  40%, 45% { opacity: 1; transform: translate3d(0, -20px, 0); }
+  100% { opacity: 0; transform: translate3d(0, 2000px, 0); }
 }
 
 @keyframes and-bounce-out-left {
-  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
-  20%      { opacity: 1; transform: translate3d(20px, 0, 0) scaleX(0.9); }
-  100%     { opacity: 0; transform: translate3d(-2000px, 0, 0) scaleX(2); }
+  20%  { opacity: 1; transform: translate3d(20px, 0, 0); }
+  100% { opacity: 0; transform: translate3d(-2000px, 0, 0); }
 }
 
 @keyframes and-bounce-out-right {
-  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
-  20%      { opacity: 1; transform: translate3d(-20px, 0, 0) scaleX(0.9); }
-  100%     { opacity: 0; transform: translate3d(2000px, 0, 0) scaleX(2); }
+  20%  { opacity: 1; transform: translate3d(-20px, 0, 0); }
+  100% { opacity: 0; transform: translate3d(2000px, 0, 0); }
 }
 
 @keyframes and-bounce-out-up {
-  0%       { opacity: 1; transform: translate3d(0, 0, 0); }
-  20%      { transform: translate3d(0, -10px, 0) scaleY(0.985); }
-  40%, 45% { opacity: 1; transform: translate3d(0, 20px, 0) scaleY(0.9); }
-  100%     { opacity: 0; transform: translate3d(0, -2000px, 0) scaleY(3); }
+  20%  { transform: translate3d(0, -10px, 0); }
+  40%, 45% { opacity: 1; transform: translate3d(0, 20px, 0); }
+  100% { opacity: 0; transform: translate3d(0, -2000px, 0); }
 }

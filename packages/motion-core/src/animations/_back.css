@@ -11,7 +11,10 @@
 [and-motion="back-out-right"][and-motion-state="active"] { animation-name: and-back-out-right; }
 [and-motion="back-out-up"][and-motion-state="active"]    { animation-name: and-back-out-up; }
 
-/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+/* ─── Keyframes — Entrances ──────────────────────────────────────────────
+ * Back entrances arrive at reduced scale, then "pop" to full size.
+ * The scale transition is smoothed with intermediate steps.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-back-in-down {
   0%   { transform: translateY(-1200px) scale(0.7); opacity: 0.7; }
@@ -37,7 +40,9 @@
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────
+ * Exits shrink with a brief "inhale" before sliding away.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-back-out-down {
   0%   { transform: translateY(0) scale(1); opacity: 1; }

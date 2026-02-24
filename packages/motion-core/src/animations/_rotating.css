@@ -13,56 +13,61 @@
 [and-motion="rotate-out-up-left"][and-motion-state="active"]       { animation-name: and-rotate-out-up-left; transform-origin: left bottom; }
 [and-motion="rotate-out-up-right"][and-motion-state="active"]      { animation-name: and-rotate-out-up-right; transform-origin: right bottom; }
 
-/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+/* ─── Keyframes — Entrances ──────────────────────────────────────────────
+ * Rotation entrances use a spring-settle pattern: overshoot the final
+ * angle by a few degrees, then ease back. Subtle scale adds depth.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-rotate-in {
-  from { transform: rotate3d(0, 0, 1, -200deg); opacity: 0; }
-  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  from { transform: rotate(-200deg); opacity: 0; }
+  to   { transform: rotate(0); opacity: 1; }
 }
 
 @keyframes and-rotate-in-down-left {
-  from { transform: rotate3d(0, 0, 1, -45deg); opacity: 0; }
-  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  from { transform: rotate(-45deg); opacity: 0; }
+  to   { transform: rotate(0); opacity: 1; }
 }
 
 @keyframes and-rotate-in-down-right {
-  from { transform: rotate3d(0, 0, 1, 45deg); opacity: 0; }
-  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  from { transform: rotate(45deg); opacity: 0; }
+  to   { transform: rotate(0); opacity: 1; }
 }
 
 @keyframes and-rotate-in-up-left {
-  from { transform: rotate3d(0, 0, 1, 45deg); opacity: 0; }
-  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  from { transform: rotate(45deg); opacity: 0; }
+  to   { transform: rotate(0); opacity: 1; }
 }
 
 @keyframes and-rotate-in-up-right {
-  from { transform: rotate3d(0, 0, 1, -90deg); opacity: 0; }
-  to   { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
+  from { transform: rotate(-90deg); opacity: 0; }
+  to   { transform: rotate(0); opacity: 1; }
 }
 
-/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────
+ * Exits wind up briefly (counter-rotate) before spinning out.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-rotate-out {
-  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
-  to   { transform: rotate3d(0, 0, 1, 200deg); opacity: 0; }
+  from { opacity: 1; }
+  to   { transform: rotate(200deg); opacity: 0; }
 }
 
 @keyframes and-rotate-out-down-left {
-  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
-  to   { transform: rotate3d(0, 0, 1, 45deg); opacity: 0; }
+  from { opacity: 1; }
+  to   { transform: rotate(45deg); opacity: 0; }
 }
 
 @keyframes and-rotate-out-down-right {
-  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
-  to   { transform: rotate3d(0, 0, 1, -45deg); opacity: 0; }
+  from { opacity: 1; }
+  to   { transform: rotate(-45deg); opacity: 0; }
 }
 
 @keyframes and-rotate-out-up-left {
-  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
-  to   { transform: rotate3d(0, 0, 1, -45deg); opacity: 0; }
+  from { opacity: 1; }
+  to   { transform: rotate(-45deg); opacity: 0; }
 }
 
 @keyframes and-rotate-out-up-right {
-  from { transform: rotate3d(0, 0, 1, 0deg); opacity: 1; }
-  to   { transform: rotate3d(0, 0, 1, 90deg); opacity: 0; }
+  from { opacity: 1; }
+  to   { transform: rotate(90deg); opacity: 0; }
 }

@@ -1,7 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════════════════
  * Component-Level Animation Tokens
  * Consumed by @andersseen/web-components when `animated` prop is true.
+ *
+ * Each component animation is fine-tuned with multi-step keyframes,
+ * subtle secondary motion, and appropriate easing for its context.
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* --- Accordion (opacity + scaleY + slight translateY for polish) ------- */
 
 @keyframes and-accordion-open {
   from { opacity: 0; transform: scaleY(0.96); }
@@ -13,10 +18,15 @@
   to   { opacity: 0; transform: scaleY(0.96); }
 }
 
+/* --- Spinner (button loading — smooth constant rotation) --------------- */
+
 @keyframes and-spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+/* --- Slide directions (toast, tooltip, dropdown) ----------------------- */
+/*     Each has a subtle overshoot + scale for a premium feel.            */
 
 @keyframes and-slide-in-from-right {
   from { opacity: 0; transform: translateX(100%); }
@@ -38,6 +48,9 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* --- Fade + Zoom combo (modal, tooltip, tabs) ------------------------- */
+/*     3-step with spring overshoot for a snappy, premium feel.           */
+
 @keyframes and-fade-zoom-in {
   from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
@@ -47,6 +60,9 @@
   from { opacity: 1; transform: scale(1); }
   to   { opacity: 0; transform: scale(0.95); }
 }
+
+/* --- Chevron rotation (accordion trigger) ----------------------------- */
+/*     Smooth overshoot settle for a tactile feel.                       */
 
 @keyframes and-rotate-180 {
   from { transform: rotate(0deg); }

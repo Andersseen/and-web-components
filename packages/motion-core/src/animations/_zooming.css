@@ -13,11 +13,13 @@
 [and-motion="zoom-out-right"][and-motion-state="active"] { animation-name: and-zoom-out-right; }
 [and-motion="zoom-out-up"][and-motion-state="active"]    { animation-name: and-zoom-out-up; }
 
-/* ─── Keyframes — Entrances ─────────────────────────────────────────────── */
+/* ─── Keyframes — Entrances ──────────────────────────────────────────────
+ * Zoom entrances use a spring-like settle with slight overshoot at ~65%.
+ * The base zoom-in adds a subtle rotate to feel less mechanical.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-zoom-in {
   from { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
-  50%  { opacity: 1; }
   to   { opacity: 1; transform: scale3d(1, 1, 1); }
 }
 
@@ -45,11 +47,12 @@
   to   { opacity: 1; transform: scale3d(1, 1, 1) translate3d(0, 0, 0); }
 }
 
-/* ─── Keyframes — Exits ─────────────────────────────────────────────────── */
+/* ─── Keyframes — Exits ─────────────────────────────────────────────────
+ * Exits briefly "inhale" (slight scale-up) before collapsing outward.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-zoom-out {
   from { opacity: 1; transform: scale3d(1, 1, 1); }
-  50%  { opacity: 0; }
   to   { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
 }
 

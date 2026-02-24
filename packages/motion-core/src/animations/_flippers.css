@@ -8,40 +8,43 @@
 [and-motion="flip-out-x"][and-motion-state="active"]  { animation-name: and-flip-out-x; backface-visibility: visible; }
 [and-motion="flip-out-y"][and-motion-state="active"]  { animation-name: and-flip-out-y; backface-visibility: visible; }
 
-/* ─── Keyframes ─────────────────────────────────────────────────────────── */
+/* ─── Keyframes ──────────────────────────────────────────────────────────
+ * Flippers use perspective + elastic settle for a premium 3D card feel.
+ * More intermediate steps = smoother perceived motion.
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-flip {
-  0%   { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg); opacity: 1; animation-timing-function: ease-out; }
-  40%  { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg); opacity: 1; animation-timing-function: ease-out; }
-  50%  { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg); opacity: 1; animation-timing-function: ease-in; }
-  80%  { transform: perspective(400px) scale3d(0.95, 0.95, 0.95) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg); opacity: 1; animation-timing-function: ease-in; }
+  0%   { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg); opacity: 1; }
+  40%  { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg); opacity: 1; }
+  50%  { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg); opacity: 1; }
+  80%  { transform: perspective(400px) scale3d(0.95, 0.95, 0.95) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg); opacity: 1; }
   100% { transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg); opacity: 1; }
 }
 
 @keyframes and-flip-in-x {
-  0%   { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; animation-timing-function: ease-in; }
-  40%  { transform: perspective(400px) rotate3d(1, 0, 0, -20deg); animation-timing-function: ease-in; }
+  0%   { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; }
+  40%  { transform: perspective(400px) rotate3d(1, 0, 0, -20deg); }
   60%  { transform: perspective(400px) rotate3d(1, 0, 0, 10deg); opacity: 1; }
   80%  { transform: perspective(400px) rotate3d(1, 0, 0, -5deg); }
-  100% { transform: perspective(400px) rotate3d(1, 0, 0, 0deg); opacity: 1; }
+  100% { transform: perspective(400px); }
 }
 
 @keyframes and-flip-in-y {
-  0%   { transform: perspective(400px) rotate3d(0, 1, 0, 90deg); opacity: 0; animation-timing-function: ease-in; }
-  40%  { transform: perspective(400px) rotate3d(0, 1, 0, -20deg); animation-timing-function: ease-in; }
+  0%   { transform: perspective(400px) rotate3d(0, 1, 0, 90deg); opacity: 0; }
+  40%  { transform: perspective(400px) rotate3d(0, 1, 0, -20deg); }
   60%  { transform: perspective(400px) rotate3d(0, 1, 0, 10deg); opacity: 1; }
   80%  { transform: perspective(400px) rotate3d(0, 1, 0, -5deg); }
-  100% { transform: perspective(400px) rotate3d(0, 1, 0, 0deg); opacity: 1; }
+  100% { transform: perspective(400px); }
 }
 
 @keyframes and-flip-out-x {
-  0%   { transform: perspective(400px) rotate3d(1, 0, 0, 0deg); opacity: 1; }
+  0%   { transform: perspective(400px); }
   30%  { transform: perspective(400px) rotate3d(1, 0, 0, -20deg); opacity: 1; }
   100% { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; }
 }
 
 @keyframes and-flip-out-y {
-  0%   { transform: perspective(400px) rotate3d(0, 1, 0, 0deg); opacity: 1; }
+  0%   { transform: perspective(400px); }
   30%  { transform: perspective(400px) rotate3d(0, 1, 0, -15deg); opacity: 1; }
   100% { transform: perspective(400px) rotate3d(0, 1, 0, 90deg); opacity: 0; }
 }
