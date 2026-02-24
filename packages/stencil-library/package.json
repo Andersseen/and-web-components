@@ -1,7 +1,7 @@
 {
   "name": "@andersseen/web-components",
   "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "description": "Accessible, framework-agnostic web components built with Stencil",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -37,8 +37,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stenciljs/component-starter.git"
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/stencil-library"
   },
+  "author": "Andersseen",
   "files": [
     "dist/",
     "loader/"
@@ -49,7 +51,8 @@
     "test": "stencil test --spec --e2e",
     "test:spec": "stencil test --spec",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
     "@stencil-community/postcss": "^2.2.0",

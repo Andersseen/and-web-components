@@ -9,7 +9,7 @@ let idCounter = 0;
  */
 export function generateId(prefix = "headless"): string {
   idCounter += 1;
-  return `${prefix}-${idCounter}-${Math.random().toString(36).substr(2, 9)}`;
+  return `${prefix}-${idCounter}-${Math.random().toString(36).substring(2, 11)}`;
 }
 
 /**

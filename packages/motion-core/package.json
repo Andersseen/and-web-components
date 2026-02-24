@@ -20,7 +20,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cat src/animations/_base.css src/animations/_attention-seekers.css src/animations/_fading.css src/animations/_sliding.css src/animations/_zooming.css src/animations/_bouncing.css src/animations/_flippers.css src/animations/_rotating.css src/animations/_lightspeed.css src/animations/_back.css src/animations/_specials.css src/animations/_components.css src/animations/_reduced-motion.css > dist/style.css",
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && node scripts/build-css.cjs",
     "dev": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext .ts",
@@ -33,12 +33,17 @@
     "css",
     "framework-agnostic"
   ],
-  "author": "Jules",
+  "author": "Andersseen",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^5.3.3"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/motion-core"
   }
 }

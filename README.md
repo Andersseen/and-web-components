@@ -1,114 +1,299 @@
-# And Web Components
+# Andersseen Web Components
 
-A modern, high-performance web component library built with [StencilJS](https://stenciljs.com/) and integrated into an [Angular](https://angular.io/) workspace. Tailored for flexibility, styling (TailwindCSS), and ease of use.
+A complete, framework-agnostic web component ecosystem: headless logic, design tokens, layout primitives, animations, icons, and **24+ accessible UI components** — built with [StencilJS](https://stenciljs.com/), ready for any framework or plain HTML.
 
-## 🚀 Features
+| Package | npm | Description |
+|---|---|---|
+| `@andersseen/web-components` | [![npm](https://img.shields.io/npm/v/@andersseen/web-components)](https://www.npmjs.com/package/@andersseen/web-components) | Stencil UI components (buttons, modals, tabs …) |
+| `@andersseen/headless-components` | [![npm](https://img.shields.io/npm/v/@andersseen/headless-components)](https://www.npmjs.com/package/@andersseen/headless-components) | Framework-agnostic headless state machines |
+| `@andersseen/icon` | [![npm](https://img.shields.io/npm/v/@andersseen/icon)](https://www.npmjs.com/package/@andersseen/icon) | 70+ SVG icon library with tree-shaking |
+| `@andersseen/motion` | [![npm](https://img.shields.io/npm/v/@andersseen/motion)](https://www.npmjs.com/package/@andersseen/motion) | Attribute-driven CSS/JS animations |
+| `@andersseen/layout` | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout) | Pure CSS layout & typography via HTML attributes |
+| `@andersseen/angular-components` | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components) | Angular standalone directive wrappers |
 
-- **Web Components**: Built with StencilJS, usable in any framework (React, Vue, Svelte, etc.) or plain HTML.
-- **Angular Integration**: First-class Angular support with typed proxies.
-- **TailwindCSS**: Styled with TailwindCSS for rapid UI development and easy customization.
-- **Shadow DOM**: Encapsulated styles ensuring no conflicts with host applications.
-- **Modern Architecture**: Monorepo structure managed with pnpm workspaces.
+## Features
 
-## 📂 Project Structure
+- **Framework-agnostic** — Works with Angular, React, Vue, Svelte, Astro, or vanilla HTML.
+- **Headless core** — State machines, accessibility, and keyboard navigation without any styling.
+- **Design tokens** — HSL-based theming with light/dark modes and color palettes.
+- **Attribute-driven layout** — Flexbox, grid, spacing, and typography from HTML attributes.
+- **Animation system** — Enter, hover, and tap animations via `and-motion` attributes with reduced-motion support.
+- **70+ icons** — Tree-shakeable SVG icons with a global registry.
+- **Shadow DOM** — Encapsulated styles with no conflicts.
+- **TailwindCSS** — Components styled with Tailwind + CSS variables.
+
+## Project Structure
 
 ```
 and-web-components/
 ├── packages/
-│   ├── stencil-library/       # The core Web Component library
-│   │   ├── src/components/    # Source code for components (and-card, and-button, etc.)
-│   │   └── stencil.config.ts  # Stencil configuration
-│   └── angular-workspace/     # Angular demo application & wrapper library
-│       ├── projects/
-│       │   ├── angular-components/ # Generated Angular wrappers
-│       │   └── demo-app/           # Showcase application
-│       └── angular.json
-├── package.json               # Root scripts and dependencies
-└── pnpm-workspace.yaml        # Workspace configuration
+│   ├── headless-core/         # @andersseen/headless-components
+│   ├── icon-library/          # @andersseen/icon
+│   ├── layout-core/           # @andersseen/layout  (SCSS → CSS)
+│   ├── motion-core/           # @andersseen/motion  (TS + CSS)
+│   └── stencil-library/       # @andersseen/web-components (Stencil)
+├── apps/
+│   ├── angular-workspace/     # Angular demo app + @andersseen/angular-components
+│   │   └── projects/
+│   │       ├── angular-components/  # Auto-generated Angular wrappers
+│   │       └── demo-app/            # Component showcase app
+│   └── astro-landing/         # Landing page built with Astro
+├── package.json               # Root scripts
+├── pnpm-workspace.yaml        # Workspace config
+└── lerna.json                 # Independent versioning
 ```
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18+ recommended)
-- pnpm (`npm install -g pnpm`)
+- **Node.js** v18+
+- **pnpm** v10+ (`corepack enable && corepack prepare pnpm@latest --activate`)
 
-### Installation
-
-1.  Clone the repository:
-
-    ```bash
-    git clone https://github.com/your-username/and-web-components.git
-    cd and-web-components
-    ```
-
-2.  Install dependencies:
-    ```bash
-    pnpm install
-    ```
-
-## 🏃‍♂️ Running locally
-
-To start the demo application with live reload:
+### Install
 
 ```bash
+git clone https://github.com/Andersseen/and-web-components.git
+cd and-web-components
+pnpm install
+```
+
+### Build all libraries
+
+```bash
+pnpm build:all
+```
+
+This builds: `headless-core` → `icon-library` → `stencil-library` → `motion-core` → `layout-core` → `angular-components` → `demo-app`.
+
+## Development
+
+### Angular Demo App
+
+```bash
+# Full build + serve
 pnpm start:demo
+
+# Dev mode with Stencil watch + Angular serve
+pnpm start:demo:dev
 ```
 
-This command will:
+Opens at `http://localhost:4200` — showcases all components, headless patterns, icons, motion, and layout utilities.
 
-1.  Build the Stencil library in watch mode (optional, usually separate). _Note: The current script runs the Angular app. For development on components, you may want to run `pnpm build:stencil --watch` in a separate terminal._
-2.  Serve the Angular demo app at `http://localhost:4200`.
-
-## 🏗️ Building
-
-To build the entire project (Stencil library + Angular wrappers + Demo App):
+### Astro Landing Page
 
 ```bash
-pnpm build:demo
+pnpm start:astro:dev
 ```
 
-The output artifacts will be located in:
+### Stencil dev server (components only)
 
-- **Web Components**: `packages/stencil-library/dist/`
-- **Angular Lib**: `packages/angular-workspace/dist/angular-components/`
-- **Demo App**: `packages/angular-workspace/dist/demo-app/`
+```bash
+pnpm -C packages/stencil-library start
+```
 
-## 🚀 Deployment (Vercel)
+## Build Scripts
 
-This project is configured for easy deployment on Vercel.
+| Script | Description |
+|---|---|
+| `pnpm build:headless` | Build headless state machines |
+| `pnpm build:icons` | Build icon library |
+| `pnpm build:motion` | Build animation library |
+| `pnpm build:layout` | Build SCSS → CSS layout library |
+| `pnpm build:stencil` | Build headless + icons + Stencil components |
+| `pnpm build:angular` | Build Angular wrappers + demo app |
+| `pnpm build:all` | Build everything |
+| `pnpm build:astro` | Build Astro landing page |
+| `pnpm start:demo` | Build libs + serve Angular demo |
+| `pnpm start:demo:dev` | Stencil watch + Angular serve (concurrent) |
+| `pnpm start:astro:dev` | Build libs + Astro dev server |
 
-**Recommended Settings:**
+## Using the Libraries
 
-- **Root Directory**: `.` (Root)
-- **Build Command**: `pnpm build:demo`
-- **Output Directory**: `packages/angular-workspace/dist/demo-app/browser` (or just `dist/demo-app` depending on Angular version)
-- **Install Command**: `pnpm install`
+### In any HTML page
 
-_Note: The included `vercel.json` handles routing rewrites for the Angular SPA._
+```html
+<script type="module" src="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.esm.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.css" />
 
-## 🧩 Components
+<and-button variant="default">Click me</and-button>
+```
 
-The library currently includes:
+### In a bundled app (Vite, Webpack, etc.)
 
-- **Accordion**: Collapsible content panels.
-- **Button**: Customizable buttons with variants.
-- **Card**: Content containers with header/content/footer.
-- **Carousel**: Image/content slider.
-- **Dropdown**: Menu overlays.
-- **Icon**: SVG icon system.
-- **Input**: Form inputs.
-- **Modal**: Dialog overlays.
-- **Navbar/Sidebar**: Navigation components.
-- **Tabs**: Tabbed content switching.
-- **Toast**: Notification messages.
-- **Tooltip**: Info popups.
+```bash
+npm install @andersseen/web-components @andersseen/icon @andersseen/motion @andersseen/layout
+```
 
-## 🎨 Styling
+```ts
+// Register all custom elements
+import '@andersseen/web-components/components/all';
 
-Components are styled using TailwindCSS within the Shadow DOM. Global styles (variables) are defined in `stencil-library/src/global/global.css`.
+// Register icons
+import { registerAllIcons } from '@andersseen/icon';
+registerAllIcons();
 
-## 📄 License
+// Enable animations
+import { enableAnimations } from '@andersseen/web-components';
+enableAnimations();
+
+// Attribute-driven animations
+import { initMotion } from '@andersseen/motion';
+initMotion();
+```
+
+```css
+/* Import styles */
+@import '@andersseen/web-components/dist/web-components/web-components.css';
+@import '@andersseen/motion/style.css';
+@import '@andersseen/layout/dist/layout.css';
+```
+
+### In Angular
+
+```bash
+npm install @andersseen/web-components @andersseen/angular-components @andersseen/icon
+```
+
+```ts
+// app.component.ts
+import { AndButton, AndModal, AndIcon } from '@andersseen/angular-components';
+
+@Component({
+  imports: [AndButton, AndModal, AndIcon],
+  template: `<and-button variant="default">Click me</and-button>`,
+})
+export class AppComponent {}
+```
+
+### In Astro
+
+```astro
+---
+import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/motion/style.css';
+---
+
+<and-button variant="outline">Hello</and-button>
+
+<script>
+  import '@andersseen/web-components/components/all';
+  import { registerAllIcons } from '@andersseen/icon';
+  import { initMotion } from '@andersseen/motion';
+  registerAllIcons();
+  initMotion();
+</script>
+```
+
+## Components
+
+| Component | Tag | Features |
+|---|---|---|
+| Accordion | `and-accordion` | Expandable panels with keyboard navigation |
+| Alert | `and-alert` | Dismissible status messages |
+| Badge | `and-badge` | Labels and status indicators |
+| Breadcrumb | `and-breadcrumb` | Navigation breadcrumbs |
+| Button | `and-button` | 6 variants, loading state, link mode |
+| Card | `and-card` | Content container with slots |
+| Carousel | `and-carousel` | Image/content slider |
+| Context Menu | `and-context-menu` | Right-click menus |
+| Drawer | `and-drawer` | Slide-out panels |
+| Dropdown | `and-dropdown` | Menu overlays |
+| Icon | `and-icon` | 70+ SVG icons |
+| Input | `and-input` | Form input with validation |
+| Menu List | `and-menu-list` | Navigable menu items |
+| Modal | `and-modal` | Dialog overlays with focus trap |
+| Navbar | `and-navbar` | Fixed/sticky navigation with scroll spy |
+| Pagination | `and-pagination` | Page navigation |
+| Sidebar | `and-sidebar` | Collapsible side navigation |
+| Tabs | `and-tabs` | Tabbed content switching |
+| Toast | `and-toast` | Notification messages |
+| Tooltip | `and-tooltip` | Info popups on hover/focus |
+
+## Theming
+
+Components use CSS custom properties with HSL values. Set a `data-color` attribute on `<html>` to switch palettes, or override variables directly:
+
+```css
+:root {
+  --primary: 243 75% 59%;
+  --primary-foreground: 0 0% 100%;
+  --background: 226 30% 98%;
+  --foreground: 224 71% 4%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --primary: 234 89% 74%;
+  --background: 229 50% 6%;
+  --foreground: 226 100% 97%;
+}
+```
+
+## Layout System
+
+Attribute-driven layout utilities — no classes needed:
+
+```html
+<div and-layout="horizontal gap:md align:center justify:between wrap:wrap">
+  <div and-layout="vertical gap:sm">
+    <h2 and-text="h2 weight:bold">Title</h2>
+    <p and-text="p align:center">Description</p>
+  </div>
+</div>
+
+<!-- Responsive modifiers -->
+<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">
+  ...
+</div>
+```
+
+## Motion System
+
+Declarative animations via HTML attributes:
+
+```html
+<!-- Animate on scroll into view -->
+<div and-motion="fade-in" and-motion-trigger="enter">Content</div>
+
+<!-- Animate on hover -->
+<div and-motion="zoom-in" and-motion-trigger="hover">Hover me</div>
+
+<!-- With custom timing -->
+<div and-motion="slide-in-up" and-motion-trigger="enter"
+     and-motion-duration="800ms" and-motion-delay="200ms">
+  Delayed slide
+</div>
+```
+
+Supports `prefers-reduced-motion` automatically.
+
+## Deployment
+
+Both apps deploy to **Cloudflare Pages**:
+
+```bash
+# Angular demo app
+pnpm deploy:cloudflare
+
+# Astro landing page
+pnpm deploy:landing
+```
+
+## Publishing to npm
+
+Libraries use [Lerna](https://lerna.js.org/) with independent versioning:
+
+```bash
+# Build all libraries first
+pnpm build:stencil && pnpm build:motion && pnpm build:layout
+
+# Publish changed packages
+pnpm publish:libs
+```
+
+Each package under `packages/` is scoped to `@andersseen/` and configured with `"publishConfig": { "access": "public" }`.
+
+## License
 
 MIT

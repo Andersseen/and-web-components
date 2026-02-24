@@ -9,8 +9,10 @@
     "src"
   ],
   "scripts": {
-    "build": "sass src/index.scss dist/layout.css && sass src/index.scss dist/layout.min.css --style compressed",
-    "watch": "sass --watch src/index.scss:dist/layout.css"
+    "build": "rm -rf dist && sass src/index.scss dist/layout.css && sass src/index.scss dist/layout.min.css --style compressed",
+    "clean": "rm -rf dist",
+    "watch": "sass --watch src/index.scss:dist/layout.css",
+    "prepublishOnly": "pnpm run build"
   },
   "exports": {
     ".": "./dist/layout.css",
@@ -28,5 +30,13 @@
   "license": "MIT",
   "devDependencies": {
     "sass": "^1.71.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/layout-core"
   }
 }

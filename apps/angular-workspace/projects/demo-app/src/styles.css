@@ -2,7 +2,7 @@
 @import "@fontsource/inter";
 @import "@andersseen/web-components/dist/web-components/web-components.css";
 @import "@andersseen/layout/dist/layout.css";
-@import "../../../../../packages/motion-core/dist/style.css";
+@import "@andersseen/motion/style.css";
 
 @theme {
   --font-sans: var(--font-family, "Inter", sans-serif);

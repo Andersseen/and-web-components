@@ -1,6 +1,7 @@
 {
-  "name": "angular-components",
+  "name": "@andersseen/angular-components",
   "version": "0.0.1",
+  "description": "Angular wrappers for @andersseen/web-components Stencil library",
   "peerDependencies": {
     "@angular/common": "^21.1.0",
     "@angular/core": "^21.1.0",
@@ -9,5 +10,15 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "apps/angular-workspace/projects/angular-components"
+  },
+  "author": "Andersseen",
+  "license": "MIT"
 }

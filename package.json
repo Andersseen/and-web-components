@@ -1,6 +1,6 @@
 {
   "name": "and-web-components",
-  "private": false,
+  "private": true,
   "scripts": {
     "clean:angular": "rm -rf apps/angular-workspace/.angular/cache",
     "clean:stencil": "rm -rf packages/stencil-library/dist packages/stencil-library/www packages/stencil-library/loader",
@@ -20,19 +20,14 @@
     "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy",
     "deploy:cloudflare:actions": "pnpm build:all && npx wrangler pages deploy apps/angular-workspace/dist/demo-app/browser --project-name=and-web-components-demo",
     "deploy:landing": "pnpm build:astro && pnpm -C apps/astro-landing exec wrangler pages deploy",
-    "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing"
+    "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing",
+    "publish:libs": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && lerna publish"
   },
   "devDependencies": {
     "@types/node": "^25.2.1",
     "lerna": "^9.0.3",
     "typescript": "^5.9.3",
     "concurrently": "^9.2.1"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp"
-    ]
   },
   "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }
