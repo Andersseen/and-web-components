@@ -583,14 +583,14 @@ export declare interface AndModal extends Components.AndModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndNavbar,
-  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
+  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
 })
 @Component({
   selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
+  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
   outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange', 'responsiveStageChange'],
 })
 export class AndNavbar {
@@ -660,14 +660,14 @@ export declare interface AndPagination extends Components.AndPagination {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndSidebar,
-  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant']
+  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'itemVariant', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant']
 })
 @Component({
   selector: 'and-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant'],
+  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'itemVariant', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant'],
   outputs: ['andSidebarItemClick', 'andSidebarToggle'],
 })
 export class AndSidebar {

@@ -25,16 +25,12 @@ const sidebarVariants = cva('sidebar-root flex h-full flex-col transition-all du
   variants: {
     variant: {
       default: 'bg-background border-r border-border',
-      ghost: 'bg-transparent border-r border-transparent',
       filled: 'bg-muted border-r border-border',
-      elevated: 'bg-background shadow-lg border-r-0',
-      bordered: 'bg-background border-r-2 border-border',
-      floating: 'bg-background shadow-xl border border-border rounded-xl m-2',
+      floating: 'sidebar-floating bg-background shadow-xl border border-border',
       glass: [
         'bg-background/60 border-r border-border/50',
         'backdrop-blur-xl',
       ].join(' '),
-      minimal: 'bg-transparent border-r border-border/30',
     },
     collapsed: {
       true: '',
@@ -47,19 +43,20 @@ const sidebarVariants = cva('sidebar-root flex h-full flex-col transition-all du
   },
 });
 
+/**
+ * Sidebar item style variants.
+ * Visual distinctiveness is handled via CSS [data-item-style] + [data-state]
+ * attribute selectors — border-radius is left to the theme.
+ */
 const sidebarItemVariants = cva(
   [
-    'sidebar-item flex w-full items-center gap-3 rounded-md text-sm font-medium',
-    'transition-colors duration-150',
+    'sidebar-item flex w-full items-center gap-3 text-sm font-medium',
+    'transition-all duration-150',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
     'bg-transparent border-none cursor-pointer text-left',
   ].join(' '),
   {
     variants: {
-      active: {
-        true: 'bg-accent text-accent-foreground font-semibold',
-        false: 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
-      },
       collapsed: {
         true: 'justify-center px-2 py-3 sm:py-2',
         false: 'px-3 py-3 sm:py-2',
@@ -70,13 +67,13 @@ const sidebarItemVariants = cva(
       },
     },
     defaultVariants: {
-      active: false,
       collapsed: false,
       disabled: false,
     },
   },
 );
 
+export type SidebarItemStyle = 'default' | 'underline' | 'filled';
 export type SidebarVariantProps = VariantProps<typeof sidebarVariants>;
 
 /* ────────────────────────────────────────────────────────────────────
@@ -144,6 +141,18 @@ export class AndSidebar {
    * ARIA label for the navigation
    */
   @Prop() ariaNavLabel: string = 'Sidebar navigation';
+
+  /**
+   * Visual style for individual sidebar items.
+   * Controls how each item looks, independent of the sidebar container variant.
+   * Border-radius is intentionally not set — the theme controls it.
+   *
+   * - `default`   — subtle accent bg on active
+   * - `underline` — left accent bar on active
+   * - `filled`    — solid primary bg on active
+   * @default 'default'
+   */
+  @Prop({ reflect: true }) itemVariant: SidebarItemStyle = 'default';
 
   /* ── Events ─────────────────────────────────────────────────────── */
 
@@ -312,7 +321,6 @@ export class AndSidebar {
 
   private renderItem(item: SidebarItem) {
     const itemProps = this.sidebar.getItemProps(item.id);
-    const isActive = this.sidebar.queries.isActive(item.id);
     const isDisabled = item.disabled ?? false;
     const isCollapsed = this.effectiveCollapsed;
 
@@ -326,10 +334,11 @@ export class AndSidebar {
         data-active={itemProps['data-active']}
         data-state={itemProps['data-state']}
         data-item-id={item.id}
+        data-item-style={this.itemVariant}
         tabindex={itemProps.tabindex}
         id={itemProps.id}
         class={cn(
-          sidebarItemVariants({ active: isActive, collapsed: isCollapsed, disabled: isDisabled }),
+          sidebarItemVariants({ collapsed: isCollapsed, disabled: isDisabled }),
         )}
         onClick={() => this.handleItemClick(item)}
         title={isCollapsed ? item.label : undefined}

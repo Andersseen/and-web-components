@@ -156,7 +156,7 @@ nav.navbar-blur {
   flex-shrink: 0;
 }
 
-/* ── Active indicator (underline bar) ────────────────────────────── */
+/* ── Active indicator (underline bar — default style only) ────────── */
 
 .nav-item-indicator {
   position: absolute;
@@ -179,6 +179,68 @@ nav.navbar-blur {
   opacity: 1;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+ * NAV LINK ITEM STYLE VARIANTS  (3 styles)
+ * Uses theme tokens: --radius, --border-width, --spacing-factor
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Shared base for all nav links ────────────────────────────────── */
+.nav-link {
+  padding: calc(0.5rem * var(--spacing-factor, 1)) calc(0.75rem * var(--spacing-factor, 1));
+  border-radius: var(--radius, 0.5rem);
+  color: hsl(var(--muted-foreground));
+  transition:
+    color 200ms ease,
+    background 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* ── 1. DEFAULT — subtle accent background on hover/active ────────── */
+.nav-link[data-item-style="default"]:hover {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent) / 0.5);
+}
+.nav-link[data-item-style="default"][data-state="active"] {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent));
+  font-weight: 600;
+}
+
+/* ── 2. UNDERLINE — bottom border, same color tone, just bolder ───── */
+.nav-link[data-item-style="underline"] {
+  border-radius: 0;
+  border-bottom: var(--border-width, 2px) solid transparent;
+  padding-bottom: calc(0.5rem * var(--spacing-factor, 1) - var(--border-width, 2px));
+}
+.nav-link[data-item-style="underline"]:hover {
+  color: hsl(var(--foreground));
+  border-bottom-color: hsl(var(--border));
+}
+.nav-link[data-item-style="underline"][data-state="active"] {
+  color: hsl(var(--foreground));
+  border-bottom-color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+/* ── 3. FILLED — solid primary bg with contrasting text on active ─── */
+.nav-link[data-item-style="filled"]:hover {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent));
+}
+.nav-link[data-item-style="filled"][data-state="active"] {
+  color: hsl(var(--primary-foreground));
+  background: hsl(var(--primary));
+  font-weight: 600;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+/* ── Floating variant uses theme radius ───────────────────────────── */
+nav.navbar-floating {
+  border-radius: var(--radius, 0.5rem);
+  margin: calc(0.5rem * var(--spacing-factor, 1)) calc(1rem * var(--spacing-factor, 1)) 0;
+}
+
 /* ── Mobile toggle ───────────────────────────────────────────────── */
 
 .navbar-mobile-toggle {
@@ -197,7 +259,7 @@ nav.navbar-blur {
   background: transparent;
   border: none;
   cursor: pointer;
-  border-radius: 0.375rem;
+  border-radius: var(--radius, 0.5rem);
   transition: background var(--navbar-transition);
 }
 .mobile-toggle-btn:hover {
@@ -265,12 +327,5 @@ nav.navbar-blur {
 :host([data-responsive-stage="minimal"]) .navbar-end {
   /* Minimal: only compact end + hamburger */
   gap: 0.25rem;
-}
-
-/* ── Floating variant overrides ───────────────────────────────────── */
-
-:host .floating-nav-wrapper {
-  /* Used by the floating variant to contain the rounded navbar */
-  padding: 0.5rem 1rem 0;
 }
 

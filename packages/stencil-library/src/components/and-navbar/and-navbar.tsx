@@ -34,17 +34,13 @@ const navbarVariants = cva('w-full', {
   variants: {
     variant: {
       default: 'bg-background border-b border-border',
-      ghost: 'bg-transparent border-b border-transparent',
       filled: 'bg-primary text-primary-foreground border-b border-primary',
-      elevated: 'bg-background shadow-md border-b-0',
-      bordered: 'bg-background border-b-2 border-border',
-      floating: 'bg-background shadow-lg border border-border rounded-xl mx-4 mt-2',
+      floating: 'navbar-floating bg-background shadow-lg border border-border',
       glass: [
         'bg-background/60 border-b border-border/50',
         'backdrop-blur-xl',
         '-webkit-backdrop-filter: blur(20px)',
       ].join(' '),
-      minimal: 'bg-transparent border-b border-border/30',
     },
   },
   defaultVariants: {
@@ -52,31 +48,33 @@ const navbarVariants = cva('w-full', {
   },
 });
 
+/**
+ * Nav-link item style variants.
+ * Layout-only classes via cva — visual distinctiveness is handled
+ * entirely in CSS via [data-item-style] + [data-state] selectors
+ * so the styles work reliably inside Shadow DOM.
+ */
 const navItemVariants = cva(
   [
-    'relative inline-flex items-center gap-1.5 rounded-md px-3 py-2',
+    'nav-link relative inline-flex items-center gap-1.5',
     'text-sm font-medium transition-all duration-200',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     'bg-transparent border-none cursor-pointer no-underline',
   ].join(' '),
   {
     variants: {
-      active: {
-        true: 'text-foreground font-semibold',
-        false: 'text-muted-foreground hover:text-foreground hover:bg-accent/50',
-      },
       disabled: {
         true: 'opacity-50 pointer-events-none cursor-default',
         false: '',
       },
     },
     defaultVariants: {
-      active: false,
       disabled: false,
     },
   },
 );
 
+export type NavItemStyle = 'default' | 'underline' | 'filled';
 export type NavbarProps = VariantProps<typeof navbarVariants>;
 
 /* ────────────────────────────────────────────────────────────────────
@@ -137,6 +135,17 @@ export class AndNavbar {
    * ARIA label for the navigation
    */
   @Prop() ariaNavLabel: string = 'Main navigation';
+
+  /**
+   * Visual style for individual nav links.
+   * Controls how each link looks, independent of the navbar container variant.
+   *
+   * - `default`   — subtle rounded pill with hover bg
+   * - `underline`  — bottom-border indicator on active
+   * - `filled`     — solid primary bg on active
+   * @default 'default'
+   */
+  @Prop({ reflect: true }) itemVariant: NavItemStyle = 'default';
 
   /**
    * Breakpoint (px) below which the navbar switches to mobile mode
@@ -439,20 +448,26 @@ export class AndNavbar {
     const isDisabled = item.disabled ?? false;
 
     const baseClass = cn(
-      navItemVariants({ active: isActive, disabled: isDisabled }),
+      navItemVariants({ disabled: isDisabled }),
       mobile && 'w-full text-left px-4 py-3 text-base rounded-lg',
     );
 
+    // The animated underline indicator only makes sense for 'default' item style;
+    // other styles handle active state through borders, bg, shadows, etc.
+    const showIndicator = !mobile && this.itemVariant === 'default';
     const indicatorClass = cn(
       'nav-item-indicator',
       isActive && 'nav-item-indicator--active',
     );
+
+    const itemStyle = mobile ? 'default' : this.itemVariant;
 
     const commonProps = {
       'aria-current': itemProps['aria-current'],
       'aria-disabled': itemProps['aria-disabled'],
       'data-active': itemProps['data-active'],
       'data-state': itemProps['data-state'],
+      'data-item-style': itemStyle,
       tabindex: itemProps.tabindex,
       id: itemProps.id,
       role: itemProps.role,
@@ -476,7 +491,7 @@ export class AndNavbar {
         >
           {item.icon && <and-icon name={item.icon} size="16" />}
           <span>{item.label}</span>
-          {!mobile && <span class={indicatorClass} />}
+          {showIndicator && <span class={indicatorClass} />}
         </a>
       );
     }
@@ -496,7 +511,7 @@ export class AndNavbar {
       >
         {item.icon && <and-icon name={item.icon} size="16" />}
         <span>{item.label}</span>
-        {!mobile && <span class={indicatorClass} />}
+        {showIndicator && <span class={indicatorClass} />}
       </button>
     );
   }

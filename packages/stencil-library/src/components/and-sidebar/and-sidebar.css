@@ -10,7 +10,6 @@
   --sidebar-expanded-width: 16rem;
   --sidebar-header-height: 3.5rem;
   --sidebar-item-gap: 0.125rem;
-  --sidebar-item-radius: 0.375rem;
   --sidebar-icon-size: 1.125rem;
   --sidebar-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --sidebar-px: 0.5rem;
@@ -63,7 +62,7 @@
   flex-shrink: 0;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: var(--sidebar-item-radius);
+  border-radius: var(--radius, 0.5rem);
   color: hsl(var(--muted-foreground));
   background: transparent;
   border: none;
@@ -153,8 +152,14 @@
 
 /* ── Item elements ────────────────────────────────────────────────── */
 .sidebar-item {
-  border-radius: var(--sidebar-item-radius);
   min-height: 2.25rem;
+  border-radius: var(--radius, 0.5rem);
+  color: hsl(var(--muted-foreground));
+  transition:
+    color 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .item-icon {
@@ -177,27 +182,63 @@
   text-overflow: ellipsis;
 }
 
-/* ── Active indicator bar ─────────────────────────────────────────── */
-.sidebar-item[data-state="active"] {
-  position: relative;
+/* ═══════════════════════════════════════════════════════════════════
+ * SIDEBAR ITEM STYLE VARIANTS  (3 styles)
+ * Border-radius is NOT set — the theme controls it.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. DEFAULT — subtle accent bg on hover/active ────────────────── */
+.sidebar-item[data-item-style="default"]:hover {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent) / 0.5);
+}
+.sidebar-item[data-item-style="default"][data-state="active"] {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent));
+  font-weight: 600;
 }
 
-.sidebar-item[data-state="active"]::before {
+/* ── 2. UNDERLINE — left accent bar on active, same color tone ────── */
+.sidebar-item[data-item-style="underline"]:hover {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent) / 0.3);
+}
+.sidebar-item[data-item-style="underline"][data-state="active"] {
+  position: relative;
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent) / 0.4);
+  font-weight: 600;
+}
+.sidebar-item[data-item-style="underline"][data-state="active"]::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 25%;
-  bottom: 25%;
-  width: 3px;
-  background: hsl(var(--primary));
+  top: 20%;
+  bottom: 20%;
+  width: calc(var(--border-width, 2px) + 1px);
+  background: hsl(var(--foreground));
   border-radius: 0 9999px 9999px 0;
 }
 
-/* ── Floating variant height adjustment ───────────────────────────── */
-/* When using the floating variant, the sidebar root has margin,
-   so we must account for that in the host height */
+/* ── 3. FILLED — solid primary bg on active ───────────────────────── */
+.sidebar-item[data-item-style="filled"]:hover {
+  color: hsl(var(--foreground));
+  background: hsl(var(--accent));
+}
+.sidebar-item[data-item-style="filled"][data-state="active"] {
+  color: hsl(var(--primary-foreground));
+  background: hsl(var(--primary));
+  font-weight: 600;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+/* ── Floating variant uses theme radius + spacing ─────────────────── */
+.sidebar-floating {
+  border-radius: var(--radius, 0.5rem);
+  margin: calc(0.5rem * var(--spacing-factor, 1));
+}
 :host([variant="floating"]) {
-  height: calc(100% - 1rem); /* accounts for m-2 on the root */
+  height: calc(100% - calc(1rem * var(--spacing-factor, 1)));
 }
 
 /* ── Glass variant shimmer ────────────────────────────────────────── */

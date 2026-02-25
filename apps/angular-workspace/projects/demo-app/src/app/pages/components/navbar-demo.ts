@@ -55,7 +55,7 @@ import {
       <!-- Variants Section -->
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Variants
+          Container Variants
         </h2>
         <div class="grid grid-cols-1 gap-6">
           @for (v of variants; track v.name) {
@@ -71,6 +71,35 @@ import {
                     <and-icon name="bell"></and-icon>
                   </and-button>
                   <and-button size="sm">Action</and-button>
+                </div>
+              </and-navbar>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Nav Link Item Variants -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Nav Link Styles (itemVariant)
+        </h2>
+        <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
+          Each <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">itemVariant</code>
+          changes how the individual nav links look\u2014independently of the container variant.
+        </p>
+        <div class="grid grid-cols-1 gap-6">
+          @for (iv of itemVariants; track iv.name) {
+            <div>
+              <p class="text-sm font-medium text-muted-foreground mb-2">{{ iv.name }}</p>
+              <and-navbar
+                [items]="navItemsJson"
+                activeItem="home"
+                [itemVariant]="iv.value"
+                class="border border-border rounded-lg overflow-hidden"
+              >
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="box"></and-icon>
+                  <span class="font-bold">Brand</span>
                 </div>
               </and-navbar>
             </div>
@@ -173,6 +202,7 @@ import {
   [items]="navItems"
   [activeItem]="active"
   variant="default"
+  itemVariant="underline"
   [compactBreakpoint]="1024"
   [minimalBreakpoint]="768"
   [mobileBreakpoint]="640"
@@ -190,12 +220,22 @@ import {
 export default class NavbarDemo {
   variants = [
     { name: 'Default', value: 'default' },
-    { name: 'Ghost', value: 'ghost' },
     { name: 'Filled', value: 'filled' },
-    { name: 'Elevated', value: 'elevated' },
-    { name: 'Bordered', value: 'bordered' },
     { name: 'Floating', value: 'floating' },
     { name: 'Glass', value: 'glass' },
-    { name: 'Minimal', value: 'minimal' },
   ];
+
+  itemVariants = [
+    { name: 'Default — subtle bg', value: 'default' },
+    { name: 'Underline — bottom border', value: 'underline' },
+    { name: 'Filled — solid primary bg', value: 'filled' },
+  ];
+
+  navItemsJson = JSON.stringify([
+    { id: 'home', label: 'Home' },
+    { id: 'products', label: 'Products' },
+    { id: 'pricing', label: 'Pricing' },
+    { id: 'about', label: 'About' },
+    { id: 'contact', label: 'Contact' },
+  ]);
 }

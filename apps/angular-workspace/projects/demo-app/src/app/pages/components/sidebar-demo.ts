@@ -43,6 +43,33 @@ import {
         </div>
       </section>
 
+      <!-- Item Variants Section -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Item Styles (itemVariant)
+        </h2>
+        <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
+          Each <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">itemVariant</code>
+          changes how the individual sidebar items look\u2014independently of the container variant.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          @for (iv of itemVariants; track iv.name) {
+            <div>
+              <p class="text-sm font-medium text-muted-foreground mb-2">{{ iv.name }}</p>
+              <div class="h-56 border border-border rounded-xl overflow-hidden">
+                <and-sidebar
+                  [items]="sidebarItemsJson"
+                  activeItem="dashboard"
+                  expandedWidth="100%"
+                  [itemVariant]="iv.value"
+                >
+                </and-sidebar>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+
       <!-- Preview Section -->
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
@@ -226,12 +253,14 @@ export default class SidebarDemo {
 
   variants = [
     { name: 'Default', value: 'default' },
-    { name: 'Ghost', value: 'ghost' },
     { name: 'Filled', value: 'filled' },
-    { name: 'Elevated', value: 'elevated' },
-    { name: 'Bordered', value: 'bordered' },
     { name: 'Floating', value: 'floating' },
     { name: 'Glass', value: 'glass' },
-    { name: 'Minimal', value: 'minimal' },
+  ];
+
+  itemVariants = [
+    { name: 'Default — subtle bg', value: 'default' },
+    { name: 'Underline — left accent bar', value: 'underline' },
+    { name: 'Filled — solid primary bg', value: 'filled' },
   ];
 }
