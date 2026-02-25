@@ -1,5 +1,6 @@
 /* ────────────────────────────────────────────────────────────────────
  * and-navbar   —   CSS custom properties + layout + active indicator
+ *                  + progressive responsive collapse + variant support
  * ──────────────────────────────────────────────────────────────────── */
 
 /* ── Custom Properties (override from the outside) ───────────────── */
@@ -7,11 +8,16 @@
   --navbar-height: 4rem; /* 64px */
   --navbar-max-width: 80rem; /* 1280px */
   --navbar-px: 1rem;
+  --navbar-px-sm: 1.5rem;
+  --navbar-px-lg: 2rem;
   --navbar-indicator-color: hsl(var(--primary));
   --navbar-indicator-height: 2px;
   --navbar-indicator-radius: 9999px;
   --navbar-item-gap: 0.25rem;
+  --navbar-section-gap: 1rem;
   --navbar-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --navbar-start-min-width: auto;
+  --navbar-end-min-width: auto;
 
   display: block;
 }
@@ -28,20 +34,86 @@
   max-width: var(--navbar-max-width);
   padding-left: var(--navbar-px);
   padding-right: var(--navbar-px);
+  gap: var(--navbar-section-gap);
 }
 
 @media (min-width: 640px) {
   .navbar-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: var(--navbar-px-sm);
+    padding-right: var(--navbar-px-sm);
   }
 }
 @media (min-width: 1024px) {
   .navbar-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: var(--navbar-px-lg);
+    padding-right: var(--navbar-px-lg);
   }
 }
+
+/* ── Start section (logo / brand) ─────────────────────────────────── */
+
+.navbar-start {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  min-width: var(--navbar-start-min-width);
+}
+
+/* ── Main section (nav links) ─────────────────────────────────────── */
+
+.navbar-main {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden; /* prevent items from pushing other sections out */
+}
+
+/* ── End section (actions / toggle) ───────────────────────────────── */
+
+.navbar-end {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  min-width: var(--navbar-end-min-width);
+  justify-content: flex-end;
+}
+
+.navbar-end-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap var(--navbar-transition);
+}
+
+/* ── Compact end section ──────────────────────────────────────────── */
+/* When the end section is compact, hide slotted text and shrink gaps. */
+
+.navbar-end--compact {
+  gap: 0.25rem;
+}
+
+/* Use ::slotted to target elements inside the end slot */
+.navbar-end--compact ::slotted(and-button[variant="outline"]),
+.navbar-end--compact ::slotted(and-button[size="sm"]:not([variant="ghost"])) {
+  font-size: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  min-width: 2.5rem;
+}
+
+/* Hide dropdown labels in compact mode */
+.navbar-end--compact ::slotted(div) {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width var(--navbar-transition), opacity var(--navbar-transition);
+}
+
+/* ── Backward compat aliases ──────────────────────────────────────── */
 
 .navbar-brand {
   display: flex;
@@ -73,6 +145,8 @@ nav.navbar-blur {
   display: flex;
   align-items: center;
   gap: var(--navbar-item-gap);
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .navbar-actions {
@@ -178,23 +252,25 @@ nav.navbar-blur {
   color: hsl(var(--foreground));
 }
 
-/* ── Responsive helpers (shadow DOM) ─────────────────────────────── */
+/* ── Progressive responsive stage indicators ──────────────────────── */
+/* These data-responsive-stage attributes are set on :host
+   and can be used for external styling or debugging. */
 
-.hidden {
-  display: none !important;
+:host([data-responsive-stage="compact"]) .navbar-main {
+  /* In compact mode, main section shifts slightly toward the start */
+  justify-content: flex-start;
+  padding-left: var(--navbar-section-gap);
 }
 
-.flex {
-  display: flex !important;
+:host([data-responsive-stage="minimal"]) .navbar-end {
+  /* Minimal: only compact end + hamburger */
+  gap: 0.25rem;
 }
 
-@media (min-width: 768px) {
-  .md\:flex {
-    display: flex !important;
-  }
+/* ── Floating variant overrides ───────────────────────────────────── */
 
-  .md\:hidden {
-    display: none !important;
-  }
+:host .floating-nav-wrapper {
+  /* Used by the floating variant to contain the rounded navbar */
+  padding: 0.5rem 1rem 0;
 }
 

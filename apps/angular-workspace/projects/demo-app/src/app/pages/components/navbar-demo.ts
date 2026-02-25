@@ -17,7 +17,7 @@ import {
         </h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Top navigation bar with brand, navigation links, and action slots.
-          Responsive by default with a mobile hamburger menu.
+          Features progressive responsive collapse and multiple visual variants.
         </p>
       </header>
 
@@ -31,11 +31,11 @@ import {
         >
           <div class="p-6">
             <and-navbar class="border border-border rounded-lg overflow-hidden">
-              <div slot="brand" class="flex items-center gap-2">
+              <div slot="start" class="flex items-center gap-2">
                 <and-icon name="box"></and-icon>
                 <span class="font-bold text-foreground">Brand</span>
               </div>
-              <div slot="actions" class="flex items-center gap-2">
+              <div slot="end" class="flex items-center gap-2">
                 <and-button variant="ghost" size="sm">Log In</and-button>
                 <and-button size="sm">Sign Up</and-button>
               </div>
@@ -44,12 +44,76 @@ import {
 
           <div class="border-t border-border bg-muted/30 px-6 py-4">
             <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-              Resize your browser to see the responsive hamburger menu. The
-              navbar you see at the top of this app is also an
-              <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono"
-                >and-navbar</code
-              >
-              component.
+              Resize your browser to see the <strong>progressive responsive
+              collapse</strong> in action: end section compacts first, then
+              nav links hide, then full hamburger.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Variants Section -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Variants
+        </h2>
+        <div class="grid grid-cols-1 gap-6">
+          @for (v of variants; track v.name) {
+            <div>
+              <p class="text-sm font-medium text-muted-foreground mb-2">{{ v.name }}</p>
+              <and-navbar [variant]="v.value" class="border border-border rounded-lg overflow-hidden">
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="box"></and-icon>
+                  <span class="font-bold">Brand</span>
+                </div>
+                <div slot="end" class="flex items-center gap-2">
+                  <and-button variant="ghost" size="icon">
+                    <and-icon name="bell"></and-icon>
+                  </and-button>
+                  <and-button size="sm">Action</and-button>
+                </div>
+              </and-navbar>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Progressive Collapse -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Progressive Responsive Collapse
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Full (> 1024px)
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              All sections visible: start, centered main navigation, and full end section.
+            </p>
+          </div>
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Compact (768–1024px)
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              End section enters compact mode (icon-only). Main navigation still visible.
+            </p>
+          </div>
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Minimal (640–768px)
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              Main section hidden. Only start + compact end + hamburger visible. Nav links move to drawer.
+            </p>
+          </div>
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Mobile (&lt; 640px)
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              Only start + hamburger. Everything in a drawer.
             </p>
           </div>
         </div>
@@ -63,26 +127,29 @@ import {
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="rounded-xl border border-border bg-card p-5">
             <h3 class="text-sm font-semibold text-foreground mb-2">
-              Brand Slot
+              Start Slot
             </h3>
             <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-              Logo and application name displayed on the left.
+              Logo and application name displayed on the left via
+              <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">slot="start"</code>.
             </p>
           </div>
           <div class="rounded-xl border border-border bg-card p-5">
             <h3 class="text-sm font-semibold text-foreground mb-2">
-              Nav Items
+              Main Slot / Nav Items
             </h3>
             <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-              Configurable array of navigation links with active state.
+              Center area for navigation links. Use the <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">items</code> prop or
+              <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">slot="main"</code> for custom content.
             </p>
           </div>
           <div class="rounded-xl border border-border bg-card p-5">
             <h3 class="text-sm font-semibold text-foreground mb-2">
-              Actions Slot
+              End Slot
             </h3>
             <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-              Right side slot for buttons, dropdowns, or user avatars.
+              Right side area for buttons, dropdowns, or user avatars via
+              <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">slot="end"</code>.
             </p>
           </div>
         </div>
@@ -102,9 +169,16 @@ import {
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-navbar [items]="navItems" [activeItem]="active"&gt;
-  &lt;span slot="brand"&gt;My App&lt;/span&gt;
-  &lt;div slot="actions"&gt;
+          ><code>&lt;and-navbar
+  [items]="navItems"
+  [activeItem]="active"
+  variant="default"
+  [compactBreakpoint]="1024"
+  [minimalBreakpoint]="768"
+  [mobileBreakpoint]="640"
+&gt;
+  &lt;span slot="start"&gt;My App&lt;/span&gt;
+  &lt;div slot="end"&gt;
     &lt;and-button size="sm"&gt;Sign Up&lt;/and-button&gt;
   &lt;/div&gt;
 &lt;/and-navbar&gt;</code></pre>
@@ -113,4 +187,15 @@ import {
     </div>
   `,
 })
-export default class NavbarDemo {}
+export default class NavbarDemo {
+  variants = [
+    { name: 'Default', value: 'default' },
+    { name: 'Ghost', value: 'ghost' },
+    { name: 'Filled', value: 'filled' },
+    { name: 'Elevated', value: 'elevated' },
+    { name: 'Bordered', value: 'bordered' },
+    { name: 'Floating', value: 'floating' },
+    { name: 'Glass', value: 'glass' },
+    { name: 'Minimal', value: 'minimal' },
+  ];
+}

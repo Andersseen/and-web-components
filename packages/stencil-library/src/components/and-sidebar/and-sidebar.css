@@ -1,39 +1,208 @@
+/* ────────────────────────────────────────────────────────────────────
+ * and-sidebar   —   CSS custom properties + layout + responsive
+ *                   + variant support
+ * ──────────────────────────────────────────────────────────────────── */
+
+/* ── Custom Properties (override from the outside) ───────────────── */
 :host {
+  --sidebar-width: 16rem;
+  --sidebar-collapsed-width: 4rem;
+  --sidebar-expanded-width: 16rem;
+  --sidebar-header-height: 3.5rem;
+  --sidebar-item-gap: 0.125rem;
+  --sidebar-item-radius: 0.375rem;
+  --sidebar-icon-size: 1.125rem;
+  --sidebar-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --sidebar-px: 0.5rem;
+  --sidebar-section-gap: 0.5rem;
+
   display: block;
   height: 100%;
+  width: var(--sidebar-width);
+  transition: width var(--sidebar-transition);
+  flex-shrink: 0;
 }
 
+/* ── Collapsed host ──────────────────────────────────────────────── */
+:host([data-collapsed="true"]) {
+  width: var(--sidebar-collapsed-width);
+}
+
+/* ── Root aside ──────────────────────────────────────────────────── */
+.sidebar-root {
+  width: 100%;
+  min-height: 0;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
 .sidebar-header {
-  @apply flex items-center justify-between border-b border-border p-4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--sidebar-header-height);
+  border-bottom: 1px solid hsl(var(--border));
+  padding: 0.75rem var(--sidebar-px);
+  gap: 0.5rem;
 }
 
 .sidebar-title {
-  @apply text-lg font-semibold text-foreground;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* ── Toggle button ────────────────────────────────────────────────── */
 .sidebar-toggle {
-  @apply rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--sidebar-item-radius);
+  color: hsl(var(--muted-foreground));
   background: transparent;
   border: none;
   cursor: pointer;
+  transition:
+    background var(--sidebar-transition),
+    color var(--sidebar-transition);
+}
+.sidebar-toggle:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--foreground));
+}
+.sidebar-toggle:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }
 
-.icon {
-  @apply h-5 w-5;
+.toggle-icon {
+  width: var(--sidebar-icon-size);
+  height: var(--sidebar-icon-size);
 }
 
+/* ── Top slot ─────────────────────────────────────────────────────── */
+.sidebar-top-slot {
+  padding: var(--sidebar-section-gap) var(--sidebar-px);
+}
+.sidebar-top-slot:empty {
+  display: none;
+}
+.sidebar-top-slot--collapsed {
+  padding: var(--sidebar-section-gap) 0.25rem;
+}
+
+/* ── Nav section ──────────────────────────────────────────────────── */
 .sidebar-nav {
-  @apply flex flex-1 flex-col gap-1 overflow-y-auto p-2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sidebar-item-gap);
+  padding: var(--sidebar-section-gap) var(--sidebar-px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 9999px;
+}
+
+/* ── Spacer (pushes bottom content down) ──────────────────────────── */
+.sidebar-spacer {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ── Bottom nav section ───────────────────────────────────────────── */
+.sidebar-bottom-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sidebar-item-gap);
+  padding: var(--sidebar-section-gap) var(--sidebar-px);
+  border-top: 1px solid hsl(var(--border));
+}
+
+.sidebar-bottom-nav nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sidebar-item-gap);
+}
+
+/* ── Footer slot ──────────────────────────────────────────────────── */
+.sidebar-footer {
+  border-top: 1px solid hsl(var(--border));
+  padding: 0.75rem var(--sidebar-px);
+}
+.sidebar-footer:empty {
+  display: none;
+}
+.sidebar-footer--collapsed {
+  padding: 0.75rem 0.25rem;
+}
+
+/* ── Item elements ────────────────────────────────────────────────── */
+.sidebar-item {
+  border-radius: var(--sidebar-item-radius);
+  min-height: 2.25rem;
 }
 
 .item-icon {
-  @apply flex-shrink-0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--sidebar-icon-size);
+  height: var(--sidebar-icon-size);
+}
+
+.sidebar-icon {
+  width: var(--sidebar-icon-size);
+  height: var(--sidebar-icon-size);
 }
 
 .item-label {
-  @apply truncate;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.sidebar-footer {
-  @apply border-t border-border p-4;
+/* ── Active indicator bar ─────────────────────────────────────────── */
+.sidebar-item[data-state="active"] {
+  position: relative;
 }
+
+.sidebar-item[data-state="active"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 3px;
+  background: hsl(var(--primary));
+  border-radius: 0 9999px 9999px 0;
+}
+
+/* ── Floating variant height adjustment ───────────────────────────── */
+/* When using the floating variant, the sidebar root has margin,
+   so we must account for that in the host height */
+:host([variant="floating"]) {
+  height: calc(100% - 1rem); /* accounts for m-2 on the root */
+}
+
+/* ── Glass variant shimmer ────────────────────────────────────────── */
+:host([variant="glass"]) .sidebar-root {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+

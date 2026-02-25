@@ -583,27 +583,30 @@ export declare interface AndModal extends Components.AndModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndNavbar,
-  inputs: ['activeItem', 'ariaNavLabel', 'items', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
+  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
 })
 @Component({
   selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'ariaNavLabel', 'items', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
-  outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange'],
+  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
+  outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange', 'responsiveStageChange'],
 })
 export class AndNavbar {
   protected el: HTMLAndNavbarElement;
   @Output() navItemClick = new EventEmitter<CustomEvent<string>>();
   @Output() navLinkClick = new EventEmitter<CustomEvent<{ id: string; href: string }>>();
   @Output() mobileMenuChange = new EventEmitter<CustomEvent<boolean>>();
+  @Output() responsiveStageChange = new EventEmitter<CustomEvent<IAndNavbarResponsiveStage>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
+
+import type { ResponsiveStage as IAndNavbarResponsiveStage } from '@andersseen/web-components/components';
 
 export declare interface AndNavbar extends Components.AndNavbar {
   /**
@@ -618,6 +621,10 @@ export declare interface AndNavbar extends Components.AndNavbar {
    * Emitted when mobile menu state changes
    */
   mobileMenuChange: EventEmitter<CustomEvent<boolean>>;
+  /**
+   * Emitted when responsive stage changes
+   */
+  responsiveStageChange: EventEmitter<CustomEvent<IAndNavbarResponsiveStage>>;
 }
 
 
@@ -653,14 +660,14 @@ export declare interface AndPagination extends Components.AndPagination {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndSidebar,
-  inputs: ['activeItem', 'collapsed', 'items', 'variant']
+  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant']
 })
 @Component({
   selector: 'and-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'collapsed', 'items', 'variant'],
+  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant'],
   outputs: ['andSidebarItemClick', 'andSidebarToggle'],
 })
 export class AndSidebar {

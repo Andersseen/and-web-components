@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import {
+  AndSidebar,
+} from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-sidebar-demo',
-  imports: [],
+  imports: [AndSidebar],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -12,9 +15,33 @@ import { Component } from '@angular/core';
         </h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Side navigation panel for organizing app sections. Supports active
-          states, icons, and collapsible behavior.
+          states, icons, collapsible behavior, bottom sections, and multiple
+          visual variants.
         </p>
       </header>
+
+      <!-- Variants Section -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Variants
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          @for (v of variants; track v.name) {
+            <div>
+              <p class="text-sm font-medium text-muted-foreground mb-2">{{ v.name }}</p>
+              <div class="h-64 border border-border rounded-xl overflow-hidden">
+                <and-sidebar
+                  [variant]="v.value"
+                  [items]="sidebarItemsJson"
+                  activeItem="dashboard"
+                  expandedWidth="100%"
+                >
+                </and-sidebar>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
 
       <!-- Preview Section -->
       <section class="mb-12">
@@ -75,7 +102,7 @@ import { Component } from '@angular/core';
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
           Features
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="rounded-xl border border-border bg-card p-5">
             <h3 class="text-sm font-semibold text-foreground mb-2">
               Icon Support
@@ -94,10 +121,37 @@ import { Component } from '@angular/core';
           </div>
           <div class="rounded-xl border border-border bg-card p-5">
             <h3 class="text-sm font-semibold text-foreground mb-2">
-              Collapsible
+              Mobile Auto-Collapse
             </h3>
             <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-              Can be collapsed to icon-only mode on smaller viewports.
+              Automatically collapses to icon-only mode on smaller viewports.
+              Controlled via <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">mobileCollapse</code> prop.
+            </p>
+          </div>
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Bottom Section
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              Items with <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">section: 'bottom'</code>
+              render in a separated footer area (e.g. Settings, Profile).
+            </p>
+          </div>
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Multiple Variants
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              8 visual variants: default, ghost, filled, elevated, bordered,
+              floating, glass, and minimal.
+            </p>
+          </div>
+          <div class="rounded-xl border border-border bg-card p-5">
+            <h3 class="text-sm font-semibold text-foreground mb-2">
+              Keyboard Navigation
+            </h3>
+            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
+              Arrow keys (Up/Down), Home, End for accessible keyboard navigation.
             </p>
           </div>
         </div>
@@ -120,8 +174,15 @@ import { Component } from '@angular/core';
           ><code>&lt;and-sidebar
   [items]="sidebarItems"
   [activeItem]="activeItem"
-  (sidebarItemClick)="onItemClick($event)"
-&gt;&lt;/and-sidebar&gt;</code></pre>
+  variant="default"
+  [mobileCollapse]="true"
+  [mobileBreakpoint]="768"
+  (andSidebarItemClick)="onItemClick($event)"
+&gt;
+  &lt;div slot="footer"&gt;
+    &lt;!-- Custom footer content --&gt;
+  &lt;/div&gt;
+&lt;/and-sidebar&gt;</code></pre>
         </div>
         <div
           class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4"
@@ -136,8 +197,11 @@ import { Component } from '@angular/core';
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
           ><code>sidebarItems = [
   {{ '{' }} id: 'dashboard', label: 'Dashboard', icon: 'layout' {{ '}' }},
-  {{ '{' }} id: 'settings', label: 'Settings', icon: 'sliders' {{ '}' }},
-  {{ '{' }} id: 'profile', label: 'Profile', icon: 'user' {{ '}' }},
+  {{ '{' }} id: 'analytics', label: 'Analytics', icon: 'bar-chart' {{ '}' }},
+  {{ '{' }} id: 'users', label: 'Users', icon: 'users' {{ '}' }},
+  // Bottom section items
+  {{ '{' }} id: 'settings', label: 'Settings', icon: 'sliders', section: 'bottom' {{ '}' }},
+  {{ '{' }} id: 'profile', label: 'Profile', icon: 'user', section: 'bottom' {{ '}' }},
 ];</code></pre>
         </div>
       </section>
@@ -151,5 +215,23 @@ export default class SidebarDemo {
     { id: 'settings', label: 'Settings', active: false },
     { id: 'users', label: 'Users', active: false },
     { id: 'billing', label: 'Billing', active: false },
+  ];
+
+  sidebarItemsJson = JSON.stringify([
+    { id: 'dashboard', label: 'Dashboard', icon: 'layout' },
+    { id: 'analytics', label: 'Analytics', icon: 'bar-chart' },
+    { id: 'users', label: 'Users', icon: 'users' },
+    { id: 'settings', label: 'Settings', icon: 'sliders', section: 'bottom' },
+  ]);
+
+  variants = [
+    { name: 'Default', value: 'default' },
+    { name: 'Ghost', value: 'ghost' },
+    { name: 'Filled', value: 'filled' },
+    { name: 'Elevated', value: 'elevated' },
+    { name: 'Bordered', value: 'bordered' },
+    { name: 'Floating', value: 'floating' },
+    { name: 'Glass', value: 'glass' },
+    { name: 'Minimal', value: 'minimal' },
   ];
 }
