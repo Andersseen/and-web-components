@@ -16,16 +16,31 @@ export type NavItem = {
   disabled?: boolean;
 };
 
+/**
+ * Progressive responsive stages (from largest to smallest viewport):
+ *
+ * - `full`    – all three sections visible (start | main centered | end)
+ * - `compact` – end section collapses to icon-only  / compact mode
+ * - `minimal` – main section hidden, only start + compact end visible
+ * - `mobile`  – hamburger menu, everything in a drawer
+ */
+export type ResponsiveStage = 'full' | 'compact' | 'minimal' | 'mobile';
+
 /* ────────────────────────────────────────────────────────────────────
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
-const navbarVariants = cva('w-full border-b', {
+const navbarVariants = cva('w-full', {
   variants: {
     variant: {
-      default: 'bg-background border-border',
-      ghost: 'bg-transparent border-transparent',
-      filled: 'bg-primary text-primary-foreground border-primary',
+      default: 'bg-background border-b border-border',
+      filled: 'bg-primary text-primary-foreground border-b border-primary',
+      floating: 'navbar-floating bg-background shadow-lg border border-border',
+      glass: [
+        'bg-background/60 border-b border-border/50',
+        'backdrop-blur-xl',
+        '-webkit-backdrop-filter: blur(20px)',
+      ].join(' '),
     },
   },
   defaultVariants: {
@@ -33,31 +48,33 @@ const navbarVariants = cva('w-full border-b', {
   },
 });
 
+/**
+ * Nav-link item style variants.
+ * Layout-only classes via cva — visual distinctiveness is handled
+ * entirely in CSS via [data-item-style] + [data-state] selectors
+ * so the styles work reliably inside Shadow DOM.
+ */
 const navItemVariants = cva(
   [
-    'relative inline-flex items-center gap-1.5 rounded-md px-3 py-2',
+    'nav-link relative inline-flex items-center gap-1.5',
     'text-sm font-medium transition-all duration-200',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     'bg-transparent border-none cursor-pointer no-underline',
   ].join(' '),
   {
     variants: {
-      active: {
-        true: 'text-foreground font-semibold',
-        false: 'text-muted-foreground hover:text-foreground hover:bg-accent/50',
-      },
       disabled: {
         true: 'opacity-50 pointer-events-none cursor-default',
         false: '',
       },
     },
     defaultVariants: {
-      active: false,
       disabled: false,
     },
   },
 );
 
+export type NavItemStyle = 'default' | 'underline' | 'filled';
 export type NavbarProps = VariantProps<typeof navbarVariants>;
 
 /* ────────────────────────────────────────────────────────────────────
@@ -73,6 +90,7 @@ export class AndNavbar {
   private navbar: NavbarReturn;
   private itemElements = new Map<string, HTMLElement>();
   private scrollHandler?: () => void;
+  private resizeObserver?: ResizeObserver;
 
   @Element() el: HTMLElement;
 
@@ -118,6 +136,48 @@ export class AndNavbar {
    */
   @Prop() ariaNavLabel: string = 'Main navigation';
 
+  /**
+   * Visual style for individual nav links.
+   * Controls how each link looks, independent of the navbar container variant.
+   *
+   * - `default`   — subtle rounded pill with hover bg
+   * - `underline`  — bottom-border indicator on active
+   * - `filled`     — solid primary bg on active
+   * @default 'default'
+   */
+  @Prop({ reflect: true }) itemVariant: NavItemStyle = 'default';
+
+  /**
+   * Breakpoint (px) below which the navbar switches to mobile mode
+   * (hamburger menu). Set to `0` to always show desktop, or a high
+   * value to always show mobile.
+   * @default 640
+   */
+  @Prop() mobileBreakpoint: number = 640;
+
+  /**
+   * Breakpoint (px) below which the main (nav links) section is hidden
+   * and the navigation moves to the hamburger drawer.
+   * Only start + compact end are visible.
+   * @default 768
+   */
+  @Prop() minimalBreakpoint: number = 768;
+
+  /**
+   * Breakpoint (px) below which the end section enters compact mode
+   * (icon-only, labels hidden). Main nav is still visible.
+   * @default 1024
+   */
+  @Prop() compactBreakpoint: number = 1024;
+
+  /**
+   * When `true`, the navbar automatically detects when the nav
+   * items overflow and switches to a smaller responsive stage
+   * regardless of breakpoints. Content-aware collapse.
+   * @default true
+   */
+  @Prop() autoCollapse: boolean = true;
+
   /* ── Events ─────────────────────────────────────────────────────── */
 
   /** Emitted when active item changes */
@@ -132,6 +192,18 @@ export class AndNavbar {
   /* ── State ──────────────────────────────────────────────────────── */
 
   @State() mobileMenuOpen: boolean = false;
+
+  /**
+   * Current responsive stage. Drives progressive collapse.
+   * - `full`    – everything visible
+   * - `compact` – end section compact (icon-only)
+   * - `minimal` – main section hidden
+   * - `mobile`  – hamburger drawer
+   */
+  @State() responsiveStage: ResponsiveStage = 'full';
+
+  /** Emitted when responsive stage changes */
+  @Event() responsiveStageChange: EventEmitter<ResponsiveStage>;
 
   /* ── Parsed items (handle string JSON from HTML attributes) ───── */
 
@@ -183,19 +255,20 @@ export class AndNavbar {
   }
 
   componentDidLoad() {
+    // Set up responsive breakpoint detection
+    this.setupResponsive();
+
     if (this.scrollSpy) {
       this.setupScrollSpy();
-      // Use actual scroll position to determine the initial active section
-      // instead of URL hash, which may be stale from a previous visit
       this.navbar.actions.updateActiveFromScroll();
     } else {
-      // Without scroll-spy, fall back to hash detection
       this.navbar.actions.updateActiveFromHash();
     }
   }
 
   disconnectedCallback() {
     this.teardownScrollSpy();
+    this.teardownResponsive();
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -229,6 +302,81 @@ export class AndNavbar {
     } else {
       this.teardownScrollSpy();
     }
+  }
+
+  /* ── Responsive detection ────────────────────────────────────────── */
+
+  private setupResponsive() {
+    this.checkResponsiveStage();
+
+    if (typeof window !== 'undefined' && typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.checkResponsiveStage();
+      });
+      // Observe the host element so we react to the actual navbar width
+      this.resizeObserver.observe(this.el);
+    }
+  }
+
+  private teardownResponsive() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = undefined;
+    }
+  }
+
+  /**
+   * Determine the current responsive stage using progressive
+   * breakpoints. Falls through from largest to smallest:
+   *
+   *   full → compact → minimal → mobile
+   *
+   * Also applies content-aware overflow detection when `autoCollapse`
+   * is enabled.
+   */
+  private checkResponsiveStage() {
+    if (typeof window === 'undefined') return;
+
+    const w = window.innerWidth;
+    let stage: ResponsiveStage;
+
+    if (w < this.mobileBreakpoint) {
+      stage = 'mobile';
+    } else if (w < this.minimalBreakpoint) {
+      stage = 'minimal';
+    } else if (w < this.compactBreakpoint) {
+      stage = 'compact';
+    } else {
+      stage = 'full';
+    }
+
+    // Auto-collapse: if nav items overflow, bump to a smaller stage
+    if (this.autoCollapse && (stage === 'full' || stage === 'compact')) {
+      const root = this.el.shadowRoot;
+      if (root) {
+        const mainEl = root.querySelector('.navbar-main') as HTMLElement;
+        const menuEl = root.querySelector('.navbar-menu') as HTMLElement;
+        if (mainEl && menuEl) {
+          const overflows = menuEl.scrollWidth > mainEl.clientWidth + 2;
+          if (overflows) {
+            // Bump one stage smaller
+            stage = stage === 'full' ? 'compact' : 'minimal';
+          }
+        }
+      }
+    }
+
+    if (stage !== this.responsiveStage) {
+      this.responsiveStage = stage;
+      this.responsiveStageChange.emit(stage);
+    }
+  }
+
+  @Watch('mobileBreakpoint')
+  @Watch('minimalBreakpoint')
+  @Watch('compactBreakpoint')
+  handleBreakpointChange() {
+    this.checkResponsiveStage();
   }
 
   /* ── Scroll spy setup ───────────────────────────────────────────── */
@@ -300,20 +448,26 @@ export class AndNavbar {
     const isDisabled = item.disabled ?? false;
 
     const baseClass = cn(
-      navItemVariants({ active: isActive, disabled: isDisabled }),
+      navItemVariants({ disabled: isDisabled }),
       mobile && 'w-full text-left px-4 py-3 text-base rounded-lg',
     );
 
+    // The animated underline indicator only makes sense for 'default' item style;
+    // other styles handle active state through borders, bg, shadows, etc.
+    const showIndicator = !mobile && this.itemVariant === 'default';
     const indicatorClass = cn(
       'nav-item-indicator',
       isActive && 'nav-item-indicator--active',
     );
+
+    const itemStyle = mobile ? 'default' : this.itemVariant;
 
     const commonProps = {
       'aria-current': itemProps['aria-current'],
       'aria-disabled': itemProps['aria-disabled'],
       'data-active': itemProps['data-active'],
       'data-state': itemProps['data-state'],
+      'data-item-style': itemStyle,
       tabindex: itemProps.tabindex,
       id: itemProps.id,
       role: itemProps.role,
@@ -337,7 +491,7 @@ export class AndNavbar {
         >
           {item.icon && <and-icon name={item.icon} size="16" />}
           <span>{item.label}</span>
-          {!mobile && <span class={indicatorClass} />}
+          {showIndicator && <span class={indicatorClass} />}
         </a>
       );
     }
@@ -357,7 +511,7 @@ export class AndNavbar {
       >
         {item.icon && <and-icon name={item.icon} size="16" />}
         <span>{item.label}</span>
-        {!mobile && <span class={indicatorClass} />}
+        {showIndicator && <span class={indicatorClass} />}
       </button>
     );
   }
@@ -375,6 +529,12 @@ export class AndNavbar {
     const items = this.parsedItems;
     const hasItems = items.length > 0;
 
+    const stage = this.responsiveStage;
+    const isMobile = stage === 'mobile';
+    const showMain = stage === 'full' || stage === 'compact';
+    const showEnd = stage !== 'mobile';
+    const isCompactEnd = stage === 'compact' || stage === 'minimal';
+
     // Host handles positioning so backdrop-blur stays on <nav>
     // and doesn't create a containing block that traps the drawer
     const hostStyle: Record<string, string> =
@@ -391,66 +551,88 @@ export class AndNavbar {
         role={containerProps.role}
         aria-label={containerProps['aria-label']}
         style={hostStyle}
+        data-responsive-stage={stage}
       >
-        <nav class={cn(navbarVariants({ variant: this.variant }), isStuck && 'navbar-blur')}>
+        <nav class={cn(
+          navbarVariants({ variant: this.variant }),
+          isStuck && this.variant !== 'glass' && 'navbar-blur',
+        )}>
           <div class="navbar-container">
-            {/* Brand */}
-            <div class="navbar-brand">
-              <slot name="brand">
-                <span class="brand-text">Brand</span>
+            {/* ── Start section (logo, brand) ──────────────────── */}
+            <div class="navbar-start">
+              <slot name="start">
+                <slot name="brand">
+                  <span class="brand-text">Brand</span>
+                </slot>
               </slot>
             </div>
 
-            {/* Desktop: Items-based navigation */}
-            {hasItems && (
-              <div
-                class="navbar-menu hidden md:flex"
-                role={navListProps.role}
-                aria-label={navListProps['aria-label']}
-              >
-                {items.map(item => this.renderNavItem(item))}
+            {/* ── Main section (navigation links) — visible in full & compact */}
+            {showMain && (
+              <div class="navbar-main">
+                {/* Items-based navigation */}
+                {hasItems && (
+                  <div
+                    class="navbar-menu"
+                    role={navListProps.role}
+                    aria-label={navListProps['aria-label']}
+                  >
+                    {items.map(item => this.renderNavItem(item))}
+                  </div>
+                )}
+
+                {/* Slot-based navigation (custom content) */}
+                <slot name="main">
+                  {!hasItems && (
+                    <slot name="nav" />
+                  )}
+                </slot>
               </div>
             )}
 
-            {/* Desktop: Slot-based navigation (custom content) */}
-            {!hasItems && (
-              <div class="navbar-nav hidden md:flex">
-                <slot name="nav"></slot>
-              </div>
-            )}
-
-            {/* Actions slot */}
-            <div class="navbar-actions hidden md:flex">
-              <slot name="actions"></slot>
-            </div>
-
-            {/* Mobile toggle */}
-            <div class="navbar-mobile-toggle flex md:hidden">
-              <button
-                aria-expanded={toggleProps['aria-expanded']}
-                aria-label={toggleProps['aria-label']}
-                aria-controls={toggleProps['aria-controls']}
-                data-state={toggleProps['data-state']}
-                class="mobile-toggle-btn"
-                onClick={this.handleToggle}
-              >
-                <span class={cn('mobile-toggle-icon', this.mobileMenuOpen && 'mobile-toggle-icon--open')}>
-                  <slot name="toggle-icon">
-                    <and-icon name={this.mobileMenuOpen ? 'close' : 'menu'} size="24" />
+            {/* ── End section (actions, hamburger) ─────────────── */}
+            <div class="navbar-end">
+              {/* Desktop/compact actions — visible in full, compact, minimal */}
+              {showEnd && (
+                <div class={cn('navbar-end-desktop', isCompactEnd && 'navbar-end--compact')}>
+                  <slot name="end">
+                    <slot name="actions" />
                   </slot>
-                </span>
-              </button>
+                </div>
+              )}
+
+              {/* Hamburger toggle — visible in mobile AND minimal */}
+              {(isMobile || stage === 'minimal') && (
+                <div class="navbar-mobile-toggle">
+                  <button
+                    aria-expanded={toggleProps['aria-expanded']}
+                    aria-label={toggleProps['aria-label']}
+                    aria-controls={toggleProps['aria-controls']}
+                    data-state={toggleProps['data-state']}
+                    class="mobile-toggle-btn"
+                    onClick={this.handleToggle}
+                  >
+                    <span class={cn('mobile-toggle-icon', this.mobileMenuOpen && 'mobile-toggle-icon--open')}>
+                      <slot name="toggle-icon">
+                        <and-icon name={this.mobileMenuOpen ? 'close' : 'menu'} size="24" />
+                      </slot>
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </nav>
 
-        {/* Mobile drawer */}
+        {/* Mobile / minimal drawer */}
         <and-drawer
           open={this.mobileMenuOpen}
           placement="right"
           onAndDrawerClose={this.handleClose}
         >
-          <span slot="header" class="mobile-menu-title">Menu</span>
+          <span slot="header" class="mobile-menu-title">
+            <slot name="mobile-title">Menu</slot>
+          </span>
 
           <nav class="mobile-menu-content">
             {/* Items-based mobile menu */}
@@ -460,13 +642,19 @@ export class AndNavbar {
             {/* Slot-based mobile menu */}
             {!hasItems && (
               <div class="mobile-menu-slot">
-                <slot name="nav"></slot>
+                <slot name="mobile-nav">
+                  <slot name="main" />
+                  <slot name="nav" />
+                </slot>
               </div>
             )}
           </nav>
 
           <div slot="footer" class="mobile-menu-actions">
-            <slot name="actions"></slot>
+            <slot name="mobile-actions">
+              <slot name="end" />
+              <slot name="actions" />
+            </slot>
           </div>
         </and-drawer>
       </Host>

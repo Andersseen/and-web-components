@@ -28,13 +28,15 @@ interface SidebarItem {
         [activeItem]="activeSection()"
         (navItemClick)="onNavItemClick($event)"
       >
-        <span slot="brand">
+        <!-- Start slot: logo & brand -->
+        <span slot="start" style="display: flex; align-items: center; gap: 0.5rem;">
           <and-icon name="layout"></and-icon>
           And Web Components UI
         </span>
 
+        <!-- End slot: theme, color, dark mode, github -->
         <div
-          slot="actions"
+          slot="end"
           style="display: flex; align-items: center; gap: 1rem;"
         >
           <!-- Theme Preset -->

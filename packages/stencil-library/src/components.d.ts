@@ -17,8 +17,8 @@ import { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./compone
 import { IconName } from "@andersseen/icon";
 import { InputType } from "./components/and-input/and-input";
 import { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
-import { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
-import { SidebarItem, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
+import { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
+import { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export { ContentItemProps } from "./components/and-accordion/and-accordion-content";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
 export { TriggerItemProps } from "./components/and-accordion/and-accordion-trigger";
@@ -31,8 +31,8 @@ export { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./compone
 export { IconName } from "@andersseen/icon";
 export { InputType } from "./components/and-input/and-input";
 export { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
-export { NavbarProps, NavItem } from "./components/and-navbar/and-navbar";
-export { SidebarItem, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
+export { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
+export { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
     /**
      * Accordion container component using headless logic.
@@ -405,10 +405,35 @@ export namespace Components {
          */
         "ariaNavLabel": string;
         /**
+          * When `true`, the navbar automatically detects when the nav items overflow and switches to a smaller responsive stage regardless of breakpoints. Content-aware collapse.
+          * @default true
+         */
+        "autoCollapse": boolean;
+        /**
+          * Breakpoint (px) below which the end section enters compact mode (icon-only, labels hidden). Main nav is still visible.
+          * @default 1024
+         */
+        "compactBreakpoint": number;
+        /**
+          * Visual style for individual nav links. Controls how each link looks, independent of the navbar container variant.  - `default`   — subtle rounded pill with hover bg - `underline`  — bottom-border indicator on active - `filled`     — solid primary bg on active
+          * @default 'default'
+         */
+        "itemVariant": NavItemStyle;
+        /**
           * Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content.
           * @default []
          */
         "items": NavItem[] | string;
+        /**
+          * Breakpoint (px) below which the main (nav links) section is hidden and the navigation moves to the hamburger drawer. Only start + compact end are visible.
+          * @default 768
+         */
+        "minimalBreakpoint": number;
+        /**
+          * Breakpoint (px) below which the navbar switches to mobile mode (hamburger menu). Set to `0` to always show desktop, or a high value to always show mobile.
+          * @default 640
+         */
+        "mobileBreakpoint": number;
         /**
           * Positioning behaviour
           * @default 'static'
@@ -449,15 +474,45 @@ export namespace Components {
          */
         "activeItem": string;
         /**
-          * Whether the sidebar is collapsed.
+          * ARIA label for the navigation
+          * @default 'Sidebar navigation'
+         */
+        "ariaNavLabel": string;
+        /**
+          * Whether the sidebar is collapsed (desktop).
           * @default false
          */
         "collapsed": boolean;
         /**
-          * Navigation items to display.
-          * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]
+          * Collapsed width of the sidebar. Accepts any CSS value.
+          * @default '4rem'
          */
-        "items": SidebarItem[];
+        "collapsedWidth": string;
+        /**
+          * Expanded width of the sidebar. Accepts any CSS value.
+          * @default '16rem'
+         */
+        "expandedWidth": string;
+        /**
+          * Visual style for individual sidebar items. Controls how each item looks, independent of the sidebar container variant. Border-radius is intentionally not set — the theme controls it.  - `default`   — subtle accent bg on active - `underline` — left accent bar on active - `filled`    — solid primary bg on active
+          * @default 'default'
+         */
+        "itemVariant": SidebarItemStyle;
+        /**
+          * Navigation items to display. Items with `section: 'bottom'` render in the footer area.
+          * @default []
+         */
+        "items": SidebarItem[] | string;
+        /**
+          * Breakpoint (px) below which the sidebar auto-collapses on mobile.
+          * @default 768
+         */
+        "mobileBreakpoint": number;
+        /**
+          * Enable auto-collapse on mobile viewports. When true, the sidebar collapses to icon-only mode on screens smaller than `mobileBreakpoint`.
+          * @default true
+         */
+        "mobileCollapse": boolean;
         /**
           * Visual variant of the sidebar.
           * @default 'default'
@@ -862,6 +917,7 @@ declare global {
         "navItemClick": string;
         "navLinkClick": { id: string; href: string };
         "mobileMenuChange": boolean;
+        "responsiveStageChange": ResponsiveStage;
     }
     interface HTMLAndNavbarElement extends Components.AndNavbar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLAndNavbarElementEventMap>(type: K, listener: (this: HTMLAndNavbarElement, ev: AndNavbarCustomEvent<HTMLAndNavbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1416,10 +1472,35 @@ declare namespace LocalJSX {
          */
         "ariaNavLabel"?: string;
         /**
+          * When `true`, the navbar automatically detects when the nav items overflow and switches to a smaller responsive stage regardless of breakpoints. Content-aware collapse.
+          * @default true
+         */
+        "autoCollapse"?: boolean;
+        /**
+          * Breakpoint (px) below which the end section enters compact mode (icon-only, labels hidden). Main nav is still visible.
+          * @default 1024
+         */
+        "compactBreakpoint"?: number;
+        /**
+          * Visual style for individual nav links. Controls how each link looks, independent of the navbar container variant.  - `default`   — subtle rounded pill with hover bg - `underline`  — bottom-border indicator on active - `filled`     — solid primary bg on active
+          * @default 'default'
+         */
+        "itemVariant"?: NavItemStyle;
+        /**
           * Navigation items to display. When provided, the component renders its own items (with full keyboard navigation, scroll-spy, and active‐indicator). When empty, use the `nav` slot for custom content.
           * @default []
          */
         "items"?: NavItem[] | string;
+        /**
+          * Breakpoint (px) below which the main (nav links) section is hidden and the navigation moves to the hamburger drawer. Only start + compact end are visible.
+          * @default 768
+         */
+        "minimalBreakpoint"?: number;
+        /**
+          * Breakpoint (px) below which the navbar switches to mobile mode (hamburger menu). Set to `0` to always show desktop, or a high value to always show mobile.
+          * @default 640
+         */
+        "mobileBreakpoint"?: number;
         /**
           * Emitted when mobile menu state changes
          */
@@ -1432,6 +1513,10 @@ declare namespace LocalJSX {
           * Emitted when a navigation link is clicked
          */
         "onNavLinkClick"?: (event: AndNavbarCustomEvent<{ id: string; href: string }>) => void;
+        /**
+          * Emitted when responsive stage changes
+         */
+        "onResponsiveStageChange"?: (event: AndNavbarCustomEvent<ResponsiveStage>) => void;
         /**
           * Positioning behaviour
           * @default 'static'
@@ -1476,15 +1561,45 @@ declare namespace LocalJSX {
          */
         "activeItem"?: string;
         /**
-          * Whether the sidebar is collapsed.
+          * ARIA label for the navigation
+          * @default 'Sidebar navigation'
+         */
+        "ariaNavLabel"?: string;
+        /**
+          * Whether the sidebar is collapsed (desktop).
           * @default false
          */
         "collapsed"?: boolean;
         /**
-          * Navigation items to display.
-          * @default [     { id: 'home', label: 'Home' },     { id: 'docs', label: 'Docs' },     { id: 'components', label: 'Components' },   ]
+          * Collapsed width of the sidebar. Accepts any CSS value.
+          * @default '4rem'
          */
-        "items"?: SidebarItem[];
+        "collapsedWidth"?: string;
+        /**
+          * Expanded width of the sidebar. Accepts any CSS value.
+          * @default '16rem'
+         */
+        "expandedWidth"?: string;
+        /**
+          * Visual style for individual sidebar items. Controls how each item looks, independent of the sidebar container variant. Border-radius is intentionally not set — the theme controls it.  - `default`   — subtle accent bg on active - `underline` — left accent bar on active - `filled`    — solid primary bg on active
+          * @default 'default'
+         */
+        "itemVariant"?: SidebarItemStyle;
+        /**
+          * Navigation items to display. Items with `section: 'bottom'` render in the footer area.
+          * @default []
+         */
+        "items"?: SidebarItem[] | string;
+        /**
+          * Breakpoint (px) below which the sidebar auto-collapses on mobile.
+          * @default 768
+         */
+        "mobileBreakpoint"?: number;
+        /**
+          * Enable auto-collapse on mobile viewports. When true, the sidebar collapses to icon-only mode on screens smaller than `mobileBreakpoint`.
+          * @default true
+         */
+        "mobileCollapse"?: boolean;
         /**
           * Emitted when a navigation item is clicked.
          */
@@ -1694,6 +1809,11 @@ declare namespace LocalJSX {
         "scrollSpy": boolean;
         "scrollSpyOffset": number;
         "ariaNavLabel": string;
+        "itemVariant": NavItemStyle;
+        "mobileBreakpoint": number;
+        "minimalBreakpoint": number;
+        "compactBreakpoint": number;
+        "autoCollapse": boolean;
     }
     interface AndPaginationAttributes {
         "totalPages": number;
@@ -1701,8 +1821,15 @@ declare namespace LocalJSX {
     }
     interface AndSidebarAttributes {
         "activeItem": string;
+        "items": SidebarItem[] | string;
         "collapsed": boolean;
         "variant": SidebarVariantProps['variant'];
+        "mobileCollapse": boolean;
+        "mobileBreakpoint": number;
+        "expandedWidth": string;
+        "collapsedWidth": string;
+        "ariaNavLabel": string;
+        "itemVariant": SidebarItemStyle;
     }
     interface AndTabsAttributes {
         "value": string;
