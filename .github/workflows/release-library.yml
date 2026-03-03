@@ -1,30 +1,74 @@
-name: Publish Stencil Library
+name: Publish Libraries
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  publish:
+    name: Build & Publish Libraries
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          registry-url: "https://registry.npmjs.org"
 
       - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
         with:
-          version: 8
+          node-version: 22
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
 
-      - run: pnpm install
-      - run: pnpm build:stencil
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - run: npm publish
-        working-directory: packages/stencil-library
+      # Build all libraries in dependency order
+      - name: Build headless-core
+        run: pnpm -C packages/headless-core build
+
+      - name: Build icon-library
+        run: pnpm -C packages/icon-library build
+
+      - name: Build motion-core
+        run: pnpm -C packages/motion-core build
+
+      - name: Build layout-core
+        run: pnpm -C packages/layout-core build
+
+      - name: Build stencil-library
+        run: pnpm -C packages/stencil-library build
+
+      # Publish all libraries (continue-on-error skips already-published versions)
+      - name: Publish @andersseen/headless-components
+        run: pnpm -C packages/headless-core publish --no-git-checks --provenance --access public
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @andersseen/icon
+        run: pnpm -C packages/icon-library publish --no-git-checks --provenance --access public
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @andersseen/motion
+        run: pnpm -C packages/motion-core publish --no-git-checks --provenance --access public
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @andersseen/layout
+        run: pnpm -C packages/layout-core publish --no-git-checks --provenance --access public
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @andersseen/web-components
+        run: pnpm -C packages/stencil-library publish --no-git-checks --provenance --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
