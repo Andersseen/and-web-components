@@ -1,5 +1,6 @@
 {
   "name": "@andersseen/astro-landing",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -13,7 +14,7 @@
     "@andersseen/icon": "^0.0.1",
     "@andersseen/layout": "^0.0.1",
     "@andersseen/motion": "^0.1.0",
-    "@andersseen/web-components": "^0.0.1",
+    "@andersseen/web-components": "^0.0.2",
     "astro": "^5.7.10"
   },
   "devDependencies": {
