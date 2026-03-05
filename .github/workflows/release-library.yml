@@ -39,8 +39,8 @@ jobs:
       - name: Build layout-core
         run: pnpm -C packages/layout-core build
 
-      - name: Build stencil-library
-        run: pnpm -C packages/stencil-library build
+      - name: Build web-components
+        run: pnpm -C packages/web-components build
 
       # Publish all libraries (continue-on-error skips already-published versions)
       - name: Publish @andersseen/headless-components
@@ -68,7 +68,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @andersseen/web-components
-        run: pnpm -C packages/stencil-library publish --no-git-checks --provenance --access public
+        run: pnpm -C packages/web-components publish --no-git-checks --provenance --access public
         continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
