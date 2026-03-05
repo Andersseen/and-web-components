@@ -3,31 +3,32 @@
   "private": true,
   "scripts": {
     "clean:angular": "rm -rf apps/angular-workspace/.angular/cache",
-    "clean:stencil": "rm -rf packages/stencil-library/dist packages/stencil-library/www packages/stencil-library/loader",
+    "clean:stencil": "rm -rf packages/web-components/dist packages/web-components/www packages/web-components/loader",
     "clean": "pnpm clean:angular && pnpm clean:stencil",
     "build:headless": "pnpm -C packages/headless-core build",
     "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
     "build:layout": "pnpm -C packages/layout-core build",
-    "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/stencil-library build",
+    "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/web-components build",
     "build:angular": "pnpm -C apps/angular-workspace ng build angular-components && pnpm -C apps/angular-workspace ng build demo-app",
     "build:all": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular",
     "start:demo:dev": "pnpm clean:angular && concurrently \"pnpm run build:stencil --watch\" \"pnpm -C apps/angular-workspace start\"",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm clean:angular && pnpm -C apps/angular-workspace start",
     "start:astro:dev": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",
     "build:astro": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C apps/astro-landing build",
-
     "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy",
     "deploy:cloudflare:actions": "pnpm build:all && npx wrangler pages deploy apps/angular-workspace/dist/demo-app/browser --project-name=and-web-components-demo",
     "deploy:landing": "pnpm build:astro && pnpm -C apps/astro-landing exec wrangler pages deploy",
     "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing",
-    "publish:libs": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && lerna publish"
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@types/node": "^25.2.1",
-    "lerna": "^9.0.3",
-    "typescript": "^5.9.3",
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }

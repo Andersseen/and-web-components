@@ -31,7 +31,7 @@ and-web-components/
 │   ├── icon-library/          # @andersseen/icon
 │   ├── layout-core/           # @andersseen/layout  (SCSS → CSS)
 │   ├── motion-core/           # @andersseen/motion  (TS + CSS)
-│   └── stencil-library/       # @andersseen/web-components (Stencil)
+│   └── web-components/        # @andersseen/web-components (Stencil)
 ├── apps/
 │   ├── angular-workspace/     # Angular demo app + @andersseen/angular-components
 │   │   └── projects/
@@ -64,7 +64,7 @@ pnpm install
 pnpm build:all
 ```
 
-This builds: `headless-core` → `icon-library` → `stencil-library` → `motion-core` → `layout-core` → `angular-components` → `demo-app`.
+This builds: `headless-core` → `icon-library` → `web-components` → `motion-core` → `layout-core` → `angular-components` → `demo-app`.
 
 ## Development
 
@@ -89,7 +89,7 @@ pnpm start:astro:dev
 ### Stencil dev server (components only)
 
 ```bash
-pnpm -C packages/stencil-library start
+pnpm -C packages/web-components start
 ```
 
 ## Build Scripts

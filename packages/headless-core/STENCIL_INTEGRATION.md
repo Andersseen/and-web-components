@@ -25,7 +25,7 @@ This guide shows how to use `@andersseen/headless-components` components in your
 First, add the headless library as a dependency to your Stencil package:
 
 ```bash
-cd packages/stencil-library
+cd packages/web-components
 pnpm add @andersseen/headless-components
 ```
 
