@@ -18,6 +18,7 @@
     "build:astro": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C apps/astro-landing build",
     "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy",
     "deploy:cloudflare:actions": "pnpm build:all && npx wrangler pages deploy apps/angular-workspace/dist/demo-app/browser --project-name=and-web-components-demo",
+    "test:e2e:landing": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C apps/astro-landing test:e2e",
     "deploy:landing": "pnpm build:astro && pnpm -C apps/astro-landing exec wrangler pages deploy",
     "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing",
     "changeset": "changeset",
