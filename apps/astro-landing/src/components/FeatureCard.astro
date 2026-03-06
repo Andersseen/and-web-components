@@ -15,13 +15,15 @@ const { icon, title, description, delay = '0ms' } = Astro.props;
   and-motion-trigger="enter"
   and-motion-delay={delay}
 >
-  <div and-layout="vertical gap:sm p:lg">
+  <and-card-header>
     <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
       <and-icon name={icon} size="24"></and-icon>
     </div>
-    <h3 and-text="h5 weight:bold">{title}</h3>
+    <and-card-title>{title}</and-card-title>
+  </and-card-header>
+  <and-card-content>
     <p and-text="p-sm" class="text-muted-foreground">
       <slot>{description}</slot>
     </p>
-  </div>
+  </and-card-content>
 </and-card>

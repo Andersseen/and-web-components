@@ -156,15 +156,16 @@ const icons = [
 
     <!-- Row 4: Layout System -->
     <and-card and-motion="zoom-in" and-motion-trigger="enter" and-motion-duration="800ms">
-      <div and-layout="vertical gap:lg p:lg">
+      <and-card-header>
         <div and-layout="horizontal align:center gap:xs">
           <and-icon name="layout" size="18" class="text-primary"></and-icon>
-          <h3 and-text="h5 weight:bold">Layout System — <code class="text-sm bg-muted px-2 py-0.5 rounded">and-layout</code></h3>
+          <and-card-title>Layout System — <code class="text-sm bg-muted px-2 py-0.5 rounded">and-layout</code></and-card-title>
         </div>
-        <p and-text="p-sm" class="text-muted-foreground">
+        <and-card-description>
           Pure attribute-driven layouts — no CSS classes. Supports responsive breakpoints, flex, grid, spacing, and typography.
-        </p>
-
+        </and-card-description>
+      </and-card-header>
+      <and-card-content>
         <div and-layout="grid cols:1 cols@lg:2 gap:lg">
           <!-- Code -->
           <div class="bg-muted rounded-xl p-5 overflow-auto">
@@ -215,7 +216,7 @@ const icons = [
             </div>
           </div>
         </div>
-      </div>
+      </and-card-content>
     </and-card>
 
   </div>
