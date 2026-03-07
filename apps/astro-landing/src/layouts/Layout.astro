@@ -4,62 +4,19 @@ interface Props {
 }
 
 const { title } = Astro.props;
+
 import "../styles/global.css";
 import "@andersseen/web-components/dist/web-components/web-components.css";
 import "@andersseen/motion/style.css";
 import "@andersseen/layout/dist/layout.css";
+
+import Head from "../components/Head.astro";
 ---
 
 <!doctype html>
 <html lang="en" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Andersseen — A powerful, framework-agnostic web component ecosystem" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <!-- Enable component animations BEFORE web-component registration -->
-    <script is:inline>
-      window.__AND_ANIMATED__ = true;
-    </script>
-    <script is:inline>
-      (() => {
-        const root = document.documentElement;
-        const modeKey = 'andersseen-mode';
-        const themeKey = 'andersseen-theme';
-        const colorKey = 'andersseen-color';
-        const getSystemMode = () =>
-          window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-        try {
-          const savedMode = localStorage.getItem(modeKey);
-          const savedTheme = localStorage.getItem(themeKey) || 'default';
-          const savedColor = localStorage.getItem(colorKey) || 'indigo-rose';
-          const mode = savedMode === 'light' || savedMode === 'dark' ? savedMode : getSystemMode();
-
-          root.classList.toggle('dark', mode === 'dark');
-          root.setAttribute('data-color', savedColor);
-
-          if (savedTheme !== 'default') {
-            root.setAttribute('data-theme', savedTheme);
-          } else {
-            root.removeAttribute('data-theme');
-          }
-        } catch {
-          root.classList.toggle('dark', getSystemMode() === 'dark');
-          root.setAttribute('data-color', 'indigo-rose');
-          root.removeAttribute('data-theme');
-        }
-      })();
-    </script>
-    <!-- Clear stale hash on fresh page load so the page always starts at Home -->
-    <script is:inline>
-      if (window.location.hash) {
-        history.replaceState(null, '', window.location.pathname);
-        window.scrollTo(0, 0);
-      }
-    </script>
+    <Head title={title} />
   </head>
   <body class="bg-background text-foreground antialiased min-h-screen font-sans">
     <slot />
