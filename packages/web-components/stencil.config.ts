@@ -25,6 +25,10 @@ export const config: Config = {
       type: 'docs-readme',
     },
     {
+      type: 'docs-custom-elements-manifest',
+      file: 'custom-elements.json',
+    },
+    {
       type: 'www',
       serviceWorker: null,
     },
