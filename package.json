@@ -24,7 +24,9 @@
     "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && changeset publish"
+    "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && changeset publish",
+    "storybook": "pnpm -C packages/web-components storybook",
+    "build-storybook": "pnpm -C packages/web-components build-storybook"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
