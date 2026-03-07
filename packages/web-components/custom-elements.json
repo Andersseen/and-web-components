@@ -1,0 +1,3805 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-accordion/and-accordion.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-accordion",
+          "name": "AndAccordion",
+          "description": "Accordion container component using headless logic.",
+          "attributes": [
+            {
+              "name": "allow-multiple",
+              "description": "Allow multiple items to be expanded simultaneously.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "allowMultiple"
+            },
+            {
+              "name": "disabled",
+              "description": "Whether the accordion is disabled.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "orientation",
+              "description": "Orientation of the accordion.",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "fieldName": "orientation"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "allowMultiple",
+              "description": "Allow multiple items to be expanded simultaneously.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "allow-multiple",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "defaultValue",
+              "description": "Default expanded item values.",
+              "type": {
+                "text": "string[]"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Whether the accordion is disabled.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "orientation",
+              "description": "Orientation of the accordion.",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "readonly": true,
+              "attribute": "orientation",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndAccordion",
+          "declaration": {
+            "name": "AndAccordion"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-accordion",
+          "declaration": {
+            "name": "AndAccordion"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-accordion/and-accordion-content.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-accordion-content",
+          "name": "AndAccordionContent",
+          "members": [
+            {
+              "kind": "method",
+              "name": "setItemProps",
+              "description": "Receive item properties from parent accordion-item.",
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "ContentItemProps",
+                    "references": [
+                      {
+                        "name": "Promise",
+                        "package": "global:"
+                      },
+                      {
+                        "name": "ContentItemProps"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "Promise<void>",
+                  "references": [
+                    {
+                      "name": "Promise",
+                      "package": "global:"
+                    },
+                    {
+                      "name": "ContentItemProps"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndAccordionContent",
+          "declaration": {
+            "name": "AndAccordionContent"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-accordion-content",
+          "declaration": {
+            "name": "AndAccordionContent"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-accordion/and-accordion-item.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-accordion-item",
+          "name": "AndAccordionItem",
+          "description": "Accordion item component.",
+          "attributes": [
+            {
+              "name": "disabled",
+              "description": "Whether this item is disabled.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "value",
+              "description": "Unique value for this accordion item.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Whether this item is disabled.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Unique value for this accordion item.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "setAccordionLogic",
+              "description": "Called by parent accordion to inject the headless logic.",
+              "parameters": [
+                {
+                  "name": "logic",
+                  "type": {
+                    "text": "AccordionReturn",
+                    "references": [
+                      {
+                        "name": "Promise",
+                        "package": "global:"
+                      },
+                      {
+                        "name": "AccordionReturn",
+                        "module": "@andersseen/headless-components"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "Promise<void>",
+                  "references": [
+                    {
+                      "name": "Promise",
+                      "package": "global:"
+                    },
+                    {
+                      "name": "AccordionReturn",
+                      "module": "@andersseen/headless-components"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndAccordionItem",
+          "declaration": {
+            "name": "AndAccordionItem"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-accordion-item",
+          "declaration": {
+            "name": "AndAccordionItem"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-accordion/and-accordion-trigger.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-accordion-trigger",
+          "name": "AndAccordionTrigger",
+          "members": [
+            {
+              "kind": "method",
+              "name": "setItemProps",
+              "description": "Receive item properties from parent accordion-item.",
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "TriggerItemProps",
+                    "references": [
+                      {
+                        "name": "Promise",
+                        "package": "global:"
+                      },
+                      {
+                        "name": "TriggerItemProps"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "Promise<void>",
+                  "references": [
+                    {
+                      "name": "Promise",
+                      "package": "global:"
+                    },
+                    {
+                      "name": "TriggerItemProps"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndAccordionTrigger",
+          "declaration": {
+            "name": "AndAccordionTrigger"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-accordion-trigger",
+          "declaration": {
+            "name": "AndAccordionTrigger"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-alert/and-alert.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-alert",
+          "name": "AndAlert",
+          "attributes": [
+            {
+              "name": "dismissible",
+              "description": "Whether the alert can be dismissed.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "dismissible"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant of the alert.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"info\" | \"success\" | \"warning\"",
+                "references": [
+                  {
+                    "name": "AlertVariant",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "dismissible",
+              "description": "Whether the alert can be dismissed.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "dismissible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant of the alert.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"info\" | \"success\" | \"warning\"",
+                "references": [
+                  {
+                    "name": "AlertVariant",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andDismiss",
+              "description": "Emitted when the alert is dismissed.",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndAlert",
+          "declaration": {
+            "name": "AndAlert"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-alert",
+          "declaration": {
+            "name": "AndAlert"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-badge/and-badge.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-badge",
+          "name": "AndBadge",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant of the badge.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"outline\" | \"secondary\"",
+                "references": [
+                  {
+                    "name": "BadgeVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant of the badge.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"outline\" | \"secondary\"",
+                "references": [
+                  {
+                    "name": "BadgeVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndBadge",
+          "declaration": {
+            "name": "AndBadge"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-badge",
+          "declaration": {
+            "name": "AndBadge"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-breadcrumb/and-breadcrumb.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-breadcrumb",
+          "name": "AndBreadcrumb",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "aria-label",
+              "description": "Accessible label for the breadcrumb navigation.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Breadcrumb'",
+              "fieldName": "navLabel"
+            },
+            {
+              "name": "size",
+              "description": "Size variant for the breadcrumb trail.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\"",
+                "references": [
+                  {
+                    "name": "BreadcrumbVariantProps"
+                  }
+                ]
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "navLabel",
+              "description": "Accessible label for the breadcrumb navigation.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Breadcrumb'",
+              "readonly": true,
+              "attribute": "aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Size variant for the breadcrumb trail.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\"",
+                "references": [
+                  {
+                    "name": "BreadcrumbVariantProps"
+                  }
+                ]
+              },
+              "default": "'md'",
+              "readonly": true,
+              "attribute": "size",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndBreadcrumb",
+          "declaration": {
+            "name": "AndBreadcrumb"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-breadcrumb",
+          "declaration": {
+            "name": "AndBreadcrumb"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-breadcrumb/and-breadcrumb-item.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-breadcrumb-item",
+          "name": "AndBreadcrumbItem",
+          "attributes": [
+            {
+              "name": "current",
+              "description": "Marks this item as the current page (adds aria-current).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "current"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "hide-separator",
+              "description": "Hide the leading separator (typically for the first item).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideSeparator"
+            },
+            {
+              "name": "href",
+              "description": "Optional URL. When set, the item renders as a link.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "href"
+            },
+            {
+              "name": "size",
+              "description": "Size variant — should match the parent breadcrumb size.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\"",
+                "references": [
+                  {
+                    "name": "BreadcrumbItemVariantProps"
+                  }
+                ]
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "current",
+              "description": "Marks this item as the current page (adds aria-current).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "current",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "hideSeparator",
+              "description": "Hide the leading separator (typically for the first item).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "hide-separator",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "description": "Optional URL. When set, the item renders as a link.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "href"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Size variant — should match the parent breadcrumb size.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\"",
+                "references": [
+                  {
+                    "name": "BreadcrumbItemVariantProps"
+                  }
+                ]
+              },
+              "default": "'md'",
+              "readonly": true,
+              "attribute": "size",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andBreadcrumbNavigate",
+              "description": "Emitted when a breadcrumb link is activated.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndBreadcrumbItem",
+          "declaration": {
+            "name": "AndBreadcrumbItem"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-breadcrumb-item",
+          "declaration": {
+            "name": "AndBreadcrumbItem"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-button/and-button.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-button",
+          "name": "AndButton",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes to merge with the internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables the button when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "href",
+              "description": "When set, renders as an anchor (`<a>`) instead of `<button>`.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "href"
+            },
+            {
+              "name": "loading",
+              "description": "Shows a loading spinner and disables interaction.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "loading"
+            },
+            {
+              "name": "rel",
+              "description": "Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "rel"
+            },
+            {
+              "name": "size",
+              "description": "Size of the button.",
+              "type": {
+                "text": "\"default\" | \"icon\" | \"lg\" | \"sm\"",
+                "references": [
+                  {
+                    "name": "ButtonVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "size"
+            },
+            {
+              "name": "target",
+              "description": "Target for the anchor (e.g. `_blank`). Only used when `href` is set.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "target"
+            },
+            {
+              "name": "type",
+              "description": "HTML button type attribute.",
+              "type": {
+                "text": "\"button\" | \"reset\" | \"submit\""
+              },
+              "default": "'button'",
+              "fieldName": "type"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant of the button.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"ghost\" | \"link\" | \"outline\" | \"secondary\"",
+                "references": [
+                  {
+                    "name": "ButtonVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes to merge with the internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Disables the button when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "description": "When set, renders as an anchor (`<a>`) instead of `<button>`.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "href",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "description": "Shows a loading spinner and disables interaction.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "loading",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rel",
+              "description": "Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "rel",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Size of the button.",
+              "type": {
+                "text": "\"default\" | \"icon\" | \"lg\" | \"sm\"",
+                "references": [
+                  {
+                    "name": "ButtonVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "description": "Target for the anchor (e.g. `_blank`). Only used when `href` is set.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "target",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "HTML button type attribute.",
+              "type": {
+                "text": "\"button\" | \"reset\" | \"submit\""
+              },
+              "default": "'button'",
+              "readonly": true,
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant of the button.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"ghost\" | \"link\" | \"outline\" | \"secondary\"",
+                "references": [
+                  {
+                    "name": "ButtonVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andButtonClick",
+              "description": "Emitted on button click.",
+              "type": {
+                "text": "CustomEvent<MouseEvent>",
+                "references": [
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndButton",
+          "declaration": {
+            "name": "AndButton"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-button",
+          "declaration": {
+            "name": "AndButton"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-card/and-card.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-card",
+          "name": "AndCard",
+          "description": "A composable card component with optional sub-components for structured layouts.",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "padded",
+              "description": "Add built-in padding to the card.\nUse `true` for simple content without sub-components.\nDefaults to `false` so sub-components (header/content/footer) manage their own spacing.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "padded"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant of the card.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"elevated\" | \"ghost\" | \"outline\"",
+                "references": [
+                  {
+                    "name": "CardVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "padded",
+              "description": "Add built-in padding to the card.\nUse `true` for simple content without sub-components.\nDefaults to `false` so sub-components (header/content/footer) manage their own spacing.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "padded",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant of the card.",
+              "type": {
+                "text": "\"default\" | \"destructive\" | \"elevated\" | \"ghost\" | \"outline\"",
+                "references": [
+                  {
+                    "name": "CardVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCard",
+          "declaration": {
+            "name": "AndCard"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-card",
+          "declaration": {
+            "name": "AndCard"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-card/and-card-content.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-card-content",
+          "name": "AndCardContent",
+          "description": "A composable card component with optional sub-components for structured layouts.",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCardContent",
+          "declaration": {
+            "name": "AndCardContent"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-card-content",
+          "declaration": {
+            "name": "AndCardContent"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-card/and-card-description.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-card-description",
+          "name": "AndCardDescription",
+          "description": "A composable card component with optional sub-components for structured layouts.",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCardDescription",
+          "declaration": {
+            "name": "AndCardDescription"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-card-description",
+          "declaration": {
+            "name": "AndCardDescription"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-card/and-card-footer.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-card-footer",
+          "name": "AndCardFooter",
+          "description": "A composable card component with optional sub-components for structured layouts.",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCardFooter",
+          "declaration": {
+            "name": "AndCardFooter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-card-footer",
+          "declaration": {
+            "name": "AndCardFooter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-card/and-card-header.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-card-header",
+          "name": "AndCardHeader",
+          "description": "A composable card component with optional sub-components for structured layouts.",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCardHeader",
+          "declaration": {
+            "name": "AndCardHeader"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-card-header",
+          "declaration": {
+            "name": "AndCardHeader"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-card/and-card-title.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-card-title",
+          "name": "AndCardTitle",
+          "description": "A composable card component with optional sub-components for structured layouts.",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCardTitle",
+          "declaration": {
+            "name": "AndCardTitle"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-card-title",
+          "declaration": {
+            "name": "AndCardTitle"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-carousel/and-carousel.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-carousel",
+          "name": "AndCarousel",
+          "attributes": [
+            {
+              "name": "autoplay",
+              "description": "Whether the carousel auto-advances.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autoplay"
+            },
+            {
+              "name": "interval",
+              "description": "Interval in ms between auto-advances.",
+              "type": {
+                "text": "number"
+              },
+              "default": "3000",
+              "fieldName": "interval"
+            },
+            {
+              "name": "label",
+              "description": "ARIA label for the carousel region.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Carousel'",
+              "fieldName": "label"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "autoplay",
+              "description": "Whether the carousel auto-advances.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "autoplay",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "interval",
+              "description": "Interval in ms between auto-advances.",
+              "type": {
+                "text": "number"
+              },
+              "default": "3000",
+              "readonly": true,
+              "attribute": "interval"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "ARIA label for the carousel region.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Carousel'",
+              "readonly": true,
+              "attribute": "label"
+            }
+          ],
+          "events": [
+            {
+              "name": "andSlideChange",
+              "description": "Emitted when the active slide changes.",
+              "type": {
+                "text": "CustomEvent<number>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCarousel",
+          "declaration": {
+            "name": "AndCarousel"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-carousel",
+          "declaration": {
+            "name": "AndCarousel"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-carousel/and-carousel-item.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-carousel-item",
+          "name": "AndCarouselItem",
+          "attributes": [
+            {
+              "name": "label",
+              "description": "Accessible label for this slide.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "label"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Accessible label for this slide.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "label"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndCarouselItem",
+          "declaration": {
+            "name": "AndCarouselItem"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-carousel-item",
+          "declaration": {
+            "name": "AndCarouselItem"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-context-menu/and-context-menu.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-context-menu",
+          "name": "AndContextMenu",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "open",
+              "description": "Whether the context menu is currently open (controlled).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "Whether the context menu is currently open (controlled).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andContextMenuOpenChange",
+              "description": "Emitted when the open state changes.",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndContextMenu",
+          "declaration": {
+            "name": "AndContextMenu"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-context-menu",
+          "declaration": {
+            "name": "AndContextMenu"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-drawer/and-drawer.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-drawer",
+          "name": "AndDrawer",
+          "attributes": [
+            {
+              "name": "open",
+              "description": "Whether the drawer is open.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "placement",
+              "description": "The direction the drawer slides in from.",
+              "type": {
+                "text": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+                "references": [
+                  {
+                    "name": "DrawerPlacement",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'left'",
+              "fieldName": "placement"
+            },
+            {
+              "name": "show-close",
+              "description": "Whether to show the default close button in the header.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "showClose"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "Whether the drawer is open.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "description": "The direction the drawer slides in from.",
+              "type": {
+                "text": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+                "references": [
+                  {
+                    "name": "DrawerPlacement",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'left'",
+              "readonly": true,
+              "attribute": "placement",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "showClose",
+              "description": "Whether to show the default close button in the header.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "readonly": true,
+              "attribute": "show-close"
+            }
+          ],
+          "events": [
+            {
+              "name": "andDrawerClose",
+              "description": "Emitted when the drawer is closed (backdrop click, close button, or Escape).",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "andDrawerOpen",
+              "description": "Emitted when the drawer is opened.",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndDrawer",
+          "declaration": {
+            "name": "AndDrawer"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-drawer",
+          "declaration": {
+            "name": "AndDrawer"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-dropdown/and-dropdown.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-dropdown",
+          "name": "AndDropdown",
+          "attributes": [
+            {
+              "name": "close-on-select",
+              "description": "Whether to close the menu after an item is selected.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "closeOnSelect"
+            },
+            {
+              "name": "label",
+              "description": "Accessible label for the dropdown trigger.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Options'",
+              "fieldName": "label"
+            },
+            {
+              "name": "placement",
+              "description": "Preferred placement of the dropdown menu.",
+              "type": {
+                "text": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+                "references": [
+                  {
+                    "name": "DropdownPlacement"
+                  }
+                ]
+              },
+              "default": "'bottom'",
+              "fieldName": "placement"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant of the trigger button.",
+              "type": {
+                "text": "\"default\" | \"ghost\" | \"outline\" | \"primary\" | \"secondary\"",
+                "references": [
+                  {
+                    "name": "DropdownVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "closeOnSelect",
+              "description": "Whether to close the menu after an item is selected.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "readonly": true,
+              "attribute": "close-on-select"
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "Items to render in the dropdown menu.",
+              "type": {
+                "text": "DropdownItem[]",
+                "references": [
+                  {
+                    "name": "DropdownItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Accessible label for the dropdown trigger.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Options'",
+              "readonly": true,
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "description": "Preferred placement of the dropdown menu.",
+              "type": {
+                "text": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+                "references": [
+                  {
+                    "name": "DropdownPlacement"
+                  }
+                ]
+              },
+              "default": "'bottom'",
+              "readonly": true,
+              "attribute": "placement",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant of the trigger button.",
+              "type": {
+                "text": "\"default\" | \"ghost\" | \"outline\" | \"primary\" | \"secondary\"",
+                "references": [
+                  {
+                    "name": "DropdownVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andDropdownOpenChange",
+              "description": "Emitted when the dropdown open state changes.",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            },
+            {
+              "name": "andDropdownSelect",
+              "description": "Emitted when an item is selected.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndDropdown",
+          "declaration": {
+            "name": "AndDropdown"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-dropdown",
+          "declaration": {
+            "name": "AndDropdown"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-icon/and-icon.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-icon",
+          "name": "AndIcon",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "The stroke/fill color (defaults to currentColor for theme inheritance).",
+              "type": {
+                "text": "string"
+              },
+              "default": "'currentColor'",
+              "fieldName": "color"
+            },
+            {
+              "name": "name",
+              "description": "The name of the icon to render (must be registered via `registerIcons()`).",
+              "type": {
+                "text": "string | string & {}",
+                "references": [
+                  {
+                    "name": "IconName",
+                    "module": "@andersseen/icon"
+                  }
+                ]
+              },
+              "fieldName": "name"
+            },
+            {
+              "name": "size",
+              "description": "The size of the icon in pixels.",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "24",
+              "fieldName": "size"
+            },
+            {
+              "name": "stroke-width",
+              "description": "SVG stroke width.",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "2",
+              "fieldName": "strokeWidth"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "The stroke/fill color (defaults to currentColor for theme inheritance).",
+              "type": {
+                "text": "string"
+              },
+              "default": "'currentColor'",
+              "readonly": true,
+              "attribute": "color",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "The name of the icon to render (must be registered via `registerIcons()`).",
+              "type": {
+                "text": "string | string & {}",
+                "references": [
+                  {
+                    "name": "IconName",
+                    "module": "@andersseen/icon"
+                  }
+                ]
+              },
+              "readonly": true,
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "The size of the icon in pixels.",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "24",
+              "readonly": true,
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "strokeWidth",
+              "description": "SVG stroke width.",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "2",
+              "readonly": true,
+              "attribute": "stroke-width",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndIcon",
+          "declaration": {
+            "name": "AndIcon"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-icon",
+          "declaration": {
+            "name": "AndIcon"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-input/and-input.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-input",
+          "name": "AndInput",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "described-by",
+              "description": "ID of the element that describes this input (e.g. error message).",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "describedBy"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables interaction when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "has-error",
+              "description": "Whether the input is in an error state.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hasError"
+            },
+            {
+              "name": "label",
+              "description": "Accessible label for the input (used when no visible label exists).",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "label"
+            },
+            {
+              "name": "placeholder",
+              "description": "Placeholder text for the input.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "required",
+              "description": "Marks the input as required.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "type",
+              "description": "HTML input type.",
+              "type": {
+                "text": "\"email\" | \"number\" | \"password\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+                "references": [
+                  {
+                    "name": "InputType"
+                  }
+                ]
+              },
+              "default": "'text'",
+              "fieldName": "type"
+            },
+            {
+              "name": "value",
+              "description": "Current value of the input.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "describedBy",
+              "description": "ID of the element that describes this input (e.g. error message).",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "described-by"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Disables interaction when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hasError",
+              "description": "Whether the input is in an error state.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "has-error",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Accessible label for the input (used when no visible label exists).",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "description": "Placeholder text for the input.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "placeholder",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "description": "Marks the input as required.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "HTML input type.",
+              "type": {
+                "text": "\"email\" | \"number\" | \"password\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+                "references": [
+                  {
+                    "name": "InputType"
+                  }
+                ]
+              },
+              "default": "'text'",
+              "readonly": true,
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Current value of the input.",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "value",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andBlur",
+              "description": "Emitted when the input loses focus.",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "andInput",
+              "description": "Emitted when the input value changes.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndInput",
+          "declaration": {
+            "name": "AndInput"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-input",
+          "declaration": {
+            "name": "AndInput"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-menu-list/and-menu-item.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-menu-item",
+          "name": "AndMenuItem",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables the menu item when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "intent",
+              "description": "Intent variant (default or destructive).",
+              "type": {
+                "text": "\"default\" | \"destructive\"",
+                "references": [
+                  {
+                    "name": "MenuItemVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "intent"
+            },
+            {
+              "name": "value",
+              "description": "Optional value identifier for the item.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Disables the menu item when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "intent",
+              "description": "Intent variant (default or destructive).",
+              "type": {
+                "text": "\"default\" | \"destructive\"",
+                "references": [
+                  {
+                    "name": "MenuItemVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "intent",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Optional value identifier for the item.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "value"
+            }
+          ],
+          "events": [
+            {
+              "name": "andMenuItemSelect",
+              "description": "Emitted when the item is selected (clicked or Enter/Space pressed).",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndMenuItem",
+          "declaration": {
+            "name": "AndMenuItem"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-menu-item",
+          "declaration": {
+            "name": "AndMenuItem"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-menu-list/and-menu-list.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-menu-list",
+          "name": "AndMenuList",
+          "attributes": [
+            {
+              "name": "aria-menu-label",
+              "description": "Accessible label for the menu.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Menu'",
+              "fieldName": "ariaMenuLabel"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "ariaMenuLabel",
+              "description": "Accessible label for the menu.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Menu'",
+              "readonly": true,
+              "attribute": "aria-menu-label"
+            },
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes to merge with internal styles.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndMenuList",
+          "declaration": {
+            "name": "AndMenuList"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-menu-list",
+          "declaration": {
+            "name": "AndMenuList"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-modal/and-modal.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-modal",
+          "name": "AndModal",
+          "attributes": [
+            {
+              "name": "open",
+              "description": "Whether the modal is open.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "Whether the modal is open.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andClose",
+              "description": "Emitted when the modal is closed.",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndModal",
+          "declaration": {
+            "name": "AndModal"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-modal",
+          "declaration": {
+            "name": "AndModal"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-navbar/and-navbar.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-navbar",
+          "name": "AndNavbar",
+          "attributes": [
+            {
+              "name": "active-item",
+              "description": "The active navigation item ID.\nReflects the headless‐core state.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "activeItem"
+            },
+            {
+              "name": "aria-nav-label",
+              "description": "ARIA label for the navigation",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Main navigation'",
+              "fieldName": "ariaNavLabel"
+            },
+            {
+              "name": "auto-collapse",
+              "description": "When `true`, the navbar automatically detects when the nav\nitems overflow and switches to a smaller responsive stage\nregardless of breakpoints. Content-aware collapse.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "autoCollapse"
+            },
+            {
+              "name": "compact-breakpoint",
+              "description": "Breakpoint (px) below which the end section enters compact mode\n(icon-only, labels hidden). Main nav is still visible.",
+              "type": {
+                "text": "number"
+              },
+              "default": "1024",
+              "fieldName": "compactBreakpoint"
+            },
+            {
+              "name": "item-variant",
+              "description": "Visual style for individual nav links.\nControls how each link looks, independent of the navbar container variant.\n\n- `default`   — subtle rounded pill with hover bg\n- `underline`  — bottom-border indicator on active\n- `filled`     — solid primary bg on active",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"underline\"",
+                "references": [
+                  {
+                    "name": "NavItemStyle"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "itemVariant"
+            },
+            {
+              "name": "items",
+              "description": "Navigation items to display.\nWhen provided, the component renders its own items (with full\nkeyboard navigation, scroll-spy, and active‐indicator).\nWhen empty, use the `nav` slot for custom content.",
+              "type": {
+                "text": "NavItem[] | string",
+                "references": [
+                  {
+                    "name": "NavItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "fieldName": "items"
+            },
+            {
+              "name": "minimal-breakpoint",
+              "description": "Breakpoint (px) below which the main (nav links) section is hidden\nand the navigation moves to the hamburger drawer.\nOnly start + compact end are visible.",
+              "type": {
+                "text": "number"
+              },
+              "default": "768",
+              "fieldName": "minimalBreakpoint"
+            },
+            {
+              "name": "mobile-breakpoint",
+              "description": "Breakpoint (px) below which the navbar switches to mobile mode\n(hamburger menu). Set to `0` to always show desktop, or a high\nvalue to always show mobile.",
+              "type": {
+                "text": "number"
+              },
+              "default": "640",
+              "fieldName": "mobileBreakpoint"
+            },
+            {
+              "name": "position",
+              "description": "Positioning behaviour",
+              "type": {
+                "text": "\"fixed\" | \"static\" | \"sticky\""
+              },
+              "default": "'static'",
+              "fieldName": "position"
+            },
+            {
+              "name": "scroll-spy",
+              "description": "Enable scroll-spy (auto-detect active section by scroll position).\nItems must have `href` starting with `#`.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "scrollSpy"
+            },
+            {
+              "name": "scroll-spy-offset",
+              "description": "Scroll-spy offset from the top of viewport (px).",
+              "type": {
+                "text": "number"
+              },
+              "default": "100",
+              "fieldName": "scrollSpyOffset"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"floating\" | \"glass\"",
+                "references": [
+                  {
+                    "name": "NavbarProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "activeItem",
+              "description": "The active navigation item ID.\nReflects the headless‐core state.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "active-item",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ariaNavLabel",
+              "description": "ARIA label for the navigation",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Main navigation'",
+              "readonly": true,
+              "attribute": "aria-nav-label"
+            },
+            {
+              "kind": "field",
+              "name": "autoCollapse",
+              "description": "When `true`, the navbar automatically detects when the nav\nitems overflow and switches to a smaller responsive stage\nregardless of breakpoints. Content-aware collapse.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "readonly": true,
+              "attribute": "auto-collapse"
+            },
+            {
+              "kind": "field",
+              "name": "compactBreakpoint",
+              "description": "Breakpoint (px) below which the end section enters compact mode\n(icon-only, labels hidden). Main nav is still visible.",
+              "type": {
+                "text": "number"
+              },
+              "default": "1024",
+              "readonly": true,
+              "attribute": "compact-breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "itemVariant",
+              "description": "Visual style for individual nav links.\nControls how each link looks, independent of the navbar container variant.\n\n- `default`   — subtle rounded pill with hover bg\n- `underline`  — bottom-border indicator on active\n- `filled`     — solid primary bg on active",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"underline\"",
+                "references": [
+                  {
+                    "name": "NavItemStyle"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "item-variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "Navigation items to display.\nWhen provided, the component renders its own items (with full\nkeyboard navigation, scroll-spy, and active‐indicator).\nWhen empty, use the `nav` slot for custom content.",
+              "type": {
+                "text": "NavItem[] | string",
+                "references": [
+                  {
+                    "name": "NavItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true,
+              "attribute": "items"
+            },
+            {
+              "kind": "field",
+              "name": "minimalBreakpoint",
+              "description": "Breakpoint (px) below which the main (nav links) section is hidden\nand the navigation moves to the hamburger drawer.\nOnly start + compact end are visible.",
+              "type": {
+                "text": "number"
+              },
+              "default": "768",
+              "readonly": true,
+              "attribute": "minimal-breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "mobileBreakpoint",
+              "description": "Breakpoint (px) below which the navbar switches to mobile mode\n(hamburger menu). Set to `0` to always show desktop, or a high\nvalue to always show mobile.",
+              "type": {
+                "text": "number"
+              },
+              "default": "640",
+              "readonly": true,
+              "attribute": "mobile-breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "description": "Positioning behaviour",
+              "type": {
+                "text": "\"fixed\" | \"static\" | \"sticky\""
+              },
+              "default": "'static'",
+              "readonly": true,
+              "attribute": "position"
+            },
+            {
+              "kind": "field",
+              "name": "scrollSpy",
+              "description": "Enable scroll-spy (auto-detect active section by scroll position).\nItems must have `href` starting with `#`.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "scroll-spy"
+            },
+            {
+              "kind": "field",
+              "name": "scrollSpyOffset",
+              "description": "Scroll-spy offset from the top of viewport (px).",
+              "type": {
+                "text": "number"
+              },
+              "default": "100",
+              "readonly": true,
+              "attribute": "scroll-spy-offset"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"floating\" | \"glass\"",
+                "references": [
+                  {
+                    "name": "NavbarProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "mobileMenuChange",
+              "description": "Emitted when mobile menu state changes",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            },
+            {
+              "name": "navItemClick",
+              "description": "Emitted when active item changes",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            },
+            {
+              "name": "navLinkClick",
+              "description": "Emitted when a navigation link is clicked",
+              "type": {
+                "text": "CustomEvent<{ id: string; href: string; }>"
+              }
+            },
+            {
+              "name": "responsiveStageChange",
+              "description": "Emitted when responsive stage changes",
+              "type": {
+                "text": "CustomEvent<\"compact\" | \"full\" | \"minimal\" | \"mobile\">",
+                "references": [
+                  {
+                    "name": "ResponsiveStage"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndNavbar",
+          "declaration": {
+            "name": "AndNavbar"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-navbar",
+          "declaration": {
+            "name": "AndNavbar"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-pagination/and-pagination.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-pagination",
+          "name": "AndPagination",
+          "attributes": [
+            {
+              "name": "current-page",
+              "description": "Current active page (1-based).",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "fieldName": "currentPage"
+            },
+            {
+              "name": "total-pages",
+              "description": "Total number of pages.",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "fieldName": "totalPages"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "currentPage",
+              "description": "Current active page (1-based).",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "readonly": true,
+              "attribute": "current-page",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "totalPages",
+              "description": "Total number of pages.",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "readonly": true,
+              "attribute": "total-pages",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andPageChange",
+              "description": "Emitted when the page changes.",
+              "type": {
+                "text": "CustomEvent<number>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndPagination",
+          "declaration": {
+            "name": "AndPagination"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-pagination",
+          "declaration": {
+            "name": "AndPagination"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-sidebar/and-sidebar.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-sidebar",
+          "name": "AndSidebar",
+          "attributes": [
+            {
+              "name": "active-item",
+              "description": "The active navigation item ID.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'home'",
+              "fieldName": "activeItem"
+            },
+            {
+              "name": "aria-nav-label",
+              "description": "ARIA label for the navigation",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Sidebar navigation'",
+              "fieldName": "ariaNavLabel"
+            },
+            {
+              "name": "collapsed",
+              "description": "Whether the sidebar is collapsed (desktop).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "collapsed"
+            },
+            {
+              "name": "collapsed-width",
+              "description": "Collapsed width of the sidebar.\nAccepts any CSS value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'4rem'",
+              "fieldName": "collapsedWidth"
+            },
+            {
+              "name": "expanded-width",
+              "description": "Expanded width of the sidebar.\nAccepts any CSS value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'16rem'",
+              "fieldName": "expandedWidth"
+            },
+            {
+              "name": "item-variant",
+              "description": "Visual style for individual sidebar items.\nControls how each item looks, independent of the sidebar container variant.\nBorder-radius is intentionally not set — the theme controls it.\n\n- `default`   — subtle accent bg on active\n- `underline` — left accent bar on active\n- `filled`    — solid primary bg on active",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"underline\"",
+                "references": [
+                  {
+                    "name": "SidebarItemStyle"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "itemVariant"
+            },
+            {
+              "name": "items",
+              "description": "Navigation items to display.\nItems with `section: 'bottom'` render in the footer area.",
+              "type": {
+                "text": "SidebarItem[] | string",
+                "references": [
+                  {
+                    "name": "SidebarItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "fieldName": "items"
+            },
+            {
+              "name": "mobile-breakpoint",
+              "description": "Breakpoint (px) below which the sidebar auto-collapses on mobile.",
+              "type": {
+                "text": "number"
+              },
+              "default": "768",
+              "fieldName": "mobileBreakpoint"
+            },
+            {
+              "name": "mobile-collapse",
+              "description": "Enable auto-collapse on mobile viewports.\nWhen true, the sidebar collapses to icon-only mode on screens\nsmaller than `mobileBreakpoint`.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "mobileCollapse"
+            },
+            {
+              "name": "variant",
+              "description": "Visual variant of the sidebar.",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"floating\" | \"glass\"",
+                "references": [
+                  {
+                    "name": "SidebarVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "activeItem",
+              "description": "The active navigation item ID.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'home'",
+              "attribute": "active-item",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ariaNavLabel",
+              "description": "ARIA label for the navigation",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Sidebar navigation'",
+              "readonly": true,
+              "attribute": "aria-nav-label"
+            },
+            {
+              "kind": "field",
+              "name": "collapsed",
+              "description": "Whether the sidebar is collapsed (desktop).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "collapsed",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "collapsedWidth",
+              "description": "Collapsed width of the sidebar.\nAccepts any CSS value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'4rem'",
+              "readonly": true,
+              "attribute": "collapsed-width"
+            },
+            {
+              "kind": "field",
+              "name": "expandedWidth",
+              "description": "Expanded width of the sidebar.\nAccepts any CSS value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'16rem'",
+              "readonly": true,
+              "attribute": "expanded-width"
+            },
+            {
+              "kind": "field",
+              "name": "itemVariant",
+              "description": "Visual style for individual sidebar items.\nControls how each item looks, independent of the sidebar container variant.\nBorder-radius is intentionally not set — the theme controls it.\n\n- `default`   — subtle accent bg on active\n- `underline` — left accent bar on active\n- `filled`    — solid primary bg on active",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"underline\"",
+                "references": [
+                  {
+                    "name": "SidebarItemStyle"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "item-variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "Navigation items to display.\nItems with `section: 'bottom'` render in the footer area.",
+              "type": {
+                "text": "SidebarItem[] | string",
+                "references": [
+                  {
+                    "name": "SidebarItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true,
+              "attribute": "items"
+            },
+            {
+              "kind": "field",
+              "name": "mobileBreakpoint",
+              "description": "Breakpoint (px) below which the sidebar auto-collapses on mobile.",
+              "type": {
+                "text": "number"
+              },
+              "default": "768",
+              "readonly": true,
+              "attribute": "mobile-breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "mobileCollapse",
+              "description": "Enable auto-collapse on mobile viewports.\nWhen true, the sidebar collapses to icon-only mode on screens\nsmaller than `mobileBreakpoint`.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "readonly": true,
+              "attribute": "mobile-collapse"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Visual variant of the sidebar.",
+              "type": {
+                "text": "\"default\" | \"filled\" | \"floating\" | \"glass\"",
+                "references": [
+                  {
+                    "name": "SidebarVariantProps"
+                  }
+                ]
+              },
+              "default": "'default'",
+              "readonly": true,
+              "attribute": "variant",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andSidebarItemClick",
+              "description": "Emitted when a navigation item is clicked.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            },
+            {
+              "name": "andSidebarToggle",
+              "description": "Emitted when the sidebar collapse state changes.",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndSidebar",
+          "declaration": {
+            "name": "AndSidebar"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-sidebar",
+          "declaration": {
+            "name": "AndSidebar"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-tabs/and-tabs.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-tabs",
+          "name": "AndTabs",
+          "attributes": [
+            {
+              "name": "activation-mode",
+              "description": "How tabs are activated (on focus or on click).",
+              "type": {
+                "text": "\"automatic\" | \"manual\""
+              },
+              "default": "'automatic'",
+              "fieldName": "activationMode"
+            },
+            {
+              "name": "default-value",
+              "description": "The initial tab value when uncontrolled.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "defaultValue"
+            },
+            {
+              "name": "orientation",
+              "description": "Orientation of the tab list.",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'horizontal'",
+              "fieldName": "orientation"
+            },
+            {
+              "name": "value",
+              "description": "The currently selected tab value.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "activationMode",
+              "description": "How tabs are activated (on focus or on click).",
+              "type": {
+                "text": "\"automatic\" | \"manual\""
+              },
+              "default": "'automatic'",
+              "readonly": true,
+              "attribute": "activation-mode",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "defaultValue",
+              "description": "The initial tab value when uncontrolled.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "default-value"
+            },
+            {
+              "kind": "field",
+              "name": "orientation",
+              "description": "Orientation of the tab list.",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'horizontal'",
+              "readonly": true,
+              "attribute": "orientation",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "The currently selected tab value.",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "value",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andTabChange",
+              "description": "Emitted when the selected tab changes.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndTabs",
+          "declaration": {
+            "name": "AndTabs"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-tabs",
+          "declaration": {
+            "name": "AndTabs"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-tabs/and-tabs-content.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-tabs-content",
+          "name": "AndTabsContent",
+          "attributes": [
+            {
+              "name": "selected",
+              "description": "Whether this content panel is currently selected (set by parent).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "selected"
+            },
+            {
+              "name": "value",
+              "description": "The value that identifies which tab this content belongs to.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "selected",
+              "description": "Whether this content panel is currently selected (set by parent).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "selected"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "The value that identifies which tab this content belongs to.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "value",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndTabsContent",
+          "declaration": {
+            "name": "AndTabsContent"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-tabs-content",
+          "declaration": {
+            "name": "AndTabsContent"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-tabs/and-tabs-list.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-tabs-list",
+          "name": "AndTabsList",
+          "attributes": [
+            {
+              "name": "orientation",
+              "description": "Orientation of the tab list.",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'horizontal'",
+              "fieldName": "orientation"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "orientation",
+              "description": "Orientation of the tab list.",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'horizontal'",
+              "readonly": true,
+              "attribute": "orientation",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndTabsList",
+          "declaration": {
+            "name": "AndTabsList"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-tabs-list",
+          "declaration": {
+            "name": "AndTabsList"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-tabs/and-tabs-trigger.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-tabs-trigger",
+          "name": "AndTabsTrigger",
+          "attributes": [
+            {
+              "name": "disabled",
+              "description": "Whether this tab trigger is disabled.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "selected",
+              "description": "Whether this tab is currently selected (set by parent).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "selected"
+            },
+            {
+              "name": "value",
+              "description": "The value that identifies this tab.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Whether this tab trigger is disabled.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "description": "Whether this tab is currently selected (set by parent).",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "selected"
+            },
+            {
+              "kind": "field",
+              "name": "tabsLogic",
+              "description": "Reference to the parent tabs headless logic (set by parent).",
+              "type": {
+                "text": "TabsReturn",
+                "references": [
+                  {
+                    "name": "TabsReturn",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "The value that identifies this tab.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "value",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "tabTriggerClick",
+              "description": "Emitted when this trigger is clicked.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndTabsTrigger",
+          "declaration": {
+            "name": "AndTabsTrigger"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-tabs-trigger",
+          "declaration": {
+            "name": "AndTabsTrigger"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-toast/and-toast.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-toast",
+          "name": "AndToast",
+          "members": [
+            {
+              "kind": "method",
+              "name": "present",
+              "description": "Present a new toast notification.",
+              "parameters": [
+                {
+                  "name": "message",
+                  "type": {
+                    "text": "string",
+                    "references": [
+                      {
+                        "name": "Promise",
+                        "package": "global:"
+                      },
+                      {
+                        "name": "ToastType",
+                        "module": "@andersseen/headless-components"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "type",
+                  "type": {
+                    "text": "\"info\" | \"error\" | \"default\" | \"success\" | \"warning\"",
+                    "references": [
+                      {
+                        "name": "Promise",
+                        "package": "global:"
+                      },
+                      {
+                        "name": "ToastType",
+                        "module": "@andersseen/headless-components"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "duration",
+                  "type": {
+                    "text": "number",
+                    "references": [
+                      {
+                        "name": "Promise",
+                        "package": "global:"
+                      },
+                      {
+                        "name": "ToastType",
+                        "module": "@andersseen/headless-components"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "Promise<number>",
+                  "references": [
+                    {
+                      "name": "Promise",
+                      "package": "global:"
+                    },
+                    {
+                      "name": "ToastType",
+                      "module": "@andersseen/headless-components"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndToast",
+          "declaration": {
+            "name": "AndToast"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-toast",
+          "declaration": {
+            "name": "AndToast"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/and-tooltip/and-tooltip.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-tooltip",
+          "name": "AndTooltip",
+          "attributes": [
+            {
+              "name": "close-delay",
+              "description": "Delay in ms before hiding the tooltip.",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "closeDelay"
+            },
+            {
+              "name": "content",
+              "description": "Text content of the tooltip (alternative: use the `content` slot).",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "content"
+            },
+            {
+              "name": "open-delay",
+              "description": "Delay in ms before showing the tooltip.",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "openDelay"
+            },
+            {
+              "name": "placement",
+              "description": "Preferred placement of the tooltip relative to its trigger.",
+              "type": {
+                "text": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+                "references": [
+                  {
+                    "name": "TooltipPlacement",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'top'",
+              "fieldName": "placement"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "closeDelay",
+              "description": "Delay in ms before hiding the tooltip.",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "readonly": true,
+              "attribute": "close-delay"
+            },
+            {
+              "kind": "field",
+              "name": "content",
+              "description": "Text content of the tooltip (alternative: use the `content` slot).",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "content"
+            },
+            {
+              "kind": "field",
+              "name": "openDelay",
+              "description": "Delay in ms before showing the tooltip.",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "readonly": true,
+              "attribute": "open-delay"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "description": "Preferred placement of the tooltip relative to its trigger.",
+              "type": {
+                "text": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+                "references": [
+                  {
+                    "name": "TooltipPlacement",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'top'",
+              "readonly": true,
+              "attribute": "placement",
+              "reflects": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndTooltip",
+          "declaration": {
+            "name": "AndTooltip"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-tooltip",
+          "declaration": {
+            "name": "AndTooltip"
+          }
+        }
+      ]
+    }
+  ]
+}
