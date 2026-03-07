@@ -46,15 +46,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const WithError = Template.bind({});
-WithError.args = {
-  hasError: true,
-  placeholder: 'Invalid input',
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
-  value: 'Disabled value',
-};

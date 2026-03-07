@@ -42,38 +42,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Outline = Template.bind({});
-Outline.args = {
-  variant: 'outline',
-};
-
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: 'destructive',
-};
-
-export const Ghost = Template.bind({});
-Ghost.args = {
-  variant: 'ghost',
-};
-
-export const Loading = Template.bind({});
-Loading.args = {
-  loading: true,
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
-};
-
-export const AsLink = Template.bind({});
-AsLink.args = {
-  href: 'https://example.com',
-};
-
-export const IconButton = Template.bind({});
-IconButton.args = {
-  size: 'icon',
-};

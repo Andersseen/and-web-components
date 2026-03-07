@@ -44,9 +44,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const PrimaryVariant = Template.bind({});
-PrimaryVariant.args = {
-  variant: 'primary',
-  label: 'Primary Actions',
-};

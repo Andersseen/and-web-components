@@ -39,9 +39,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Autoplay = Template.bind({});
-Autoplay.args = {
-  autoplay: true,
-  interval: 2000,
-};

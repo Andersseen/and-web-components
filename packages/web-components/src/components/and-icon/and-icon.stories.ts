@@ -29,10 +29,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const CustomSizeAndColor = Template.bind({});
-CustomSizeAndColor.args = {
-  name: 'close',
-  size: 48,
-  color: 'red',
-};

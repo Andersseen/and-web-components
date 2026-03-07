@@ -32,23 +32,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Elevated = Template.bind({});
-Elevated.args = {
-  variant: 'elevated',
-};
-
-export const Outline = Template.bind({});
-Outline.args = {
-  variant: 'outline',
-};
-
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: 'destructive',
-};
-
-export const Unpadded = Template.bind({});
-Unpadded.args = {
-  padded: false,
-};

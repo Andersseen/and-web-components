@@ -62,13 +62,3 @@ const Template = args => {
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const PlacementLeft = Template.bind({});
-PlacementLeft.args = {
-  placement: 'left',
-};
-
-export const PlacementBottom = Template.bind({});
-PlacementBottom.args = {
-  placement: 'bottom',
-};

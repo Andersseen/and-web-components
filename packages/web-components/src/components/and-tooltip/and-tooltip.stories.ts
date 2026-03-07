@@ -33,8 +33,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Bottom = Template.bind({});
-Bottom.args = {
-  placement: 'bottom',
-};

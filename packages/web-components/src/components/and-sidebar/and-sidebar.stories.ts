@@ -47,8 +47,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Collapsed = Template.bind({});
-Collapsed.args = {
-  collapsed: true,
-};

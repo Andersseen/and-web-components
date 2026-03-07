@@ -23,18 +23,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  variant: 'secondary',
-};
-
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: 'destructive',
-};
-
-export const Outline = Template.bind({});
-Outline.args = {
-  variant: 'outline',
-};

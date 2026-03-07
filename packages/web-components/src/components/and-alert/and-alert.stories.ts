@@ -28,18 +28,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: 'destructive',
-};
-
-export const Success = Template.bind({});
-Success.args = {
-  variant: 'success',
-};
-
-export const Dismissible = Template.bind({});
-Dismissible.args = {
-  dismissible: true,
-};

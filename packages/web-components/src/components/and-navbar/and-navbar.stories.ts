@@ -53,14 +53,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Glass = Template.bind({});
-Glass.args = {
-  variant: 'glass',
-};
-
-export const Floating = Template.bind({});
-Floating.args = {
-  variant: 'floating',
-  position: 'fixed',
-};

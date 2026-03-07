@@ -51,8 +51,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const Vertical = Template.bind({});
-Vertical.args = {
-  orientation: 'vertical',
-};

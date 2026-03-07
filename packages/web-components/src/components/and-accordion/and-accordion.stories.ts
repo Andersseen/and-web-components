@@ -42,13 +42,3 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
-
-export const AllowMultiple = Template.bind({});
-AllowMultiple.args = {
-  allowMultiple: true,
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
-};
