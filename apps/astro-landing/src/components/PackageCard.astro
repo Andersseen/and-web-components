@@ -4,12 +4,12 @@ interface Props {
   name: string;
   subtitle: string;
   description: string;
-  version?: string;
+  version: string;
   tags: string[];
   delay?: string;
 }
 
-const { icon, name, subtitle, description, version = 'v0.0.1', tags, delay = '0ms' } = Astro.props;
+const { icon, name, subtitle, description, version, tags, delay = '0ms' } = Astro.props;
 ---
 
 <and-card
