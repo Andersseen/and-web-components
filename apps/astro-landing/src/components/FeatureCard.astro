@@ -4,26 +4,42 @@ interface Props {
   title: string;
   description: string;
   delay?: string;
+  tags?: string[];
 }
 
-const { icon, title, description, delay = '0ms' } = Astro.props;
+const { icon, title, description, delay = '0ms', tags = [] } = Astro.props;
 ---
 
 <and-card
-  class="h-full"
+  class="group h-full overflow-hidden border-border/70 bg-gradient-to-b from-background to-muted/25 transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-xl"
   and-motion="slide-in-up"
   and-motion-trigger="enter"
   and-motion-delay={delay}
+  variant="elevated"
 >
-  <and-card-header>
-    <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-      <and-icon name={icon} size="24"></and-icon>
+  <and-card-header class="pb-3">
+    <div and-layout="horizontal align:start gap:md">
+      <div class="h-12 w-12 shrink-0 rounded-xl bg-primary/10 ring-1 ring-primary/20 flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary/15">
+        <and-icon name={icon} size="22"></and-icon>
+      </div>
+      <div and-layout="vertical gap:xxs">
+        <and-card-title class="text-xl leading-tight">{title}</and-card-title>
+        <and-card-description class="text-sm leading-relaxed">
+          {description}
+        </and-card-description>
+      </div>
     </div>
-    <and-card-title>{title}</and-card-title>
   </and-card-header>
-  <and-card-content>
-    <p and-text="p-sm" class="text-muted-foreground">
-      <slot>{description}</slot>
-    </p>
-  </and-card-content>
+
+  {tags.length > 0 && (
+    <and-card-content class="pt-0">
+      <div and-layout="horizontal gap:xs wrap:wrap">
+        {tags.map((tag) => (
+          <code class="text-xs rounded-md border border-border bg-muted px-2 py-1 text-foreground/85">
+            {tag}
+          </code>
+        ))}
+      </div>
+    </and-card-content>
+  )}
 </and-card>

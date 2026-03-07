@@ -36,7 +36,8 @@ const features = [
   {
     icon: 'monitor',
     title: 'Responsive First',
-    description: '',
+    description: 'Every layout attribute supports responsive breakpoints from mobile to desktop.',
+    tags: ['cols@md:3', 'gap@lg:xl', 'p@xl:2xl'],
     delay: '500ms',
   },
 ];
@@ -51,20 +52,15 @@ const features = [
       description="From layout primitives to complex interactive components — our ecosystem covers the full spectrum of modern UI development."
     />
 
-    <div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">
+    <div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg" class="items-stretch">
       {features.map((feature) => (
         <FeatureCard
           icon={feature.icon}
           title={feature.title}
           description={feature.description}
           delay={feature.delay}
-        >
-          {feature.icon === 'monitor' && (
-            <Fragment>
-              Every layout attribute supports responsive breakpoints: <code class="text-xs bg-muted px-1 py-0.5 rounded">cols@md:3</code>, <code class="text-xs bg-muted px-1 py-0.5 rounded">gap@lg:xl</code>
-            </Fragment>
-          )}
-        </FeatureCard>
+          tags={feature.tags}
+        />
       ))}
     </div>
 
