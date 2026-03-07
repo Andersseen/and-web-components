@@ -2,11 +2,24 @@
  * Rotating Entrances & Exits
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
+[and-motion="rotate"][and-motion-state="active"]                   { animation-name: and-rotate-in; }
+[and-motion="rotate-down-left"][and-motion-state="active"]         { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
+[and-motion="rotate-down-right"][and-motion-state="active"]        { animation-name: and-rotate-in-down-right; transform-origin: right bottom; }
+[and-motion="rotate-up-left"][and-motion-state="active"]           { animation-name: and-rotate-in-up-left; transform-origin: left bottom; }
+[and-motion="rotate-up-right"][and-motion-state="active"]          { animation-name: and-rotate-in-up-right; transform-origin: right bottom; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
+
 [and-motion="rotate-in"][and-motion-state="active"]                { animation-name: and-rotate-in; }
 [and-motion="rotate-in-down-left"][and-motion-state="active"]      { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
 [and-motion="rotate-in-down-right"][and-motion-state="active"]     { animation-name: and-rotate-in-down-right; transform-origin: right bottom; }
 [and-motion="rotate-in-up-left"][and-motion-state="active"]        { animation-name: and-rotate-in-up-left; transform-origin: left bottom; }
 [and-motion="rotate-in-up-right"][and-motion-state="active"]       { animation-name: and-rotate-in-up-right; transform-origin: right bottom; }
+
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
+
 [and-motion="rotate-out"][and-motion-state="active"]               { animation-name: and-rotate-out; }
 [and-motion="rotate-out-down-left"][and-motion-state="active"]     { animation-name: and-rotate-out-down-left; transform-origin: left bottom; }
 [and-motion="rotate-out-down-right"][and-motion-state="active"]    { animation-name: and-rotate-out-down-right; transform-origin: right bottom; }

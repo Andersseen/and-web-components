@@ -2,8 +2,14 @@
  * Specials
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
 [and-motion="hinge"][and-motion-state="active"]           { animation-name: and-hinge; animation-duration: 2s; transform-origin: top left; }
 [and-motion="jack-in-the-box"][and-motion-state="active"] { animation-name: and-jack-in-the-box; }
+[and-motion="roll"][and-motion-state="active"]            { animation-name: and-roll-in; }
+
+/* ─── Selectors — Shortcuts (backwards compatible) ──────────────────────── */
+
 [and-motion="roll-in"][and-motion-state="active"]         { animation-name: and-roll-in; }
 [and-motion="roll-out"][and-motion-state="active"]        { animation-name: and-roll-out; }
 

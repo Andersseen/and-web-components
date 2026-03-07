@@ -2,11 +2,24 @@
  * Bouncing Entrances & Exits
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+/* Note: bare "bounce" is an attention seeker, so directional clean names only */
+
+[and-motion="bounce-down"][and-motion-state="active"]   { animation-name: and-bounce-in-down; }
+[and-motion="bounce-left"][and-motion-state="active"]   { animation-name: and-bounce-in-left; }
+[and-motion="bounce-right"][and-motion-state="active"]  { animation-name: and-bounce-in-right; }
+[and-motion="bounce-up"][and-motion-state="active"]     { animation-name: and-bounce-in-up; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
+
 [and-motion="bounce-in"][and-motion-state="active"]        { animation-name: and-bounce-in; animation-duration: 750ms; }
 [and-motion="bounce-in-down"][and-motion-state="active"]   { animation-name: and-bounce-in-down; }
 [and-motion="bounce-in-left"][and-motion-state="active"]   { animation-name: and-bounce-in-left; }
 [and-motion="bounce-in-right"][and-motion-state="active"]  { animation-name: and-bounce-in-right; }
 [and-motion="bounce-in-up"][and-motion-state="active"]     { animation-name: and-bounce-in-up; }
+
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
+
 [and-motion="bounce-out"][and-motion-state="active"]       { animation-name: and-bounce-out; animation-duration: 750ms; }
 [and-motion="bounce-out-down"][and-motion-state="active"]  { animation-name: and-bounce-out-down; }
 [and-motion="bounce-out-left"][and-motion-state="active"]  { animation-name: and-bounce-out-left; }

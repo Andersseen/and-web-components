@@ -53,23 +53,23 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
     icon: 'eye',
     groups: [
       {
-        label: 'Fading Entrances',
-        tag: 'Fade In',
+        label: 'Fading',
+        tag: 'Fade',
         color: 'from-sky-500 to-blue-600',
         items: [
-          'fade-in',
-          'fade-in-down',
-          'fade-in-down-big',
-          'fade-in-left',
-          'fade-in-left-big',
-          'fade-in-right',
-          'fade-in-right-big',
-          'fade-in-up',
-          'fade-in-up-big',
-          'fade-in-top-left',
-          'fade-in-top-right',
-          'fade-in-bottom-left',
-          'fade-in-bottom-right',
+          'fade',
+          'fade-down',
+          'fade-down-big',
+          'fade-left',
+          'fade-left-big',
+          'fade-right',
+          'fade-right-big',
+          'fade-up',
+          'fade-up-big',
+          'fade-top-left',
+          'fade-top-right',
+          'fade-bottom-left',
+          'fade-bottom-right',
         ],
       },
       {
@@ -96,10 +96,10 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
     icon: 'arrow-right',
     groups: [
       {
-        label: 'Sliding Entrances',
-        tag: 'Slide In',
+        label: 'Sliding',
+        tag: 'Slide',
         color: 'from-emerald-500 to-green-600',
-        items: ['slide-in-up', 'slide-in-down', 'slide-in-left', 'slide-in-right'],
+        items: ['slide-up', 'slide-down', 'slide-left', 'slide-right'],
       },
       {
         label: 'Sliding Exits',
@@ -115,10 +115,10 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
     icon: 'search',
     groups: [
       {
-        label: 'Zooming Entrances',
-        tag: 'Zoom In',
+        label: 'Zooming',
+        tag: 'Zoom',
         color: 'from-violet-500 to-purple-600',
-        items: ['zoom-in', 'zoom-in-down', 'zoom-in-left', 'zoom-in-right', 'zoom-in-up'],
+        items: ['zoom', 'zoom-down', 'zoom-left', 'zoom-right', 'zoom-up'],
       },
       {
         label: 'Zooming Exits',
@@ -134,10 +134,10 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
     icon: 'circle',
     groups: [
       {
-        label: 'Bouncing Entrances',
-        tag: 'Bounce In',
+        label: 'Bouncing',
+        tag: 'Bounce',
         color: 'from-rose-500 to-pink-600',
-        items: ['bounce-in', 'bounce-in-down', 'bounce-in-left', 'bounce-in-right', 'bounce-in-up'],
+        items: ['bounce-in', 'bounce-down', 'bounce-left', 'bounce-right', 'bounce-up'],
       },
       {
         label: 'Bouncing Exits',
@@ -156,7 +156,7 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
         label: 'Flippers',
         tag: 'Flip',
         color: 'from-cyan-500 to-teal-600',
-        items: ['flip', 'flip-in-x', 'flip-in-y', 'flip-out-x', 'flip-out-y'],
+        items: ['flip', 'flip-x', 'flip-y', 'flip-out-x', 'flip-out-y'],
       },
     ],
   },
@@ -166,10 +166,10 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
     icon: 'refresh-cw',
     groups: [
       {
-        label: 'Rotating Entrances',
-        tag: 'Rotate In',
+        label: 'Rotating',
+        tag: 'Rotate',
         color: 'from-indigo-500 to-indigo-700',
-        items: ['rotate-in', 'rotate-in-down-left', 'rotate-in-down-right', 'rotate-in-up-left', 'rotate-in-up-right'],
+        items: ['rotate', 'rotate-down-left', 'rotate-down-right', 'rotate-up-left', 'rotate-up-right'],
       },
       {
         label: 'Rotating Exits',
@@ -188,7 +188,7 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
         label: 'Light Speed',
         tag: 'Speed',
         color: 'from-yellow-400 to-amber-500',
-        items: ['light-speed-in-right', 'light-speed-in-left', 'light-speed-out-right', 'light-speed-out-left'],
+        items: ['light-speed-right', 'light-speed-left', 'light-speed-out-right', 'light-speed-out-left'],
       },
     ],
   },
@@ -201,7 +201,7 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
         label: 'Back Entrances',
         tag: 'Back In',
         color: 'from-fuchsia-500 to-fuchsia-700',
-        items: ['back-in-down', 'back-in-left', 'back-in-right', 'back-in-up'],
+        items: ['back-down', 'back-left', 'back-right', 'back-up'],
       },
       {
         label: 'Back Exits',
@@ -220,7 +220,7 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
         label: 'Specials',
         tag: 'Special',
         color: 'from-red-500 to-red-700',
-        items: ['hinge', 'jack-in-the-box', 'roll-in', 'roll-out'],
+        items: ['hinge', 'jack-in-the-box', 'roll', 'roll-out'],
       },
     ],
   },

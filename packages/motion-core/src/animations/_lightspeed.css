@@ -2,8 +2,18 @@
  * Light Speed
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
+[and-motion="light-speed-right"][and-motion-state="active"]  { animation-name: and-light-speed-in-right; animation-timing-function: ease-out; }
+[and-motion="light-speed-left"][and-motion-state="active"]   { animation-name: and-light-speed-in-left; animation-timing-function: ease-out; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
+
 [and-motion="light-speed-in-right"][and-motion-state="active"]  { animation-name: and-light-speed-in-right; animation-timing-function: ease-out; }
 [and-motion="light-speed-in-left"][and-motion-state="active"]   { animation-name: and-light-speed-in-left; animation-timing-function: ease-out; }
+
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
+
 [and-motion="light-speed-out-right"][and-motion-state="active"] { animation-name: and-light-speed-out-right; animation-timing-function: ease-in; }
 [and-motion="light-speed-out-left"][and-motion-state="active"]  { animation-name: and-light-speed-out-left; animation-timing-function: ease-in; }
 

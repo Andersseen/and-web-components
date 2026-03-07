@@ -2,7 +2,23 @@
  * Fading Entrances & Exits
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ─── Selectors — Entrances ─────────────────────────────────────────────── */
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
+[and-motion="fade"][and-motion-state="active"]              { animation-name: and-fade-in; }
+[and-motion="fade-down"][and-motion-state="active"]         { animation-name: and-fade-in-down; }
+[and-motion="fade-down-big"][and-motion-state="active"]     { animation-name: and-fade-in-down-big; }
+[and-motion="fade-left"][and-motion-state="active"]         { animation-name: and-fade-in-left; }
+[and-motion="fade-left-big"][and-motion-state="active"]     { animation-name: and-fade-in-left-big; }
+[and-motion="fade-right"][and-motion-state="active"]        { animation-name: and-fade-in-right; }
+[and-motion="fade-right-big"][and-motion-state="active"]    { animation-name: and-fade-in-right-big; }
+[and-motion="fade-up"][and-motion-state="active"]           { animation-name: and-fade-in-up; }
+[and-motion="fade-up-big"][and-motion-state="active"]       { animation-name: and-fade-in-up-big; }
+[and-motion="fade-top-left"][and-motion-state="active"]     { animation-name: and-fade-in-top-left; }
+[and-motion="fade-top-right"][and-motion-state="active"]    { animation-name: and-fade-in-top-right; }
+[and-motion="fade-bottom-left"][and-motion-state="active"]  { animation-name: and-fade-in-bottom-left; }
+[and-motion="fade-bottom-right"][and-motion-state="active"] { animation-name: and-fade-in-bottom-right; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
 
 [and-motion="fade-in"][and-motion-state="active"]              { animation-name: and-fade-in; }
 [and-motion="fade-in-down"][and-motion-state="active"]         { animation-name: and-fade-in-down; }
@@ -18,7 +34,7 @@
 [and-motion="fade-in-bottom-left"][and-motion-state="active"]  { animation-name: and-fade-in-bottom-left; }
 [and-motion="fade-in-bottom-right"][and-motion-state="active"] { animation-name: and-fade-in-bottom-right; }
 
-/* ─── Selectors — Exits ─────────────────────────────────────────────────── */
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
 
 [and-motion="fade-out"][and-motion-state="active"]              { animation-name: and-fade-out; }
 [and-motion="fade-out-down"][and-motion-state="active"]         { animation-name: and-fade-out-down; }

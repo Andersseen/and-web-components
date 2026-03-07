@@ -5,22 +5,11 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MotionController } from '@andersseen/motion';
 import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
 
-/** Exit animation names */
-const EXIT_PATTERNS = [
-  'fade-out', 'slide-out', 'zoom-out', 'bounce-out', 'flip-out',
-  'rotate-out', 'back-out', 'light-speed-out', 'roll-out', 'hinge',
-];
-function isExitAnimation(name: string): boolean {
-  return EXIT_PATTERNS.some((p) => name.startsWith(p) || name === p);
-}
-
 @Component({
   selector: 'app-attribute-demo',
-  imports: [CommonModule],
   template: `
     <div class="max-w-6xl mx-auto flex flex-col gap-8 pb-16" #demoRoot>
       <!-- ── Header ── -->
@@ -35,25 +24,58 @@ function isExitAnimation(name: string): boolean {
         </p>
       </div>
 
+      <!-- ── Developer Quick Start ── -->
+      <section class="border border-border rounded-xl p-6 bg-card">
+        <div class="mb-5">
+          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Quick Start</span>
+          <h2 class="text-xl font-bold mb-1">How To Use {{ '@' }}andersseen/motion</h2>
+          <p class="text-sm text-muted-foreground">
+            Framework-agnostic — works with vanilla JS, Angular, React, Vue, Svelte, Astro, or any HTML page.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <article class="rounded-xl border border-border bg-muted/30 p-4">
+            <h3 class="text-sm font-semibold mb-2">1) Install</h3>
+            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetInstall }}</code></pre>
+          </article>
+
+          <article class="rounded-xl border border-border bg-muted/30 p-4">
+            <h3 class="text-sm font-semibold mb-2">2) Initialize</h3>
+            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetInitMotion }}</code></pre>
+          </article>
+
+          <article class="rounded-xl border border-border bg-muted/30 p-4">
+            <h3 class="text-sm font-semibold mb-2">3) HTML Attributes</h3>
+            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetAttributes }}</code></pre>
+          </article>
+
+          <article class="rounded-xl border border-border bg-muted/30 p-4">
+            <h3 class="text-sm font-semibold mb-2">4) Programmatic Replay</h3>
+            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetControllerReplay }}</code></pre>
+          </article>
+        </div>
+      </section>
+
       <!-- ── Trigger Mode Demos (Enter / Hover / Tap) ── -->
       <section class="border border-border rounded-xl p-6 bg-card" #triggerSection>
         <div class="mb-5">
           <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Trigger Modes</span>
           <h2 class="text-xl font-bold mb-1">Enter · Hover · Tap</h2>
           <p class="text-sm text-muted-foreground">
-            The controller supports three trigger types via <code class="text-xs">and-motion-trigger</code>.
+            Three trigger types via <code class="text-xs">and-motion-trigger</code>. Default is <code class="text-xs">enter</code> (viewport).
           </p>
         </div>
 
         <div class="flex gap-4 flex-wrap">
           <div
-            and-motion="fade-in-up"
+            and-motion="fade-up"
             and-motion-trigger="enter"
             class="flex flex-col items-center justify-center gap-1 w-[110px] h-[110px] rounded-xl text-white font-semibold text-sm shadow-lg bg-gradient-to-br from-primary to-primary/80"
           >
             <span class="text-2xl">👁️</span>
             <span class="text-xs">Enter</span>
-            <span class="text-[10px] opacity-70">fade-in-up</span>
+            <span class="text-[10px] opacity-70">fade-up</span>
           </div>
 
           <div
@@ -77,7 +99,7 @@ function isExitAnimation(name: string): boolean {
           </div>
 
           <div
-            and-motion="slide-in-right"
+            and-motion="slide-right"
             and-motion-trigger="enter"
             and-motion-duration="900ms"
             and-motion-delay="200ms"
@@ -85,19 +107,19 @@ function isExitAnimation(name: string): boolean {
           >
             <span class="text-2xl">⏱️</span>
             <span class="text-xs">900ms</span>
-            <span class="text-[10px] opacity-70">slide-in-right</span>
+            <span class="text-[10px] opacity-70">slide-right</span>
           </div>
         </div>
       </section>
 
       <!-- ── All Animation Groups ── -->
-      <ng-container *ngFor="let group of groups">
+      @for (group of groups; track group.label) {
         <section class="border border-border rounded-xl p-6 bg-card">
           <div class="flex items-center justify-between mb-5">
             <div>
               <span
                 class="inline-block text-xs font-semibold uppercase tracking-wider text-white px-2.5 py-1 rounded-full mb-2 bg-gradient-to-r"
-                [ngClass]="group.color"
+                [class]="group.color"
               >{{ group.tag }}</span>
               <h2 class="text-xl font-bold">{{ group.label }}</h2>
             </div>
@@ -110,24 +132,25 @@ function isExitAnimation(name: string): boolean {
           </div>
 
           <div class="flex gap-3 flex-wrap">
-            <div
-              *ngFor="let anim of group.items"
-              [attr.data-anim-name]="anim"
-              [attr.data-anim-group]="group.label"
-              class="relative flex flex-col items-center justify-center gap-1 min-w-[100px] h-[90px] rounded-xl text-white font-semibold text-xs shadow-md overflow-hidden bg-gradient-to-br"
-              [ngClass]="group.color"
-            >
-              <span class="font-mono text-[10px] leading-tight text-center px-1 opacity-90">{{ anim }}</span>
-              <button
-                (click)="playCard($event)"
-                class="mt-1 flex items-center gap-0.5 text-[10px] font-medium text-white/90 bg-white/20 hover:bg-white/30 rounded-md px-2 py-0.5 transition-colors cursor-pointer"
+            @for (anim of group.items; track anim) {
+              <div
+                [attr.and-motion]="anim"
+                [attr.data-anim-group]="group.label"
+                class="relative flex flex-col items-center justify-center gap-1 min-w-[100px] h-[90px] rounded-xl text-white font-semibold text-xs shadow-md overflow-hidden bg-gradient-to-br"
+                [class]="group.color"
               >
-                ▶ Play
-              </button>
-            </div>
+                <span class="font-mono text-[10px] leading-tight text-center px-1 opacity-90">{{ anim }}</span>
+                <button
+                  (click)="playCard($event)"
+                  class="mt-1 flex items-center gap-0.5 text-[10px] font-medium text-white/90 bg-white/20 hover:bg-white/30 rounded-md px-2 py-0.5 transition-colors cursor-pointer"
+                >
+                  ▶ Play
+                </button>
+              </div>
+            }
           </div>
         </section>
-      </ng-container>
+      }
 
       <!-- ── API Note ── -->
       <div class="flex items-start gap-3 p-4 rounded-xl bg-muted border border-border">
@@ -164,9 +187,44 @@ export default class AttributeDemoComponent
   private runningTimers: number[] = [];
   private abortControllers: AbortController[] = [];
 
+  readonly snippetInstall = `pnpm add @andersseen/motion`;
+
+  readonly snippetInitMotion = `import { initMotion } from '@andersseen/motion';
+import '@andersseen/motion/style.css';
+
+// Auto-scan document.body for [and-motion] elements
+const cleanup = initMotion({ once: false });
+
+// Call cleanup() on SPA unmount or when done`;
+
+  readonly snippetAttributes = `<div
+  and-motion="fade-up"
+  and-motion-duration="700ms"
+  and-motion-delay="120ms"
+  and-motion-easing="ease-out"
+>
+  Animated card
+</div>`;
+
+  readonly snippetControllerReplay = `import { MotionController } from '@andersseen/motion';
+
+const mc = new MotionController({
+  root: document.getElementById('app'),
+  once: false,
+});
+
+// Programmatic replay
+function replay(el) {
+  el.removeAttribute('and-motion-state');
+  void el.offsetWidth; // force reflow
+  el.setAttribute('and-motion-state', 'active');
+}
+
+// Cleanup
+mc.destroy();`;
+
   ngAfterViewInit() {
     // MotionController ONLY scoped to the trigger-mode demos (enter/hover/tap)
-    // — NOT the gallery cards, which are played manually via ▶ Play buttons.
     setTimeout(() => {
       this.controller = new MotionController({
         root: this.triggerSection.nativeElement,
@@ -183,7 +241,7 @@ export default class AttributeDemoComponent
 
   playCard(event: Event): void {
     event.stopPropagation();
-    const card = (event.target as HTMLElement).closest<HTMLElement>('[data-anim-name]');
+    const card = (event.target as HTMLElement).closest<HTMLElement>('[and-motion]');
     if (card) this.playElement(card);
   }
 
@@ -198,27 +256,18 @@ export default class AttributeDemoComponent
     });
   }
 
-  /**
-   * Animate a single gallery card.
-   *
-   * 1. Set `and-motion` + `and-motion-state="active"` to trigger CSS animation.
-   * 2. Listen for `animationend` to clean up reliably.
-   * 3. After animation ends, restore card to idle (no motion attributes).
-   */
   private playElement(el: HTMLElement): void {
-    const animName = el.getAttribute('data-anim-name') || '';
+    const animName = el.getAttribute('and-motion') || '';
     if (!animName) return;
 
-    // ── 1. Reset any in-progress animation ──
-    el.removeAttribute('and-motion');
+    // Reset any in-progress animation
     el.removeAttribute('and-motion-state');
-    void el.offsetWidth; // force reflow
+    void el.offsetWidth;
 
-    // ── 2. Attach the animation attributes ──
-    el.setAttribute('and-motion', animName);
+    // Trigger animation
     el.setAttribute('and-motion-state', 'active');
 
-    // ── 3. Clean up when animation ends ──
+    // Clean up when animation ends
     const ac = new AbortController();
     this.abortControllers.push(ac);
 
@@ -226,7 +275,6 @@ export default class AttributeDemoComponent
       'animationend',
       () => {
         el.removeAttribute('and-motion-state');
-        el.removeAttribute('and-motion');
         el.style.opacity = '';
         el.style.transform = '';
       },
@@ -237,7 +285,6 @@ export default class AttributeDemoComponent
     const fallbackMs = this.getAnimDuration(el) + 200;
     const t = window.setTimeout(() => {
       el.removeAttribute('and-motion-state');
-      el.removeAttribute('and-motion');
       el.style.opacity = '';
       el.style.transform = '';
     }, fallbackMs);

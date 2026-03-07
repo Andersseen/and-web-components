@@ -2,11 +2,24 @@
  * Zooming Entrances & Exits
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
+[and-motion="zoom"][and-motion-state="active"]        { animation-name: and-zoom-in; }
+[and-motion="zoom-down"][and-motion-state="active"]   { animation-name: and-zoom-in-down; }
+[and-motion="zoom-left"][and-motion-state="active"]   { animation-name: and-zoom-in-left; }
+[and-motion="zoom-right"][and-motion-state="active"]  { animation-name: and-zoom-in-right; }
+[and-motion="zoom-up"][and-motion-state="active"]     { animation-name: and-zoom-in-up; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
+
 [and-motion="zoom-in"][and-motion-state="active"]        { animation-name: and-zoom-in; }
 [and-motion="zoom-in-down"][and-motion-state="active"]   { animation-name: and-zoom-in-down; }
 [and-motion="zoom-in-left"][and-motion-state="active"]   { animation-name: and-zoom-in-left; }
 [and-motion="zoom-in-right"][and-motion-state="active"]  { animation-name: and-zoom-in-right; }
 [and-motion="zoom-in-up"][and-motion-state="active"]     { animation-name: and-zoom-in-up; }
+
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
+
 [and-motion="zoom-out"][and-motion-state="active"]       { animation-name: and-zoom-out; }
 [and-motion="zoom-out-down"][and-motion-state="active"]  { animation-name: and-zoom-out-down; }
 [and-motion="zoom-out-left"][and-motion-state="active"]  { animation-name: and-zoom-out-left; }

@@ -5,7 +5,6 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AnimGroup } from '../data/animation-catalogue';
 
 /** Exit animation names end in -out or start with an out direction */
@@ -18,20 +17,9 @@ function isExitAnimation(name: string): boolean {
   return EXIT_PATTERNS.some((p) => name.startsWith(p) || name === p);
 }
 
-/**
- * Reusable component that renders a set of animation groups with a Play button.
- * Used by every per-category route page.
- *
- * Cards do NOT carry the `and-motion` attribute by default — it is only set
- * when the user clicks ▶ Play (or ▶ Play All).  This prevents the base CSS
- * rule `[and-motion]` from adding `animation-fill-mode: both` / `will-change`
- * on idle cards and, more importantly, prevents the MotionController's
- * IntersectionObserver from auto-triggering animations on page load.
- */
 @Component({
   selector: 'app-category-demo',
   standalone: true,
-  imports: [CommonModule],
   template: `
     <div class="max-w-6xl mx-auto flex flex-col gap-8 pb-16" #demoRoot>
       <!-- Header -->
@@ -44,14 +32,37 @@ function isExitAnimation(name: string): boolean {
         </p>
       </div>
 
+      <!-- Developer examples -->
+      <section class="border border-border rounded-xl p-6 bg-card">
+        <div class="mb-5">
+          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Code Examples</span>
+          <h2 class="text-xl font-bold mb-1">Using Animations In Your Project</h2>
+          <p class="text-sm text-muted-foreground">
+            Pure HTML attributes — works with any framework or vanilla JS.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <article class="rounded-xl border border-border bg-muted/30 p-4">
+            <h3 class="text-sm font-semibold mb-2">HTML Markup</h3>
+            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ markupSnippet }}</code></pre>
+          </article>
+
+          <article class="rounded-xl border border-border bg-muted/30 p-4">
+            <h3 class="text-sm font-semibold mb-2">Vanilla JS Controller</h3>
+            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ controllerSnippet }}</code></pre>
+          </article>
+        </div>
+      </section>
+
       <!-- Groups -->
-      <ng-container *ngFor="let group of groups">
+      @for (group of groups; track group.label) {
         <section class="border border-border rounded-xl p-6 bg-card">
           <div class="flex items-center justify-between mb-5">
             <div>
               <span
                 class="inline-block text-xs font-semibold uppercase tracking-wider text-white px-2.5 py-1 rounded-full mb-2 bg-gradient-to-r"
-                [ngClass]="group.color"
+                [class]="group.color"
               >{{ group.tag }}</span>
               <h2 class="text-xl font-bold">{{ group.label }}</h2>
             </div>
@@ -64,24 +75,25 @@ function isExitAnimation(name: string): boolean {
           </div>
 
           <div class="flex gap-3 flex-wrap">
-            <div
-              *ngFor="let anim of group.items"
-              [attr.data-anim-name]="anim"
-              [attr.data-anim-group]="group.label"
-              class="relative flex flex-col items-center justify-center gap-1 min-w-[100px] h-[90px] rounded-xl text-white font-semibold text-xs shadow-md overflow-hidden bg-gradient-to-br"
-              [ngClass]="group.color"
-            >
-              <span class="font-mono text-[10px] leading-tight text-center px-1 opacity-90">{{ anim }}</span>
-              <button
-                (click)="playCard($event)"
-                class="mt-1 flex items-center gap-0.5 text-[10px] font-medium text-white/90 bg-white/20 hover:bg-white/30 rounded-md px-2 py-0.5 transition-colors cursor-pointer"
+            @for (anim of group.items; track anim) {
+              <div
+                [attr.and-motion]="anim"
+                [attr.data-anim-group]="group.label"
+                class="relative flex flex-col items-center justify-center gap-1 min-w-[100px] h-[90px] rounded-xl text-white font-semibold text-xs shadow-md overflow-hidden bg-gradient-to-br"
+                [class]="group.color"
               >
-                ▶ Play
-              </button>
-            </div>
+                <span class="font-mono text-[10px] leading-tight text-center px-1 opacity-90">{{ anim }}</span>
+                <button
+                  (click)="playCard($event)"
+                  class="mt-1 flex items-center gap-0.5 text-[10px] font-medium text-white/90 bg-white/20 hover:bg-white/30 rounded-md px-2 py-0.5 transition-colors cursor-pointer"
+                >
+                  ▶ Play
+                </button>
+              </div>
+            }
           </div>
         </section>
-      </ng-container>
+      }
     </div>
   `,
 })
@@ -94,6 +106,29 @@ export class CategoryDemoComponent implements OnDestroy {
   private runningTimers: number[] = [];
   private abortControllers: AbortController[] = [];
 
+  get sampleAnimation(): string {
+    return this.groups[0]?.items[0] || 'fade-up';
+  }
+
+  get markupSnippet(): string {
+    return `<div
+  and-motion="${this.sampleAnimation}"
+  and-motion-duration="650ms"
+>
+  Animated card
+</div>`;
+  }
+
+  get controllerSnippet(): string {
+    return `import { initMotion } from '@andersseen/motion';
+import '@andersseen/motion/style.css';
+
+// Auto-scan & animate on viewport enter
+const cleanup = initMotion({ once: false });
+
+// Call cleanup() when done (SPA unmount, etc.)`;
+  }
+
   get totalCount(): number {
     return this.groups.reduce((sum, g) => sum + g.items.length, 0);
   }
@@ -105,7 +140,7 @@ export class CategoryDemoComponent implements OnDestroy {
 
   playCard(event: Event): void {
     event.stopPropagation();
-    const card = (event.target as HTMLElement).closest<HTMLElement>('[data-anim-name]');
+    const card = (event.target as HTMLElement).closest<HTMLElement>('[and-motion]');
     if (card) this.playElement(card);
   }
 
@@ -120,30 +155,18 @@ export class CategoryDemoComponent implements OnDestroy {
     });
   }
 
-  /**
-   * Animate a single demo card.
-   *
-   * 1. Set `and-motion` + `and-motion-state="active"` to trigger CSS animation.
-   * 2. Listen for `animationend` to clean up reliably (no manual timeouts).
-   * 3. For exit animations: after anim ends, restore the card to its normal state.
-   */
   private playElement(el: HTMLElement): void {
-    const animName = el.getAttribute('data-anim-name') || '';
+    const animName = el.getAttribute('and-motion') || '';
     if (!animName) return;
 
-    const isExit = isExitAnimation(animName);
-
-    // ── 1. Reset any in-progress animation ──
-    el.removeAttribute('and-motion');
+    // Reset any in-progress animation
     el.removeAttribute('and-motion-state');
-    // Force reflow so the browser acknowledges the attribute removal
     void el.offsetWidth;
 
-    // ── 2. Attach the animation attributes ──
-    el.setAttribute('and-motion', animName);
+    // Trigger animation
     el.setAttribute('and-motion-state', 'active');
 
-    // ── 3. Clean up when animation ends ──
+    // Clean up when animation ends
     const ac = new AbortController();
     this.abortControllers.push(ac);
 
@@ -151,31 +174,27 @@ export class CategoryDemoComponent implements OnDestroy {
       'animationend',
       () => {
         el.removeAttribute('and-motion-state');
-        el.removeAttribute('and-motion');
-        // Ensure visibility is restored (exit animations may set opacity < 1)
         el.style.opacity = '';
         el.style.transform = '';
       },
       { once: true, signal: ac.signal },
     );
 
-    // Fallback timeout in case animationend doesn't fire (e.g. display:none)
+    // Fallback timeout
     const fallbackMs = this.getAnimDuration(el) + 200;
     const t = window.setTimeout(() => {
       el.removeAttribute('and-motion-state');
-      el.removeAttribute('and-motion');
       el.style.opacity = '';
       el.style.transform = '';
     }, fallbackMs);
     this.runningTimers.push(t);
   }
 
-  /** Read the effective animation duration from the element or CSS variable */
   private getAnimDuration(el: HTMLElement): number {
     const attr = el.getAttribute('and-motion-duration');
     if (attr) return parseFloat(attr);
     const computed = getComputedStyle(el).getPropertyValue('--and-motion-duration').trim();
     if (computed) return parseFloat(computed);
-    return 300; // fallback
+    return 300;
   }
 }
