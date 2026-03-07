@@ -1,8 +1,10 @@
 import { setCustomElementsManifest } from '@storybook/web-components-vite';
 import customElements from '../custom-elements.json';
 
-// Initialize the web components synchronously to fix Vite unresolved chunks
-import '../dist/components/index.js';
+// Initialize the web components
+import { defineCustomElements } from '../loader';
+
+defineCustomElements();
 
 setCustomElementsManifest(customElements);
 import '../src/global/global.css';
