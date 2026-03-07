@@ -5,7 +5,7 @@ import {
   AndNavbar,
   AndSidebar,
 } from '@angular-components/stencil-generated/components';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -15,109 +15,130 @@ interface SidebarItem {
   icon?: string;
 }
 
+type Section =
+  | 'components'
+  | 'icons'
+  | 'themes'
+  | 'headless'
+  | 'motion'
+  | 'layout';
+
+interface SidebarConfig {
+  items: SidebarItem[];
+  active: WritableSignal<string>;
+  route: string;
+}
+
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, AndNavbar, AndSidebar, AndDropdown, AndButton, AndIcon],
-  schemas: [],
+  imports: [
+    RouterOutlet,
+    AndNavbar,
+    AndSidebar,
+    AndDropdown,
+    AndButton,
+    AndIcon,
+  ],
   template: `
     <div class="app-container" and-layout="vertical">
-      <!-- Navbar -->
       <and-navbar
         class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
         (navItemClick)="onNavItemClick($event)"
       >
-        <!-- Start slot: logo & brand -->
-        <span slot="start" style="display: flex; align-items: center; gap: 0.5rem;">
+        <span
+          slot="start"
+          style="display: flex; align-items: center; gap: 0.5rem;"
+        >
           <and-icon name="layout"></and-icon>
           And Web Components UI
         </span>
 
-        <!-- End slot: theme, color, dark mode, github -->
-        <div
-          slot="end"
-          style="display: flex; align-items: center; gap: 1rem;"
-        >
-          <!-- Theme Preset -->
+        <div slot="end" style="display: flex; align-items: center; gap: 1rem;">
           <div style="width: 140px;">
             <and-dropdown
               label="Theme"
               [items]="themeOptions"
               (andDropdownSelect)="onThemeSelect($event)"
-            ></and-dropdown>
+            />
           </div>
 
-          <!-- Color Palette -->
           <div style="width: 140px;">
             <and-dropdown
               label="Color"
               [items]="colorOptions"
               (andDropdownSelect)="onColorSelect($event)"
-            ></and-dropdown>
+            />
           </div>
 
-          <!-- Dark Mode Toggle -->
           <and-button
             variant="ghost"
             size="icon"
             (click)="toggleDarkMode()"
             title="Toggle Dark Mode"
           >
-            <and-icon [name]="isDark() ? 'sun' : 'moon'"></and-icon>
+            <and-icon [name]="isDark() ? 'sun' : 'moon'" />
           </and-button>
 
           <and-button
-            variant="outline"
             size="sm"
-            onclick="window.open('https://github.com', '_blank')"
+            variant="link"
+            href="https://libs.andersseen.dev"
           >
+            <and-icon name="app-window" size="16" />
+            Home
+          </and-button>
+          <and-button
+            size="sm"
+            variant="link"
+            href="https://github.com/Andersseen/and-web-components"
+            target="_blank"
+          >
+            <and-icon name="github" size="16" />
             GitHub
           </and-button>
         </div>
       </and-navbar>
 
       <div class="main-content" and-layout="horizontal">
-        @if (activeSection() === 'components') {
-          <and-sidebar
-            class="bg-background"
-            [items]="componentItems"
-            [activeItem]="activeComponent()"
-            (andSidebarItemClick)="onSidebarItemClick($event)"
-          >
-          </and-sidebar>
-        }
-        @if (activeSection() === 'headless') {
-          <and-sidebar
-            class="bg-background"
-            [items]="headlessItems"
-            [activeItem]="activeHeadless()"
-            (andSidebarItemClick)="onHeadlessSidebarItemClick($event)"
-          >
-          </and-sidebar>
-        }
-        @if (activeSection() === 'motion') {
-          <and-sidebar
-            class="bg-background"
-            [items]="motionItems"
-            [activeItem]="activeMotion()"
-            (andSidebarItemClick)="onMotionItemClick($event)"
-          >
-          </and-sidebar>
-        }
-        @if (activeSection() === 'layout') {
-          <and-sidebar
-            class="bg-background"
-            [items]="layoutItems"
-            [activeItem]="activeLayout()"
-            (andSidebarItemClick)="onLayoutItemClick($event)"
-          >
-          </and-sidebar>
+        @switch (activeSection()) {
+          @case ('components') {
+            <and-sidebar
+              class="bg-background"
+              [items]="componentItems"
+              [activeItem]="activeComponent()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
+          @case ('headless') {
+            <and-sidebar
+              class="bg-background"
+              [items]="headlessItems"
+              [activeItem]="activeHeadless()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
+          @case ('motion') {
+            <and-sidebar
+              class="bg-background"
+              [items]="motionItems"
+              [activeItem]="activeMotion()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
+          @case ('layout') {
+            <and-sidebar
+              class="bg-background"
+              [items]="layoutItems"
+              [activeItem]="activeLayout()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
         }
 
-        <!-- Content Area -->
         <div class="content-area" and-layout="p:xl">
-          <router-outlet></router-outlet>
+          <router-outlet />
         </div>
       </div>
     </div>
@@ -130,12 +151,10 @@ interface SidebarItem {
         background-color: var(--background);
         color: var(--foreground);
       }
-
       .main-content {
         flex: 1;
         overflow: hidden;
       }
-
       .content-area {
         flex: 1;
         overflow-y: auto;
@@ -146,7 +165,10 @@ interface SidebarItem {
   ],
 })
 export class MainLayoutComponent {
-  navItems = [
+  private readonly router = inject(Router);
+
+  // ── Navigation ──
+  readonly navItems = [
     { id: 'components', label: 'Components' },
     { id: 'headless', label: 'Headless' },
     { id: 'icons', label: 'Icons' },
@@ -154,7 +176,8 @@ export class MainLayoutComponent {
     { id: 'layout', label: 'Layout' },
   ];
 
-  componentItems: SidebarItem[] = [
+  // ── Sidebar items ──
+  readonly componentItems: SidebarItem[] = [
     { id: 'accordion', label: 'Accordion', icon: 'layers' },
     { id: 'alert', label: 'Alert', icon: 'alert-circle' },
     { id: 'badge', label: 'Badge', icon: 'award' },
@@ -176,7 +199,7 @@ export class MainLayoutComponent {
     { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
   ];
 
-  headlessItems: SidebarItem[] = [
+  readonly headlessItems: SidebarItem[] = [
     { id: 'overview', label: 'Overview', icon: 'compass' },
     { id: 'button', label: 'Button', icon: 'circle-dot' },
     { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
@@ -193,7 +216,8 @@ export class MainLayoutComponent {
     { id: 'menu-list', label: 'Menu List', icon: 'list' },
     { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
   ];
-  motionItems: SidebarItem[] = [
+
+  readonly motionItems: SidebarItem[] = [
     { id: 'attribute', label: 'Overview', icon: 'code' },
     { id: 'attention-seekers', label: 'Attention Seekers', icon: 'zap' },
     { id: 'fading', label: 'Fading', icon: 'eye' },
@@ -207,7 +231,7 @@ export class MainLayoutComponent {
     { id: 'specials', label: 'Specials', icon: 'star' },
   ];
 
-  layoutItems: SidebarItem[] = [
+  readonly layoutItems: SidebarItem[] = [
     { id: 'overview', label: 'Overview', icon: 'compass' },
     { id: 'flex', label: 'Flexbox', icon: 'columns' },
     { id: 'grid', label: 'Grid', icon: 'layout' },
@@ -216,7 +240,8 @@ export class MainLayoutComponent {
     { id: 'responsive', label: 'Responsive', icon: 'monitor' },
   ];
 
-  themeOptions = [
+  // ── Theme / Color options ──
+  readonly themeOptions = [
     { text: 'Modern', value: 'default' },
     { text: 'Compact', value: 'compact' },
     { text: 'Playful', value: 'playful' },
@@ -224,7 +249,7 @@ export class MainLayoutComponent {
     { text: 'Elegant', value: 'elegant' },
   ];
 
-  colorOptions = [
+  readonly colorOptions = [
     { text: 'Indigo & Rose', value: 'indigo-rose' },
     { text: 'Slate & Amber', value: 'slate-amber' },
     { text: 'Emerald & Orange', value: 'emerald-orange' },
@@ -232,116 +257,91 @@ export class MainLayoutComponent {
     { text: 'Rose & Teal', value: 'rose-teal' },
   ];
 
-  activeComponent = signal<string>('accordion');
-  activeHeadless = signal<string>('overview');
-  activeSection = signal<
-    'components' | 'icons' | 'themes' | 'headless' | 'motion' | 'layout'
-  >('components');
+  // ── State ──
+  readonly activeSection = signal<Section>('components');
+  readonly activeComponent = signal('accordion');
+  readonly activeHeadless = signal('overview');
+  readonly activeMotion = signal('attribute');
+  readonly activeLayout = signal('overview');
+  readonly isDark = signal(false);
 
-  activeMotion = signal<string>('attribute');
-  activeLayout = signal<string>('overview');
-  isDark = signal<boolean>(false);
+  // ── Config maps (eliminates if/else chains) ──
+  private readonly sectionRoutes: Record<Section, string> = {
+    components: '/components',
+    headless: '/headless',
+    icons: '/icons',
+    themes: '/themes',
+    motion: '/motion',
+    layout: '/layout',
+  };
 
-  constructor(private router: Router) {
+  private readonly sidebarConfig: Partial<Record<Section, SidebarConfig>> = {
+    components: {
+      items: this.componentItems,
+      active: this.activeComponent,
+      route: '/components',
+    },
+    headless: {
+      items: this.headlessItems,
+      active: this.activeHeadless,
+      route: '/headless',
+    },
+    motion: {
+      items: this.motionItems,
+      active: this.activeMotion,
+      route: '/motion',
+    },
+    layout: {
+      items: this.layoutItems,
+      active: this.activeLayout,
+      route: '/layout',
+    },
+  };
+
+  private readonly sections = Object.keys(this.sectionRoutes) as Section[];
+
+  constructor() {
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        const url = event.urlAfterRedirects;
-        if (url.includes('/icons')) {
-          this.activeSection.set('icons');
-        } else if (url.includes('/headless')) {
-          this.activeSection.set('headless');
-        } else if (url.includes('/themes')) {
-          this.activeSection.set('themes');
-        } else if (url.includes('/motion')) {
-          this.activeSection.set('motion');
-          const motionId = url.split('/').pop();
-          if (motionId && motionId !== 'motion') {
-            this.activeMotion.set(motionId);
-          }
-        } else if (url.includes('/layout')) {
-          this.activeSection.set('layout');
-          const layoutId = url.split('/').pop();
-          if (layoutId && layoutId !== 'layout') {
-            this.activeLayout.set(layoutId);
-          }
-        } else {
-          this.activeSection.set('components');
-          const componentId = url.split('/').pop();
-          if (componentId && componentId !== 'components') {
-            this.activeComponent.set(componentId);
-          }
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(({ urlAfterRedirects: url }) => {
+        const section =
+          this.sections.find((s) => url.includes(`/${s}`)) ?? 'components';
+        this.activeSection.set(section);
+
+        const config = this.sidebarConfig[section];
+        const id = url.split('/').pop();
+        if (config && id && id !== section) {
+          config.active.set(id);
         }
       });
 
-    // Initialize theme if needed
     document.documentElement.setAttribute('data-color', 'indigo-rose');
   }
 
   onNavItemClick(event: any) {
-    const section = event.detail as
-      | 'components'
-      | 'icons'
-      | 'headless'
-      | 'themes'
-      | 'motion'
-      | 'layout';
+    const section = event.detail as Section;
     this.activeSection.set(section);
-    if (section === 'icons') {
-      this.router.navigate(['/icons']);
-    } else if (section === 'headless') {
-      this.router.navigate(['/headless']);
-    } else if (section === 'themes') {
-      this.router.navigate(['/themes']);
-    } else if (section === 'motion') {
-      this.router.navigate(['/motion']);
-    } else if (section === 'layout') {
-      this.router.navigate(['/layout']);
-    } else {
-      this.router.navigate(['/components']);
-    }
+    this.router.navigate([this.sectionRoutes[section]]);
+  }
+
+  onSidebarItemClick(event: any) {
+    const config = this.sidebarConfig[this.activeSection()];
+    if (!config) return;
+    const id = event.detail;
+    config.active.set(id);
+    this.router.navigate([config.route, id]);
   }
 
   onThemeSelect(event: any) {
-    const theme = event.detail;
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', event.detail);
   }
 
   onColorSelect(event: any) {
-    const color = event.detail;
-    document.documentElement.setAttribute('data-color', color);
+    document.documentElement.setAttribute('data-color', event.detail);
   }
 
   toggleDarkMode() {
     this.isDark.update((d) => !d);
-    if (this.isDark()) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
-
-  onSidebarItemClick(event: any) {
-    const componentId = event.detail;
-    this.activeComponent.set(componentId);
-    this.router.navigate(['/components', componentId]);
-  }
-
-  onHeadlessSidebarItemClick(event: any) {
-    const headlessId = event.detail;
-    this.activeHeadless.set(headlessId);
-    this.router.navigate(['/headless', headlessId]);
-  }
-
-  onMotionItemClick(event: any) {
-    const motionId = event.detail;
-    this.activeMotion.set(motionId);
-    this.router.navigate(['/motion', motionId]);
-  }
-
-  onLayoutItemClick(event: any) {
-    const layoutId = event.detail;
-    this.activeLayout.set(layoutId);
-    this.router.navigate(['/layout', layoutId]);
+    document.documentElement.classList.toggle('dark', this.isDark());
   }
 }

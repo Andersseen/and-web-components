@@ -209,10 +209,45 @@ export namespace Components {
          */
         "customClass": string;
         /**
+          * Add built-in padding to the card. Use `true` for simple content without sub-components. Defaults to `false` so sub-components (header/content/footer) manage their own spacing.
+          * @default false
+         */
+        "padded": boolean;
+        /**
           * Visual variant of the card.
           * @default 'default'
          */
         "variant": CardVariantProps['variant'];
+    }
+    interface AndCardContent {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+    }
+    interface AndCardDescription {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+    }
+    interface AndCardFooter {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+    }
+    interface AndCardHeader {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+    }
+    interface AndCardTitle {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
     }
     interface AndCarousel {
         /**
@@ -773,6 +808,36 @@ declare global {
         prototype: HTMLAndCardElement;
         new (): HTMLAndCardElement;
     };
+    interface HTMLAndCardContentElement extends Components.AndCardContent, HTMLStencilElement {
+    }
+    var HTMLAndCardContentElement: {
+        prototype: HTMLAndCardContentElement;
+        new (): HTMLAndCardContentElement;
+    };
+    interface HTMLAndCardDescriptionElement extends Components.AndCardDescription, HTMLStencilElement {
+    }
+    var HTMLAndCardDescriptionElement: {
+        prototype: HTMLAndCardDescriptionElement;
+        new (): HTMLAndCardDescriptionElement;
+    };
+    interface HTMLAndCardFooterElement extends Components.AndCardFooter, HTMLStencilElement {
+    }
+    var HTMLAndCardFooterElement: {
+        prototype: HTMLAndCardFooterElement;
+        new (): HTMLAndCardFooterElement;
+    };
+    interface HTMLAndCardHeaderElement extends Components.AndCardHeader, HTMLStencilElement {
+    }
+    var HTMLAndCardHeaderElement: {
+        prototype: HTMLAndCardHeaderElement;
+        new (): HTMLAndCardHeaderElement;
+    };
+    interface HTMLAndCardTitleElement extends Components.AndCardTitle, HTMLStencilElement {
+    }
+    var HTMLAndCardTitleElement: {
+        prototype: HTMLAndCardTitleElement;
+        new (): HTMLAndCardTitleElement;
+    };
     interface HTMLAndCarouselElementEventMap {
         "andSlideChange": number;
     }
@@ -1037,6 +1102,11 @@ declare global {
         "and-breadcrumb-item": HTMLAndBreadcrumbItemElement;
         "and-button": HTMLAndButtonElement;
         "and-card": HTMLAndCardElement;
+        "and-card-content": HTMLAndCardContentElement;
+        "and-card-description": HTMLAndCardDescriptionElement;
+        "and-card-footer": HTMLAndCardFooterElement;
+        "and-card-header": HTMLAndCardHeaderElement;
+        "and-card-title": HTMLAndCardTitleElement;
         "and-carousel": HTMLAndCarouselElement;
         "and-carousel-item": HTMLAndCarouselItemElement;
         "and-context-menu": HTMLAndContextMenuElement;
@@ -1236,10 +1306,45 @@ declare namespace LocalJSX {
          */
         "customClass"?: string;
         /**
+          * Add built-in padding to the card. Use `true` for simple content without sub-components. Defaults to `false` so sub-components (header/content/footer) manage their own spacing.
+          * @default false
+         */
+        "padded"?: boolean;
+        /**
           * Visual variant of the card.
           * @default 'default'
          */
         "variant"?: CardVariantProps['variant'];
+    }
+    interface AndCardContent {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+    }
+    interface AndCardDescription {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+    }
+    interface AndCardFooter {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+    }
+    interface AndCardHeader {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+    }
+    interface AndCardTitle {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
     }
     interface AndCarousel {
         /**
@@ -1746,6 +1851,22 @@ declare namespace LocalJSX {
     }
     interface AndCardAttributes {
         "variant": CardVariantProps['variant'];
+        "padded": boolean;
+        "customClass": string;
+    }
+    interface AndCardContentAttributes {
+        "customClass": string;
+    }
+    interface AndCardDescriptionAttributes {
+        "customClass": string;
+    }
+    interface AndCardFooterAttributes {
+        "customClass": string;
+    }
+    interface AndCardHeaderAttributes {
+        "customClass": string;
+    }
+    interface AndCardTitleAttributes {
         "customClass": string;
     }
     interface AndCarouselAttributes {
@@ -1867,6 +1988,11 @@ declare namespace LocalJSX {
         "and-breadcrumb-item": Omit<AndBreadcrumbItem, keyof AndBreadcrumbItemAttributes> & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes]?: AndBreadcrumbItem[K] } & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes as `attr:${K}`]?: AndBreadcrumbItemAttributes[K] } & { [K in keyof AndBreadcrumbItem & keyof AndBreadcrumbItemAttributes as `prop:${K}`]?: AndBreadcrumbItem[K] };
         "and-button": Omit<AndButton, keyof AndButtonAttributes> & { [K in keyof AndButton & keyof AndButtonAttributes]?: AndButton[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `attr:${K}`]?: AndButtonAttributes[K] } & { [K in keyof AndButton & keyof AndButtonAttributes as `prop:${K}`]?: AndButton[K] };
         "and-card": Omit<AndCard, keyof AndCardAttributes> & { [K in keyof AndCard & keyof AndCardAttributes]?: AndCard[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `attr:${K}`]?: AndCardAttributes[K] } & { [K in keyof AndCard & keyof AndCardAttributes as `prop:${K}`]?: AndCard[K] };
+        "and-card-content": Omit<AndCardContent, keyof AndCardContentAttributes> & { [K in keyof AndCardContent & keyof AndCardContentAttributes]?: AndCardContent[K] } & { [K in keyof AndCardContent & keyof AndCardContentAttributes as `attr:${K}`]?: AndCardContentAttributes[K] } & { [K in keyof AndCardContent & keyof AndCardContentAttributes as `prop:${K}`]?: AndCardContent[K] };
+        "and-card-description": Omit<AndCardDescription, keyof AndCardDescriptionAttributes> & { [K in keyof AndCardDescription & keyof AndCardDescriptionAttributes]?: AndCardDescription[K] } & { [K in keyof AndCardDescription & keyof AndCardDescriptionAttributes as `attr:${K}`]?: AndCardDescriptionAttributes[K] } & { [K in keyof AndCardDescription & keyof AndCardDescriptionAttributes as `prop:${K}`]?: AndCardDescription[K] };
+        "and-card-footer": Omit<AndCardFooter, keyof AndCardFooterAttributes> & { [K in keyof AndCardFooter & keyof AndCardFooterAttributes]?: AndCardFooter[K] } & { [K in keyof AndCardFooter & keyof AndCardFooterAttributes as `attr:${K}`]?: AndCardFooterAttributes[K] } & { [K in keyof AndCardFooter & keyof AndCardFooterAttributes as `prop:${K}`]?: AndCardFooter[K] };
+        "and-card-header": Omit<AndCardHeader, keyof AndCardHeaderAttributes> & { [K in keyof AndCardHeader & keyof AndCardHeaderAttributes]?: AndCardHeader[K] } & { [K in keyof AndCardHeader & keyof AndCardHeaderAttributes as `attr:${K}`]?: AndCardHeaderAttributes[K] } & { [K in keyof AndCardHeader & keyof AndCardHeaderAttributes as `prop:${K}`]?: AndCardHeader[K] };
+        "and-card-title": Omit<AndCardTitle, keyof AndCardTitleAttributes> & { [K in keyof AndCardTitle & keyof AndCardTitleAttributes]?: AndCardTitle[K] } & { [K in keyof AndCardTitle & keyof AndCardTitleAttributes as `attr:${K}`]?: AndCardTitleAttributes[K] } & { [K in keyof AndCardTitle & keyof AndCardTitleAttributes as `prop:${K}`]?: AndCardTitle[K] };
         "and-carousel": Omit<AndCarousel, keyof AndCarouselAttributes> & { [K in keyof AndCarousel & keyof AndCarouselAttributes]?: AndCarousel[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `attr:${K}`]?: AndCarouselAttributes[K] } & { [K in keyof AndCarousel & keyof AndCarouselAttributes as `prop:${K}`]?: AndCarousel[K] };
         "and-carousel-item": Omit<AndCarouselItem, keyof AndCarouselItemAttributes> & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes]?: AndCarouselItem[K] } & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes as `attr:${K}`]?: AndCarouselItemAttributes[K] } & { [K in keyof AndCarouselItem & keyof AndCarouselItemAttributes as `prop:${K}`]?: AndCarouselItem[K] };
         "and-context-menu": Omit<AndContextMenu, keyof AndContextMenuAttributes> & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes]?: AndContextMenu[K] } & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes as `attr:${K}`]?: AndContextMenuAttributes[K] } & { [K in keyof AndContextMenu & keyof AndContextMenuAttributes as `prop:${K}`]?: AndContextMenu[K] };
@@ -1916,6 +2042,11 @@ declare module "@stencil/core" {
             "and-breadcrumb-item": LocalJSX.IntrinsicElements["and-breadcrumb-item"] & JSXBase.HTMLAttributes<HTMLAndBreadcrumbItemElement>;
             "and-button": LocalJSX.IntrinsicElements["and-button"] & JSXBase.HTMLAttributes<HTMLAndButtonElement>;
             "and-card": LocalJSX.IntrinsicElements["and-card"] & JSXBase.HTMLAttributes<HTMLAndCardElement>;
+            "and-card-content": LocalJSX.IntrinsicElements["and-card-content"] & JSXBase.HTMLAttributes<HTMLAndCardContentElement>;
+            "and-card-description": LocalJSX.IntrinsicElements["and-card-description"] & JSXBase.HTMLAttributes<HTMLAndCardDescriptionElement>;
+            "and-card-footer": LocalJSX.IntrinsicElements["and-card-footer"] & JSXBase.HTMLAttributes<HTMLAndCardFooterElement>;
+            "and-card-header": LocalJSX.IntrinsicElements["and-card-header"] & JSXBase.HTMLAttributes<HTMLAndCardHeaderElement>;
+            "and-card-title": LocalJSX.IntrinsicElements["and-card-title"] & JSXBase.HTMLAttributes<HTMLAndCardTitleElement>;
             "and-carousel": LocalJSX.IntrinsicElements["and-carousel"] & JSXBase.HTMLAttributes<HTMLAndCarouselElement>;
             "and-carousel-item": LocalJSX.IntrinsicElements["and-carousel-item"] & JSXBase.HTMLAttributes<HTMLAndCarouselItemElement>;
             "and-context-menu": LocalJSX.IntrinsicElements["and-context-menu"] & JSXBase.HTMLAttributes<HTMLAndContextMenuElement>;

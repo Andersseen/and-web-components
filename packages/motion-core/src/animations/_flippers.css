@@ -2,9 +2,19 @@
  * Flippers
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
 [and-motion="flip"][and-motion-state="active"]        { animation-name: and-flip; backface-visibility: visible; }
+[and-motion="flip-x"][and-motion-state="active"]      { animation-name: and-flip-in-x; backface-visibility: visible; }
+[and-motion="flip-y"][and-motion-state="active"]      { animation-name: and-flip-in-y; backface-visibility: visible; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
+
 [and-motion="flip-in-x"][and-motion-state="active"]   { animation-name: and-flip-in-x; backface-visibility: visible; }
 [and-motion="flip-in-y"][and-motion-state="active"]   { animation-name: and-flip-in-y; backface-visibility: visible; }
+
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
+
 [and-motion="flip-out-x"][and-motion-state="active"]  { animation-name: and-flip-out-x; backface-visibility: visible; }
 [and-motion="flip-out-y"][and-motion-state="active"]  { animation-name: and-flip-out-y; backface-visibility: visible; }
 

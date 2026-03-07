@@ -17,12 +17,14 @@ const {
 ---
 
 <and-card and-motion={motion} and-motion-trigger="enter" and-motion-duration={motionDuration}>
-  <div and-layout="vertical gap:md p:lg">
+  <and-card-header>
     <div and-layout="horizontal align:center gap:xs">
       <and-icon name={icon} size="18" class="text-primary"></and-icon>
-      <h3 and-text="h5 weight:bold">{title}</h3>
+      <and-card-title>{title}</and-card-title>
     </div>
-    <p and-text="p-sm" class="text-muted-foreground">{description}</p>
+    <and-card-description>{description}</and-card-description>
+  </and-card-header>
+  <and-card-content>
     <slot />
-  </div>
+  </and-card-content>
 </and-card>

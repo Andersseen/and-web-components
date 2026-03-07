@@ -2,10 +2,22 @@
  * Back Entrances & Exits
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
+
+[and-motion="back-down"][and-motion-state="active"]   { animation-name: and-back-in-down; }
+[and-motion="back-left"][and-motion-state="active"]   { animation-name: and-back-in-left; }
+[and-motion="back-right"][and-motion-state="active"]  { animation-name: and-back-in-right; }
+[and-motion="back-up"][and-motion-state="active"]     { animation-name: and-back-in-up; }
+
+/* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
+
 [and-motion="back-in-down"][and-motion-state="active"]   { animation-name: and-back-in-down; }
 [and-motion="back-in-left"][and-motion-state="active"]   { animation-name: and-back-in-left; }
 [and-motion="back-in-right"][and-motion-state="active"]  { animation-name: and-back-in-right; }
 [and-motion="back-in-up"][and-motion-state="active"]     { animation-name: and-back-in-up; }
+
+/* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
+
 [and-motion="back-out-down"][and-motion-state="active"]  { animation-name: and-back-out-down; }
 [and-motion="back-out-left"][and-motion-state="active"]  { animation-name: and-back-out-left; }
 [and-motion="back-out-right"][and-motion-state="active"] { animation-name: and-back-out-right; }

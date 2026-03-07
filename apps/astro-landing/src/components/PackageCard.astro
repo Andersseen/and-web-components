@@ -4,32 +4,34 @@ interface Props {
   name: string;
   subtitle: string;
   description: string;
-  version?: string;
+  version: string;
   tags: string[];
   delay?: string;
 }
 
-const { icon, name, subtitle, description, version = 'v0.0.1', tags, delay = '0ms' } = Astro.props;
+const { icon, name, subtitle, description, version, tags, delay = '0ms' } = Astro.props;
 ---
 
 <and-card
-  and-motion="slide-in-up"
+  and-motion="slide-up"
   and-motion-trigger="enter"
   and-motion-delay={delay}
 >
-  <div and-layout="vertical gap:md p:lg">
+  <and-card-header>
     <div and-layout="horizontal align:center justify:between">
       <div and-layout="horizontal align:center gap:sm">
         <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
           <and-icon name={icon} size="20"></and-icon>
         </div>
         <div>
-          <h4 and-text="h6 weight:bold">{name}</h4>
-          <span and-text="p-xs" class="text-muted-foreground">{subtitle}</span>
+          <and-card-title>{name}</and-card-title>
+          <and-card-description>{subtitle}</and-card-description>
         </div>
       </div>
       <and-badge>{version}</and-badge>
     </div>
+  </and-card-header>
+  <and-card-content>
     <p and-text="p-sm" class="text-muted-foreground">
       {description}
     </p>
@@ -38,5 +40,5 @@ const { icon, name, subtitle, description, version = 'v0.0.1', tags, delay = '0m
         <and-badge variant="outline">{tag}</and-badge>
       ))}
     </div>
-  </div>
+  </and-card-content>
 </and-card>

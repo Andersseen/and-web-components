@@ -71,8 +71,24 @@
 [and-motion="scale-down"][and-motion-state="active"]   { animation-name: and-scale-down; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * FADING ENTRANCES
+ * FADING — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="fade"][and-motion-state="active"]              { animation-name: and-fade-in; }
+[and-motion="fade-down"][and-motion-state="active"]         { animation-name: and-fade-in-down; }
+[and-motion="fade-down-big"][and-motion-state="active"]     { animation-name: and-fade-in-down-big; }
+[and-motion="fade-left"][and-motion-state="active"]         { animation-name: and-fade-in-left; }
+[and-motion="fade-left-big"][and-motion-state="active"]     { animation-name: and-fade-in-left-big; }
+[and-motion="fade-right"][and-motion-state="active"]        { animation-name: and-fade-in-right; }
+[and-motion="fade-right-big"][and-motion-state="active"]    { animation-name: and-fade-in-right-big; }
+[and-motion="fade-up"][and-motion-state="active"]           { animation-name: and-fade-in-up; }
+[and-motion="fade-up-big"][and-motion-state="active"]       { animation-name: and-fade-in-up-big; }
+[and-motion="fade-top-left"][and-motion-state="active"]     { animation-name: and-fade-in-top-left; }
+[and-motion="fade-top-right"][and-motion-state="active"]    { animation-name: and-fade-in-top-right; }
+[and-motion="fade-bottom-left"][and-motion-state="active"]  { animation-name: and-fade-in-bottom-left; }
+[and-motion="fade-bottom-right"][and-motion-state="active"] { animation-name: and-fade-in-bottom-right; }
+
+/* ─── Fading Entrances (shortcuts) ──────────────────────────────────────── */
 
 [and-motion="fade-in"][and-motion-state="active"]              { animation-name: and-fade-in; }
 [and-motion="fade-in-down"][and-motion-state="active"]         { animation-name: and-fade-in-down; }
@@ -88,9 +104,7 @@
 [and-motion="fade-in-bottom-left"][and-motion-state="active"]  { animation-name: and-fade-in-bottom-left; }
 [and-motion="fade-in-bottom-right"][and-motion-state="active"] { animation-name: and-fade-in-bottom-right; }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- * FADING EXITS
- * ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Fading Exits (shortcuts) ──────────────────────────────────────────── */
 
 [and-motion="fade-out"][and-motion-state="active"]              { animation-name: and-fade-out; }
 [and-motion="fade-out-down"][and-motion-state="active"]         { animation-name: and-fade-out-down; }
@@ -103,8 +117,15 @@
 [and-motion="fade-out-up-big"][and-motion-state="active"]       { animation-name: and-fade-out-up-big; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * SLIDING ENTRANCES / EXITS (legacy names kept for compat)
+ * SLIDING — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="slide-up"][and-motion-state="active"]      { animation-name: and-slide-in-up; }
+[and-motion="slide-down"][and-motion-state="active"]    { animation-name: and-slide-in-down; }
+[and-motion="slide-left"][and-motion-state="active"]    { animation-name: and-slide-in-left; }
+[and-motion="slide-right"][and-motion-state="active"]   { animation-name: and-slide-in-right; }
+
+/* ─── Sliding Entrances / Exits (shortcuts) ─────────────────────────────── */
 
 [and-motion="slide-in-up"][and-motion-state="active"]      { animation-name: and-slide-in-up; }
 [and-motion="slide-in-down"][and-motion-state="active"]    { animation-name: and-slide-in-down; }
@@ -116,8 +137,16 @@
 [and-motion="slide-out-right"][and-motion-state="active"]  { animation-name: and-slide-out-right; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * ZOOMING ENTRANCES / EXITS
+ * ZOOMING — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="zoom"][and-motion-state="active"]        { animation-name: and-zoom-in; }
+[and-motion="zoom-down"][and-motion-state="active"]   { animation-name: and-zoom-in-down; }
+[and-motion="zoom-left"][and-motion-state="active"]   { animation-name: and-zoom-in-left; }
+[and-motion="zoom-right"][and-motion-state="active"]  { animation-name: and-zoom-in-right; }
+[and-motion="zoom-up"][and-motion-state="active"]     { animation-name: and-zoom-in-up; }
+
+/* ─── Zooming Entrances / Exits (shortcuts) ─────────────────────────────── */
 
 [and-motion="zoom-in"][and-motion-state="active"]        { animation-name: and-zoom-in; }
 [and-motion="zoom-in-down"][and-motion-state="active"]   { animation-name: and-zoom-in-down; }
@@ -131,8 +160,16 @@
 [and-motion="zoom-out-up"][and-motion-state="active"]    { animation-name: and-zoom-out-up; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * BOUNCING ENTRANCES / EXITS
+ * BOUNCING — Clean names (preferred)
+ * Note: bare "bounce" is an attention seeker, so directional clean names only
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="bounce-down"][and-motion-state="active"]   { animation-name: and-bounce-in-down; }
+[and-motion="bounce-left"][and-motion-state="active"]   { animation-name: and-bounce-in-left; }
+[and-motion="bounce-right"][and-motion-state="active"]  { animation-name: and-bounce-in-right; }
+[and-motion="bounce-up"][and-motion-state="active"]     { animation-name: and-bounce-in-up; }
+
+/* ─── Bouncing Entrances / Exits (shortcuts) ────────────────────────────── */
 
 [and-motion="bounce-in"][and-motion-state="active"]        { animation-name: and-bounce-in; }
 [and-motion="bounce-in-down"][and-motion-state="active"]   { animation-name: and-bounce-in-down; }
@@ -146,18 +183,31 @@
 [and-motion="bounce-out-up"][and-motion-state="active"]    { animation-name: and-bounce-out-up; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * FLIPPERS
+ * FLIPPERS — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 [and-motion="flip"][and-motion-state="active"]        { animation-name: and-flip; backface-visibility: visible; }
+[and-motion="flip-x"][and-motion-state="active"]      { animation-name: and-flip-in-x; backface-visibility: visible; }
+[and-motion="flip-y"][and-motion-state="active"]      { animation-name: and-flip-in-y; backface-visibility: visible; }
+
+/* ─── Flippers Entrances / Exits (shortcuts) ────────────────────────────── */
+
 [and-motion="flip-in-x"][and-motion-state="active"]   { animation-name: and-flip-in-x; backface-visibility: visible; }
 [and-motion="flip-in-y"][and-motion-state="active"]   { animation-name: and-flip-in-y; backface-visibility: visible; }
 [and-motion="flip-out-x"][and-motion-state="active"]  { animation-name: and-flip-out-x; backface-visibility: visible; }
 [and-motion="flip-out-y"][and-motion-state="active"]  { animation-name: and-flip-out-y; backface-visibility: visible; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * ROTATING ENTRANCES / EXITS
+ * ROTATING — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="rotate"][and-motion-state="active"]                   { animation-name: and-rotate-in; }
+[and-motion="rotate-down-left"][and-motion-state="active"]         { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
+[and-motion="rotate-down-right"][and-motion-state="active"]        { animation-name: and-rotate-in-down-right; transform-origin: right bottom; }
+[and-motion="rotate-up-left"][and-motion-state="active"]           { animation-name: and-rotate-in-up-left; transform-origin: left bottom; }
+[and-motion="rotate-up-right"][and-motion-state="active"]          { animation-name: and-rotate-in-up-right; transform-origin: right bottom; }
+
+/* ─── Rotating Entrances / Exits (shortcuts) ────────────────────────────── */
 
 [and-motion="rotate-in"][and-motion-state="active"]                { animation-name: and-rotate-in; }
 [and-motion="rotate-in-down-left"][and-motion-state="active"]      { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
@@ -171,17 +221,26 @@
 [and-motion="rotate-out-up-right"][and-motion-state="active"]      { animation-name: and-rotate-out-up-right; transform-origin: right bottom; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * SPECIALS
+ * SPECIALS — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 [and-motion="hinge"][and-motion-state="active"]           { animation-name: and-hinge; animation-duration: 2s; transform-origin: top left; }
 [and-motion="jack-in-the-box"][and-motion-state="active"] { animation-name: and-jack-in-the-box; }
+[and-motion="roll"][and-motion-state="active"]            { animation-name: and-roll-in; }
+
+/* ─── Specials (shortcuts) ──────────────────────────────────────────────── */
+
 [and-motion="roll-in"][and-motion-state="active"]         { animation-name: and-roll-in; }
 [and-motion="roll-out"][and-motion-state="active"]        { animation-name: and-roll-out; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * LIGHT-SPEED
+ * LIGHT-SPEED — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="light-speed-right"][and-motion-state="active"]  { animation-name: and-light-speed-in-right; }
+[and-motion="light-speed-left"][and-motion-state="active"]   { animation-name: and-light-speed-in-left; }
+
+/* ─── Light-Speed Entrances / Exits (shortcuts) ─────────────────────────── */
 
 [and-motion="light-speed-in-right"][and-motion-state="active"]  { animation-name: and-light-speed-in-right; }
 [and-motion="light-speed-in-left"][and-motion-state="active"]   { animation-name: and-light-speed-in-left; }
@@ -189,8 +248,15 @@
 [and-motion="light-speed-out-left"][and-motion-state="active"]  { animation-name: and-light-speed-out-left; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * BACK ENTRANCES / EXITS
+ * BACK — Clean names (preferred)
  * ═══════════════════════════════════════════════════════════════════════════ */
+
+[and-motion="back-down"][and-motion-state="active"]   { animation-name: and-back-in-down; }
+[and-motion="back-left"][and-motion-state="active"]   { animation-name: and-back-in-left; }
+[and-motion="back-right"][and-motion-state="active"]  { animation-name: and-back-in-right; }
+[and-motion="back-up"][and-motion-state="active"]     { animation-name: and-back-in-up; }
+
+/* ─── Back Entrances / Exits (shortcuts) ────────────────────────────────── */
 
 [and-motion="back-in-down"][and-motion-state="active"]   { animation-name: and-back-in-down; }
 [and-motion="back-in-left"][and-motion-state="active"]   { animation-name: and-back-in-left; }

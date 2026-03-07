@@ -5,6 +5,22 @@ const navItems = [
   { id: 'showcase', label: 'Showcase', href: '#showcase' },
   { id: 'ecosystem', label: 'Ecosystem', href: '#ecosystem' },
 ];
+
+const styleThemes = [
+  { value: 'default', label: 'Modern' },
+  { value: 'compact', label: 'Compact' },
+  { value: 'playful', label: 'Playful' },
+  { value: 'retro', label: 'Retro' },
+  { value: 'elegant', label: 'Elegant' },
+];
+
+const colorThemes = [
+  { value: 'indigo-rose', label: 'Indigo/Rose' },
+  { value: 'slate-amber', label: 'Slate/Amber' },
+  { value: 'emerald-orange', label: 'Emerald/Orange' },
+  { value: 'violet-cyan', label: 'Violet/Cyan' },
+  { value: 'rose-teal', label: 'Rose/Teal' },
+];
 ---
 
 <and-navbar
@@ -20,6 +36,31 @@ const navItems = [
     <and-icon name="layers" size="24"></and-icon>
     <span>Andersseen</span>
   </div>
+
+  <div slot="actions" class="hidden xl:flex items-center gap-2 text-xs text-muted-foreground">
+    <label for="theme-style-select" class="sr-only">Component style theme</label>
+    <select
+      id="theme-style-select"
+      class="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground transition-colors outline-none focus:border-primary"
+    >
+      {styleThemes.map((theme) => (
+        <option value={theme.value}>{theme.label}</option>
+      ))}
+    </select>
+
+    <label for="theme-color-select" class="sr-only">Component color palette</label>
+    <select
+      id="theme-color-select"
+      class="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground transition-colors outline-none focus:border-primary"
+    >
+      {colorThemes.map((theme) => (
+        <option value={theme.value}>{theme.label}</option>
+      ))}
+    </select>
+  </div>
+
+
+
   <div slot="actions">
     <and-button size="sm" variant="link" href="https://docs.andersseen.dev">
       <and-icon name="book-open" size="16"></and-icon>
@@ -30,4 +71,14 @@ const navItems = [
       GitHub
     </and-button>
   </div>
+    <and-button
+    slot="actions"
+    id="theme-mode-toggle"
+    variant="outline"
+    size="icon"
+    aria-label="Toggle dark and light theme"
+    title="Toggle dark and light theme"
+  >
+    <and-icon id="theme-mode-icon" name="moon" size="16"></and-icon>
+  </and-button>
 </and-navbar>

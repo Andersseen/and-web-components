@@ -16,6 +16,11 @@ import { defineCustomElement as defineAndBreadcrumb } from '@andersseen/web-comp
 import { defineCustomElement as defineAndBreadcrumbItem } from '@andersseen/web-components/components/and-breadcrumb-item.js';
 import { defineCustomElement as defineAndButton } from '@andersseen/web-components/components/and-button.js';
 import { defineCustomElement as defineAndCard } from '@andersseen/web-components/components/and-card.js';
+import { defineCustomElement as defineAndCardContent } from '@andersseen/web-components/components/and-card-content.js';
+import { defineCustomElement as defineAndCardDescription } from '@andersseen/web-components/components/and-card-description.js';
+import { defineCustomElement as defineAndCardFooter } from '@andersseen/web-components/components/and-card-footer.js';
+import { defineCustomElement as defineAndCardHeader } from '@andersseen/web-components/components/and-card-header.js';
+import { defineCustomElement as defineAndCardTitle } from '@andersseen/web-components/components/and-card-title.js';
 import { defineCustomElement as defineAndCarousel } from '@andersseen/web-components/components/and-carousel.js';
 import { defineCustomElement as defineAndCarouselItem } from '@andersseen/web-components/components/and-carousel-item.js';
 import { defineCustomElement as defineAndContextMenu } from '@andersseen/web-components/components/and-context-menu.js';
@@ -266,14 +271,14 @@ export declare interface AndButton extends Components.AndButton {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCard,
-  inputs: ['customClass', 'variant']
+  inputs: ['customClass', 'padded', 'variant']
 })
 @Component({
   selector: 'and-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'variant'],
+  inputs: ['customClass', 'padded', 'variant'],
 })
 export class AndCard {
   protected el: HTMLAndCardElement;
@@ -285,6 +290,121 @@ export class AndCard {
 
 
 export declare interface AndCard extends Components.AndCard {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndCardContent,
+  inputs: ['customClass']
+})
+@Component({
+  selector: 'and-card-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass'],
+})
+export class AndCardContent {
+  protected el: HTMLAndCardContentElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndCardContent extends Components.AndCardContent {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndCardDescription,
+  inputs: ['customClass']
+})
+@Component({
+  selector: 'and-card-description',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass'],
+})
+export class AndCardDescription {
+  protected el: HTMLAndCardDescriptionElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndCardDescription extends Components.AndCardDescription {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndCardFooter,
+  inputs: ['customClass']
+})
+@Component({
+  selector: 'and-card-footer',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass'],
+})
+export class AndCardFooter {
+  protected el: HTMLAndCardFooterElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndCardFooter extends Components.AndCardFooter {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndCardHeader,
+  inputs: ['customClass']
+})
+@Component({
+  selector: 'and-card-header',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass'],
+})
+export class AndCardHeader {
+  protected el: HTMLAndCardHeaderElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndCardHeader extends Components.AndCardHeader {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndCardTitle,
+  inputs: ['customClass']
+})
+@Component({
+  selector: 'and-card-title',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass'],
+})
+export class AndCardTitle {
+  protected el: HTMLAndCardTitleElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndCardTitle extends Components.AndCardTitle {}
 
 
 @ProxyCmp({

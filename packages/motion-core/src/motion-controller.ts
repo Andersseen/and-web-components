@@ -188,6 +188,12 @@ export class MotionController {
   private resolveTrigger(el: HTMLElement): TriggerType {
     const raw = el.getAttribute(ATTR.TRIGGER);
     if (raw === "hover" || raw === "tap") return raw;
+    if (raw === "enter") return "enter";
+
+    // Shortcut inference: names with "-in" default to enter trigger
+    const name = el.getAttribute(ATTR.MOTION) ?? "";
+    if (/-in(?:-|$)/.test(name)) return "enter";
+
     return "enter"; // default
   }
 
