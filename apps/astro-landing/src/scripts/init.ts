@@ -69,20 +69,20 @@ const applyThemeState = (mode: Mode, theme: string, color: string): void => {
     root.removeAttribute("data-theme");
   }
 
-  const modeIcon = document.getElementById("theme-mode-icon") as HTMLElement | null;
-  const modeLabel = document.getElementById("theme-mode-label");
-  const nextModeLabel = mode === "dark" ? "Light" : "Dark";
+  const modeIcon = document.getElementById(
+    "theme-mode-icon",
+  ) as HTMLElement | null;
 
   if (modeIcon) {
     modeIcon.setAttribute("name", mode === "dark" ? "sun" : "moon");
   }
 
-  if (modeLabel) {
-    modeLabel.textContent = nextModeLabel;
-  }
-
-  const styleSelect = document.getElementById("theme-style-select") as HTMLSelectElement | null;
-  const colorSelect = document.getElementById("theme-color-select") as HTMLSelectElement | null;
+  const styleSelect = document.getElementById(
+    "theme-style-select",
+  ) as HTMLSelectElement | null;
+  const colorSelect = document.getElementById(
+    "theme-color-select",
+  ) as HTMLSelectElement | null;
 
   if (styleSelect) {
     styleSelect.value = theme;
@@ -95,9 +95,15 @@ const applyThemeState = (mode: Mode, theme: string, color: string): void => {
 
 const setupThemeControls = (): void => {
   const root = document.documentElement;
-  const modeToggle = document.getElementById("theme-mode-toggle") as HTMLButtonElement | null;
-  const styleSelect = document.getElementById("theme-style-select") as HTMLSelectElement | null;
-  const colorSelect = document.getElementById("theme-color-select") as HTMLSelectElement | null;
+  const modeToggle = document.getElementById(
+    "theme-mode-toggle",
+  ) as HTMLButtonElement | null;
+  const styleSelect = document.getElementById(
+    "theme-style-select",
+  ) as HTMLSelectElement | null;
+  const colorSelect = document.getElementById(
+    "theme-color-select",
+  ) as HTMLSelectElement | null;
 
   let mode = readMode();
   let theme = readTheme();
@@ -112,14 +118,16 @@ const setupThemeControls = (): void => {
   });
 
   styleSelect?.addEventListener("change", (event) => {
-    const nextTheme = (event.currentTarget as HTMLSelectElement).value || THEME_DEFAULTS.theme;
+    const nextTheme =
+      (event.currentTarget as HTMLSelectElement).value || THEME_DEFAULTS.theme;
     theme = nextTheme;
     localStorage.setItem(THEME_STORAGE_KEYS.theme, nextTheme);
     applyThemeState(mode, theme, color);
   });
 
   colorSelect?.addEventListener("change", (event) => {
-    const nextColor = (event.currentTarget as HTMLSelectElement).value || THEME_DEFAULTS.color;
+    const nextColor =
+      (event.currentTarget as HTMLSelectElement).value || THEME_DEFAULTS.color;
     color = nextColor;
     localStorage.setItem(THEME_STORAGE_KEYS.color, nextColor);
     applyThemeState(mode, theme, color);
@@ -127,7 +135,8 @@ const setupThemeControls = (): void => {
 
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   media.addEventListener("change", (event) => {
-    const hasExplicitMode = localStorage.getItem(THEME_STORAGE_KEYS.mode) !== null;
+    const hasExplicitMode =
+      localStorage.getItem(THEME_STORAGE_KEYS.mode) !== null;
     if (hasExplicitMode) {
       return;
     }

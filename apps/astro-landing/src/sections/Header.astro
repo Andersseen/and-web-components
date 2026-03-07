@@ -59,17 +59,7 @@ const colorThemes = [
     </select>
   </div>
 
-  <button
-    slot="actions"
-    id="theme-mode-toggle"
-    type="button"
-    class="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-background px-2 text-sm text-foreground transition-colors hover:border-primary/40 hover:bg-muted/70"
-    aria-label="Toggle dark and light theme"
-    title="Toggle dark and light theme"
-  >
-    <and-icon id="theme-mode-icon" name="moon" size="16"></and-icon>
-    <span id="theme-mode-label" class="hidden lg:inline">Dark</span>
-  </button>
+
 
   <div slot="actions">
     <and-button size="sm" variant="link" href="https://docs.andersseen.dev">
@@ -81,4 +71,14 @@ const colorThemes = [
       GitHub
     </and-button>
   </div>
+    <and-button
+    slot="actions"
+    id="theme-mode-toggle"
+    variant="outline"
+    size="icon"
+    aria-label="Toggle dark and light theme"
+    title="Toggle dark and light theme"
+  >
+    <and-icon id="theme-mode-icon" name="moon" size="16"></and-icon>
+  </and-button>
 </and-navbar>
