@@ -33,6 +33,12 @@ Every modifier supports responsive variants using \`@breakpoint\`:
 <p   and-text="p-sm align:center align@md:left">
 \`\`\`
 
+Verified token source:
+- Spacing scale: none, xxxs, xxs, xs, sm, md, lg, xl, xxl, xxxl, auto
+- Text colors map to CSS variables: --color-primary, --color-secondary,
+  --color-accent, --color-muted, --color-destructive, --color-background,
+  --color-foreground
+
 ---
 
 ## \`and-layout\` — layout attribute

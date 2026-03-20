@@ -15,13 +15,19 @@ npm i @andersseen/icon
 ## Core API
 \`\`\`ts
 import {
-  registerIcons,      // add one or more icons to the registry
-  registerAllIcons,   // register every available icon (use in dev/prototyping only)
-  getIcon,            // retrieve SVG string by name
-  hasIcon,            // check if an icon is registered
-  getRegisteredIconNames, // list all currently registered names
+  registerIcons,
+  registerAllIcons,
+  getIcon,
+  hasIcon,
+  getRegisteredIconNames,
+  getRegisteredIconCount,
 } from '@andersseen/icon';
 \`\`\`
+
+Verified behavior:
+- Registry is global (window/globalThis) under \`__AND_ICONS_REGISTRY__\`.
+- \`registerIcons\` merges entries into that global Map.
+- \`getIcon(name)\` returns SVG string or \`undefined\` if not registered.
 
 ## Setup options
 
@@ -57,6 +63,9 @@ if (!hasIcon('home')) {
   console.warn('Icon "home" is not registered');
 }
 
+console.log(getRegisteredIconNames());
+console.log(getRegisteredIconCount());
+
 // Render inline in a framework
 // Angular:
 // <span [innerHTML]="getIcon('home')"></span>
@@ -86,9 +95,9 @@ registerIcons({
 \`\`\`
 
 ## Rules for LLM output
-- Always call registerIcons (or registerAllIcons) before using any \`and-icon\` or getIcon().
-- In production builds use selective registration — import only what you need.
-- The \`name\` attribute value in HTML must exactly match the key used in registerIcons().
-- Do not hard-code SVG markup; always use the registry.
-- COMPONENT_ICONS must always be registered when using @andersseen/web-components.
+- Always register icons before rendering \`and-icon\` or calling \`getIcon\`.
+- In production prefer selective registration; avoid \`registerAllIcons\` unless demo/prototype.
+- Keep \`and-icon name\` exactly aligned with registry keys.
+- Do not inline random SVG literals in generated code when registry can be used.
+- Register \`COMPONENT_ICONS\` whenever @andersseen/web-components is used.
 `;

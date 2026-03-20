@@ -3,9 +3,9 @@ CONTEXT: @andersseen/motion
 
 ## Library profile
 Attribute-driven animation engine for the web.
-Applies CSS keyframe animations declaratively via HTML data attributes.
-JS layer handles IntersectionObserver (enter), mouseenter (hover), and pointer (tap) triggers.
-Fully respects \`prefers-reduced-motion\` — collapses durations and replaces keyframes with opacity crossfades.
+Uses HTML attributes + CSS keyframes with a lightweight JS controller.
+Supports triggers: enter (IntersectionObserver), hover, tap.
+Respects prefers-reduced-motion in CSS and JS.
 
 ## Install
 \`\`\`
@@ -17,15 +17,15 @@ npm i @andersseen/motion
 import { initMotion } from '@andersseen/motion';
 import '@andersseen/motion/style.css';
 
-// Scan document.body and start observing. Returns cleanup function.
+// Creates MotionController + scans root. Returns cleanup function.
 const cleanup = initMotion();
 
 // Optional options:
 const cleanup = initMotion({
-  root: document.getElementById('page'), // element to scan (default: document.body)
-  threshold: 0.15,    // IntersectionObserver threshold (default: 0.1)
-  rootMargin: '0px',  // IntersectionObserver rootMargin (default: '0px')
-  once: true,         // enter trigger fires only once per element (default: true)
+  root: document.getElementById('page') as HTMLElement,
+  threshold: 0.15,
+  rootMargin: '0px',
+  once: true,
 });
 
 // On SPA route change / component destroy:
@@ -41,16 +41,25 @@ mc.scan();     // re-scan root (call after dynamic content is added)
 mc.destroy();  // remove all observers and event listeners
 \`\`\`
 
+Verified options:
+- root?: HTMLElement (default document.body)
+- threshold?: number (default 0.1)
+- rootMargin?: string (default '0px')
+- once?: boolean (default true)
+
 ## Attribute reference
 
 | Attribute | Values | Notes |
 |---|---|---|
 | \`and-motion\` | animation name (required) | Marks the element and sets which animation to run |
-| \`and-motion-trigger\` | \`enter\` · \`hover\` · \`tap\` | Default: \`enter\`. Animations with \`-in\` in name auto-infer \`enter\` |
+| \`and-motion-trigger\` | \`enter\` · \`hover\` · \`tap\` | Default \`enter\`; names with \`-in\` also infer enter |
 | \`and-motion-duration\` | CSS time (\`500ms\`, \`1.2s\`) | Sets \`--and-motion-duration\` on the element |
 | \`and-motion-delay\` | CSS time (\`200ms\`) | Sets \`--and-motion-delay\` on the element |
 | \`and-motion-easing\` | CSS easing string | Sets \`--and-motion-easing\` on the element |
 | \`and-motion-once\` | \`true\` · \`false\` | Per-element override of the controller-level \`once\` option |
+
+Controller runtime attribute:
+- \`and-motion-state=active\` is toggled internally when animation is active.
 
 ## CSS custom properties (global, all overridable)
 \`\`\`css
@@ -160,5 +169,5 @@ For Angular components with OnPush and dynamic content, call mc.scan() after con
 - Use motion for meaningful feedback (entrance, hover affordance, tap confirmation).
 - Avoid constant looping animations that distract from content.
 - Always provide a usable experience without animation (reduced motion is handled automatically).
-- Call \`cleanup()\` when unmounting a single-page-app view to avoid observer leaks.
+- Call \`cleanup()\` or \`destroy()\` when unmounting SPA views to avoid listener leaks.
 `;
