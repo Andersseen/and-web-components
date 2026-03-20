@@ -31,6 +31,10 @@ export const routes: Routes = [
         path: 'layout',
         loadChildren: () => import('./layout.routes'),
       },
+      {
+        path: 'docs',
+        loadComponent: () => import('./pages/docs/docs-ai.component'),
+      },
     ],
   },
 ];

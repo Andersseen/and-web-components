@@ -21,7 +21,8 @@ type Section =
   | 'themes'
   | 'headless'
   | 'motion'
-  | 'layout';
+  | 'layout'
+  | 'docs';
 
 interface SidebarConfig {
   items: SidebarItem[];
@@ -45,28 +46,31 @@ interface SidebarConfig {
         class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
+        itemVariant="underline"
+        [compactBreakpoint]="1280"
+        [minimalBreakpoint]="1060"
+        [mobileBreakpoint]="780"
         (navItemClick)="onNavItemClick($event)"
       >
-        <span
-          slot="start"
-          style="display: flex; align-items: center; gap: 0.5rem;"
-        >
+        <span slot="start" class="brand-slot">
           <and-icon name="layout"></and-icon>
-          And Web Components UI
+          <span class="brand-label">And Web Components UI</span>
         </span>
 
-        <div slot="end" style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 140px;">
+        <div slot="end" class="navbar-actions">
+          <div class="navbar-control navbar-control-theme">
             <and-dropdown
               label="Theme"
+              variant="ghost"
               [items]="themeOptions"
               (andDropdownSelect)="onThemeSelect($event)"
             />
           </div>
 
-          <div style="width: 140px;">
+          <div class="navbar-control navbar-control-color">
             <and-dropdown
-              label="Color"
+              label="Palette"
+              variant="ghost"
               [items]="colorOptions"
               (andDropdownSelect)="onColorSelect($event)"
             />
@@ -89,6 +93,7 @@ interface SidebarConfig {
             <and-icon name="app-window" size="16" />
             Home
           </and-button>
+
           <and-button
             size="sm"
             variant="link"
@@ -161,6 +166,42 @@ interface SidebarConfig {
         background: var(--background);
         color: var(--foreground);
       }
+      .brand-slot {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+      .brand-label {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .navbar-control {
+        width: 126px;
+      }
+      @media (max-width: 1280px) {
+        .navbar-control-color {
+          display: none;
+        }
+      }
+      @media (max-width: 1024px) {
+        .brand-label {
+          display: none;
+        }
+        .navbar-control {
+          width: 110px;
+        }
+      }
+      @media (max-width: 860px) {
+        .navbar-actions and-button[variant='link'] {
+          display: none;
+        }
+      }
     `,
   ],
 })
@@ -174,6 +215,7 @@ export class MainLayoutComponent {
     { id: 'icons', label: 'Icons' },
     { id: 'motion', label: 'Motion' },
     { id: 'layout', label: 'Layout' },
+    { id: 'docs', label: 'Docs' },
   ];
 
   // ── Sidebar items ──
@@ -273,6 +315,7 @@ export class MainLayoutComponent {
     themes: '/themes',
     motion: '/motion',
     layout: '/layout',
+    docs: '/docs',
   };
 
   private readonly sidebarConfig: Partial<Record<Section, SidebarConfig>> = {
