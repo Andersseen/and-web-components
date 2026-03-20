@@ -21,7 +21,8 @@ type Section =
   | 'themes'
   | 'headless'
   | 'motion'
-  | 'layout';
+  | 'layout'
+  | 'docs';
 
 interface SidebarConfig {
   items: SidebarItem[];
@@ -45,28 +46,32 @@ interface SidebarConfig {
         class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
+        itemVariant="underline"
+        [autoCollapse]="false"
+        [compactBreakpoint]="0"
+        [minimalBreakpoint]="0"
+        [mobileBreakpoint]="760"
         (navItemClick)="onNavItemClick($event)"
       >
-        <span
-          slot="start"
-          style="display: flex; align-items: center; gap: 0.5rem;"
-        >
+        <span slot="start" class="brand-slot">
           <and-icon name="layout"></and-icon>
-          And Web Components UI
+          <span class="brand-label">And Web Components UI</span>
         </span>
 
-        <div slot="end" style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 140px;">
+        <div slot="end" class="navbar-actions">
+          <div class="navbar-control navbar-control-theme">
             <and-dropdown
               label="Theme"
+              variant="ghost"
               [items]="themeOptions"
               (andDropdownSelect)="onThemeSelect($event)"
             />
           </div>
 
-          <div style="width: 140px;">
+          <div class="navbar-control navbar-control-color">
             <and-dropdown
-              label="Color"
+              label="Palette"
+              variant="ghost"
               [items]="colorOptions"
               (andDropdownSelect)="onColorSelect($event)"
             />
@@ -89,6 +94,7 @@ interface SidebarConfig {
             <and-icon name="app-window" size="16" />
             Home
           </and-button>
+
           <and-button
             size="sm"
             variant="link"
@@ -161,6 +167,32 @@ interface SidebarConfig {
         background: var(--background);
         color: var(--foreground);
       }
+      .brand-slot {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+      .brand-label {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .navbar-control {
+        width: 102px;
+      }
+      @media (max-width: 1180px) {
+        .brand-label {
+          display: none;
+        }
+        .navbar-control {
+          width: 92px;
+        }
+      }
     `,
   ],
 })
@@ -174,6 +206,7 @@ export class MainLayoutComponent {
     { id: 'icons', label: 'Icons' },
     { id: 'motion', label: 'Motion' },
     { id: 'layout', label: 'Layout' },
+    { id: 'docs', label: 'Docs' },
   ];
 
   // ── Sidebar items ──
@@ -273,6 +306,7 @@ export class MainLayoutComponent {
     themes: '/themes',
     motion: '/motion',
     layout: '/layout',
+    docs: '/docs',
   };
 
   private readonly sidebarConfig: Partial<Record<Section, SidebarConfig>> = {
