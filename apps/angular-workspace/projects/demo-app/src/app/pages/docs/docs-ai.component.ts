@@ -2,11 +2,18 @@ import { Component, computed, signal } from '@angular/core';
 import { DemoCodeBlockComponent } from '../../shared/demo-code-block.component';
 import { DemoHeaderComponent } from '../../shared/demo-header.component';
 import { DemoSectionComponent } from '../../shared/demo-section.component';
+import {
+  HEADLESS_CORE_PROMPT,
+  ICON_PROMPT,
+  LAYOUT_PROMPT,
+  MOTION_PROMPT,
+  WEB_COMPONENTS_PROMPT,
+} from './prompts';
 
 type PackageManager = 'pnpm' | 'npm' | 'yarn';
 type PromptLibrary =
   | 'web-components'
-  | 'headless-components'
+  | 'headless-core'
   | 'icon'
   | 'motion'
   | 'layout';
@@ -254,7 +261,7 @@ export default class DocsAiComponent {
   readonly copiedInstall = signal(false);
   readonly promptLibraries: PromptLibrary[] = [
     'web-components',
-    'headless-components',
+    'headless-core',
     'icon',
     'motion',
     'layout',
@@ -299,231 +306,18 @@ export class HomeComponent {}`;
 
   private readonly promptLibraryLabels: Record<PromptLibrary, string> = {
     'web-components': 'web-components',
-    'headless-components': 'headless-core',
+    'headless-core': 'headless-core',
     icon: 'icon',
     motion: 'motion',
     layout: 'layout',
   };
 
   private readonly promptByLibrary: Record<PromptLibrary, string> = {
-    'web-components': `CONTEXT: @andersseen/web-components
-
-Library profile:
-- Stencil custom-elements package (and-* tags), Shadow DOM based.
-- Framework-agnostic runtime (plain HTML + any framework).
-- Built on top of @andersseen/headless-components and @andersseen/icon.
-
-Verified package entrypoints:
-- '@andersseen/web-components/components/all'  -> registers all elements.
-- '@andersseen/web-components/loader'          -> defineCustomElements(window).
-- '@andersseen/web-components/dist/web-components/web-components.css' -> global theme tokens/palettes/base styles.
-
-Install:
-npm i @andersseen/web-components @andersseen/icon
-
-Recommended setup in bundled apps:
-import '@andersseen/web-components/components/all';
-import '@andersseen/web-components/dist/web-components/web-components.css';
-
-Alternative setup with loader API:
-import { defineCustomElements } from '@andersseen/web-components/loader';
-defineCustomElements(window);
-
-Icon requirement (important):
-- and-icon reads from @andersseen/icon registry.
-- Register at least component-required icons:
-import { registerIcons, COMPONENT_ICONS } from '@andersseen/icon';
-registerIcons(COMPONENT_ICONS);
-
-Optional runtime toggle:
-import { enableAnimations } from '@andersseen/web-components';
-enableAnimations();
-
-Usage contract for LLM output:
-- Use public props, slots, and CustomEvent APIs from component docs.
-- Do not depend on internal shadow markup/classes.
-- Prefer design tokens (CSS variables) over hardcoded color palettes.
-
-Minimal usage examples:
-<and-button variant="default">Save</and-button>
-<and-dropdown id="theme" label="Theme"></and-dropdown>
-
-const dd = document.querySelector('#theme');
-dd?.addEventListener('andDropdownSelect', (e) => {
-  console.log('selected', e.detail);
-});`,
-
-    'headless-components': `CONTEXT: @andersseen/headless-components
-
-Library profile:
-- Framework-agnostic state/behavior primitives.
-- No DOM rendering and no CSS.
-- Includes ARIA props, keyboard handlers, and actions.
-
-Install:
-npm i @andersseen/headless-components
-
-Exported modules (verified):
-- button, accordion, tabs, dropdown, modal, tooltip, toast,
-  drawer, alert, navbar, sidebar, breadcrumb, menu-list, context-menu.
-
-Canonical API shape:
-const logic = createX(config);
-logic.state;
-logic.actions;
-logic.queries;            // available on many components
-logic.get*Props(...);     // aria + keyboard related props
-logic.handle*KeyDown(...);
-
-Usage rules:
-- Always map returned props to semantic elements.
-- Keep styling/rendering fully separated from logic.
-- Preserve keyboard handlers from the library.
-
-Example (accordion):
-import { createAccordion } from '@andersseen/headless-components/accordion';
-
-const accordion = createAccordion({ allowMultiple: true });
-const trigger = accordion.getTriggerProps('item-1');
-const content = accordion.getContentProps('item-1');
-
-// Bind trigger props to your button and content props to your panel.
-// Keyboard path:
-accordion.handleTriggerKeyDown(event, 'item-1', ['item-1', 'item-2']);
-
-Common mistake to avoid:
-- Do not reimplement focus/keyboard state manually if logic already provides it.`,
-
-    icon: `CONTEXT: @andersseen/icon
-
-Library profile:
-- Framework-agnostic SVG string registry.
-- Tree-shakable icon constants + runtime registration functions.
-- Used by and-icon in @andersseen/web-components.
-
-Install:
-npm i @andersseen/icon
-
-Core API:
-import { registerIcons, getIcon, hasIcon, getRegisteredIconNames } from '@andersseen/icon';
-
-Setup options:
-import { registerAllIcons } from '@andersseen/icon';
-registerAllIcons();
-
-Or tree-shakable:
-import { registerIcons, HOME, CLOSE, COMPONENT_ICONS } from '@andersseen/icon';
-registerIcons(COMPONENT_ICONS);
-registerIcons({ home: HOME, close: CLOSE });
-
-Usage rules:
-- Prefer selective registration in production.
-- Use registerAllIcons only in demo/prototyping.
-- Keep icon names synced with registration keys.
-
-Example with web components:
-<and-icon name="home" size="16"></and-icon>
-
-Registry example:
-const svg = getIcon('home');
-if (!hasIcon('home')) {
-  console.warn('Icon not registered');
-}`,
-
-    motion: `CONTEXT: @andersseen/motion
-
-Library profile:
-- Framework-agnostic attribute-driven animation engine.
-- JS controller + CSS animation catalog.
-- Respects prefers-reduced-motion.
-
-Install:
-npm i @andersseen/motion
-
-Setup:
-import { initMotion } from '@andersseen/motion';
-import '@andersseen/motion/style.css';
-
-const cleanup = initMotion();
-// later: cleanup();
-
-Optional advanced API:
-import { MotionController } from '@andersseen/motion';
-const controller = new MotionController({
-  root: document.body,
-  threshold: 0.1,
-  rootMargin: '0px',
-  once: true,
-});
-
-Attribute API examples:
-<div and-motion="fade-in" and-motion-trigger="enter">...</div>
-<button and-motion="zoom-in" and-motion-trigger="hover">...</button>
-<div and-motion="slide-in-up" and-motion-duration="800ms" and-motion-delay="120ms">...</div>
-
-Supported trigger values:
-- enter | hover | tap
-
-Attribute options:
-- and-motion
-- and-motion-trigger
-- and-motion-duration
-- and-motion-delay
-- and-motion-easing
-- and-motion-once
-
-Usage rules:
-- Use motion for feedback/hierarchy, not constant decoration.
-- Keep duration/easing tokens consistent.
-- Always expose a non-motion-complete UX path.`,
-
-    layout: `CONTEXT: @andersseen/layout
-
-Library profile:
-- Pure CSS library, no JS runtime.
-- Attribute-driven layout and typography.
-- Framework-agnostic.
-
-Install:
-npm i @andersseen/layout
-
-Setup:
-import '@andersseen/layout/dist/layout.css';
-
-Breakpoints (verified):
-- sm: 640px
-- md: 768px
-- lg: 1024px
-- xl: 1280px
-- 2xl: 1536px
-
-Core attribute system:
-- and-layout="horizontal|vertical|grid"
-- and-layout spacing: gap, gap-x, gap-y
-- and-layout alignment: align, justify, wrap
-- and-layout spacing utils: p, p-x, p-y, m, m-x, m-y (+ directional variants)
-- and-layout grid: cols (1..12), span (1..12/full), col-start, col-end
-- Responsive syntax: prop@md:value
-
-Typography attribute system:
-- and-text="h1|h2|h3|h4|h5|h6|p|p-sm|p-xs|caption"
-- and-text modifiers: align, weight, color
-
-Attribute examples:
-<section and-layout="vertical gap:md">
-  <header and-layout="horizontal justify:between align:center">
-    <h2 and-text="h2 weight:bold">Title</h2>
-  </header>
-</section>
-
-Responsive examples:
-<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg"></div>
-<p and-text="p align:left align@md:center">Body text</p>
-
-Usage rules:
- - Prefer attributes as source of truth for composition.
- - Avoid mixing utility frameworks and and-layout rules on same node when equivalent modifiers exist.
- - Color tokens in layout map to CSS variables (--color-primary, --color-foreground, etc).`,
+    'web-components': WEB_COMPONENTS_PROMPT,
+    'headless-core': HEADLESS_CORE_PROMPT,
+    icon: ICON_PROMPT,
+    motion: MOTION_PROMPT,
+    layout: LAYOUT_PROMPT,
   };
 
   readonly selectedPromptContext = computed(
