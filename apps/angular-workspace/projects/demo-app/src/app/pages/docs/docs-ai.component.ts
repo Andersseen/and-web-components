@@ -4,6 +4,12 @@ import { DemoHeaderComponent } from '../../shared/demo-header.component';
 import { DemoSectionComponent } from '../../shared/demo-section.component';
 
 type PackageManager = 'pnpm' | 'npm' | 'yarn';
+type PromptLibrary =
+  | 'web-components'
+  | 'headless-components'
+  | 'icon'
+  | 'motion'
+  | 'layout';
 
 @Component({
   selector: 'app-docs-ai',
@@ -73,55 +79,52 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
         </div>
       </demo-section>
 
-      <demo-section title="Prompt template for any LLM">
+      <demo-section title="Prompt Context by Library">
         <div class="rounded-xl border border-border bg-muted/30 p-4 mb-4">
           <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-            Inspired by
-            <a
-              class="text-primary"
-              href="https://angular.dev/ai/develop-with-ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Angular AI prompting guidance</a
-            >: give the model explicit stack, constraints, coding conventions,
-            and a clear task. Replace the placeholders and keep this prompt as
-            your base template.
+            These are reusable context snippets, one per library. They are not
+            task prompts. Copy the one you need and prepend it to your own
+            request in any framework.
           </p>
         </div>
 
-        <demo-code-block label="generic-prompt.md" [code]="genericPrompt" />
-      </demo-section>
-
-      <demo-section title="Extra context to improve AI output quality">
-        <div class="rounded-xl border border-border bg-card p-6 shadow-sm">
-          <ul class="m-0 pl-5 text-sm text-muted-foreground space-y-2">
-            <li>
-              Mention package names exactly:
-              <code class="text-xs">@andersseen/web-components</code>,
-              <code class="text-xs">@andersseen/angular-components</code>,
-              <code class="text-xs">@andersseen/headless-components</code>,
-              <code class="text-xs">@andersseen/icon</code>,
-              <code class="text-xs">@andersseen/motion</code>,
-              <code class="text-xs">@andersseen/layout</code>.
-            </li>
-            <li>
-              Ask the LLM to prefer existing <code class="text-xs">and-*</code>
-              components before creating custom UI.
-            </li>
-            <li>
-              Require accessibility defaults: semantic HTML, keyboard behavior,
-              and ARIA attributes where needed.
-            </li>
-            <li>
-              Request output as a complete patch-ready response: imports,
-              component code, styles, and route updates when needed.
-            </li>
-            <li>
-              Add acceptance criteria (responsive behavior, theme compatibility,
-              and no TypeScript errors) to reduce iteration loops.
-            </li>
-          </ul>
+        <div
+          class="context-toolbar"
+          role="tablist"
+          aria-label="Prompt library selector"
+        >
+          @for (lib of promptLibraries; track lib) {
+            <button
+              type="button"
+              role="tab"
+              class="context-tab"
+              [attr.aria-selected]="selectedPromptLibrary() === lib"
+              [class.context-tab--active]="selectedPromptLibrary() === lib"
+              (click)="selectedPromptLibrary.set(lib)"
+            >
+              {{ promptLibraryLabel(lib) }}
+            </button>
+          }
         </div>
+
+        <div class="context-meta">
+          <span class="text-xs text-muted-foreground">
+            Context snippet only. Each tab is framework-agnostic and focused on
+            one library contract.
+          </span>
+          <button
+            type="button"
+            class="context-copy-btn"
+            (click)="copyPromptContext()"
+          >
+            {{ copiedPrompt() ? 'Copied' : 'Copy context' }}
+          </button>
+        </div>
+
+        <demo-code-block
+          [label]="selectedPromptLabel()"
+          [code]="selectedPromptContext()"
+        />
       </demo-section>
     </div>
   `,
@@ -187,6 +190,61 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
         color: hsl(var(--foreground));
         overflow-x: auto;
       }
+
+      .context-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .context-tab {
+        border: 1px solid hsl(var(--border));
+        border-radius: 999px;
+        padding: 0.35rem 0.7rem;
+        background: hsl(var(--background));
+        color: hsl(var(--muted-foreground));
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .context-tab--active {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--foreground) / 0.45);
+        background: hsl(var(--accent));
+      }
+
+      .context-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .context-copy-btn {
+        border: 1px solid hsl(var(--border));
+        border-radius: 0.5rem;
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.35rem 0.65rem;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .context-copy-btn:hover {
+        background: hsl(var(--accent));
+      }
+
+      @media (max-width: 640px) {
+        .context-meta {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
     `,
   ],
 })
@@ -194,11 +252,20 @@ export default class DocsAiComponent {
   readonly packageManagers: PackageManager[] = ['pnpm', 'npm', 'yarn'];
   readonly selectedPm = signal<PackageManager>('pnpm');
   readonly copiedInstall = signal(false);
+  readonly promptLibraries: PromptLibrary[] = [
+    'web-components',
+    'headless-components',
+    'icon',
+    'motion',
+    'layout',
+  ];
+  readonly selectedPromptLibrary = signal<PromptLibrary>('web-components');
+  readonly copiedPrompt = signal(false);
 
   private readonly installByPm: Record<PackageManager, string> = {
-    pnpm: 'pnpm add @andersseen/web-components @andersseen/angular-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
-    npm: 'npm install @andersseen/web-components @andersseen/angular-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
-    yarn: 'yarn add @andersseen/web-components @andersseen/angular-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
+    pnpm: 'pnpm add @andersseen/web-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
+    npm: 'npm install @andersseen/web-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
+    yarn: 'yarn add @andersseen/web-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
   };
 
   readonly installCommand = computed(() => this.installByPm[this.selectedPm()]);
@@ -230,101 +297,256 @@ import { AndButton, AndCard, AndIcon } from '@andersseen/angular-components';
 })
 export class HomeComponent {}`;
 
-  readonly genericPrompt = `You are a senior Angular + design-system engineer.
+  private readonly promptLibraryLabels: Record<PromptLibrary, string> = {
+    'web-components': 'web-components',
+    'headless-components': 'headless-core',
+    icon: 'icon',
+    motion: 'motion',
+    layout: 'layout',
+  };
 
-Goal:
-Implement the requested feature in an Angular standalone app using Andersseen libraries with production quality, accessibility, and strong TypeScript safety.
+  private readonly promptByLibrary: Record<PromptLibrary, string> = {
+    'web-components': `CONTEXT: @andersseen/web-components
 
-Tech context (must respect):
-- Angular standalone components + signals.
-- UI components package: @andersseen/web-components (custom elements with and-* tags).
-- Angular wrappers package: @andersseen/angular-components (imports like AndButton, AndCard, AndIcon).
-- Headless logic package: @andersseen/headless-components (state machines only, no UI styles).
-- Icon package: @andersseen/icon (register icons in app bootstrap).
-- Motion package: @andersseen/motion (attribute-driven animations + initMotion()).
-- Layout package: @andersseen/layout (attribute-driven layout via and-layout / and-text).
+Library profile:
+- Stencil custom-elements package (and-* tags), Shadow DOM based.
+- Framework-agnostic runtime (plain HTML + any framework).
+- Built on top of @andersseen/headless-components and @andersseen/icon.
 
-Library behavior notes:
-1) @andersseen/web-components
-- Use existing and-* components first.
-- Respect component APIs and events.
-- Keep visual customization through props, slots, and design tokens.
+Verified package entrypoints:
+- '@andersseen/web-components/components/all'  -> registers all elements.
+- '@andersseen/web-components/loader'          -> defineCustomElements(window).
+- '@andersseen/web-components/dist/web-components/web-components.css' -> global theme tokens/palettes/base styles.
 
-2) @andersseen/angular-components
-- Prefer Angular wrappers inside Angular templates for typed integration.
-- Import only the wrappers needed by each component.
+Install:
+npm i @andersseen/web-components @andersseen/icon
 
-3) @andersseen/headless-components
-- Use when custom rendering is required.
-- It provides state, keyboard behavior, ARIA props, and actions.
-- You must render semantic markup and styles yourself.
+Recommended setup in bundled apps:
+import '@andersseen/web-components/components/all';
+import '@andersseen/web-components/dist/web-components/web-components.css';
 
-4) @andersseen/icon
-- Assume icons are registered at bootstrap.
-- Use and-icon with valid names.
+Alternative setup with loader API:
+import { defineCustomElements } from '@andersseen/web-components/loader';
+defineCustomElements(window);
 
-5) @andersseen/motion
-- Use subtle motion only when it adds clarity.
-- Respect reduced-motion and avoid noisy animations.
+Icon requirement (important):
+- and-icon reads from @andersseen/icon registry.
+- Register at least component-required icons:
+import { registerIcons, COMPONENT_ICONS } from '@andersseen/icon';
+registerIcons(COMPONENT_ICONS);
 
-6) @andersseen/layout
-- Prefer layout attributes over ad-hoc utility class sprawl.
-- Keep spacing and typography token-aligned.
-
-Coding requirements:
-- Mobile-first responsive behavior.
-- Semantic HTML and accessibility by default.
-- Keyboard support for interactive controls.
-- Strict TypeScript style; avoid any unless unavoidable.
-- Do not invent package APIs. If uncertain, use conservative patterns.
-- Keep changes minimal, cohesive, and easy to review.
-
-Output format:
-1. Brief plan (3-6 bullets).
-2. Exact code changes per file.
-3. Short rationale for tradeoffs.
-4. Quick validation checklist.
-
-Implementation examples (use as patterns):
-
-Example: Angular wrapper usage
-import { Component } from '@angular/core';
-import { AndButton, AndCard, AndIcon } from '@andersseen/angular-components';
-
-@Component({
-  selector: 'app-example',
-  imports: [AndButton, AndCard, AndIcon],
-  template: '<and-card><and-button><and-icon name="sparkles" size="16"></and-icon>Run</and-button></and-card>',
-})
-export class ExampleComponent {}
-
-Example: bootstrap essentials
-import { registerAllIcons } from '@andersseen/icon';
+Optional runtime toggle:
 import { enableAnimations } from '@andersseen/web-components';
-import { initMotion } from '@andersseen/motion';
-
-registerAllIcons();
 enableAnimations();
-initMotion();
 
-Example: headless logic integration
+Usage contract for LLM output:
+- Use public props, slots, and CustomEvent APIs from component docs.
+- Do not depend on internal shadow markup/classes.
+- Prefer design tokens (CSS variables) over hardcoded color palettes.
+
+Minimal usage examples:
+<and-button variant="default">Save</and-button>
+<and-dropdown id="theme" label="Theme"></and-dropdown>
+
+const dd = document.querySelector('#theme');
+dd?.addEventListener('andDropdownSelect', (e) => {
+  console.log('selected', e.detail);
+});`,
+
+    'headless-components': `CONTEXT: @andersseen/headless-components
+
+Library profile:
+- Framework-agnostic state/behavior primitives.
+- No DOM rendering and no CSS.
+- Includes ARIA props, keyboard handlers, and actions.
+
+Install:
+npm i @andersseen/headless-components
+
+Exported modules (verified):
+- button, accordion, tabs, dropdown, modal, tooltip, toast,
+  drawer, alert, navbar, sidebar, breadcrumb, menu-list, context-menu.
+
+Canonical API shape:
+const logic = createX(config);
+logic.state;
+logic.actions;
+logic.queries;            // available on many components
+logic.get*Props(...);     // aria + keyboard related props
+logic.handle*KeyDown(...);
+
+Usage rules:
+- Always map returned props to semantic elements.
+- Keep styling/rendering fully separated from logic.
+- Preserve keyboard handlers from the library.
+
+Example (accordion):
 import { createAccordion } from '@andersseen/headless-components/accordion';
+
 const accordion = createAccordion({ allowMultiple: true });
-// Use accordion.getTriggerProps(id), getContentProps(id), actions.toggle(id)
+const trigger = accordion.getTriggerProps('item-1');
+const content = accordion.getContentProps('item-1');
 
-Task to implement:
-{{DESCRIBE_THE_FEATURE_OR_FIX}}
+// Bind trigger props to your button and content props to your panel.
+// Keyboard path:
+accordion.handleTriggerKeyDown(event, 'item-1', ['item-1', 'item-2']);
 
-Acceptance criteria:
-- Works on desktop and mobile.
-- Reuses Andersseen components and tokens where possible.
-- Accessibility baseline is preserved or improved.
-- No TypeScript or template errors.
-- Include concise notes about what changed and why.`;
+Common mistake to avoid:
+- Do not reimplement focus/keyboard state manually if logic already provides it.`,
+
+    icon: `CONTEXT: @andersseen/icon
+
+Library profile:
+- Framework-agnostic SVG string registry.
+- Tree-shakable icon constants + runtime registration functions.
+- Used by and-icon in @andersseen/web-components.
+
+Install:
+npm i @andersseen/icon
+
+Core API:
+import { registerIcons, getIcon, hasIcon, getRegisteredIconNames } from '@andersseen/icon';
+
+Setup options:
+import { registerAllIcons } from '@andersseen/icon';
+registerAllIcons();
+
+Or tree-shakable:
+import { registerIcons, HOME, CLOSE, COMPONENT_ICONS } from '@andersseen/icon';
+registerIcons(COMPONENT_ICONS);
+registerIcons({ home: HOME, close: CLOSE });
+
+Usage rules:
+- Prefer selective registration in production.
+- Use registerAllIcons only in demo/prototyping.
+- Keep icon names synced with registration keys.
+
+Example with web components:
+<and-icon name="home" size="16"></and-icon>
+
+Registry example:
+const svg = getIcon('home');
+if (!hasIcon('home')) {
+  console.warn('Icon not registered');
+}`,
+
+    motion: `CONTEXT: @andersseen/motion
+
+Library profile:
+- Framework-agnostic attribute-driven animation engine.
+- JS controller + CSS animation catalog.
+- Respects prefers-reduced-motion.
+
+Install:
+npm i @andersseen/motion
+
+Setup:
+import { initMotion } from '@andersseen/motion';
+import '@andersseen/motion/style.css';
+
+const cleanup = initMotion();
+// later: cleanup();
+
+Optional advanced API:
+import { MotionController } from '@andersseen/motion';
+const controller = new MotionController({
+  root: document.body,
+  threshold: 0.1,
+  rootMargin: '0px',
+  once: true,
+});
+
+Attribute API examples:
+<div and-motion="fade-in" and-motion-trigger="enter">...</div>
+<button and-motion="zoom-in" and-motion-trigger="hover">...</button>
+<div and-motion="slide-in-up" and-motion-duration="800ms" and-motion-delay="120ms">...</div>
+
+Supported trigger values:
+- enter | hover | tap
+
+Attribute options:
+- and-motion
+- and-motion-trigger
+- and-motion-duration
+- and-motion-delay
+- and-motion-easing
+- and-motion-once
+
+Usage rules:
+- Use motion for feedback/hierarchy, not constant decoration.
+- Keep duration/easing tokens consistent.
+- Always expose a non-motion-complete UX path.`,
+
+    layout: `CONTEXT: @andersseen/layout
+
+Library profile:
+- Pure CSS library, no JS runtime.
+- Attribute-driven layout and typography.
+- Framework-agnostic.
+
+Install:
+npm i @andersseen/layout
+
+Setup:
+import '@andersseen/layout/dist/layout.css';
+
+Breakpoints (verified):
+- sm: 640px
+- md: 768px
+- lg: 1024px
+- xl: 1280px
+- 2xl: 1536px
+
+Core attribute system:
+- and-layout="horizontal|vertical|grid"
+- and-layout spacing: gap, gap-x, gap-y
+- and-layout alignment: align, justify, wrap
+- and-layout spacing utils: p, p-x, p-y, m, m-x, m-y (+ directional variants)
+- and-layout grid: cols (1..12), span (1..12/full), col-start, col-end
+- Responsive syntax: prop@md:value
+
+Typography attribute system:
+- and-text="h1|h2|h3|h4|h5|h6|p|p-sm|p-xs|caption"
+- and-text modifiers: align, weight, color
+
+Attribute examples:
+<section and-layout="vertical gap:md">
+  <header and-layout="horizontal justify:between align:center">
+    <h2 and-text="h2 weight:bold">Title</h2>
+  </header>
+</section>
+
+Responsive examples:
+<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg"></div>
+<p and-text="p align:left align@md:center">Body text</p>
+
+Usage rules:
+ - Prefer attributes as source of truth for composition.
+ - Avoid mixing utility frameworks and and-layout rules on same node when equivalent modifiers exist.
+ - Color tokens in layout map to CSS variables (--color-primary, --color-foreground, etc).`,
+  };
+
+  readonly selectedPromptContext = computed(
+    () => this.promptByLibrary[this.selectedPromptLibrary()],
+  );
+
+  readonly selectedPromptLabel = computed(
+    () => `${this.promptLibraryLabel(this.selectedPromptLibrary())}.context.md`,
+  );
 
   copyInstallCommand() {
     navigator.clipboard?.writeText(this.installCommand());
     this.copiedInstall.set(true);
     setTimeout(() => this.copiedInstall.set(false), 1200);
+  }
+
+  promptLibraryLabel(lib: PromptLibrary) {
+    return this.promptLibraryLabels[lib];
+  }
+
+  copyPromptContext() {
+    navigator.clipboard?.writeText(this.selectedPromptContext());
+    this.copiedPrompt.set(true);
+    setTimeout(() => this.copiedPrompt.set(false), 1200);
   }
 }
