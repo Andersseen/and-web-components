@@ -131,9 +131,9 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
         display: inline-flex;
         gap: 0.5rem;
         padding: 0.25rem;
-        border: 1px solid var(--color-border);
+        border: 1px solid hsl(var(--border));
         border-radius: 0.75rem;
-        background: color-mix(in oklab, var(--color-muted) 55%, transparent);
+        background: hsl(var(--muted) / 0.55);
       }
 
       .install-tab {
@@ -144,14 +144,14 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
         font-size: 0.75rem;
         font-weight: 600;
         letter-spacing: 0.04em;
-        color: var(--color-muted-foreground);
+        color: hsl(var(--muted-foreground));
         cursor: pointer;
       }
 
       .install-tab--active {
-        background: var(--color-background);
-        color: var(--color-foreground);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        box-shadow: 0 1px 2px hsl(var(--foreground) / 0.12);
       }
 
       .install-command-row {
@@ -159,14 +159,14 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
         align-items: center;
         justify-content: space-between;
         padding: 0.75rem 1rem;
-        border-bottom: 1px solid var(--color-border);
+        border-bottom: 1px solid hsl(var(--border));
       }
 
       .copy-btn {
-        border: 1px solid var(--color-border);
+        border: 1px solid hsl(var(--border));
         border-radius: 0.5rem;
-        background: var(--color-background);
-        color: var(--color-foreground);
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
         font-size: 0.75rem;
         font-weight: 600;
         padding: 0.35rem 0.65rem;
@@ -174,7 +174,7 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
       }
 
       .copy-btn:hover {
-        background: var(--color-accent);
+        background: hsl(var(--accent));
       }
 
       .install-command {
@@ -184,7 +184,7 @@ type PackageManager = 'pnpm' | 'npm' | 'yarn';
           ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
           'Liberation Mono', 'Courier New', monospace;
         font-size: 0.9rem;
-        color: var(--color-foreground);
+        color: hsl(var(--foreground));
         overflow-x: auto;
       }
     `,
