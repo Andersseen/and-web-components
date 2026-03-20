@@ -69,7 +69,7 @@ type PromptLibrary =
           </and-tabs>
 
           <div
-            class="mt-4 overflow-hidden rounded-xl border border-border bg-muted/20"
+            class="mt-4 overflow-hidden rounded-xl border border-border bg-card"
           >
             <div
               class="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
@@ -128,7 +128,7 @@ type PromptLibrary =
         </and-tabs>
 
         <div class="mb-3">
-          <span class="text-xs leading-relaxed text-muted-foreground">
+          <span class="text-xs leading-relaxed text-foreground/80">
             Context snippet only. Each tab is framework-agnostic and focused on
             one library contract.
           </span>

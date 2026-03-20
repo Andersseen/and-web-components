@@ -5,9 +5,9 @@ import { Component, input } from '@angular/core';
   host: { class: 'block w-full min-w-0 max-w-full' },
   template: `
     <section
-      class="w-full min-w-0 max-w-full overflow-hidden rounded-xl border border-border shadow-sm"
+      class="w-full min-w-0 max-w-full overflow-hidden rounded-xl border border-border bg-card shadow-sm"
       [class.bg-card]="tone() === 'card'"
-      [class.bg-muted]="tone() === 'muted'"
+      [class.bg-muted/40]="tone() === 'muted'"
       [class.p-4]="padding() === 'md'"
       [class.p-5]="padding() === 'lg'"
     >
@@ -24,7 +24,7 @@ import { Component, input } from '@angular/core';
               </h3>
             }
             @if (description()) {
-              <p class="m-0 mt-1 text-sm leading-relaxed text-muted-foreground">
+              <p class="m-0 mt-1 text-sm leading-relaxed text-foreground/80">
                 {{ description() }}
               </p>
             }

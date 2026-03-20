@@ -5,10 +5,10 @@ import { Component, input, signal } from '@angular/core';
   host: { class: 'block w-full min-w-0 max-w-full' },
   template: `
     <div
-      class="w-full min-w-0 max-w-full overflow-x-hidden rounded-xl border border-border shadow-sm"
+      class="w-full min-w-0 max-w-full overflow-x-hidden rounded-xl border border-border bg-card shadow-sm"
     >
       <div
-        class="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-muted/85 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-muted/70 sm:px-5"
+        class="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-card px-4 py-3 sm:px-5"
       >
         <span
           class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
@@ -25,7 +25,7 @@ import { Component, input, signal } from '@angular/core';
         }
       </div>
       <pre
-        class="m-0 max-w-full overflow-x-auto bg-muted/20 p-4 font-mono text-[13px] leading-relaxed text-foreground/80 whitespace-pre-wrap break-words sm:p-5 sm:whitespace-pre sm:break-normal"
+        class="m-0 max-w-full overflow-x-auto bg-background p-4 font-mono text-[13px] leading-relaxed text-foreground whitespace-pre-wrap break-words sm:p-5 sm:whitespace-pre sm:break-normal"
       ><code class="block w-full">{{ code() }}</code></pre>
     </div>
   `,
