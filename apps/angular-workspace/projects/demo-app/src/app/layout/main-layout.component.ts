@@ -47,9 +47,10 @@ interface SidebarConfig {
         [items]="navItems"
         [activeItem]="activeSection()"
         itemVariant="underline"
-        [compactBreakpoint]="1280"
-        [minimalBreakpoint]="1060"
-        [mobileBreakpoint]="780"
+        [autoCollapse]="false"
+        [compactBreakpoint]="0"
+        [minimalBreakpoint]="0"
+        [mobileBreakpoint]="760"
         (navItemClick)="onNavItemClick($event)"
       >
         <span slot="start" class="brand-slot">
@@ -179,27 +180,17 @@ interface SidebarConfig {
       .navbar-actions {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.35rem;
       }
       .navbar-control {
-        width: 126px;
+        width: 102px;
       }
-      @media (max-width: 1280px) {
-        .navbar-control-color {
-          display: none;
-        }
-      }
-      @media (max-width: 1024px) {
+      @media (max-width: 1180px) {
         .brand-label {
           display: none;
         }
         .navbar-control {
-          width: 110px;
-        }
-      }
-      @media (max-width: 860px) {
-        .navbar-actions and-button[variant='link'] {
-          display: none;
+          width: 92px;
         }
       }
     `,
