@@ -1,6 +1,12 @@
 import { Component, computed, signal } from '@angular/core';
+import {
+  AndTabs,
+  AndTabsList,
+  AndTabsTrigger,
+} from '@angular-components/stencil-generated/components';
 import { DemoCodeBlockComponent } from '../../shared/demo-code-block.component';
 import { DemoHeaderComponent } from '../../shared/demo-header.component';
+import { DemoPanelComponent } from '../../shared/demo-panel.component';
 import { DemoSectionComponent } from '../../shared/demo-section.component';
 import {
   HEADLESS_CORE_PROMPT,
@@ -20,44 +26,54 @@ type PromptLibrary =
 
 @Component({
   selector: 'app-docs-ai',
-  imports: [DemoHeaderComponent, DemoSectionComponent, DemoCodeBlockComponent],
+  imports: [
+    AndTabs,
+    AndTabsList,
+    AndTabsTrigger,
+    DemoHeaderComponent,
+    DemoSectionComponent,
+    DemoCodeBlockComponent,
+    DemoPanelComponent,
+  ],
   template: `
-    <div class="max-w-5xl mx-auto pb-12">
+    <div
+      class="mx-auto w-full min-w-0 max-w-5xl overflow-x-clip px-4 pb-10 sm:px-6 sm:pb-12"
+    >
       <demo-header
         title="Docs for AI-Driven Development"
         description="Use this page as a copy-paste baseline when you start a new project and want an LLM to generate code with Andersseen libraries correctly."
       />
 
       <demo-section title="Install all core libraries">
-        <div class="rounded-xl border border-border bg-card p-5 shadow-sm">
-          <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-            Select your package manager and copy one command for the full
-            ecosystem.
-          </p>
+        <demo-panel
+          title="Single command install"
+          description="Select your package manager and copy one command for the full ecosystem."
+        >
+          <and-tabs
+            [value]="selectedPm()"
+            (andTabChange)="onPackageManagerTabChange($event)"
+            class="block w-full"
+          >
+            <and-tabs-list
+              class="grid w-full grid-cols-3 rounded-xl border border-border bg-muted/60 p-1"
+            >
+              @for (pm of packageManagers; track pm) {
+                <and-tabs-trigger
+                  [value]="pm"
+                  class="px-3 py-2 text-xs font-semibold uppercase tracking-wide"
+                >
+                  {{ pm.toUpperCase() }}
+                </and-tabs-trigger>
+              }
+            </and-tabs-list>
+          </and-tabs>
 
           <div
-            class="mt-4 install-toolbar"
-            role="tablist"
-            aria-label="Package manager selector"
+            class="mt-4 overflow-hidden rounded-xl border border-border bg-muted/20"
           >
-            @for (pm of packageManagers; track pm) {
-              <button
-                type="button"
-                role="tab"
-                class="install-tab"
-                [attr.aria-selected]="selectedPm() === pm"
-                [class.install-tab--active]="selectedPm() === pm"
-                (click)="selectedPm.set(pm)"
-              >
-                {{ pm.toUpperCase() }}
-              </button>
-            }
-          </div>
-
-          <div
-            class="mt-4 rounded-xl border border-border bg-muted/20 overflow-hidden"
-          >
-            <div class="install-command-row">
+            <div
+              class="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+            >
               <span
                 class="text-xs font-medium uppercase tracking-wide text-muted-foreground"
               >
@@ -65,21 +81,21 @@ type PromptLibrary =
               </span>
               <button
                 type="button"
-                class="copy-btn"
+                class="h-8 w-full rounded-md border border-border bg-background px-3 text-xs font-semibold text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:w-auto"
                 (click)="copyInstallCommand()"
               >
                 {{ copiedInstall() ? 'Copied' : 'Copy' }}
               </button>
             </div>
             <pre
-              class="install-command"
+              class="m-0 max-w-full overflow-x-auto p-4 font-mono text-sm text-foreground whitespace-pre-wrap break-all sm:p-5 sm:whitespace-pre sm:break-normal"
             ><code>{{ installCommand() }}</code></pre>
           </div>
-        </div>
+        </demo-panel>
       </demo-section>
 
       <demo-section title="Angular setup (standalone app)">
-        <div class="grid gap-4">
+        <div class="grid min-w-0 gap-4">
           <demo-code-block label="styles.css" [code]="stylesImport" />
           <demo-code-block label="main.ts" [code]="mainTsSetup" />
           <demo-code-block label="example component" [code]="componentUsage" />
@@ -87,173 +103,45 @@ type PromptLibrary =
       </demo-section>
 
       <demo-section title="Prompt Context by Library">
-        <div class="rounded-xl border border-border bg-muted/30 p-4 mb-4">
-          <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-            These are reusable context snippets, one per library. They are not
-            task prompts. Copy the one you need and prepend it to your own
-            request in any framework.
-          </p>
-        </div>
+        <demo-panel
+          tone="muted"
+          padding="md"
+          title="Reusable context snippets"
+          description="Each tab contains a framework-agnostic library contract. Use it as context and prepend your own task prompt."
+        />
 
-        <div
-          class="context-toolbar"
-          role="tablist"
-          aria-label="Prompt library selector"
+        <and-tabs
+          [value]="selectedPromptLibrary()"
+          (andTabChange)="onPromptLibraryTabChange($event)"
+          class="mb-3 block w-full"
         >
-          @for (lib of promptLibraries; track lib) {
-            <button
-              type="button"
-              role="tab"
-              class="context-tab"
-              [attr.aria-selected]="selectedPromptLibrary() === lib"
-              [class.context-tab--active]="selectedPromptLibrary() === lib"
-              (click)="selectedPromptLibrary.set(lib)"
-            >
-              {{ promptLibraryLabel(lib) }}
-            </button>
-          }
-        </div>
+          <and-tabs-list class="flex w-full flex-wrap gap-2">
+            @for (lib of promptLibraries; track lib) {
+              <and-tabs-trigger
+                [value]="lib"
+                class="px-3 py-1.5 text-xs font-semibold capitalize"
+              >
+                {{ promptLibraryLabel(lib) }}
+              </and-tabs-trigger>
+            }
+          </and-tabs-list>
+        </and-tabs>
 
-        <div class="context-meta">
-          <span class="text-xs text-muted-foreground">
+        <div class="mb-3">
+          <span class="text-xs leading-relaxed text-muted-foreground">
             Context snippet only. Each tab is framework-agnostic and focused on
             one library contract.
           </span>
-          <button
-            type="button"
-            class="context-copy-btn"
-            (click)="copyPromptContext()"
-          >
-            {{ copiedPrompt() ? 'Copied' : 'Copy context' }}
-          </button>
         </div>
 
         <demo-code-block
           [label]="selectedPromptLabel()"
           [code]="selectedPromptContext()"
+          [copyable]="true"
         />
       </demo-section>
     </div>
   `,
-  styles: [
-    `
-      .install-toolbar {
-        display: inline-flex;
-        gap: 0.5rem;
-        padding: 0.25rem;
-        border: 1px solid hsl(var(--border));
-        border-radius: 0.75rem;
-        background: hsl(var(--muted) / 0.55);
-      }
-
-      .install-tab {
-        border: 0;
-        border-radius: 0.5rem;
-        padding: 0.45rem 0.8rem;
-        background: transparent;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        color: hsl(var(--muted-foreground));
-        cursor: pointer;
-      }
-
-      .install-tab--active {
-        background: hsl(var(--background));
-        color: hsl(var(--foreground));
-        box-shadow: 0 1px 2px hsl(var(--foreground) / 0.12);
-      }
-
-      .install-command-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid hsl(var(--border));
-      }
-
-      .copy-btn {
-        border: 1px solid hsl(var(--border));
-        border-radius: 0.5rem;
-        background: hsl(var(--background));
-        color: hsl(var(--foreground));
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 0.35rem 0.65rem;
-        cursor: pointer;
-      }
-
-      .copy-btn:hover {
-        background: hsl(var(--accent));
-      }
-
-      .install-command {
-        margin: 0;
-        padding: 1rem;
-        font-family:
-          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          'Liberation Mono', 'Courier New', monospace;
-        font-size: 0.9rem;
-        color: hsl(var(--foreground));
-        overflow-x: auto;
-      }
-
-      .context-toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.45rem;
-        margin-bottom: 0.85rem;
-      }
-
-      .context-tab {
-        border: 1px solid hsl(var(--border));
-        border-radius: 999px;
-        padding: 0.35rem 0.7rem;
-        background: hsl(var(--background));
-        color: hsl(var(--muted-foreground));
-        font-size: 0.75rem;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      .context-tab--active {
-        color: hsl(var(--foreground));
-        border-color: hsl(var(--foreground) / 0.45);
-        background: hsl(var(--accent));
-      }
-
-      .context-meta {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 0.75rem;
-      }
-
-      .context-copy-btn {
-        border: 1px solid hsl(var(--border));
-        border-radius: 0.5rem;
-        background: hsl(var(--background));
-        color: hsl(var(--foreground));
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 0.35rem 0.65rem;
-        cursor: pointer;
-        white-space: nowrap;
-      }
-
-      .context-copy-btn:hover {
-        background: hsl(var(--accent));
-      }
-
-      @media (max-width: 640px) {
-        .context-meta {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-      }
-    `,
-  ],
 })
 export default class DocsAiComponent {
   readonly packageManagers: PackageManager[] = ['pnpm', 'npm', 'yarn'];
@@ -267,7 +155,6 @@ export default class DocsAiComponent {
     'layout',
   ];
   readonly selectedPromptLibrary = signal<PromptLibrary>('web-components');
-  readonly copiedPrompt = signal(false);
 
   private readonly installByPm: Record<PackageManager, string> = {
     pnpm: 'pnpm add @andersseen/web-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
@@ -338,9 +225,17 @@ export class HomeComponent {}`;
     return this.promptLibraryLabels[lib];
   }
 
-  copyPromptContext() {
-    navigator.clipboard?.writeText(this.selectedPromptContext());
-    this.copiedPrompt.set(true);
-    setTimeout(() => this.copiedPrompt.set(false), 1200);
+  onPackageManagerTabChange(event: CustomEvent<string>) {
+    const value = event.detail;
+    if (this.packageManagers.includes(value as PackageManager)) {
+      this.selectedPm.set(value as PackageManager);
+    }
+  }
+
+  onPromptLibraryTabChange(event: CustomEvent<string>) {
+    const value = event.detail;
+    if (this.promptLibraries.includes(value as PromptLibrary)) {
+      this.selectedPromptLibrary.set(value as PromptLibrary);
+    }
   }
 }
