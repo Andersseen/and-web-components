@@ -1,4 +1,11 @@
 :host {
+  --carousel-track-radius: var(--theme-carousel-track-radius, var(--radius, 0.5rem));
+  --carousel-control-size: var(--theme-carousel-control-size, 2.5rem);
+  --carousel-control-offset: var(--theme-carousel-control-offset, 1rem);
+  --carousel-control-radius: var(--theme-carousel-control-radius, 50%);
+  --carousel-control-border-width: var(--theme-carousel-control-border-width, var(--border-width, 1px));
+  --carousel-control-transition: var(--theme-motion-fast, 150ms) var(--theme-easing-standard, cubic-bezier(0.4, 0, 0.2, 1));
+
   display: block;
   position: relative;
   overflow: hidden;
@@ -7,12 +14,12 @@
 
 .carousel-track-container {
   overflow: hidden;
-  border-radius: var(--radius, 0.5rem);
+  border-radius: var(--carousel-track-radius);
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform var(--theme-motion-slow, 320ms) var(--theme-easing-standard, cubic-bezier(0.4, 0, 0.2, 1));
   width: 100%;
 }
 
@@ -30,17 +37,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
+  width: var(--carousel-control-size);
+  height: var(--carousel-control-size);
+  border-radius: var(--carousel-control-radius);
   background-color: hsla(var(--background), 0.8);
   color: hsl(var(--foreground));
-  border: 1px solid hsl(var(--border));
+  border: var(--carousel-control-border-width) solid hsl(var(--border));
   cursor: pointer;
   opacity: 0;
   transition:
-    opacity 0.2s,
-    background-color 0.2s;
+    opacity var(--carousel-control-transition),
+    background-color var(--carousel-control-transition);
 }
 
 :host(:hover) .carousel-control {
@@ -52,11 +59,11 @@
 }
 
 .carousel-control.prev {
-  left: 1rem;
+  left: var(--carousel-control-offset);
 }
 
 .carousel-control.next {
-  right: 1rem;
+  right: var(--carousel-control-offset);
 }
 
 .sr-only {

@@ -1,4 +1,10 @@
 :host {
+  --modal-backdrop-opacity: var(--theme-overlay-opacity, 0.5);
+  --modal-backdrop-blur: var(--theme-modal-backdrop-blur, 4px);
+  --modal-motion-fast: var(--theme-motion-fast, 150ms);
+  --modal-motion-slow: var(--theme-motion-slow, 320ms);
+  --modal-easing: var(--theme-easing-standard, cubic-bezier(0.4, 0, 0.2, 1));
+
   display: contents;
 }
 
@@ -11,15 +17,15 @@ dialog {
 }
 
 dialog::backdrop {
-  background-color: hsl(var(--foreground) / 0.5);
-  backdrop-filter: blur(4px);
+  background-color: hsl(var(--foreground) / var(--modal-backdrop-opacity));
+  backdrop-filter: blur(var(--modal-backdrop-blur));
 }
 
 /* Animations only when the host has [animated] */
 :host([animated]) dialog::backdrop {
-  animation: and-fade-in 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: and-fade-in var(--modal-motion-fast) var(--modal-easing) both;
 }
 
 :host([animated]) dialog[open] {
-  animation: and-fade-zoom-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: and-fade-zoom-in var(--modal-motion-slow) var(--modal-easing) both;
 }

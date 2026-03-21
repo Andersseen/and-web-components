@@ -29,6 +29,7 @@ export const DIRECTIVES = [
   d.AndModal,
   d.AndNavbar,
   d.AndPagination,
+  d.AndSelect,
   d.AndSidebar,
   d.AndTabs,
   d.AndTabsContent,

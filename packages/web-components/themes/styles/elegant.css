@@ -1,0 +1,52 @@
+/* =============================================================================
+   Elegant Style Theme — Refined & Subtle
+   @andersseen/web-components
+
+   Structural tokens only. Pair with any palette.
+
+   Usage:
+     @import "@andersseen/web-components/themes/styles/elegant";
+   or shorthand:
+     @import "@andersseen/web-components/elegant";
+
+   Effect: large radius, slightly spacious (1.1×), hairline 0.5px borders.
+   ============================================================================= */
+
+:root {
+  --radius: 0.75rem;
+  --spacing-factor: 1.12;
+  --border-width: 0.5px;
+  --navbar-link-active-weight: 600;
+  --navbar-link-letter-spacing: 0.015em;
+  --navbar-link-text-transform: none;
+  --theme-layout-max-width: 84rem;
+  --theme-motion-fast: 200ms;
+  --theme-motion-base: 280ms;
+  --theme-motion-slow: 420ms;
+  --theme-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 3px;
+  --theme-surface-blur: 14px;
+  --theme-overlay-opacity: 0.42;
+  --theme-modal-backdrop-blur: 8px;
+  --theme-navbar-height: 4.25rem;
+  --theme-navbar-px: 1.25rem;
+  --theme-navbar-px-sm: 1.75rem;
+  --theme-navbar-px-lg: 2.25rem;
+  --theme-navbar-item-gap: 0.375rem;
+  --theme-navbar-section-gap: 1.125rem;
+  --theme-navbar-indicator-height: 1px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 15.5rem;
+  --theme-sidebar-collapsed-width: 3.75rem;
+  --theme-sidebar-header-height: 3.75rem;
+  --theme-sidebar-item-gap: 0.2rem;
+  --theme-sidebar-icon-size: 1.1rem;
+  --theme-sidebar-px: 0.625rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: calc(var(--radius) * 0.9);
+  --theme-carousel-control-size: 2.5rem;
+  --theme-carousel-control-offset: 1.125rem;
+  --theme-carousel-control-radius: 9999px;
+  --theme-carousel-control-border-width: var(--border-width);
+}

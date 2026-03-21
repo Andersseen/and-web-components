@@ -30,7 +30,23 @@
       "import": "./loader/index.js",
       "require": "./loader/index.cjs"
     },
-    "./dist/web-components/web-components.css": "./dist/web-components/web-components.css"
+    "./dist/web-components/web-components.css": "./dist/web-components/web-components.css",
+    "./themes": "./themes/index.css",
+    "./themes/*": "./themes/*.css",
+    "./themes/colors": "./themes/colors/index.css",
+    "./themes/styles": "./themes/styles/index.css",
+    "./themes/colors/*": "./themes/colors/*.css",
+    "./themes/styles/*": "./themes/styles/*.css",
+    "./indigo-rose": "./themes/indigo-rose.css",
+    "./slate-amber": "./themes/slate-amber.css",
+    "./emerald-orange": "./themes/emerald-orange.css",
+    "./violet-cyan": "./themes/violet-cyan.css",
+    "./rose-teal": "./themes/rose-teal.css",
+    "./default": "./themes/default.css",
+    "./compact": "./themes/compact.css",
+    "./playful": "./themes/playful.css",
+    "./retro": "./themes/retro.css",
+    "./elegant": "./themes/elegant.css"
   },
   "publishConfig": {
     "access": "public"
@@ -43,7 +59,8 @@
   "author": "Andersseen",
   "files": [
     "dist/",
-    "loader/"
+    "loader/",
+    "themes/"
   ],
   "scripts": {
     "build": "stencil build && node scripts/generate-all-barrel.cjs",

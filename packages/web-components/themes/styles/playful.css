@@ -1,0 +1,52 @@
+/* =============================================================================
+   Playful Style Theme — Rounded & Spacious
+   @andersseen/web-components
+
+   Structural tokens only. Pair with any palette.
+
+   Usage:
+     @import "@andersseen/web-components/themes/styles/playful";
+   or shorthand:
+     @import "@andersseen/web-components/playful";
+
+   Effect: extra spacing (1.25×), large radius, thicker 2px borders.
+   ============================================================================= */
+
+:root {
+  --radius: 1rem;
+  --spacing-factor: 1.24;
+  --border-width: 2px;
+  --navbar-link-active-weight: 700;
+  --navbar-link-letter-spacing: 0.01em;
+  --navbar-link-text-transform: none;
+  --theme-layout-max-width: 86rem;
+  --theme-motion-fast: 170ms;
+  --theme-motion-base: 260ms;
+  --theme-motion-slow: 360ms;
+  --theme-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-focus-ring-width: 3px;
+  --theme-focus-ring-offset: 3px;
+  --theme-surface-blur: 12px;
+  --theme-overlay-opacity: 0.58;
+  --theme-modal-backdrop-blur: 6px;
+  --theme-navbar-height: 4.5rem;
+  --theme-navbar-px: 1.25rem;
+  --theme-navbar-px-sm: 1.75rem;
+  --theme-navbar-px-lg: 2.5rem;
+  --theme-navbar-item-gap: 0.5rem;
+  --theme-navbar-section-gap: 1.25rem;
+  --theme-navbar-indicator-height: 3px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 17rem;
+  --theme-sidebar-collapsed-width: 4.5rem;
+  --theme-sidebar-header-height: 4rem;
+  --theme-sidebar-item-gap: 0.25rem;
+  --theme-sidebar-icon-size: 1.25rem;
+  --theme-sidebar-px: 0.75rem;
+  --theme-sidebar-section-gap: 0.625rem;
+  --theme-carousel-track-radius: calc(var(--radius) * 1.1);
+  --theme-carousel-control-size: 2.75rem;
+  --theme-carousel-control-offset: 1.25rem;
+  --theme-carousel-control-radius: 50%;
+  --theme-carousel-control-border-width: var(--border-width);
+}

@@ -1,0 +1,52 @@
+/* =============================================================================
+   Compact Style Theme — Dense & Professional
+   @andersseen/web-components
+
+   Structural tokens only. Pair with any palette.
+
+   Usage:
+     @import "@andersseen/web-components/themes/styles/compact";
+   or shorthand:
+     @import "@andersseen/web-components/compact";
+
+   Effect: tighter spacing (0.75×), smaller radius, standard borders.
+   ============================================================================= */
+
+:root {
+  --radius: 0.25rem;
+  --spacing-factor: 0.82;
+  --border-width: 1px;
+  --navbar-link-active-weight: 600;
+  --navbar-link-letter-spacing: 0;
+  --navbar-link-text-transform: none;
+  --theme-layout-max-width: 74rem;
+  --theme-motion-fast: 120ms;
+  --theme-motion-base: 180ms;
+  --theme-motion-slow: 260ms;
+  --theme-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 1px;
+  --theme-surface-blur: 6px;
+  --theme-overlay-opacity: 0.46;
+  --theme-modal-backdrop-blur: 3px;
+  --theme-navbar-height: 3.5rem;
+  --theme-navbar-px: 0.75rem;
+  --theme-navbar-px-sm: 1rem;
+  --theme-navbar-px-lg: 1.25rem;
+  --theme-navbar-item-gap: 0.125rem;
+  --theme-navbar-section-gap: 0.625rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 14rem;
+  --theme-sidebar-collapsed-width: 3.5rem;
+  --theme-sidebar-header-height: 3rem;
+  --theme-sidebar-item-gap: 0.1rem;
+  --theme-sidebar-icon-size: 1rem;
+  --theme-sidebar-px: 0.375rem;
+  --theme-sidebar-section-gap: 0.375rem;
+  --theme-carousel-track-radius: var(--radius);
+  --theme-carousel-control-size: 2rem;
+  --theme-carousel-control-offset: 0.625rem;
+  --theme-carousel-control-radius: 9999px;
+  --theme-carousel-control-border-width: var(--border-width);
+}

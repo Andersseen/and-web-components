@@ -50,6 +50,7 @@ interface SidebarConfig {
     >
       <and-navbar
         class="bg-background"
+        style="--navbar-max-width: 100%; --navbar-px: 0.5rem; --navbar-px-sm: 0.75rem; --navbar-px-lg: 1rem"
         [items]="navItems"
         [activeItem]="activeSection()"
         [autoCollapse]="false"
@@ -69,6 +70,8 @@ interface SidebarConfig {
           slot="end"
           [themeOptions]="themeOptions"
           [colorOptions]="colorOptions"
+          [currentTheme]="currentTheme()"
+          [currentColor]="currentColor()"
           [isDark]="isDark()"
           (themeSelect)="applyTheme($event)"
           (colorSelect)="applyColor($event)"
@@ -79,6 +82,8 @@ interface SidebarConfig {
           slot="mobile-actions"
           [themeOptions]="themeOptions"
           [colorOptions]="colorOptions"
+          [currentTheme]="currentTheme()"
+          [currentColor]="currentColor()"
           (themeSelect)="applyTheme($event)"
           (colorSelect)="applyColor($event)"
         />
@@ -156,6 +161,8 @@ export class MainLayoutComponent {
   readonly activeHeadless = signal('overview');
   readonly activeMotion = signal('attribute');
   readonly activeLayout = signal('overview');
+  readonly currentTheme = signal('default');
+  readonly currentColor = signal('indigo-rose');
   readonly isDark = signal(false);
 
   // ── Config maps (eliminates if/else chains) ──
@@ -209,7 +216,16 @@ export class MainLayoutComponent {
         }
       });
 
-    document.documentElement.setAttribute('data-color', 'indigo-rose');
+    const currentThemeAttr =
+      document.documentElement.getAttribute('data-theme') || 'default';
+    const currentColorAttr =
+      document.documentElement.getAttribute('data-color') || 'indigo-rose';
+
+    this.currentTheme.set(currentThemeAttr);
+    this.currentColor.set(currentColorAttr);
+
+    document.documentElement.setAttribute('data-theme', currentThemeAttr);
+    document.documentElement.setAttribute('data-color', currentColorAttr);
   }
 
   onNavItemClick(event: CustomEvent<unknown>) {
@@ -230,11 +246,13 @@ export class MainLayoutComponent {
 
   applyTheme(theme: string) {
     if (theme.length === 0) return;
+    this.currentTheme.set(theme);
     document.documentElement.setAttribute('data-theme', theme);
   }
 
   applyColor(color: string) {
     if (color.length === 0) return;
+    this.currentColor.set(color);
     document.documentElement.setAttribute('data-color', color);
   }
 

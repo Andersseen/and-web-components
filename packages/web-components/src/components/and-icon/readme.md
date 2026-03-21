@@ -27,6 +27,7 @@
  - [and-modal](../and-modal)
  - [and-navbar](../and-navbar)
  - [and-pagination](../and-pagination)
+ - [and-select](../and-select)
  - [and-sidebar](../and-sidebar)
  - [and-toast](../and-toast)
 
@@ -41,6 +42,7 @@ graph TD;
   and-modal --> and-icon
   and-navbar --> and-icon
   and-pagination --> and-icon
+  and-select --> and-icon
   and-sidebar --> and-icon
   and-toast --> and-icon
   style and-icon fill:#f9f,stroke:#333,stroke-width:4px

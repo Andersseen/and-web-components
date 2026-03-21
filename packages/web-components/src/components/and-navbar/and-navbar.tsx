@@ -19,7 +19,7 @@ export type NavItem = {
 /**
  * Progressive responsive stages (from largest to smallest viewport):
  *
- * - `full`    – all three sections visible (start | main centered | end)
+ * - `full`    – all three sections visible (start | center | end)
  * - `compact` – end section collapses to icon-only  / compact mode
  * - `minimal` – main section hidden, only start + compact end visible
  * - `mobile`  – hamburger menu, everything in a drawer
@@ -36,11 +36,7 @@ const navbarVariants = cva('w-full', {
       default: 'bg-background border-b border-border',
       filled: 'bg-primary text-primary-foreground border-b border-primary',
       floating: 'navbar-floating bg-background shadow-lg border border-border',
-      glass: [
-        'bg-background/60 border-b border-border/50',
-        'backdrop-blur-xl',
-        '-webkit-backdrop-filter: blur(20px)',
-      ].join(' '),
+      glass: ['bg-background/60 border-b border-border/50', 'backdrop-blur-xl', '-webkit-backdrop-filter: blur(20px)'].join(' '),
     },
   },
   defaultVariants: {
@@ -447,18 +443,12 @@ export class AndNavbar {
     const isActive = this.navbar.queries.isActive(item.id);
     const isDisabled = item.disabled ?? false;
 
-    const baseClass = cn(
-      navItemVariants({ disabled: isDisabled }),
-      mobile && 'w-full text-left px-4 py-3 text-base rounded-lg',
-    );
+    const baseClass = cn(navItemVariants({ disabled: isDisabled }), mobile && 'w-full text-left px-4 py-3 text-base rounded-lg');
 
     // The animated underline indicator only makes sense for 'default' item style;
     // other styles handle active state through borders, bg, shadows, etc.
     const showIndicator = !mobile && this.itemVariant === 'default';
-    const indicatorClass = cn(
-      'nav-item-indicator',
-      isActive && 'nav-item-indicator--active',
-    );
+    const indicatorClass = cn('nav-item-indicator', isActive && 'nav-item-indicator--active');
 
     const itemStyle = mobile ? 'default' : this.itemVariant;
 
@@ -468,9 +458,9 @@ export class AndNavbar {
       'data-active': itemProps['data-active'],
       'data-state': itemProps['data-state'],
       'data-item-style': itemStyle,
-      tabindex: itemProps.tabindex,
-      id: itemProps.id,
-      role: itemProps.role,
+      'tabindex': itemProps.tabindex,
+      'id': itemProps.id,
+      'role': itemProps.role,
     };
 
     if (item.href) {
@@ -482,12 +472,15 @@ export class AndNavbar {
           target={item.target}
           {...commonProps}
           class={baseClass}
-          onClick={(e) => {
-            if (isDisabled) { e.preventDefault(); return; }
+          onClick={e => {
+            if (isDisabled) {
+              e.preventDefault();
+              return;
+            }
             this.handleItemClick(item);
             if (mobile) this.handleClose();
           }}
-          onKeyDown={(e) => !mobile && this.handleItemKeyDown(e, item)}
+          onKeyDown={e => !mobile && this.handleItemKeyDown(e, item)}
         >
           {item.icon && <and-icon name={item.icon} size="16" />}
           <span>{item.label}</span>
@@ -507,7 +500,7 @@ export class AndNavbar {
           this.handleItemClick(item);
           if (mobile) this.handleClose();
         }}
-        onKeyDown={(e) => !mobile && this.handleItemKeyDown(e, item)}
+        onKeyDown={e => !mobile && this.handleItemKeyDown(e, item)}
       >
         {item.icon && <and-icon name={item.icon} size="16" />}
         <span>{item.label}</span>
@@ -520,7 +513,11 @@ export class AndNavbar {
 
   render() {
     if (!this.navbar) {
-      return <Host><div style={{padding: '1rem', background: 'red', color: 'white'}}>Navbar: headless not initialized</div></Host>;
+      return (
+        <Host>
+          <div style={{ padding: '1rem', background: 'red', color: 'white' }}>Navbar: headless not initialized</div>
+        </Host>
+      );
     }
 
     const containerProps = this.navbar.getContainerProps();
@@ -547,16 +544,8 @@ export class AndNavbar {
     const isStuck = this.position === 'sticky' || this.position === 'fixed';
 
     return (
-      <Host
-        role={containerProps.role}
-        aria-label={containerProps['aria-label']}
-        style={hostStyle}
-        data-responsive-stage={stage}
-      >
-        <nav class={cn(
-          navbarVariants({ variant: this.variant }),
-          isStuck && this.variant !== 'glass' && 'navbar-blur',
-        )}>
+      <Host role={containerProps.role} aria-label={containerProps['aria-label']} style={hostStyle} data-responsive-stage={stage}>
+        <nav class={cn(navbarVariants({ variant: this.variant }), isStuck && this.variant !== 'glass' && 'navbar-blur')}>
           <div class="navbar-container">
             {/* ── Start section (logo, brand) ──────────────────── */}
             <div class="navbar-start">
@@ -567,26 +556,24 @@ export class AndNavbar {
               </slot>
             </div>
 
-            {/* ── Main section (navigation links) — visible in full & compact */}
+            {/* ── Center section (navigation links / custom content) — visible in full & compact */}
             {showMain && (
-              <div class="navbar-main">
+              <div class="navbar-center navbar-main">
                 {/* Items-based navigation */}
                 {hasItems && (
-                  <div
-                    class="navbar-menu"
-                    role={navListProps.role}
-                    aria-label={navListProps['aria-label']}
-                  >
+                  <div class="navbar-menu" role={navListProps.role} aria-label={navListProps['aria-label']}>
                     {items.map(item => this.renderNavItem(item))}
                   </div>
                 )}
 
-                {/* Slot-based navigation (custom content) */}
-                <slot name="main">
-                  {!hasItems && (
-                    <slot name="nav" />
-                  )}
-                </slot>
+                {/* Slot-based center content (custom content) */}
+                {!hasItems && (
+                  <slot name="center">
+                    <slot name="main">
+                      <slot name="nav" />
+                    </slot>
+                  </slot>
+                )}
               </div>
             )}
 
@@ -625,24 +612,20 @@ export class AndNavbar {
         </nav>
 
         {/* Mobile / minimal drawer */}
-        <and-drawer
-          open={this.mobileMenuOpen}
-          placement="right"
-          onAndDrawerClose={this.handleClose}
-        >
+        <and-drawer open={this.mobileMenuOpen} placement="right" onAndDrawerClose={this.handleClose}>
           <span slot="header" class="mobile-menu-title">
             <slot name="mobile-title">Menu</slot>
           </span>
 
           <nav class="mobile-menu-content">
             {/* Items-based mobile menu */}
-            {hasItems &&
-              items.map(item => this.renderNavItem(item, true))}
+            {hasItems && items.map(item => this.renderNavItem(item, true))}
 
             {/* Slot-based mobile menu */}
             {!hasItems && (
               <div class="mobile-menu-slot">
                 <slot name="mobile-nav">
+                  <slot name="center" />
                   <slot name="main" />
                   <slot name="nav" />
                 </slot>

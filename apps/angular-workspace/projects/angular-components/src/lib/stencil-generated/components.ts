@@ -33,6 +33,7 @@ import { defineCustomElement as defineAndMenuList } from '@andersseen/web-compon
 import { defineCustomElement as defineAndModal } from '@andersseen/web-components/components/and-modal.js';
 import { defineCustomElement as defineAndNavbar } from '@andersseen/web-components/components/and-navbar.js';
 import { defineCustomElement as defineAndPagination } from '@andersseen/web-components/components/and-pagination.js';
+import { defineCustomElement as defineAndSelect } from '@andersseen/web-components/components/and-select.js';
 import { defineCustomElement as defineAndSidebar } from '@andersseen/web-components/components/and-sidebar.js';
 import { defineCustomElement as defineAndTabs } from '@andersseen/web-components/components/and-tabs.js';
 import { defineCustomElement as defineAndTabsContent } from '@andersseen/web-components/components/and-tabs-content.js';
@@ -775,6 +776,41 @@ export declare interface AndPagination extends Components.AndPagination {
    * Emitted when the page changes.
    */
   andPageChange: EventEmitter<CustomEvent<number>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineAndSelect,
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'menuPlacement', 'name', 'options', 'placeholder', 'required', 'value']
+})
+@Component({
+  selector: 'and-select',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'menuPlacement', 'name', 'options', 'placeholder', 'required', 'value'],
+  outputs: ['andSelectChange', 'andBlur'],
+})
+export class AndSelect {
+  protected el: HTMLAndSelectElement;
+  @Output() andSelectChange = new EventEmitter<CustomEvent<string>>();
+  @Output() andBlur = new EventEmitter<CustomEvent<void>>();
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface AndSelect extends Components.AndSelect {
+  /**
+   * Emitted when selected value changes.
+   */
+  andSelectChange: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when select loses focus.
+   */
+  andBlur: EventEmitter<CustomEvent<void>>;
 }
 
 
