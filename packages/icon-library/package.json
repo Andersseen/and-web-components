@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/icon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Shared icon library for Andersseen web components",
   "type": "module",
   "main": "dist/index.js",
