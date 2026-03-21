@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
         <div
           class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
         >
-          <div class="mb-4 text-[#6366f1]">
+          <div class="mb-4 text-primary">
             <svg
               width="32"
               height="32"
@@ -54,7 +54,7 @@ import { CommonModule } from '@angular/common';
         <div
           class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
         >
-          <div class="mb-4 text-[#10b981]">
+          <div class="mb-4 text-success">
             <svg
               width="32"
               height="32"
@@ -82,7 +82,7 @@ import { CommonModule } from '@angular/common';
         <div
           class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
         >
-          <div class="mb-4 text-[#f97316]">
+          <div class="mb-4 text-warning">
             <svg
               width="32"
               height="32"
@@ -110,7 +110,7 @@ import { CommonModule } from '@angular/common';
         <div
           class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
         >
-          <div class="mb-4 text-[#a855f7]">
+          <div class="mb-4 text-secondary-500">
             <svg
               width="32"
               height="32"
@@ -192,7 +192,7 @@ import { CommonModule } from '@angular/common';
               class="m-0 font-mono text-xs leading-relaxed text-blue-200"
             ><code><span class="text-purple-400">const</span> btn = <span class="text-blue-300">createButton</span>();
 
-<span class="text-slate-500">// Your native button</span>
+<span class="text-muted-foreground">// Your native button</span>
 &lt;<span class="text-pink-400">button</span>
   <span class="text-green-300">class</span>="bg-primary text-primary-foreground ..."
   [<span class="text-amber-200">disabled</span>]="btn.state.disabled"

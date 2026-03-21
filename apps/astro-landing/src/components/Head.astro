@@ -1,15 +1,44 @@
 ---
 interface Props {
   title: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = 'Andersseen web component ecosystem: framework-agnostic UI libraries for web components, headless logic, icons, motion, and layout.',
+  canonical = 'https://and-web-components-landing.pages.dev/',
+  image = 'https://and-web-components-landing.pages.dev/social-card.svg',
+} = Astro.props;
 ---
 
 <meta charset="UTF-8" />
-<meta name="description" content="Andersseen — A powerful, framework-agnostic web component ecosystem" />
+<meta name="description" content={description} />
 <meta name="viewport" content="width=device-width" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="And Web Components" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="And Web Components landing page preview" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
 

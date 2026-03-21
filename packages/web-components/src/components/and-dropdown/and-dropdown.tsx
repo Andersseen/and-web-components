@@ -43,11 +43,14 @@ const dropdownTriggerVariants = cva(
   },
 );
 
-const menuClass = [
-  'absolute left-0 z-50 mt-2 min-w-[8rem]',
-  'origin-top-right overflow-hidden rounded-md border border-border',
-  'bg-popover p-1 shadow-md transition-opacity',
-].join(' ');
+const menuClass = ['absolute z-50 min-w-[8rem]', 'overflow-hidden rounded-md border border-border', 'bg-popover p-1 shadow-md transition-opacity'].join(' ');
+
+const menuPlacementClass: Record<DropdownPlacement, string> = {
+  bottom: 'left-0 top-full mt-2 origin-top-left',
+  top: 'left-0 bottom-full mb-2 origin-bottom-left',
+  left: 'right-full top-0 mr-2 origin-right',
+  right: 'left-full top-0 ml-2 origin-left',
+};
 
 const menuItemClass = [
   'relative flex w-full cursor-pointer select-none items-center rounded-sm text-sm',
@@ -157,24 +160,12 @@ export class AndDropdown {
       <Host>
         <div class="relative inline-block text-left w-full">
           {/* Trigger */}
-          <div
-            class="cursor-pointer"
-            onClick={() => this.dropdownLogic?.actions.toggle()}
-            onKeyDown={this.handleTriggerKeyDown}
-          >
+          <div class="cursor-pointer" onClick={() => this.dropdownLogic?.actions.toggle()} onKeyDown={this.handleTriggerKeyDown}>
             <slot name="trigger">
-              <button
-                {...triggerProps}
-                type="button"
-                class={cn(dropdownTriggerVariants({ variant: this.variant }), 'w-full justify-between')}
-              >
+              <button {...triggerProps} type="button" class={cn(dropdownTriggerVariants({ variant: this.variant }), 'w-full justify-between')}>
                 {this.label}
                 <span class="ml-auto flex shrink-0 items-center justify-center">
-                  <and-icon
-                    name={this.isOpen ? 'chevron-up' : 'chevron-down'}
-                    size={16}
-                    class="h-4 w-4"
-                  />
+                  <and-icon name={this.isOpen ? 'chevron-up' : 'chevron-down'} size={16} class="h-4 w-4" />
                 </span>
               </button>
             </slot>
@@ -183,18 +174,15 @@ export class AndDropdown {
           {/* Menu */}
           <div
             {...menuProps}
-            class={cn(menuClass, 'and-dropdown-menu', this.isOpen ? 'opacity-100 visible' : 'opacity-0 invisible')}
+            class={cn(menuClass, menuPlacementClass[this.placement], 'and-dropdown-menu', this.isOpen ? 'visible opacity-100' : 'invisible opacity-0')}
             data-state={this.isOpen ? 'open' : 'closed'}
+            data-side={this.placement}
             onKeyDown={this.handleMenuKeyDown}
           >
             {this.items.map(item => {
               const itemProps = this.dropdownLogic?.getItemProps(item.value) || {};
               return (
-                <div
-                  {...itemProps}
-                  class={cn(menuItemClass, item.disabled && 'pointer-events-none opacity-50')}
-                  onClick={() => !item.disabled && this.handleSelect(item.value)}
-                >
+                <div {...itemProps} class={cn(menuItemClass, item.disabled && 'pointer-events-none opacity-50')} onClick={() => !item.disabled && this.handleSelect(item.value)}>
                   {item.text}
                 </div>
               );
