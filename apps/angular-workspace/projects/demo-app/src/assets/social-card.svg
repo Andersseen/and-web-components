@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="And Web Components UI">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1024" />
+      <stop offset="50%" stop-color="#171537" />
+      <stop offset="100%" stop-color="#24103d" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+
+  <g opacity="0.1" stroke="#ffffff" stroke-width="1">
+    <path d="M0 105 H1200" />
+    <path d="M0 210 H1200" />
+    <path d="M0 315 H1200" />
+    <path d="M0 420 H1200" />
+    <path d="M0 525 H1200" />
+    <path d="M120 0 V630" />
+    <path d="M240 0 V630" />
+    <path d="M360 0 V630" />
+    <path d="M480 0 V630" />
+    <path d="M600 0 V630" />
+    <path d="M720 0 V630" />
+    <path d="M840 0 V630" />
+    <path d="M960 0 V630" />
+    <path d="M1080 0 V630" />
+  </g>
+
+  <g transform="translate(84 86)">
+    <rect width="1032" height="458" rx="34" fill="#0b132c" opacity="0.7" stroke="#334155" />
+  </g>
+
+  <g transform="translate(130 138)">
+    <rect width="128" height="128" rx="28" fill="url(#accent)" />
+    <rect x="32" y="32" width="64" height="64" rx="12" fill="none" stroke="#ffffff" stroke-width="8" />
+  </g>
+
+  <text x="290" y="208" fill="#f8fafc" font-size="72" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800">
+    And Web Components UI
+  </text>
+
+  <text x="290" y="282" fill="#cbd5e1" font-size="33" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="500">
+    Angular demo for Web Components, Headless, Motion, Layout and Icons
+  </text>
+
+  <g transform="translate(130, 334)">
+    <rect width="940" height="170" rx="22" fill="#0f172a" opacity="0.82" stroke="#475569" />
+    <text x="34" y="72" fill="#e2e8f0" font-size="30" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      Theme and palette-aware components with mobile-first navigation
+    </text>
+    <text x="34" y="122" fill="#94a3b8" font-size="25" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      and-web-components · demo-app
+    </text>
+  </g>
+</svg>
