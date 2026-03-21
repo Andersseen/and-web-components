@@ -155,6 +155,15 @@ export const BOOK_OPEN =
   '<g><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></g>';
 export const CIRCLE_DOT =
   '<g><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="1" /></g>';
+export const CIRCLE = '<circle cx="12" cy="12" r="10" />';
+export const SKIP_BACK =
+  '<g><polygon points="19 20 9 12 19 4 19 20" /><line x1="5" y1="19" x2="5" y2="5" /></g>';
+export const COLUMNS =
+  '<g><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M12 3v18" /></g>';
+export const MOVE =
+  '<g><path d="m12 2 3 3-3 3-3-3 3-3Z" /><path d="m12 22 3-3-3-3-3 3 3 3Z" /><path d="m2 12 3-3 3 3-3 3-3-3Z" /><path d="m22 12-3-3-3 3 3 3 3-3Z" /><path d="M12 8v8" /><path d="M8 12h8" /></g>';
+export const TYPE =
+  '<g><polyline points="4 7 4 4 20 4 20 7" /><line x1="9" y1="20" x2="15" y2="20" /><line x1="12" y1="4" x2="12" y2="20" /></g>';
 
 /**
  * A comprehensive map of all available icons.
@@ -249,6 +258,11 @@ export const ALL_ICONS: Record<string, string> = {
   hash: HASH,
   "book-open": BOOK_OPEN,
   "circle-dot": CIRCLE_DOT,
+  circle: CIRCLE,
+  "skip-back": SKIP_BACK,
+  columns: COLUMNS,
+  move: MOVE,
+  type: TYPE,
 };
 
 /** All recognized icon names. Accepts any string for custom registered icons. */
@@ -266,9 +280,9 @@ export type IconName = keyof typeof ALL_ICONS | (string & {});
  */
 export const COMPONENT_ICONS: Record<string, string> = {
   close: CLOSE,
-  'chevron-down': CHEVRON_DOWN,
-  'chevron-up': CHEVRON_UP,
-  'chevron-left': CHEVRON_LEFT,
-  'chevron-right': CHEVRON_RIGHT,
+  "chevron-down": CHEVRON_DOWN,
+  "chevron-up": CHEVRON_UP,
+  "chevron-left": CHEVRON_LEFT,
+  "chevron-right": CHEVRON_RIGHT,
   menu: MENU,
 };
