@@ -1,0 +1,143 @@
+/* =============================================================================
+   Emerald & Orange — Natural Energy
+   @andersseen/web-components
+
+   Usage:
+     @import "@andersseen/web-components/themes/colors/emerald-orange";
+   or shorthand:
+     @import "@andersseen/web-components/emerald-orange";
+   ============================================================================= */
+
+:root {
+  /* ── Primary Scale — Emerald ────────────────────────────────────────── */
+  --primary-50: 152 81% 96%;
+  --primary-100: 149 80% 90%;
+  --primary-200: 152 76% 80%;
+  --primary-300: 156 72% 67%;
+  --primary-400: 158 64% 52%;
+  --primary-500: 160 84% 39%;
+  --primary-600: 161 94% 30%;
+  --primary-700: 163 94% 24%;
+  --primary-800: 163 88% 20%;
+  --primary-900: 164 86% 16%;
+  --primary-950: 166 91% 9%;
+
+  /* ── Secondary Scale — Orange ───────────────────────────────────────── */
+  --secondary-50: 33 100% 96%;
+  --secondary-100: 34 100% 92%;
+  --secondary-200: 32 98% 83%;
+  --secondary-300: 31 97% 72%;
+  --secondary-400: 27 96% 61%;
+  --secondary-500: 25 95% 53%;
+  --secondary-600: 21 90% 48%;
+  --secondary-700: 17 88% 40%;
+  --secondary-800: 15 79% 34%;
+  --secondary-900: 15 75% 28%;
+  --secondary-950: 13 81% 15%;
+
+  /* ── Semantic Tokens — Light ────────────────────────────────────────── */
+  --primary: 161 94% 30%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 34 100% 92%;
+  --secondary-foreground: 17 88% 40%;
+
+  --background: 152 25% 97%;
+  --foreground: 166 91% 9%;
+  --card: 152 30% 98%;
+  --card-foreground: 166 91% 9%;
+  --popover: 152 30% 98%;
+  --popover-foreground: 166 91% 9%;
+
+  --muted: 152 20% 93%;
+  --muted-foreground: 160 10% 44%;
+  --accent: 149 80% 90%;
+  --accent-foreground: 164 86% 16%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 152 15% 88%;
+  --input: 152 15% 88%;
+  --ring: 161 94% 30%;
+
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+  --info: 217 91% 60%;
+  --info-foreground: 0 0% 100%;
+
+  /* ── Structural Defaults ────────────────────────────────────────────── */
+  --radius: 0.5rem;
+  --spacing-factor: 1;
+  --border-width: 1px;
+  --navbar-link-active-weight: 600;
+  --navbar-link-letter-spacing: 0;
+  --navbar-link-text-transform: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode='light']) {
+    --primary: 158 64% 52%;
+    --primary-foreground: 166 91% 9%;
+    --secondary: 15 79% 34%;
+    --secondary-foreground: 34 100% 92%;
+
+    --background: 164 50% 4%;
+    --foreground: 152 81% 96%;
+    --card: 163 40% 7%;
+    --card-foreground: 152 81% 96%;
+    --popover: 163 40% 7%;
+    --popover-foreground: 152 81% 96%;
+
+    --muted: 163 30% 13%;
+    --muted-foreground: 152 20% 55%;
+    --accent: 164 86% 16%;
+    --accent-foreground: 149 80% 90%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 86% 97%;
+    --border: 163 25% 16%;
+    --input: 163 25% 16%;
+    --ring: 158 64% 52%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
+  }
+}
+
+.dark,
+[data-mode='dark'] {
+  --primary: 158 64% 52%;
+  --primary-foreground: 166 91% 9%;
+  --secondary: 15 79% 34%;
+  --secondary-foreground: 34 100% 92%;
+
+  --background: 164 50% 4%;
+  --foreground: 152 81% 96%;
+  --card: 163 40% 7%;
+  --card-foreground: 152 81% 96%;
+  --popover: 163 40% 7%;
+  --popover-foreground: 152 81% 96%;
+
+  --muted: 163 30% 13%;
+  --muted-foreground: 152 20% 55%;
+  --accent: 164 86% 16%;
+  --accent-foreground: 149 80% 90%;
+
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 0 86% 97%;
+  --border: 163 25% 16%;
+  --input: 163 25% 16%;
+  --ring: 158 64% 52%;
+
+  --success: 142 70% 45%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 90% 56%;
+  --warning-foreground: 0 0% 100%;
+  --info: 217 85% 65%;
+  --info-foreground: 0 0% 100%;
+}

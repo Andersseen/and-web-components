@@ -1,0 +1,28 @@
+/* =============================================================================
+   @andersseen/web-components — Theme Reference
+
+   GROUPED IMPORTS:
+
+   COLORS (palettes):
+     @import "@andersseen/web-components/themes/colors/indigo-rose";  ← default
+     @import "@andersseen/web-components/themes/colors/slate-amber";
+     @import "@andersseen/web-components/themes/colors/emerald-orange";
+     @import "@andersseen/web-components/themes/colors/violet-cyan";
+     @import "@andersseen/web-components/themes/colors/rose-teal";
+
+   STYLES (layout/shape/motion density):
+     @import "@andersseen/web-components/themes/styles/default";       ← default
+     @import "@andersseen/web-components/themes/styles/compact";
+     @import "@andersseen/web-components/themes/styles/playful";
+     @import "@andersseen/web-components/themes/styles/retro";
+     @import "@andersseen/web-components/themes/styles/elegant";
+
+   SHORTHANDS (kept for backwards compatibility):
+     @import "@andersseen/web-components/violet-cyan";
+     @import "@andersseen/web-components/compact";
+
+   DARK MODE is supported automatically via:
+     • System preference  → prefers-color-scheme: dark (zero config)
+     • Manual toggle      → add class .dark or attribute data-mode="dark"
+     • Force light        → add attribute data-mode="light"
+   ============================================================================= */

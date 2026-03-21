@@ -1,0 +1,50 @@
+/* =============================================================================
+   Default Style Theme — Modern (baseline)
+   @andersseen/web-components
+
+   Structural tokens only. Pair with any palette.
+
+   Usage:
+     @import "@andersseen/web-components/themes/styles/default";
+   or shorthand:
+     @import "@andersseen/web-components/default";
+   ============================================================================= */
+
+:root {
+  --radius: 0.5rem;
+  --spacing-factor: 1;
+  --border-width: 1px;
+  --navbar-link-active-weight: 600;
+  --navbar-link-letter-spacing: 0;
+  --navbar-link-text-transform: none;
+  --theme-layout-max-width: 80rem;
+  --theme-motion-fast: 150ms;
+  --theme-motion-base: 220ms;
+  --theme-motion-slow: 320ms;
+  --theme-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 2px;
+  --theme-surface-blur: 8px;
+  --theme-overlay-opacity: 0.5;
+  --theme-modal-backdrop-blur: 4px;
+  --theme-navbar-height: 4rem;
+  --theme-navbar-px: 1rem;
+  --theme-navbar-px-sm: 1.5rem;
+  --theme-navbar-px-lg: 2rem;
+  --theme-navbar-item-gap: 0.25rem;
+  --theme-navbar-section-gap: 1rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 16rem;
+  --theme-sidebar-collapsed-width: 4rem;
+  --theme-sidebar-header-height: 3.5rem;
+  --theme-sidebar-item-gap: 0.125rem;
+  --theme-sidebar-icon-size: 1.125rem;
+  --theme-sidebar-px: 0.5rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: var(--radius);
+  --theme-carousel-control-size: 2.5rem;
+  --theme-carousel-control-offset: 1rem;
+  --theme-carousel-control-radius: 50%;
+  --theme-carousel-control-border-width: var(--border-width);
+}

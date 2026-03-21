@@ -1,0 +1,52 @@
+/* =============================================================================
+   Retro Style Theme — Sharp & Bold
+   @andersseen/web-components
+
+   Structural tokens only. Pair with any palette.
+
+   Usage:
+     @import "@andersseen/web-components/themes/styles/retro";
+   or shorthand:
+     @import "@andersseen/web-components/retro";
+
+   Effect: zero radius, thick 2px borders, uppercase nav links.
+   ============================================================================= */
+
+:root {
+  --radius: 0;
+  --spacing-factor: 1;
+  --border-width: 2px;
+  --navbar-link-active-weight: 700;
+  --navbar-link-letter-spacing: 0.04em;
+  --navbar-link-text-transform: uppercase;
+  --theme-layout-max-width: 80rem;
+  --theme-motion-fast: 90ms;
+  --theme-motion-base: 140ms;
+  --theme-motion-slow: 200ms;
+  --theme-easing-standard: linear;
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 2px;
+  --theme-surface-blur: 0px;
+  --theme-overlay-opacity: 0.62;
+  --theme-modal-backdrop-blur: 0px;
+  --theme-navbar-height: 4rem;
+  --theme-navbar-px: 1rem;
+  --theme-navbar-px-sm: 1.5rem;
+  --theme-navbar-px-lg: 2rem;
+  --theme-navbar-item-gap: 0.125rem;
+  --theme-navbar-section-gap: 1rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 0;
+  --theme-sidebar-width: 16rem;
+  --theme-sidebar-collapsed-width: 4rem;
+  --theme-sidebar-header-height: 3.5rem;
+  --theme-sidebar-item-gap: 0.125rem;
+  --theme-sidebar-icon-size: 1.125rem;
+  --theme-sidebar-px: 0.5rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: 0;
+  --theme-carousel-control-size: 2.25rem;
+  --theme-carousel-control-offset: 1rem;
+  --theme-carousel-control-radius: 0;
+  --theme-carousel-control-border-width: var(--border-width);
+}
