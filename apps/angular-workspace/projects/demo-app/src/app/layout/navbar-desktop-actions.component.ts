@@ -16,7 +16,7 @@ import type { DropdownOption } from './navigation.data';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AndDropdown, AndButton, AndIcon],
   template: `
-    <div class="hidden items-center gap-1 [@media(min-width:761px)]:flex">
+    <div class="flex items-center gap-1">
       <div class="w-[102px] max-[1180px]:w-[92px]">
         <and-dropdown
           label="Theme"
