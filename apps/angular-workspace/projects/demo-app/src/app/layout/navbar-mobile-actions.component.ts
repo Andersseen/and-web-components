@@ -1,7 +1,7 @@
 import {
   AndButton,
-  AndDropdown,
   AndIcon,
+  AndSelect,
 } from '@angular-components/stencil-generated/components';
 import {
   ChangeDetectionStrategy,
@@ -14,25 +14,25 @@ import type { DropdownOption } from './navigation.data';
 @Component({
   selector: 'app-navbar-mobile-actions',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AndDropdown, AndButton, AndIcon],
+  imports: [AndSelect, AndButton, AndIcon],
   template: `
     <div class="w-full flex flex-col items-stretch gap-2">
       <div class="grid grid-cols-2 gap-2">
-        <and-dropdown
+        <and-select
           label="Theme"
-          variant="ghost"
-          placement="top"
-          [items]="themeOptions()"
-          (andDropdownSelect)="onThemeSelect($event)"
-        />
+          [options]="themeOptions()"
+          [value]="currentTheme()"
+          [customClass]="'h-10 border-transparent bg-transparent shadow-none hover:bg-accent px-2 pr-8 font-semibold'"
+          (andSelectChange)="onThemeSelect($event)"
+        ></and-select>
 
-        <and-dropdown
+        <and-select
           label="Palette"
-          variant="ghost"
-          placement="top"
-          [items]="colorOptions()"
-          (andDropdownSelect)="onColorSelect($event)"
-        />
+          [options]="colorOptions()"
+          [value]="currentColor()"
+          [customClass]="'h-10 border-transparent bg-transparent shadow-none hover:bg-accent px-2 pr-8 font-semibold'"
+          (andSelectChange)="onColorSelect($event)"
+        ></and-select>
       </div>
 
       <div class="grid grid-cols-2 gap-2">
@@ -63,6 +63,8 @@ import type { DropdownOption } from './navigation.data';
 export class NavbarMobileActionsComponent {
   readonly themeOptions = input.required<DropdownOption[]>();
   readonly colorOptions = input.required<DropdownOption[]>();
+  readonly currentTheme = input('default');
+  readonly currentColor = input('indigo-rose');
 
   readonly themeSelect = output<string>();
   readonly colorSelect = output<string>();

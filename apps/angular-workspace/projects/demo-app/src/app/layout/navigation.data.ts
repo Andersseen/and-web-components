@@ -43,6 +43,7 @@ export const COMPONENT_ITEMS: SidebarItem[] = [
   { id: 'modal', label: 'Modal', icon: 'app-window' },
   { id: 'navbar', label: 'Navbar', icon: 'panel-top' },
   { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
+  { id: 'select', label: 'Select', icon: 'chevron-down' },
   { id: 'sidebar', label: 'Sidebar', icon: 'panel-left-open' },
   { id: 'tabs', label: 'Tabs', icon: 'folder-open' },
   { id: 'toast', label: 'Toast', icon: 'bell' },

@@ -1,7 +1,7 @@
 import {
   AndButton,
-  AndDropdown,
   AndIcon,
+  AndSelect,
 } from '@angular-components/stencil-generated/components';
 import {
   ChangeDetectionStrategy,
@@ -14,25 +14,27 @@ import type { DropdownOption } from './navigation.data';
 @Component({
   selector: 'app-navbar-desktop-actions',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AndDropdown, AndButton, AndIcon],
+  imports: [AndSelect, AndButton, AndIcon],
   template: `
     <div class="flex items-center gap-1">
-      <div class="w-[102px] max-[1180px]:w-[92px]">
-        <and-dropdown
+      <div class="w-[152px] max-[1180px]:w-[136px]">
+        <and-select
           label="Theme"
-          variant="ghost"
-          [items]="themeOptions()"
-          (andDropdownSelect)="onThemeSelect($event)"
-        />
+          [options]="themeOptions()"
+          [value]="currentTheme()"
+          [customClass]="'h-10 border-transparent bg-transparent shadow-none hover:bg-accent px-2 pr-8 font-semibold'"
+          (andSelectChange)="onThemeSelect($event)"
+        ></and-select>
       </div>
 
-      <div class="w-[102px] max-[1180px]:w-[92px]">
-        <and-dropdown
+      <div class="w-[170px] max-[1180px]:w-[150px]">
+        <and-select
           label="Palette"
-          variant="ghost"
-          [items]="colorOptions()"
-          (andDropdownSelect)="onColorSelect($event)"
-        />
+          [options]="colorOptions()"
+          [value]="currentColor()"
+          [customClass]="'h-10 border-transparent bg-transparent shadow-none hover:bg-accent px-2 pr-8 font-semibold'"
+          (andSelectChange)="onColorSelect($event)"
+        ></and-select>
       </div>
 
       <and-button
@@ -64,6 +66,8 @@ import type { DropdownOption } from './navigation.data';
 export class NavbarDesktopActionsComponent {
   readonly themeOptions = input.required<DropdownOption[]>();
   readonly colorOptions = input.required<DropdownOption[]>();
+  readonly currentTheme = input('default');
+  readonly currentColor = input('indigo-rose');
   readonly isDark = input(false);
 
   readonly themeSelect = output<string>();

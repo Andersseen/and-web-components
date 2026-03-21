@@ -18,6 +18,7 @@ import { IconName } from "@andersseen/icon";
 import { InputType } from "./components/and-input/and-input";
 import { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 import { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
+import { SelectOption } from "./components/and-select/and-select";
 import { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export { ContentItemProps } from "./components/and-accordion/and-accordion-content";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
@@ -32,6 +33,7 @@ export { IconName } from "@andersseen/icon";
 export { InputType } from "./components/and-input/and-input";
 export { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 export { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
+export { SelectOption } from "./components/and-select/and-select";
 export { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
     /**
@@ -502,6 +504,54 @@ export namespace Components {
          */
         "totalPages": number;
     }
+    interface AndSelect {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass": string;
+        /**
+          * ID of element describing this field (e.g. helper or error text).
+         */
+        "describedBy": string;
+        /**
+          * Disables interaction when true.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Whether the select is in an error state.
+          * @default false
+         */
+        "hasError": boolean;
+        /**
+          * Accessible label for the select (used when no visible label exists).
+         */
+        "label": string;
+        /**
+          * Name attribute forwarded to native select.
+         */
+        "name": string;
+        /**
+          * Options rendered in the select menu.
+          * @default []
+         */
+        "options": SelectOption[];
+        /**
+          * Placeholder shown when no value is selected.
+          * @default 'Select an option'
+         */
+        "placeholder": string;
+        /**
+          * Marks the field as required.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Current selected value.
+          * @default ''
+         */
+        "value": string;
+    }
     interface AndSidebar {
         /**
           * The active navigation item ID.
@@ -687,6 +737,10 @@ export interface AndNavbarCustomEvent<T> extends CustomEvent<T> {
 export interface AndPaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAndPaginationElement;
+}
+export interface AndSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAndSelectElement;
 }
 export interface AndSidebarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1015,6 +1069,24 @@ declare global {
         prototype: HTMLAndPaginationElement;
         new (): HTMLAndPaginationElement;
     };
+    interface HTMLAndSelectElementEventMap {
+        "andSelectChange": string;
+        "andBlur": void;
+    }
+    interface HTMLAndSelectElement extends Components.AndSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAndSelectElementEventMap>(type: K, listener: (this: HTMLAndSelectElement, ev: AndSelectCustomEvent<HTMLAndSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAndSelectElementEventMap>(type: K, listener: (this: HTMLAndSelectElement, ev: AndSelectCustomEvent<HTMLAndSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAndSelectElement: {
+        prototype: HTMLAndSelectElement;
+        new (): HTMLAndSelectElement;
+    };
     interface HTMLAndSidebarElementEventMap {
         "andSidebarItemClick": string;
         "andSidebarToggle": boolean;
@@ -1119,6 +1191,7 @@ declare global {
         "and-modal": HTMLAndModalElement;
         "and-navbar": HTMLAndNavbarElement;
         "and-pagination": HTMLAndPaginationElement;
+        "and-select": HTMLAndSelectElement;
         "and-sidebar": HTMLAndSidebarElement;
         "and-tabs": HTMLAndTabsElement;
         "and-tabs-content": HTMLAndTabsContentElement;
@@ -1659,6 +1732,62 @@ declare namespace LocalJSX {
          */
         "totalPages"?: number;
     }
+    interface AndSelect {
+        /**
+          * Additional CSS classes from the consumer.
+         */
+        "customClass"?: string;
+        /**
+          * ID of element describing this field (e.g. helper or error text).
+         */
+        "describedBy"?: string;
+        /**
+          * Disables interaction when true.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Whether the select is in an error state.
+          * @default false
+         */
+        "hasError"?: boolean;
+        /**
+          * Accessible label for the select (used when no visible label exists).
+         */
+        "label"?: string;
+        /**
+          * Name attribute forwarded to native select.
+         */
+        "name"?: string;
+        /**
+          * Emitted when select loses focus.
+         */
+        "onAndBlur"?: (event: AndSelectCustomEvent<void>) => void;
+        /**
+          * Emitted when selected value changes.
+         */
+        "onAndSelectChange"?: (event: AndSelectCustomEvent<string>) => void;
+        /**
+          * Options rendered in the select menu.
+          * @default []
+         */
+        "options"?: SelectOption[];
+        /**
+          * Placeholder shown when no value is selected.
+          * @default 'Select an option'
+         */
+        "placeholder"?: string;
+        /**
+          * Marks the field as required.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Current selected value.
+          * @default ''
+         */
+        "value"?: string;
+    }
     interface AndSidebar {
         /**
           * The active navigation item ID.
@@ -1940,6 +2069,17 @@ declare namespace LocalJSX {
         "totalPages": number;
         "currentPage": number;
     }
+    interface AndSelectAttributes {
+        "placeholder": string;
+        "value": string;
+        "name": string;
+        "disabled": boolean;
+        "required": boolean;
+        "hasError": boolean;
+        "label": string;
+        "describedBy": string;
+        "customClass": string;
+    }
     interface AndSidebarAttributes {
         "activeItem": string;
         "items": SidebarItem[] | string;
@@ -2005,6 +2145,7 @@ declare namespace LocalJSX {
         "and-modal": Omit<AndModal, keyof AndModalAttributes> & { [K in keyof AndModal & keyof AndModalAttributes]?: AndModal[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `attr:${K}`]?: AndModalAttributes[K] } & { [K in keyof AndModal & keyof AndModalAttributes as `prop:${K}`]?: AndModal[K] };
         "and-navbar": Omit<AndNavbar, keyof AndNavbarAttributes> & { [K in keyof AndNavbar & keyof AndNavbarAttributes]?: AndNavbar[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `attr:${K}`]?: AndNavbarAttributes[K] } & { [K in keyof AndNavbar & keyof AndNavbarAttributes as `prop:${K}`]?: AndNavbar[K] };
         "and-pagination": Omit<AndPagination, keyof AndPaginationAttributes> & { [K in keyof AndPagination & keyof AndPaginationAttributes]?: AndPagination[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `attr:${K}`]?: AndPaginationAttributes[K] } & { [K in keyof AndPagination & keyof AndPaginationAttributes as `prop:${K}`]?: AndPagination[K] };
+        "and-select": Omit<AndSelect, keyof AndSelectAttributes> & { [K in keyof AndSelect & keyof AndSelectAttributes]?: AndSelect[K] } & { [K in keyof AndSelect & keyof AndSelectAttributes as `attr:${K}`]?: AndSelectAttributes[K] } & { [K in keyof AndSelect & keyof AndSelectAttributes as `prop:${K}`]?: AndSelect[K] };
         "and-sidebar": Omit<AndSidebar, keyof AndSidebarAttributes> & { [K in keyof AndSidebar & keyof AndSidebarAttributes]?: AndSidebar[K] } & { [K in keyof AndSidebar & keyof AndSidebarAttributes as `attr:${K}`]?: AndSidebarAttributes[K] } & { [K in keyof AndSidebar & keyof AndSidebarAttributes as `prop:${K}`]?: AndSidebar[K] };
         "and-tabs": Omit<AndTabs, keyof AndTabsAttributes> & { [K in keyof AndTabs & keyof AndTabsAttributes]?: AndTabs[K] } & { [K in keyof AndTabs & keyof AndTabsAttributes as `attr:${K}`]?: AndTabsAttributes[K] } & { [K in keyof AndTabs & keyof AndTabsAttributes as `prop:${K}`]?: AndTabs[K] };
         "and-tabs-content": Omit<AndTabsContent, keyof AndTabsContentAttributes> & { [K in keyof AndTabsContent & keyof AndTabsContentAttributes]?: AndTabsContent[K] } & { [K in keyof AndTabsContent & keyof AndTabsContentAttributes as `attr:${K}`]?: AndTabsContentAttributes[K] } & { [K in keyof AndTabsContent & keyof AndTabsContentAttributes as `prop:${K}`]?: AndTabsContent[K] };
@@ -2059,6 +2200,7 @@ declare module "@stencil/core" {
             "and-modal": LocalJSX.IntrinsicElements["and-modal"] & JSXBase.HTMLAttributes<HTMLAndModalElement>;
             "and-navbar": LocalJSX.IntrinsicElements["and-navbar"] & JSXBase.HTMLAttributes<HTMLAndNavbarElement>;
             "and-pagination": LocalJSX.IntrinsicElements["and-pagination"] & JSXBase.HTMLAttributes<HTMLAndPaginationElement>;
+            "and-select": LocalJSX.IntrinsicElements["and-select"] & JSXBase.HTMLAttributes<HTMLAndSelectElement>;
             "and-sidebar": LocalJSX.IntrinsicElements["and-sidebar"] & JSXBase.HTMLAttributes<HTMLAndSidebarElement>;
             "and-tabs": LocalJSX.IntrinsicElements["and-tabs"] & JSXBase.HTMLAttributes<HTMLAndTabsElement>;
             "and-tabs-content": LocalJSX.IntrinsicElements["and-tabs-content"] & JSXBase.HTMLAttributes<HTMLAndTabsContentElement>;

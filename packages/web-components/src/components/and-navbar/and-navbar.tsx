@@ -19,7 +19,7 @@ export type NavItem = {
 /**
  * Progressive responsive stages (from largest to smallest viewport):
  *
- * - `full`    – all three sections visible (start | main centered | end)
+ * - `full`    – all three sections visible (start | center | end)
  * - `compact` – end section collapses to icon-only  / compact mode
  * - `minimal` – main section hidden, only start + compact end visible
  * - `mobile`  – hamburger menu, everything in a drawer
@@ -194,7 +194,7 @@ export class AndNavbar {
   @State() mobileMenuOpen: boolean = false;
 
   /**
-   * Current responsive stage. Drives progressive collapse.
+  * Current responsive stage. Drives progressive collapse.
    * - `full`    – everything visible
    * - `compact` – end section compact (icon-only)
    * - `minimal` – main section hidden
@@ -567,9 +567,9 @@ export class AndNavbar {
               </slot>
             </div>
 
-            {/* ── Main section (navigation links) — visible in full & compact */}
+            {/* ── Center section (navigation links / custom content) — visible in full & compact */}
             {showMain && (
-              <div class="navbar-main">
+              <div class="navbar-center navbar-main">
                 {/* Items-based navigation */}
                 {hasItems && (
                   <div
@@ -581,12 +581,14 @@ export class AndNavbar {
                   </div>
                 )}
 
-                {/* Slot-based navigation (custom content) */}
-                <slot name="main">
-                  {!hasItems && (
-                    <slot name="nav" />
-                  )}
-                </slot>
+                {/* Slot-based center content (custom content) */}
+                {!hasItems && (
+                  <slot name="center">
+                    <slot name="main">
+                      <slot name="nav" />
+                    </slot>
+                  </slot>
+                )}
               </div>
             )}
 
@@ -643,6 +645,7 @@ export class AndNavbar {
             {!hasItems && (
               <div class="mobile-menu-slot">
                 <slot name="mobile-nav">
+                  <slot name="center" />
                   <slot name="main" />
                   <slot name="nav" />
                 </slot>

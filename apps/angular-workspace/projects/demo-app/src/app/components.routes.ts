@@ -67,6 +67,10 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/pagination-demo'),
   },
   {
+    path: 'select',
+    loadComponent: () => import('./pages/components/select-demo'),
+  },
+  {
     path: 'sidebar',
     loadComponent: () => import('./pages/components/sidebar-demo'),
   },

@@ -2941,6 +2941,246 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/and-select/and-select.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "and-select",
+          "name": "AndSelect",
+          "attributes": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "customClass"
+            },
+            {
+              "name": "described-by",
+              "description": "ID of element describing this field (e.g. helper or error text).",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "describedBy"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables interaction when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "has-error",
+              "description": "Whether the select is in an error state.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hasError"
+            },
+            {
+              "name": "label",
+              "description": "Accessible label for the select (used when no visible label exists).",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "label"
+            },
+            {
+              "name": "name",
+              "description": "Name attribute forwarded to native select.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "name"
+            },
+            {
+              "name": "placeholder",
+              "description": "Placeholder shown when no value is selected.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Select an option'",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "required",
+              "description": "Marks the field as required.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "value",
+              "description": "Current selected value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "customClass",
+              "description": "Additional CSS classes from the consumer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "class"
+            },
+            {
+              "kind": "field",
+              "name": "describedBy",
+              "description": "ID of element describing this field (e.g. helper or error text).",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "described-by"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Disables interaction when true.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hasError",
+              "description": "Whether the select is in an error state.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "has-error",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Accessible label for the select (used when no visible label exists).",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "Name attribute forwarded to native select.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "description": "Options rendered in the select menu.",
+              "type": {
+                "text": "SelectOption[]",
+                "references": [
+                  {
+                    "name": "SelectOption"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "description": "Placeholder shown when no value is selected.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Select an option'",
+              "readonly": true,
+              "attribute": "placeholder",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "description": "Marks the field as required.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Current selected value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "andBlur",
+              "description": "Emitted when select loses focus.",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "andSelectChange",
+              "description": "Emitted when selected value changes.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AndSelect",
+          "declaration": {
+            "name": "AndSelect"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "and-select",
+          "declaration": {
+            "name": "AndSelect"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/and-sidebar/and-sidebar.tsx",
       "declarations": [
         {
