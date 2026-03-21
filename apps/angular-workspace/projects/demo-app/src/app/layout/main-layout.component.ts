@@ -1,28 +1,30 @@
 import {
-  AndButton,
-  AndDropdown,
   AndIcon,
   AndNavbar,
   AndSidebar,
 } from '@angular-components/stencil-generated/components';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-
-interface SidebarItem {
-  id: string;
-  label: string;
-  icon?: string;
-}
-
-type Section =
-  | 'components'
-  | 'icons'
-  | 'themes'
-  | 'headless'
-  | 'motion'
-  | 'layout'
-  | 'docs';
+import {
+  COLOR_OPTIONS,
+  COMPONENT_ITEMS,
+  HEADLESS_ITEMS,
+  LAYOUT_ITEMS,
+  MOTION_ITEMS,
+  NAV_ITEMS,
+  type Section,
+  type SidebarItem,
+  THEME_OPTIONS,
+} from './navigation.data';
+import { NavbarDesktopActionsComponent } from './navbar-desktop-actions.component';
+import { NavbarMobileActionsComponent } from './navbar-mobile-actions.component';
 
 interface SidebarConfig {
   items: SidebarItem[];
@@ -32,16 +34,20 @@ interface SidebarConfig {
 
 @Component({
   selector: 'app-main-layout',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterOutlet,
     AndNavbar,
     AndSidebar,
-    AndDropdown,
-    AndButton,
     AndIcon,
+    NavbarDesktopActionsComponent,
+    NavbarMobileActionsComponent,
   ],
   template: `
-    <div class="app-container" and-layout="vertical">
+    <div
+      class="h-screen overflow-hidden bg-background text-foreground"
+      and-layout="vertical"
+    >
       <and-navbar
         class="bg-background"
         [items]="navItems"
@@ -53,61 +59,33 @@ interface SidebarConfig {
         [mobileBreakpoint]="760"
         (navItemClick)="onNavItemClick($event)"
       >
-        <span slot="start" class="brand-slot">
+        <span slot="start" class="flex min-w-0 items-center gap-2">
           <and-icon name="layout"></and-icon>
-          <span class="brand-label">And Web Components UI</span>
+          <span class="whitespace-nowrap font-semibold max-[1180px]:hidden"
+            >And Web Components UI</span
+          >
         </span>
 
-        <div slot="end" class="navbar-actions">
-          <div class="navbar-control navbar-control-theme">
-            <and-dropdown
-              label="Theme"
-              variant="ghost"
-              [items]="themeOptions"
-              (andDropdownSelect)="onThemeSelect($event)"
-            />
-          </div>
+        <app-navbar-desktop-actions
+          slot="end"
+          [themeOptions]="themeOptions"
+          [colorOptions]="colorOptions"
+          [isDark]="isDark()"
+          (themeSelect)="applyTheme($event)"
+          (colorSelect)="applyColor($event)"
+          (darkModeToggle)="toggleDarkMode()"
+        />
 
-          <div class="navbar-control navbar-control-color">
-            <and-dropdown
-              label="Palette"
-              variant="ghost"
-              [items]="colorOptions"
-              (andDropdownSelect)="onColorSelect($event)"
-            />
-          </div>
-
-          <and-button
-            variant="ghost"
-            size="icon"
-            (click)="toggleDarkMode()"
-            title="Toggle Dark Mode"
-          >
-            <and-icon [name]="isDark() ? 'sun' : 'moon'" />
-          </and-button>
-
-          <and-button
-            size="sm"
-            variant="link"
-            href="https://libs.andersseen.dev"
-          >
-            <and-icon name="app-window" size="16" />
-            Home
-          </and-button>
-
-          <and-button
-            size="sm"
-            variant="link"
-            href="https://github.com/Andersseen/and-web-components"
-            target="_blank"
-          >
-            <and-icon name="github" size="16" />
-            GitHub
-          </and-button>
-        </div>
+        <app-navbar-mobile-actions
+          slot="mobile-actions"
+          [themeOptions]="themeOptions"
+          [colorOptions]="colorOptions"
+          (themeSelect)="applyTheme($event)"
+          (colorSelect)="applyColor($event)"
+        />
       </and-navbar>
 
-      <div class="main-content" and-layout="horizontal">
+      <div class="flex-1 overflow-hidden" and-layout="horizontal">
         @switch (activeSection()) {
           @case ('components') {
             <and-sidebar
@@ -143,152 +121,35 @@ interface SidebarConfig {
           }
         }
 
-        <div class="content-area" and-layout="p:xl">
+        <div
+          class="flex-1 overflow-y-auto bg-background text-foreground"
+          and-layout="p:xl"
+        >
           <router-outlet />
         </div>
       </div>
     </div>
   `,
-  styles: [
-    `
-      .app-container {
-        height: 100vh;
-        overflow: hidden;
-        background-color: var(--background);
-        color: var(--foreground);
-      }
-      .main-content {
-        flex: 1;
-        overflow: hidden;
-      }
-      .content-area {
-        flex: 1;
-        overflow-y: auto;
-        background: var(--background);
-        color: var(--foreground);
-      }
-      .brand-slot {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        min-width: 0;
-      }
-      .brand-label {
-        font-weight: 600;
-        white-space: nowrap;
-      }
-      .navbar-actions {
-        display: flex;
-        align-items: center;
-        gap: 0.35rem;
-      }
-      .navbar-control {
-        width: 102px;
-      }
-      @media (max-width: 1180px) {
-        .brand-label {
-          display: none;
-        }
-        .navbar-control {
-          width: 92px;
-        }
-      }
-    `,
-  ],
 })
 export class MainLayoutComponent {
   private readonly router = inject(Router);
 
   // ── Navigation ──
-  readonly navItems = [
-    { id: 'components', label: 'Components' },
-    { id: 'headless', label: 'Headless' },
-    { id: 'icons', label: 'Icons' },
-    { id: 'motion', label: 'Motion' },
-    { id: 'layout', label: 'Layout' },
-    { id: 'docs', label: 'Docs' },
-  ];
+  readonly navItems = NAV_ITEMS;
 
   // ── Sidebar items ──
-  readonly componentItems: SidebarItem[] = [
-    { id: 'accordion', label: 'Accordion', icon: 'layers' },
-    { id: 'alert', label: 'Alert', icon: 'alert-circle' },
-    { id: 'badge', label: 'Badge', icon: 'award' },
-    { id: 'breadcrumb', label: 'Breadcrumb', icon: 'chevron-right' },
-    { id: 'button', label: 'Button', icon: 'circle-dot' },
-    { id: 'card', label: 'Card', icon: 'credit-card' },
-    { id: 'carousel', label: 'Carousel', icon: 'gallery' },
-    { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
-    { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
-    { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
-    { id: 'input', label: 'Input', icon: 'text-cursor' },
-    { id: 'menu-list', label: 'Menu List', icon: 'list' },
-    { id: 'modal', label: 'Modal', icon: 'app-window' },
-    { id: 'navbar', label: 'Navbar', icon: 'panel-top' },
-    { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
-    { id: 'sidebar', label: 'Sidebar', icon: 'panel-left-open' },
-    { id: 'tabs', label: 'Tabs', icon: 'folder-open' },
-    { id: 'toast', label: 'Toast', icon: 'bell' },
-    { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
-  ];
+  readonly componentItems: SidebarItem[] = COMPONENT_ITEMS;
 
-  readonly headlessItems: SidebarItem[] = [
-    { id: 'overview', label: 'Overview', icon: 'compass' },
-    { id: 'button', label: 'Button', icon: 'circle-dot' },
-    { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
-    { id: 'tabs', label: 'Tabs', icon: 'folder-open' },
-    { id: 'accordion', label: 'Accordion', icon: 'layers' },
-    { id: 'modal', label: 'Modal', icon: 'app-window' },
-    { id: 'navbar', label: 'Navbar', icon: 'panel-top' },
-    { id: 'sidebar', label: 'Sidebar', icon: 'panel-left-open' },
-    { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
-    { id: 'toast', label: 'Toast', icon: 'bell' },
-    { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
-    { id: 'alert', label: 'Alert', icon: 'alert-circle' },
-    { id: 'breadcrumb', label: 'Breadcrumb', icon: 'chevron-right' },
-    { id: 'menu-list', label: 'Menu List', icon: 'list' },
-    { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
-  ];
+  readonly headlessItems: SidebarItem[] = HEADLESS_ITEMS;
 
-  readonly motionItems: SidebarItem[] = [
-    { id: 'attribute', label: 'Overview', icon: 'code' },
-    { id: 'attention-seekers', label: 'Attention Seekers', icon: 'zap' },
-    { id: 'fading', label: 'Fading', icon: 'eye' },
-    { id: 'sliding', label: 'Sliding', icon: 'arrow-right' },
-    { id: 'zooming', label: 'Zooming', icon: 'search' },
-    { id: 'bouncing', label: 'Bouncing', icon: 'circle' },
-    { id: 'flippers', label: 'Flippers', icon: 'rotate-cw' },
-    { id: 'rotating', label: 'Rotating', icon: 'refresh-cw' },
-    { id: 'lightspeed', label: 'Light Speed', icon: 'zap' },
-    { id: 'back', label: 'Back', icon: 'skip-back' },
-    { id: 'specials', label: 'Specials', icon: 'star' },
-  ];
+  readonly motionItems: SidebarItem[] = MOTION_ITEMS;
 
-  readonly layoutItems: SidebarItem[] = [
-    { id: 'overview', label: 'Overview', icon: 'compass' },
-    { id: 'flex', label: 'Flexbox', icon: 'columns' },
-    { id: 'grid', label: 'Grid', icon: 'layout' },
-    { id: 'spacing', label: 'Spacing', icon: 'move' },
-    { id: 'typography', label: 'Typography', icon: 'type' },
-    { id: 'responsive', label: 'Responsive', icon: 'monitor' },
-  ];
+  readonly layoutItems: SidebarItem[] = LAYOUT_ITEMS;
 
   // ── Theme / Color options ──
-  readonly themeOptions = [
-    { text: 'Modern', value: 'default' },
-    { text: 'Compact', value: 'compact' },
-    { text: 'Playful', value: 'playful' },
-    { text: 'Retro', value: 'retro' },
-    { text: 'Elegant', value: 'elegant' },
-  ];
+  readonly themeOptions = THEME_OPTIONS;
 
-  readonly colorOptions = [
-    { text: 'Indigo & Rose', value: 'indigo-rose' },
-    { text: 'Slate & Amber', value: 'slate-amber' },
-    { text: 'Emerald & Orange', value: 'emerald-orange' },
-    { text: 'Violet & Cyan', value: 'violet-cyan' },
-    { text: 'Rose & Teal', value: 'rose-teal' },
-  ];
+  readonly colorOptions = COLOR_OPTIONS;
 
   // ── State ──
   readonly activeSection = signal<Section>('components');
@@ -352,30 +213,40 @@ export class MainLayoutComponent {
     document.documentElement.setAttribute('data-color', 'indigo-rose');
   }
 
-  onNavItemClick(event: any) {
-    const section = event.detail as Section;
+  onNavItemClick(event: CustomEvent<unknown>) {
+    const section = event.detail;
+    if (!this.isSection(section)) return;
     this.activeSection.set(section);
     this.router.navigate([this.sectionRoutes[section]]);
   }
 
-  onSidebarItemClick(event: any) {
+  onSidebarItemClick(event: CustomEvent<unknown>) {
     const config = this.sidebarConfig[this.activeSection()];
     if (!config) return;
+    if (typeof event.detail !== 'string' || event.detail.length === 0) return;
     const id = event.detail;
     config.active.set(id);
     this.router.navigate([config.route, id]);
   }
 
-  onThemeSelect(event: any) {
-    document.documentElement.setAttribute('data-theme', event.detail);
+  applyTheme(theme: string) {
+    if (theme.length === 0) return;
+    document.documentElement.setAttribute('data-theme', theme);
   }
 
-  onColorSelect(event: any) {
-    document.documentElement.setAttribute('data-color', event.detail);
+  applyColor(color: string) {
+    if (color.length === 0) return;
+    document.documentElement.setAttribute('data-color', color);
   }
 
   toggleDarkMode() {
     this.isDark.update((d) => !d);
     document.documentElement.classList.toggle('dark', this.isDark());
+  }
+
+  private isSection(value: unknown): value is Section {
+    return (
+      typeof value === 'string' && this.sections.includes(value as Section)
+    );
   }
 }
