@@ -221,19 +221,24 @@ nav.navbar-blur {
   font-weight: var(--navbar-link-active-weight);
 }
 
-/* ── 2. UNDERLINE — bottom border, same color tone, just bolder ───── */
+/* ── 2. UNDERLINE — pure text underline (no bg, no border) ────────── */
 .nav-link[data-item-style='underline'] {
-  border-radius: var(--radius, 0.5rem);
-  border-bottom: var(--border-width, 2px) solid transparent;
-  padding-bottom: calc(0.5rem * var(--spacing-factor, 1) - var(--border-width, 2px));
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  text-decoration-line: none;
+  text-decoration-thickness: max(1px, var(--border-width, 2px));
+  text-underline-offset: 0.35em;
 }
 .nav-link[data-item-style='underline']:hover {
   color: var(--navbar-link-hover-color);
-  border-bottom-color: var(--navbar-link-hover-border-color);
+  background: transparent;
 }
 .nav-link[data-item-style='underline'][data-state='active'] {
   color: var(--navbar-link-active-color);
-  border-bottom-color: var(--navbar-link-active-border-color);
+  background: transparent;
+  text-decoration-line: underline;
+  text-decoration-color: var(--navbar-link-active-border-color);
   font-weight: var(--navbar-link-active-weight);
 }
 
@@ -325,7 +330,7 @@ nav.navbar-floating {
 
 /* ── Mobile active item highlight ────────────────────────────────── */
 
-:host [data-state='active'][role='menuitem'] {
+.mobile-menu-content [data-state='active'][role='menuitem'] {
   background: hsl(var(--accent));
   color: hsl(var(--foreground));
 }
