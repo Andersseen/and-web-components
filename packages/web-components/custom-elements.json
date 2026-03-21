@@ -2992,6 +2992,20 @@
               "fieldName": "label"
             },
             {
+              "name": "menu-placement",
+              "description": "Menu placement strategy.\n- `auto`: chooses top/bottom based on viewport space\n- `bottom`: always opens below\n- `top`: always opens above",
+              "type": {
+                "text": "\"auto\" | \"bottom\" | \"top\"",
+                "references": [
+                  {
+                    "name": "SelectMenuPlacement"
+                  }
+                ]
+              },
+              "default": "'auto'",
+              "fieldName": "menuPlacement"
+            },
+            {
               "name": "name",
               "description": "Name attribute forwarded to native select.",
               "type": {
@@ -3081,6 +3095,23 @@
               },
               "readonly": true,
               "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "menuPlacement",
+              "description": "Menu placement strategy.\n- `auto`: chooses top/bottom based on viewport space\n- `bottom`: always opens below\n- `top`: always opens above",
+              "type": {
+                "text": "\"auto\" | \"bottom\" | \"top\"",
+                "references": [
+                  {
+                    "name": "SelectMenuPlacement"
+                  }
+                ]
+              },
+              "default": "'auto'",
+              "readonly": true,
+              "attribute": "menu-placement",
+              "reflects": true
             },
             {
               "kind": "field",

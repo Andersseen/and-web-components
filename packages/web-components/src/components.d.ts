@@ -18,7 +18,7 @@ import { IconName } from "@andersseen/icon";
 import { InputType } from "./components/and-input/and-input";
 import { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 import { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
-import { SelectOption } from "./components/and-select/and-select";
+import { SelectMenuPlacement, SelectOption } from "./components/and-select/and-select";
 import { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export { ContentItemProps } from "./components/and-accordion/and-accordion-content";
 export { AccordionReturn, AlertVariant, DrawerPlacement, TabsReturn, ToastType, TooltipPlacement } from "@andersseen/headless-components";
@@ -33,7 +33,7 @@ export { IconName } from "@andersseen/icon";
 export { InputType } from "./components/and-input/and-input";
 export { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
 export { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
-export { SelectOption } from "./components/and-select/and-select";
+export { SelectMenuPlacement, SelectOption } from "./components/and-select/and-select";
 export { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
     /**
@@ -527,6 +527,11 @@ export namespace Components {
           * Accessible label for the select (used when no visible label exists).
          */
         "label": string;
+        /**
+          * Menu placement strategy. - `auto`: chooses top/bottom based on viewport space - `bottom`: always opens below - `top`: always opens above
+          * @default 'auto'
+         */
+        "menuPlacement": SelectMenuPlacement;
         /**
           * Name attribute forwarded to native select.
          */
@@ -1756,6 +1761,11 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Menu placement strategy. - `auto`: chooses top/bottom based on viewport space - `bottom`: always opens below - `top`: always opens above
+          * @default 'auto'
+         */
+        "menuPlacement"?: SelectMenuPlacement;
+        /**
           * Name attribute forwarded to native select.
          */
         "name"?: string;
@@ -2076,6 +2086,7 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "required": boolean;
         "hasError": boolean;
+        "menuPlacement": SelectMenuPlacement;
         "label": string;
         "describedBy": string;
         "customClass": string;

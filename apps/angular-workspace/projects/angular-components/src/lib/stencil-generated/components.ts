@@ -781,14 +781,14 @@ export declare interface AndPagination extends Components.AndPagination {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndSelect,
-  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'name', 'options', 'placeholder', 'required', 'value']
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'menuPlacement', 'name', 'options', 'placeholder', 'required', 'value']
 })
 @Component({
   selector: 'and-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'name', 'options', 'placeholder', 'required', 'value'],
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'menuPlacement', 'name', 'options', 'placeholder', 'required', 'value'],
   outputs: ['andSelectChange', 'andBlur'],
 })
 export class AndSelect {

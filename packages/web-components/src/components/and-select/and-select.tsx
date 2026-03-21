@@ -8,6 +8,8 @@ export type SelectOption = {
   disabled?: boolean;
 };
 
+export type SelectMenuPlacement = 'auto' | 'bottom' | 'top';
+
 const selectVariants = cva(
   [
     'inline-flex h-10 w-full items-center rounded-md border border-border bg-background',
@@ -41,6 +43,11 @@ export type SelectVariantProps = VariantProps<typeof selectVariants>;
 export class AndSelect {
   @Element() el: HTMLElement;
   @State() private isOpen: boolean = false;
+  @State() private resolvedPlacement: 'bottom' | 'top' = 'bottom';
+  @State() private menuMaxHeight: number = 256;
+
+  private wrapperEl?: HTMLDivElement;
+  private menuEl?: HTMLDivElement;
 
   /** Options rendered in the select menu. */
   @Prop() options: SelectOption[] = [];
@@ -62,6 +69,14 @@ export class AndSelect {
 
   /** Whether the select is in an error state. */
   @Prop({ reflect: true }) hasError: boolean = false;
+
+  /**
+   * Menu placement strategy.
+   * - `auto`: chooses top/bottom based on viewport space
+   * - `bottom`: always opens below
+   * - `top`: always opens above
+   */
+  @Prop({ reflect: true }) menuPlacement: SelectMenuPlacement = 'auto';
 
   /** Accessible label for the select (used when no visible label exists). */
   @Prop() label: string;
@@ -96,6 +111,16 @@ export class AndSelect {
     }
   }
 
+  @Listen('resize', { target: 'window' })
+  handleWindowResize() {
+    if (this.isOpen) this.updateMenuPlacement();
+  }
+
+  @Listen('scroll', { target: 'window' })
+  handleWindowScroll() {
+    if (this.isOpen) this.updateMenuPlacement();
+  }
+
   private handleSelect = (nextValue: string) => {
     this.value = nextValue;
     this.andSelectChange.emit(nextValue);
@@ -105,7 +130,42 @@ export class AndSelect {
   private toggleOpen = () => {
     if (this.disabled) return;
     this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      requestAnimationFrame(() => this.updateMenuPlacement());
+    }
   };
+
+  private updateMenuPlacement() {
+    if (!this.wrapperEl) return;
+
+    const rect = this.wrapperEl.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const viewportMargin = 8;
+    const gap = 6;
+
+    const spaceBelow = Math.max(0, viewportHeight - rect.bottom - viewportMargin - gap);
+    const spaceAbove = Math.max(0, rect.top - viewportMargin - gap);
+
+    const preferredHeight = this.menuEl?.scrollHeight ?? 256;
+    const minUsefulHeight = 140;
+
+    if (this.menuPlacement === 'top') {
+      this.resolvedPlacement = 'top';
+      this.menuMaxHeight = Math.max(96, spaceAbove);
+      return;
+    }
+
+    if (this.menuPlacement === 'bottom') {
+      this.resolvedPlacement = 'bottom';
+      this.menuMaxHeight = Math.max(96, spaceBelow);
+      return;
+    }
+
+    const shouldOpenTop = spaceBelow < Math.min(preferredHeight, minUsefulHeight) && spaceAbove > spaceBelow;
+
+    this.resolvedPlacement = shouldOpenTop ? 'top' : 'bottom';
+    this.menuMaxHeight = Math.max(96, shouldOpenTop ? spaceAbove : spaceBelow);
+  }
 
   render() {
     const selected = this.options.find(option => option.value === this.value);
@@ -114,7 +174,12 @@ export class AndSelect {
 
     return (
       <Host class="block">
-        <div class="select-wrapper">
+        <div
+          class="select-wrapper"
+          ref={el => {
+            this.wrapperEl = el as HTMLDivElement;
+          }}
+        >
           <button
             type="button"
             class={cn(selectVariants({ hasError: this.hasError }), !hasValue && 'text-muted-foreground', hasValue && 'text-foreground', this.customClass)}
@@ -132,7 +197,16 @@ export class AndSelect {
 
           <and-icon class="select-icon" name="chevron-down" size={16} />
 
-          <div class={cn('select-menu', this.isOpen ? 'select-menu--open' : 'select-menu--closed')} role="listbox" aria-hidden={this.isOpen ? 'false' : 'true'}>
+          <div
+            class={cn('select-menu', this.isOpen ? 'select-menu--open' : 'select-menu--closed')}
+            data-placement={this.resolvedPlacement}
+            role="listbox"
+            aria-hidden={this.isOpen ? 'false' : 'true'}
+            style={{ maxHeight: `${this.menuMaxHeight}px` }}
+            ref={el => {
+              this.menuEl = el as HTMLDivElement;
+            }}
+          >
             {this.options.map(option => {
               const isSelected = option.value === this.value;
               return (

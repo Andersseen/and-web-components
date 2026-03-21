@@ -22,6 +22,7 @@ import type { DropdownOption } from './navigation.data';
           label="Theme"
           [options]="themeOptions()"
           [value]="currentTheme()"
+          menuPlacement="top"
           (andSelectChange)="onThemeSelect($event)"
         ></and-select>
 
@@ -29,6 +30,7 @@ import type { DropdownOption } from './navigation.data';
           label="Palette"
           [options]="colorOptions()"
           [value]="currentColor()"
+          menuPlacement="top"
           (andSelectChange)="onColorSelect($event)"
         ></and-select>
       </div>
