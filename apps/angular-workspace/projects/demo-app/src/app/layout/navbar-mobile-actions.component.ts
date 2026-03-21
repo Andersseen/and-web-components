@@ -22,9 +22,6 @@ import type { DropdownOption } from './navigation.data';
           label="Theme"
           [options]="themeOptions()"
           [value]="currentTheme()"
-          [customClass]="
-            'h-10 border-transparent bg-transparent shadow-none hover:bg-accent px-2 pr-8 font-semibold'
-          "
           (andSelectChange)="onThemeSelect($event)"
         ></and-select>
 
@@ -32,9 +29,6 @@ import type { DropdownOption } from './navigation.data';
           label="Palette"
           [options]="colorOptions()"
           [value]="currentColor()"
-          [customClass]="
-            'h-10 border-transparent bg-transparent shadow-none hover:bg-accent px-2 pr-8 font-semibold'
-          "
           (andSelectChange)="onColorSelect($event)"
         ></and-select>
       </div>
