@@ -52,7 +52,6 @@ interface SidebarConfig {
         class="bg-background"
         [items]="navItems"
         [activeItem]="activeSection()"
-        itemVariant="underline"
         [autoCollapse]="false"
         [compactBreakpoint]="0"
         [minimalBreakpoint]="0"

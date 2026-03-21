@@ -18,6 +18,16 @@
   --navbar-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
   --navbar-start-min-width: auto;
   --navbar-end-min-width: auto;
+  --navbar-link-color: hsl(var(--muted-foreground));
+  --navbar-link-hover-color: hsl(var(--foreground));
+  --navbar-link-active-color: hsl(var(--primary));
+  --navbar-link-hover-bg: hsl(var(--accent) / 0.5);
+  --navbar-link-active-bg: hsl(var(--accent));
+  --navbar-link-hover-border-color: hsl(var(--border));
+  --navbar-link-active-border-color: hsl(var(--primary));
+  --navbar-link-active-weight: 600;
+  --navbar-link-letter-spacing: 0;
+  --navbar-link-text-transform: none;
 
   display: block;
 }
@@ -97,8 +107,8 @@
 }
 
 /* Use ::slotted to target elements inside the end slot */
-.navbar-end--compact ::slotted(and-button[variant="outline"]),
-.navbar-end--compact ::slotted(and-button[size="sm"]:not([variant="ghost"])) {
+.navbar-end--compact ::slotted(and-button[variant='outline']),
+.navbar-end--compact ::slotted(and-button[size='sm']:not([variant='ghost'])) {
   font-size: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -110,7 +120,9 @@
   max-width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-width var(--navbar-transition), opacity var(--navbar-transition);
+  transition:
+    max-width var(--navbar-transition),
+    opacity var(--navbar-transition);
 }
 
 /* ── Backward compat aliases ──────────────────────────────────────── */
@@ -188,7 +200,9 @@ nav.navbar-blur {
 .nav-link {
   padding: calc(0.5rem * var(--spacing-factor, 1)) calc(0.75rem * var(--spacing-factor, 1));
   border-radius: var(--radius, 0.5rem);
-  color: hsl(var(--muted-foreground));
+  color: var(--navbar-link-color);
+  letter-spacing: var(--navbar-link-letter-spacing);
+  text-transform: var(--navbar-link-text-transform);
   transition:
     color 200ms ease,
     background 200ms ease,
@@ -197,42 +211,44 @@ nav.navbar-blur {
 }
 
 /* ── 1. DEFAULT — subtle accent background on hover/active ────────── */
-.nav-link[data-item-style="default"]:hover {
-  color: hsl(var(--foreground));
-  background: hsl(var(--accent) / 0.5);
+.nav-link[data-item-style='default']:hover {
+  color: var(--navbar-link-hover-color);
+  background: var(--navbar-link-hover-bg);
 }
-.nav-link[data-item-style="default"][data-state="active"] {
-  color: hsl(var(--foreground));
-  background: hsl(var(--accent));
-  font-weight: 600;
+.nav-link[data-item-style='default'][data-state='active'] {
+  color: var(--navbar-link-active-color);
+  background: var(--navbar-link-active-bg);
+  font-weight: var(--navbar-link-active-weight);
 }
 
 /* ── 2. UNDERLINE — bottom border, same color tone, just bolder ───── */
-.nav-link[data-item-style="underline"] {
-  border-radius: 0;
+.nav-link[data-item-style='underline'] {
+  border-radius: var(--radius, 0.5rem);
   border-bottom: var(--border-width, 2px) solid transparent;
   padding-bottom: calc(0.5rem * var(--spacing-factor, 1) - var(--border-width, 2px));
 }
-.nav-link[data-item-style="underline"]:hover {
-  color: hsl(var(--foreground));
-  border-bottom-color: hsl(var(--border));
+.nav-link[data-item-style='underline']:hover {
+  color: var(--navbar-link-hover-color);
+  border-bottom-color: var(--navbar-link-hover-border-color);
 }
-.nav-link[data-item-style="underline"][data-state="active"] {
-  color: hsl(var(--foreground));
-  border-bottom-color: hsl(var(--foreground));
-  font-weight: 600;
+.nav-link[data-item-style='underline'][data-state='active'] {
+  color: var(--navbar-link-active-color);
+  border-bottom-color: var(--navbar-link-active-border-color);
+  font-weight: var(--navbar-link-active-weight);
 }
 
 /* ── 3. FILLED — solid primary bg with contrasting text on active ─── */
-.nav-link[data-item-style="filled"]:hover {
-  color: hsl(var(--foreground));
-  background: hsl(var(--accent));
+.nav-link[data-item-style='filled']:hover {
+  color: var(--navbar-link-hover-color);
+  background: var(--navbar-link-active-bg);
 }
-.nav-link[data-item-style="filled"][data-state="active"] {
+.nav-link[data-item-style='filled'][data-state='active'] {
   color: hsl(var(--primary-foreground));
   background: hsl(var(--primary));
-  font-weight: 600;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  font-weight: var(--navbar-link-active-weight);
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.1),
+    0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
 /* ── Floating variant uses theme radius ───────────────────────────── */
@@ -309,7 +325,7 @@ nav.navbar-floating {
 
 /* ── Mobile active item highlight ────────────────────────────────── */
 
-:host [data-state="active"][role="menuitem"] {
+:host [data-state='active'][role='menuitem'] {
   background: hsl(var(--accent));
   color: hsl(var(--foreground));
 }
@@ -318,14 +334,13 @@ nav.navbar-floating {
 /* These data-responsive-stage attributes are set on :host
    and can be used for external styling or debugging. */
 
-:host([data-responsive-stage="compact"]) .navbar-main {
+:host([data-responsive-stage='compact']) .navbar-main {
   /* In compact mode, main section shifts slightly toward the start */
   justify-content: flex-start;
   padding-left: var(--navbar-section-gap);
 }
 
-:host([data-responsive-stage="minimal"]) .navbar-end {
+:host([data-responsive-stage='minimal']) .navbar-end {
   /* Minimal: only compact end + hamburger */
   gap: 0.25rem;
 }
-
