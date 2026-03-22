@@ -1,6 +1,5 @@
-export const WEB_COMPONENTS_PROMPT = `\
-CONTEXT: @andersseen/web-components
-
+export const WEB_COMPONENTS_PROMPT = `\\
+<andersseen-web-components-context>
 ## Library profile
 Stencil custom-elements package. All tags share the \`and-*\` prefix.
 Renders in Shadow DOM — do NOT depend on internal shadow markup or classes.
@@ -326,4 +325,5 @@ Slots   : default (trigger element)   [content] (when no content prop)
 - Icon \`name\` must match a registered key; always pair with registerIcons/registerAllIcons.
 - For array-type props (items, defaultValue) set them via JS, not attribute strings when possible.
 - Mutable props marked above can be set directly as element properties.
+</andersseen-web-components-context>
 `;

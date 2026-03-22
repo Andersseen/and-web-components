@@ -1,6 +1,5 @@
-export const ICON_PROMPT = `\
-CONTEXT: @andersseen/icon
-
+export const ICON_PROMPT = `\\
+<andersseen-icon-context>
 ## Library profile
 Framework-agnostic SVG string registry.
 Tree-shakable icon constants + runtime registration functions.
@@ -100,4 +99,5 @@ registerIcons({
 - Keep \`and-icon name\` exactly aligned with registry keys.
 - Do not inline random SVG literals in generated code when registry can be used.
 - Register \`COMPONENT_ICONS\` whenever @andersseen/web-components is used.
+</andersseen-icon-context>
 `;

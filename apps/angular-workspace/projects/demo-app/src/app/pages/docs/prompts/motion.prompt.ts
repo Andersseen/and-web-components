@@ -1,6 +1,5 @@
-export const MOTION_PROMPT = `\
-CONTEXT: @andersseen/motion
-
+export const MOTION_PROMPT = `\\
+<andersseen-motion-context>
 ## Library profile
 Attribute-driven animation engine for the web.
 Uses HTML attributes + CSS keyframes with a lightweight JS controller.
@@ -170,4 +169,5 @@ For Angular components with OnPush and dynamic content, call mc.scan() after con
 - Avoid constant looping animations that distract from content.
 - Always provide a usable experience without animation (reduced motion is handled automatically).
 - Call \`cleanup()\` or \`destroy()\` when unmounting SPA views to avoid listener leaks.
+</andersseen-motion-context>
 `;

@@ -1,6 +1,5 @@
-export const LAYOUT_PROMPT = `\
-CONTEXT: @andersseen/layout
-
+export const LAYOUT_PROMPT = `\\
+<andersseen-layout-context>
 ## Library profile
 Pure CSS library — no JavaScript runtime.
 Attribute-driven layout composition and typography.
@@ -206,4 +205,5 @@ Maps to CSS variables: \`var(--color-primary)\`, \`var(--color-foreground)\`, et
 - Responsive tokens use \`@breakpoint\` suffix: \`cols@md:2\`, \`align@lg:left\`.
 - Color tokens map to CSS custom properties — do not override with hardcoded values.
 - \`caption\` automatically applies a muted color — do not combine with \`color:foreground\`.
+</andersseen-layout-context>
 `;

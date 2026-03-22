@@ -45,8 +45,26 @@ export class AndTabs {
     }
   }
 
+  private mutationObserver?: MutationObserver;
+
   componentDidLoad() {
     this.updateChildren();
+
+    // Watch for dynamic children (like triggers inside and-tabs-list) rendered async by frameworks
+    this.mutationObserver = new MutationObserver((mutations) => {
+      const hasChildChanges = mutations.some(m => m.type === 'childList');
+      if (hasChildChanges) {
+        this.updateChildren();
+      }
+    });
+
+    this.mutationObserver.observe(this.el, { childList: true, subtree: true });
+  }
+
+  disconnectedCallback() {
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
   }
 
   /* ── Listeners & Watchers ──────────────────────────────────────── */
