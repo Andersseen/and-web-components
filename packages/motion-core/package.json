@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/motion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-agnostic animation library for TypeScript and CSS",
   "type": "module",
   "main": "./dist/index.js",
