@@ -1,5 +1,17 @@
 # @andersseen/web-components
 
+## 0.0.6
+
+### Patch Changes
+
+- updae sidebar
+
+## 0.0.5
+
+### Patch Changes
+
+- a9cd5d8: fix(web-components): resolve Content Security Policy (CSP) eval errors by disabling Stencil's dynamic import injection shim
+
 ## 0.0.4
 
 ### Patch Changes
