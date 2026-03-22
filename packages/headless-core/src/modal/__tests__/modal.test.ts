@@ -92,6 +92,18 @@ describe('createModal', () => {
     expect(props.type).toBe('button');
   });
 
+  it('provides correct default aria-label', () => {
+    const modal = createModal();
+    const props = modal.getContentProps();
+    expect(props['aria-label']).toBe('Dialog');
+  });
+
+  it('allows custom aria-label', () => {
+    const modal = createModal({ label: 'Custom Label' });
+    const props = modal.getContentProps();
+    expect(props['aria-label']).toBe('Custom Label');
+  });
+
   it('handles Escape key to close by default', () => {
     const modal = createModal();
     modal.actions.open();

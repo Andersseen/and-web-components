@@ -11,6 +11,11 @@ export const config: Config = {
   namespace: 'web-components',
   globalStyle: 'src/global/global.css',
   sourceMap: isDev,
+  buildEs5: false,
+  allowInlineScripts: false,
+  extras: {
+    enableImportInjection: false,
+  },
   outputTargets: [
     {
       type: 'dist',
@@ -27,10 +32,6 @@ export const config: Config = {
     {
       type: 'docs-custom-elements-manifest',
       file: 'custom-elements.json',
-    },
-    {
-      type: 'www',
-      serviceWorker: null,
     },
     angularOutputTarget({
       componentCorePackage: '@andersseen/web-components',

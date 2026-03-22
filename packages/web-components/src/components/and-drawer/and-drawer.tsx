@@ -93,6 +93,11 @@ export class AndDrawer {
    */
   @Prop() showClose: boolean = true;
 
+  /**
+   * Accessible label for the drawer.
+   */
+  @Prop() label: string;
+
   /** Emitted when the drawer is closed (backdrop click, close button, or Escape). */
   @Event({ bubbles: true, composed: true }) andDrawerClose: EventEmitter<void>;
 
@@ -119,6 +124,7 @@ export class AndDrawer {
     this.drawer = createDrawer({
       defaultOpen: this.open,
       placement: this.placement,
+      label: this.label,
       onOpenChange: (isOpen) => {
         this.isOpen = isOpen;
         this.open = isOpen;

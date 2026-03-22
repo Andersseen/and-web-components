@@ -56,6 +56,11 @@ export interface DrawerConfig {
    * @default false
    */
   disabled?: boolean;
+
+  /**
+   * Accessible label for the drawer
+   */
+  label?: string;
 }
 
 /**
@@ -82,6 +87,7 @@ export interface DrawerContentProps extends AriaAttributes, DataAttributes {
   role: "dialog";
   "aria-modal": boolean;
   "aria-hidden": boolean;
+  "aria-label": string;
   "data-state": "open" | "closed";
   "data-side": DrawerPlacement;
   tabindex: number;
@@ -210,6 +216,7 @@ export function createDrawer(config: DrawerConfig = {}): DrawerReturn {
     role: "dialog",
     "aria-modal": true,
     "aria-hidden": !state.isOpen,
+    "aria-label": config.label ?? "Drawer",
     "data-state": state.isOpen ? "open" : "closed",
     "data-side": state.placement,
     tabindex: -1,

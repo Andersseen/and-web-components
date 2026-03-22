@@ -76,9 +76,9 @@ export interface TabListProps extends AriaAttributes, DataAttributes {
  */
 export interface TabTriggerProps extends AriaAttributes, DataAttributes {
   role: "tab";
-  "aria-selected": boolean;
+  "aria-selected": "true" | "false";
   "aria-controls": string;
-  "aria-disabled": boolean;
+  "aria-disabled": "true" | "false";
   tabindex: number;
   id: string;
 }
@@ -209,9 +209,9 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
 
     return {
       role: "tab",
-      "aria-selected": selected,
+      "aria-selected": selected ? "true" : "false",
       "aria-controls": contentId,
-      "aria-disabled": state.disabled,
+      "aria-disabled": state.disabled ? "true" : "false",
       tabindex: selected ? 0 : -1,
       id: triggerId,
       "data-state": selected ? "active" : "inactive",

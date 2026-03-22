@@ -77,12 +77,12 @@ describe('createTabs', () => {
 
     const selectedProps = tabs.getTabTriggerProps('tab-1');
     expect(selectedProps.role).toBe('tab');
-    expect(selectedProps['aria-selected']).toBe(true);
+    expect(selectedProps['aria-selected']).toBe('true');
     expect(selectedProps.tabindex).toBe(0);
     expect(selectedProps['data-state']).toBe('active');
 
     const unselectedProps = tabs.getTabTriggerProps('tab-2');
-    expect(unselectedProps['aria-selected']).toBe(false);
+    expect(unselectedProps['aria-selected']).toBe('false');
     expect(unselectedProps.tabindex).toBe(-1);
     expect(unselectedProps['data-state']).toBe('inactive');
   });

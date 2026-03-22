@@ -101,6 +101,18 @@ describe('createDrawer', () => {
     expect(props.type).toBe('button');
   });
 
+  it('provides correct default aria-label', () => {
+    const drawer = createDrawer();
+    const props = drawer.getContentProps();
+    expect(props['aria-label']).toBe('Drawer');
+  });
+
+  it('allows custom aria-label', () => {
+    const drawer = createDrawer({ label: 'Custom Label' });
+    const props = drawer.getContentProps();
+    expect(props['aria-label']).toBe('Custom Label');
+  });
+
   it('handles Escape key to close by default', () => {
     const drawer = createDrawer();
     drawer.actions.open();

@@ -287,6 +287,10 @@ export namespace Components {
     }
     interface AndDrawer {
         /**
+          * Accessible label for the drawer.
+         */
+        "label": string;
+        /**
           * Whether the drawer is open.
           * @default false
          */
@@ -584,17 +588,17 @@ export namespace Components {
          */
         "collapsed": boolean;
         /**
-          * Collapsed width of the sidebar. Accepts any CSS value.
+          * Collapsed width of the sidebar.
           * @default '4rem'
          */
         "collapsedWidth": string;
         /**
-          * Expanded width of the sidebar. Accepts any CSS value.
+          * Expanded width of the sidebar.
           * @default '16rem'
          */
         "expandedWidth": string;
         /**
-          * Visual style for individual sidebar items. Controls how each item looks, independent of the sidebar container variant. Border-radius is intentionally not set — the theme controls it.  - `default`   — subtle accent bg on active - `underline` — left accent bar on active - `filled`    — solid primary bg on active
+          * Visual style for individual sidebar items.
           * @default 'default'
          */
         "itemVariant": SidebarItemStyle;
@@ -609,7 +613,7 @@ export namespace Components {
          */
         "mobileBreakpoint": number;
         /**
-          * Enable auto-collapse on mobile viewports. When true, the sidebar collapses to icon-only mode on screens smaller than `mobileBreakpoint`.
+          * Enable auto-collapse on mobile viewports.
           * @default true
          */
         "mobileCollapse": boolean;
@@ -1217,7 +1221,7 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, T> = { [P in K]: T } | { [P in `attr:${K}`]: T } | { [P in `prop:${K}`]: T };
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
 
     /**
      * Accordion container component using headless logic.
@@ -1477,6 +1481,10 @@ declare namespace LocalJSX {
         "open"?: boolean;
     }
     interface AndDrawer {
+        /**
+          * Accessible label for the drawer.
+         */
+        "label"?: string;
         /**
           * Emitted when the drawer is closed (backdrop click, close button, or Escape).
          */
@@ -1835,17 +1843,17 @@ declare namespace LocalJSX {
          */
         "collapsed"?: boolean;
         /**
-          * Collapsed width of the sidebar. Accepts any CSS value.
+          * Collapsed width of the sidebar.
           * @default '4rem'
          */
         "collapsedWidth"?: string;
         /**
-          * Expanded width of the sidebar. Accepts any CSS value.
+          * Expanded width of the sidebar.
           * @default '16rem'
          */
         "expandedWidth"?: string;
         /**
-          * Visual style for individual sidebar items. Controls how each item looks, independent of the sidebar container variant. Border-radius is intentionally not set — the theme controls it.  - `default`   — subtle accent bg on active - `underline` — left accent bar on active - `filled`    — solid primary bg on active
+          * Visual style for individual sidebar items.
           * @default 'default'
          */
         "itemVariant"?: SidebarItemStyle;
@@ -1860,7 +1868,7 @@ declare namespace LocalJSX {
          */
         "mobileBreakpoint"?: number;
         /**
-          * Enable auto-collapse on mobile viewports. When true, the sidebar collapses to icon-only mode on screens smaller than `mobileBreakpoint`.
+          * Enable auto-collapse on mobile viewports.
           * @default true
          */
         "mobileCollapse"?: boolean;
@@ -2044,6 +2052,7 @@ declare namespace LocalJSX {
         "open": boolean;
         "placement": DrawerPlacement;
         "showClose": boolean;
+        "label": string;
     }
     interface AndDropdownAttributes {
         "variant": DropdownVariantProps['variant'];
@@ -2153,7 +2162,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "and-accordion": Omit<AndAccordion, keyof AndAccordionAttributes> & { [K in keyof AndAccordion & keyof AndAccordionAttributes]?: AndAccordion[K] } & { [K in keyof AndAccordion & keyof AndAccordionAttributes as `attr:${K}`]?: AndAccordionAttributes[K] } & { [K in keyof AndAccordion & keyof AndAccordionAttributes as `prop:${K}`]?: AndAccordion[K] };
         "and-accordion-content": AndAccordionContent;
-        "and-accordion-item": Omit<AndAccordionItem, keyof AndAccordionItemAttributes> & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes]?: AndAccordionItem[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `attr:${K}`]?: AndAccordionItemAttributes[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `prop:${K}`]?: AndAccordionItem[K] } & OneOf<"value", AndAccordionItem["value"]>;
+        "and-accordion-item": Omit<AndAccordionItem, keyof AndAccordionItemAttributes> & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes]?: AndAccordionItem[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `attr:${K}`]?: AndAccordionItemAttributes[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `prop:${K}`]?: AndAccordionItem[K] } & OneOf<"value", AndAccordionItem["value"], AndAccordionItemAttributes["value"]>;
         "and-accordion-trigger": AndAccordionTrigger;
         "and-alert": Omit<AndAlert, keyof AndAlertAttributes> & { [K in keyof AndAlert & keyof AndAlertAttributes]?: AndAlert[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `attr:${K}`]?: AndAlertAttributes[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `prop:${K}`]?: AndAlert[K] };
         "and-badge": Omit<AndBadge, keyof AndBadgeAttributes> & { [K in keyof AndBadge & keyof AndBadgeAttributes]?: AndBadge[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `attr:${K}`]?: AndBadgeAttributes[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `prop:${K}`]?: AndBadge[K] };

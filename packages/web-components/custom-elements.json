@@ -1623,6 +1623,14 @@
           "name": "AndDrawer",
           "attributes": [
             {
+              "name": "label",
+              "description": "Accessible label for the drawer.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "label"
+            },
+            {
               "name": "open",
               "description": "Whether the drawer is open.",
               "type": {
@@ -1657,6 +1665,16 @@
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Accessible label for the drawer.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "label"
+            },
             {
               "kind": "field",
               "name": "open",
@@ -3309,7 +3327,7 @@
             },
             {
               "name": "collapsed-width",
-              "description": "Collapsed width of the sidebar.\nAccepts any CSS value.",
+              "description": "Collapsed width of the sidebar.",
               "type": {
                 "text": "string"
               },
@@ -3318,7 +3336,7 @@
             },
             {
               "name": "expanded-width",
-              "description": "Expanded width of the sidebar.\nAccepts any CSS value.",
+              "description": "Expanded width of the sidebar.",
               "type": {
                 "text": "string"
               },
@@ -3327,7 +3345,7 @@
             },
             {
               "name": "item-variant",
-              "description": "Visual style for individual sidebar items.\nControls how each item looks, independent of the sidebar container variant.\nBorder-radius is intentionally not set — the theme controls it.\n\n- `default`   — subtle accent bg on active\n- `underline` — left accent bar on active\n- `filled`    — solid primary bg on active",
+              "description": "Visual style for individual sidebar items.",
               "type": {
                 "text": "\"default\" | \"filled\" | \"underline\"",
                 "references": [
@@ -3364,7 +3382,7 @@
             },
             {
               "name": "mobile-collapse",
-              "description": "Enable auto-collapse on mobile viewports.\nWhen true, the sidebar collapses to icon-only mode on screens\nsmaller than `mobileBreakpoint`.",
+              "description": "Enable auto-collapse on mobile viewports.",
               "type": {
                 "text": "boolean"
               },
@@ -3423,7 +3441,7 @@
             {
               "kind": "field",
               "name": "collapsedWidth",
-              "description": "Collapsed width of the sidebar.\nAccepts any CSS value.",
+              "description": "Collapsed width of the sidebar.",
               "type": {
                 "text": "string"
               },
@@ -3434,7 +3452,7 @@
             {
               "kind": "field",
               "name": "expandedWidth",
-              "description": "Expanded width of the sidebar.\nAccepts any CSS value.",
+              "description": "Expanded width of the sidebar.",
               "type": {
                 "text": "string"
               },
@@ -3445,7 +3463,7 @@
             {
               "kind": "field",
               "name": "itemVariant",
-              "description": "Visual style for individual sidebar items.\nControls how each item looks, independent of the sidebar container variant.\nBorder-radius is intentionally not set — the theme controls it.\n\n- `default`   — subtle accent bg on active\n- `underline` — left accent bar on active\n- `filled`    — solid primary bg on active",
+              "description": "Visual style for individual sidebar items.",
               "type": {
                 "text": "\"default\" | \"filled\" | \"underline\"",
                 "references": [
@@ -3489,7 +3507,7 @@
             {
               "kind": "field",
               "name": "mobileCollapse",
-              "description": "Enable auto-collapse on mobile viewports.\nWhen true, the sidebar collapses to icon-only mode on screens\nsmaller than `mobileBreakpoint`.",
+              "description": "Enable auto-collapse on mobile viewports.",
               "type": {
                 "text": "boolean"
               },
