@@ -287,6 +287,10 @@ export namespace Components {
     }
     interface AndDrawer {
         /**
+          * Accessible label for the drawer.
+         */
+        "label": string;
+        /**
           * Whether the drawer is open.
           * @default false
          */
@@ -1478,6 +1482,10 @@ declare namespace LocalJSX {
     }
     interface AndDrawer {
         /**
+          * Accessible label for the drawer.
+         */
+        "label"?: string;
+        /**
           * Emitted when the drawer is closed (backdrop click, close button, or Escape).
          */
         "onAndDrawerClose"?: (event: AndDrawerCustomEvent<void>) => void;
@@ -2044,6 +2052,7 @@ declare namespace LocalJSX {
         "open": boolean;
         "placement": DrawerPlacement;
         "showClose": boolean;
+        "label": string;
     }
     interface AndDropdownAttributes {
         "variant": DropdownVariantProps['variant'];

@@ -19,10 +19,10 @@ export interface AriaAttributes {
   "aria-label"?: string;
   "aria-labelledby"?: string;
   "aria-describedby"?: string;
-  "aria-hidden"?: boolean;
-  "aria-disabled"?: boolean;
-  "aria-expanded"?: boolean;
-  "aria-selected"?: boolean;
+  "aria-hidden"?: boolean | "true" | "false";
+  "aria-disabled"?: boolean | "true" | "false";
+  "aria-expanded"?: boolean | "true" | "false";
+  "aria-selected"?: boolean | "true" | "false";
   "aria-controls"?: string;
   "aria-haspopup"?:
     | boolean

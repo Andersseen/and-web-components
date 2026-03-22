@@ -493,14 +493,14 @@ export declare interface AndContextMenu extends Components.AndContextMenu {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndDrawer,
-  inputs: ['open', 'placement', 'showClose']
+  inputs: ['label', 'open', 'placement', 'showClose']
 })
 @Component({
   selector: 'and-drawer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['open', 'placement', 'showClose'],
+  inputs: ['label', 'open', 'placement', 'showClose'],
   outputs: ['andDrawerClose', 'andDrawerOpen'],
 })
 export class AndDrawer {

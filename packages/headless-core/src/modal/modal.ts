@@ -45,6 +45,11 @@ export interface ModalConfig {
    * @default false
    */
   disabled?: boolean;
+
+  /**
+   * Accessible label for the modal
+   */
+  label?: string;
 }
 
 /**
@@ -70,6 +75,7 @@ export interface ModalContentProps extends AriaAttributes, DataAttributes {
   role: "dialog";
   "aria-modal": boolean;
   "aria-hidden": boolean;
+  "aria-label": string;
   "data-state": "open" | "closed";
   tabindex: number;
 }
@@ -190,6 +196,7 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
     role: "dialog",
     "aria-modal": true,
     "aria-hidden": !state.isOpen,
+    "aria-label": config.label ?? "Dialog",
     "data-state": state.isOpen ? "open" : "closed",
     tabindex: -1,
   });

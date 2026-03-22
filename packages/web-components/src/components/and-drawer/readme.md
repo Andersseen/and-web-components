@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                                             | Type                                     | Default  |
-| ----------- | ------------ | ------------------------------------------------------- | ---------------------------------------- | -------- |
-| `open`      | `open`       | Whether the drawer is open.                             | `boolean`                                | `false`  |
-| `placement` | `placement`  | The direction the drawer slides in from.                | `"bottom" \| "left" \| "right" \| "top"` | `'left'` |
-| `showClose` | `show-close` | Whether to show the default close button in the header. | `boolean`                                | `true`   |
+| Property    | Attribute    | Description                                             | Type                                     | Default     |
+| ----------- | ------------ | ------------------------------------------------------- | ---------------------------------------- | ----------- |
+| `label`     | `label`      | Accessible label for the drawer.                        | `string`                                 | `undefined` |
+| `open`      | `open`       | Whether the drawer is open.                             | `boolean`                                | `false`     |
+| `placement` | `placement`  | The direction the drawer slides in from.                | `"bottom" \| "left" \| "right" \| "top"` | `'left'`    |
+| `showClose` | `show-close` | Whether to show the default close button in the header. | `boolean`                                | `true`      |
 
 
 ## Events

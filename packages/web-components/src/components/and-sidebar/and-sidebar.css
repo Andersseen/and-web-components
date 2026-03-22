@@ -17,8 +17,9 @@
 
   display: block;
   height: 100%;
-  width: var(--sidebar-width);
+  width: var(--sidebar-expanded-width);
   transition: width var(--sidebar-transition);
+  will-change: width;
   flex-shrink: 0;
 }
 

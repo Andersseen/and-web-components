@@ -11,6 +11,7 @@ export const config: Config = {
   namespace: 'web-components',
   globalStyle: 'src/global/global.css',
   sourceMap: isDev,
+  buildEs5: false,
   outputTargets: [
     {
       type: 'dist',
