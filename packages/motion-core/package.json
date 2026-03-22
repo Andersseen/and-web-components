@@ -24,7 +24,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
@@ -40,6 +40,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.1.0",
     "typescript": "^5.3.3",
+    "typescript-eslint": "^8.57.1",
     "vitest": "^4.1.0"
   },
   "publishConfig": {

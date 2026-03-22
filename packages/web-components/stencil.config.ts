@@ -47,7 +47,7 @@ export const config: Config = {
   testing: {
     browserHeadless: 'shell',
     moduleNameMapper: {
-      '^@andersseen/icon$': '<rootDir>/../icon-library/dist/index.js',
+      '^@andersseen/icon$': '<rootDir>/../icon-library/dist-cjs/index.js',
     },
   },
 };
