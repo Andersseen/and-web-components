@@ -145,8 +145,8 @@ importers:
   apps/astro-landing:
     dependencies:
       '@andersseen/icon':
-        specifier: ^0.0.1
-        version: 0.0.1
+        specifier: ^0.0.2
+        version: 0.0.2
       '@andersseen/layout':
         specifier: ^0.0.1
         version: 0.0.1
@@ -154,8 +154,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       '@andersseen/web-components':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       astro:
         specifier: ^5.7.10
         version: 5.17.3(@types/node@22.19.9)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(rollup@4.57.1)(sass@1.97.3)(terser@5.46.0)(typescript@5.9.3)(yaml@2.8.2)
@@ -372,8 +372,8 @@ packages:
   '@andersseen/headless-components@0.1.0':
     resolution: {integrity: sha512-332WHj8Ug5yl3iuGkVAdqdu4TEO4B//bsEL5s6rkLqis/t2t5FmzeXmWap6i38/5kLOPz5XOa1M7H7Lh58lUEg==}
 
-  '@andersseen/icon@0.0.1':
-    resolution: {integrity: sha512-uGAVkwpQWUCRWPthHUjJibIBVxA5xElaUWyTS7w70VGbQgyOWSAI3VknTEKXDHqxZJGkHPJ08r+DULg/aWZxkQ==}
+  '@andersseen/icon@0.0.2':
+    resolution: {integrity: sha512-vuro1aXwBAo1ntQZcMCyzYFd/MhQAh0Q1NyoTSTyykkX/CGPjbktRzbWVDuhCJ6+PYGcReRtNdvShVuvT3TBGA==}
 
   '@andersseen/layout@0.0.1':
     resolution: {integrity: sha512-Cugg9xqRnD98jHeMfmaUtKF9ErIRM5NYnaNIHSssyXZBKv5mBbeRli2h6mMC/KR0s/XLOZSAeVhC+B+7yTLaYA==}
@@ -381,8 +381,8 @@ packages:
   '@andersseen/motion@0.1.0':
     resolution: {integrity: sha512-tuOtlOGLEgU6ZQqDmKPCyCmOWfH3hMo7I9Tvc4kfLv19DC+DlL/m8HKDbT5QzGVA9ceUJgyMVQDvLVjBfKoq/w==}
 
-  '@andersseen/web-components@0.0.2':
-    resolution: {integrity: sha512-7zG4MD8W4TX44zqQ0VULJkISbWm1S/JhPYN9S1AAeoHqpkGREnf4feHJCwSL4ymWHPYPU2bInAXyYrmQvmie5Q==}
+  '@andersseen/web-components@0.0.3':
+    resolution: {integrity: sha512-55KVsPbhmzDmtR2hJ1Mj0KyHF3EWrmli38Hrku/go7AiE365DbpsxRG3OAIUe2kNtJxShSalSOO7N3/GADSEQA==}
 
   '@angular-devkit/architect@0.2101.3':
     resolution: {integrity: sha512-vKz8aPA62W+e9+pF6ct4CRDG/MjlIH7sWFGYkxPPRst2g46ZQsRkrzfMZAWv/wnt6OZ1OwyRuO3RW83EMhag8g==}
@@ -8238,16 +8238,16 @@ snapshots:
 
   '@andersseen/headless-components@0.1.0': {}
 
-  '@andersseen/icon@0.0.1': {}
+  '@andersseen/icon@0.0.2': {}
 
   '@andersseen/layout@0.0.1': {}
 
   '@andersseen/motion@0.1.0': {}
 
-  '@andersseen/web-components@0.0.2':
+  '@andersseen/web-components@0.0.3':
     dependencies:
       '@andersseen/headless-components': 0.1.0
-      '@andersseen/icon': 0.0.1
+      '@andersseen/icon': 0.0.2
       '@andersseen/motion': 0.1.0
       '@babel/runtime': 7.28.4
       class-variance-authority: 0.7.1
