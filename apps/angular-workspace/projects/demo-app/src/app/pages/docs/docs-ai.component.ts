@@ -3,6 +3,7 @@ import {
   AndTabs,
   AndTabsList,
   AndTabsTrigger,
+  AndIcon,
 } from '@angular-components/stencil-generated/components';
 import { DemoCodeBlockComponent } from '../../shared/demo-code-block.component';
 import { DemoHeaderComponent } from '../../shared/demo-header.component';
@@ -30,6 +31,7 @@ type PromptLibrary =
     AndTabs,
     AndTabsList,
     AndTabsTrigger,
+    AndIcon,
     DemoHeaderComponent,
     DemoSectionComponent,
     DemoCodeBlockComponent,
@@ -41,26 +43,26 @@ type PromptLibrary =
     >
       <demo-header
         title="Docs for AI-Driven Development"
-        description="Use this page as a copy-paste baseline when you start a new project and want an LLM to generate code with Andersseen libraries correctly."
+        description="A specialized toolkit to help you construct the perfect system prompt. Copy the base instructions and append the architectural context of the specific libraries your project needs to drastically reduce LLM hallucinations."
       />
-
-      <demo-section title="Install all core libraries">
+      <demo-section title="Appendix: Workspace Installation">
         <demo-panel
-          title="Single command install"
-          description="Select your package manager and copy one command for the full ecosystem."
+          tone="muted"
+          title="Core dependencies"
+          description="If you haven't installed the ecosystem in your repository yet, grab the command below."
         >
           <and-tabs
             [value]="selectedPm()"
             (andTabChange)="onPackageManagerTabChange($event)"
-            class="block w-full"
+            class="block w-full mt-4"
           >
             <and-tabs-list
-              class="grid w-full grid-cols-3 rounded-xl border border-border bg-muted/60 p-1"
+              class="grid w-fit grid-cols-3 rounded-xl border border-border bg-muted/60 p-1"
             >
               @for (pm of packageManagers; track pm) {
                 <and-tabs-trigger
                   [value]="pm"
-                  class="px-3 py-2 text-xs font-semibold uppercase tracking-wide"
+                  class="px-4 py-1.5 text-xs font-semibold uppercase tracking-wide"
                 >
                   {{ pm.toUpperCase() }}
                 </and-tabs-trigger>
@@ -69,22 +71,22 @@ type PromptLibrary =
           </and-tabs>
 
           <div
-            class="mt-4 overflow-hidden rounded-xl border border-border bg-card"
+            class="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm"
           >
             <div
-              class="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+              class="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between bg-muted/20"
             >
               <span
-                class="text-xs font-medium uppercase tracking-wide text-muted-foreground"
+                class="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-2"
               >
-                Install Command
+                <and-icon name="terminal" size="14"></and-icon> Install Command
               </span>
               <button
                 type="button"
-                class="h-8 w-full rounded-md border border-border bg-background px-3 text-xs font-semibold text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:w-auto"
+                class="h-8 w-full rounded-md border border-border bg-background px-4 text-xs font-semibold text-foreground transition-all hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:w-auto active:scale-95"
                 (click)="copyInstallCommand()"
               >
-                {{ copiedInstall() ? 'Copied' : 'Copy' }}
+                {{ copiedInstall() ? 'Copied ✓' : 'Copy' }}
               </button>
             </div>
             <pre
@@ -94,32 +96,37 @@ type PromptLibrary =
         </demo-panel>
       </demo-section>
 
-      <demo-section title="Angular setup (standalone app)">
-        <div class="grid min-w-0 gap-4">
-          <demo-code-block label="styles.css" [code]="stylesImport" />
-          <demo-code-block label="main.ts" [code]="mainTsSetup" />
-          <demo-code-block label="example component" [code]="componentUsage" />
-        </div>
+      <demo-section title="1. Base System Prompt">
+        <demo-panel
+          title="Core developer persona"
+          description="Always start your AI discussion with this baseline prompt. It strictly defines the AI's role and sets the rules of engagement."
+        >
+          <div class="mt-2">
+            <demo-code-block
+              label="system-prompt.txt"
+              [code]="baseSystemPrompt"
+              [copyable]="true"
+            />
+          </div>
+        </demo-panel>
       </demo-section>
 
-      <demo-section title="Prompt Context by Library">
+      <demo-section title="2. Library Context Snippets">
         <demo-panel
-          tone="muted"
-          padding="md"
-          title="Reusable context snippets"
-          description="Each tab contains a framework-agnostic library contract. Use it as context and prepend your own task prompt."
+          title="Append exact XML boundaries"
+          description="Select the packages you actually intend to use. Copy their isolated XML context blocks and paste them directly below the Base System Prompt."
         />
 
         <and-tabs
           [value]="selectedPromptLibrary()"
           (andTabChange)="onPromptLibraryTabChange($event)"
-          class="mb-3 block w-full"
+          class="mb-3 block w-full mt-4"
         >
           <and-tabs-list class="flex w-full flex-wrap gap-2">
             @for (lib of promptLibraries; track lib) {
               <and-tabs-trigger
                 [value]="lib"
-                class="px-3 py-1.5 text-xs font-semibold capitalize"
+                class="px-4 py-2 text-sm font-semibold capitalize transition-all"
               >
                 {{ promptLibraryLabel(lib) }}
               </and-tabs-trigger>
@@ -127,10 +134,12 @@ type PromptLibrary =
           </and-tabs-list>
         </and-tabs>
 
-        <div class="mb-3">
-          <span class="text-xs leading-relaxed text-foreground/80">
-            Context snippet only. Each tab is framework-agnostic and focused on
-            one library contract.
+        <div class="mb-4">
+          <span
+            class="text-xs leading-relaxed text-foreground/70 bg-muted/40 px-3 py-1.5 rounded-md border border-border/50"
+          >
+            <strong>Tip:</strong> You can append multiple blocks if using
+            multiple libraries.
           </span>
         </div>
 
@@ -156,6 +165,18 @@ export default class DocsAiComponent {
   ];
   readonly selectedPromptLibrary = signal<PromptLibrary>('web-components');
 
+  readonly baseSystemPrompt = `You are an expert web developer building a modern application.
+You will write clean, semantic HTML and TypeScript.
+The project uses the strict Andersseen design system.
+
+Below, you will be provided with XML blocks containing the architectural context and API contracts for the specific Andersseen libraries installed in this project.
+Read the context carefully before generating any code. 
+Do NOT invent element properties, CSS classes, or attributes that are not explicitly defined in the context.
+
+{INSERT_XML_CONTEXT_SNIPPETS_HERE}
+
+Now, implement the user's request based ONLY on the provided system capabilities.`;
+
   private readonly installByPm: Record<PackageManager, string> = {
     pnpm: 'pnpm add @andersseen/web-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
     npm: 'npm install @andersseen/web-components @andersseen/headless-components @andersseen/icon @andersseen/motion @andersseen/layout',
@@ -164,39 +185,12 @@ export default class DocsAiComponent {
 
   readonly installCommand = computed(() => this.installByPm[this.selectedPm()]);
 
-  readonly stylesImport = `@import '@andersseen/web-components/dist/web-components/web-components.css';
-@import '@andersseen/motion/style.css';
-@import '@andersseen/layout/dist/layout.css';`;
-
-  readonly mainTsSetup = `import { bootstrapApplication } from '@angular/platform-browser';
-import { registerAllIcons } from '@andersseen/icon';
-import { enableAnimations } from '@andersseen/web-components';
-import { initMotion } from '@andersseen/motion';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
-
-registerAllIcons();
-enableAnimations();
-initMotion();
-
-bootstrapApplication(AppComponent, appConfig);`;
-
-  readonly componentUsage = `import { Component } from '@angular/core';
-import { AndButton, AndCard, AndIcon } from '@andersseen/angular-components';
-
-@Component({
-  selector: 'app-home',
-  imports: [AndButton, AndCard, AndIcon],
-  template: '<and-card><and-button><and-icon name="sparkles" size="16"></and-icon>Start</and-button></and-card>',
-})
-export class HomeComponent {}`;
-
   private readonly promptLibraryLabels: Record<PromptLibrary, string> = {
-    'web-components': 'web-components',
-    'headless-core': 'headless-core',
-    icon: 'icon',
-    motion: 'motion',
-    layout: 'layout',
+    'web-components': 'Web Components (UI)',
+    'headless-core': 'Headless Logic',
+    icon: 'Icon System',
+    motion: 'Motion Engine',
+    layout: 'Layout & Typography',
   };
 
   private readonly promptByLibrary: Record<PromptLibrary, string> = {
@@ -212,7 +206,7 @@ export class HomeComponent {}`;
   );
 
   readonly selectedPromptLabel = computed(
-    () => `${this.promptLibraryLabel(this.selectedPromptLibrary())}.context.md`,
+    () => `${this.selectedPromptLibrary()}.context.xml`,
   );
 
   copyInstallCommand() {

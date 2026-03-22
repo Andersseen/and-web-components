@@ -17,7 +17,7 @@ import { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./compone
 import { IconName } from "@andersseen/icon";
 import { InputType } from "./components/and-input/and-input";
 import { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
-import { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
+import { ActiveMode, NavbarProps, NavItem, NavItemStyle, ResponsiveStage, RouteMatchMode } from "./components/and-navbar/and-navbar";
 import { SelectMenuPlacement, SelectOption } from "./components/and-select/and-select";
 import { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export { ContentItemProps } from "./components/and-accordion/and-accordion-content";
@@ -32,7 +32,7 @@ export { DropdownItem, DropdownPlacement, DropdownVariantProps } from "./compone
 export { IconName } from "@andersseen/icon";
 export { InputType } from "./components/and-input/and-input";
 export { MenuItemVariantProps } from "./components/and-menu-list/and-menu-item";
-export { NavbarProps, NavItem, NavItemStyle, ResponsiveStage } from "./components/and-navbar/and-navbar";
+export { ActiveMode, NavbarProps, NavItem, NavItemStyle, ResponsiveStage, RouteMatchMode } from "./components/and-navbar/and-navbar";
 export { SelectMenuPlacement, SelectOption } from "./components/and-select/and-select";
 export { SidebarItem, SidebarItemStyle, SidebarVariantProps } from "./components/and-sidebar/and-sidebar";
 export namespace Components {
@@ -437,6 +437,11 @@ export namespace Components {
          */
         "activeItem": string;
         /**
+          * Strategy used to compute active item. - `auto`: prefers scroll-spy when possible, then route, then hash - `route`: pathname matching (`/docs`, `/demo`) - `hash`: hash matching (`#hero`) - `scroll`: scroll-spy based section tracking - `manual`: external control only (no auto detection)
+          * @default 'auto'
+         */
+        "activeMode": ActiveMode;
+        /**
           * ARIA label for the navigation
           * @default 'Main navigation'
          */
@@ -476,6 +481,11 @@ export namespace Components {
           * @default 'static'
          */
         "position": 'static' | 'sticky' | 'fixed';
+        /**
+          * Route matching mode used when activeMode resolves through pathname.
+          * @default 'prefix'
+         */
+        "routeMatchMode": RouteMatchMode;
         /**
           * Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.
           * @default false
@@ -1650,6 +1660,11 @@ declare namespace LocalJSX {
          */
         "activeItem"?: string;
         /**
+          * Strategy used to compute active item. - `auto`: prefers scroll-spy when possible, then route, then hash - `route`: pathname matching (`/docs`, `/demo`) - `hash`: hash matching (`#hero`) - `scroll`: scroll-spy based section tracking - `manual`: external control only (no auto detection)
+          * @default 'auto'
+         */
+        "activeMode"?: ActiveMode;
+        /**
           * ARIA label for the navigation
           * @default 'Main navigation'
          */
@@ -1705,6 +1720,11 @@ declare namespace LocalJSX {
           * @default 'static'
          */
         "position"?: 'static' | 'sticky' | 'fixed';
+        /**
+          * Route matching mode used when activeMode resolves through pathname.
+          * @default 'prefix'
+         */
+        "routeMatchMode"?: RouteMatchMode;
         /**
           * Enable scroll-spy (auto-detect active section by scroll position). Items must have `href` starting with `#`.
           * @default false
@@ -2067,6 +2087,8 @@ declare namespace LocalJSX {
         "variant": NavbarProps['variant'];
         "position": 'static' | 'sticky' | 'fixed';
         "scrollSpy": boolean;
+        "activeMode": ActiveMode;
+        "routeMatchMode": RouteMatchMode;
         "scrollSpyOffset": number;
         "ariaNavLabel": string;
         "itemVariant": NavItemStyle;

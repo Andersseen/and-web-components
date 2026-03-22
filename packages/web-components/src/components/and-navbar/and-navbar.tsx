@@ -25,6 +25,57 @@ export type NavItem = {
  * - `mobile`  – hamburger menu, everything in a drawer
  */
 export type ResponsiveStage = 'full' | 'compact' | 'minimal' | 'mobile';
+export type ActiveMode = 'auto' | 'route' | 'hash' | 'scroll' | 'manual';
+export type RouteMatchMode = 'exact' | 'prefix';
+
+const NAVBAR_ROUTE_EVENT = 'and-navbar-route-change';
+let historyPatchRefCount = 0;
+let originalPushState: History['pushState'] | undefined;
+let originalReplaceState: History['replaceState'] | undefined;
+
+const emitNavbarRouteEvent = () => {
+  window.dispatchEvent(new CustomEvent(NAVBAR_ROUTE_EVENT));
+};
+
+const acquireHistoryPatch = () => {
+  if (typeof window === 'undefined') return;
+
+  historyPatchRefCount += 1;
+  if (historyPatchRefCount > 1) return;
+
+  originalPushState = window.history.pushState;
+  originalReplaceState = window.history.replaceState;
+
+  window.history.pushState = function (...args) {
+    const result = originalPushState!.apply(this, args);
+    emitNavbarRouteEvent();
+    return result;
+  };
+
+  window.history.replaceState = function (...args) {
+    const result = originalReplaceState!.apply(this, args);
+    emitNavbarRouteEvent();
+    return result;
+  };
+};
+
+const releaseHistoryPatch = () => {
+  if (typeof window === 'undefined') return;
+  if (historyPatchRefCount === 0) return;
+
+  historyPatchRefCount -= 1;
+  if (historyPatchRefCount > 0) return;
+
+  if (originalPushState) {
+    window.history.pushState = originalPushState;
+  }
+  if (originalReplaceState) {
+    window.history.replaceState = originalReplaceState;
+  }
+
+  originalPushState = undefined;
+  originalReplaceState = undefined;
+};
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -86,7 +137,9 @@ export class AndNavbar {
   private navbar: NavbarReturn;
   private itemElements = new Map<string, HTMLElement>();
   private scrollHandler?: () => void;
+  private locationHandler?: () => void;
   private resizeObserver?: ResizeObserver;
+  private slotObserver?: MutationObserver;
 
   @Element() el: HTMLElement;
 
@@ -121,6 +174,21 @@ export class AndNavbar {
    * Items must have `href` starting with `#`.
    */
   @Prop() scrollSpy: boolean = false;
+
+  /**
+   * Strategy used to compute active item.
+   * - `auto`: prefers scroll-spy when possible, then route, then hash
+   * - `route`: pathname matching (`/docs`, `/demo`)
+   * - `hash`: hash matching (`#hero`)
+   * - `scroll`: scroll-spy based section tracking
+   * - `manual`: external control only (no auto detection)
+   */
+  @Prop() activeMode: ActiveMode = 'auto';
+
+  /**
+   * Route matching mode used when activeMode resolves through pathname.
+   */
+  @Prop() routeMatchMode: RouteMatchMode = 'prefix';
 
   /**
    * Scroll-spy offset from the top of viewport (px).
@@ -188,6 +256,8 @@ export class AndNavbar {
   /* ── State ──────────────────────────────────────────────────────── */
 
   @State() mobileMenuOpen: boolean = false;
+  @State() hasNavSlotContent: boolean = false;
+  @State() hasMobileNavSlotContent: boolean = false;
 
   /**
    * Current responsive stage. Drives progressive collapse.
@@ -251,19 +321,19 @@ export class AndNavbar {
   }
 
   componentDidLoad() {
+    this.setupSlotTracking();
+
     // Set up responsive breakpoint detection
     this.setupResponsive();
 
-    if (this.scrollSpy) {
-      this.setupScrollSpy();
-      this.navbar.actions.updateActiveFromScroll();
-    } else {
-      this.navbar.actions.updateActiveFromHash();
-    }
+    this.configureActiveDetection();
+    this.syncActiveFromLocation();
   }
 
   disconnectedCallback() {
     this.teardownScrollSpy();
+    this.teardownLocationTracking();
+    this.teardownSlotTracking();
     this.teardownResponsive();
   }
 
@@ -289,15 +359,175 @@ export class AndNavbar {
         disabled: i.disabled,
       })),
     );
+
+    this.configureActiveDetection();
+    this.syncActiveFromLocation();
   }
 
   @Watch('scrollSpy')
-  handleScrollSpyChange(val: boolean) {
-    if (val) {
+  handleScrollSpyChange() {
+    this.configureActiveDetection();
+    this.syncActiveFromLocation();
+  }
+
+  @Watch('activeMode')
+  handleActiveModeChange() {
+    this.configureActiveDetection();
+    this.syncActiveFromLocation();
+  }
+
+  @Watch('routeMatchMode')
+  handleRouteMatchModeChange() {
+    this.syncActiveFromLocation();
+  }
+
+  @Watch('scrollSpyOffset')
+  handleScrollSpyOffsetChange() {
+    if (this.shouldUseScrollSpy()) {
+      this.syncActiveFromLocation();
+    }
+  }
+
+  /* ── Slot detection ─────────────────────────────────────────────── */
+
+  private hasNamedSlotContent(names: string[]) {
+    return names.some(name => this.el.querySelector(`[slot="${name}"]`) !== null);
+  }
+
+  private refreshSlotState = () => {
+    const hasNav = this.hasNamedSlotContent(['center', 'main', 'nav']);
+    const hasMobileNav = this.hasNamedSlotContent(['mobile-nav']);
+
+    if (hasNav !== this.hasNavSlotContent) {
+      this.hasNavSlotContent = hasNav;
+    }
+    if (hasMobileNav !== this.hasMobileNavSlotContent) {
+      this.hasMobileNavSlotContent = hasMobileNav;
+    }
+  };
+
+  private setupSlotTracking() {
+    this.refreshSlotState();
+
+    if (typeof MutationObserver === 'undefined') return;
+
+    this.slotObserver = new MutationObserver(() => {
+      this.refreshSlotState();
+      this.checkResponsiveStage();
+    });
+
+    this.slotObserver.observe(this.el, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['slot'],
+    });
+  }
+
+  private teardownSlotTracking() {
+    if (this.slotObserver) {
+      this.slotObserver.disconnect();
+      this.slotObserver = undefined;
+    }
+  }
+
+  /* ── Active state orchestration ────────────────────────────────── */
+
+  private hasHashHrefItems() {
+    return this.parsedItems.some(item => typeof item.href === 'string' && item.href.startsWith('#'));
+  }
+
+  private shouldUseScrollSpy() {
+    const hasHashItems = this.hasHashHrefItems();
+    if (!hasHashItems) return false;
+
+    if (this.activeMode === 'manual') return false;
+    if (this.activeMode === 'scroll') return true;
+    if (this.activeMode === 'auto') return this.scrollSpy;
+
+    return false;
+  }
+
+  private configureActiveDetection() {
+    if (this.shouldUseScrollSpy()) {
       this.setupScrollSpy();
     } else {
       this.teardownScrollSpy();
     }
+
+    if (this.activeMode === 'manual') {
+      this.teardownLocationTracking();
+    } else {
+      this.setupLocationTracking();
+    }
+  }
+
+  private syncActiveFromLocation() {
+    if (!this.navbar || this.activeMode === 'manual') return;
+
+    const runRoute = () => {
+      const updateFromRoute = (this.navbar.actions as any).updateActiveFromRoute as ((pathname?: string, routeMatchMode?: RouteMatchMode) => void) | undefined;
+
+      if (typeof updateFromRoute === 'function') {
+        updateFromRoute(undefined, this.routeMatchMode);
+        return;
+      }
+
+      // Backward compatibility for older headless builds.
+      this.navbar.actions.updateActiveFromHash();
+    };
+
+    switch (this.activeMode) {
+      case 'route':
+        runRoute();
+        return;
+      case 'hash':
+        this.navbar.actions.updateActiveFromHash();
+        return;
+      case 'scroll':
+        if (this.shouldUseScrollSpy()) {
+          (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
+        } else {
+          runRoute();
+          this.navbar.actions.updateActiveFromHash();
+        }
+        return;
+      case 'auto':
+      default:
+        if (this.shouldUseScrollSpy()) {
+          (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
+          return;
+        }
+        runRoute();
+        this.navbar.actions.updateActiveFromHash();
+    }
+  }
+
+  private setupLocationTracking() {
+    if (typeof window === 'undefined') return;
+    if (this.locationHandler) return;
+
+    acquireHistoryPatch();
+
+    this.locationHandler = () => {
+      this.syncActiveFromLocation();
+    };
+
+    window.addEventListener('popstate', this.locationHandler);
+    window.addEventListener('hashchange', this.locationHandler);
+    window.addEventListener(NAVBAR_ROUTE_EVENT, this.locationHandler as EventListener);
+  }
+
+  private teardownLocationTracking() {
+    if (typeof window === 'undefined') return;
+    if (!this.locationHandler) return;
+
+    window.removeEventListener('popstate', this.locationHandler);
+    window.removeEventListener('hashchange', this.locationHandler);
+    window.removeEventListener(NAVBAR_ROUTE_EVENT, this.locationHandler as EventListener);
+    this.locationHandler = undefined;
+
+    releaseHistoryPatch();
   }
 
   /* ── Responsive detection ────────────────────────────────────────── */
@@ -351,9 +581,9 @@ export class AndNavbar {
       const root = this.el.shadowRoot;
       if (root) {
         const mainEl = root.querySelector('.navbar-main') as HTMLElement;
-        const menuEl = root.querySelector('.navbar-menu') as HTMLElement;
-        if (mainEl && menuEl) {
-          const overflows = menuEl.scrollWidth > mainEl.clientWidth + 2;
+        const contentEl = root.querySelector('.navbar-menu, .navbar-center-slot') as HTMLElement;
+        if (mainEl && contentEl) {
+          const overflows = contentEl.scrollWidth > mainEl.clientWidth + 2;
           if (overflows) {
             // Bump one stage smaller
             stage = stage === 'full' ? 'compact' : 'minimal';
@@ -378,14 +608,16 @@ export class AndNavbar {
   /* ── Scroll spy setup ───────────────────────────────────────────── */
 
   private setupScrollSpy() {
+    if (typeof window === 'undefined') return;
     this.teardownScrollSpy();
     this.scrollHandler = () => {
-      this.navbar.actions.updateActiveFromScroll();
+      (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
     };
     window.addEventListener('scroll', this.scrollHandler, { passive: true });
   }
 
   private teardownScrollSpy() {
+    if (typeof window === 'undefined') return;
     if (this.scrollHandler) {
       window.removeEventListener('scroll', this.scrollHandler);
       this.scrollHandler = undefined;
@@ -525,6 +757,12 @@ export class AndNavbar {
     const navListProps = this.navbar.getNavListProps();
     const items = this.parsedItems;
     const hasItems = items.length > 0;
+    const hasSlottedDesktopNav = this.hasNavSlotContent;
+    const hasSlottedMobileNav = this.hasMobileNavSlotContent || hasSlottedDesktopNav;
+    const renderDesktopItems = hasItems && !hasSlottedDesktopNav;
+    const renderDesktopSlots = hasSlottedDesktopNav || !hasItems;
+    const renderMobileItems = hasItems && !hasSlottedMobileNav;
+    const renderMobileSlots = hasSlottedMobileNav || !hasItems;
 
     const stage = this.responsiveStage;
     const isMobile = stage === 'mobile';
@@ -560,19 +798,21 @@ export class AndNavbar {
             {showMain && (
               <div class="navbar-center navbar-main">
                 {/* Items-based navigation */}
-                {hasItems && (
+                {renderDesktopItems && (
                   <div class="navbar-menu" role={navListProps.role} aria-label={navListProps['aria-label']}>
                     {items.map(item => this.renderNavItem(item))}
                   </div>
                 )}
 
                 {/* Slot-based center content (custom content) */}
-                {!hasItems && (
-                  <slot name="center">
-                    <slot name="main">
-                      <slot name="nav" />
+                {renderDesktopSlots && (
+                  <div class="navbar-center-slot">
+                    <slot name="center">
+                      <slot name="main">
+                        <slot name="nav" />
+                      </slot>
                     </slot>
-                  </slot>
+                  </div>
                 )}
               </div>
             )}
@@ -619,10 +859,10 @@ export class AndNavbar {
 
           <nav class="mobile-menu-content">
             {/* Items-based mobile menu */}
-            {hasItems && items.map(item => this.renderNavItem(item, true))}
+            {renderMobileItems && items.map(item => this.renderNavItem(item, true))}
 
             {/* Slot-based mobile menu */}
-            {!hasItems && (
+            {renderMobileSlots && (
               <div class="mobile-menu-slot">
                 <slot name="mobile-nav">
                   <slot name="center" />

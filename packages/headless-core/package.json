@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/headless-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Headless UI components for Web Components - Framework agnostic state machines and logic",
   "type": "module",
   "main": "./dist/index.js",
@@ -72,7 +72,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
@@ -90,8 +90,10 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
     "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^10.1.0",
     "jest": "^29.7.0",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1",
     "vitest": "^4.0.18"
   },
   "publishConfig": {

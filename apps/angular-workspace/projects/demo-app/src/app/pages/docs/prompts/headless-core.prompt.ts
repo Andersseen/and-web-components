@@ -1,6 +1,5 @@
-export const HEADLESS_CORE_PROMPT = `\
-CONTEXT: @andersseen/headless-components
-
+export const HEADLESS_CORE_PROMPT = `\\
+<andersseen-headless-components-context>
 ## Library profile
 Framework-agnostic headless primitives for behavior, a11y, and keyboard navigation.
 No DOM rendering, no CSS, no framework lock-in.
@@ -160,4 +159,5 @@ const dismissProps = toasts.getDismissProps();
 - Preserve provided keyboard handlers and ARIA attributes.
 - Do not duplicate focus/state logic already provided by module actions/queries.
 - Call destroy() where provided (tooltip/toast manager) during unmount cleanup.
+</andersseen-headless-components-context>
 `;

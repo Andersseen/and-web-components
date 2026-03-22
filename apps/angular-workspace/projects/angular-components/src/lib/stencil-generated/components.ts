@@ -704,14 +704,14 @@ export declare interface AndModal extends Components.AndModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineAndNavbar,
-  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant']
+  inputs: ['activeItem', 'activeMode', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'routeMatchMode', 'scrollSpy', 'scrollSpyOffset', 'variant']
 })
 @Component({
   selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'scrollSpy', 'scrollSpyOffset', 'variant'],
+  inputs: ['activeItem', 'activeMode', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'routeMatchMode', 'scrollSpy', 'scrollSpyOffset', 'variant'],
   outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange', 'responsiveStageChange'],
 })
 export class AndNavbar {

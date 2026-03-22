@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/icon",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Shared icon library for Andersseen web components",
   "type": "module",
   "main": "dist/index.js",
@@ -8,18 +8,21 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist-cjs/index.js"
     }
   },
   "sideEffects": false,
   "files": [
     "dist",
+    "dist-cjs",
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc",
-    "clean": "rm -rf dist",
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json",
+    "clean": "rm -rf dist dist-cjs",
+    "lint": "eslint src",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
@@ -30,7 +33,9 @@
   "author": "Andersseen",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "eslint": "^10.1.0",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.57.1"
   },
   "publishConfig": {
     "access": "public"

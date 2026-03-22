@@ -25,11 +25,13 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && changeset publish",
+    "lint": "pnpm -r lint",
     "storybook": "pnpm -C packages/web-components storybook",
     "build-storybook": "pnpm -C packages/web-components build-storybook"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.2.1",
     "concurrently": "^9.2.1",
     "typescript": "^5.9.3"

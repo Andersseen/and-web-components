@@ -13,10 +13,10 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
-    "@andersseen/icon": "^0.0.2",
-    "@andersseen/layout": "^0.0.1",
-    "@andersseen/motion": "^0.1.0",
-    "@andersseen/web-components": "^0.0.3",
+    "@andersseen/icon": "workspace:*",
+    "@andersseen/layout": "workspace:*",
+    "@andersseen/motion": "workspace:*",
+    "@andersseen/web-components": "workspace:*",
     "astro": "^5.7.10"
   },
   "devDependencies": {
