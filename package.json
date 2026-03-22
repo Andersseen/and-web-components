@@ -25,6 +25,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && changeset publish",
+    "lint": "pnpm -r lint",
     "storybook": "pnpm -C packages/web-components storybook",
     "build-storybook": "pnpm -C packages/web-components build-storybook"
   },

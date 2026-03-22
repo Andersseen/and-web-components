@@ -8,18 +8,20 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist-cjs/index.js"
     }
   },
   "sideEffects": false,
   "files": [
     "dist",
+    "dist-cjs",
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc",
-    "clean": "rm -rf dist",
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json",
+    "clean": "rm -rf dist dist-cjs",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
@@ -30,6 +32,7 @@
   "author": "Andersseen",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^10.1.0",
     "typescript": "^5.3.3"
   },
   "publishConfig": {

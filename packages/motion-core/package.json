@@ -21,8 +21,9 @@
   ],
   "scripts": {
     "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && node scripts/build-css.cjs",
-    "dev": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint src --ext .ts",
     "prepublishOnly": "pnpm run build"
   },
@@ -36,7 +37,10 @@
   "author": "Andersseen",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^10.1.0",
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.0"
   },
   "publishConfig": {
     "access": "public"
