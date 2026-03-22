@@ -100,6 +100,17 @@
   transition: gap var(--navbar-transition);
 }
 
+.navbar-end-desktop ::slotted(*) {
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar-end-desktop ::slotted(div) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
 /* ── Compact end section ──────────────────────────────────────────── */
 /* When the end section is compact, hide slotted text and shrink gaps. */
 
@@ -110,7 +121,6 @@
 /* Use ::slotted to target elements inside the end slot */
 .navbar-end--compact ::slotted(and-button[variant='outline']),
 .navbar-end--compact ::slotted(and-button[size='sm']:not([variant='ghost'])) {
-  font-size: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   min-width: 2.5rem;
@@ -160,6 +170,21 @@ nav.navbar-blur {
   gap: var(--navbar-item-gap);
   flex-wrap: nowrap;
   white-space: nowrap;
+}
+
+.navbar-center-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.navbar-center-slot ::slotted(*) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--navbar-item-gap);
+  min-width: 0;
 }
 
 .navbar-actions {

@@ -119,6 +119,14 @@ export interface NavbarConfig {
    * @default 'Main navigation'
    */
   ariaLabel?: string;
+
+  /**
+   * Route matching mode used by `updateActiveFromRoute`.
+   * - `exact`: pathname must exactly match the item's href path.
+   * - `prefix`: pathname can match nested routes (`/docs/intro` -> `/docs`).
+   * @default 'prefix'
+   */
+  routeMatchMode?: "exact" | "prefix";
 }
 
 // ─── State ──────────────────────────────────────────────────────────
@@ -219,12 +227,20 @@ export interface NavbarReturn {
      * Detect which section is in view and update active item.
      * Call this from a scroll event listener.
      */
-    updateActiveFromScroll: () => void;
+    updateActiveFromScroll: (offset?: number) => void;
     /**
      * Detect active item from the current URL hash.
      * Useful on initial load or `hashchange` event.
      */
     updateActiveFromHash: () => void;
+    /**
+     * Detect active item from the current pathname.
+     * Useful for route-driven apps (`/docs`, `/demo`, etc.).
+     */
+    updateActiveFromRoute: (
+      pathname?: string,
+      routeMatchMode?: "exact" | "prefix",
+    ) => void;
   };
 
   /**
@@ -320,21 +336,105 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
     setMobileMenuOpen(false);
   };
 
+  const normalizePathname = (value: string): string => {
+    if (!value) return "/";
+
+    // Support callers that may accidentally pass full URLs.
+    let input = value;
+    try {
+      if (value.startsWith("http://") || value.startsWith("https://")) {
+        input = new URL(value).pathname;
+      }
+    } catch {
+      input = value;
+    }
+
+    const withoutQuery = input.split("?")[0] ?? input;
+    const withoutHash = withoutQuery.split("#")[0] ?? withoutQuery;
+    if (!withoutHash) return "/";
+
+    let normalized = withoutHash.startsWith("/")
+      ? withoutHash
+      : `/${withoutHash}`;
+    if (normalized.length > 1 && normalized.endsWith("/")) {
+      normalized = normalized.slice(0, -1);
+    }
+    return normalized || "/";
+  };
+
+  const getHrefPathname = (href?: string): string | null => {
+    if (!href) return null;
+    if (href.startsWith("#")) return null;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("//")) return null;
+    return normalizePathname(href);
+  };
+
+  const findRouteMatch = (
+    pathname: string,
+    routeMatchMode?: "exact" | "prefix",
+  ): NavbarItem | undefined => {
+    const normalizedPath = normalizePathname(pathname);
+    const mode = routeMatchMode ?? config.routeMatchMode ?? "prefix";
+
+    const candidates = items
+      .filter((item) => !item.disabled)
+      .map((item) => ({ item, hrefPath: getHrefPathname(item.href) }))
+      .filter((entry): entry is { item: NavbarItem; hrefPath: string } =>
+        Boolean(entry.hrefPath),
+      );
+
+    if (mode === "exact") {
+      return candidates.find(({ hrefPath }) => hrefPath === normalizedPath)
+        ?.item;
+    }
+
+    // Prefix mode: choose the longest matching path so nested sections
+    // prefer the most specific nav item.
+    let best: { item: NavbarItem; hrefPath: string } | undefined;
+    for (const candidate of candidates) {
+      if (candidate.hrefPath === "/") {
+        if (normalizedPath !== "/") continue;
+      } else {
+        const prefix = `${candidate.hrefPath}/`;
+        if (
+          !(
+            normalizedPath === candidate.hrefPath ||
+            normalizedPath.startsWith(prefix)
+          )
+        ) {
+          continue;
+        }
+      }
+
+      if (!best || candidate.hrefPath.length > best.hrefPath.length) {
+        best = candidate;
+      }
+    }
+
+    return best?.item;
+  };
+
   const setItems = (newItems: NavbarItem[]): void => {
     items = newItems;
     itemMap = new Map(items.map((i) => [i.id, i]));
     itemIds = items.map((i) => i.id);
     state = { ...state, itemIds: [...itemIds] };
+
+    // Keep state valid after dynamic item updates.
+    if (!itemMap.has(state.activeItem)) {
+      state = { ...state, activeItem: resolveDefault() };
+      notifyActiveItemChange();
+    }
   };
 
   /**
    * Scroll-spy: iterate href targets and find the one whose section
    * is closest to (but above) the scroll-spy offset line.
    */
-  const updateActiveFromScroll = (): void => {
+  const updateActiveFromScroll = (offsetOverride?: number): void => {
     if (typeof document === "undefined") return;
 
-    const offset = config.scrollSpyOffset ?? 100;
+    const offset = offsetOverride ?? config.scrollSpyOffset ?? 100;
     let bestId: string | null = null;
     let bestTop = -Infinity;
 
@@ -366,6 +466,21 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
     if (!hash) return;
 
     const match = items.find((i) => i.href === hash);
+    if (match) {
+      setActiveItem(match.id);
+    }
+  };
+
+  /**
+   * Detect active item from pathname.
+   */
+  const updateActiveFromRoute = (
+    pathname?: string,
+    routeMatchMode?: "exact" | "prefix",
+  ): void => {
+    if (typeof window === "undefined" && !pathname) return;
+    const currentPathname = pathname ?? window.location.pathname;
+    const match = findRouteMatch(currentPathname, routeMatchMode);
     if (match) {
       setActiveItem(match.id);
     }
@@ -512,6 +627,7 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
       setItems,
       updateActiveFromScroll,
       updateActiveFromHash,
+      updateActiveFromRoute,
     },
     queries: {
       isActive,

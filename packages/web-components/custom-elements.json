@@ -2538,6 +2538,20 @@
               "fieldName": "activeItem"
             },
             {
+              "name": "active-mode",
+              "description": "Strategy used to compute active item.\n- `auto`: prefers scroll-spy when possible, then route, then hash\n- `route`: pathname matching (`/docs`, `/demo`)\n- `hash`: hash matching (`#hero`)\n- `scroll`: scroll-spy based section tracking\n- `manual`: external control only (no auto detection)",
+              "type": {
+                "text": "\"auto\" | \"hash\" | \"manual\" | \"route\" | \"scroll\"",
+                "references": [
+                  {
+                    "name": "ActiveMode"
+                  }
+                ]
+              },
+              "default": "'auto'",
+              "fieldName": "activeMode"
+            },
+            {
               "name": "aria-nav-label",
               "description": "ARIA label for the navigation",
               "type": {
@@ -2620,6 +2634,20 @@
               "fieldName": "position"
             },
             {
+              "name": "route-match-mode",
+              "description": "Route matching mode used when activeMode resolves through pathname.",
+              "type": {
+                "text": "\"exact\" | \"prefix\"",
+                "references": [
+                  {
+                    "name": "RouteMatchMode"
+                  }
+                ]
+              },
+              "default": "'prefix'",
+              "fieldName": "routeMatchMode"
+            },
+            {
               "name": "scroll-spy",
               "description": "Enable scroll-spy (auto-detect active section by scroll position).\nItems must have `href` starting with `#`.",
               "type": {
@@ -2663,6 +2691,22 @@
               "default": "''",
               "attribute": "active-item",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "activeMode",
+              "description": "Strategy used to compute active item.\n- `auto`: prefers scroll-spy when possible, then route, then hash\n- `route`: pathname matching (`/docs`, `/demo`)\n- `hash`: hash matching (`#hero`)\n- `scroll`: scroll-spy based section tracking\n- `manual`: external control only (no auto detection)",
+              "type": {
+                "text": "\"auto\" | \"hash\" | \"manual\" | \"route\" | \"scroll\"",
+                "references": [
+                  {
+                    "name": "ActiveMode"
+                  }
+                ]
+              },
+              "default": "'auto'",
+              "readonly": true,
+              "attribute": "active-mode"
             },
             {
               "kind": "field",
@@ -2762,6 +2806,22 @@
               "default": "'static'",
               "readonly": true,
               "attribute": "position"
+            },
+            {
+              "kind": "field",
+              "name": "routeMatchMode",
+              "description": "Route matching mode used when activeMode resolves through pathname.",
+              "type": {
+                "text": "\"exact\" | \"prefix\"",
+                "references": [
+                  {
+                    "name": "RouteMatchMode"
+                  }
+                ]
+              },
+              "default": "'prefix'",
+              "readonly": true,
+              "attribute": "route-match-mode"
             },
             {
               "kind": "field",
