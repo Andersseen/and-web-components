@@ -1221,7 +1221,7 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, T> = { [P in K]: T } | { [P in `attr:${K}`]: T } | { [P in `prop:${K}`]: T };
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
 
     /**
      * Accordion container component using headless logic.
@@ -2162,7 +2162,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "and-accordion": Omit<AndAccordion, keyof AndAccordionAttributes> & { [K in keyof AndAccordion & keyof AndAccordionAttributes]?: AndAccordion[K] } & { [K in keyof AndAccordion & keyof AndAccordionAttributes as `attr:${K}`]?: AndAccordionAttributes[K] } & { [K in keyof AndAccordion & keyof AndAccordionAttributes as `prop:${K}`]?: AndAccordion[K] };
         "and-accordion-content": AndAccordionContent;
-        "and-accordion-item": Omit<AndAccordionItem, keyof AndAccordionItemAttributes> & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes]?: AndAccordionItem[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `attr:${K}`]?: AndAccordionItemAttributes[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `prop:${K}`]?: AndAccordionItem[K] } & OneOf<"value", AndAccordionItem["value"]>;
+        "and-accordion-item": Omit<AndAccordionItem, keyof AndAccordionItemAttributes> & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes]?: AndAccordionItem[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `attr:${K}`]?: AndAccordionItemAttributes[K] } & { [K in keyof AndAccordionItem & keyof AndAccordionItemAttributes as `prop:${K}`]?: AndAccordionItem[K] } & OneOf<"value", AndAccordionItem["value"], AndAccordionItemAttributes["value"]>;
         "and-accordion-trigger": AndAccordionTrigger;
         "and-alert": Omit<AndAlert, keyof AndAlertAttributes> & { [K in keyof AndAlert & keyof AndAlertAttributes]?: AndAlert[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `attr:${K}`]?: AndAlertAttributes[K] } & { [K in keyof AndAlert & keyof AndAlertAttributes as `prop:${K}`]?: AndAlert[K] };
         "and-badge": Omit<AndBadge, keyof AndBadgeAttributes> & { [K in keyof AndBadge & keyof AndBadgeAttributes]?: AndBadge[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `attr:${K}`]?: AndBadgeAttributes[K] } & { [K in keyof AndBadge & keyof AndBadgeAttributes as `prop:${K}`]?: AndBadge[K] };
