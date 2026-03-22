@@ -588,17 +588,17 @@ export namespace Components {
          */
         "collapsed": boolean;
         /**
-          * Collapsed width of the sidebar. Accepts any CSS value.
+          * Collapsed width of the sidebar.
           * @default '4rem'
          */
         "collapsedWidth": string;
         /**
-          * Expanded width of the sidebar. Accepts any CSS value.
+          * Expanded width of the sidebar.
           * @default '16rem'
          */
         "expandedWidth": string;
         /**
-          * Visual style for individual sidebar items. Controls how each item looks, independent of the sidebar container variant. Border-radius is intentionally not set — the theme controls it.  - `default`   — subtle accent bg on active - `underline` — left accent bar on active - `filled`    — solid primary bg on active
+          * Visual style for individual sidebar items.
           * @default 'default'
          */
         "itemVariant": SidebarItemStyle;
@@ -613,7 +613,7 @@ export namespace Components {
          */
         "mobileBreakpoint": number;
         /**
-          * Enable auto-collapse on mobile viewports. When true, the sidebar collapses to icon-only mode on screens smaller than `mobileBreakpoint`.
+          * Enable auto-collapse on mobile viewports.
           * @default true
          */
         "mobileCollapse": boolean;
@@ -1843,17 +1843,17 @@ declare namespace LocalJSX {
          */
         "collapsed"?: boolean;
         /**
-          * Collapsed width of the sidebar. Accepts any CSS value.
+          * Collapsed width of the sidebar.
           * @default '4rem'
          */
         "collapsedWidth"?: string;
         /**
-          * Expanded width of the sidebar. Accepts any CSS value.
+          * Expanded width of the sidebar.
           * @default '16rem'
          */
         "expandedWidth"?: string;
         /**
-          * Visual style for individual sidebar items. Controls how each item looks, independent of the sidebar container variant. Border-radius is intentionally not set — the theme controls it.  - `default`   — subtle accent bg on active - `underline` — left accent bar on active - `filled`    — solid primary bg on active
+          * Visual style for individual sidebar items.
           * @default 'default'
          */
         "itemVariant"?: SidebarItemStyle;
@@ -1868,7 +1868,7 @@ declare namespace LocalJSX {
          */
         "mobileBreakpoint"?: number;
         /**
-          * Enable auto-collapse on mobile viewports. When true, the sidebar collapses to icon-only mode on screens smaller than `mobileBreakpoint`.
+          * Enable auto-collapse on mobile viewports.
           * @default true
          */
         "mobileCollapse"?: boolean;

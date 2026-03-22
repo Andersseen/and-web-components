@@ -43,11 +43,6 @@ const sidebarVariants = cva('sidebar-root flex h-full flex-col transition-all du
   },
 });
 
-/**
- * Sidebar item style variants.
- * Visual distinctiveness is handled via CSS [data-item-style] + [data-state]
- * attribute selectors — border-radius is left to the theme.
- */
 const sidebarItemVariants = cva(
   [
     'sidebar-item flex w-full items-center gap-3 text-sm font-medium',
@@ -111,9 +106,6 @@ export class AndSidebar {
 
   /**
    * Enable auto-collapse on mobile viewports.
-   * When true, the sidebar collapses to icon-only mode on screens
-   * smaller than `mobileBreakpoint`.
-   * @default true
    */
   @Prop() mobileCollapse: boolean = true;
 
@@ -125,14 +117,12 @@ export class AndSidebar {
 
   /**
    * Expanded width of the sidebar.
-   * Accepts any CSS value.
    * @default '16rem'
    */
   @Prop() expandedWidth: string = '16rem';
 
   /**
    * Collapsed width of the sidebar.
-   * Accepts any CSS value.
    * @default '4rem'
    */
   @Prop() collapsedWidth: string = '4rem';
@@ -144,12 +134,6 @@ export class AndSidebar {
 
   /**
    * Visual style for individual sidebar items.
-   * Controls how each item looks, independent of the sidebar container variant.
-   * Border-radius is intentionally not set — the theme controls it.
-   *
-   * - `default`   — subtle accent bg on active
-   * - `underline` — left accent bar on active
-   * - `filled`    — solid primary bg on active
    * @default 'default'
    */
   @Prop({ reflect: true }) itemVariant: SidebarItemStyle = 'default';
@@ -165,8 +149,12 @@ export class AndSidebar {
   /* ── State ──────────────────────────────────────────────────────── */
 
   @State() isMobile: boolean = false;
+  @State() hasHeader: boolean = false;
+  @State() hasFooter: boolean = false;
+  @State() hasTop: boolean = false;
+  @State() hasNavSlot: boolean = false;
 
-  /* ── Parsed items (handle string JSON from HTML attributes) ───── */
+  /* ── Parsed items ───────────────────────────────────────────────── */
 
   private get parsedItems(): SidebarItem[] {
     if (typeof this.items === 'string') {
@@ -212,6 +200,7 @@ export class AndSidebar {
     if (this.mobileCollapse) {
       this.setupMobileDetection();
     }
+    this.checkSlots();
   }
 
   disconnectedCallback() {
@@ -284,8 +273,6 @@ export class AndSidebar {
     const itemId = target?.getAttribute('data-item-id');
     if (itemId) {
       this.sidebar.handleItemKeyDown(event, itemId);
-
-      // Move DOM focus to the newly active item
       const newActive = this.sidebar.state.activeItem;
       if (newActive !== itemId) {
         const el = this.itemElements.get(newActive);
@@ -311,7 +298,18 @@ export class AndSidebar {
     }
   };
 
-  /* ── Effective collapsed check (considers mobile) ───────────────── */
+  private checkSlots() {
+    this.hasHeader = !!this.el.querySelector('[slot="header"]');
+    this.hasFooter = !!this.el.querySelector('[slot="footer"]');
+    this.hasTop = !!this.el.querySelector('[slot="top"]');
+    this.hasNavSlot = !!this.el.querySelector('[slot="nav"]');
+  }
+
+  private handleSlotChange = () => {
+    this.checkSlots();
+  };
+
+  /* ── Effective collapsed check ──────────────────────────────────── */
 
   private get effectiveCollapsed(): boolean {
     return this.collapsed || (this.mobileCollapse && this.isMobile);
@@ -357,7 +355,13 @@ export class AndSidebar {
 
   render() {
     if (!this.sidebar) {
-      return <Host><div style={{padding: '1rem', background: 'red', color: 'white'}}>Sidebar: headless not initialized</div></Host>;
+      return (
+        <Host>
+          <div style={{ padding: '1rem', background: 'red', color: 'white' }}>
+            Sidebar: headless not initialized
+          </div>
+        </Host>
+      );
     }
 
     const containerProps = this.sidebar.getContainerProps();
@@ -379,15 +383,24 @@ export class AndSidebar {
         aria-label={containerProps['aria-label']}
         data-collapsed={isCollapsed}
         data-mobile-collapsed={this.isMobile && this.mobileCollapse}
+        data-has-header={this.hasHeader}
+        data-has-footer={this.hasFooter}
+        data-has-top={this.hasTop}
+        data-has-bottom-nav={bottomItems.length > 0}
         style={hostStyle}
       >
         <aside
           class={cn(sidebarVariants({ variant: this.variant, collapsed: isCollapsed }))}
         >
           {/* ── Header ──────────────────────────────────────────── */}
-          <div class="sidebar-header">
-            <slot name="header">
-              {!isCollapsed && <span class="sidebar-title">Navigation</span>}
+          <div
+            class={cn(
+              'sidebar-header',
+              !this.hasHeader && 'sidebar-header--no-content',
+            )}
+          >
+            <slot name="header" onSlotchange={this.handleSlotChange}>
+              {!isCollapsed && !this.hasHeader && <span class="sidebar-title">Navigation</span>}
             </slot>
             <button
               aria-expanded={toggleProps['aria-expanded']}
@@ -404,8 +417,14 @@ export class AndSidebar {
           </div>
 
           {/* ── Top slot (above nav, e.g. search, user info) ────── */}
-          <div class={cn('sidebar-top-slot', isCollapsed && 'sidebar-top-slot--collapsed')}>
-            <slot name="top" />
+          <div
+            class={cn(
+              'sidebar-top-slot',
+              isCollapsed && 'sidebar-top-slot--collapsed',
+              !this.hasTop && 'sidebar-top-slot--empty',
+            )}
+          >
+            <slot name="top" onSlotchange={this.handleSlotChange} />
           </div>
 
           {/* ── Main navigation ─────────────────────────────────── */}
@@ -415,15 +434,14 @@ export class AndSidebar {
             aria-label={this.sidebar.getNavListProps('main')['aria-label']}
           >
             {mainItems.map(item => this.renderItem(item))}
-            {/* Slot for custom main nav content */}
-            <slot name="nav" />
+            <slot name="nav" onSlotchange={this.handleSlotChange} />
           </nav>
 
           {/* ── Spacer pushes bottom content down ── */}
           <div class="sidebar-spacer" />
 
           {/* ── Bottom section (settings, user, etc.) ────────────── */}
-          {(bottomItems.length > 0) && (
+          {bottomItems.length > 0 && (
             <div class="sidebar-bottom-nav">
               <nav
                 role={this.sidebar.getNavListProps('bottom').role}
@@ -435,8 +453,14 @@ export class AndSidebar {
           )}
 
           {/* ── Footer slot (fully custom bottom area) ────────────── */}
-          <div class={cn('sidebar-footer', isCollapsed && 'sidebar-footer--collapsed')}>
-            <slot name="footer" />
+          <div
+            class={cn(
+              'sidebar-footer',
+              isCollapsed && 'sidebar-footer--collapsed',
+              !this.hasFooter && 'sidebar-footer--empty'
+            )}
+          >
+            <slot name="footer" onSlotchange={this.handleSlotChange} />
           </div>
         </aside>
       </Host>
