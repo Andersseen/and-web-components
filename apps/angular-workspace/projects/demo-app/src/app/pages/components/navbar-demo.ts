@@ -3,11 +3,23 @@ import {
   AndButton,
   AndNavbar,
   AndIcon,
+  AndTabs,
+  AndTabsList,
+  AndTabsTrigger,
+  AndTabsContent,
 } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-navbar-demo',
-  imports: [AndButton, AndIcon, AndNavbar],
+  imports: [
+    AndButton,
+    AndIcon,
+    AndNavbar,
+    AndTabs,
+    AndTabsList,
+    AndTabsTrigger,
+    AndTabsContent,
+  ],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -26,9 +38,7 @@ import {
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
           Preview
         </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-6">
             <and-navbar class="border border-border rounded-lg overflow-hidden">
               <div slot="start" class="flex items-center gap-2">
@@ -41,41 +51,211 @@ import {
               </div>
             </and-navbar>
           </div>
-
-          <div class="border-t border-border bg-muted/30 px-6 py-4">
-            <p class="text-sm text-muted-foreground m-0 leading-relaxed">
-              Resize your browser to see the <strong>progressive responsive
-              collapse</strong> in action: end section compacts first, then
-              nav links hide, then full hamburger.
-            </p>
-          </div>
         </div>
       </section>
 
-      <!-- Variants Section -->
+      <!-- Usage Examples with Tabs -->
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Container Variants
+          Usage Examples
         </h2>
-        <div class="grid grid-cols-1 gap-6">
-          @for (v of variants; track v.name) {
-            <div>
-              <p class="text-sm font-medium text-muted-foreground mb-2">{{ v.name }}</p>
-              <and-navbar [variant]="v.value" class="border border-border rounded-lg overflow-hidden">
+        <and-tabs value="route">
+          <and-tabs-list>
+            <and-tabs-trigger value="route">Route Active</and-tabs-trigger>
+            <and-tabs-trigger value="hash">Hash Active</and-tabs-trigger>
+            <and-tabs-trigger value="scroll">ScrollSpy</and-tabs-trigger>
+            <and-tabs-trigger value="manual">Manual Active</and-tabs-trigger>
+            <and-tabs-trigger value="slots">Slot Priority</and-tabs-trigger>
+            <and-tabs-trigger value="mobile">Mobile Drawer</and-tabs-trigger>
+          </and-tabs-list>
+
+          <!-- Route Active Example -->
+          <and-tabs-content value="route" class="mt-4 p-0 border-none">
+            <div class="mb-4">
+              <and-navbar
+                [items]="routeItemsJson"
+                activeMode="route"
+                routeMatchMode="prefix"
+                activeItem="components"
+                class="border border-border rounded-lg overflow-hidden"
+              >
                 <div slot="start" class="flex items-center gap-2">
-                  <and-icon name="box"></and-icon>
-                  <span class="font-bold">Brand</span>
+                  <and-icon name="compass"></and-icon>
+                  <span class="font-bold">Route Active</span>
                 </div>
                 <div slot="end" class="flex items-center gap-2">
-                  <and-button variant="ghost" size="icon">
-                    <and-icon name="bell"></and-icon>
-                  </and-button>
-                  <and-button size="sm">Action</and-button>
+                  <and-button variant="ghost" size="sm">Help</and-button>
                 </div>
               </and-navbar>
             </div>
-          }
-        </div>
+            <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
+              <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
+  [items]="routeItemsJson"
+  activeMode="route"
+  routeMatchMode="prefix"
+  activeItem="components"
+&gt;
+  &lt;div slot="start" class="flex items-center gap-2"&gt;
+    &lt;and-icon name="compass"&gt;&lt;/and-icon&gt;
+    &lt;span class="font-bold"&gt;Route Active&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div slot="end" class="flex items-center gap-2"&gt;
+    &lt;and-button variant="ghost" size="sm"&gt;Help&lt;/and-button&gt;
+  &lt;/div&gt;
+&lt;/and-navbar&gt;</code></pre>
+            </div>
+          </and-tabs-content>
+
+          <!-- Hash Active Example -->
+          <and-tabs-content value="hash" class="mt-4 p-0 border-none">
+            <div class="mb-4">
+              <and-navbar
+                [items]="hashItemsJson"
+                activeMode="hash"
+                class="border border-border rounded-lg overflow-hidden"
+              >
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="hash"></and-icon>
+                  <span class="font-bold">Hash Active</span>
+                </div>
+              </and-navbar>
+            </div>
+            <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
+              <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
+  [items]="hashItemsJson"
+  activeMode="hash"
+&gt;
+  &lt;div slot="start" class="flex items-center gap-2"&gt;
+    &lt;and-icon name="hash"&gt;&lt;/and-icon&gt;
+    &lt;span class="font-bold"&gt;Hash Active&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/and-navbar&gt;</code></pre>
+            </div>
+          </and-tabs-content>
+
+          <!-- ScrollSpy Example -->
+          <and-tabs-content value="scroll" class="mt-4 p-0 border-none">
+            <div class="mb-4">
+              <and-navbar
+                [items]="hashItemsJson"
+                activeMode="scroll"
+                scrollSpy="true"
+                scrollSpyOffset="110"
+                class="border border-border rounded-lg overflow-hidden"
+              >
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="hash"></and-icon>
+                  <span class="font-bold">ScrollSpy</span>
+                </div>
+              </and-navbar>
+            </div>
+            <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
+              <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
+  [items]="hashItemsJson"
+  activeMode="scroll"
+  scrollSpy="true"
+  scrollSpyOffset="110"
+&gt;
+  &lt;div slot="start" class="flex items-center gap-2"&gt;
+    &lt;and-icon name="hash"&gt;&lt;/and-icon&gt;
+    &lt;span class="font-bold"&gt;ScrollSpy&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/and-navbar&gt;</code></pre>
+            </div>
+          </and-tabs-content>
+
+          <!-- Manual Active Example -->
+          <and-tabs-content value="manual" class="mt-4 p-0 border-none">
+            <div class="mb-4">
+              <and-navbar
+                [items]="navItemsJson"
+                activeMode="manual"
+                activeItem="home"
+                class="border border-border rounded-lg overflow-hidden"
+              >
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="compass"></and-icon>
+                  <span class="font-bold">Manual Active</span>
+                </div>
+              </and-navbar>
+            </div>
+            <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
+              <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
+  [items]="navItemsJson"
+  activeMode="manual"
+  activeItem="home"
+&gt;
+  &lt;div slot="start" class="flex items-center gap-2"&gt;
+    &lt;and-icon name="compass"&gt;&lt;/and-icon&gt;
+    &lt;span class="font-bold"&gt;Manual Active&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/and-navbar&gt;</code></pre>
+            </div>
+          </and-tabs-content>
+
+          <!-- Slot Priority Example -->
+          <and-tabs-content value="slots" class="mt-4 p-0 border-none">
+            <div class="mb-4">
+              <and-navbar
+                [items]="slotPriorityItemsJson"
+                activeMode="manual"
+                class="border border-border rounded-lg overflow-hidden"
+              >
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="layers"></and-icon>
+                  <span class="font-bold">Slots First</span>
+                </div>
+                <nav slot="nav" class="flex items-center gap-1">
+                  <a href="/" class="px-3 py-2 rounded text-sm no-underline text-foreground hover:bg-accent font-medium">Custom Home</a>
+                  <a href="/demo" class="px-3 py-2 rounded text-sm no-underline text-foreground hover:bg-accent font-medium">Custom Demo</a>
+                  <a href="/docs" class="px-3 py-2 rounded text-sm no-underline text-foreground hover:bg-accent font-medium">Custom Docs</a>
+                </nav>
+              </and-navbar>
+            </div>
+            <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
+              <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
+  [items]="slotPriorityItemsJson"
+&gt;
+  &lt;div slot="start" class="flex items-center gap-2"&gt;
+    &lt;and-icon name="layers"&gt;&lt;/and-icon&gt;
+    &lt;span class="font-bold"&gt;Slots First&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;nav slot="nav" class="flex items-center gap-1"&gt;
+    &lt;a href="/" class="px-3 py-2 rounded text-sm no-underline text-foreground hover:bg-accent font-medium"&gt;Custom Home&lt;/a&gt;
+    &lt;a href="/demo" class="px-3 py-2 rounded text-sm no-underline text-foreground hover:bg-accent font-medium"&gt;Custom Demo&lt;/a&gt;
+    &lt;a href="/docs" class="px-3 py-2 rounded text-sm no-underline text-foreground hover:bg-accent font-medium"&gt;Custom Docs&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/and-navbar&gt;</code></pre>
+            </div>
+          </and-tabs-content>
+
+          <!-- Mobile Drawer Example -->
+          <and-tabs-content value="mobile" class="mt-4 p-0 border-none">
+            <div class="mb-4">
+              <and-navbar
+                [items]="mobileItemsJson"
+                mobileBreakpoint="1200"
+                class="border border-border rounded-lg overflow-hidden"
+              >
+                <div slot="start" class="flex items-center gap-2">
+                  <and-icon name="menu"></and-icon>
+                  <span class="font-bold">Drawer via Items</span>
+                </div>
+              </and-navbar>
+            </div>
+            <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
+              <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
+  [items]="mobileItemsJson"
+  mobileBreakpoint="1200"
+&gt;
+  &lt;div slot="start" class="flex items-center gap-2"&gt;
+    &lt;and-icon name="menu"&gt;&lt;/and-icon&gt;
+    &lt;span class="font-bold"&gt;Drawer via Items&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/and-navbar&gt;</code></pre>
+            </div>
+          </and-tabs-content>
+        </and-tabs>
       </section>
 
       <!-- Nav Link Item Variants -->
@@ -85,7 +265,7 @@ import {
         </h2>
         <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
           Each <code class="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">itemVariant</code>
-          changes how the individual nav links look\u2014independently of the container variant.
+          changes how the individual nav links look—independently of the container variant.
         </p>
         <div class="grid grid-cols-1 gap-6">
           @for (iv of itemVariants; track iv.name) {
@@ -237,5 +417,27 @@ export default class NavbarDemo {
     { id: 'pricing', label: 'Pricing' },
     { id: 'about', label: 'About' },
     { id: 'contact', label: 'Contact' },
+  ]);
+
+  routeItemsJson = JSON.stringify([
+    { id: 'home', label: 'Home', href: '/' },
+    { id: 'components', label: 'Components', href: '/components' },
+    { id: 'docs', label: 'Docs', href: '/docs' },
+  ]);
+
+  hashItemsJson = JSON.stringify([
+    { id: 'section-1', label: 'Section 1', href: '#section-1' },
+    { id: 'section-2', label: 'Section 2', href: '#section-2' },
+    { id: 'section-3', label: 'Section 3', href: '#section-3' },
+  ]);
+
+  slotPriorityItemsJson = JSON.stringify([
+    { id: 'hidden', label: 'This should be hidden' },
+  ]);
+
+  mobileItemsJson = JSON.stringify([
+    { id: 'm1', label: 'Mobile Item 1' },
+    { id: 'm2', label: 'Mobile Item 2' },
+    { id: 'm3', label: 'Mobile Item 3' },
   ]);
 }
