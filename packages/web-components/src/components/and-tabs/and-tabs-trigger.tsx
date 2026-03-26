@@ -49,7 +49,7 @@ export class AndTabsTrigger {
     const allTriggers = Array.from(parent?.querySelectorAll('and-tabs-trigger') || []);
     const allTabIds = allTriggers.map((t: any) => t.value).filter(Boolean);
 
-    this.tabsLogic.handleTabKeyDown(e, this.value, allTabIds);
+    this.tabsLogic.handleTriggerKeyDown(e, this.value, allTabIds);
 
     // Move focus to the newly selected tab after arrow-key navigation
     const navKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
@@ -63,7 +63,7 @@ export class AndTabsTrigger {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    const triggerProps = this.tabsLogic?.getTabTriggerProps(this.value) || {
+    const triggerProps = this.tabsLogic?.getTriggerProps(this.value) || {
       'role': 'tab',
       'aria-selected': this.selected,
       'tabindex': this.selected ? 0 : -1,

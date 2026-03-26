@@ -5,7 +5,6 @@
 
 /* ── Custom Properties (override from the outside) ───────────────── */
 :host {
-  --sidebar-width: var(--theme-sidebar-width, 16rem);
   --sidebar-collapsed-width: var(--theme-sidebar-collapsed-width, 4rem);
   --sidebar-expanded-width: var(--theme-sidebar-width, 16rem);
   --sidebar-header-height: var(--theme-sidebar-header-height, 3.5rem);
@@ -17,21 +16,30 @@
 
   display: block;
   height: 100%;
-  width: var(--sidebar-expanded-width);
+  width: var(--sidebar-width, var(--sidebar-expanded-width)) !important;
+  min-width: 0 !important;
+  max-width: var(--sidebar-width, var(--sidebar-expanded-width)) !important;
   transition: width var(--sidebar-transition);
   will-change: width;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 /* ── Collapsed host ──────────────────────────────────────────────── */
+:host([data-state='collapsed']),
+:host([data-collapsed]),
+:host([collapsed]),
 :host([data-collapsed='true']) {
-  width: var(--sidebar-collapsed-width);
+  width: var(--sidebar-collapsed-width) !important;
+  max-width: var(--sidebar-collapsed-width) !important;
 }
 
 /* ── Root aside ──────────────────────────────────────────────────── */
 .sidebar-root {
   width: 100%;
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* ── Header ──────────────────────────────────────────────────────── */
@@ -44,6 +52,8 @@
   gap: 0.5rem;
   border-bottom: 1px solid transparent;
   transition: border-color var(--sidebar-transition);
+  min-width: 0;
+  overflow: hidden;
 }
 
 :host([data-has-header='true']) .sidebar-header {

@@ -372,6 +372,7 @@ export class AndSidebar {
     const bottomItems = items.filter(i => i.section === 'bottom');
 
     const hostStyle: Record<string, string> = {
+      'width': isCollapsed ? this.collapsedWidth : this.expandedWidth,
       '--sidebar-width': isCollapsed ? this.collapsedWidth : this.expandedWidth,
       '--sidebar-collapsed-width': this.collapsedWidth,
       '--sidebar-expanded-width': this.expandedWidth,
@@ -381,7 +382,8 @@ export class AndSidebar {
       <Host
         role={containerProps.role}
         aria-label={containerProps['aria-label']}
-        data-collapsed={isCollapsed}
+        data-state={isCollapsed ? 'collapsed' : 'expanded'}
+        data-collapsed={isCollapsed ? 'true' : null}
         data-mobile-collapsed={this.isMobile && this.mobileCollapse}
         data-has-header={this.hasHeader}
         data-has-footer={this.hasFooter}
