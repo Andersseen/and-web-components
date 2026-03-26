@@ -1,0 +1,168 @@
+/**
+ * Headless [Component Name]
+ *
+ * [Brief description of the component's purpose and accessibility features]
+ */
+
+import type {
+  AriaAttributes,
+  DataAttributes,
+  EventCallback,
+} from "../types/common";
+import { createIdGenerator } from "../utils/id";
+
+/**
+ * Configuration options for creating a [component]
+ */
+export interface ComponentConfig {
+  /**
+   * Initial state value
+   */
+  defaultValue?: any;
+
+  /**
+   * Callback when state changes
+   */
+  onValueChange?: EventCallback<any>;
+
+  /**
+   * Whether the component is disabled
+   * @default false
+   */
+  disabled?: boolean;
+}
+
+/**
+ * Component state
+ */
+export interface ComponentState {
+  isActive: boolean;
+  disabled: boolean;
+}
+
+/**
+ * Props for the root/trigger element
+ */
+export interface ComponentTriggerProps extends AriaAttributes, DataAttributes {
+  role: string;
+  "aria-disabled": boolean;
+  "data-state": "active" | "inactive";
+}
+
+/**
+ * Props for the content/panel element
+ */
+export interface ComponentContentProps extends AriaAttributes, DataAttributes {
+  id: string;
+  hidden: boolean;
+  "aria-hidden": boolean;
+}
+
+/**
+ * Return type of createComponent
+ */
+export interface ComponentReturn {
+  /**
+   * Current state (Readonly)
+   */
+  state: Readonly<ComponentState>;
+
+  /**
+   * Actions to update state
+   */
+  actions: {
+    toggle: () => void;
+    setActive: (active: boolean) => void;
+    setDisabled: (disabled: boolean) => void;
+  };
+
+  /**
+   * Query methods for derived state
+   */
+  queries: {
+    isActive: () => boolean;
+  };
+
+  /**
+   * Prop getters
+   */
+  getTriggerProps: () => ComponentTriggerProps;
+  getContentProps: () => ComponentContentProps;
+
+  /**
+   * Event handlers
+   */
+  handleTriggerKeyDown: (event: KeyboardEvent) => void;
+}
+
+/**
+ * Create a new headless component
+ */
+export function createComponent(config: ComponentConfig = {}): ComponentReturn {
+  const generateId = createIdGenerator("component");
+
+  // 1. Internal State
+  let state: ComponentState = {
+    isActive: !!config.defaultValue,
+    disabled: config.disabled ?? false,
+  };
+
+  // 2. Actions
+  const setActive = (isActive: boolean): void => {
+    if (state.disabled) return;
+    state = { ...state, isActive };
+    config.onValueChange?.(isActive);
+  };
+
+  const toggle = (): void => {
+    setActive(!state.isActive);
+  };
+
+  const setDisabled = (disabled: boolean): void => {
+    state = { ...state, disabled };
+  };
+
+  // 3. Queries
+  const isActive = (): boolean => state.isActive;
+
+  // 4. Prop Getters
+  const getTriggerProps = (): ComponentTriggerProps => ({
+    role: "button",
+    "aria-disabled": state.disabled,
+    "data-state": isActive() ? "active" : "inactive",
+    "data-disabled": state.disabled,
+  });
+
+  const getContentProps = (): ComponentContentProps => {
+    const contentId = generateId("content");
+    return {
+      id: contentId,
+      hidden: !isActive(),
+      "aria-hidden": !isActive(),
+      "data-state": isActive() ? "active" : "inactive",
+    };
+  };
+
+  // 5. Event Handlers
+  const handleTriggerKeyDown = (event: KeyboardEvent): void => {
+    if (state.disabled) return;
+    // Implementation of keyboard navigation (e.g., Space/Enter to toggle)
+  };
+
+  return {
+    get state() {
+      return Object.freeze({ ...state });
+    },
+    actions: {
+      toggle,
+      setActive,
+      setDisabled,
+    },
+    queries: {
+      isActive,
+    },
+    getTriggerProps,
+    getContentProps,
+    handleTriggerKeyDown,
+  };
+}

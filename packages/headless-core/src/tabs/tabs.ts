@@ -97,6 +97,9 @@ export interface TabContentProps extends AriaAttributes, DataAttributes {
 /**
  * Return type of createTabs
  */
+/**
+ * Return type of createTabs
+ */
 export interface TabsReturn {
   /**
    * Current state
@@ -123,14 +126,14 @@ export interface TabsReturn {
    * Get props for different elements
    */
   getContainerProps: () => TabsContainerProps;
-  getTabListProps: () => TabListProps;
-  getTabTriggerProps: (tabId: string) => TabTriggerProps;
-  getTabContentProps: (tabId: string) => TabContentProps;
+  getListProps: () => TabListProps;
+  getTriggerProps: (tabId: string) => TabTriggerProps;
+  getContentProps: (tabId: string) => TabContentProps;
 
   /**
-   * Keyboard navigation handler
+   * Event handlers
    */
-  handleTabKeyDown: (
+  handleTriggerKeyDown: (
     event: KeyboardEvent,
     tabId: string,
     allTabIds: string[],
@@ -155,9 +158,9 @@ export interface TabsReturn {
  * tabs.queries.isSelected('tab-2'); // true
  *
  * // Get props
- * const listProps = tabs.getTabListProps();
- * const triggerProps = tabs.getTabTriggerProps('tab-1');
- * const contentProps = tabs.getTabContentProps('tab-1');
+ * const listProps = tabs.getListProps();
+ * const triggerProps = tabs.getTriggerProps('tab-1');
+ * const contentProps = tabs.getContentProps('tab-1');
  * ```
  */
 export function createTabs(config: TabsConfig = {}): TabsReturn {
@@ -197,12 +200,12 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
     "data-orientation": state.orientation,
   });
 
-  const getTabListProps = (): TabListProps => ({
+  const getListProps = (): TabListProps => ({
     role: "tablist",
     "aria-orientation": state.orientation,
   });
 
-  const getTabTriggerProps = (tabId: string): TabTriggerProps => {
+  const getTriggerProps = (tabId: string): TabTriggerProps => {
     const selected = isSelected(tabId);
     const triggerId = generateId(`trigger-${tabId}`);
     const contentId = generateId(`content-${tabId}`);
@@ -220,7 +223,7 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
     };
   };
 
-  const getTabContentProps = (tabId: string): TabContentProps => {
+  const getContentProps = (tabId: string): TabContentProps => {
     const selected = isSelected(tabId);
     const triggerId = generateId(`trigger-${tabId}`);
     const contentId = generateId(`content-${tabId}`);
@@ -236,7 +239,7 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
   };
 
   // Keyboard navigation
-  const handleTabKeyDown = (
+  const handleTriggerKeyDown = (
     event: KeyboardEvent,
     currentTabId: string,
     allTabIds: string[],
@@ -302,9 +305,9 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
       getSelectedTab,
     },
     getContainerProps,
-    getTabListProps,
-    getTabTriggerProps,
-    getTabContentProps,
-    handleTabKeyDown,
+    getListProps,
+    getTriggerProps,
+    getContentProps,
+    handleTriggerKeyDown,
   };
 }

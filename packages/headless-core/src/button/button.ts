@@ -78,13 +78,25 @@ export interface ButtonReturn {
   actions: {
     setDisabled: (disabled: boolean) => void;
     setLoading: (loading: boolean) => void;
-    click: (event: MouseEvent) => void;
+  };
+
+  /**
+   * Query methods
+   */
+  queries: {
+    isDisabled: () => boolean;
+    isLoading: () => boolean;
   };
 
   /**
    * Get props to spread on the button element
    */
   getButtonProps: () => ButtonElementProps;
+
+  /**
+   * Event handlers
+   */
+  handleClick: (event: MouseEvent) => void;
 }
 
 /**
@@ -121,7 +133,8 @@ export function createButton(config: ButtonConfig = {}): ButtonReturn {
     state = { ...state, loading };
   };
 
-  const click = (event: MouseEvent): void => {
+  // Event handlers
+  const handleClick = (event: MouseEvent): void => {
     // Don't trigger click if disabled or loading
     if (state.disabled || state.loading) {
       event.preventDefault();
@@ -131,19 +144,23 @@ export function createButton(config: ButtonConfig = {}): ButtonReturn {
     config.onClick?.(event);
   };
 
+  // Queries
+  const isDisabled = (): boolean => state.disabled || state.loading;
+  const isLoading = (): boolean => state.loading;
+
   // Get element props
   const getButtonProps = (): ButtonElementProps => {
-    const isDisabled = state.disabled || state.loading;
+    const disabledStatus = isDisabled();
 
     return {
       type: state.type,
-      disabled: isDisabled,
-      tabindex: isDisabled ? -1 : 0,
-      "aria-disabled": isDisabled,
+      disabled: disabledStatus,
+      tabindex: disabledStatus ? -1 : 0,
+      "aria-disabled": disabledStatus,
       "aria-busy": state.loading,
       "aria-label": config.ariaLabel,
-      "data-state": isDisabled ? "inactive" : "active",
-      "data-disabled": isDisabled,
+      "data-state": disabledStatus ? "inactive" : "active",
+      "data-disabled": disabledStatus,
     };
   };
 
@@ -154,8 +171,12 @@ export function createButton(config: ButtonConfig = {}): ButtonReturn {
     actions: {
       setDisabled,
       setLoading,
-      click,
+    },
+    queries: {
+      isDisabled,
+      isLoading,
     },
     getButtonProps,
+    handleClick,
   };
 }
