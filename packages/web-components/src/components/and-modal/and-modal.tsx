@@ -8,9 +8,7 @@ import { applyGlobalAnimationFlag } from '../../utils/animation-config';
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
-const overlayClass = [
-  'and-modal-backdrop fixed inset-0 z-50 bg-foreground/80 backdrop-blur-sm',
-].join(' ');
+const overlayClass = ['and-modal-backdrop fixed inset-0 z-50 bg-foreground/80 backdrop-blur-sm'].join(' ');
 
 const contentVariants = cva(
   [
@@ -80,6 +78,15 @@ export class AndModal {
     this.modalLogic.handleKeyDown(ev);
   }
 
+  /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
+
+  disconnectedCallback() {
+    // Close modal on unmount to prevent memory leaks and restore body scroll
+    if (this.open) {
+      this.modalLogic.actions.close();
+    }
+  }
+
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
@@ -92,22 +99,14 @@ export class AndModal {
     return (
       <Host>
         {/* Backdrop */}
-        <div
-          class={overlayClass}
-          {...overlayProps}
-          onClick={() => this.modalLogic.handleOverlayClick()}
-        />
+        <div class={overlayClass} {...overlayProps} onClick={() => this.modalLogic.handleOverlayClick()} />
 
         {/* Modal Container */}
         <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
           <div class={cn(contentVariants())} data-state="open" {...contentProps}>
             <div class="flex flex-col gap-4">
               <slot />
-              <button
-                class={closeButtonClass}
-                onClick={() => this.modalLogic.actions.close()}
-                {...closeButtonProps}
-              >
+              <button class={closeButtonClass} onClick={() => this.modalLogic.actions.close()} {...closeButtonProps}>
                 <and-icon name="close" class="h-4 w-4" />
                 <span class="sr-only">Close</span>
               </button>

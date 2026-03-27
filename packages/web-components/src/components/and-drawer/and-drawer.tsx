@@ -8,18 +8,15 @@ import { applyGlobalAnimationFlag } from '../../utils/animation-config';
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
-const overlayVariants = cva(
-  'and-drawer-overlay fixed inset-0 z-[9999] bg-foreground/60',
-  {
-    variants: {
-      open: {
-        true: 'opacity-100 pointer-events-auto',
-        false: 'opacity-0 pointer-events-none',
-      },
+const overlayVariants = cva('and-drawer-overlay fixed inset-0 z-[9999] bg-foreground/60', {
+  variants: {
+    open: {
+      true: 'opacity-100 pointer-events-auto',
+      false: 'opacity-0 pointer-events-none',
     },
-    defaultVariants: { open: false },
   },
-);
+  defaultVariants: { open: false },
+});
 
 const contentVariants = cva(
   'and-drawer-content fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
@@ -125,7 +122,7 @@ export class AndDrawer {
       defaultOpen: this.open,
       placement: this.placement,
       label: this.label,
-      onOpenChange: (isOpen) => {
+      onOpenChange: isOpen => {
         this.isOpen = isOpen;
         this.open = isOpen;
         if (isOpen) {
@@ -188,6 +185,16 @@ export class AndDrawer {
     this.drawer.handleKeyDown(ev);
   }
 
+  /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
+
+  disconnectedCallback() {
+    // Close drawer on unmount to prevent memory leaks and restore body scroll
+    if (this.open) {
+      this.drawer.actions.close();
+      document.body.style.overflow = '';
+    }
+  }
+
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
@@ -216,11 +223,7 @@ export class AndDrawer {
               <slot name="header" />
             </div>
             {this.showClose && (
-              <button
-                class={cn(closeBtnVariants())}
-                onClick={() => this.drawer.actions.close()}
-                {...closeButtonProps}
-              >
+              <button class={cn(closeBtnVariants())} onClick={() => this.drawer.actions.close()} {...closeButtonProps}>
                 <slot name="close-icon">
                   <and-icon name="close" size="16" />
                 </slot>
