@@ -1,0 +1,17 @@
+name = "andersseen-mcp"
+main = "src/index.ts"
+compatibility_date = "2024-12-30"
+
+# Configuración para el worker
+[vars]
+ENVIRONMENT = "production"
+
+# Opcional: Si quieres usar KV para caching
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "tu-kv-namespace-id"
+
+# Opcional: Configuración de logs
+[observability]
+enabled = true
+head_sampling_rate = 1
