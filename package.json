@@ -26,15 +26,29 @@
     "version-packages": "changeset version",
     "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && changeset publish",
     "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,md,scss,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,md,scss,css}\"",
     "storybook": "pnpm -C packages/web-components storybook",
-    "build-storybook": "pnpm -C packages/web-components build-storybook"
+    "build-storybook": "pnpm -C packages/web-components build-storybook",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,json,md,scss,css,yaml,yml}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^25.2.1",
     "concurrently": "^9.2.1",
-    "typescript": "^5.9.3"
+    "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
   },
   "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }
