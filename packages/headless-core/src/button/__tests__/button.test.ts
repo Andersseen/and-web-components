@@ -38,7 +38,7 @@ describe('createButton', () => {
     const onClick = vi.fn();
     const button = createButton({ onClick });
     const event = {} as unknown as MouseEvent;
-    button.actions.click(event);
+    button.handleClick(event);
     expect(onClick).toHaveBeenCalledWith(event);
   });
 
@@ -48,7 +48,7 @@ describe('createButton', () => {
     const preventDefault = vi.fn();
     const event = { preventDefault } as unknown as MouseEvent;
 
-    button.actions.click(event);
+    button.handleClick(event);
     expect(preventDefault).toHaveBeenCalled();
     expect(onClick).not.toHaveBeenCalled();
   });
@@ -59,9 +59,23 @@ describe('createButton', () => {
     const preventDefault = vi.fn();
     const event = { preventDefault } as unknown as MouseEvent;
 
-    button.actions.click(event);
+    button.handleClick(event);
     expect(preventDefault).toHaveBeenCalled();
     expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('provides correct queries', () => {
+    const button = createButton();
+    expect(button.queries.isDisabled()).toBe(false);
+    expect(button.queries.isLoading()).toBe(false);
+
+    button.actions.setDisabled(true);
+    expect(button.queries.isDisabled()).toBe(true);
+
+    button.actions.setDisabled(false);
+    button.actions.setLoading(true);
+    expect(button.queries.isDisabled()).toBe(true);
+    expect(button.queries.isLoading()).toBe(true);
   });
 
   it('provides correct button props when enabled', () => {

@@ -5,7 +5,6 @@
 
 /* ── Custom Properties (override from the outside) ───────────────── */
 :host {
-  --sidebar-width: var(--theme-sidebar-width, 16rem);
   --sidebar-collapsed-width: var(--theme-sidebar-collapsed-width, 4rem);
   --sidebar-expanded-width: var(--theme-sidebar-width, 16rem);
   --sidebar-header-height: var(--theme-sidebar-header-height, 3.5rem);
@@ -17,33 +16,68 @@
 
   display: block;
   height: 100%;
-  width: var(--sidebar-expanded-width);
-  transition: width var(--sidebar-transition);
+  width: var(--sidebar-width, var(--sidebar-expanded-width)) !important;
+  min-width: 0 !important;
+  max-width: var(--sidebar-width, var(--sidebar-expanded-width)) !important;
   will-change: width;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+:host([animated]) {
+  transition:
+    width var(--sidebar-transition),
+    max-width var(--sidebar-transition);
+}
+
+:host([animated]) .item-label,
+:host([animated]) .sidebar-title,
+:host([animated]) .sidebar-toggle {
+  transition:
+    opacity var(--sidebar-transition),
+    width var(--sidebar-transition),
+    margin var(--sidebar-transition),
+    transform var(--sidebar-transition);
+}
+
+:host([animated]) .sidebar-item,
+:host([animated]) .sidebar-header {
+  transition:
+    padding var(--sidebar-transition),
+    gap var(--sidebar-transition),
+    background var(--sidebar-transition),
+    color var(--sidebar-transition);
 }
 
 /* ── Collapsed host ──────────────────────────────────────────────── */
+:host([data-state='collapsed']),
+:host([data-collapsed]),
+:host([collapsed]),
 :host([data-collapsed='true']) {
-  width: var(--sidebar-collapsed-width);
+  width: var(--sidebar-collapsed-width) !important;
+  max-width: var(--sidebar-collapsed-width) !important;
 }
 
 /* ── Root aside ──────────────────────────────────────────────────── */
 .sidebar-root {
   width: 100%;
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* ── Header ──────────────────────────────────────────────────────── */
 .sidebar-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: var(--sidebar-header-height);
   padding: 0.75rem var(--sidebar-px);
   gap: 0.5rem;
   border-bottom: 1px solid transparent;
   transition: border-color var(--sidebar-transition);
+  min-width: 0;
+  overflow: hidden;
 }
 
 :host([data-has-header='true']) .sidebar-header {
@@ -51,6 +85,7 @@
 }
 
 .sidebar-title {
+  flex: 1;
   font-size: 0.875rem;
   font-weight: 600;
   color: hsl(var(--foreground));
@@ -58,6 +93,21 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 1;
+  width: auto;
+}
+
+:host([data-state='collapsed']) .sidebar-title {
+  flex: 0;
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+:host([data-state='collapsed']) .sidebar-header {
+  gap: 0;
+  padding-left: calc((var(--sidebar-collapsed-width) - 1.75rem) / 2);
 }
 
 /* ── Toggle button ────────────────────────────────────────────────── */
@@ -168,6 +218,11 @@
 
 /* ── Item elements ────────────────────────────────────────────────── */
 .sidebar-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.75rem;
+  padding: 0 var(--sidebar-px);
   min-height: 2.25rem;
   border-radius: var(--radius, 0.5rem);
   color: hsl(var(--muted-foreground));
@@ -176,6 +231,11 @@
     background 150ms ease,
     border-color 150ms ease,
     box-shadow 150ms ease;
+}
+
+:host([data-state='collapsed']) .sidebar-item {
+  gap: 0;
+  padding-left: calc((var(--sidebar-collapsed-width) - var(--sidebar-icon-size)) / 3);
 }
 
 .item-icon {
@@ -196,6 +256,15 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 1;
+  width: auto;
+}
+
+:host([data-state='collapsed']) .item-label {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════

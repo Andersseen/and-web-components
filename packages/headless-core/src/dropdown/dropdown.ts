@@ -85,6 +85,9 @@ export interface DropdownItemProps extends AriaAttributes {
 /**
  * Return type of createDropdown
  */
+/**
+ * Return type of createDropdown
+ */
 export interface DropdownReturn {
   /**
    * Current state
@@ -103,17 +106,24 @@ export interface DropdownReturn {
   };
 
   /**
+   * Queries
+   */
+  queries: {
+    isOpen: () => boolean;
+  };
+
+  /**
    * Get props for different elements
    */
   getTriggerProps: () => DropdownTriggerProps;
-  getMenuProps: () => DropdownMenuProps;
+  getContentProps: () => DropdownMenuProps;
   getItemProps: (itemId?: string) => DropdownItemProps;
 
   /**
    * Event handlers
    */
   handleTriggerKeyDown: (event: KeyboardEvent) => void;
-  handleMenuKeyDown: (event: KeyboardEvent, allItemIds: string[]) => void;
+  handleContentKeyDown: (event: KeyboardEvent, allItemIds: string[]) => void;
 }
 
 /**
@@ -132,7 +142,7 @@ export interface DropdownReturn {
  *
  * // Get props
  * const triggerProps = dropdown.getTriggerProps();
- * const menuProps = dropdown.getMenuProps();
+ * const contentProps = dropdown.getContentProps();
  * const itemProps = dropdown.getItemProps('item-1');
  * ```
  */
@@ -188,6 +198,9 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
     }
   };
 
+  // Queries
+  const isOpen = (): boolean => state.isOpen;
+
   // Get element props
   const getTriggerProps = (): DropdownTriggerProps => ({
     "aria-haspopup": "menu",
@@ -196,7 +209,7 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
     "data-state": state.isOpen ? "open" : "closed",
   });
 
-  const getMenuProps = (): DropdownMenuProps => ({
+  const getContentProps = (): DropdownMenuProps => ({
     role: "menu",
     "data-state": state.isOpen ? "open" : "closed",
     hidden: !state.isOpen,
@@ -231,7 +244,7 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
     }
   };
 
-  const handleMenuKeyDown = (
+  const handleContentKeyDown = (
     event: KeyboardEvent,
     _allItemIds: string[],
   ): void => {
@@ -264,10 +277,13 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
       selectItem,
       setDisabled,
     },
+    queries: {
+      isOpen,
+    },
     getTriggerProps,
-    getMenuProps,
+    getContentProps,
     getItemProps,
     handleTriggerKeyDown,
-    handleMenuKeyDown,
+    handleContentKeyDown,
   };
 }

@@ -145,16 +145,16 @@ export class AndDropdown {
     this.dropdownLogic.handleTriggerKeyDown(e);
   };
 
-  private handleMenuKeyDown = (e: KeyboardEvent) => {
+  private handleContentKeyDown = (e: KeyboardEvent) => {
     const itemIds = this.items.map(item => item.value);
-    this.dropdownLogic.handleMenuKeyDown(e, itemIds);
+    this.dropdownLogic.handleContentKeyDown(e, itemIds);
   };
 
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
     const triggerProps = this.dropdownLogic?.getTriggerProps() || {};
-    const menuProps = this.dropdownLogic?.getMenuProps() || {};
+    const contentProps = this.dropdownLogic?.getContentProps() || {};
 
     return (
       <Host>
@@ -173,11 +173,11 @@ export class AndDropdown {
 
           {/* Menu */}
           <div
-            {...menuProps}
+            {...contentProps}
             class={cn(menuClass, menuPlacementClass[this.placement], 'and-dropdown-menu', this.isOpen ? 'visible opacity-100' : 'invisible opacity-0')}
             data-state={this.isOpen ? 'open' : 'closed'}
             data-side={this.placement}
-            onKeyDown={this.handleMenuKeyDown}
+            onKeyDown={this.handleContentKeyDown}
           >
             {this.items.map(item => {
               const itemProps = this.dropdownLogic?.getItemProps(item.value) || {};
