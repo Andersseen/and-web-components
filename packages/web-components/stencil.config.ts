@@ -13,6 +13,32 @@ export const config: Config = {
   sourceMap: isDev,
   buildEs5: false,
   allowInlineScripts: false,
+  // Bundle components to reduce duplication and improve loading
+  bundles: [
+    { components: ['and-button', 'and-badge'] },
+    { components: ['and-accordion', 'and-accordion-item', 'and-accordion-trigger', 'and-accordion-content'] },
+    {
+      components: [
+        'and-card',
+        'and-card-content',
+        'and-card-description',
+        'and-card-footer',
+        'and-card-header',
+        'and-card-title',
+      ],
+    },
+    { components: ['and-tabs', 'and-tabs-list', 'and-tabs-trigger', 'and-tabs-content'] },
+    { components: ['and-modal', 'and-drawer'] },
+    { components: ['and-dropdown', 'and-select', 'and-context-menu'] },
+    { components: ['and-navbar', 'and-sidebar'] },
+    { components: ['and-carousel', 'and-carousel-item'] },
+    { components: ['and-toast', 'and-tooltip', 'and-alert'] },
+    { components: ['and-breadcrumb', 'and-breadcrumb-item'] },
+    { components: ['and-menu-list', 'and-menu-item'] },
+    { components: ['and-pagination'] },
+    { components: ['and-input'] },
+    { components: ['and-icon'] },
+  ],
   extras: {
     enableImportInjection: false,
   },
@@ -36,8 +62,10 @@ export const config: Config = {
     angularOutputTarget({
       componentCorePackage: '@andersseen/web-components',
       outputType: 'standalone',
-      directivesProxyFile: '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
-      directivesArrayFile: '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
+      directivesProxyFile:
+        '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
+      directivesArrayFile:
+        '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
     }),
   ],
   plugins: [

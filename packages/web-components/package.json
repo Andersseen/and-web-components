@@ -57,6 +57,10 @@
     "directory": "packages/web-components"
   },
   "author": "Andersseen",
+  "sideEffects": [
+    "*.css",
+    "./dist/web-components/web-components.css"
+  ],
   "files": [
     "dist/",
     "loader/",
