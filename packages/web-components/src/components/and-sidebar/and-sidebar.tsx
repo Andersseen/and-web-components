@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { type IconName } from '@andersseen/icon';
 import { createSidebar, type SidebarReturn, type SidebarItemDef } from '@andersseen/headless-components';
+import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
 /* ────────────────────────────────────────────────────────────────────
  * Types
@@ -53,8 +54,8 @@ const sidebarItemVariants = cva(
   {
     variants: {
       collapsed: {
-        true: 'justify-center px-2 py-3 sm:py-2',
-        false: 'px-3 py-3 sm:py-2',
+        true: 'px-0 py-3 sm:py-2',
+        false: 'px-0 py-3 sm:py-2',
       },
       disabled: {
         true: 'opacity-50 pointer-events-none cursor-default',
@@ -170,6 +171,7 @@ export class AndSidebar {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    applyGlobalAnimationFlag(this.el);
     const items = this.parsedItems;
     const headlessItems: SidebarItemDef[] = items.map(i => ({
       id: i.id,
@@ -346,7 +348,7 @@ export class AndSidebar {
             <and-icon name={item.icon} class="sidebar-icon" />
           </span>
         )}
-        {!isCollapsed && <span class="item-label">{item.label}</span>}
+        <span class="item-label">{item.label}</span>
       </button>
     );
   }
@@ -402,7 +404,7 @@ export class AndSidebar {
             )}
           >
             <slot name="header" onSlotchange={this.handleSlotChange}>
-              {!isCollapsed && !this.hasHeader && <span class="sidebar-title">Navigation</span>}
+              {!this.hasHeader && <span class="sidebar-title">Navigation</span>}
             </slot>
             <button
               aria-expanded={toggleProps['aria-expanded']}
