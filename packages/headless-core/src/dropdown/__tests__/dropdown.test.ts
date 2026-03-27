@@ -78,6 +78,13 @@ describe('createDropdown', () => {
     expect(dropdown.state.disabled).toBe(false);
   });
 
+  it('provides correct queries', () => {
+    const dropdown = createDropdown();
+    expect(dropdown.queries.isOpen()).toBe(false);
+    dropdown.actions.open();
+    expect(dropdown.queries.isOpen()).toBe(true);
+  });
+
   it('provides correct trigger props', () => {
     const dropdown = createDropdown();
     let props = dropdown.getTriggerProps();
@@ -92,15 +99,15 @@ describe('createDropdown', () => {
     expect(props['data-state']).toBe('open');
   });
 
-  it('provides correct menu props', () => {
+  it('provides correct content props', () => {
     const dropdown = createDropdown();
-    let props = dropdown.getMenuProps();
+    let props = dropdown.getContentProps();
     expect(props.role).toBe('menu');
     expect(props['data-state']).toBe('closed');
     expect(props.hidden).toBe(true);
 
     dropdown.actions.open();
-    props = dropdown.getMenuProps();
+    props = dropdown.getContentProps();
     expect(props['data-state']).toBe('open');
     expect(props.hidden).toBe(false);
   });
@@ -137,16 +144,16 @@ describe('createDropdown', () => {
     expect(dropdown.state.isOpen).toBe(true);
   });
 
-  it('handles menu keydown (Escape to close, Tab to close)', () => {
+  it('handles content keydown (Escape to close, Tab to close)', () => {
     const dropdown = createDropdown({ defaultOpen: true });
     const preventDefault = vi.fn();
 
-    dropdown.handleMenuKeyDown({ key: 'Escape', preventDefault } as any, []);
+    dropdown.handleContentKeyDown({ key: 'Escape', preventDefault } as any, []);
     expect(preventDefault).toHaveBeenCalled();
     expect(dropdown.state.isOpen).toBe(false);
 
     dropdown.actions.open();
-    dropdown.handleMenuKeyDown({ key: 'Tab', preventDefault } as any, []);
+    dropdown.handleContentKeyDown({ key: 'Tab', preventDefault } as any, []);
     expect(preventDefault).toHaveBeenCalledTimes(1); // Not called for Tab
     expect(dropdown.state.isOpen).toBe(false);
   });

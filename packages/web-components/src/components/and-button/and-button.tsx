@@ -145,7 +145,7 @@ export class AndButton {
     return (
       <button
         {...props}
-        onClick={(e: MouseEvent) => this.buttonLogic?.actions.click(e)}
+        onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)}
         class={classes}
       >
         {content}
