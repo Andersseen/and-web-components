@@ -31,7 +31,12 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,md,scss,css}\"",
     "storybook": "pnpm -C packages/web-components storybook",
     "build-storybook": "pnpm -C packages/web-components build-storybook",
-    "prepare": "husky"
+    "prepare": "husky",
+    "wrangler:dev": "pnpm -C packages/mcp-server dev",
+    "wrangler:deploy": "pnpm -C packages/mcp-server deploy",
+    "deploy:storybook": "pnpm build-storybook && wrangler pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook",
+    "deploy:mcp": "pnpm -C packages/mcp-server deploy",
+    "deploy:all": "pnpm deploy:storybook && pnpm deploy:mcp && pnpm deploy:landing && pnpm deploy:cloudflare"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,json,md,scss,css,yaml,yml}": [
@@ -48,7 +53,8 @@
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.1"
+    "typescript-eslint": "^8.57.1",
+    "wrangler": "^3.99.0"
   },
   "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }
