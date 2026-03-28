@@ -1,15 +1,5 @@
-import {
-  AndIcon,
-  AndNavbar,
-  AndSidebar,
-} from '@angular-components/stencil-generated/components';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { AndIcon, AndNavbar, AndSidebar } from '@angular-components/stencil-generated/components';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import {
@@ -35,19 +25,9 @@ interface SidebarConfig {
 @Component({
   selector: 'app-main-layout',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterOutlet,
-    AndNavbar,
-    AndSidebar,
-    AndIcon,
-    NavbarDesktopActionsComponent,
-    NavbarMobileActionsComponent,
-  ],
+  imports: [RouterOutlet, AndNavbar, AndSidebar, AndIcon, NavbarDesktopActionsComponent, NavbarMobileActionsComponent],
   template: `
-    <div
-      class="h-screen overflow-hidden bg-background text-foreground"
-      and-layout="vertical"
-    >
+    <div class="h-screen overflow-hidden bg-background text-foreground" and-layout="vertical">
       <and-navbar
         class="bg-background"
         style="--navbar-max-width: 100%; --navbar-px: 0.5rem; --navbar-px-sm: 0.75rem; --navbar-px-lg: 1rem"
@@ -61,9 +41,7 @@ interface SidebarConfig {
       >
         <span slot="start" class="flex min-w-0 items-center gap-2">
           <and-icon name="layout"></and-icon>
-          <span class="whitespace-nowrap font-semibold max-[1180px]:hidden"
-            >And Web Components UI</span
-          >
+          <span class="whitespace-nowrap font-semibold max-[1180px]:hidden">And Web Components UI</span>
         </span>
 
         <app-navbar-desktop-actions
@@ -125,10 +103,7 @@ interface SidebarConfig {
           }
         }
 
-        <div
-          class="flex-1 overflow-y-auto bg-background text-foreground"
-          and-layout="p:xl"
-        >
+        <div class="flex-1 overflow-y-auto bg-background text-foreground" and-layout="p:xl">
           <router-outlet />
         </div>
       </div>
@@ -174,6 +149,7 @@ export class MainLayoutComponent {
     motion: '/motion',
     layout: '/layout',
     docs: '/docs',
+    vanilla: '/vanilla',
   };
 
   private readonly sidebarConfig: Partial<Record<Section, SidebarConfig>> = {
@@ -205,8 +181,7 @@ export class MainLayoutComponent {
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(({ urlAfterRedirects: url }) => {
-        const section =
-          this.sections.find((s) => url.includes(`/${s}`)) ?? 'components';
+        const section = this.sections.find(s => url.includes(`/${s}`)) ?? 'components';
         this.activeSection.set(section);
 
         const config = this.sidebarConfig[section];
@@ -216,10 +191,8 @@ export class MainLayoutComponent {
         }
       });
 
-    const currentThemeAttr =
-      document.documentElement.getAttribute('data-theme') || 'default';
-    const currentColorAttr =
-      document.documentElement.getAttribute('data-color') || 'indigo-rose';
+    const currentThemeAttr = document.documentElement.getAttribute('data-theme') || 'default';
+    const currentColorAttr = document.documentElement.getAttribute('data-color') || 'indigo-rose';
 
     this.currentTheme.set(currentThemeAttr);
     this.currentColor.set(currentColorAttr);
@@ -257,13 +230,11 @@ export class MainLayoutComponent {
   }
 
   toggleDarkMode() {
-    this.isDark.update((d) => !d);
+    this.isDark.update(d => !d);
     document.documentElement.classList.toggle('dark', this.isDark());
   }
 
   private isSection(value: unknown): value is Section {
-    return (
-      typeof value === 'string' && this.sections.includes(value as Section)
-    );
+    return typeof value === 'string' && this.sections.includes(value as Section);
   }
 }

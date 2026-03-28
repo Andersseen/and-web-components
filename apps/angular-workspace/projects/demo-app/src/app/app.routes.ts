@@ -35,6 +35,10 @@ export const routes: Routes = [
         path: 'docs',
         loadComponent: () => import('./pages/docs/docs-ai.component'),
       },
+      {
+        path: 'vanilla',
+        loadComponent: () => import('./pages/vanilla/vanilla-demo.component'),
+      },
     ],
   },
 ];
