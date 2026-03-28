@@ -4,14 +4,7 @@ export interface SidebarItem {
   icon?: string;
 }
 
-export type Section =
-  | 'components'
-  | 'icons'
-  | 'themes'
-  | 'headless'
-  | 'motion'
-  | 'layout'
-  | 'docs';
+export type Section = 'components' | 'icons' | 'themes' | 'headless' | 'motion' | 'layout' | 'docs' | 'vanilla';
 
 export interface DropdownOption {
   text: string;
@@ -24,6 +17,7 @@ export const NAV_ITEMS: Array<{ id: Section; label: string }> = [
   { id: 'icons', label: 'Icons' },
   { id: 'motion', label: 'Motion' },
   { id: 'layout', label: 'Layout' },
+  { id: 'vanilla', label: 'Vanilla' },
   { id: 'docs', label: 'Docs' },
 ];
 
@@ -89,6 +83,11 @@ export const LAYOUT_ITEMS: SidebarItem[] = [
   { id: 'spacing', label: 'Spacing', icon: 'move' },
   { id: 'typography', label: 'Typography', icon: 'type' },
   { id: 'responsive', label: 'Responsive', icon: 'monitor' },
+];
+
+export const VANILLA_ITEMS: SidebarItem[] = [
+  { id: 'button', label: 'Button', icon: 'circle-dot' },
+  { id: 'development', label: 'Development Guide', icon: 'code' },
 ];
 
 export const THEME_OPTIONS: DropdownOption[] = [

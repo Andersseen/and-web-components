@@ -1,6 +1,11 @@
 import { Component, Host, h, State, Method, Element } from '@stencil/core';
 import { cva } from 'class-variance-authority';
-import { createToastManager, type ToastType, type ToastManagerReturn, type ToastItem } from '@andersseen/headless-components';
+import {
+  createToastManager,
+  type ToastType,
+  type ToastManagerReturn,
+  type ToastItem,
+} from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 
@@ -72,6 +77,13 @@ export class AndToast {
     return this.toastManager.actions.present(message, type, duration);
   }
 
+  /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
+
+  disconnectedCallback() {
+    // Clear all timers to prevent memory leaks
+    this.toastManager.destroy();
+  }
+
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleDismiss = (id: number) => {
@@ -98,10 +110,7 @@ export class AndToast {
             return (
               <div
                 key={toast.id}
-                class={cn(
-                  toastVariants({ variant: toast.type }),
-                  'and-toast-item',
-                )}
+                class={cn(toastVariants({ variant: toast.type }), 'and-toast-item')}
                 role="alert"
                 {...toastProps}
               >

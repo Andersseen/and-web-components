@@ -5,27 +5,17 @@
  * Handles toast queue, auto-dismissal, and positioning — no rendering logic.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
 
 /**
  * Toast types
  */
-export type ToastType = "default" | "success" | "error" | "info" | "warning";
+export type ToastType = 'default' | 'success' | 'error' | 'info' | 'warning';
 
 /**
  * Toast position options
  */
-export type ToastPosition =
-  | "top-right"
-  | "top-left"
-  | "bottom-right"
-  | "bottom-left"
-  | "top-center"
-  | "bottom-center";
+export type ToastPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center';
 
 /**
  * Individual toast item
@@ -77,29 +67,29 @@ export interface ToastManagerState {
  * Props for the toast container element
  */
 export interface ToastContainerProps extends DataAttributes {
-  role: "region";
-  "aria-label": string;
-  "aria-live": "polite";
-  "aria-atomic": boolean;
-  "data-position": ToastPosition;
+  'role': 'region';
+  'aria-label': string;
+  'aria-live': 'polite';
+  'aria-atomic': boolean;
+  'data-position': ToastPosition;
 }
 
 /**
  * Props for individual toast elements
  */
 export interface ToastItemProps extends AriaAttributes, DataAttributes {
-  role: "alert";
-  "aria-live": "assertive";
-  "aria-atomic": boolean;
-  "data-type": ToastType;
+  'role': 'alert';
+  'aria-live': 'assertive';
+  'aria-atomic': boolean;
+  'data-type': ToastType;
 }
 
 /**
  * Props for toast dismiss button
  */
 export interface ToastDismissProps extends AriaAttributes {
-  "aria-label": string;
-  type: "button";
+  'aria-label': string;
+  'type': 'button';
 }
 
 /**
@@ -160,16 +150,14 @@ export interface ToastManagerReturn {
  * toasts.destroy();
  * ```
  */
-export function createToastManager(
-  config: ToastManagerConfig = {},
-): ToastManagerReturn {
+export function createToastManager(config: ToastManagerConfig = {}): ToastManagerReturn {
   const defaultDuration = config.defaultDuration ?? 3000;
   const maxToasts = config.maxToasts ?? 5;
 
   // Internal state
   let state: ToastManagerState = {
     toasts: [],
-    position: config.position ?? "bottom-right",
+    position: config.position ?? 'bottom-right',
   };
 
   // Timer map for auto-dismiss
@@ -189,27 +177,23 @@ export function createToastManager(
 
     state = {
       ...state,
-      toasts: state.toasts.filter((t) => t.id !== id),
+      toasts: state.toasts.filter(t => t.id !== id),
     };
     notifyChange();
   };
 
-  const present = (
-    message: string,
-    type: ToastType = "default",
-    duration?: number,
-  ): number => {
+  const present = (message: string, type: ToastType = 'default', duration?: number): number => {
     const id = Date.now() + Math.random();
     const actualDuration = duration ?? defaultDuration;
 
     const toast: ToastItem = { id, message, type, duration: actualDuration };
 
     // Add toast, respecting max limit
-    let toasts = [...state.toasts, toast];
+    const toasts = [...state.toasts, toast];
     if (toasts.length > maxToasts) {
       // Remove oldest toasts that exceed limit
       const removed = toasts.splice(0, toasts.length - maxToasts);
-      removed.forEach((t) => {
+      removed.forEach(t => {
         const timer = timers.get(t.id);
         if (timer) {
           clearTimeout(timer);
@@ -233,7 +217,7 @@ export function createToastManager(
   };
 
   const dismissAll = (): void => {
-    timers.forEach((timer) => clearTimeout(timer));
+    timers.forEach(timer => clearTimeout(timer));
     timers.clear();
 
     state = { ...state, toasts: [] };
@@ -242,28 +226,28 @@ export function createToastManager(
 
   // Get element props
   const getContainerProps = (): ToastContainerProps => ({
-    role: "region",
-    "aria-label": "Notifications",
-    "aria-live": "polite",
-    "aria-atomic": false,
-    "data-position": state.position,
+    'role': 'region',
+    'aria-label': 'Notifications',
+    'aria-live': 'polite',
+    'aria-atomic': false,
+    'data-position': state.position,
   });
 
   const getToastProps = (toast: ToastItem): ToastItemProps => ({
-    role: "alert",
-    "aria-live": "assertive",
-    "aria-atomic": true,
-    "data-type": toast.type,
+    'role': 'alert',
+    'aria-live': 'assertive',
+    'aria-atomic': true,
+    'data-type': toast.type,
   });
 
   const getDismissProps = (): ToastDismissProps => ({
-    "aria-label": "Dismiss notification",
-    type: "button",
+    'aria-label': 'Dismiss notification',
+    'type': 'button',
   });
 
   // Cleanup
   const destroy = (): void => {
-    timers.forEach((timer) => clearTimeout(timer));
+    timers.forEach(timer => clearTimeout(timer));
     timers.clear();
   };
 

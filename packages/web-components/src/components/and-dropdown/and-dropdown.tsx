@@ -43,7 +43,11 @@ const dropdownTriggerVariants = cva(
   },
 );
 
-const menuClass = ['absolute z-50 min-w-[8rem]', 'overflow-hidden rounded-md border border-border', 'bg-popover p-1 shadow-md transition-opacity'].join(' ');
+const menuClass = [
+  'absolute z-50 min-w-[8rem]',
+  'overflow-hidden rounded-md border border-border',
+  'bg-popover p-1 shadow-md transition-opacity',
+].join(' ');
 
 const menuPlacementClass: Record<DropdownPlacement, string> = {
   bottom: 'left-0 top-full mt-2 origin-top-left',
@@ -136,6 +140,15 @@ export class AndDropdown {
     }
   }
 
+  /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
+
+  disconnectedCallback() {
+    // Close dropdown on unmount to prevent memory leaks
+    if (this.isOpen) {
+      this.dropdownLogic.actions.close();
+    }
+  }
+
   private handleSelect = (value: string) => {
     this.andDropdownSelect.emit(value);
     this.dropdownLogic.actions.selectItem(value);
@@ -160,9 +173,17 @@ export class AndDropdown {
       <Host>
         <div class="relative inline-block text-left w-full">
           {/* Trigger */}
-          <div class="cursor-pointer" onClick={() => this.dropdownLogic?.actions.toggle()} onKeyDown={this.handleTriggerKeyDown}>
+          <div
+            class="cursor-pointer"
+            onClick={() => this.dropdownLogic?.actions.toggle()}
+            onKeyDown={this.handleTriggerKeyDown}
+          >
             <slot name="trigger">
-              <button {...triggerProps} type="button" class={cn(dropdownTriggerVariants({ variant: this.variant }), 'w-full justify-between')}>
+              <button
+                {...triggerProps}
+                type="button"
+                class={cn(dropdownTriggerVariants({ variant: this.variant }), 'w-full justify-between')}
+              >
                 {this.label}
                 <span class="ml-auto flex shrink-0 items-center justify-center">
                   <and-icon name={this.isOpen ? 'chevron-up' : 'chevron-down'} size={16} class="h-4 w-4" />
@@ -174,7 +195,12 @@ export class AndDropdown {
           {/* Menu */}
           <div
             {...contentProps}
-            class={cn(menuClass, menuPlacementClass[this.placement], 'and-dropdown-menu', this.isOpen ? 'visible opacity-100' : 'invisible opacity-0')}
+            class={cn(
+              menuClass,
+              menuPlacementClass[this.placement],
+              'and-dropdown-menu',
+              this.isOpen ? 'visible opacity-100' : 'invisible opacity-0',
+            )}
             data-state={this.isOpen ? 'open' : 'closed'}
             data-side={this.placement}
             onKeyDown={this.handleContentKeyDown}
@@ -182,7 +208,11 @@ export class AndDropdown {
             {this.items.map(item => {
               const itemProps = this.dropdownLogic?.getItemProps(item.value) || {};
               return (
-                <div {...itemProps} class={cn(menuItemClass, item.disabled && 'pointer-events-none opacity-50')} onClick={() => !item.disabled && this.handleSelect(item.value)}>
+                <div
+                  {...itemProps}
+                  class={cn(menuItemClass, item.disabled && 'pointer-events-none opacity-50')}
+                  onClick={() => !item.disabled && this.handleSelect(item.value)}
+                >
                   {item.text}
                 </div>
               );

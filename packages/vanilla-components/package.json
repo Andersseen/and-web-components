@@ -1,0 +1,59 @@
+{
+  "name": "@andersseen/vanilla-components",
+  "version": "0.1.0",
+  "description": "Native Web Components without framework overhead - same API, zero runtime dependencies",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/*": {
+      "import": "./dist/components/*.js",
+      "require": "./dist/components/*.js"
+    },
+    "./styles": {
+      "import": "./dist/styles/index.css",
+      "require": "./dist/styles/index.css"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:css && npm run build:js",
+    "build:js": "vite build",
+    "build:css": "node scripts/build-css.js",
+    "preview": "vite preview",
+    "test": "vitest",
+    "analyze": "node scripts/analyze-bundle.js"
+  },
+  "dependencies": {
+    "@andersseen/headless-components": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "postcss": "^8.4.49",
+    "tailwind-merge": "^3.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0"
+  },
+  "keywords": [
+    "web-components",
+    "vanilla-js",
+    "custom-elements",
+    "headless-ui",
+    "tailwind"
+  ],
+  "license": "MIT"
+}

@@ -22,7 +22,10 @@
   "scripts": {
     "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json",
     "clean": "rm -rf dist dist-cjs",
-    "lint": "eslint src",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
