@@ -12,6 +12,8 @@
     "build:stencil": "pnpm build:headless && pnpm build:icons && pnpm -C packages/web-components build",
     "build:angular": "pnpm -C apps/angular-workspace ng build angular-components && pnpm -C apps/angular-workspace ng build demo-app",
     "build:all": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular",
+    "publish:headless": "pnpm -C packages/headless-core test && pnpm -C packages/headless-core build && pnpm -C packages/headless-core pack --dry-run && cd packages/headless-core && NPM_CONFIG_CACHE=/private/tmp/and-web-components-npm-cache pnpm publish --access public --no-git-checks --ignore-scripts",
+    "publish:web-components": "pnpm -C packages/headless-core test && pnpm -C packages/headless-core build && pnpm -C packages/web-components build && pnpm -C packages/web-components pack --dry-run && cd packages/web-components && NPM_CONFIG_CACHE=/private/tmp/and-web-components-npm-cache pnpm publish --access public --no-git-checks --ignore-scripts",
     "start:demo:dev": "pnpm clean:angular && concurrently \"pnpm run build:stencil --watch\" \"pnpm -C apps/angular-workspace start\"",
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm clean:angular && pnpm -C apps/angular-workspace start",
     "start:astro:dev": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",

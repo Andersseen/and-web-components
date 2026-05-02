@@ -52,9 +52,21 @@ describe('createDropdown', () => {
     expect(dropdown.state.isOpen).toBe(false);
   });
 
-  it('does not close on select if configured false', () => {
-    const dropdown = createDropdown({ defaultOpen: true, closeOnSelect: false });
+  it('calls onSelect before closing on select', () => {
+    const onSelect = vi.fn();
+    const dropdown = createDropdown({ defaultOpen: true, onSelect });
+
     dropdown.actions.selectItem('item-1');
+
+    expect(onSelect).toHaveBeenCalledWith({ itemId: 'item-1' });
+    expect(dropdown.state.isOpen).toBe(false);
+  });
+
+  it('does not close on select if configured false', () => {
+    const onSelect = vi.fn();
+    const dropdown = createDropdown({ defaultOpen: true, closeOnSelect: false, onSelect });
+    dropdown.actions.selectItem('item-1');
+    expect(onSelect).toHaveBeenCalledWith({ itemId: 'item-1' });
     expect(dropdown.state.isOpen).toBe(true);
   });
 

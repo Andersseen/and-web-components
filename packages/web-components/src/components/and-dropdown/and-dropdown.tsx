@@ -111,6 +111,9 @@ export class AndDropdown {
         this.isOpen = isOpen;
         this.andDropdownOpenChange.emit(isOpen);
       },
+      onSelect: ({ itemId }) => {
+        if (itemId) this.andDropdownSelect.emit(itemId);
+      },
     });
   }
 
@@ -125,6 +128,9 @@ export class AndDropdown {
       onOpenChange: (isOpen: boolean) => {
         this.isOpen = isOpen;
         this.andDropdownOpenChange.emit(isOpen);
+      },
+      onSelect: ({ itemId }) => {
+        if (itemId) this.andDropdownSelect.emit(itemId);
       },
     });
   }
@@ -150,7 +156,6 @@ export class AndDropdown {
   }
 
   private handleSelect = (value: string) => {
-    this.andDropdownSelect.emit(value);
     this.dropdownLogic.actions.selectItem(value);
   };
 
@@ -159,7 +164,7 @@ export class AndDropdown {
   };
 
   private handleContentKeyDown = (e: KeyboardEvent) => {
-    const itemIds = this.items.map(item => item.value);
+    const itemIds = this.items.filter(item => !item.disabled).map(item => item.value);
     this.dropdownLogic.handleContentKeyDown(e, itemIds);
   };
 

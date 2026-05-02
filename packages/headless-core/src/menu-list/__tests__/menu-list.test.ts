@@ -17,6 +17,18 @@ describe('createMenuList', () => {
     expect(menu.state.ariaLabel).toBe('Actions');
   });
 
+  it('accepts rich item metadata and separators', () => {
+    const items = [
+      { id: 'open', label: 'Open', shortcut: 'Ctrl+O', icon: 'folder' },
+      { separator: true },
+      { id: 'delete', label: 'Delete', intent: 'destructive' as const },
+    ];
+    const menu = createMenuList({ items });
+
+    expect(menu.state.items).toEqual(items);
+    expect(menu.getSeparatorProps()).toEqual({ role: 'separator' });
+  });
+
   it('can set items', () => {
     const menu = createMenuList();
     const items = [{ id: '1' }];
@@ -39,6 +51,13 @@ describe('createMenuList', () => {
     expect(menu.state.focusedIndex).toBe(-1);
   });
 
+  it('does not focus a separator', () => {
+    const items = [{ id: '1' }, { separator: true }, { id: '2' }];
+    const menu = createMenuList({ items });
+    menu.actions.focusItem(1);
+    expect(menu.state.focusedIndex).toBe(-1);
+  });
+
   it('can select an enabled item and triggers onSelect callback', () => {
     const onSelect = vi.fn();
     const items = [{ id: '1' }];
@@ -53,6 +72,38 @@ describe('createMenuList', () => {
     const menu = createMenuList({ items, onSelect });
     menu.actions.selectItem('1');
     expect(onSelect).not.toHaveBeenCalled();
+  });
+
+  it('cannot select a separator', () => {
+    const onSelect = vi.fn();
+    const items = [{ separator: true }];
+    const menu = createMenuList({ items, onSelect });
+    menu.actions.selectItem('missing');
+    expect(onSelect).not.toHaveBeenCalled();
+  });
+
+  it('provides normalized interactive items and ids', () => {
+    const items = [
+      { id: 'open' },
+      { separator: true },
+      { id: 'rename', disabled: true },
+      { id: 'delete', intent: 'destructive' as const },
+    ];
+    const menu = createMenuList({ items });
+
+    expect(menu.queries.getInteractiveItems()).toEqual([{ id: 'open' }, { id: 'delete', intent: 'destructive' }]);
+    expect(menu.queries.getInteractiveItemIds()).toEqual(['open', 'delete']);
+  });
+
+  it('maps template indices to item indices ignoring separators', () => {
+    const items = [{ id: 'open' }, { separator: true }, { id: 'rename', disabled: true }, { id: 'delete' }];
+    const menu = createMenuList({ items });
+
+    expect(menu.queries.getItemIndex(0)).toBe(0);
+    expect(menu.queries.getItemIndex(1)).toBe(-1);
+    expect(menu.queries.getItemIndex(2)).toBe(1);
+    expect(menu.queries.getItemIndex(3)).toBe(2);
+    expect(menu.queries.getItemIndex(99)).toBe(-1);
   });
 
   it('provides correct menu props', () => {
@@ -90,7 +141,7 @@ describe('createMenuList', () => {
   });
 
   it('handles menu keyboard navigation (ArrowDown, ArrowUp, Home, End)', () => {
-    const items = [{ id: '1' }, { id: '2', disabled: true }, { id: '3' }];
+    const items = [{ id: '1' }, { separator: true }, { id: '2', disabled: true }, { id: '3' }];
     const menu = createMenuList({ items });
     const preventDefault = vi.fn();
 
@@ -99,9 +150,9 @@ describe('createMenuList', () => {
     expect(preventDefault).toHaveBeenCalled();
     expect(menu.state.focusedIndex).toBe(0);
 
-    // ArrowDown -> 3 (index 2, skipping disabled index 1)
+    // ArrowDown -> 3 (index 3, skipping separator index 1 and disabled index 2)
     menu.handleMenuKeyDown({ key: 'ArrowDown', preventDefault } as any);
-    expect(menu.state.focusedIndex).toBe(2);
+    expect(menu.state.focusedIndex).toBe(3);
 
     // ArrowDown at end -> loops to 1 (index 0)
     menu.handleMenuKeyDown({ key: 'ArrowDown', preventDefault } as any);
@@ -109,7 +160,7 @@ describe('createMenuList', () => {
 
     // ArrowUp -> loops to 3 (index 2)
     menu.handleMenuKeyDown({ key: 'ArrowUp', preventDefault } as any);
-    expect(menu.state.focusedIndex).toBe(2);
+    expect(menu.state.focusedIndex).toBe(3);
 
     // Home -> 1 (index 0)
     menu.handleMenuKeyDown({ key: 'Home', preventDefault } as any);
@@ -117,7 +168,7 @@ describe('createMenuList', () => {
 
     // End -> 3 (index 2)
     menu.handleMenuKeyDown({ key: 'End', preventDefault } as any);
-    expect(menu.state.focusedIndex).toBe(2);
+    expect(menu.state.focusedIndex).toBe(3);
   });
 
   it('handles item keyboard interactions (Enter, Space)', () => {

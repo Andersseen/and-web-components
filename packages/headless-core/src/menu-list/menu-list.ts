@@ -6,26 +6,39 @@
  * intent variants, and disabled state.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
 
 /**
  * Configuration for a single menu item
  */
 export interface MenuItemConfig {
-  /** Unique identifier / value for the item. */
-  id: string;
+  /** Unique identifier / value for the item. Required for interactive items. */
+  id?: string;
+
+  /** Visible label. Useful for consumers that render from the headless config. */
+  label?: string;
+
+  /** Optional keyboard shortcut text. */
+  shortcut?: string;
+
+  /** Optional icon identifier. */
+  icon?: string;
+
+  /** Whether this row is a separator instead of a selectable item. */
+  separator?: boolean;
 
   /** Visual intent of the item. */
-  intent?: "default" | "destructive";
+  intent?: 'default' | 'destructive';
 
   /** Whether the item is disabled. */
   disabled?: boolean;
 }
+
+export type MenuInteractiveItem = MenuItemConfig & {
+  id: string;
+  separator?: false;
+};
 
 /**
  * Configuration options for creating a menu list
@@ -68,19 +81,23 @@ export interface MenuListState {
  * Props for the <ul> menu element
  */
 export interface MenuListProps extends AriaAttributes {
-  role: "menu";
-  "aria-label": string;
+  'role': 'menu';
+  'aria-label': string;
+}
+
+export interface MenuSeparatorProps extends DataAttributes {
+  role: 'separator';
 }
 
 /**
  * Props for an individual <li> menu item
  */
 export interface MenuItemProps extends AriaAttributes, DataAttributes {
-  role: "menuitem";
-  tabindex: number;
-  "aria-disabled"?: boolean;
-  "data-state"?: "active" | "inactive";
-  "data-disabled"?: boolean;
+  'role': 'menuitem';
+  'tabindex': number;
+  'aria-disabled'?: boolean;
+  'data-state'?: 'active' | 'inactive';
+  'data-disabled'?: boolean;
 }
 
 /**
@@ -97,9 +114,17 @@ export interface MenuListReturn {
     selectItem: (itemId: string) => void;
   };
 
+  /** Queries for normalized item models. */
+  queries: {
+    getInteractiveItems: () => MenuInteractiveItem[];
+    getInteractiveItemIds: () => string[];
+    getItemIndex: (templateIndex: number) => number;
+  };
+
   /** Get props for different elements. */
   getMenuProps: () => MenuListProps;
   getItemProps: (item: MenuItemConfig, index: number) => MenuItemProps;
+  getSeparatorProps: () => MenuSeparatorProps;
 
   /** Keyboard handler to attach to the menu or individual items. */
   handleMenuKeyDown: (event: KeyboardEvent) => void;
@@ -130,15 +155,30 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
 
   let state: MenuListState = {
     items: config.items ?? [],
-    ariaLabel: config.ariaLabel ?? "Menu",
+    ariaLabel: config.ariaLabel ?? 'Menu',
     focusedIndex: -1,
   };
 
   /* ── Helpers ─────────────────────────────────────────────────────── */
 
+  const isMenuItem = (item: MenuItemConfig): item is MenuInteractiveItem =>
+    !item.separator && typeof item.id === 'string' && item.id.length > 0;
+
+  const getInteractiveItems = (): MenuInteractiveItem[] =>
+    state.items.filter(isMenuItem).filter(item => !item.disabled);
+
+  const getInteractiveItemIds = (): string[] => getInteractiveItems().map(item => item.id);
+
+  const getItemIndex = (templateIndex: number): number => {
+    const item = state.items[templateIndex];
+    if (!item || !isMenuItem(item)) return -1;
+
+    return state.items.slice(0, templateIndex + 1).filter(isMenuItem).length - 1;
+  };
+
   const getEnabledIndices = (): number[] =>
     state.items.reduce<number[]>((acc, item, i) => {
-      if (!item.disabled) acc.push(i);
+      if (isMenuItem(item) && !item.disabled) acc.push(i);
       return acc;
     }, []);
 
@@ -181,14 +221,15 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
   };
 
   const focusItem = (index: number): void => {
-    if (index >= 0 && index < state.items.length && !state.items[index].disabled) {
+    const item = state.items[index];
+    if (item && isMenuItem(item) && !item.disabled) {
       state = { ...state, focusedIndex: index };
     }
   };
 
   const selectItem = (itemId: string): void => {
-    const item = state.items.find((i) => i.id === itemId);
-    if (item && !item.disabled) {
+    const item = state.items.find(i => i.id === itemId);
+    if (item && isMenuItem(item) && !item.disabled) {
       config.onSelect?.(itemId);
     }
   };
@@ -196,20 +237,24 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
   /* ── Props getters ───────────────────────────────────────────────── */
 
   const getMenuProps = (): MenuListProps => ({
-    role: "menu",
-    "aria-label": state.ariaLabel,
+    'role': 'menu',
+    'aria-label': state.ariaLabel,
   });
 
   const getItemProps = (item: MenuItemConfig, index: number): MenuItemProps => {
     const isFocused = rovingFocus && state.focusedIndex === index;
     return {
-      role: "menuitem",
-      tabindex: isFocused || (!rovingFocus && !item.disabled) ? 0 : -1,
-      ...(item.disabled ? { "aria-disabled": true } : {}),
-      "data-state": isFocused ? "active" : "inactive",
-      ...(item.disabled ? { "data-disabled": true } : {}),
+      'role': 'menuitem',
+      'tabindex': isFocused || (!rovingFocus && isMenuItem(item) && !item.disabled) ? 0 : -1,
+      ...(item.disabled ? { 'aria-disabled': true } : {}),
+      'data-state': isFocused ? 'active' : 'inactive',
+      ...(item.disabled ? { 'data-disabled': true } : {}),
     };
   };
+
+  const getSeparatorProps = (): MenuSeparatorProps => ({
+    role: 'separator',
+  });
 
   /* ── Keyboard ────────────────────────────────────────────────────── */
 
@@ -236,11 +281,8 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
     }
   };
 
-  const handleItemKeyDown = (
-    event: KeyboardEvent,
-    item: MenuItemConfig,
-  ): void => {
-    if (item.disabled) return;
+  const handleItemKeyDown = (event: KeyboardEvent, item: MenuItemConfig): void => {
+    if (!isMenuItem(item) || item.disabled) return;
 
     switch (event.key) {
       case Keys.Enter:
@@ -266,8 +308,14 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
       focusItem,
       selectItem,
     },
+    queries: {
+      getInteractiveItems,
+      getInteractiveItemIds,
+      getItemIndex,
+    },
     getMenuProps,
     getItemProps,
+    getSeparatorProps,
     handleMenuKeyDown,
     handleItemKeyDown,
   };
