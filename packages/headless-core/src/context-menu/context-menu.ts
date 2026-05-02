@@ -6,12 +6,9 @@
  * dismissal, and Escape-key support.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
+import { createMenuSelection, type MenuSelectEvent, type MenuSelectionConfig } from '../menu';
 
 /**
  * Position of the context menu relative to the viewport
@@ -24,7 +21,7 @@ export interface ContextMenuPosition {
 /**
  * Configuration options for creating a context menu
  */
-export interface ContextMenuConfig {
+export interface ContextMenuConfig extends MenuSelectionConfig {
   /**
    * Callback when the open state changes.
    */
@@ -40,6 +37,11 @@ export interface ContextMenuConfig {
    * @default true
    */
   closeOnSelect?: boolean;
+
+  /**
+   * Callback when a menu item is selected.
+   */
+  onSelect?: EventCallback<MenuSelectEvent>;
 }
 
 /**
@@ -54,17 +56,17 @@ export interface ContextMenuState {
  * Props for the trigger wrapper element
  */
 export interface ContextMenuTriggerProps extends DataAttributes {
-  "data-state": "open" | "closed";
+  'data-state': 'open' | 'closed';
 }
 
 /**
  * Props for the floating menu panel
  */
 export interface ContextMenuPanelProps extends AriaAttributes, DataAttributes {
-  role: "menu";
-  "aria-label": string;
-  "data-state": "open" | "closed";
-  hidden: boolean;
+  'role': 'menu';
+  'aria-label': string;
+  'data-state': 'open' | 'closed';
+  'hidden': boolean;
 }
 
 /**
@@ -114,11 +116,7 @@ export interface ContextMenuReturn {
  * const panelProps = ctx.getPanelProps('Context menu');
  * ```
  */
-export function createContextMenu(
-  config: ContextMenuConfig = {},
-): ContextMenuReturn {
-  const closeOnSelect = config.closeOnSelect ?? true;
-
+export function createContextMenu(config: ContextMenuConfig = {}): ContextMenuReturn {
   let state: ContextMenuState = {
     isOpen: false,
     position: { x: 0, y: 0 },
@@ -144,33 +142,28 @@ export function createContextMenu(
     notifyOpen();
   };
 
-  const selectItem = (_itemId?: string): void => {
-    if (closeOnSelect) {
-      close();
-    }
+  const selectItem = (itemId?: string): void => {
+    menuSelection.selectItem(itemId);
   };
+
+  const menuSelection = createMenuSelection(config, close);
 
   /* ── Props getters ───────────────────────────────────────────────── */
 
   const getTriggerProps = (): ContextMenuTriggerProps => ({
-    "data-state": state.isOpen ? "open" : "closed",
+    'data-state': state.isOpen ? 'open' : 'closed',
   });
 
-  const getPanelProps = (
-    label: string = "Context menu",
-  ): ContextMenuPanelProps => ({
-    role: "menu",
-    "aria-label": label,
-    "data-state": state.isOpen ? "open" : "closed",
-    hidden: !state.isOpen,
+  const getPanelProps = (label: string = 'Context menu'): ContextMenuPanelProps => ({
+    'role': 'menu',
+    'aria-label': label,
+    'data-state': state.isOpen ? 'open' : 'closed',
+    'hidden': !state.isOpen,
   });
 
   /* ── Event handlers ──────────────────────────────────────────────── */
 
-  const handleContextMenu = (
-    event: MouseEvent,
-    triggerRect?: DOMRect,
-  ): void => {
+  const handleContextMenu = (event: MouseEvent, triggerRect?: DOMRect): void => {
     event.preventDefault();
 
     const x = triggerRect ? event.clientX - triggerRect.left : event.clientX;

@@ -52,6 +52,10 @@
       "types": "./dist/breadcrumb/index.d.ts",
       "import": "./dist/breadcrumb/index.js"
     },
+    "./menu": {
+      "types": "./dist/menu/index.d.ts",
+      "import": "./dist/menu/index.js"
+    },
     "./menu-list": {
       "types": "./dist/menu-list/index.d.ts",
       "import": "./dist/menu-list/index.js"

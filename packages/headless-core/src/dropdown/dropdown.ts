@@ -5,17 +5,14 @@
  * Handles open/close states, keyboard navigation, and focus management.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
+import { createMenuSelection, type MenuSelectEvent, type MenuSelectionConfig } from '../menu';
 
 /**
  * Configuration options for creating a dropdown
  */
-export interface DropdownConfig {
+export interface DropdownConfig extends MenuSelectionConfig {
   /**
    * Initially open state
    * @default false
@@ -34,10 +31,15 @@ export interface DropdownConfig {
   closeOnSelect?: boolean;
 
   /**
+   * Callback when a menu item is selected.
+   */
+  onSelect?: EventCallback<MenuSelectEvent>;
+
+  /**
    * Placement of the dropdown relative to trigger
    * @default 'bottom'
    */
-  placement?: "top" | "bottom" | "left" | "right";
+  placement?: 'top' | 'bottom' | 'left' | 'right';
 
   /**
    * Whether the dropdown is disabled
@@ -51,7 +53,7 @@ export interface DropdownConfig {
  */
 export interface DropdownState {
   isOpen: boolean;
-  placement: "top" | "bottom" | "left" | "right";
+  placement: 'top' | 'bottom' | 'left' | 'right';
   disabled: boolean;
 }
 
@@ -59,32 +61,29 @@ export interface DropdownState {
  * Props for dropdown trigger element
  */
 export interface DropdownTriggerProps extends AriaAttributes, DataAttributes {
-  "aria-haspopup": "menu";
-  "aria-expanded": boolean;
-  "aria-disabled": boolean;
-  "data-state": "open" | "closed";
+  'aria-haspopup': 'menu';
+  'aria-expanded': boolean;
+  'aria-disabled': boolean;
+  'data-state': 'open' | 'closed';
 }
 
 /**
  * Props for dropdown menu container
  */
 export interface DropdownMenuProps extends AriaAttributes, DataAttributes {
-  role: "menu";
-  "data-state": "open" | "closed";
-  hidden: boolean;
+  'role': 'menu';
+  'data-state': 'open' | 'closed';
+  'hidden': boolean;
 }
 
 /**
  * Props for dropdown menu item
  */
 export interface DropdownItemProps extends AriaAttributes {
-  role: "menuitem";
+  role: 'menuitem';
   tabindex: number;
 }
 
-/**
- * Return type of createDropdown
- */
 /**
  * Return type of createDropdown
  */
@@ -147,12 +146,10 @@ export interface DropdownReturn {
  * ```
  */
 export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
-  const closeOnSelect = config.closeOnSelect ?? true;
-
   // Internal state
   let state: DropdownState = {
     isOpen: config.defaultOpen ?? false,
-    placement: config.placement ?? "bottom",
+    placement: config.placement ?? 'bottom',
     disabled: config.disabled ?? false,
   };
 
@@ -181,15 +178,12 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
     state.isOpen ? close() : open();
   };
 
-  const selectItem = (_itemId?: string): void => {
+  const selectItem = (itemId?: string): void => {
     if (state.disabled) return;
-
-    // Custom logic can be added here for item selection
-    // For now, just close if configured to do so
-    if (closeOnSelect) {
-      close();
-    }
+    menuSelection.selectItem(itemId);
   };
+
+  const menuSelection = createMenuSelection(config, close);
 
   const setDisabled = (disabled: boolean): void => {
     state = { ...state, disabled };
@@ -203,20 +197,20 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
 
   // Get element props
   const getTriggerProps = (): DropdownTriggerProps => ({
-    "aria-haspopup": "menu",
-    "aria-expanded": state.isOpen,
-    "aria-disabled": state.disabled,
-    "data-state": state.isOpen ? "open" : "closed",
+    'aria-haspopup': 'menu',
+    'aria-expanded': state.isOpen,
+    'aria-disabled': state.disabled,
+    'data-state': state.isOpen ? 'open' : 'closed',
   });
 
   const getContentProps = (): DropdownMenuProps => ({
-    role: "menu",
-    "data-state": state.isOpen ? "open" : "closed",
-    hidden: !state.isOpen,
+    'role': 'menu',
+    'data-state': state.isOpen ? 'open' : 'closed',
+    'hidden': !state.isOpen,
   });
 
   const getItemProps = (_itemId?: string): DropdownItemProps => ({
-    role: "menuitem",
+    role: 'menuitem',
     tabindex: state.isOpen ? 0 : -1,
   });
 
@@ -244,10 +238,7 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
     }
   };
 
-  const handleContentKeyDown = (
-    event: KeyboardEvent,
-    _allItemIds: string[],
-  ): void => {
+  const handleContentKeyDown = (event: KeyboardEvent, _allItemIds: string[]): void => {
     if (state.disabled) return;
 
     switch (event.key) {

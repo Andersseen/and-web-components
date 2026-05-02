@@ -30,10 +30,23 @@ describe('createContextMenu', () => {
     expect(ctx.state.isOpen).toBe(false);
   });
 
+  it('calls onSelect before closing on select', () => {
+    const onSelect = vi.fn();
+    const ctx = createContextMenu({ onSelect });
+    ctx.actions.open({ x: 10, y: 10 });
+
+    ctx.actions.selectItem('item-1');
+
+    expect(onSelect).toHaveBeenCalledWith({ itemId: 'item-1' });
+    expect(ctx.state.isOpen).toBe(false);
+  });
+
   it('does not close on select if configured', () => {
-    const ctx = createContextMenu({ closeOnSelect: false });
+    const onSelect = vi.fn();
+    const ctx = createContextMenu({ closeOnSelect: false, onSelect });
     ctx.actions.open({ x: 10, y: 10 });
     ctx.actions.selectItem('item-1');
+    expect(onSelect).toHaveBeenCalledWith({ itemId: 'item-1' });
     expect(ctx.state.isOpen).toBe(true);
   });
 
