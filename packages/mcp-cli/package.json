@@ -2,6 +2,7 @@
   "name": "@andersseen/mcp-cli",
   "version": "0.1.0",
   "description": "Interactive CLI to install @andersseen MCP servers for AI agents",
+  "type": "module",
   "main": "dist/index.js",
   "bin": {
     "andersseen-mcp": "./bin/cli.js",
