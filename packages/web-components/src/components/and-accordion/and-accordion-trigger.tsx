@@ -27,7 +27,7 @@ export interface TriggerItemProps {
 
 @Component({
   tag: 'and-accordion-trigger',
-  styleUrl: '../../global/global.css',
+  styleUrls: ['../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndAccordionTrigger {
@@ -106,10 +106,7 @@ export class AndAccordionTrigger {
           <and-icon
             name="chevron-down"
             size={16}
-            class={cn(
-              'and-chevron h-4 w-4 shrink-0 origin-center',
-              this.isExpanded && 'rotate-180',
-            )}
+            class={cn('and-chevron h-4 w-4 shrink-0 origin-center', this.isExpanded && 'rotate-180')}
             data-expanded={String(this.isExpanded)}
           />
         </button>

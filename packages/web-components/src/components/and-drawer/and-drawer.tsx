@@ -69,7 +69,7 @@ export type DrawerVariantProps = VariantProps<typeof contentVariants>;
 
 @Component({
   tag: 'and-drawer',
-  styleUrls: ['and-drawer.css', '../../global/global.css'],
+  styleUrls: ['and-drawer.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDrawer {

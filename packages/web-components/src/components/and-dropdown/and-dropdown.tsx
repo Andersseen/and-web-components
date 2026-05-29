@@ -70,7 +70,7 @@ export type DropdownVariantProps = VariantProps<typeof dropdownTriggerVariants>;
 
 @Component({
   tag: 'and-dropdown',
-  styleUrls: ['and-dropdown.css', '../../global/global.css'],
+  styleUrls: ['and-dropdown.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDropdown {

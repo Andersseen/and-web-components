@@ -6,11 +6,7 @@ import { createMenuList, type MenuListReturn } from '@andersseen/headless-compon
  * Base Styles
  * ──────────────────────────────────────────────────────────────────── */
 
-const menuListBaseClass = [
-  'flex flex-col gap-0.5 p-1',
-  'rounded-md',
-  'text-foreground font-sans',
-].join(' ');
+const menuListBaseClass = ['flex flex-col gap-0.5 p-1', 'rounded-md', 'text-foreground font-sans'].join(' ');
 
 /* ────────────────────────────────────────────────────────────────────
  * Component
@@ -18,7 +14,7 @@ const menuListBaseClass = [
 
 @Component({
   tag: 'and-menu-list',
-  styleUrls: ['and-menu-list.css', '../../global/global.css'],
+  styleUrls: ['and-menu-list.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndMenuList {
@@ -48,11 +44,7 @@ export class AndMenuList {
 
     return (
       <Host>
-        <ul
-          {...menuProps}
-          class={classes}
-          onKeyDown={(e: KeyboardEvent) => this.menuLogic?.handleMenuKeyDown(e)}
-        >
+        <ul {...menuProps} class={classes} onKeyDown={(e: KeyboardEvent) => this.menuLogic?.handleMenuKeyDown(e)}>
           <slot />
         </ul>
       </Host>

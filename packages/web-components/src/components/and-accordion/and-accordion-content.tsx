@@ -20,7 +20,7 @@ export interface ContentItemProps {
 
 @Component({
   tag: 'and-accordion-content',
-  styleUrl: '../../global/global.css',
+  styleUrls: ['../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndAccordionContent {

@@ -21,7 +21,7 @@ interface AndAccordionItemElement extends HTMLElement {
  */
 @Component({
   tag: 'and-accordion',
-  styleUrl: '../../global/global.css',
+  styleUrls: ['../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndAccordion {
@@ -67,9 +67,7 @@ export class AndAccordion {
   /* ── Helpers ────────────────────────────────────────────────────── */
 
   private updateChildren() {
-    const items = Array.from(
-      this.el.querySelectorAll('and-accordion-item'),
-    ) as AndAccordionItemElement[];
+    const items = Array.from(this.el.querySelectorAll('and-accordion-item')) as AndAccordionItemElement[];
 
     items.forEach(item => {
       item.setAccordionLogic?.(this.accordionLogic);

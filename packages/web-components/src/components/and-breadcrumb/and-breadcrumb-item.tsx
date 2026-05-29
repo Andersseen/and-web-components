@@ -7,21 +7,18 @@ import { createBreadcrumb, type BreadcrumbReturn, type BreadcrumbItemConfig } fr
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
-const breadcrumbItemVariants = cva(
-  'inline-flex items-center font-sans transition-colors',
-  {
-    variants: {
-      size: {
-        sm: 'text-xs gap-1',
-        md: 'text-sm gap-1.5',
-        lg: 'text-base gap-2',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
+const breadcrumbItemVariants = cva('inline-flex items-center font-sans transition-colors', {
+  variants: {
+    size: {
+      sm: 'text-xs gap-1',
+      md: 'text-sm gap-1.5',
+      lg: 'text-base gap-2',
     },
   },
-);
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
 const separatorSizeMap: Record<string, string> = {
   sm: 'text-xs',
@@ -37,7 +34,7 @@ export type BreadcrumbItemVariantProps = VariantProps<typeof breadcrumbItemVaria
 
 @Component({
   tag: 'and-breadcrumb-item',
-  styleUrls: ['and-breadcrumb.css', '../../global/global.css'],
+  styleUrls: ['and-breadcrumb.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndBreadcrumbItem {
@@ -88,9 +85,7 @@ export class AndBreadcrumbItem {
 
     const linkClasses = cn(
       breadcrumbItemVariants({ size: this.size }),
-      this.current
-        ? 'text-foreground font-medium pointer-events-none'
-        : 'text-muted-foreground hover:text-foreground',
+      this.current ? 'text-foreground font-medium pointer-events-none' : 'text-muted-foreground hover:text-foreground',
       this.customClass,
     );
 

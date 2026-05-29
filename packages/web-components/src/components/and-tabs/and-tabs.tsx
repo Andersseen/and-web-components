@@ -4,7 +4,7 @@ import { createTabs, type TabsReturn } from '@andersseen/headless-components';
 
 @Component({
   tag: 'and-tabs',
-  styleUrls: ['and-tabs.css', '../../global/global.css'],
+  styleUrls: ['and-tabs.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndTabs {
@@ -51,7 +51,7 @@ export class AndTabs {
     this.updateChildren();
 
     // Watch for dynamic children (like triggers inside and-tabs-list) rendered async by frameworks
-    this.mutationObserver = new MutationObserver((mutations) => {
+    this.mutationObserver = new MutationObserver(mutations => {
       const hasChildChanges = mutations.some(m => m.type === 'childList');
       if (hasChildChanges) {
         this.updateChildren();
@@ -101,10 +101,7 @@ export class AndTabs {
     const containerProps = this.tabsLogic?.getContainerProps() || {};
 
     return (
-      <Host
-        {...containerProps}
-        class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}
-      >
+      <Host {...containerProps} class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}>
         <slot />
       </Host>
     );

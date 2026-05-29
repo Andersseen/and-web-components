@@ -42,7 +42,7 @@ const dismissButtonClass = [
 
 @Component({
   tag: 'and-alert',
-  styleUrls: ['and-alert.css', '../../global/global.css'],
+  styleUrls: ['and-alert.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndAlert {
@@ -94,21 +94,13 @@ export class AndAlert {
     const dismissButtonProps = this.alertLogic.getDismissButtonProps();
 
     return (
-      <Host
-        class={cn(alertVariants({ variant: this.variant }))}
-        role="alert"
-        {...alertProps}
-      >
+      <Host class={cn(alertVariants({ variant: this.variant }))} role="alert" {...alertProps}>
         <slot name="icon" />
         <div class="text-sm [&_p]:leading-relaxed">
           <slot />
         </div>
         {this.dismissible && (
-          <button
-            class={dismissButtonClass}
-            onClick={() => this.alertLogic.actions.dismiss()}
-            {...dismissButtonProps}
-          >
+          <button class={dismissButtonClass} onClick={() => this.alertLogic.actions.dismiss()} {...dismissButtonProps}>
             <and-icon name="close" class="h-4 w-4" />
             <span class="sr-only">Dismiss</span>
           </button>

@@ -39,7 +39,7 @@ export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
 
 @Component({
   tag: 'and-input',
-  styleUrls: ['and-input.css', '../../global/global.css'],
+  styleUrls: ['and-input.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndInput {

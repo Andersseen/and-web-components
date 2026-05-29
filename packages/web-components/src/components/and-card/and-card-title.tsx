@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn';
 
 @Component({
   tag: 'and-card-title',
-  styleUrls: ['and-card-title.css', '../../global/global.css'],
+  styleUrls: ['and-card-title.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndCardTitle {
@@ -16,12 +16,7 @@ export class AndCardTitle {
 
   render() {
     return (
-      <Host
-        class={cn(
-          'text-2xl font-semibold leading-none tracking-tight',
-          this.customClass,
-        )}
-      >
+      <Host class={cn('text-2xl font-semibold leading-none tracking-tight', this.customClass)}>
         <slot />
       </Host>
     );

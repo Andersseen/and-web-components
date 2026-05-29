@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn';
 
 @Component({
   tag: 'and-card-description',
-  styleUrls: ['and-card-description.css', '../../global/global.css'],
+  styleUrls: ['and-card-description.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndCardDescription {
@@ -16,12 +16,7 @@ export class AndCardDescription {
 
   render() {
     return (
-      <Host
-        class={cn(
-          'text-sm text-muted-foreground',
-          this.customClass,
-        )}
-      >
+      <Host class={cn('text-sm text-muted-foreground', this.customClass)}>
         <slot />
       </Host>
     );

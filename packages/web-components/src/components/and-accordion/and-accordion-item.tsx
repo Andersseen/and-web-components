@@ -15,7 +15,7 @@ interface AndAccordionChildElement extends HTMLElement {
  */
 @Component({
   tag: 'and-accordion-item',
-  styleUrl: '../../global/global.css',
+  styleUrl: '../../global/component-base.css',
   shadow: true,
 })
 export class AndAccordionItem {

@@ -87,7 +87,11 @@ const navbarVariants = cva('w-full', {
       default: 'bg-background border-b border-border',
       filled: 'bg-primary text-primary-foreground border-b border-primary',
       floating: 'navbar-floating bg-background shadow-lg border border-border',
-      glass: ['bg-background/60 border-b border-border/50', 'backdrop-blur-xl', '-webkit-backdrop-filter: blur(20px)'].join(' '),
+      glass: [
+        'bg-background/60 border-b border-border/50',
+        'backdrop-blur-xl',
+        '-webkit-backdrop-filter: blur(20px)',
+      ].join(' '),
     },
   },
   defaultVariants: {
@@ -130,7 +134,7 @@ export type NavbarProps = VariantProps<typeof navbarVariants>;
 
 @Component({
   tag: 'and-navbar',
-  styleUrls: ['and-navbar.css', '../../global/global.css'],
+  styleUrls: ['and-navbar.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndNavbar {
@@ -466,7 +470,9 @@ export class AndNavbar {
     if (!this.navbar || this.activeMode === 'manual') return;
 
     const runRoute = () => {
-      const updateFromRoute = (this.navbar.actions as any).updateActiveFromRoute as ((pathname?: string, routeMatchMode?: RouteMatchMode) => void) | undefined;
+      const updateFromRoute = (this.navbar.actions as any).updateActiveFromRoute as
+        | ((pathname?: string, routeMatchMode?: RouteMatchMode) => void)
+        | undefined;
 
       if (typeof updateFromRoute === 'function') {
         updateFromRoute(undefined, this.routeMatchMode);
@@ -671,11 +677,17 @@ export class AndNavbar {
   /* ── Render helpers ─────────────────────────────────────────────── */
 
   private renderNavItem(item: NavItem, mobile: boolean = false) {
-    const itemProps = this.navbar.getItemProps(item.id, item.href ? { href: item.href, target: item.target } : undefined);
+    const itemProps = this.navbar.getItemProps(
+      item.id,
+      item.href ? { href: item.href, target: item.target } : undefined,
+    );
     const isActive = this.navbar.queries.isActive(item.id);
     const isDisabled = item.disabled ?? false;
 
-    const baseClass = cn(navItemVariants({ disabled: isDisabled }), mobile && 'w-full text-left px-4 py-3 text-base rounded-lg');
+    const baseClass = cn(
+      navItemVariants({ disabled: isDisabled }),
+      mobile && 'w-full text-left px-4 py-3 text-base rounded-lg',
+    );
 
     // The animated underline indicator only makes sense for 'default' item style;
     // other styles handle active state through borders, bg, shadows, etc.
@@ -782,8 +794,15 @@ export class AndNavbar {
     const isStuck = this.position === 'sticky' || this.position === 'fixed';
 
     return (
-      <Host role={containerProps.role} aria-label={containerProps['aria-label']} style={hostStyle} data-responsive-stage={stage}>
-        <nav class={cn(navbarVariants({ variant: this.variant }), isStuck && this.variant !== 'glass' && 'navbar-blur')}>
+      <Host
+        role={containerProps.role}
+        aria-label={containerProps['aria-label']}
+        style={hostStyle}
+        data-responsive-stage={stage}
+      >
+        <nav
+          class={cn(navbarVariants({ variant: this.variant }), isStuck && this.variant !== 'glass' && 'navbar-blur')}
+        >
           <div class="navbar-container">
             {/* ── Start section (logo, brand) ──────────────────── */}
             <div class="navbar-start">

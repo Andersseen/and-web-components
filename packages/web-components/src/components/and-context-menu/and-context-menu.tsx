@@ -20,7 +20,7 @@ const contextMenuPanelClass = [
 
 @Component({
   tag: 'and-context-menu',
-  styleUrls: ['and-context-menu.css', '../../global/global.css'],
+  styleUrls: ['and-context-menu.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndContextMenu {
@@ -48,7 +48,7 @@ export class AndContextMenu {
         this.open = isOpen;
         this.andContextMenuOpenChange.emit(isOpen);
       },
-      onPosition: (pos) => {
+      onPosition: pos => {
         this.posX = pos.x;
         this.posY = pos.y;
       },
@@ -81,9 +81,7 @@ export class AndContextMenu {
       this.triggerEls = slot.assignedElements();
     }
     if (!this.triggerEls.length) {
-      this.triggerEls = Array.from(this.el.children).filter(
-        el => !el.slot || el.slot === 'trigger',
-      );
+      this.triggerEls = Array.from(this.el.children).filter(el => !el.slot || el.slot === 'trigger');
     }
 
     this.triggerEls.forEach(el => {

@@ -31,7 +31,7 @@ const closeButtonClass = [
 
 @Component({
   tag: 'and-modal',
-  styleUrls: ['and-modal.css', '../../global/global.css'],
+  styleUrls: ['and-modal.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndModal {

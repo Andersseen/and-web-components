@@ -48,7 +48,7 @@ export type MenuItemVariantProps = VariantProps<typeof menuItemVariants>;
 
 @Component({
   tag: 'and-menu-item',
-  styleUrls: ['and-menu-list.css', '../../global/global.css'],
+  styleUrls: ['and-menu-list.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndMenuItem {
@@ -102,19 +102,11 @@ export class AndMenuItem {
     const itemConfig = { id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled };
     const itemProps = this.menuItemLogic?.getItemProps(itemConfig, 0) || {};
 
-    const classes = cn(
-      menuItemVariants({ intent: this.intent, disabled: this.disabled }),
-      this.customClass,
-    );
+    const classes = cn(menuItemVariants({ intent: this.intent, disabled: this.disabled }), this.customClass);
 
     return (
       <Host>
-        <li
-          {...itemProps}
-          class={classes}
-          onClick={this.handleClick}
-          onKeyDown={this.handleKeyDown}
-        >
+        <li {...itemProps} class={classes} onClick={this.handleClick} onKeyDown={this.handleKeyDown}>
           <slot name="start" />
           <slot />
           <slot name="end" />

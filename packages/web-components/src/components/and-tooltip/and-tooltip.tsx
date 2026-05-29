@@ -39,7 +39,7 @@ const tooltipVariants = cva(
 
 @Component({
   tag: 'and-tooltip',
-  styleUrls: ['and-tooltip.css', '../../global/global.css'],
+  styleUrls: ['and-tooltip.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndTooltip {

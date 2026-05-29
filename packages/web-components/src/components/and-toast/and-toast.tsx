@@ -48,7 +48,7 @@ const dismissButtonClass = [
 
 @Component({
   tag: 'and-toast',
-  styleUrls: ['and-toast.css', '../../global/global.css'],
+  styleUrls: ['and-toast.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndToast {

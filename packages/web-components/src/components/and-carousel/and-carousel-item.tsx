@@ -2,7 +2,7 @@ import { Component, h, Host, Prop } from '@stencil/core';
 
 @Component({
   tag: 'and-carousel-item',
-  styleUrl: '../../global/global.css',
+  styleUrl: '../../global/component-base.css',
   shadow: true,
 })
 export class AndCarouselItem {

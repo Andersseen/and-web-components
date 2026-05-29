@@ -39,7 +39,7 @@ const pageButtonVariants = cva(
 
 @Component({
   tag: 'and-pagination',
-  styleUrl: '../../global/global.css',
+  styleUrl: '../../global/component-base.css',
   shadow: true,
 })
 export class AndPagination {
