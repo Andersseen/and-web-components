@@ -15,7 +15,7 @@ describe('createButton', () => {
       disabled: true,
       loading: true,
       type: 'submit',
-      ariaLabel: 'Submit'
+      ariaLabel: 'Submit',
     });
     expect(button.state.disabled).toBe(true);
     expect(button.state.loading).toBe(true);
@@ -109,5 +109,23 @@ describe('createButton', () => {
     expect(props.disabled).toBe(true);
     expect(props['aria-busy']).toBe(true);
     expect(props['aria-disabled']).toBe(true);
+  });
+
+  it('subscribe notifies on state changes', () => {
+    const button = createButton();
+    const subscriber = vi.fn();
+    const unsubscribe = button.subscribe(subscriber);
+
+    button.actions.setDisabled(true);
+    expect(subscriber).toHaveBeenCalledTimes(1);
+    expect(subscriber).toHaveBeenLastCalledWith(expect.objectContaining({ disabled: true }));
+
+    button.actions.setLoading(true);
+    expect(subscriber).toHaveBeenCalledTimes(2);
+    expect(subscriber).toHaveBeenLastCalledWith(expect.objectContaining({ loading: true }));
+
+    unsubscribe();
+    button.actions.setDisabled(false);
+    expect(subscriber).toHaveBeenCalledTimes(2); // no more calls after unsubscribe
   });
 });

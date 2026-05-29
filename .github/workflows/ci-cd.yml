@@ -36,8 +36,11 @@ jobs:
       - name: Build packages
         run: pnpm build:all
 
-      - name: Run tests
+      - name: Run headless tests
         run: pnpm test:headless
+
+      - name: Run Stencil component tests
+        run: pnpm -C packages/web-components test:spec
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

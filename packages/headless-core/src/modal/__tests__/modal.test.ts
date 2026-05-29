@@ -135,4 +135,22 @@ describe('createModal', () => {
     modal.handleOverlayClick();
     expect(modal.state.isOpen).toBe(true);
   });
+
+  it('subscribe notifies on open/close changes', () => {
+    const modal = createModal();
+    const subscriber = vi.fn();
+    const unsubscribe = modal.subscribe(subscriber);
+
+    modal.actions.open();
+    expect(subscriber).toHaveBeenCalledTimes(1);
+    expect(subscriber).toHaveBeenLastCalledWith(expect.objectContaining({ isOpen: true }));
+
+    modal.actions.close();
+    expect(subscriber).toHaveBeenCalledTimes(2);
+    expect(subscriber).toHaveBeenLastCalledWith(expect.objectContaining({ isOpen: false }));
+
+    unsubscribe();
+    modal.actions.open();
+    expect(subscriber).toHaveBeenCalledTimes(2); // no more calls after unsubscribe
+  });
 });
