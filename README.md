@@ -1,23 +1,31 @@
 # Andersseen Web Components
 
-A complete, framework-agnostic web component ecosystem: headless logic, design tokens, layout primitives, animations, icons, and **24+ accessible UI components** — built with [StencilJS](https://stenciljs.com/), ready for any framework or plain HTML.
+A complete, framework-agnostic web component ecosystem: headless logic, design
+tokens, layout primitives, animations, icons, and **24+ accessible UI
+components** — built with [StencilJS](https://stenciljs.com/), ready for any
+framework or plain HTML.
 
-| Package | npm | Description |
-|---|---|---|
-| `@andersseen/web-components` | [![npm](https://img.shields.io/npm/v/@andersseen/web-components)](https://www.npmjs.com/package/@andersseen/web-components) | Stencil UI components (buttons, modals, tabs …) |
-| `@andersseen/headless-components` | [![npm](https://img.shields.io/npm/v/@andersseen/headless-components)](https://www.npmjs.com/package/@andersseen/headless-components) | Framework-agnostic headless state machines |
-| `@andersseen/icon` | [![npm](https://img.shields.io/npm/v/@andersseen/icon)](https://www.npmjs.com/package/@andersseen/icon) | 70+ SVG icon library with tree-shaking |
-| `@andersseen/motion` | [![npm](https://img.shields.io/npm/v/@andersseen/motion)](https://www.npmjs.com/package/@andersseen/motion) | Attribute-driven CSS/JS animations |
-| `@andersseen/layout` | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout) | Pure CSS layout & typography via HTML attributes |
-| `@andersseen/angular-components` | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components) | Angular standalone directive wrappers |
+| Package                           | npm                                                                                                                                   | Description                                      |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `@andersseen/web-components`      | [![npm](https://img.shields.io/npm/v/@andersseen/web-components)](https://www.npmjs.com/package/@andersseen/web-components)           | Stencil UI components (buttons, modals, tabs …)  |
+| `@andersseen/headless-components` | [![npm](https://img.shields.io/npm/v/@andersseen/headless-components)](https://www.npmjs.com/package/@andersseen/headless-components) | Framework-agnostic headless state machines       |
+| `@andersseen/icon`                | [![npm](https://img.shields.io/npm/v/@andersseen/icon)](https://www.npmjs.com/package/@andersseen/icon)                               | 70+ SVG icon library with tree-shaking           |
+| `@andersseen/motion`              | [![npm](https://img.shields.io/npm/v/@andersseen/motion)](https://www.npmjs.com/package/@andersseen/motion)                           | Attribute-driven CSS/JS animations               |
+| `@andersseen/layout`              | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout)                           | Pure CSS layout & typography via HTML attributes |
+| `@andersseen/angular-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone directive wrappers            |
 
 ## Features
 
-- **Framework-agnostic** — Works with Angular, React, Vue, Svelte, Astro, or vanilla HTML.
-- **Headless core** — State machines, accessibility, and keyboard navigation without any styling.
-- **Design tokens** — HSL-based theming with light/dark modes and color palettes.
-- **Attribute-driven layout** — Flexbox, grid, spacing, and typography from HTML attributes.
-- **Animation system** — Enter, hover, and tap animations via `and-motion` attributes with reduced-motion support.
+- **Framework-agnostic** — Works with Angular, React, Vue, Svelte, Astro, or
+  vanilla HTML.
+- **Headless core** — State machines, accessibility, and keyboard navigation
+  without any styling.
+- **Design tokens** — HSL-based theming with light/dark modes and color
+  palettes.
+- **Attribute-driven layout** — Flexbox, grid, spacing, and typography from HTML
+  attributes.
+- **Animation system** — Enter, hover, and tap animations via `and-motion`
+  attributes with reduced-motion support.
 - **70+ icons** — Tree-shakeable SVG icons with a global registry.
 - **Shadow DOM** — Encapsulated styles with no conflicts.
 - **TailwindCSS** — Components styled with Tailwind + CSS variables.
@@ -40,7 +48,7 @@ and-web-components/
 │   └── astro-landing/         # Landing page built with Astro
 ├── package.json               # Root scripts
 ├── pnpm-workspace.yaml        # Workspace config
-└── lerna.json                 # Independent versioning
+
 ```
 
 ## Getting Started
@@ -64,7 +72,8 @@ pnpm install
 pnpm build:all
 ```
 
-This builds: `headless-core` → `icon-library` → `web-components` → `motion-core` → `layout-core` → `angular-components` → `demo-app`.
+This builds: `headless-core` → `icon-library` → `web-components` → `motion-core`
+→ `layout-core` → `angular-components` → `demo-app`.
 
 ## Development
 
@@ -78,7 +87,8 @@ pnpm start:demo
 pnpm start:demo:dev
 ```
 
-Opens at `http://localhost:4200` — showcases all components, headless patterns, icons, motion, and layout utilities.
+Opens at `http://localhost:4200` — showcases all components, headless patterns,
+icons, motion, and layout utilities.
 
 ### Astro Landing Page
 
@@ -94,27 +104,33 @@ pnpm -C packages/web-components start
 
 ## Build Scripts
 
-| Script | Description |
-|---|---|
-| `pnpm build:headless` | Build headless state machines |
-| `pnpm build:icons` | Build icon library |
-| `pnpm build:motion` | Build animation library |
-| `pnpm build:layout` | Build SCSS → CSS layout library |
-| `pnpm build:stencil` | Build headless + icons + Stencil components |
-| `pnpm build:angular` | Build Angular wrappers + demo app |
-| `pnpm build:all` | Build everything |
-| `pnpm build:astro` | Build Astro landing page |
-| `pnpm start:demo` | Build libs + serve Angular demo |
-| `pnpm start:demo:dev` | Stencil watch + Angular serve (concurrent) |
-| `pnpm start:astro:dev` | Build libs + Astro dev server |
+| Script                 | Description                                 |
+| ---------------------- | ------------------------------------------- |
+| `pnpm build:headless`  | Build headless state machines               |
+| `pnpm build:icons`     | Build icon library                          |
+| `pnpm build:motion`    | Build animation library                     |
+| `pnpm build:layout`    | Build SCSS → CSS layout library             |
+| `pnpm build:stencil`   | Build headless + icons + Stencil components |
+| `pnpm build:angular`   | Build Angular wrappers + demo app           |
+| `pnpm build:all`       | Build everything                            |
+| `pnpm build:astro`     | Build Astro landing page                    |
+| `pnpm start:demo`      | Build libs + serve Angular demo             |
+| `pnpm start:demo:dev`  | Stencil watch + Angular serve (concurrent)  |
+| `pnpm start:astro:dev` | Build libs + Astro dev server               |
 
 ## Using the Libraries
 
 ### In any HTML page
 
 ```html
-<script type="module" src="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.esm.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.css" />
+<script
+  type="module"
+  src="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.esm.js"
+></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.css"
+/>
 
 <and-button variant="default">Click me</and-button>
 ```
@@ -187,32 +203,33 @@ import '@andersseen/motion/style.css';
 
 ## Components
 
-| Component | Tag | Features |
-|---|---|---|
-| Accordion | `and-accordion` | Expandable panels with keyboard navigation |
-| Alert | `and-alert` | Dismissible status messages |
-| Badge | `and-badge` | Labels and status indicators |
-| Breadcrumb | `and-breadcrumb` | Navigation breadcrumbs |
-| Button | `and-button` | 6 variants, loading state, link mode |
-| Card | `and-card` | Content container with slots |
-| Carousel | `and-carousel` | Image/content slider |
-| Context Menu | `and-context-menu` | Right-click menus |
-| Drawer | `and-drawer` | Slide-out panels |
-| Dropdown | `and-dropdown` | Menu overlays |
-| Icon | `and-icon` | 70+ SVG icons |
-| Input | `and-input` | Form input with validation |
-| Menu List | `and-menu-list` | Navigable menu items |
-| Modal | `and-modal` | Dialog overlays with focus trap |
-| Navbar | `and-navbar` | Fixed/sticky navigation with scroll spy |
-| Pagination | `and-pagination` | Page navigation |
-| Sidebar | `and-sidebar` | Collapsible side navigation |
-| Tabs | `and-tabs` | Tabbed content switching |
-| Toast | `and-toast` | Notification messages |
-| Tooltip | `and-tooltip` | Info popups on hover/focus |
+| Component    | Tag                | Features                                   |
+| ------------ | ------------------ | ------------------------------------------ |
+| Accordion    | `and-accordion`    | Expandable panels with keyboard navigation |
+| Alert        | `and-alert`        | Dismissible status messages                |
+| Badge        | `and-badge`        | Labels and status indicators               |
+| Breadcrumb   | `and-breadcrumb`   | Navigation breadcrumbs                     |
+| Button       | `and-button`       | 6 variants, loading state, link mode       |
+| Card         | `and-card`         | Content container with slots               |
+| Carousel     | `and-carousel`     | Image/content slider                       |
+| Context Menu | `and-context-menu` | Right-click menus                          |
+| Drawer       | `and-drawer`       | Slide-out panels                           |
+| Dropdown     | `and-dropdown`     | Menu overlays                              |
+| Icon         | `and-icon`         | 70+ SVG icons                              |
+| Input        | `and-input`        | Form input with validation                 |
+| Menu List    | `and-menu-list`    | Navigable menu items                       |
+| Modal        | `and-modal`        | Dialog overlays with focus trap            |
+| Navbar       | `and-navbar`       | Fixed/sticky navigation with scroll spy    |
+| Pagination   | `and-pagination`   | Page navigation                            |
+| Sidebar      | `and-sidebar`      | Collapsible side navigation                |
+| Tabs         | `and-tabs`         | Tabbed content switching                   |
+| Toast        | `and-toast`        | Notification messages                      |
+| Tooltip      | `and-tooltip`      | Info popups on hover/focus                 |
 
 ## Theming
 
-Components use CSS custom properties with HSL values. Set a `data-color` attribute on `<html>` to switch palettes, or override variables directly:
+Components use CSS custom properties with HSL values. Set a `data-color`
+attribute on `<html>` to switch palettes, or override variables directly:
 
 ```css
 :root {
@@ -243,9 +260,7 @@ Attribute-driven layout utilities — no classes needed:
 </div>
 
 <!-- Responsive modifiers -->
-<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">
-  ...
-</div>
+<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">...</div>
 ```
 
 ## Motion System
@@ -260,8 +275,12 @@ Declarative animations via HTML attributes:
 <div and-motion="zoom-in" and-motion-trigger="hover">Hover me</div>
 
 <!-- With custom timing -->
-<div and-motion="slide-in-up" and-motion-trigger="enter"
-     and-motion-duration="800ms" and-motion-delay="200ms">
+<div
+  and-motion="slide-in-up"
+  and-motion-trigger="enter"
+  and-motion-duration="800ms"
+  and-motion-delay="200ms"
+>
   Delayed slide
 </div>
 ```
@@ -282,17 +301,19 @@ pnpm deploy:landing
 
 ## Publishing to npm
 
-Libraries use [Lerna](https://lerna.js.org/) with independent versioning:
+Libraries use [Changesets](https://github.com/changesets/changesets) with
+independent versioning:
 
 ```bash
 # Build all libraries first
 pnpm build:stencil && pnpm build:motion && pnpm build:layout
 
 # Publish changed packages
-pnpm publish:libs
+pnpm release
 ```
 
-Each package under `packages/` is scoped to `@andersseen/` and configured with `"publishConfig": { "access": "public" }`.
+Each package under `packages/` is scoped to `@andersseen/` and configured with
+`"publishConfig": { "access": "public" }`.
 
 ## License
 

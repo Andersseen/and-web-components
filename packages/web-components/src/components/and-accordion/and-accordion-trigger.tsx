@@ -54,20 +54,26 @@ export class AndAccordionTrigger {
   /* ── State ──────────────────────────────────────────────────────── */
 
   private syncState() {
-    if (!this.accordionLogic || !this.itemId) return;
+    if (!this.accordionLogic || !this.itemId) {
+      return;
+    }
     this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
   }
 
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleClick = () => {
-    if (this.disabled || !this.accordionLogic || !this.itemId) return;
+    if (this.disabled || !this.accordionLogic || !this.itemId) {
+      return;
+    }
     this.accordionLogic.actions.toggle(this.itemId);
     this.syncState();
   };
 
   private handleKeyDown = (event: KeyboardEvent) => {
-    if (!this.accordionLogic || !this.itemId) return;
+    if (!this.accordionLogic || !this.itemId) {
+      return;
+    }
     this.accordionLogic.handleTriggerKeyDown(event, this.itemId);
     this.syncState();
   };

@@ -120,8 +120,11 @@ export function createModalMachine(
       close: () => machine.send('CLOSE'),
       toggle: () => {
         const s = machine.snapshot.value;
-        if (s === 'open' || s === 'opening') machine.send('CLOSE');
-        else machine.send('OPEN');
+        if (s === 'open' || s === 'opening') {
+          machine.send('CLOSE');
+        } else {
+          machine.send('OPEN');
+        }
       },
       setDisabled: (disabled: boolean) => {
         // Context update via a special event
@@ -157,7 +160,9 @@ export function createModalMachine(
       'type': 'button',
     }),
     handleKeyDown: (event: KeyboardEvent) => {
-      if (event.key === 'Escape') machine.send('ESCAPE');
+      if (event.key === 'Escape') {
+        machine.send('ESCAPE');
+      }
     },
     handleOverlayClick: () => machine.send('OVERLAY_CLICK'),
   };

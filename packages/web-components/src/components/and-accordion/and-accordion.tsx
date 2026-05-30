@@ -82,7 +82,9 @@ export class AndAccordion {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    if (!this.accordionLogic) return null;
+    if (!this.accordionLogic) {
+      return null;
+    }
 
     const containerProps = this.accordionLogic.getContainerProps();
 

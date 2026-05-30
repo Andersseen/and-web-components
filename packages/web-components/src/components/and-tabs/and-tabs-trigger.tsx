@@ -43,7 +43,9 @@ export class AndTabsTrigger {
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleKeyDown = (e: KeyboardEvent) => {
-    if (!this.tabsLogic) return;
+    if (!this.tabsLogic) {
+      return;
+    }
 
     const parent = this.el.parentElement;
     const allTriggers = Array.from(parent?.querySelectorAll('and-tabs-trigger') || []);
@@ -77,9 +79,7 @@ export class AndTabsTrigger {
         tabIndex={this.selected ? 0 : -1}
         class={cn(
           triggerBaseClass,
-          this.selected
-            ? 'bg-background text-foreground shadow-sm'
-            : 'text-muted-foreground hover:text-foreground',
+          this.selected ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
           this.disabled && 'opacity-50 pointer-events-none',
         )}
       >

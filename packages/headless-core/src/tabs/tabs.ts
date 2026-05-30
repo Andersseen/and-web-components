@@ -3,15 +3,14 @@
  *
  * Provides state management and accessibility for tab components.
  * Implements ARIA tabs pattern with keyboard navigation.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { createIdGenerator } from "../utils/id";
-import { Keys } from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { createIdGenerator } from '../utils/id';
+import { Keys } from '../types/common';
 
 /**
  * Configuration options for creating tabs
@@ -31,13 +30,13 @@ export interface TabsConfig {
    * Orientation of the tabs
    * @default 'horizontal'
    */
-  orientation?: "horizontal" | "vertical";
+  orientation?: 'horizontal' | 'vertical';
 
   /**
    * Whether to activate tab on focus (automatic) or require selection (manual)
    * @default 'automatic'
    */
-  activationMode?: "automatic" | "manual";
+  activationMode?: 'automatic' | 'manual';
 
   /**
    * Whether the tabs are disabled
@@ -51,8 +50,8 @@ export interface TabsConfig {
  */
 export interface TabsState {
   selectedTab: string | null;
-  orientation: "horizontal" | "vertical";
-  activationMode: "automatic" | "manual";
+  orientation: 'horizontal' | 'vertical';
+  activationMode: 'automatic' | 'manual';
   disabled: boolean;
 }
 
@@ -60,38 +59,38 @@ export interface TabsState {
  * Props for tabs container
  */
 export interface TabsContainerProps extends DataAttributes {
-  "data-orientation": "horizontal" | "vertical";
+  'data-orientation': 'horizontal' | 'vertical';
 }
 
 /**
  * Props for tab list element
  */
 export interface TabListProps extends AriaAttributes, DataAttributes {
-  role: "tablist";
-  "aria-orientation": "horizontal" | "vertical";
+  'role': 'tablist';
+  'aria-orientation': 'horizontal' | 'vertical';
 }
 
 /**
  * Props for individual tab trigger
  */
 export interface TabTriggerProps extends AriaAttributes, DataAttributes {
-  role: "tab";
-  "aria-selected": "true" | "false";
-  "aria-controls": string;
-  "aria-disabled": "true" | "false";
-  tabindex: number;
-  id: string;
+  'role': 'tab';
+  'aria-selected': 'true' | 'false';
+  'aria-controls': string;
+  'aria-disabled': 'true' | 'false';
+  'tabindex': number;
+  'id': string;
 }
 
 /**
  * Props for tab content panel
  */
 export interface TabContentProps extends AriaAttributes, DataAttributes {
-  role: "tabpanel";
-  "aria-labelledby": string;
-  tabindex: number;
-  id: string;
-  hidden: boolean;
+  'role': 'tabpanel';
+  'aria-labelledby': string;
+  'tabindex': number;
+  'id': string;
+  'hidden': boolean;
 }
 
 /**
@@ -105,6 +104,11 @@ export interface TabsReturn {
    * Current state
    */
   state: Readonly<TabsState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<TabsState>) => void) => () => void;
 
   /**
    * Actions
@@ -133,11 +137,7 @@ export interface TabsReturn {
   /**
    * Event handlers
    */
-  handleTriggerKeyDown: (
-    event: KeyboardEvent,
-    tabId: string,
-    allTabIds: string[],
-  ) => void;
+  handleTriggerKeyDown: (event: KeyboardEvent, tabId: string, allTabIds: string[]) => void;
 }
 
 /**
@@ -164,45 +164,47 @@ export interface TabsReturn {
  * ```
  */
 export function createTabs(config: TabsConfig = {}): TabsReturn {
-  const generateId = createIdGenerator("tabs");
+  const generateId = createIdGenerator('tabs');
 
   // Internal state
-  let state: TabsState = {
+  const store = createStore<TabsState>({
     selectedTab: config.defaultValue ?? null,
-    orientation: config.orientation ?? "horizontal",
-    activationMode: config.activationMode ?? "automatic",
+    orientation: config.orientation ?? 'horizontal',
+    activationMode: config.activationMode ?? 'automatic',
     disabled: config.disabled ?? false,
-  };
+  });
 
   // Actions
   const selectTab = (tabId: string): void => {
-    if (state.disabled || state.selectedTab === tabId) return;
+    if (store.state.disabled || store.state.selectedTab === tabId) {
+      return;
+    }
 
-    state = { ...state, selectedTab: tabId };
+    store.setState({ selectedTab: tabId });
     config.onValueChange?.(tabId);
   };
 
   const setDisabled = (disabled: boolean): void => {
-    state = { ...state, disabled };
+    store.setState({ disabled });
   };
 
   // Queries
   const isSelected = (tabId: string): boolean => {
-    return state.selectedTab === tabId;
+    return store.state.selectedTab === tabId;
   };
 
   const getSelectedTab = (): string | null => {
-    return state.selectedTab;
+    return store.state.selectedTab;
   };
 
   // Get element props
   const getContainerProps = (): TabsContainerProps => ({
-    "data-orientation": state.orientation,
+    'data-orientation': store.state.orientation,
   });
 
   const getListProps = (): TabListProps => ({
-    role: "tablist",
-    "aria-orientation": state.orientation,
+    'role': 'tablist',
+    'aria-orientation': store.state.orientation,
   });
 
   const getTriggerProps = (tabId: string): TabTriggerProps => {
@@ -211,15 +213,15 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
     const contentId = generateId(`content-${tabId}`);
 
     return {
-      role: "tab",
-      "aria-selected": selected ? "true" : "false",
-      "aria-controls": contentId,
-      "aria-disabled": state.disabled ? "true" : "false",
-      tabindex: selected ? 0 : -1,
-      id: triggerId,
-      "data-state": selected ? "active" : "inactive",
-      "data-disabled": state.disabled,
-      "data-orientation": state.orientation,
+      'role': 'tab',
+      'aria-selected': selected ? 'true' : 'false',
+      'aria-controls': contentId,
+      'aria-disabled': store.state.disabled ? 'true' : 'false',
+      'tabindex': selected ? 0 : -1,
+      'id': triggerId,
+      'data-state': selected ? 'active' : 'inactive',
+      'data-disabled': store.state.disabled,
+      'data-orientation': store.state.orientation,
     };
   };
 
@@ -229,29 +231,29 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
     const contentId = generateId(`content-${tabId}`);
 
     return {
-      role: "tabpanel",
-      "aria-labelledby": triggerId,
-      tabindex: 0,
-      id: contentId,
-      hidden: !selected,
-      "data-state": selected ? "active" : "inactive",
+      'role': 'tabpanel',
+      'aria-labelledby': triggerId,
+      'tabindex': 0,
+      'id': contentId,
+      'hidden': !selected,
+      'data-state': selected ? 'active' : 'inactive',
     };
   };
 
   // Keyboard navigation
-  const handleTriggerKeyDown = (
-    event: KeyboardEvent,
-    currentTabId: string,
-    allTabIds: string[],
-  ): void => {
-    if (state.disabled) return;
+  const handleTriggerKeyDown = (event: KeyboardEvent, currentTabId: string, allTabIds: string[]): void => {
+    if (store.state.disabled) {
+      return;
+    }
 
     const currentIndex = allTabIds.indexOf(currentTabId);
-    if (currentIndex === -1) return;
+    if (currentIndex === -1) {
+      return;
+    }
 
     let nextIndex: number | null = null;
 
-    const isHorizontal = state.orientation === "horizontal";
+    const isHorizontal = store.state.orientation === 'horizontal';
 
     switch (event.key) {
       case isHorizontal ? Keys.ArrowRight : Keys.ArrowDown:
@@ -261,8 +263,7 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
 
       case isHorizontal ? Keys.ArrowLeft : Keys.ArrowUp:
         event.preventDefault();
-        nextIndex =
-          currentIndex === 0 ? allTabIds.length - 1 : currentIndex - 1;
+        nextIndex = currentIndex === 0 ? allTabIds.length - 1 : currentIndex - 1;
         break;
 
       case Keys.Home:
@@ -283,7 +284,7 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
       const nextTabId = allTabIds[nextIndex];
 
       // In automatic mode, select on focus
-      if (state.activationMode === "automatic") {
+      if (store.state.activationMode === 'automatic') {
         selectTab(nextTabId);
       }
 
@@ -294,7 +295,10 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       selectTab,

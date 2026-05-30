@@ -112,7 +112,9 @@ export class AndDropdown {
         this.andDropdownOpenChange.emit(isOpen);
       },
       onSelect: ({ itemId }) => {
-        if (itemId) this.andDropdownSelect.emit(itemId);
+        if (itemId) {
+          this.andDropdownSelect.emit(itemId);
+        }
       },
     });
   }
@@ -130,7 +132,9 @@ export class AndDropdown {
         this.andDropdownOpenChange.emit(isOpen);
       },
       onSelect: ({ itemId }) => {
-        if (itemId) this.andDropdownSelect.emit(itemId);
+        if (itemId) {
+          this.andDropdownSelect.emit(itemId);
+        }
       },
     });
   }
@@ -139,7 +143,9 @@ export class AndDropdown {
 
   @Listen('click', { target: 'window' })
   handleWindowClick(ev: MouseEvent) {
-    if (!this.isOpen) return;
+    if (!this.isOpen) {
+      return;
+    }
     const path = ev.composedPath();
     if (!path.includes(this.el)) {
       this.dropdownLogic.actions.close();

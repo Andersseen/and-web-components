@@ -227,7 +227,9 @@ export class AndSidebar {
   }
 
   private checkMobile() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     const wasMobile = this.isMobile;
     this.isMobile = window.innerWidth < this.mobileBreakpoint;
 
@@ -287,7 +289,9 @@ export class AndSidebar {
   };
 
   private handleItemClick = (item: SidebarItem) => {
-    if (item.disabled) return;
+    if (item.disabled) {
+      return;
+    }
     this.sidebar.actions.setActiveItem(item.id);
   };
 

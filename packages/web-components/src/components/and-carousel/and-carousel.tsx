@@ -85,12 +85,16 @@ export class AndCarousel {
   /* ── Navigation ─────────────────────────────────────────────────── */
 
   private goToNext = () => {
-    if (this.slideCount === 0) return;
+    if (this.slideCount === 0) {
+      return;
+    }
     this.setActiveIndex((this.activeIndex + 1) % this.slideCount);
   };
 
   private goToPrev = () => {
-    if (this.slideCount === 0) return;
+    if (this.slideCount === 0) {
+      return;
+    }
     this.setActiveIndex((this.activeIndex - 1 + this.slideCount) % this.slideCount);
   };
 
@@ -106,11 +110,15 @@ export class AndCarousel {
   /* ── Interaction ────────────────────────────────────────────────── */
 
   private handleMouseEnter = () => {
-    if (this.autoplay) this.stopAutoplay();
+    if (this.autoplay) {
+      this.stopAutoplay();
+    }
   };
 
   private handleMouseLeave = () => {
-    if (this.autoplay) this.startAutoplay();
+    if (this.autoplay) {
+      this.startAutoplay();
+    }
   };
 
   @Listen('keydown')
@@ -153,20 +161,12 @@ export class AndCarousel {
           </div>
 
           {/* Previous */}
-          <button
-            class={cn(controlBaseClass, 'left-2')}
-            onClick={this.goToPrev}
-            aria-label="Previous slide"
-          >
+          <button class={cn(controlBaseClass, 'left-2')} onClick={this.goToPrev} aria-label="Previous slide">
             <and-icon name="chevron-left" size={16} class="h-4 w-4" />
           </button>
 
           {/* Next */}
-          <button
-            class={cn(controlBaseClass, 'right-2')}
-            onClick={this.goToNext}
-            aria-label="Next slide"
-          >
+          <button class={cn(controlBaseClass, 'right-2')} onClick={this.goToNext} aria-label="Next slide">
             <and-icon name="chevron-right" size={16} class="h-4 w-4" />
           </button>
 
@@ -181,10 +181,7 @@ export class AndCarousel {
                 <button
                   key={i}
                   role="tab"
-                  class={cn(
-                    dotBaseClass,
-                    i === this.activeIndex ? 'bg-foreground' : 'bg-muted-foreground/40',
-                  )}
+                  class={cn(dotBaseClass, i === this.activeIndex ? 'bg-foreground' : 'bg-muted-foreground/40')}
                   aria-selected={i === this.activeIndex ? 'true' : 'false'}
                   aria-label={`Go to slide ${i + 1}`}
                   onClick={() => this.goToSlide(i)}

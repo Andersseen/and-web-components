@@ -4,19 +4,18 @@
  * Provides state management and accessibility for tooltip components.
  * Handles show/hide with configurable delays, placement, and
  * hover/focus trigger support.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { generateId } from "../utils/id";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { generateId } from '../utils/id';
 
 /**
  * Tooltip placement options
  */
-export type TooltipPlacement = "top" | "bottom" | "left" | "right";
+export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 /**
  * Configuration options for creating a tooltip
@@ -65,19 +64,19 @@ export interface TooltipState {
  * Props for the trigger element
  */
 export interface TooltipTriggerProps extends AriaAttributes {
-  "aria-describedby": string;
+  'aria-describedby': string;
 }
 
 /**
  * Props for the tooltip content element
  */
 export interface TooltipContentProps extends AriaAttributes, DataAttributes {
-  role: "tooltip";
-  id: string;
-  "aria-hidden": boolean;
-  "data-state": "open" | "closed";
-  "data-side": TooltipPlacement;
-  hidden: boolean;
+  'role': 'tooltip';
+  'id': string;
+  'aria-hidden': boolean;
+  'data-state': 'open' | 'closed';
+  'data-side': TooltipPlacement;
+  'hidden': boolean;
 }
 
 /**
@@ -88,6 +87,11 @@ export interface TooltipReturn {
    * Current state
    */
   state: Readonly<TooltipState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<TooltipState>) => void) => () => void;
 
   /**
    * Actions
@@ -148,14 +152,14 @@ export interface TooltipReturn {
 export function createTooltip(config: TooltipConfig = {}): TooltipReturn {
   const openDelay = config.openDelay ?? 0;
   const closeDelay = config.closeDelay ?? 0;
-  const tooltipId = generateId("tooltip");
+  const tooltipId = generateId('tooltip');
 
   // Internal state
-  let state: TooltipState = {
+  const store = createStore<TooltipState>({
     isVisible: false,
-    placement: config.placement ?? "top",
+    placement: config.placement ?? 'top',
     disabled: config.disabled ?? false,
-  };
+  });
 
   let timeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -167,16 +171,18 @@ export function createTooltip(config: TooltipConfig = {}): TooltipReturn {
   };
 
   const notifyChange = (): void => {
-    config.onVisibilityChange?.(state.isVisible);
+    config.onVisibilityChange?.(store.state.isVisible);
   };
 
   // Actions
   const show = (): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
     clearTimer();
     timeout = setTimeout(() => {
-      state = { ...state, isVisible: true };
+      store.setState({ isVisible: true });
       notifyChange();
     }, openDelay);
   };
@@ -184,36 +190,36 @@ export function createTooltip(config: TooltipConfig = {}): TooltipReturn {
   const hide = (): void => {
     clearTimer();
     timeout = setTimeout(() => {
-      state = { ...state, isVisible: false };
+      store.setState({ isVisible: false });
       notifyChange();
     }, closeDelay);
   };
 
   const setPlacement = (placement: TooltipPlacement): void => {
-    state = { ...state, placement };
+    store.setState({ placement });
   };
 
   const setDisabled = (disabled: boolean): void => {
-    state = { ...state, disabled };
-    if (disabled && state.isVisible) {
+    store.setState({ disabled });
+    if (disabled && store.state.isVisible) {
       clearTimer();
-      state = { ...state, isVisible: false };
+      store.setState({ isVisible: false });
       notifyChange();
     }
   };
 
   // Get element props
   const getTriggerProps = (): TooltipTriggerProps => ({
-    "aria-describedby": state.isVisible ? tooltipId : "",
+    'aria-describedby': store.state.isVisible ? tooltipId : '',
   });
 
   const getTooltipProps = (): TooltipContentProps => ({
-    role: "tooltip",
-    id: tooltipId,
-    "aria-hidden": !state.isVisible,
-    "data-state": state.isVisible ? "open" : "closed",
-    "data-side": state.placement,
-    hidden: !state.isVisible,
+    'role': 'tooltip',
+    'id': tooltipId,
+    'aria-hidden': !store.state.isVisible,
+    'data-state': store.state.isVisible ? 'open' : 'closed',
+    'data-side': store.state.placement,
+    'hidden': !store.state.isVisible,
   });
 
   // Event handlers
@@ -229,7 +235,10 @@ export function createTooltip(config: TooltipConfig = {}): TooltipReturn {
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       show,

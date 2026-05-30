@@ -4,19 +4,18 @@
  * Provides state management and accessibility for drawer/sheet components.
  * Handles open/close states, placement directions, escape key, backdrop click,
  * and body scroll lock signaling.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
 
 /**
  * Drawer placement options
  */
-export type DrawerPlacement = "top" | "bottom" | "left" | "right";
+export type DrawerPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 /**
  * Configuration options for creating a drawer
@@ -76,29 +75,29 @@ export interface DrawerState {
  * Props for the overlay/backdrop element
  */
 export interface DrawerOverlayProps extends DataAttributes {
-  "data-state": "open" | "closed";
-  "aria-hidden": boolean;
+  'data-state': 'open' | 'closed';
+  'aria-hidden': boolean;
 }
 
 /**
  * Props for the drawer content element
  */
 export interface DrawerContentProps extends AriaAttributes, DataAttributes {
-  role: "dialog";
-  "aria-modal": boolean;
-  "aria-hidden": boolean;
-  "aria-label": string;
-  "data-state": "open" | "closed";
-  "data-side": DrawerPlacement;
-  tabindex: number;
+  'role': 'dialog';
+  'aria-modal': boolean;
+  'aria-hidden': boolean;
+  'aria-label': string;
+  'data-state': 'open' | 'closed';
+  'data-side': DrawerPlacement;
+  'tabindex': number;
 }
 
 /**
  * Props for the close button element
  */
 export interface DrawerCloseButtonProps extends AriaAttributes {
-  "aria-label": string;
-  type: "button";
+  'aria-label': string;
+  'type': 'button';
 }
 
 /**
@@ -109,6 +108,11 @@ export interface DrawerReturn {
    * Current state
    */
   state: Readonly<DrawerState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<DrawerState>) => void) => () => void;
 
   /**
    * Actions
@@ -164,72 +168,80 @@ export function createDrawer(config: DrawerConfig = {}): DrawerReturn {
   const closeOnOverlayClick = config.closeOnOverlayClick ?? true;
 
   // Internal state
-  let state: DrawerState = {
+  const store = createStore<DrawerState>({
     isOpen: config.defaultOpen ?? false,
-    placement: config.placement ?? "left",
+    placement: config.placement ?? 'left',
     disabled: config.disabled ?? false,
-  };
+  });
 
   const notifyChange = (): void => {
-    config.onOpenChange?.(state.isOpen);
+    config.onOpenChange?.(store.state.isOpen);
   };
 
   // Actions
   const open = (): void => {
-    if (state.disabled || state.isOpen) return;
+    if (store.state.disabled || store.state.isOpen) {
+      return;
+    }
 
-    state = { ...state, isOpen: true };
+    store.setState({ isOpen: true });
     notifyChange();
   };
 
   const close = (): void => {
-    if (!state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
 
-    state = { ...state, isOpen: false };
+    store.setState({ isOpen: false });
     notifyChange();
   };
 
   const toggle = (): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
-    state.isOpen ? close() : open();
+    store.state.isOpen ? close() : open();
   };
 
   const setPlacement = (placement: DrawerPlacement): void => {
-    state = { ...state, placement };
+    store.setState({ placement });
   };
 
   const setDisabled = (disabled: boolean): void => {
-    state = { ...state, disabled };
-    if (disabled && state.isOpen) {
+    store.setState({ disabled });
+    if (disabled && store.state.isOpen) {
       close();
     }
   };
 
   // Get element props
   const getOverlayProps = (): DrawerOverlayProps => ({
-    "data-state": state.isOpen ? "open" : "closed",
-    "aria-hidden": !state.isOpen,
+    'data-state': store.state.isOpen ? 'open' : 'closed',
+    'aria-hidden': !store.state.isOpen,
   });
 
   const getContentProps = (): DrawerContentProps => ({
-    role: "dialog",
-    "aria-modal": true,
-    "aria-hidden": !state.isOpen,
-    "aria-label": config.label ?? "Drawer",
-    "data-state": state.isOpen ? "open" : "closed",
-    "data-side": state.placement,
-    tabindex: -1,
+    'role': 'dialog',
+    'aria-modal': true,
+    'aria-hidden': !store.state.isOpen,
+    'aria-label': config.label ?? 'Drawer',
+    'data-state': store.state.isOpen ? 'open' : 'closed',
+    'data-side': store.state.placement,
+    'tabindex': -1,
   });
 
   const getCloseButtonProps = (): DrawerCloseButtonProps => ({
-    "aria-label": "Close",
-    type: "button",
+    'aria-label': 'Close',
+    'type': 'button',
   });
 
   // Keyboard handler
   const handleKeyDown = (event: KeyboardEvent): void => {
-    if (!state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
 
     if (event.key === Keys.Escape && closeOnEscape) {
       event.preventDefault();
@@ -246,7 +258,10 @@ export function createDrawer(config: DrawerConfig = {}): DrawerReturn {
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       open,

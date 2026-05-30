@@ -91,7 +91,9 @@ export class AndMenuItem {
   };
 
   private handleKeyDown = (e: KeyboardEvent) => {
-    if (this.disabled) return;
+    if (this.disabled) {
+      return;
+    }
     const itemConfig = { id: this.value, intent: this.intent as 'default' | 'destructive', disabled: this.disabled };
     this.menuItemLogic?.handleItemKeyDown(e, itemConfig);
   };

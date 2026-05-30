@@ -3,8 +3,11 @@
  *
  * Provides state management and accessibility for dropdown/menu components.
  * Handles open/close states, keyboard navigation, and focus management.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
+import { createStore } from '../utils/store';
 import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
 import { Keys } from '../types/common';
 import { createMenuSelection, type MenuSelectEvent, type MenuSelectionConfig } from '../menu';
@@ -94,6 +97,11 @@ export interface DropdownReturn {
   state: Readonly<DropdownState>;
 
   /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<DropdownState>) => void) => () => void;
+
+  /**
    * Actions
    */
   actions: {
@@ -147,76 +155,86 @@ export interface DropdownReturn {
  */
 export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
   // Internal state
-  let state: DropdownState = {
+  const store = createStore<DropdownState>({
     isOpen: config.defaultOpen ?? false,
     placement: config.placement ?? 'bottom',
     disabled: config.disabled ?? false,
-  };
+  });
 
   const notifyChange = (): void => {
-    config.onOpenChange?.(state.isOpen);
+    config.onOpenChange?.(store.state.isOpen);
   };
 
   // Actions
   const open = (): void => {
-    if (state.disabled || state.isOpen) return;
+    if (store.state.disabled || store.state.isOpen) {
+      return;
+    }
 
-    state = { ...state, isOpen: true };
+    store.setState({ isOpen: true });
     notifyChange();
   };
 
   const close = (): void => {
-    if (state.disabled || !state.isOpen) return;
+    if (store.state.disabled || !store.state.isOpen) {
+      return;
+    }
 
-    state = { ...state, isOpen: false };
+    store.setState({ isOpen: false });
     notifyChange();
   };
 
   const toggle = (): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
-    state.isOpen ? close() : open();
+    store.state.isOpen ? close() : open();
   };
 
   const selectItem = (itemId?: string): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
     menuSelection.selectItem(itemId);
   };
 
   const menuSelection = createMenuSelection(config, close);
 
   const setDisabled = (disabled: boolean): void => {
-    state = { ...state, disabled };
-    if (disabled && state.isOpen) {
+    store.setState({ disabled });
+    if (disabled && store.state.isOpen) {
       close();
     }
   };
 
   // Queries
-  const isOpen = (): boolean => state.isOpen;
+  const isOpen = (): boolean => store.state.isOpen;
 
   // Get element props
   const getTriggerProps = (): DropdownTriggerProps => ({
     'aria-haspopup': 'menu',
-    'aria-expanded': state.isOpen,
-    'aria-disabled': state.disabled,
-    'data-state': state.isOpen ? 'open' : 'closed',
+    'aria-expanded': store.state.isOpen,
+    'aria-disabled': store.state.disabled,
+    'data-state': store.state.isOpen ? 'open' : 'closed',
   });
 
   const getContentProps = (): DropdownMenuProps => ({
     'role': 'menu',
-    'data-state': state.isOpen ? 'open' : 'closed',
-    'hidden': !state.isOpen,
+    'data-state': store.state.isOpen ? 'open' : 'closed',
+    'hidden': !store.state.isOpen,
   });
 
   const getItemProps = (_itemId?: string): DropdownItemProps => ({
     role: 'menuitem',
-    tabindex: state.isOpen ? 0 : -1,
+    tabindex: store.state.isOpen ? 0 : -1,
   });
 
   // Keyboard navigation
   const handleTriggerKeyDown = (event: KeyboardEvent): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
     switch (event.key) {
       case Keys.Enter:
@@ -239,7 +257,9 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
   };
 
   const handleContentKeyDown = (event: KeyboardEvent, _allItemIds: string[]): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
     switch (event.key) {
       case Keys.Escape:
@@ -259,7 +279,10 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       open,

@@ -120,8 +120,12 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
       event: null, // populated during transition
       can: (eventType: string) => {
         const transition = stateDef?.on?.[eventType];
-        if (!transition) return false;
-        if (transition.guard) return transition.guard(context, { type: eventType });
+        if (!transition) {
+          return false;
+        }
+        if (transition.guard) {
+          return transition.guard(context, { type: eventType });
+        }
         return true;
       },
     };
@@ -147,7 +151,6 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
 
   const notify = (prevSnapshot: MachineSnapshot<C>, event: MachineEvent) => {
     const nextSnapshot = getSnapshot();
-    // @ts-ignore – patch event into snapshot for subscribers
     nextSnapshot.event = event;
     listeners.forEach(cb => cb(nextSnapshot, prevSnapshot));
   };
@@ -155,12 +158,16 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
   const send = (event: MachineEvent | string) => {
     const ev = typeof event === 'string' ? { type: event } : event;
     const stateDef = config.states[stateValue];
-    if (!stateDef?.on?.[ev.type]) return; // unhandled event – silently ignore (or log)
+    if (!stateDef?.on?.[ev.type]) {
+      return;
+    } // unhandled event – silently ignore (or log)
 
     const transition = stateDef.on[ev.type];
 
     // Guard check
-    if (transition.guard && !transition.guard(context, ev)) return;
+    if (transition.guard && !transition.guard(context, ev)) {
+      return;
+    }
 
     // Build previous snapshot before transition
     const prevSnapshot = getSnapshot();

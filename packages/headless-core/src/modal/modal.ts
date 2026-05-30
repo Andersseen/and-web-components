@@ -170,19 +170,25 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
   // Actions
   const open = (): void => {
     const { disabled, isOpen } = store.state;
-    if (disabled || isOpen) return;
+    if (disabled || isOpen) {
+      return;
+    }
     store.setState({ isOpen: true });
     notifyChange();
   };
 
   const close = (): void => {
-    if (!store.state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
     store.setState({ isOpen: false });
     notifyChange();
   };
 
   const toggle = (): void => {
-    if (store.state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
     store.state.isOpen ? close() : open();
   };
 
@@ -221,7 +227,9 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
 
   // Keyboard handler
   const handleKeyDown = (event: KeyboardEvent): void => {
-    if (!store.state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
 
     if (event.key === Keys.Escape && closeOnEscape) {
       event.preventDefault();

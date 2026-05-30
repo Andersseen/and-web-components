@@ -1,8 +1,9 @@
 /**
- * Lightweight reactive store built on native EventTarget.
+ * Lightweight reactive store with framework-agnostic pub/sub.
  *
- * Works in browsers and Node 15+. Framework-agnostic: React, Vue,
- * Svelte, Angular, or vanilla JS can all subscribe without adapters.
+ * Works in browsers, Node, and test environments (including Stencil's
+ * mock-doc).  React, Vue, Svelte, Angular, or vanilla JS can all
+ * subscribe without adapters.
  *
  * @example
  * const store = new StateStore({ count: 0, name: 'and' });
@@ -15,11 +16,11 @@
  * unsubscribe();
  */
 
-export class StateStore<T extends Record<string, any>> extends EventTarget {
+export class StateStore<T extends Record<string, any>> {
   private _state: T;
+  private _listeners = new Set<(state: Readonly<T>, prev: Readonly<T>) => void>();
 
   constructor(initial: T) {
-    super();
     this._state = initial;
   }
 
@@ -40,14 +41,16 @@ export class StateStore<T extends Record<string, any>> extends EventTarget {
       }
     }
 
-    if (!changed) return;
+    if (!changed) {
+      return;
+    }
 
     this._state = { ...this._state, ...partial };
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: { state: this.state, prev: Object.freeze(prev) },
-      }),
-    );
+    const frozenState = this.state;
+    const frozenPrev = Object.freeze(prev);
+
+    // Notify all subscribers
+    this._listeners.forEach(cb => cb(frozenState, frozenPrev));
   }
 
   /**
@@ -55,12 +58,8 @@ export class StateStore<T extends Record<string, any>> extends EventTarget {
    * Returns an unsubscribe function.
    */
   subscribe(callback: (state: Readonly<T>, prev: Readonly<T>) => void): () => void {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent).detail;
-      callback(detail.state, detail.prev);
-    };
-    this.addEventListener('change', handler);
-    return () => this.removeEventListener('change', handler);
+    this._listeners.add(callback);
+    return () => this._listeners.delete(callback);
   }
 }
 

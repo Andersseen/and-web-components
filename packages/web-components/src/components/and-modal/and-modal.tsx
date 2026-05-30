@@ -90,7 +90,9 @@ export class AndModal {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    if (!this.open) return <Host />;
+    if (!this.open) {
+      return <Host />;
+    }
 
     const overlayProps = this.modalLogic.getOverlayProps();
     const contentProps = this.modalLogic.getContentProps();

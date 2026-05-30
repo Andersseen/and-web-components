@@ -43,7 +43,9 @@ export class AndAccordionContent {
   }
 
   private syncState() {
-    if (!this.accordionLogic || !this.itemId) return;
+    if (!this.accordionLogic || !this.itemId) {
+      return;
+    }
     this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
   }
 

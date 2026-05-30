@@ -110,7 +110,9 @@ export class AndSelect {
 
   @Listen('click', { target: 'window' })
   handleOutsideClick(event: MouseEvent) {
-    if (!this.isOpen) return;
+    if (!this.isOpen) {
+      return;
+    }
     const path = event.composedPath();
     if (!path.includes(this.el)) {
       this.closeMenu();
@@ -119,12 +121,16 @@ export class AndSelect {
 
   @Listen('resize', { target: 'window' })
   handleWindowResize() {
-    if (this.isOpen) this.updateMenuPlacement();
+    if (this.isOpen) {
+      this.updateMenuPlacement();
+    }
   }
 
   @Listen('scroll', { target: 'window' })
   handleWindowScroll() {
-    if (this.isOpen) this.updateMenuPlacement();
+    if (this.isOpen) {
+      this.updateMenuPlacement();
+    }
   }
 
   /* ── Keyboard handling (on host so it fires when trigger is focused) ── */
@@ -211,7 +217,9 @@ export class AndSelect {
   /* ── Menu control ─────────────────────────────────────────────── */
 
   private openMenu() {
-    if (this.disabled) return;
+    if (this.disabled) {
+      return;
+    }
     this.isOpen = true;
     this.highlightedIndex = this.findSelectedIndex();
     if (this.highlightedIndex === -1) {
@@ -221,7 +229,9 @@ export class AndSelect {
   }
 
   private closeMenu() {
-    if (!this.isOpen) return;
+    if (!this.isOpen) {
+      return;
+    }
     this.isOpen = false;
     this.highlightedIndex = -1;
     this.andBlur.emit();
@@ -230,9 +240,14 @@ export class AndSelect {
   }
 
   private toggleOpen = () => {
-    if (this.disabled) return;
-    if (this.isOpen) this.closeMenu();
-    else this.openMenu();
+    if (this.disabled) {
+      return;
+    }
+    if (this.isOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
   };
 
   private selectValue(nextValue: string) {
@@ -252,7 +267,9 @@ export class AndSelect {
   }
 
   private highlightNext(delta: 1 | -1) {
-    if (this.resolvedOptions.length === 0) return;
+    if (this.resolvedOptions.length === 0) {
+      return;
+    }
     const start = this.highlightedIndex >= 0 ? this.highlightedIndex : delta > 0 ? -1 : this.resolvedOptions.length;
     this.highlightTo(start + delta, delta);
   }
@@ -268,8 +285,12 @@ export class AndSelect {
 
     for (let i = 0; i < len; i++) {
       // Wrap around
-      if (index >= len) index = 0;
-      if (index < 0) index = len - 1;
+      if (index >= len) {
+        index = 0;
+      }
+      if (index < 0) {
+        index = len - 1;
+      }
 
       if (!this.resolvedOptions[index].disabled) {
         this.highlightedIndex = index;
@@ -313,7 +334,9 @@ export class AndSelect {
     for (let i = 0; i < len; i++) {
       const idx = (start + i) % len;
       const option = this.resolvedOptions[idx];
-      if (option.disabled) continue;
+      if (option.disabled) {
+        continue;
+      }
       if (option.text.toLowerCase().startsWith(this.searchQuery)) {
         this.highlightedIndex = idx;
         this.scrollOptionIntoView(idx);
@@ -324,7 +347,9 @@ export class AndSelect {
     // If no match from cursor, search from beginning
     for (let i = 0; i < len; i++) {
       const option = this.resolvedOptions[i];
-      if (option.disabled) continue;
+      if (option.disabled) {
+        continue;
+      }
       if (option.text.toLowerCase().startsWith(this.searchQuery)) {
         this.highlightedIndex = i;
         this.scrollOptionIntoView(i);
@@ -356,7 +381,9 @@ export class AndSelect {
   /* ── Placement ──────────────────────────────────────────────── */
 
   private updateMenuPlacement() {
-    if (!this.wrapperEl) return;
+    if (!this.wrapperEl) {
+      return;
+    }
 
     const rect = this.wrapperEl.getBoundingClientRect();
     const viewportHeight = window.innerHeight;

@@ -88,7 +88,9 @@ export class AndAlert {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    if (!this.visible) return null;
+    if (!this.visible) {
+      return null;
+    }
 
     const alertProps = this.alertLogic.getAlertProps();
     const dismissButtonProps = this.alertLogic.getDismissButtonProps();
