@@ -1,4 +1,5 @@
-import { Component, h, Host, State, Element, Prop, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, h, Host, State, Element, Prop, Event, EventEmitter, Listen, Watch } from '@stencil/core';
+import { createCarousel, type CarouselReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 
 /* ────────────────────────────────────────────────────────────────────
@@ -50,15 +51,29 @@ export class AndCarousel {
   /** Emitted when the active slide changes. */
   @Event({ bubbles: true, composed: true }) andSlideChange: EventEmitter<number>;
 
-  @State() private activeIndex: number = 0;
-
-  private slideCount: number = 0;
+  @State() private renderTick = 0;
+  private carouselLogic: CarouselReturn;
   private autoplayTimer: ReturnType<typeof setInterval> | undefined;
+  private trackId: string = `carousel-track-${Math.random().toString(36).slice(2)}`;
+  private unsubscribe: () => void;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
+  componentWillLoad() {
+    this.carouselLogic = createCarousel({
+      autoplay: this.autoplay,
+      onIndexChange: (index: number) => {
+        this.andSlideChange.emit(index);
+      },
+    });
+    this.unsubscribe = this.carouselLogic.subscribe(() => {
+      this.renderTick++;
+    });
+  }
+
   componentDidLoad() {
-    this.slideCount = this.el.querySelectorAll('and-carousel-item').length;
+    const count = this.el.querySelectorAll('and-carousel-item').length;
+    this.carouselLogic.actions.setSlideCount(count);
     if (this.autoplay) {
       this.startAutoplay();
     }
@@ -66,13 +81,26 @@ export class AndCarousel {
 
   disconnectedCallback() {
     this.stopAutoplay();
+    this.unsubscribe?.();
+  }
+
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
+  @Watch('autoplay')
+  autoplayChanged(newValue: boolean) {
+    this.carouselLogic.actions.setAutoplay(newValue);
+    if (newValue) {
+      this.startAutoplay();
+    } else {
+      this.stopAutoplay();
+    }
   }
 
   /* ── Autoplay ───────────────────────────────────────────────────── */
 
   private startAutoplay() {
     this.stopAutoplay();
-    this.autoplayTimer = setInterval(() => this.goToNext(), this.interval);
+    this.autoplayTimer = setInterval(() => this.carouselLogic.actions.goToNext(), this.interval);
   }
 
   private stopAutoplay() {
@@ -80,31 +108,6 @@ export class AndCarousel {
       clearInterval(this.autoplayTimer);
       this.autoplayTimer = undefined;
     }
-  }
-
-  /* ── Navigation ─────────────────────────────────────────────────── */
-
-  private goToNext = () => {
-    if (this.slideCount === 0) {
-      return;
-    }
-    this.setActiveIndex((this.activeIndex + 1) % this.slideCount);
-  };
-
-  private goToPrev = () => {
-    if (this.slideCount === 0) {
-      return;
-    }
-    this.setActiveIndex((this.activeIndex - 1 + this.slideCount) % this.slideCount);
-  };
-
-  private goToSlide = (index: number) => {
-    this.setActiveIndex(index);
-  };
-
-  private setActiveIndex(index: number) {
-    this.activeIndex = index;
-    this.andSlideChange.emit(index);
   }
 
   /* ── Interaction ────────────────────────────────────────────────── */
@@ -126,11 +129,11 @@ export class AndCarousel {
     switch (ev.key) {
       case 'ArrowLeft':
         ev.preventDefault();
-        this.goToPrev();
+        this.carouselLogic.actions.goToPrev();
         break;
       case 'ArrowRight':
         ev.preventDefault();
-        this.goToNext();
+        this.carouselLogic.actions.goToNext();
         break;
     }
   }
@@ -138,7 +141,11 @@ export class AndCarousel {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    const dots = Array.from({ length: this.slideCount }, (_, i) => i);
+    const state = this.carouselLogic.state;
+    const dots = Array.from({ length: state.slideCount }, (_, i) => i);
+    const trackProps = this.carouselLogic.getTrackProps(this.trackId);
+    const prevProps = this.carouselLogic.getPrevButtonProps(this.trackId);
+    const nextProps = this.carouselLogic.getNextButtonProps(this.trackId);
 
     return (
       <Host>
@@ -152,26 +159,35 @@ export class AndCarousel {
         >
           <div class={trackContainerClass}>
             <div
+              id={this.trackId}
               class={trackClass}
-              style={{ transform: `translateX(-${this.activeIndex * 100}%)` }}
-              aria-live={this.autoplay ? 'off' : 'polite'}
+              style={{ transform: `translateX(-${state.activeIndex * 100}%)` }}
+              {...trackProps}
             >
               <slot />
             </div>
           </div>
 
           {/* Previous */}
-          <button class={cn(controlBaseClass, 'left-2')} onClick={this.goToPrev} aria-label="Previous slide">
+          <button
+            class={cn(controlBaseClass, 'left-2')}
+            onClick={() => this.carouselLogic.actions.goToPrev()}
+            {...prevProps}
+          >
             <and-icon name="chevron-left" size={16} class="h-4 w-4" />
           </button>
 
           {/* Next */}
-          <button class={cn(controlBaseClass, 'right-2')} onClick={this.goToNext} aria-label="Next slide">
+          <button
+            class={cn(controlBaseClass, 'right-2')}
+            onClick={() => this.carouselLogic.actions.goToNext()}
+            {...nextProps}
+          >
             <and-icon name="chevron-right" size={16} class="h-4 w-4" />
           </button>
 
           {/* Dot indicators */}
-          {this.slideCount > 1 && (
+          {state.slideCount > 1 && (
             <div
               class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5"
               role="tablist"
@@ -181,10 +197,10 @@ export class AndCarousel {
                 <button
                   key={i}
                   role="tab"
-                  class={cn(dotBaseClass, i === this.activeIndex ? 'bg-foreground' : 'bg-muted-foreground/40')}
-                  aria-selected={i === this.activeIndex ? 'true' : 'false'}
+                  class={cn(dotBaseClass, i === state.activeIndex ? 'bg-foreground' : 'bg-muted-foreground/40')}
+                  aria-selected={i === state.activeIndex ? 'true' : 'false'}
                   aria-label={`Go to slide ${i + 1}`}
-                  onClick={() => this.goToSlide(i)}
+                  onClick={() => this.carouselLogic.actions.goToSlide(i)}
                 />
               ))}
             </div>

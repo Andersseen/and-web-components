@@ -44,6 +44,7 @@ export class AndModal {
   @Event({ bubbles: true, composed: true }) andClose: EventEmitter<void>;
 
   private modalLogic: ModalReturn;
+  private previouslyFocused: Element | null = null;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -60,14 +61,49 @@ export class AndModal {
     });
   }
 
+  componentDidLoad() {
+    if (this.open) {
+      this.trapFocus();
+    }
+  }
+
   /* ── Watchers ───────────────────────────────────────────────────── */
 
   @Watch('open')
   openChanged(newValue: boolean) {
     if (newValue) {
       this.modalLogic.actions.open();
+      // Wait for render before trapping focus
+      requestAnimationFrame(() => this.trapFocus());
     } else {
       this.modalLogic.actions.close();
+      this.restoreFocus();
+    }
+  }
+
+  /* ── Focus Trap ─────────────────────────────────────────────────── */
+
+  private getFocusableElements(): HTMLElement[] {
+    const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    return Array.from(this.el.shadowRoot?.querySelectorAll(selector) ?? []).filter((el): el is HTMLElement => {
+      const htmlEl = el as HTMLElement;
+      return htmlEl.offsetParent !== null && !htmlEl.hasAttribute('disabled') && !htmlEl.getAttribute('aria-hidden');
+    });
+  }
+
+  private trapFocus() {
+    if (!this.open) return;
+    this.previouslyFocused = document.activeElement;
+    const focusable = this.getFocusableElements();
+    if (focusable.length > 0) {
+      focusable[0].focus();
+    }
+  }
+
+  private restoreFocus() {
+    if (this.previouslyFocused instanceof HTMLElement) {
+      this.previouslyFocused.focus();
+      this.previouslyFocused = null;
     }
   }
 
@@ -76,12 +112,31 @@ export class AndModal {
   @Listen('keydown', { target: 'window' })
   handleKeyDown(ev: KeyboardEvent) {
     this.modalLogic.handleKeyDown(ev);
+
+    if (!this.open) return;
+
+    if (ev.key === 'Tab') {
+      const focusable = this.getFocusableElements();
+      if (focusable.length === 0) {
+        ev.preventDefault();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (ev.shiftKey && document.activeElement === first) {
+        ev.preventDefault();
+        last.focus();
+      } else if (!ev.shiftKey && document.activeElement === last) {
+        ev.preventDefault();
+        first.focus();
+      }
+    }
   }
 
   /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
 
   disconnectedCallback() {
-    // Close modal on unmount to prevent memory leaks and restore body scroll
     if (this.open) {
       this.modalLogic.actions.close();
     }

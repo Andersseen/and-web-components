@@ -492,9 +492,7 @@ export class AndNavbar {
     }
 
     const runRoute = () => {
-      const updateFromRoute = (this.navbar.actions as any).updateActiveFromRoute as
-        | ((pathname?: string, routeMatchMode?: RouteMatchMode) => void)
-        | undefined;
+      const updateFromRoute = this.navbar.actions.updateActiveFromRoute;
 
       if (typeof updateFromRoute === 'function') {
         updateFromRoute(undefined, this.routeMatchMode);

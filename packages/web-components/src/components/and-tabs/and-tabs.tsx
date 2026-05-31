@@ -85,12 +85,12 @@ export class AndTabs {
     const triggers = Array.from(this.el.querySelectorAll('and-tabs-trigger'));
     const contents = Array.from(this.el.querySelectorAll('and-tabs-content'));
 
-    triggers.forEach((trigger: any) => {
+    triggers.forEach((trigger: HTMLAndTabsTriggerElement) => {
       trigger.selected = trigger.value === this.value;
       trigger.tabsLogic = this.tabsLogic;
     });
 
-    contents.forEach((content: any) => {
+    contents.forEach((content: HTMLAndTabsContentElement) => {
       content.selected = content.value === this.value;
     });
   }

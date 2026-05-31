@@ -94,6 +94,7 @@ export class AndTooltip {
 
     return (
       <Host
+        {...triggerProps}
         onMouseEnter={() => this.tooltipLogic.handleMouseEnter()}
         onMouseLeave={() => this.tooltipLogic.handleMouseLeave()}
         onFocusin={() => this.tooltipLogic.handleFocusIn()}
@@ -101,7 +102,7 @@ export class AndTooltip {
       >
         <div class="relative inline-block">
           {/* Trigger */}
-          <div class="inline-block relative" {...triggerProps}>
+          <div class="inline-block relative">
             <slot />
           </div>
 

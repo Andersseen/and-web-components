@@ -1,15 +1,9 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Element, State, Listen, Watch } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { createIdGenerator } from '@andersseen/headless-components';
-
-export type SelectOption = {
-  text: string;
-  value: string;
-  disabled?: boolean;
-};
-
-export type SelectMenuPlacement = 'auto' | 'bottom' | 'top';
+import { createIdGenerator, createSelect } from '@andersseen/headless-components';
+import type { SelectReturn, SelectState } from '@andersseen/headless-components';
+import type { SelectOption, SelectMenuPlacement } from './types';
 
 const selectVariants = cva(
   [
@@ -38,24 +32,24 @@ export type SelectVariantProps = VariantProps<typeof selectVariants>;
 
 @Component({
   tag: 'and-select',
-  styleUrls: ['and-select.css'],
+  styleUrls: ['and-select.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndSelect {
   @Element() el: HTMLElement;
 
-  @State() private isOpen: boolean = false;
+  @State() private selectState: SelectState;
   @State() private resolvedPlacement: 'bottom' | 'top' = 'bottom';
   @State() private menuMaxHeight: number = 256;
-  @State() private highlightedIndex: number = -1;
 
+  private selectLogic: SelectReturn;
   private wrapperEl?: HTMLDivElement;
   private menuEl?: HTMLDivElement;
   private triggerEl?: HTMLButtonElement;
   private generateId = createIdGenerator('select');
   private listboxId = this.generateId('listbox');
-  private searchQuery = '';
-  private searchTimer?: ReturnType<typeof setTimeout>;
+  private prevHighlightedIndex = -1;
+  private prevIsOpen = false;
 
   /** Options rendered in the select menu. Can be an array or a JSON string. */
   @Prop() options: SelectOption[] | string = [];
@@ -98,263 +92,123 @@ export class AndSelect {
   /** Emitted when select loses focus / closes. */
   @Event({ bubbles: true, composed: true }) andBlur: EventEmitter<void>;
 
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.selectLogic = createSelect({
+      options: this.resolvedOptions,
+      defaultValue: this.value || undefined,
+      disabled: this.disabled,
+      onValueChange: v => {
+        this.value = v;
+        this.andSelectChange.emit(v);
+      },
+      onOpenChange: isOpen => {
+        if (!isOpen) {
+          this.andBlur.emit();
+        }
+      },
+    });
+    this.selectState = this.selectLogic.state;
+    this.prevIsOpen = this.selectState.isOpen;
+    this.prevHighlightedIndex = this.selectState.highlightedIndex;
+
+    this.selectLogic.subscribe(s => {
+      this.selectState = s;
+
+      if (this.prevIsOpen && !s.isOpen) {
+        this.triggerEl?.focus();
+      }
+
+      if (s.highlightedIndex !== this.prevHighlightedIndex) {
+        this.scrollOptionIntoView(s.highlightedIndex);
+      }
+
+      if (s.isOpen && !this.prevIsOpen) {
+        requestAnimationFrame(() => this.updateMenuPlacement());
+      }
+
+      this.prevIsOpen = s.isOpen;
+      this.prevHighlightedIndex = s.highlightedIndex;
+    });
+  }
+
+  disconnectedCallback() {
+    // No explicit cleanup needed; store subscriptions are lightweight
+  }
+
   /* ── Watchers ───────────────────────────────────────────────────── */
 
   @Watch('options')
-  @Watch('value')
-  resetHighlight() {
-    this.highlightedIndex = this.findSelectedIndex();
+  handleOptionsChange() {
+    this.selectLogic?.actions.setOptions(this.resolvedOptions);
   }
 
-  /* ── Outside interactions ─────────────────────────────────────── */
+  @Watch('value')
+  handleValueChange() {
+    if (this.selectLogic && this.value !== this.selectLogic.state.selectedValue) {
+      this.selectLogic.actions.selectValue(this.value);
+    }
+  }
+
+  @Watch('disabled')
+  handleDisabledChange(v: boolean) {
+    this.selectLogic?.actions.setDisabled(v);
+  }
+
+  /* ── Outside interactions ───────────────────────────────────────── */
 
   @Listen('click', { target: 'window' })
   handleOutsideClick(event: MouseEvent) {
-    if (!this.isOpen) {
+    if (!this.selectState?.isOpen) {
       return;
     }
     const path = event.composedPath();
     if (!path.includes(this.el)) {
-      this.closeMenu();
+      this.selectLogic.actions.close();
     }
   }
 
   @Listen('resize', { target: 'window' })
   handleWindowResize() {
-    if (this.isOpen) {
+    if (this.selectState?.isOpen) {
       this.updateMenuPlacement();
     }
   }
 
   @Listen('scroll', { target: 'window' })
   handleWindowScroll() {
-    if (this.isOpen) {
+    if (this.selectState?.isOpen) {
       this.updateMenuPlacement();
     }
   }
 
-  /* ── Keyboard handling (on host so it fires when trigger is focused) ── */
+  /* ── Keyboard handling (focus stays on trigger via aria-activedescendant) ── */
 
   private handleKeyDown = (event: KeyboardEvent) => {
-    const { key, altKey } = event;
-
-    // When closed, some keys open the menu
-    if (!this.isOpen) {
-      switch (key) {
-        case 'ArrowDown':
-        case 'ArrowUp':
-        case 'Enter':
-        case ' ':
-          event.preventDefault();
-          this.openMenu();
-          return;
-        default:
-          // Typeahead when closed also opens
-          if (this.isPrintableKey(key)) {
-            event.preventDefault();
-            this.openMenu();
-            this.handleTypeahead(key);
-          }
-          return;
-      }
-    }
-
-    // When open, full navigation
-    switch (key) {
-      case 'ArrowDown': {
-        event.preventDefault();
-        this.highlightNext(1);
-        return;
-      }
-      case 'ArrowUp': {
-        event.preventDefault();
-        this.highlightNext(-1);
-        return;
-      }
-      case 'Home': {
-        event.preventDefault();
-        this.highlightTo(0, 1);
-        return;
-      }
-      case 'End': {
-        event.preventDefault();
-        this.highlightTo(this.resolvedOptions.length - 1, -1);
-        return;
-      }
-      case 'Enter':
-      case ' ': {
-        event.preventDefault();
-        const option = this.resolvedOptions[this.highlightedIndex];
-        if (option && !option.disabled) {
-          this.selectValue(option.value);
-        }
-        return;
-      }
-      case 'Escape': {
-        event.preventDefault();
-        this.closeMenu();
-        return;
-      }
-      case 'Tab': {
-        // Tab closes menu and lets default focus move
-        this.closeMenu();
-        return;
-      }
-      default: {
-        if (altKey && (key === 'ArrowUp' || key === 'ArrowDown')) {
-          event.preventDefault();
-          this.closeMenu();
-          return;
-        }
-        if (this.isPrintableKey(key)) {
-          event.preventDefault();
-          this.handleTypeahead(key);
-        }
-      }
+    if (this.selectState.isOpen) {
+      this.selectLogic.handleMenuKeyDown(event);
+    } else {
+      this.selectLogic.handleTriggerKeyDown(event);
     }
   };
 
-  /* ── Menu control ─────────────────────────────────────────────── */
-
-  private openMenu() {
-    if (this.disabled) {
-      return;
-    }
-    this.isOpen = true;
-    this.highlightedIndex = this.findSelectedIndex();
-    if (this.highlightedIndex === -1) {
-      this.highlightTo(0, 1);
-    }
-    requestAnimationFrame(() => this.updateMenuPlacement());
-  }
-
-  private closeMenu() {
-    if (!this.isOpen) {
-      return;
-    }
-    this.isOpen = false;
-    this.highlightedIndex = -1;
-    this.andBlur.emit();
-    // Return focus to trigger
-    this.triggerEl?.focus();
-  }
+  /* ── Menu control ───────────────────────────────────────────────── */
 
   private toggleOpen = () => {
-    if (this.disabled) {
-      return;
-    }
-    if (this.isOpen) {
-      this.closeMenu();
-    } else {
-      this.openMenu();
-    }
+    this.selectLogic.actions.toggle();
   };
-
-  private selectValue(nextValue: string) {
-    this.value = nextValue;
-    this.andSelectChange.emit(nextValue);
-    this.closeMenu();
-  }
 
   private handleSelect = (nextValue: string) => {
-    this.selectValue(nextValue);
+    this.selectLogic.actions.selectValue(nextValue);
   };
 
-  /* ── Highlight navigation ─────────────────────────────────────── */
-
-  private findSelectedIndex(): number {
-    return this.resolvedOptions.findIndex(o => o.value === this.value);
-  }
-
-  private highlightNext(delta: 1 | -1) {
-    if (this.resolvedOptions.length === 0) {
-      return;
-    }
-    const start = this.highlightedIndex >= 0 ? this.highlightedIndex : delta > 0 ? -1 : this.resolvedOptions.length;
-    this.highlightTo(start + delta, delta);
-  }
-
-  private highlightTo(startIndex: number, direction: 1 | -1) {
-    if (this.resolvedOptions.length === 0) {
-      this.highlightedIndex = -1;
-      return;
-    }
-
-    let index = startIndex;
-    const len = this.resolvedOptions.length;
-
-    for (let i = 0; i < len; i++) {
-      // Wrap around
-      if (index >= len) {
-        index = 0;
-      }
-      if (index < 0) {
-        index = len - 1;
-      }
-
-      if (!this.resolvedOptions[index].disabled) {
-        this.highlightedIndex = index;
-        this.scrollOptionIntoView(index);
-        return;
-      }
-      index += direction;
-    }
-
-    // All disabled
-    this.highlightedIndex = -1;
-  }
+  /* ── DOM helpers ────────────────────────────────────────────────── */
 
   private scrollOptionIntoView(index: number) {
     const optionEl = this.menuEl?.querySelectorAll<HTMLElement>('.select-option')[index];
     if (optionEl) {
       optionEl.scrollIntoView({ block: 'nearest' });
-    }
-  }
-
-  /* ── Typeahead ────────────────────────────────────────────────── */
-
-  private isPrintableKey(key: string): boolean {
-    return (
-      key.length === 1 && !key.startsWith('Arrow') && !key.startsWith('Escape') && key !== 'Tab' && key !== 'Enter'
-    );
-  }
-
-  private handleTypeahead(key: string) {
-    // Accumulate search query
-    this.searchQuery += key.toLowerCase();
-    this.clearSearchTimer();
-    this.searchTimer = setTimeout(() => {
-      this.searchQuery = '';
-    }, 500);
-
-    // Search from current highlight + 1
-    const start = this.highlightedIndex >= 0 ? this.highlightedIndex + 1 : 0;
-    const len = this.resolvedOptions.length;
-
-    for (let i = 0; i < len; i++) {
-      const idx = (start + i) % len;
-      const option = this.resolvedOptions[idx];
-      if (option.disabled) {
-        continue;
-      }
-      if (option.text.toLowerCase().startsWith(this.searchQuery)) {
-        this.highlightedIndex = idx;
-        this.scrollOptionIntoView(idx);
-        return;
-      }
-    }
-
-    // If no match from cursor, search from beginning
-    for (let i = 0; i < len; i++) {
-      const option = this.resolvedOptions[i];
-      if (option.disabled) {
-        continue;
-      }
-      if (option.text.toLowerCase().startsWith(this.searchQuery)) {
-        this.highlightedIndex = i;
-        this.scrollOptionIntoView(i);
-        return;
-      }
     }
   }
 
@@ -371,14 +225,7 @@ export class AndSelect {
     return Array.isArray(this.options) ? this.options : [];
   }
 
-  private clearSearchTimer() {
-    if (this.searchTimer) {
-      clearTimeout(this.searchTimer);
-      this.searchTimer = undefined;
-    }
-  }
-
-  /* ── Placement ──────────────────────────────────────────────── */
+  /* ── Placement ──────────────────────────────────────────────────── */
 
   private updateMenuPlacement() {
     if (!this.wrapperEl) {
@@ -414,14 +261,19 @@ export class AndSelect {
     this.menuMaxHeight = Math.max(96, shouldOpenTop ? spaceAbove : spaceBelow);
   }
 
-  /* ── Render ───────────────────────────────────────────────────── */
+  /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
     const selected = this.resolvedOptions.find(option => option.value === this.value);
     const hasValue = !!selected;
     const displayText = selected?.text ?? this.placeholder;
     const activeDescendant =
-      this.isOpen && this.highlightedIndex >= 0 ? `${this.listboxId}-option-${this.highlightedIndex}` : undefined;
+      this.selectState.isOpen && this.selectState.highlightedIndex >= 0
+        ? `${this.listboxId}-option-${this.selectState.highlightedIndex}`
+        : undefined;
+
+    const triggerProps = this.selectLogic.getTriggerProps();
+    const menuProps = this.selectLogic.getMenuProps();
 
     return (
       <Host class="block">
@@ -444,8 +296,7 @@ export class AndSelect {
             )}
             disabled={this.disabled}
             role="combobox"
-            aria-haspopup="listbox"
-            aria-expanded={String(this.isOpen)}
+            {...triggerProps}
             aria-controls={this.listboxId}
             aria-activedescendant={activeDescendant}
             aria-label={this.label}
@@ -462,34 +313,33 @@ export class AndSelect {
 
           <div
             id={this.listboxId}
-            class={cn('select-menu', this.isOpen ? 'select-menu--open' : 'select-menu--closed')}
+            class={cn('select-menu', this.selectState.isOpen ? 'select-menu--open' : 'select-menu--closed')}
             data-placement={this.resolvedPlacement}
-            role="listbox"
-            aria-hidden={this.isOpen ? 'false' : 'true'}
+            {...menuProps}
+            aria-hidden={this.selectState.isOpen ? 'false' : 'true'}
             style={{ maxHeight: `${this.menuMaxHeight}px` }}
             ref={el => {
               this.menuEl = el as HTMLDivElement;
             }}
           >
             {this.resolvedOptions.map((option, index) => {
-              const isSelected = option.value === this.value;
-              const isHighlighted = index === this.highlightedIndex;
+              const itemProps = this.selectLogic.getItemProps(option, index);
+              const isHighlighted = index === this.selectState.highlightedIndex;
               return (
                 <button
                   type="button"
                   id={`${this.listboxId}-option-${index}`}
-                  role="option"
-                  aria-selected={isSelected ? 'true' : 'false'}
+                  {...itemProps}
                   class={cn(
                     'select-option',
-                    isSelected && 'select-option--selected',
+                    itemProps['aria-selected'] === 'true' && 'select-option--selected',
                     isHighlighted && 'select-option--highlighted',
                   )}
                   disabled={option.disabled}
                   onClick={() => this.handleSelect(option.value)}
                 >
                   <span>{option.text}</span>
-                  {isSelected && <and-icon name="check" size={16} />}
+                  {itemProps['aria-selected'] === 'true' && <and-icon name="check" size={16} />}
                 </button>
               );
             })}

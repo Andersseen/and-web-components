@@ -12,15 +12,17 @@ export * from './accordion';
 export * from './tabs';
 export * from './dropdown';
 export * from './modal';
-export * from './modal/modal-v2';
 export * from './tooltip';
 export * from './toast';
 export * from './drawer';
+export * from './input';
 export * from './alert';
 export * from './navbar';
 export * from './sidebar';
 export * from './breadcrumb';
+export * from './carousel';
 export * from './menu';
+export * from './select';
 export * from './menu-list';
 export * from './context-menu';
 

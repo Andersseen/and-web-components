@@ -12,8 +12,7 @@
  * ```
  */
 
-const getGlobalObject = (): any =>
-  typeof window !== 'undefined' ? window : globalThis;
+const getGlobalObject = (): typeof globalThis => (typeof window !== 'undefined' ? window : globalThis);
 
 /**
  * Enable animations globally for every @andersseen component.

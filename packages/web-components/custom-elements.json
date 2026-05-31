@@ -3076,7 +3076,8 @@
                 "text": "\"auto\" | \"bottom\" | \"top\"",
                 "references": [
                   {
-                    "name": "SelectMenuPlacement"
+                    "name": "SelectMenuPlacement",
+                    "module": "./types"
                   }
                 ]
               },
@@ -3098,7 +3099,8 @@
                 "text": "SelectOption[] | string",
                 "references": [
                   {
-                    "name": "SelectOption"
+                    "name": "SelectOption",
+                    "module": "./types"
                   }
                 ]
               },
@@ -3196,7 +3198,8 @@
                 "text": "\"auto\" | \"bottom\" | \"top\"",
                 "references": [
                   {
-                    "name": "SelectMenuPlacement"
+                    "name": "SelectMenuPlacement",
+                    "module": "./types"
                   }
                 ]
               },
@@ -3224,7 +3227,8 @@
                 "text": "SelectOption[] | string",
                 "references": [
                   {
-                    "name": "SelectOption"
+                    "name": "SelectOption",
+                    "module": "./types"
                   }
                 ]
               },

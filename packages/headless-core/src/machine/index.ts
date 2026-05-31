@@ -37,7 +37,7 @@
 /** An event sent to the machine. */
 export interface MachineEvent {
   type: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /** A guard function. Returns true if the transition is allowed. */

@@ -32,7 +32,7 @@ import {
   ResponsiveStage,
   RouteMatchMode,
 } from './components/and-navbar/and-navbar';
-import { SelectMenuPlacement, SelectOption } from './components/and-select/and-select';
+import { SelectMenuPlacement, SelectOption } from './components/and-select/types';
 import { SidebarItem, SidebarItemStyle, SidebarVariantProps } from './components/and-sidebar/and-sidebar';
 export { ContentItemProps } from './components/and-accordion/and-accordion-content';
 export {
@@ -61,7 +61,7 @@ export {
   ResponsiveStage,
   RouteMatchMode,
 } from './components/and-navbar/and-navbar';
-export { SelectMenuPlacement, SelectOption } from './components/and-select/and-select';
+export { SelectMenuPlacement, SelectOption } from './components/and-select/types';
 export { SidebarItem, SidebarItemStyle, SidebarVariantProps } from './components/and-sidebar/and-sidebar';
 export namespace Components {
   /**
