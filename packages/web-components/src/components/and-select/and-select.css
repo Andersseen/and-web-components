@@ -89,9 +89,12 @@
   background: hsl(var(--accent) / 0.8);
 }
 
+.select-option--highlighted,
 .select-option:focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 1px;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
 }
 
 .select-option--selected {

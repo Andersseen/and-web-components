@@ -39,7 +39,7 @@ const tooltipVariants = cva(
 
 @Component({
   tag: 'and-tooltip',
-  styleUrls: ['and-tooltip.css', '../../global/global.css'],
+  styleUrls: ['../../global/component-base.css', '../../global/animations.css', 'and-tooltip.css'],
   shadow: true,
 })
 export class AndTooltip {
@@ -94,6 +94,7 @@ export class AndTooltip {
 
     return (
       <Host
+        {...triggerProps}
         onMouseEnter={() => this.tooltipLogic.handleMouseEnter()}
         onMouseLeave={() => this.tooltipLogic.handleMouseLeave()}
         onFocusin={() => this.tooltipLogic.handleFocusIn()}
@@ -101,7 +102,7 @@ export class AndTooltip {
       >
         <div class="relative inline-block">
           {/* Trigger */}
-          <div class="inline-block relative" {...triggerProps}>
+          <div class="inline-block relative">
             <slot />
           </div>
 

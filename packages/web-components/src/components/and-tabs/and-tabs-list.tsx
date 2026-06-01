@@ -1,14 +1,13 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import { cn } from '../../utils/cn';
 
-const tabsListClass = [
-  'flex flex-row w-full h-10 items-center rounded-md',
-  'bg-muted p-1 text-muted-foreground',
-].join(' ');
+const tabsListClass = ['flex flex-row w-full h-10 items-center rounded-md', 'bg-muted p-1 text-muted-foreground'].join(
+  ' ',
+);
 
 @Component({
   tag: 'and-tabs-list',
-  styleUrls: ['and-tabs.css', '../../global/global.css'],
+  styleUrls: ['and-tabs.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndTabsList {
@@ -17,11 +16,7 @@ export class AndTabsList {
 
   render() {
     return (
-      <Host
-        role="tablist"
-        aria-orientation={this.orientation}
-        class={cn(tabsListClass)}
-      >
+      <Host role="tablist" aria-orientation={this.orientation} class={cn(tabsListClass)}>
         <slot />
       </Host>
     );

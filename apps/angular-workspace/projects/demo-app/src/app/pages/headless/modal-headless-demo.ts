@@ -10,23 +10,17 @@ import { createModal } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Modal / Dialog
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Modal / Dialog</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A window overlaid on the primary content. Manages focus trapping,
-          keyboard navigation, and ARIA dialog semantics.
+          A window overlaid on the primary content. Manages focus trapping, keyboard navigation, and ARIA dialog
+          semantics.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-12 flex items-center justify-center min-h-[200px]">
             <button
               class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-5 bg-primary text-primary-foreground border-0 cursor-pointer transition-opacity hover:opacity-90"
@@ -44,9 +38,7 @@ import { createModal } from '@andersseen/headless-components';
             (click)="onOverlayClick()"
             [attr.data-state]="isOpen() ? 'open' : 'closed'"
           ></div>
-          <div
-            class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
-          >
+          <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
             <div
               class="relative w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-2xl pointer-events-auto animate-scale-in"
               role="dialog"
@@ -55,12 +47,10 @@ import { createModal } from '@andersseen/headless-components';
               tabindex="-1"
             >
               <div class="mb-6">
-                <h3 class="text-lg font-semibold text-foreground m-0 mb-2">
-                  Are you sure?
-                </h3>
+                <h3 class="text-lg font-semibold text-foreground m-0 mb-2">Are you sure?</h3>
                 <p class="text-sm text-muted-foreground leading-relaxed m-0">
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
+                  This action cannot be undone. This will permanently delete your account and remove your data from our
+                  servers.
                 </p>
               </div>
               <div class="flex justify-end gap-2">
@@ -91,12 +81,8 @@ import { createModal } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createModal {{ '}' }} from '@andersseen/headless-components';
@@ -125,23 +111,16 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
       <!-- Headless Raw Example -->
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
-          The headless core manages open/close state, Escape key, and overlay
-          click. You just render the elements.
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
+          The headless core manages open/close state, Escape key, and overlay click. You just render the elements.
         </p>
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <button (click)="openRaw()">Open Raw Modal</button>
 
           @if (isRawOpen()) {
@@ -157,8 +136,7 @@ window.addEventListener('keydown', modal.handleKeyDown);</code></pre>
               >
                 <h4 style="margin:0 0 8px 0;">Raw Modal</h4>
                 <p style="margin:0 0 16px 0;color:#555;">
-                  This is a completely unstyled modal powered by the headless
-                  core.
+                  This is a completely unstyled modal powered by the headless core.
                 </p>
                 <button (click)="closeRaw()">Close</button>
               </div>
@@ -207,7 +185,6 @@ export default class ModalHeadlessDemo {
     closeOnOverlayClick: true,
     onOpenChange: (isOpen: boolean) => {
       this.state.set(this._modal.state);
-      console.log('Modal open:', isOpen);
     },
   });
 
@@ -239,7 +216,6 @@ export default class ModalHeadlessDemo {
   }
 
   confirm() {
-    console.log('Confirmed!');
     this.closeModal();
   }
 

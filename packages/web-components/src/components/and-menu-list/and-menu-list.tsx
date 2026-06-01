@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop, Element, State } from '@stencil/core';
+import { Component, h, Host, Prop, Element, State, Watch } from '@stencil/core';
 import { cn } from '../../utils/cn';
 import { createMenuList, type MenuListReturn } from '@andersseen/headless-components';
 
@@ -6,11 +6,7 @@ import { createMenuList, type MenuListReturn } from '@andersseen/headless-compon
  * Base Styles
  * ──────────────────────────────────────────────────────────────────── */
 
-const menuListBaseClass = [
-  'flex flex-col gap-0.5 p-1',
-  'rounded-md',
-  'text-foreground font-sans',
-].join(' ');
+const menuListBaseClass = ['flex flex-col gap-0.5 p-1', 'rounded-md', 'text-foreground font-sans'].join(' ');
 
 /* ────────────────────────────────────────────────────────────────────
  * Component
@@ -18,7 +14,7 @@ const menuListBaseClass = [
 
 @Component({
   tag: 'and-menu-list',
-  styleUrls: ['and-menu-list.css', '../../global/global.css'],
+  styleUrls: ['and-menu-list.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndMenuList {
@@ -40,6 +36,17 @@ export class AndMenuList {
     });
   }
 
+  @Watch('ariaMenuLabel')
+  ariaMenuLabelChanged(newValue: string) {
+    this.menuLogic?.actions.setItems(this.menuLogic.state.items);
+    // Note: headless menu-list doesn't expose a setAriaLabel action;
+    // re-creating is the simplest way to update the label.
+    this.menuLogic = createMenuList({
+      ariaLabel: newValue,
+      items: this.menuLogic.state.items,
+    });
+  }
+
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
@@ -48,11 +55,7 @@ export class AndMenuList {
 
     return (
       <Host>
-        <ul
-          {...menuProps}
-          class={classes}
-          onKeyDown={(e: KeyboardEvent) => this.menuLogic?.handleMenuKeyDown(e)}
-        >
+        <ul {...menuProps} class={classes} onKeyDown={(e: KeyboardEvent) => this.menuLogic?.handleMenuKeyDown(e)}>
           <slot />
         </ul>
       </Host>

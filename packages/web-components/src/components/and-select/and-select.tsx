@@ -1,14 +1,9 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Element, State, Listen } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Element, State, Listen, Watch } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-
-export type SelectOption = {
-  text: string;
-  value: string;
-  disabled?: boolean;
-};
-
-export type SelectMenuPlacement = 'auto' | 'bottom' | 'top';
+import { createIdGenerator, createSelect } from '@andersseen/headless-components';
+import type { SelectReturn, SelectState } from '@andersseen/headless-components';
+import type { SelectOption, SelectMenuPlacement } from './types';
 
 const selectVariants = cva(
   [
@@ -37,20 +32,27 @@ export type SelectVariantProps = VariantProps<typeof selectVariants>;
 
 @Component({
   tag: 'and-select',
-  styleUrls: ['and-select.css', '../../global/global.css'],
+  styleUrls: ['and-select.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndSelect {
   @Element() el: HTMLElement;
-  @State() private isOpen: boolean = false;
+
+  @State() private selectState: SelectState;
   @State() private resolvedPlacement: 'bottom' | 'top' = 'bottom';
   @State() private menuMaxHeight: number = 256;
 
+  private selectLogic: SelectReturn;
   private wrapperEl?: HTMLDivElement;
   private menuEl?: HTMLDivElement;
+  private triggerEl?: HTMLButtonElement;
+  private generateId = createIdGenerator('select');
+  private listboxId = this.generateId('listbox');
+  private prevHighlightedIndex = -1;
+  private prevIsOpen = false;
 
-  /** Options rendered in the select menu. */
-  @Prop() options: SelectOption[] = [];
+  /** Options rendered in the select menu. Can be an array or a JSON string. */
+  @Prop() options: SelectOption[] | string = [];
 
   /** Placeholder shown when no value is selected. */
   @Prop({ reflect: true }) placeholder: string = 'Select an option';
@@ -72,16 +74,13 @@ export class AndSelect {
 
   /**
    * Menu placement strategy.
-   * - `auto`: chooses top/bottom based on viewport space
-   * - `bottom`: always opens below
-   * - `top`: always opens above
    */
   @Prop({ reflect: true }) menuPlacement: SelectMenuPlacement = 'auto';
 
-  /** Accessible label for the select (used when no visible label exists). */
+  /** Accessible label for the select. */
   @Prop() label: string;
 
-  /** ID of element describing this field (e.g. helper or error text). */
+  /** ID of element describing this field. */
   @Prop() describedBy: string;
 
   /** Additional CSS classes from the consumer. */
@@ -90,53 +89,148 @@ export class AndSelect {
   /** Emitted when selected value changes. */
   @Event({ bubbles: true, composed: true }) andSelectChange: EventEmitter<string>;
 
-  /** Emitted when select loses focus. */
+  /** Emitted when select loses focus / closes. */
   @Event({ bubbles: true, composed: true }) andBlur: EventEmitter<void>;
 
-  @Listen('click', { target: 'window' })
-  handleOutsideClick(event: MouseEvent) {
-    if (!this.isOpen) return;
-    const path = event.composedPath();
-    if (!path.includes(this.el)) {
-      this.isOpen = false;
-      this.andBlur.emit();
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.selectLogic = createSelect({
+      options: this.resolvedOptions,
+      defaultValue: this.value || undefined,
+      disabled: this.disabled,
+      onValueChange: v => {
+        this.value = v;
+        this.andSelectChange.emit(v);
+      },
+      onOpenChange: isOpen => {
+        if (!isOpen) {
+          this.andBlur.emit();
+        }
+      },
+    });
+    this.selectState = this.selectLogic.state;
+    this.prevIsOpen = this.selectState.isOpen;
+    this.prevHighlightedIndex = this.selectState.highlightedIndex;
+
+    this.selectLogic.subscribe(s => {
+      this.selectState = s;
+
+      if (this.prevIsOpen && !s.isOpen) {
+        this.triggerEl?.focus();
+      }
+
+      if (s.highlightedIndex !== this.prevHighlightedIndex) {
+        this.scrollOptionIntoView(s.highlightedIndex);
+      }
+
+      if (s.isOpen && !this.prevIsOpen) {
+        requestAnimationFrame(() => this.updateMenuPlacement());
+      }
+
+      this.prevIsOpen = s.isOpen;
+      this.prevHighlightedIndex = s.highlightedIndex;
+    });
+  }
+
+  disconnectedCallback() {
+    // No explicit cleanup needed; store subscriptions are lightweight
+  }
+
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
+  @Watch('options')
+  handleOptionsChange() {
+    this.selectLogic?.actions.setOptions(this.resolvedOptions);
+  }
+
+  @Watch('value')
+  handleValueChange() {
+    if (this.selectLogic && this.value !== this.selectLogic.state.selectedValue) {
+      this.selectLogic.actions.selectValue(this.value);
     }
   }
 
-  @Listen('keydown', { target: 'window' })
-  handleWindowKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape' && this.isOpen) {
-      this.isOpen = false;
-      this.andBlur.emit();
+  @Watch('disabled')
+  handleDisabledChange(v: boolean) {
+    this.selectLogic?.actions.setDisabled(v);
+  }
+
+  /* ── Outside interactions ───────────────────────────────────────── */
+
+  @Listen('click', { target: 'window' })
+  handleOutsideClick(event: MouseEvent) {
+    if (!this.selectState?.isOpen) {
+      return;
+    }
+    const path = event.composedPath();
+    if (!path.includes(this.el)) {
+      this.selectLogic.actions.close();
     }
   }
 
   @Listen('resize', { target: 'window' })
   handleWindowResize() {
-    if (this.isOpen) this.updateMenuPlacement();
+    if (this.selectState?.isOpen) {
+      this.updateMenuPlacement();
+    }
   }
 
   @Listen('scroll', { target: 'window' })
   handleWindowScroll() {
-    if (this.isOpen) this.updateMenuPlacement();
+    if (this.selectState?.isOpen) {
+      this.updateMenuPlacement();
+    }
   }
 
-  private handleSelect = (nextValue: string) => {
-    this.value = nextValue;
-    this.andSelectChange.emit(nextValue);
-    this.isOpen = false;
-  };
+  /* ── Keyboard handling (focus stays on trigger via aria-activedescendant) ── */
 
-  private toggleOpen = () => {
-    if (this.disabled) return;
-    this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      requestAnimationFrame(() => this.updateMenuPlacement());
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (this.selectState.isOpen) {
+      this.selectLogic.handleMenuKeyDown(event);
+    } else {
+      this.selectLogic.handleTriggerKeyDown(event);
     }
   };
 
+  /* ── Menu control ───────────────────────────────────────────────── */
+
+  private toggleOpen = () => {
+    this.selectLogic.actions.toggle();
+  };
+
+  private handleSelect = (nextValue: string) => {
+    this.selectLogic.actions.selectValue(nextValue);
+  };
+
+  /* ── DOM helpers ────────────────────────────────────────────────── */
+
+  private scrollOptionIntoView(index: number) {
+    const optionEl = this.menuEl?.querySelectorAll<HTMLElement>('.select-option')[index];
+    if (optionEl) {
+      optionEl.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  /** Parsed options — handles both array and JSON string input */
+  private get resolvedOptions(): SelectOption[] {
+    if (typeof this.options === 'string') {
+      try {
+        const parsed = JSON.parse(this.options);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(this.options) ? this.options : [];
+  }
+
+  /* ── Placement ──────────────────────────────────────────────────── */
+
   private updateMenuPlacement() {
-    if (!this.wrapperEl) return;
+    if (!this.wrapperEl) {
+      return;
+    }
 
     const rect = this.wrapperEl.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
@@ -167,10 +261,19 @@ export class AndSelect {
     this.menuMaxHeight = Math.max(96, shouldOpenTop ? spaceAbove : spaceBelow);
   }
 
+  /* ── Render ─────────────────────────────────────────────────────── */
+
   render() {
-    const selected = this.options.find(option => option.value === this.value);
+    const selected = this.resolvedOptions.find(option => option.value === this.value);
     const hasValue = !!selected;
     const displayText = selected?.text ?? this.placeholder;
+    const activeDescendant =
+      this.selectState.isOpen && this.selectState.highlightedIndex >= 0
+        ? `${this.listboxId}-option-${this.selectState.highlightedIndex}`
+        : undefined;
+
+    const triggerProps = this.selectLogic.getTriggerProps();
+    const menuProps = this.selectLogic.getMenuProps();
 
     return (
       <Host class="block">
@@ -182,15 +285,26 @@ export class AndSelect {
         >
           <button
             type="button"
-            class={cn(selectVariants({ hasError: this.hasError }), !hasValue && 'text-muted-foreground', hasValue && 'text-foreground', this.customClass)}
+            ref={el => {
+              this.triggerEl = el as HTMLButtonElement;
+            }}
+            class={cn(
+              selectVariants({ hasError: this.hasError }),
+              !hasValue && 'text-muted-foreground',
+              hasValue && 'text-foreground',
+              this.customClass,
+            )}
             disabled={this.disabled}
             role="combobox"
-            aria-haspopup="listbox"
-            aria-expanded={String(this.isOpen)}
+            {...triggerProps}
+            aria-controls={this.listboxId}
+            aria-activedescendant={activeDescendant}
             aria-label={this.label}
             aria-describedby={this.describedBy}
             aria-invalid={this.hasError ? 'true' : undefined}
+            aria-required={this.required ? 'true' : undefined}
             onClick={this.toggleOpen}
+            onKeyDown={this.handleKeyDown}
           >
             <span class="select-value">{displayText}</span>
           </button>
@@ -198,28 +312,34 @@ export class AndSelect {
           <and-icon class="select-icon" name="chevron-down" size={16} />
 
           <div
-            class={cn('select-menu', this.isOpen ? 'select-menu--open' : 'select-menu--closed')}
+            id={this.listboxId}
+            class={cn('select-menu', this.selectState.isOpen ? 'select-menu--open' : 'select-menu--closed')}
             data-placement={this.resolvedPlacement}
-            role="listbox"
-            aria-hidden={this.isOpen ? 'false' : 'true'}
+            {...menuProps}
+            aria-hidden={this.selectState.isOpen ? 'false' : 'true'}
             style={{ maxHeight: `${this.menuMaxHeight}px` }}
             ref={el => {
               this.menuEl = el as HTMLDivElement;
             }}
           >
-            {this.options.map(option => {
-              const isSelected = option.value === this.value;
+            {this.resolvedOptions.map((option, index) => {
+              const itemProps = this.selectLogic.getItemProps(option, index);
+              const isHighlighted = index === this.selectState.highlightedIndex;
               return (
                 <button
                   type="button"
-                  role="option"
-                  aria-selected={isSelected ? 'true' : 'false'}
-                  class={cn('select-option', isSelected && 'select-option--selected')}
+                  id={`${this.listboxId}-option-${index}`}
+                  {...itemProps}
+                  class={cn(
+                    'select-option',
+                    itemProps['aria-selected'] === 'true' && 'select-option--selected',
+                    isHighlighted && 'select-option--highlighted',
+                  )}
                   disabled={option.disabled}
                   onClick={() => this.handleSelect(option.value)}
                 >
                   <span>{option.text}</span>
-                  {isSelected && <and-icon name="check" size={16} />}
+                  {itemProps['aria-selected'] === 'true' && <and-icon name="check" size={16} />}
                 </button>
               );
             })}

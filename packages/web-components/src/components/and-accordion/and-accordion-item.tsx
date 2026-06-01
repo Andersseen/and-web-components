@@ -15,7 +15,7 @@ interface AndAccordionChildElement extends HTMLElement {
  */
 @Component({
   tag: 'and-accordion-item',
-  styleUrl: '../../global/global.css',
+  styleUrl: '../../global/component-base.css',
   shadow: true,
 })
 export class AndAccordionItem {
@@ -51,7 +51,9 @@ export class AndAccordionItem {
 
   private findParentAccordion() {
     const parent = this.el.closest('and-accordion') as AndAccordionElement | null;
-    if (!parent?.getAccordionLogic) return;
+    if (!parent?.getAccordionLogic) {
+      return;
+    }
 
     this.accordionLogic = parent.getAccordionLogic();
     this.syncState();
@@ -67,14 +69,18 @@ export class AndAccordionItem {
   /* ── State sync ─────────────────────────────────────────────────── */
 
   private syncState() {
-    if (!this.accordionLogic) return;
+    if (!this.accordionLogic) {
+      return;
+    }
 
     this.isExpanded = this.accordionLogic.queries.isExpanded(this.value);
     this.propagateToChildren();
   }
 
   private propagateToChildren() {
-    if (!this.accordionLogic) return;
+    if (!this.accordionLogic) {
+      return;
+    }
 
     const trigger = this.el.querySelector('and-accordion-trigger') as AndAccordionChildElement | null;
     const content = this.el.querySelector('and-accordion-content') as AndAccordionChildElement | null;

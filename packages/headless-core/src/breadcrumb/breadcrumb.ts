@@ -3,9 +3,12 @@
  *
  * Provides state management and accessibility for breadcrumb navigation.
  * Handles ARIA semantics, current-page tracking, and keyboard navigation.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type { AriaAttributes, DataAttributes } from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes } from '../types/common';
 
 /**
  * Configuration for a single breadcrumb item
@@ -57,40 +60,45 @@ export interface BreadcrumbState {
  * Props for the <nav> wrapper element
  */
 export interface BreadcrumbNavProps extends AriaAttributes {
-  "aria-label": string;
-  role: "navigation";
+  'aria-label': string;
+  'role': 'navigation';
 }
 
 /**
  * Props for the ordered list element
  */
 export interface BreadcrumbListProps {
-  role: "list";
+  role: 'list';
 }
 
 /**
  * Props for an individual breadcrumb item
  */
 export interface BreadcrumbItemProps extends AriaAttributes, DataAttributes {
-  "aria-current"?: "page";
-  "data-state"?: "active" | "inactive";
+  'aria-current'?: 'page';
+  'data-state'?: 'active' | 'inactive';
 }
 
 /**
  * Props for the link/text element inside a breadcrumb item
  */
 export interface BreadcrumbLinkProps extends AriaAttributes {
-  href?: string;
-  "aria-current"?: "page";
-  tabindex?: number;
+  'href'?: string;
+  'aria-current'?: 'page';
+  'tabindex'?: number;
 }
 
 /**
  * Return type of createBreadcrumb
  */
 export interface BreadcrumbReturn {
-  /** Current state. */
+  /** Current store.state. */
   state: Readonly<BreadcrumbState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<BreadcrumbState>) => void) => () => void;
 
   /** Actions. */
   actions: {
@@ -128,61 +136,57 @@ export interface BreadcrumbReturn {
  * const linkProps = breadcrumb.getLinkProps(item);
  * ```
  */
-export function createBreadcrumb(
-  config: BreadcrumbConfig = {},
-): BreadcrumbReturn {
-  let state: BreadcrumbState = {
+export function createBreadcrumb(config: BreadcrumbConfig = {}): BreadcrumbReturn {
+  const store = createStore<BreadcrumbState>({
     items: config.items ?? [],
-    ariaLabel: config.ariaLabel ?? "Breadcrumb",
-  };
+    ariaLabel: config.ariaLabel ?? 'Breadcrumb',
+  });
 
   /* ── Actions ─────────────────────────────────────────────────────── */
 
   const setItems = (items: BreadcrumbItemConfig[]): void => {
-    state = { ...state, items };
+    store.setState({ items });
   };
 
   const setCurrentItem = (itemId: string): void => {
-    state = {
-      ...state,
-      items: state.items.map((item) => ({
+    store.setState({
+      items: store.state.items.map(item => ({
         ...item,
         current: item.id === itemId,
       })),
-    };
+    });
   };
 
   /* ── Props getters ───────────────────────────────────────────────── */
 
   const getNavProps = (): BreadcrumbNavProps => ({
-    role: "navigation",
-    "aria-label": state.ariaLabel,
+    'role': 'navigation',
+    'aria-label': store.state.ariaLabel,
   });
 
   const getListProps = (): BreadcrumbListProps => ({
-    role: "list",
+    role: 'list',
   });
 
   const getItemProps = (item: BreadcrumbItemConfig): BreadcrumbItemProps => ({
-    ...(item.current ? { "aria-current": "page" as const } : {}),
-    "data-state": item.current ? "active" : "inactive",
+    ...(item.current ? { 'aria-current': 'page' as const } : {}),
+    'data-state': item.current ? 'active' : 'inactive',
   });
 
   const getLinkProps = (item: BreadcrumbItemConfig): BreadcrumbLinkProps => ({
     ...(item.href && !item.current ? { href: item.href } : {}),
-    ...(item.current ? { "aria-current": "page" as const } : {}),
+    ...(item.current ? { 'aria-current': 'page' as const } : {}),
     tabindex: item.current ? undefined : 0,
   });
 
   /* ── Keyboard ────────────────────────────────────────────────────── */
 
-  const handleKeyDown = (
-    event: KeyboardEvent,
-    item: BreadcrumbItemConfig,
-  ): void => {
-    if (item.current) return;
+  const handleKeyDown = (event: KeyboardEvent, item: BreadcrumbItemConfig): void => {
+    if (item.current) {
+      return;
+    }
 
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       config.onNavigate?.(item);
     }
@@ -192,7 +196,10 @@ export function createBreadcrumb(
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       setItems,

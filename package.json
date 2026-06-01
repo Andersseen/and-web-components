@@ -34,11 +34,8 @@
     "storybook": "pnpm -C packages/web-components storybook",
     "build-storybook": "pnpm -C packages/web-components build-storybook",
     "prepare": "husky",
-    "wrangler:dev": "pnpm -C packages/mcp-server dev",
-    "wrangler:deploy": "pnpm -C packages/mcp-server deploy",
     "deploy:storybook": "pnpm build-storybook && wrangler pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook",
-    "deploy:mcp": "pnpm -C packages/mcp-server deploy",
-    "deploy:all": "pnpm deploy:storybook && pnpm deploy:mcp && pnpm deploy:landing && pnpm deploy:cloudflare"
+    "deploy:all": "pnpm deploy:storybook && pnpm deploy:landing && pnpm deploy:cloudflare"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,json,md,scss,css,yaml,yml}": [

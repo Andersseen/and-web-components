@@ -20,21 +20,21 @@
 // ─── Attribute Constants ───────────────────────────────────────────────────
 
 const ATTR = {
-  MOTION: "and-motion",
-  TRIGGER: "and-motion-trigger",
-  DURATION: "and-motion-duration",
-  DELAY: "and-motion-delay",
-  EASING: "and-motion-easing",
-  STATE: "and-motion-state",
-  ONCE: "and-motion-once",
+  MOTION: 'and-motion',
+  TRIGGER: 'and-motion-trigger',
+  DURATION: 'and-motion-duration',
+  DELAY: 'and-motion-delay',
+  EASING: 'and-motion-easing',
+  STATE: 'and-motion-state',
+  ONCE: 'and-motion-once',
 } as const;
 
-const STATE_ACTIVE = "active";
+const STATE_ACTIVE = 'active';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
 /** Supported trigger modes. */
-export type TriggerType = "enter" | "hover" | "tap";
+export type TriggerType = 'enter' | 'hover' | 'tap';
 
 export interface MotionControllerOptions {
   /**
@@ -84,26 +84,17 @@ export class MotionController {
   private destroyed = false;
 
   constructor(options: MotionControllerOptions = {}) {
-    const {
-      root = document.body,
-      threshold = 0.1,
-      rootMargin = "0px",
-      once = true,
-    } = options;
+    const { root = document.body, threshold = 0.1, rootMargin = '0px', once = true } = options;
 
     this.root = root;
     this.once = once;
 
     // ── Reduced-motion detection (JS layer, mirrors CSS @media) ──
     this.prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
     // ── Create shared IntersectionObserver ──
-    this.observer = new IntersectionObserver(
-      (entries) => this.handleIntersections(entries),
-      { threshold, rootMargin },
-    );
+    this.observer = new IntersectionObserver(entries => this.handleIntersections(entries), { threshold, rootMargin });
 
     // ── Scan & wire ──
     this.scan();
@@ -116,13 +107,13 @@ export class MotionController {
    * Safe to call multiple times (idempotent per element).
    */
   scan(): void {
-    if (this.destroyed) return;
+    if (this.destroyed) {
+      return;
+    }
 
-    const elements = this.root.querySelectorAll<HTMLElement>(
-      `[${ATTR.MOTION}]`,
-    );
+    const elements = this.root.querySelectorAll<HTMLElement>(`[${ATTR.MOTION}]`);
 
-    elements.forEach((el) => this.setupElement(el));
+    elements.forEach(el => this.setupElement(el));
   }
 
   /**
@@ -130,7 +121,9 @@ export class MotionController {
    * Call this when the host component / page unmounts.
    */
   destroy(): void {
-    if (this.destroyed) return;
+    if (this.destroyed) {
+      return;
+    }
     this.destroyed = true;
 
     // Disconnect IntersectionObserver
@@ -149,7 +142,9 @@ export class MotionController {
 
   private setupElement(el: HTMLElement): void {
     // Skip elements already wired
-    if (this.observedElements.has(el)) return;
+    if (this.observedElements.has(el)) {
+      return;
+    }
     this.observedElements.add(el);
 
     const trigger = this.resolveTrigger(el);
@@ -158,13 +153,13 @@ export class MotionController {
     this.applyTokenOverrides(el);
 
     switch (trigger) {
-      case "enter":
+      case 'enter':
         this.setupEnterTrigger(el);
         break;
-      case "hover":
+      case 'hover':
         this.setupHoverTrigger(el);
         break;
-      case "tap":
+      case 'tap':
         this.setupTapTrigger(el);
         break;
     }
@@ -176,25 +171,37 @@ export class MotionController {
    */
   private applyTokenOverrides(el: HTMLElement): void {
     const duration = el.getAttribute(ATTR.DURATION);
-    if (duration) el.style.setProperty("--and-motion-duration", duration);
+    if (duration) {
+      el.style.setProperty('--and-motion-duration', duration);
+    }
 
     const delay = el.getAttribute(ATTR.DELAY);
-    if (delay) el.style.setProperty("--and-motion-delay", delay);
+    if (delay) {
+      el.style.setProperty('--and-motion-delay', delay);
+    }
 
     const easing = el.getAttribute(ATTR.EASING);
-    if (easing) el.style.setProperty("--and-motion-easing", easing);
+    if (easing) {
+      el.style.setProperty('--and-motion-easing', easing);
+    }
   }
 
   private resolveTrigger(el: HTMLElement): TriggerType {
     const raw = el.getAttribute(ATTR.TRIGGER);
-    if (raw === "hover" || raw === "tap") return raw;
-    if (raw === "enter") return "enter";
+    if (raw === 'hover' || raw === 'tap') {
+      return raw;
+    }
+    if (raw === 'enter') {
+      return 'enter';
+    }
 
     // Shortcut inference: names with "-in" default to enter trigger
-    const name = el.getAttribute(ATTR.MOTION) ?? "";
-    if (/-in(?:-|$)/.test(name)) return "enter";
+    const name = el.getAttribute(ATTR.MOTION) ?? '';
+    if (/-in(?:-|$)/.test(name)) {
+      return 'enter';
+    }
 
-    return "enter"; // default
+    return 'enter'; // default
   }
 
   /**
@@ -203,8 +210,12 @@ export class MotionController {
    */
   private isOnce(el: HTMLElement): boolean {
     const attr = el.getAttribute(ATTR.ONCE);
-    if (attr === "false") return false;
-    if (attr === "true" || attr === "") return true;
+    if (attr === 'false') {
+      return false;
+    }
+    if (attr === 'true' || attr === '') {
+      return true;
+    }
     return this.once;
   }
 
@@ -213,7 +224,7 @@ export class MotionController {
   private setupEnterTrigger(el: HTMLElement): void {
     // Set initial hidden state so CSS animation can reveal
     if (!this.prefersReducedMotion) {
-      el.style.opacity = "0";
+      el.style.opacity = '0';
     }
 
     this.observer?.observe(el);
@@ -243,8 +254,8 @@ export class MotionController {
     const onEnter = () => this.activate(el);
     const onLeave = () => this.deactivate(el);
 
-    this.addListener(el, "mouseenter", onEnter);
-    this.addListener(el, "mouseleave", onLeave);
+    this.addListener(el, 'mouseenter', onEnter);
+    this.addListener(el, 'mouseleave', onLeave);
   }
 
   // ─── Private — Tap ──────────────────────────────────────────────────────
@@ -253,16 +264,16 @@ export class MotionController {
     const onDown = () => this.activate(el);
     const onUp = () => this.deactivate(el);
 
-    this.addListener(el, "pointerdown", onDown);
-    this.addListener(el, "pointerup", onUp);
-    this.addListener(el, "pointercancel", onUp);
-    this.addListener(el, "pointerleave", onUp);
+    this.addListener(el, 'pointerdown', onDown);
+    this.addListener(el, 'pointerup', onUp);
+    this.addListener(el, 'pointercancel', onUp);
+    this.addListener(el, 'pointerleave', onUp);
   }
 
   // ─── Private — State Management ──────────────────────────────────────────
 
   private activate(el: HTMLElement): void {
-    el.style.opacity = "";
+    el.style.opacity = '';
     el.setAttribute(ATTR.STATE, STATE_ACTIVE);
   }
 
@@ -272,11 +283,7 @@ export class MotionController {
 
   // ─── Private — Listener bookkeeping ──────────────────────────────────────
 
-  private addListener(
-    el: HTMLElement,
-    type: string,
-    handler: EventListener,
-  ): void {
+  private addListener(el: HTMLElement, type: string, handler: EventListener): void {
     el.addEventListener(type, handler);
     this.listeners.push({ el, type, handler });
   }

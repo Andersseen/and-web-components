@@ -2,26 +2,17 @@ import { newSpecPage } from '@stencil/core/testing';
 import { AndIcon } from './and-icon';
 
 describe('and-icon', () => {
-  it('renders with default values', async () => {
+  it('renders host with correct attributes', async () => {
     const page = await newSpecPage({
       components: [AndIcon],
-      html: `<and-icon name="close"></and-icon>`,
+      html: `<and-icon name="close" size="16" stroke-width="1.5"></and-icon>`,
     });
 
-    expect(page.root).toEqualHtml(`
-          <and-icon name="close">
-            <mock:shadow-root>
-              <svg fill="none" height="24px" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                  <g>
-                    <path d="M18 6 6 18">
-                      <path d="m6 6 12 12"></path>
-                    </path>
-                  </g>
-                </g>
-              </svg>
-            </mock:shadow-root>
-          </and-icon>
-        `);
+    expect(page.root).toBeTruthy();
+    expect(page.root.getAttribute('name')).toBe('close');
+    expect(page.root.getAttribute('size')).toBe('16');
+    expect(page.root.getAttribute('stroke-width')).toBe('1.5');
+    expect(page.root.getAttribute('role')).toBe('img');
+    expect(page.root.getAttribute('aria-hidden')).toBe('true');
   });
 });

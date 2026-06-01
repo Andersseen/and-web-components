@@ -10,23 +10,16 @@ import { createDropdown } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Dropdown Menu
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Dropdown Menu</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Displays a menu to the user — such as a set of actions or functions —
-          triggered by a button.
+          Displays a menu to the user — such as a set of actions or functions — triggered by a button.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-12 flex items-center justify-center min-h-[300px]">
             <div class="relative inline-block" #dropdownContainer>
               <!-- Trigger -->
@@ -60,9 +53,7 @@ import { createDropdown } from '@andersseen/headless-components';
                 role="menu"
                 tabindex="-1"
               >
-                <div class="px-2 py-1.5 text-sm font-semibold text-foreground">
-                  My Account
-                </div>
+                <div class="px-2 py-1.5 text-sm font-semibold text-foreground">My Account</div>
                 <div class="-mx-1 and-1 h-px bg-muted"></div>
 
                 @for (item of items; track item.id) {
@@ -72,16 +63,10 @@ import { createDropdown } from '@andersseen/headless-components';
                     (click)="select(item)"
                     (keydown)="onMenuKeydown($event)"
                   >
-                    <span
-                      class="mr-2 flex h-3.5 w-3.5 items-center justify-center"
-                      >{{ item.icon }}</span
-                    >
+                    <span class="mr-2 flex h-3.5 w-3.5 items-center justify-center">{{ item.icon }}</span>
                     <span>{{ item.label }}</span>
                     @if (item.shortcut) {
-                      <span
-                        class="ml-auto text-xs tracking-widest opacity-60"
-                        >{{ item.shortcut }}</span
-                      >
+                      <span class="ml-auto text-xs tracking-widest opacity-60">{{ item.shortcut }}</span>
                     }
                   </button>
                 }
@@ -90,12 +75,9 @@ import { createDropdown } from '@andersseen/headless-components';
                 <button
                   class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none bg-transparent border-0 text-destructive hover:bg-destructive hover:text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground"
                   role="menuitem"
-                  (click)="select({ label: 'Log out' })"
+                  (click)="select({ id: 'logout', label: 'Log out' })"
                 >
-                  <span
-                    class="mr-2 flex h-3.5 w-3.5 items-center justify-center"
-                    >🚪</span
-                  >
+                  <span class="mr-2 flex h-3.5 w-3.5 items-center justify-center">🚪</span>
                   <span>Log out</span>
                 </button>
               </div>
@@ -106,12 +88,8 @@ import { createDropdown } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createDropdown {{ '}' }} from '@andersseen/headless-components';
@@ -134,25 +112,18 @@ dropdown.actions.close();</code></pre>
       <!-- Raw Example -->
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
 
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
-          The headless core manages the open state and focus trapping. You just
-          render the elements.
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
+          The headless core manages the open state and focus trapping. You just render the elements.
         </p>
 
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <div style="position: relative; display: inline-block;">
             <button (click)="toggle()">Native Button</button>
 
@@ -161,10 +132,7 @@ dropdown.actions.close();</code></pre>
               style="position: absolute; top: 100%; left: 0; border: 1px solid #999; background: white; padding: 0; margin: 4px 0 0 0; list-style: none; min-width: 150px; z-index: 10;"
             >
               @for (item of items; track item.id) {
-                <li
-                  style="padding: 6px 12px; cursor: pointer; border-bottom: 1px solid #eee;"
-                  (click)="select(item)"
-                >
+                <li style="padding: 6px 12px; cursor: pointer; border-bottom: 1px solid #eee;" (click)="select(item)">
                   {{ item.label }}
                 </li>
               }
@@ -198,7 +166,7 @@ dropdown.actions.close();</code></pre>
 export default class DropdownHeadlessDemo {
   @ViewChild('dropdownContainer') container!: ElementRef;
 
-  items = [
+  items: Array<{ id: string; label: string; icon: string; shortcut: string }> = [
     { id: '1', label: 'Profile', icon: '👤', shortcut: '⇧⌘P' },
     { id: '2', label: 'Billing', icon: '💳', shortcut: '⌘B' },
     { id: '3', label: 'Settings', icon: '⚙️', shortcut: '⌘S' },
@@ -207,7 +175,9 @@ export default class DropdownHeadlessDemo {
 
   private _dropdown = createDropdown({
     closeOnSelect: true,
-    onOpenChange: (isOpen: boolean) => console.log('Dropdown open:', isOpen),
+    onOpenChange: (_isOpen: boolean) => {
+      // Dropdown state changed
+    },
   });
 
   state = signal(this._dropdown.state);
@@ -221,8 +191,7 @@ export default class DropdownHeadlessDemo {
     this.updateState();
   }
 
-  select(item: any) {
-    console.log('Selected:', item.label);
+  select(item: { id: string; label: string }) {
     this._dropdown.actions.selectItem(item.id || 'custom');
     this.updateState();
   }
@@ -237,10 +206,7 @@ export default class DropdownHeadlessDemo {
   }
 
   onDocumentClick(event: MouseEvent) {
-    if (
-      this.container &&
-      !this.container.nativeElement.contains(event.target)
-    ) {
+    if (this.container && !this.container.nativeElement.contains(event.target)) {
       if (this.isOpen()) {
         this._dropdown.actions.close();
         this.updateState();

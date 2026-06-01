@@ -38,10 +38,14 @@ const emitNavbarRouteEvent = () => {
 };
 
 const acquireHistoryPatch = () => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {
+    return;
+  }
 
   historyPatchRefCount += 1;
-  if (historyPatchRefCount > 1) return;
+  if (historyPatchRefCount > 1) {
+    return;
+  }
 
   originalPushState = window.history.pushState;
   originalReplaceState = window.history.replaceState;
@@ -60,11 +64,17 @@ const acquireHistoryPatch = () => {
 };
 
 const releaseHistoryPatch = () => {
-  if (typeof window === 'undefined') return;
-  if (historyPatchRefCount === 0) return;
+  if (typeof window === 'undefined') {
+    return;
+  }
+  if (historyPatchRefCount === 0) {
+    return;
+  }
 
   historyPatchRefCount -= 1;
-  if (historyPatchRefCount > 0) return;
+  if (historyPatchRefCount > 0) {
+    return;
+  }
 
   if (originalPushState) {
     window.history.pushState = originalPushState;
@@ -87,7 +97,11 @@ const navbarVariants = cva('w-full', {
       default: 'bg-background border-b border-border',
       filled: 'bg-primary text-primary-foreground border-b border-primary',
       floating: 'navbar-floating bg-background shadow-lg border border-border',
-      glass: ['bg-background/60 border-b border-border/50', 'backdrop-blur-xl', '-webkit-backdrop-filter: blur(20px)'].join(' '),
+      glass: [
+        'bg-background/60 border-b border-border/50',
+        'backdrop-blur-xl',
+        '-webkit-backdrop-filter: blur(20px)',
+      ].join(' '),
     },
   },
   defaultVariants: {
@@ -130,7 +144,7 @@ export type NavbarProps = VariantProps<typeof navbarVariants>;
 
 @Component({
   tag: 'and-navbar',
-  styleUrls: ['and-navbar.css', '../../global/global.css'],
+  styleUrls: ['and-navbar.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndNavbar {
@@ -409,7 +423,9 @@ export class AndNavbar {
   private setupSlotTracking() {
     this.refreshSlotState();
 
-    if (typeof MutationObserver === 'undefined') return;
+    if (typeof MutationObserver === 'undefined') {
+      return;
+    }
 
     this.slotObserver = new MutationObserver(() => {
       this.refreshSlotState();
@@ -439,11 +455,19 @@ export class AndNavbar {
 
   private shouldUseScrollSpy() {
     const hasHashItems = this.hasHashHrefItems();
-    if (!hasHashItems) return false;
+    if (!hasHashItems) {
+      return false;
+    }
 
-    if (this.activeMode === 'manual') return false;
-    if (this.activeMode === 'scroll') return true;
-    if (this.activeMode === 'auto') return this.scrollSpy;
+    if (this.activeMode === 'manual') {
+      return false;
+    }
+    if (this.activeMode === 'scroll') {
+      return true;
+    }
+    if (this.activeMode === 'auto') {
+      return this.scrollSpy;
+    }
 
     return false;
   }
@@ -463,10 +487,12 @@ export class AndNavbar {
   }
 
   private syncActiveFromLocation() {
-    if (!this.navbar || this.activeMode === 'manual') return;
+    if (!this.navbar || this.activeMode === 'manual') {
+      return;
+    }
 
     const runRoute = () => {
-      const updateFromRoute = (this.navbar.actions as any).updateActiveFromRoute as ((pathname?: string, routeMatchMode?: RouteMatchMode) => void) | undefined;
+      const updateFromRoute = this.navbar.actions.updateActiveFromRoute;
 
       if (typeof updateFromRoute === 'function') {
         updateFromRoute(undefined, this.routeMatchMode);
@@ -504,8 +530,12 @@ export class AndNavbar {
   }
 
   private setupLocationTracking() {
-    if (typeof window === 'undefined') return;
-    if (this.locationHandler) return;
+    if (typeof window === 'undefined') {
+      return;
+    }
+    if (this.locationHandler) {
+      return;
+    }
 
     acquireHistoryPatch();
 
@@ -519,8 +549,12 @@ export class AndNavbar {
   }
 
   private teardownLocationTracking() {
-    if (typeof window === 'undefined') return;
-    if (!this.locationHandler) return;
+    if (typeof window === 'undefined') {
+      return;
+    }
+    if (!this.locationHandler) {
+      return;
+    }
 
     window.removeEventListener('popstate', this.locationHandler);
     window.removeEventListener('hashchange', this.locationHandler);
@@ -561,7 +595,9 @@ export class AndNavbar {
    * is enabled.
    */
   private checkResponsiveStage() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
 
     const w = window.innerWidth;
     let stage: ResponsiveStage;
@@ -608,7 +644,9 @@ export class AndNavbar {
   /* ── Scroll spy setup ───────────────────────────────────────────── */
 
   private setupScrollSpy() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     this.teardownScrollSpy();
     this.scrollHandler = () => {
       (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
@@ -617,7 +655,9 @@ export class AndNavbar {
   }
 
   private teardownScrollSpy() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     if (this.scrollHandler) {
       window.removeEventListener('scroll', this.scrollHandler);
       this.scrollHandler = undefined;
@@ -644,7 +684,9 @@ export class AndNavbar {
   };
 
   private handleItemClick = (item: NavItem) => {
-    if (item.disabled) return;
+    if (item.disabled) {
+      return;
+    }
     this.navbar.actions.setActiveItem(item.id);
     if (item.href) {
       this.navLinkClick.emit({ id: item.id, href: item.href });
@@ -671,11 +713,17 @@ export class AndNavbar {
   /* ── Render helpers ─────────────────────────────────────────────── */
 
   private renderNavItem(item: NavItem, mobile: boolean = false) {
-    const itemProps = this.navbar.getItemProps(item.id, item.href ? { href: item.href, target: item.target } : undefined);
+    const itemProps = this.navbar.getItemProps(
+      item.id,
+      item.href ? { href: item.href, target: item.target } : undefined,
+    );
     const isActive = this.navbar.queries.isActive(item.id);
     const isDisabled = item.disabled ?? false;
 
-    const baseClass = cn(navItemVariants({ disabled: isDisabled }), mobile && 'w-full text-left px-4 py-3 text-base rounded-lg');
+    const baseClass = cn(
+      navItemVariants({ disabled: isDisabled }),
+      mobile && 'w-full text-left px-4 py-3 text-base rounded-lg',
+    );
 
     // The animated underline indicator only makes sense for 'default' item style;
     // other styles handle active state through borders, bg, shadows, etc.
@@ -710,7 +758,9 @@ export class AndNavbar {
               return;
             }
             this.handleItemClick(item);
-            if (mobile) this.handleClose();
+            if (mobile) {
+              this.handleClose();
+            }
           }}
           onKeyDown={e => !mobile && this.handleItemKeyDown(e, item)}
         >
@@ -728,9 +778,13 @@ export class AndNavbar {
         {...commonProps}
         class={baseClass}
         onClick={() => {
-          if (isDisabled) return;
+          if (isDisabled) {
+            return;
+          }
           this.handleItemClick(item);
-          if (mobile) this.handleClose();
+          if (mobile) {
+            this.handleClose();
+          }
         }}
         onKeyDown={e => !mobile && this.handleItemKeyDown(e, item)}
       >
@@ -782,8 +836,15 @@ export class AndNavbar {
     const isStuck = this.position === 'sticky' || this.position === 'fixed';
 
     return (
-      <Host role={containerProps.role} aria-label={containerProps['aria-label']} style={hostStyle} data-responsive-stage={stage}>
-        <nav class={cn(navbarVariants({ variant: this.variant }), isStuck && this.variant !== 'glass' && 'navbar-blur')}>
+      <Host
+        role={containerProps.role}
+        aria-label={containerProps['aria-label']}
+        style={hostStyle}
+        data-responsive-stage={stage}
+      >
+        <nav
+          class={cn(navbarVariants({ variant: this.variant }), isStuck && this.variant !== 'glass' && 'navbar-blur')}
+        >
           <div class="navbar-container">
             {/* ── Start section (logo, brand) ──────────────────── */}
             <div class="navbar-start">

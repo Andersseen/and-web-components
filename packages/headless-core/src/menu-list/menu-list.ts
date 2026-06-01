@@ -3,9 +3,12 @@
  *
  * Provides state management and accessibility for menu/menuitem lists.
  * Handles keyboard navigation (arrow keys, Home, End), focus tracking,
- * intent variants, and disabled state.
+ * intent variants, and disabled store.state.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
+import { createStore } from '../utils/store';
 import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
 import { Keys } from '../types/common';
 
@@ -104,8 +107,13 @@ export interface MenuItemProps extends AriaAttributes, DataAttributes {
  * Return type of createMenuList
  */
 export interface MenuListReturn {
-  /** Current state. */
+  /** Current store.state. */
   state: Readonly<MenuListState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<MenuListState>) => void) => () => void;
 
   /** Actions. */
   actions: {
@@ -153,11 +161,11 @@ export interface MenuListReturn {
 export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
   const rovingFocus = config.rovingFocus ?? true;
 
-  let state: MenuListState = {
+  const store = createStore<MenuListState>({
     items: config.items ?? [],
     ariaLabel: config.ariaLabel ?? 'Menu',
     focusedIndex: -1,
-  };
+  });
 
   /* ── Helpers ─────────────────────────────────────────────────────── */
 
@@ -165,70 +173,78 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
     !item.separator && typeof item.id === 'string' && item.id.length > 0;
 
   const getInteractiveItems = (): MenuInteractiveItem[] =>
-    state.items.filter(isMenuItem).filter(item => !item.disabled);
+    store.state.items.filter(isMenuItem).filter(item => !item.disabled);
 
   const getInteractiveItemIds = (): string[] => getInteractiveItems().map(item => item.id);
 
   const getItemIndex = (templateIndex: number): number => {
-    const item = state.items[templateIndex];
-    if (!item || !isMenuItem(item)) return -1;
+    const item = store.state.items[templateIndex];
+    if (!item || !isMenuItem(item)) {
+      return -1;
+    }
 
-    return state.items.slice(0, templateIndex + 1).filter(isMenuItem).length - 1;
+    return store.state.items.slice(0, templateIndex + 1).filter(isMenuItem).length - 1;
   };
 
   const getEnabledIndices = (): number[] =>
-    state.items.reduce<number[]>((acc, item, i) => {
-      if (isMenuItem(item) && !item.disabled) acc.push(i);
+    store.state.items.reduce<number[]>((acc, item, i) => {
+      if (isMenuItem(item) && !item.disabled) {
+        acc.push(i);
+      }
       return acc;
     }, []);
 
   const focusNext = (): void => {
     const enabled = getEnabledIndices();
-    if (!enabled.length) return;
+    if (!enabled.length) {
+      return;
+    }
 
-    const currentPos = enabled.indexOf(state.focusedIndex);
+    const currentPos = enabled.indexOf(store.state.focusedIndex);
     const next = currentPos < enabled.length - 1 ? enabled[currentPos + 1] : enabled[0];
-    state = { ...state, focusedIndex: next };
+    store.setState({ focusedIndex: next });
   };
 
   const focusPrev = (): void => {
     const enabled = getEnabledIndices();
-    if (!enabled.length) return;
+    if (!enabled.length) {
+      return;
+    }
 
-    const currentPos = enabled.indexOf(state.focusedIndex);
+    const currentPos = enabled.indexOf(store.state.focusedIndex);
     const prev = currentPos > 0 ? enabled[currentPos - 1] : enabled[enabled.length - 1];
-    state = { ...state, focusedIndex: prev };
+    store.setState({ focusedIndex: prev });
   };
 
   const focusFirst = (): void => {
     const enabled = getEnabledIndices();
     if (enabled.length) {
-      state = { ...state, focusedIndex: enabled[0] };
+      store.setState({ focusedIndex: enabled[0] });
     }
   };
 
   const focusLast = (): void => {
     const enabled = getEnabledIndices();
     if (enabled.length) {
-      state = { ...state, focusedIndex: enabled[enabled.length - 1] };
+      store.setState({ focusedIndex: enabled[enabled.length - 1] });
     }
   };
 
   /* ── Actions ─────────────────────────────────────────────────────── */
 
   const setItems = (items: MenuItemConfig[]): void => {
-    state = { ...state, items, focusedIndex: -1 };
+    store.setState({ items, focusedIndex: -1 });
   };
 
   const focusItem = (index: number): void => {
-    const item = state.items[index];
+    const item = store.state.items[index];
     if (item && isMenuItem(item) && !item.disabled) {
-      state = { ...state, focusedIndex: index };
+      store.setState({ focusedIndex: index });
     }
   };
 
   const selectItem = (itemId: string): void => {
-    const item = state.items.find(i => i.id === itemId);
+    const item = store.state.items.find(i => i.id === itemId);
     if (item && isMenuItem(item) && !item.disabled) {
       config.onSelect?.(itemId);
     }
@@ -238,11 +254,11 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
 
   const getMenuProps = (): MenuListProps => ({
     'role': 'menu',
-    'aria-label': state.ariaLabel,
+    'aria-label': store.state.ariaLabel,
   });
 
   const getItemProps = (item: MenuItemConfig, index: number): MenuItemProps => {
-    const isFocused = rovingFocus && state.focusedIndex === index;
+    const isFocused = rovingFocus && store.state.focusedIndex === index;
     return {
       'role': 'menuitem',
       'tabindex': isFocused || (!rovingFocus && isMenuItem(item) && !item.disabled) ? 0 : -1,
@@ -282,7 +298,9 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
   };
 
   const handleItemKeyDown = (event: KeyboardEvent, item: MenuItemConfig): void => {
-    if (!isMenuItem(item) || item.disabled) return;
+    if (!isMenuItem(item) || item.disabled) {
+      return;
+    }
 
     switch (event.key) {
       case Keys.Enter:
@@ -301,7 +319,10 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       setItems,

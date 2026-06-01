@@ -1,6 +1,14 @@
 /* tslint:disable */
 /* auto-generated angular directive proxies */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Output, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Output,
+  NgZone,
+} from '@angular/core';
 
 import { ProxyCmp } from './angular-component-lib/utils';
 
@@ -43,7 +51,7 @@ import { defineCustomElement as defineAndToast } from '@andersseen/web-component
 import { defineCustomElement as defineAndTooltip } from '@andersseen/web-components/components/and-tooltip.js';
 @ProxyCmp({
   defineCustomElementFn: defineAndAccordion,
-  inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation']
+  inputs: ['allowMultiple', 'defaultValue', 'disabled', 'orientation'],
 })
 @Component({
   selector: 'and-accordion',
@@ -54,19 +62,21 @@ import { defineCustomElement as defineAndTooltip } from '@andersseen/web-compone
 })
 export class AndAccordion {
   protected el: HTMLAndAccordionElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndAccordion extends Components.AndAccordion {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndAccordionContent,
-  methods: ['setItemProps']
+  methods: ['setItemProps'],
 })
 @Component({
   selector: 'and-accordion-content',
@@ -77,20 +87,22 @@ export declare interface AndAccordion extends Components.AndAccordion {}
 })
 export class AndAccordionContent {
   protected el: HTMLAndAccordionContentElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndAccordionContent extends Components.AndAccordionContent {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndAccordionItem,
   inputs: ['disabled', 'value'],
-  methods: ['setAccordionLogic']
+  methods: ['setAccordionLogic'],
 })
 @Component({
   selector: 'and-accordion-item',
@@ -101,19 +113,21 @@ export declare interface AndAccordionContent extends Components.AndAccordionCont
 })
 export class AndAccordionItem {
   protected el: HTMLAndAccordionItemElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndAccordionItem extends Components.AndAccordionItem {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndAccordionTrigger,
-  methods: ['setItemProps']
+  methods: ['setItemProps'],
 })
 @Component({
   selector: 'and-accordion-trigger',
@@ -124,19 +138,21 @@ export declare interface AndAccordionItem extends Components.AndAccordionItem {}
 })
 export class AndAccordionTrigger {
   protected el: HTMLAndAccordionTriggerElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndAccordionTrigger extends Components.AndAccordionTrigger {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndAlert,
-  inputs: ['dismissible', 'variant']
+  inputs: ['dismissible', 'variant'],
 })
 @Component({
   selector: 'and-alert',
@@ -149,12 +165,15 @@ export declare interface AndAccordionTrigger extends Components.AndAccordionTrig
 export class AndAlert {
   protected el: HTMLAndAlertElement;
   @Output() andDismiss = new EventEmitter<CustomEvent<void>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndAlert extends Components.AndAlert {
   /**
@@ -163,10 +182,9 @@ export declare interface AndAlert extends Components.AndAlert {
   andDismiss: EventEmitter<CustomEvent<void>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndBadge,
-  inputs: ['customClass', 'variant']
+  inputs: ['customClass', 'variant'],
 })
 @Component({
   selector: 'and-badge',
@@ -177,19 +195,21 @@ export declare interface AndAlert extends Components.AndAlert {
 })
 export class AndBadge {
   protected el: HTMLAndBadgeElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndBadge extends Components.AndBadge {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndBreadcrumb,
-  inputs: ['customClass', 'navLabel', 'size']
+  inputs: ['customClass', 'navLabel', 'size'],
 })
 @Component({
   selector: 'and-breadcrumb',
@@ -200,19 +220,21 @@ export declare interface AndBadge extends Components.AndBadge {}
 })
 export class AndBreadcrumb {
   protected el: HTMLAndBreadcrumbElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndBreadcrumb extends Components.AndBreadcrumb {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndBreadcrumbItem,
-  inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size']
+  inputs: ['current', 'customClass', 'hideSeparator', 'href', 'size'],
 })
 @Component({
   selector: 'and-breadcrumb-item',
@@ -225,12 +247,15 @@ export declare interface AndBreadcrumb extends Components.AndBreadcrumb {}
 export class AndBreadcrumbItem {
   protected el: HTMLAndBreadcrumbItemElement;
   @Output() andBreadcrumbNavigate = new EventEmitter<CustomEvent<string>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem {
   /**
@@ -239,10 +264,9 @@ export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem 
   andBreadcrumbNavigate: EventEmitter<CustomEvent<string>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndButton,
-  inputs: ['customClass', 'disabled', 'href', 'loading', 'rel', 'size', 'target', 'type', 'variant']
+  inputs: ['customClass', 'disabled', 'href', 'loading', 'rel', 'size', 'target', 'type', 'variant'],
 })
 @Component({
   selector: 'and-button',
@@ -255,12 +279,15 @@ export declare interface AndBreadcrumbItem extends Components.AndBreadcrumbItem 
 export class AndButton {
   protected el: HTMLAndButtonElement;
   @Output() andButtonClick = new EventEmitter<CustomEvent<MouseEvent>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndButton extends Components.AndButton {
   /**
@@ -269,10 +296,9 @@ export declare interface AndButton extends Components.AndButton {
   andButtonClick: EventEmitter<CustomEvent<MouseEvent>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndCard,
-  inputs: ['customClass', 'padded', 'variant']
+  inputs: ['customClass', 'padded', 'variant'],
 })
 @Component({
   selector: 'and-card',
@@ -283,19 +309,21 @@ export declare interface AndButton extends Components.AndButton {
 })
 export class AndCard {
   protected el: HTMLAndCardElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCard extends Components.AndCard {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCardContent,
-  inputs: ['customClass']
+  inputs: ['customClass'],
 })
 @Component({
   selector: 'and-card-content',
@@ -306,19 +334,21 @@ export declare interface AndCard extends Components.AndCard {}
 })
 export class AndCardContent {
   protected el: HTMLAndCardContentElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCardContent extends Components.AndCardContent {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCardDescription,
-  inputs: ['customClass']
+  inputs: ['customClass'],
 })
 @Component({
   selector: 'and-card-description',
@@ -329,19 +359,21 @@ export declare interface AndCardContent extends Components.AndCardContent {}
 })
 export class AndCardDescription {
   protected el: HTMLAndCardDescriptionElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCardDescription extends Components.AndCardDescription {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCardFooter,
-  inputs: ['customClass']
+  inputs: ['customClass'],
 })
 @Component({
   selector: 'and-card-footer',
@@ -352,19 +384,21 @@ export declare interface AndCardDescription extends Components.AndCardDescriptio
 })
 export class AndCardFooter {
   protected el: HTMLAndCardFooterElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCardFooter extends Components.AndCardFooter {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCardHeader,
-  inputs: ['customClass']
+  inputs: ['customClass'],
 })
 @Component({
   selector: 'and-card-header',
@@ -375,19 +409,21 @@ export declare interface AndCardFooter extends Components.AndCardFooter {}
 })
 export class AndCardHeader {
   protected el: HTMLAndCardHeaderElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCardHeader extends Components.AndCardHeader {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCardTitle,
-  inputs: ['customClass']
+  inputs: ['customClass'],
 })
 @Component({
   selector: 'and-card-title',
@@ -398,19 +434,21 @@ export declare interface AndCardHeader extends Components.AndCardHeader {}
 })
 export class AndCardTitle {
   protected el: HTMLAndCardTitleElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCardTitle extends Components.AndCardTitle {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndCarousel,
-  inputs: ['autoplay', 'interval', 'label']
+  inputs: ['autoplay', 'interval', 'label'],
 })
 @Component({
   selector: 'and-carousel',
@@ -423,12 +461,15 @@ export declare interface AndCardTitle extends Components.AndCardTitle {}
 export class AndCarousel {
   protected el: HTMLAndCarouselElement;
   @Output() andSlideChange = new EventEmitter<CustomEvent<number>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndCarousel extends Components.AndCarousel {
   /**
@@ -437,10 +478,9 @@ export declare interface AndCarousel extends Components.AndCarousel {
   andSlideChange: EventEmitter<CustomEvent<number>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndCarouselItem,
-  inputs: ['label']
+  inputs: ['label'],
 })
 @Component({
   selector: 'and-carousel-item',
@@ -451,19 +491,21 @@ export declare interface AndCarousel extends Components.AndCarousel {
 })
 export class AndCarouselItem {
   protected el: HTMLAndCarouselItemElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndCarouselItem extends Components.AndCarouselItem {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndContextMenu,
-  inputs: ['customClass', 'open']
+  inputs: ['customClass', 'open'],
 })
 @Component({
   selector: 'and-context-menu',
@@ -476,12 +518,15 @@ export declare interface AndCarouselItem extends Components.AndCarouselItem {}
 export class AndContextMenu {
   protected el: HTMLAndContextMenuElement;
   @Output() andContextMenuOpenChange = new EventEmitter<CustomEvent<boolean>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndContextMenu extends Components.AndContextMenu {
   /**
@@ -490,10 +535,9 @@ export declare interface AndContextMenu extends Components.AndContextMenu {
   andContextMenuOpenChange: EventEmitter<CustomEvent<boolean>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndDrawer,
-  inputs: ['label', 'open', 'placement', 'showClose']
+  inputs: ['label', 'open', 'placement', 'showClose'],
 })
 @Component({
   selector: 'and-drawer',
@@ -507,12 +551,15 @@ export class AndDrawer {
   protected el: HTMLAndDrawerElement;
   @Output() andDrawerClose = new EventEmitter<CustomEvent<void>>();
   @Output() andDrawerOpen = new EventEmitter<CustomEvent<void>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndDrawer extends Components.AndDrawer {
   /**
@@ -525,10 +572,9 @@ export declare interface AndDrawer extends Components.AndDrawer {
   andDrawerOpen: EventEmitter<CustomEvent<void>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndDropdown,
-  inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant']
+  inputs: ['closeOnSelect', 'items', 'label', 'placement', 'variant'],
 })
 @Component({
   selector: 'and-dropdown',
@@ -542,12 +588,15 @@ export class AndDropdown {
   protected el: HTMLAndDropdownElement;
   @Output() andDropdownSelect = new EventEmitter<CustomEvent<string>>();
   @Output() andDropdownOpenChange = new EventEmitter<CustomEvent<boolean>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndDropdown extends Components.AndDropdown {
   /**
@@ -560,10 +609,9 @@ export declare interface AndDropdown extends Components.AndDropdown {
   andDropdownOpenChange: EventEmitter<CustomEvent<boolean>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndIcon,
-  inputs: ['color', 'name', 'size', 'strokeWidth']
+  inputs: ['color', 'name', 'size', 'strokeWidth'],
 })
 @Component({
   selector: 'and-icon',
@@ -574,19 +622,21 @@ export declare interface AndDropdown extends Components.AndDropdown {
 })
 export class AndIcon {
   protected el: HTMLAndIconElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndIcon extends Components.AndIcon {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndInput,
-  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'placeholder', 'required', 'type', 'value']
+  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'placeholder', 'required', 'type', 'value'],
 })
 @Component({
   selector: 'and-input',
@@ -600,12 +650,15 @@ export class AndInput {
   protected el: HTMLAndInputElement;
   @Output() andInput = new EventEmitter<CustomEvent<string>>();
   @Output() andBlur = new EventEmitter<CustomEvent<void>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndInput extends Components.AndInput {
   /**
@@ -618,10 +671,9 @@ export declare interface AndInput extends Components.AndInput {
   andBlur: EventEmitter<CustomEvent<void>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndMenuItem,
-  inputs: ['customClass', 'disabled', 'intent', 'value']
+  inputs: ['customClass', 'disabled', 'intent', 'value'],
 })
 @Component({
   selector: 'and-menu-item',
@@ -634,12 +686,15 @@ export declare interface AndInput extends Components.AndInput {
 export class AndMenuItem {
   protected el: HTMLAndMenuItemElement;
   @Output() andMenuItemSelect = new EventEmitter<CustomEvent<string>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndMenuItem extends Components.AndMenuItem {
   /**
@@ -648,10 +703,9 @@ export declare interface AndMenuItem extends Components.AndMenuItem {
   andMenuItemSelect: EventEmitter<CustomEvent<string>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndMenuList,
-  inputs: ['ariaMenuLabel', 'customClass']
+  inputs: ['ariaMenuLabel', 'customClass'],
 })
 @Component({
   selector: 'and-menu-list',
@@ -662,19 +716,21 @@ export declare interface AndMenuItem extends Components.AndMenuItem {
 })
 export class AndMenuList {
   protected el: HTMLAndMenuListElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndMenuList extends Components.AndMenuList {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndModal,
-  inputs: ['open']
+  inputs: ['open'],
 })
 @Component({
   selector: 'and-modal',
@@ -687,12 +743,15 @@ export declare interface AndMenuList extends Components.AndMenuList {}
 export class AndModal {
   protected el: HTMLAndModalElement;
   @Output() andClose = new EventEmitter<CustomEvent<void>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndModal extends Components.AndModal {
   /**
@@ -701,17 +760,46 @@ export declare interface AndModal extends Components.AndModal {
   andClose: EventEmitter<CustomEvent<void>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndNavbar,
-  inputs: ['activeItem', 'activeMode', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'routeMatchMode', 'scrollSpy', 'scrollSpyOffset', 'variant']
+  inputs: [
+    'activeItem',
+    'activeMode',
+    'ariaNavLabel',
+    'autoCollapse',
+    'compactBreakpoint',
+    'itemVariant',
+    'items',
+    'minimalBreakpoint',
+    'mobileBreakpoint',
+    'position',
+    'routeMatchMode',
+    'scrollSpy',
+    'scrollSpyOffset',
+    'variant',
+  ],
 })
 @Component({
   selector: 'and-navbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'activeMode', 'ariaNavLabel', 'autoCollapse', 'compactBreakpoint', 'itemVariant', 'items', 'minimalBreakpoint', 'mobileBreakpoint', 'position', 'routeMatchMode', 'scrollSpy', 'scrollSpyOffset', 'variant'],
+  inputs: [
+    'activeItem',
+    'activeMode',
+    'ariaNavLabel',
+    'autoCollapse',
+    'compactBreakpoint',
+    'itemVariant',
+    'items',
+    'minimalBreakpoint',
+    'mobileBreakpoint',
+    'position',
+    'routeMatchMode',
+    'scrollSpy',
+    'scrollSpyOffset',
+    'variant',
+  ],
   outputs: ['navItemClick', 'navLinkClick', 'mobileMenuChange', 'responsiveStageChange'],
 })
 export class AndNavbar {
@@ -720,12 +808,15 @@ export class AndNavbar {
   @Output() navLinkClick = new EventEmitter<CustomEvent<{ id: string; href: string }>>();
   @Output() mobileMenuChange = new EventEmitter<CustomEvent<boolean>>();
   @Output() responsiveStageChange = new EventEmitter<CustomEvent<IAndNavbarResponsiveStage>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 import type { ResponsiveStage as IAndNavbarResponsiveStage } from '@andersseen/web-components/components';
 
@@ -748,10 +839,9 @@ export declare interface AndNavbar extends Components.AndNavbar {
   responsiveStageChange: EventEmitter<CustomEvent<IAndNavbarResponsiveStage>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndPagination,
-  inputs: ['currentPage', 'totalPages']
+  inputs: ['currentPage', 'totalPages'],
 })
 @Component({
   selector: 'and-pagination',
@@ -764,12 +854,15 @@ export declare interface AndNavbar extends Components.AndNavbar {
 export class AndPagination {
   protected el: HTMLAndPaginationElement;
   @Output() andPageChange = new EventEmitter<CustomEvent<number>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndPagination extends Components.AndPagination {
   /**
@@ -778,29 +871,55 @@ export declare interface AndPagination extends Components.AndPagination {
   andPageChange: EventEmitter<CustomEvent<number>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndSelect,
-  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'menuPlacement', 'name', 'options', 'placeholder', 'required', 'value']
+  inputs: [
+    'customClass',
+    'describedBy',
+    'disabled',
+    'hasError',
+    'label',
+    'menuPlacement',
+    'name',
+    'options',
+    'placeholder',
+    'required',
+    'value',
+  ],
 })
 @Component({
   selector: 'and-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['customClass', 'describedBy', 'disabled', 'hasError', 'label', 'menuPlacement', 'name', 'options', 'placeholder', 'required', 'value'],
+  inputs: [
+    'customClass',
+    'describedBy',
+    'disabled',
+    'hasError',
+    'label',
+    'menuPlacement',
+    'name',
+    'options',
+    'placeholder',
+    'required',
+    'value',
+  ],
   outputs: ['andSelectChange', 'andBlur'],
 })
 export class AndSelect {
   protected el: HTMLAndSelectElement;
   @Output() andSelectChange = new EventEmitter<CustomEvent<string>>();
   @Output() andBlur = new EventEmitter<CustomEvent<void>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndSelect extends Components.AndSelect {
   /**
@@ -808,34 +927,58 @@ export declare interface AndSelect extends Components.AndSelect {
    */
   andSelectChange: EventEmitter<CustomEvent<string>>;
   /**
-   * Emitted when select loses focus.
+   * Emitted when select loses focus / closes.
    */
   andBlur: EventEmitter<CustomEvent<void>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndSidebar,
-  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'itemVariant', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant']
+  inputs: [
+    'activeItem',
+    'ariaNavLabel',
+    'collapsed',
+    'collapsedWidth',
+    'expandedWidth',
+    'itemVariant',
+    'items',
+    'mobileBreakpoint',
+    'mobileCollapse',
+    'variant',
+  ],
 })
 @Component({
   selector: 'and-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeItem', 'ariaNavLabel', 'collapsed', 'collapsedWidth', 'expandedWidth', 'itemVariant', 'items', 'mobileBreakpoint', 'mobileCollapse', 'variant'],
+  inputs: [
+    'activeItem',
+    'ariaNavLabel',
+    'collapsed',
+    'collapsedWidth',
+    'expandedWidth',
+    'itemVariant',
+    'items',
+    'mobileBreakpoint',
+    'mobileCollapse',
+    'variant',
+  ],
   outputs: ['andSidebarItemClick', 'andSidebarToggle'],
 })
 export class AndSidebar {
   protected el: HTMLAndSidebarElement;
   @Output() andSidebarItemClick = new EventEmitter<CustomEvent<string>>();
   @Output() andSidebarToggle = new EventEmitter<CustomEvent<boolean>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndSidebar extends Components.AndSidebar {
   /**
@@ -848,10 +991,9 @@ export declare interface AndSidebar extends Components.AndSidebar {
   andSidebarToggle: EventEmitter<CustomEvent<boolean>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndTabs,
-  inputs: ['activationMode', 'defaultValue', 'orientation', 'value']
+  inputs: ['activationMode', 'defaultValue', 'orientation', 'value'],
 })
 @Component({
   selector: 'and-tabs',
@@ -864,12 +1006,15 @@ export declare interface AndSidebar extends Components.AndSidebar {
 export class AndTabs {
   protected el: HTMLAndTabsElement;
   @Output() andTabChange = new EventEmitter<CustomEvent<string>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndTabs extends Components.AndTabs {
   /**
@@ -878,10 +1023,9 @@ export declare interface AndTabs extends Components.AndTabs {
   andTabChange: EventEmitter<CustomEvent<string>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndTabsContent,
-  inputs: ['selected', 'value']
+  inputs: ['selected', 'value'],
 })
 @Component({
   selector: 'and-tabs-content',
@@ -892,19 +1036,21 @@ export declare interface AndTabs extends Components.AndTabs {
 })
 export class AndTabsContent {
   protected el: HTMLAndTabsContentElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndTabsContent extends Components.AndTabsContent {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndTabsList,
-  inputs: ['orientation']
+  inputs: ['orientation'],
 })
 @Component({
   selector: 'and-tabs-list',
@@ -915,19 +1061,21 @@ export declare interface AndTabsContent extends Components.AndTabsContent {}
 })
 export class AndTabsList {
   protected el: HTMLAndTabsListElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndTabsList extends Components.AndTabsList {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndTabsTrigger,
-  inputs: ['disabled', 'selected', 'tabsLogic', 'value']
+  inputs: ['disabled', 'selected', 'tabsLogic', 'value'],
 })
 @Component({
   selector: 'and-tabs-trigger',
@@ -940,12 +1088,15 @@ export declare interface AndTabsList extends Components.AndTabsList {}
 export class AndTabsTrigger {
   protected el: HTMLAndTabsTriggerElement;
   @Output() tabTriggerClick = new EventEmitter<CustomEvent<string>>();
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
 
 export declare interface AndTabsTrigger extends Components.AndTabsTrigger {
   /**
@@ -954,10 +1105,9 @@ export declare interface AndTabsTrigger extends Components.AndTabsTrigger {
   tabTriggerClick: EventEmitter<CustomEvent<string>>;
 }
 
-
 @ProxyCmp({
   defineCustomElementFn: defineAndToast,
-  methods: ['present']
+  methods: ['present'],
 })
 @Component({
   selector: 'and-toast',
@@ -968,19 +1118,21 @@ export declare interface AndTabsTrigger extends Components.AndTabsTrigger {
 })
 export class AndToast {
   protected el: HTMLAndToastElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndToast extends Components.AndToast {}
-
 
 @ProxyCmp({
   defineCustomElementFn: defineAndTooltip,
-  inputs: ['closeDelay', 'content', 'openDelay', 'placement']
+  inputs: ['closeDelay', 'content', 'openDelay', 'placement'],
 })
 @Component({
   selector: 'and-tooltip',
@@ -991,13 +1143,14 @@ export declare interface AndToast extends Components.AndToast {}
 })
 export class AndTooltip {
   protected el: HTMLAndTooltipElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+  constructor(
+    c: ChangeDetectorRef,
+    r: ElementRef,
+    protected z: NgZone,
+  ) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
-
 export declare interface AndTooltip extends Components.AndTooltip {}
-
-

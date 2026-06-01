@@ -1,0 +1,12 @@
+/**
+ * Component-level base styles for Shadow DOM.
+ * NO @tailwind base (reset belongs in document.css).
+ * NO themes/palettes (CSS custom properties inherit from document.css via cascade).
+ * NO animations.css (only components that need animation import it separately).
+ */
+
+@tailwind utilities;
+
+:host {
+  display: block;
+}

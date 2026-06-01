@@ -1,5 +1,6 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Element, Watch } from '@stencil/core';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { createInput, type InputReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 
 /* ────────────────────────────────────────────────────────────────────
@@ -39,7 +40,7 @@ export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
 
 @Component({
   tag: 'and-input',
-  styleUrls: ['and-input.css', '../../global/global.css'],
+  styleUrls: ['and-input.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndInput {
@@ -78,35 +79,77 @@ export class AndInput {
   /** Emitted when the input loses focus. */
   @Event({ bubbles: true, composed: true }) andBlur: EventEmitter<void>;
 
+  private inputLogic: InputReturn;
+  private unsubscribe: () => void;
+
+  /* ── Lifecycle ──────────────────────────────────────────────────── */
+
+  componentWillLoad() {
+    this.inputLogic = createInput({
+      defaultValue: this.value,
+      disabled: this.disabled,
+      required: this.required,
+      onValueChange: (value: string) => {
+        this.value = value;
+        this.andInput.emit(value);
+      },
+    });
+    this.unsubscribe = this.inputLogic.subscribe(() => {
+      // trigger re-render on state change from headless
+      this.value = this.inputLogic.state.value;
+    });
+  }
+
+  disconnectedCallback() {
+    this.unsubscribe?.();
+  }
+
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
+  @Watch('disabled')
+  disabledChanged(newValue: boolean) {
+    this.inputLogic?.actions.setDisabled(newValue);
+  }
+
+  @Watch('required')
+  requiredChanged(newValue: boolean) {
+    this.inputLogic?.actions.setRequired(newValue);
+  }
+
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleInput = (ev: Event) => {
     const target = ev.target as HTMLInputElement;
-    this.value = target.value;
-    this.andInput.emit(target.value);
+    this.inputLogic.actions.setValue(target.value);
   };
 
   private handleBlur = () => {
+    this.inputLogic.actions.blur();
     this.andBlur.emit();
+  };
+
+  private handleFocus = () => {
+    this.inputLogic.actions.focus();
   };
 
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
+    const props = this.inputLogic?.getInputProps() || {};
+
     return (
       <Host class="block">
         <input
+          {...props}
           type={this.type}
           class={cn(inputVariants({ hasError: this.hasError }), this.customClass)}
           placeholder={this.placeholder}
-          value={this.value}
-          disabled={this.disabled}
-          required={this.required}
           aria-label={this.label}
           aria-describedby={this.describedBy}
           aria-invalid={this.hasError ? 'true' : undefined}
           onInput={this.handleInput}
           onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
         />
       </Host>
     );

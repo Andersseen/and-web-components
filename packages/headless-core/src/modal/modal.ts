@@ -4,14 +4,13 @@
  * Provides state management and accessibility for modal/dialog components.
  * Handles open/close states, escape key, backdrop click, focus trap hints,
  * and body scroll lock signaling.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
 
 /**
  * Configuration options for creating a modal
@@ -64,28 +63,28 @@ export interface ModalState {
  * Props for the overlay/backdrop element
  */
 export interface ModalOverlayProps extends DataAttributes {
-  "data-state": "open" | "closed";
-  "aria-hidden": boolean;
+  'data-state': 'open' | 'closed';
+  'aria-hidden': boolean;
 }
 
 /**
  * Props for the dialog content element
  */
 export interface ModalContentProps extends AriaAttributes, DataAttributes {
-  role: "dialog";
-  "aria-modal": boolean;
-  "aria-hidden": boolean;
-  "aria-label": string;
-  "data-state": "open" | "closed";
-  tabindex: number;
+  'role': 'dialog';
+  'aria-modal': boolean;
+  'aria-hidden': boolean;
+  'aria-label': string;
+  'data-state': 'open' | 'closed';
+  'tabindex': number;
 }
 
 /**
  * Props for the close button element
  */
 export interface ModalCloseButtonProps extends AriaAttributes {
-  "aria-label": string;
-  type: "button";
+  'aria-label': string;
+  'type': 'button';
 }
 
 /**
@@ -96,6 +95,11 @@ export interface ModalReturn {
    * Current state
    */
   state: Readonly<ModalState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<ModalState>) => void) => () => void;
 
   /**
    * Actions
@@ -132,6 +136,11 @@ export interface ModalReturn {
  *   onOpenChange: (isOpen) => console.log('Modal:', isOpen)
  * });
  *
+ * // Subscribe from React/Vue/Svelte/vanilla
+ * modal.subscribe((state) => {
+ *   if (state.isOpen) console.log('Modal opened');
+ * });
+ *
  * // Open
  * modal.actions.open();
  *
@@ -148,67 +157,79 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
   const closeOnEscape = config.closeOnEscape ?? true;
   const closeOnOverlayClick = config.closeOnOverlayClick ?? true;
 
-  // Internal state
-  let state: ModalState = {
+  const store = createStore<ModalState>({
     isOpen: config.defaultOpen ?? false,
     disabled: config.disabled ?? false,
-  };
+  });
 
+  // Notify legacy callback and new subscribers
   const notifyChange = (): void => {
-    config.onOpenChange?.(state.isOpen);
+    config.onOpenChange?.(store.state.isOpen);
   };
 
   // Actions
   const open = (): void => {
-    if (state.disabled || state.isOpen) return;
-
-    state = { ...state, isOpen: true };
+    const { disabled, isOpen } = store.state;
+    if (disabled || isOpen) {
+      return;
+    }
+    store.setState({ isOpen: true });
     notifyChange();
   };
 
   const close = (): void => {
-    if (!state.isOpen) return;
-
-    state = { ...state, isOpen: false };
+    if (!store.state.isOpen) {
+      return;
+    }
+    store.setState({ isOpen: false });
     notifyChange();
   };
 
   const toggle = (): void => {
-    if (state.disabled) return;
-
-    state.isOpen ? close() : open();
+    if (store.state.disabled) {
+      return;
+    }
+    store.state.isOpen ? close() : open();
   };
 
   const setDisabled = (disabled: boolean): void => {
-    state = { ...state, disabled };
-    if (disabled && state.isOpen) {
+    store.setState({ disabled });
+    if (disabled && store.state.isOpen) {
       close();
     }
   };
 
   // Get element props
-  const getOverlayProps = (): ModalOverlayProps => ({
-    "data-state": state.isOpen ? "open" : "closed",
-    "aria-hidden": !state.isOpen,
-  });
+  const getOverlayProps = (): ModalOverlayProps => {
+    const { isOpen } = store.state;
+    return {
+      'data-state': isOpen ? 'open' : 'closed',
+      'aria-hidden': !isOpen,
+    };
+  };
 
-  const getContentProps = (): ModalContentProps => ({
-    role: "dialog",
-    "aria-modal": true,
-    "aria-hidden": !state.isOpen,
-    "aria-label": config.label ?? "Dialog",
-    "data-state": state.isOpen ? "open" : "closed",
-    tabindex: -1,
-  });
+  const getContentProps = (): ModalContentProps => {
+    const { isOpen } = store.state;
+    return {
+      'role': 'dialog',
+      'aria-modal': true,
+      'aria-hidden': !isOpen,
+      'aria-label': config.label ?? 'Dialog',
+      'data-state': isOpen ? 'open' : 'closed',
+      'tabindex': -1,
+    };
+  };
 
   const getCloseButtonProps = (): ModalCloseButtonProps => ({
-    "aria-label": "Close",
-    type: "button",
+    'aria-label': 'Close',
+    'type': 'button',
   });
 
   // Keyboard handler
   const handleKeyDown = (event: KeyboardEvent): void => {
-    if (!state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
 
     if (event.key === Keys.Escape && closeOnEscape) {
       event.preventDefault();
@@ -225,7 +246,10 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       open,

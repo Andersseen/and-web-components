@@ -4,7 +4,7 @@ import { createTabs, type TabsReturn } from '@andersseen/headless-components';
 
 @Component({
   tag: 'and-tabs',
-  styleUrls: ['and-tabs.css', '../../global/global.css'],
+  styleUrls: ['and-tabs.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndTabs {
@@ -51,7 +51,7 @@ export class AndTabs {
     this.updateChildren();
 
     // Watch for dynamic children (like triggers inside and-tabs-list) rendered async by frameworks
-    this.mutationObserver = new MutationObserver((mutations) => {
+    this.mutationObserver = new MutationObserver(mutations => {
       const hasChildChanges = mutations.some(m => m.type === 'childList');
       if (hasChildChanges) {
         this.updateChildren();
@@ -79,18 +79,30 @@ export class AndTabs {
     this.updateChildren();
   }
 
+  @Watch('orientation')
+  orientationChanged(newValue: 'horizontal' | 'vertical') {
+    this.tabsLogic?.actions.setOrientation(newValue);
+    this.updateChildren();
+  }
+
+  @Watch('activationMode')
+  activationModeChanged(newValue: 'automatic' | 'manual') {
+    this.tabsLogic?.actions.setActivationMode(newValue);
+    this.updateChildren();
+  }
+
   /* ── Helpers ────────────────────────────────────────────────────── */
 
   private updateChildren() {
     const triggers = Array.from(this.el.querySelectorAll('and-tabs-trigger'));
     const contents = Array.from(this.el.querySelectorAll('and-tabs-content'));
 
-    triggers.forEach((trigger: any) => {
+    triggers.forEach((trigger: HTMLAndTabsTriggerElement) => {
       trigger.selected = trigger.value === this.value;
       trigger.tabsLogic = this.tabsLogic;
     });
 
-    contents.forEach((content: any) => {
+    contents.forEach((content: HTMLAndTabsContentElement) => {
       content.selected = content.value === this.value;
     });
   }
@@ -101,10 +113,7 @@ export class AndTabs {
     const containerProps = this.tabsLogic?.getContainerProps() || {};
 
     return (
-      <Host
-        {...containerProps}
-        class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}
-      >
+      <Host {...containerProps} class={cn('flex w-full', this.orientation === 'vertical' ? 'flex-row' : 'flex-col')}>
         <slot />
       </Host>
     );

@@ -28,10 +28,7 @@ const sidebarVariants = cva('sidebar-root flex h-full flex-col transition-all du
       default: 'bg-background border-r border-border',
       filled: 'bg-muted border-r border-border',
       floating: 'sidebar-floating bg-background shadow-xl border border-border',
-      glass: [
-        'bg-background/60 border-r border-border/50',
-        'backdrop-blur-xl',
-      ].join(' '),
+      glass: ['bg-background/60 border-r border-border/50', 'backdrop-blur-xl'].join(' '),
     },
     collapsed: {
       true: '',
@@ -78,7 +75,7 @@ export type SidebarVariantProps = VariantProps<typeof sidebarVariants>;
 
 @Component({
   tag: 'and-sidebar',
-  styleUrls: ['and-sidebar.css', '../../global/global.css'],
+  styleUrls: ['and-sidebar.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndSidebar {
@@ -230,7 +227,9 @@ export class AndSidebar {
   }
 
   private checkMobile() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     const wasMobile = this.isMobile;
     this.isMobile = window.innerWidth < this.mobileBreakpoint;
 
@@ -290,7 +289,9 @@ export class AndSidebar {
   };
 
   private handleItemClick = (item: SidebarItem) => {
-    if (item.disabled) return;
+    if (item.disabled) {
+      return;
+    }
     this.sidebar.actions.setActiveItem(item.id);
   };
 
@@ -337,9 +338,7 @@ export class AndSidebar {
         data-item-style={this.itemVariant}
         tabindex={itemProps.tabindex}
         id={itemProps.id}
-        class={cn(
-          sidebarItemVariants({ collapsed: isCollapsed, disabled: isDisabled }),
-        )}
+        class={cn(sidebarItemVariants({ collapsed: isCollapsed, disabled: isDisabled }))}
         onClick={() => this.handleItemClick(item)}
         title={isCollapsed ? item.label : undefined}
       >
@@ -359,9 +358,7 @@ export class AndSidebar {
     if (!this.sidebar) {
       return (
         <Host>
-          <div style={{ padding: '1rem', background: 'red', color: 'white' }}>
-            Sidebar: headless not initialized
-          </div>
+          <div style={{ padding: '1rem', background: 'red', color: 'white' }}>Sidebar: headless not initialized</div>
         </Host>
       );
     }
@@ -393,16 +390,9 @@ export class AndSidebar {
         data-has-bottom-nav={bottomItems.length > 0}
         style={hostStyle}
       >
-        <aside
-          class={cn(sidebarVariants({ variant: this.variant, collapsed: isCollapsed }))}
-        >
+        <aside class={cn(sidebarVariants({ variant: this.variant, collapsed: isCollapsed }))}>
           {/* ── Header ──────────────────────────────────────────── */}
-          <div
-            class={cn(
-              'sidebar-header',
-              !this.hasHeader && 'sidebar-header--no-content',
-            )}
-          >
+          <div class={cn('sidebar-header', !this.hasHeader && 'sidebar-header--no-content')}>
             <slot name="header" onSlotchange={this.handleSlotChange}>
               {!this.hasHeader && <span class="sidebar-title">Navigation</span>}
             </slot>
@@ -413,10 +403,7 @@ export class AndSidebar {
               class="sidebar-toggle"
               onClick={this.handleToggle}
             >
-              <and-icon
-                name={isCollapsed ? 'chevron-right' : 'chevron-left'}
-                class="toggle-icon"
-              />
+              <and-icon name={isCollapsed ? 'chevron-right' : 'chevron-left'} class="toggle-icon" />
             </button>
           </div>
 
@@ -461,7 +448,7 @@ export class AndSidebar {
             class={cn(
               'sidebar-footer',
               isCollapsed && 'sidebar-footer--collapsed',
-              !this.hasFooter && 'sidebar-footer--empty'
+              !this.hasFooter && 'sidebar-footer--empty',
             )}
           >
             <slot name="footer" onSlotchange={this.handleSlotChange} />

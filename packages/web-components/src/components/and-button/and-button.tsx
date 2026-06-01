@@ -1,4 +1,5 @@
 import { Component, h, Prop, Element, Event, EventEmitter, State, Watch } from '@stencil/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createButton, type ButtonReturn } from '@andersseen/headless-components';
@@ -19,7 +20,8 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-primary text-primary-foreground shadow-sm hover:shadow-md hover:bg-primary/90',
         destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:shadow-md hover:bg-destructive/90',
-        outline: 'border border-input bg-background shadow-sm hover:shadow-md hover:bg-accent hover:text-accent-foreground',
+        outline:
+          'border border-input bg-background shadow-sm hover:shadow-md hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:shadow-md hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-muted-foreground no-underline hover:text-foreground px-2 py-1 h-auto rounded-md hover:bg-accent/50',
@@ -48,7 +50,7 @@ export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
 @Component({
   tag: 'and-button',
-  styleUrls: ['and-button.css', '../../global/global.css'],
+  styleUrls: ['and-button.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndButton {
@@ -84,7 +86,9 @@ export class AndButton {
   /** Emitted on button click. */
   @Event({ bubbles: true, composed: true }) andButtonClick: EventEmitter<MouseEvent>;
 
-  @State() private buttonLogic: ButtonReturn;
+  @State() private renderTick = 0;
+  private buttonLogic: ButtonReturn;
+  private unsubscribe: () => void;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -98,6 +102,13 @@ export class AndButton {
       ariaLabel,
       onClick: (e: MouseEvent) => this.andButtonClick.emit(e),
     });
+    this.unsubscribe = this.buttonLogic.subscribe(() => {
+      this.renderTick++;
+    });
+  }
+
+  disconnectedCallback() {
+    this.unsubscribe?.();
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -143,11 +154,7 @@ export class AndButton {
     }
 
     return (
-      <button
-        {...props}
-        onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)}
-        class={classes}
-      >
+      <button {...props} onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)} class={classes}>
         {content}
       </button>
     );

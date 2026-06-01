@@ -43,11 +43,13 @@ export class AndTabsTrigger {
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handleKeyDown = (e: KeyboardEvent) => {
-    if (!this.tabsLogic) return;
+    if (!this.tabsLogic) {
+      return;
+    }
 
     const parent = this.el.parentElement;
     const allTriggers = Array.from(parent?.querySelectorAll('and-tabs-trigger') || []);
-    const allTabIds = allTriggers.map((t: any) => t.value).filter(Boolean);
+    const allTabIds = allTriggers.map((t: HTMLAndTabsTriggerElement) => t.value).filter(Boolean);
 
     this.tabsLogic.handleTriggerKeyDown(e, this.value, allTabIds);
 
@@ -55,7 +57,7 @@ export class AndTabsTrigger {
     const navKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
     if (navKeys.includes(e.key)) {
       const selectedTab = this.tabsLogic.queries.getSelectedTab();
-      const selectedTrigger = allTriggers.find((t: any) => t.value === selectedTab) as HTMLElement;
+      const selectedTrigger = allTriggers.find((t: HTMLAndTabsTriggerElement) => t.value === selectedTab);
       selectedTrigger?.focus();
     }
   };
@@ -77,9 +79,7 @@ export class AndTabsTrigger {
         tabIndex={this.selected ? 0 : -1}
         class={cn(
           triggerBaseClass,
-          this.selected
-            ? 'bg-background text-foreground shadow-sm'
-            : 'text-muted-foreground hover:text-foreground',
+          this.selected ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
           this.disabled && 'opacity-50 pointer-events-none',
         )}
       >

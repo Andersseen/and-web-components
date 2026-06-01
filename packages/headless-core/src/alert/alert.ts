@@ -3,23 +3,17 @@
  *
  * Provides state management and accessibility for alert/banner components.
  * Handles variant management, dismissible state, and ARIA alert semantics.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
 
 /**
  * Alert variant options
  */
-export type AlertVariant =
-  | "default"
-  | "destructive"
-  | "success"
-  | "warning"
-  | "info";
+export type AlertVariant = 'default' | 'destructive' | 'success' | 'warning' | 'info';
 
 /**
  * Configuration options for creating an alert
@@ -67,19 +61,19 @@ export interface AlertState {
  * Props for the alert container element
  */
 export interface AlertProps extends AriaAttributes, DataAttributes {
-  role: "alert" | "status";
-  "aria-live": "assertive" | "polite";
-  "aria-atomic": boolean;
-  "data-state": "open" | "closed";
-  "data-variant": AlertVariant;
+  'role': 'alert' | 'status';
+  'aria-live': 'assertive' | 'polite';
+  'aria-atomic': boolean;
+  'data-state': 'open' | 'closed';
+  'data-variant': AlertVariant;
 }
 
 /**
  * Props for the dismiss button element
  */
 export interface AlertDismissProps extends AriaAttributes {
-  "aria-label": string;
-  type: "button";
+  'aria-label': string;
+  'type': 'button';
 }
 
 /**
@@ -90,6 +84,11 @@ export interface AlertReturn {
    * Current state
    */
   state: Readonly<AlertState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<AlertState>) => void) => () => void;
 
   /**
    * Actions
@@ -132,64 +131,70 @@ export interface AlertReturn {
  */
 export function createAlert(config: AlertConfig = {}): AlertReturn {
   // Internal state
-  let state: AlertState = {
-    variant: config.variant ?? "default",
+  const store = createStore<AlertState>({
+    variant: config.variant ?? 'default',
     visible: config.defaultVisible ?? true,
     dismissible: config.dismissible ?? false,
-  };
+  });
 
   const notifyVisibility = (): void => {
-    config.onVisibilityChange?.(state.visible);
+    config.onVisibilityChange?.(store.state.visible);
   };
 
   // Actions
   const dismiss = (): void => {
-    if (!state.dismissible || !state.visible) return;
+    if (!store.state.dismissible || !store.state.visible) {
+      return;
+    }
 
-    state = { ...state, visible: false };
+    store.setState({ visible: false });
     config.onDismiss?.();
     notifyVisibility();
   };
 
   const show = (): void => {
-    if (state.visible) return;
+    if (store.state.visible) {
+      return;
+    }
 
-    state = { ...state, visible: true };
+    store.setState({ visible: true });
     notifyVisibility();
   };
 
   const setVariant = (variant: AlertVariant): void => {
-    state = { ...state, variant };
+    store.setState({ variant });
   };
 
   const setDismissible = (dismissible: boolean): void => {
-    state = { ...state, dismissible };
+    store.setState({ dismissible });
   };
 
   // Get element props
   const getAlertProps = (): AlertProps => {
     // Destructive alerts use "alert" role with "assertive" for immediate attention
     // Other variants use "status" with "polite" for non-intrusive notifications
-    const isUrgent =
-      state.variant === "destructive" || state.variant === "warning";
+    const isUrgent = store.state.variant === 'destructive' || store.state.variant === 'warning';
 
     return {
-      role: isUrgent ? "alert" : "status",
-      "aria-live": isUrgent ? "assertive" : "polite",
-      "aria-atomic": true,
-      "data-state": state.visible ? "open" : "closed",
-      "data-variant": state.variant,
+      'role': isUrgent ? 'alert' : 'status',
+      'aria-live': isUrgent ? 'assertive' : 'polite',
+      'aria-atomic': true,
+      'data-state': store.state.visible ? 'open' : 'closed',
+      'data-variant': store.state.variant,
     };
   };
 
   const getDismissButtonProps = (): AlertDismissProps => ({
-    "aria-label": "Dismiss alert",
-    type: "button",
+    'aria-label': 'Dismiss alert',
+    'type': 'button',
   });
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       dismiss,

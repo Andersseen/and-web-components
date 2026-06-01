@@ -3,15 +3,14 @@
  *
  * Provides state management and accessibility for accordion/collapsible components.
  * Supports single and multi-select modes with full keyboard navigation.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { createIdGenerator } from "../utils/id";
-import { Keys } from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { createIdGenerator } from '../utils/id';
+import { Keys } from '../types/common';
 
 /**
  * Configuration options for creating an accordion
@@ -38,7 +37,7 @@ export interface AccordionConfig {
    * Orientation of the accordion
    * @default 'vertical'
    */
-  orientation?: "horizontal" | "vertical";
+  orientation?: 'horizontal' | 'vertical';
 
   /**
    * Whether the accordion is disabled
@@ -52,36 +51,37 @@ export interface AccordionConfig {
  */
 export interface AccordionState {
   expandedItems: Set<string>;
-  orientation: "horizontal" | "vertical";
+  orientation: 'horizontal' | 'vertical';
   disabled: boolean;
+  allowMultiple: boolean;
 }
 
 /**
  * Props for accordion container element
  */
 export interface AccordionContainerProps extends DataAttributes {
-  "data-orientation": "horizontal" | "vertical";
+  'data-orientation': 'horizontal' | 'vertical';
 }
 
 /**
  * Props for accordion item trigger/button element
  */
 export interface AccordionTriggerProps extends AriaAttributes, DataAttributes {
-  "aria-expanded": boolean;
-  "aria-controls": string;
-  "aria-disabled": boolean;
-  role: "button";
-  tabindex: number;
+  'aria-expanded': boolean;
+  'aria-controls': string;
+  'aria-disabled': boolean;
+  'role': 'button';
+  'tabindex': number;
 }
 
 /**
  * Props for accordion item content/panel element
  */
 export interface AccordionContentProps extends AriaAttributes, DataAttributes {
-  role: "region";
-  id: string;
-  "aria-hidden": boolean;
-  hidden: boolean;
+  'role': 'region';
+  'id': string;
+  'aria-hidden': boolean;
+  'hidden': boolean;
 }
 
 /**
@@ -94,6 +94,11 @@ export interface AccordionReturn {
   state: Readonly<AccordionState>;
 
   /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<AccordionState>) => void) => () => void;
+
+  /**
    * Actions to manipulate accordion state
    */
   actions: {
@@ -103,6 +108,7 @@ export interface AccordionReturn {
     expandAll: () => void;
     collapseAll: () => void;
     setDisabled: (disabled: boolean) => void;
+    setAllowMultiple: (allowMultiple: boolean) => void;
   };
 
   /**
@@ -150,91 +156,102 @@ export interface AccordionReturn {
  * ```
  */
 export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
-  const generateId = createIdGenerator("accordion");
+  const generateId = createIdGenerator('accordion');
 
   // Internal state
-  let state: AccordionState = {
+  const store = createStore<AccordionState>({
     expandedItems: new Set(config.defaultValue || []),
-    orientation: config.orientation ?? "vertical",
+    orientation: config.orientation ?? 'vertical',
     disabled: config.disabled ?? false,
-  };
-
-  const allowMultiple = config.allowMultiple ?? false;
+    allowMultiple: config.allowMultiple ?? false,
+  });
 
   // Notify of changes
   const notifyChange = (): void => {
-    config.onValueChange?.(Array.from(state.expandedItems));
+    config.onValueChange?.(Array.from(store.state.expandedItems));
   };
 
   // Actions
   const toggle = (itemId: string): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
-    const newExpanded = new Set(state.expandedItems);
+    const newExpanded = new Set(store.state.expandedItems);
 
     if (newExpanded.has(itemId)) {
       newExpanded.delete(itemId);
     } else {
-      if (!allowMultiple) {
+      if (!store.state.allowMultiple) {
         newExpanded.clear();
       }
       newExpanded.add(itemId);
     }
 
-    state = { ...state, expandedItems: newExpanded };
+    store.setState({ expandedItems: newExpanded });
     notifyChange();
   };
 
   const expand = (itemId: string): void => {
-    if (state.disabled || state.expandedItems.has(itemId)) return;
+    if (store.state.disabled || store.state.expandedItems.has(itemId)) {
+      return;
+    }
 
-    const newExpanded = allowMultiple
-      ? new Set([...state.expandedItems, itemId])
-      : new Set([itemId]);
+    const newExpanded = store.state.allowMultiple ? new Set([...store.state.expandedItems, itemId]) : new Set([itemId]);
 
-    state = { ...state, expandedItems: newExpanded };
+    store.setState({ expandedItems: newExpanded });
     notifyChange();
   };
 
   const collapse = (itemId: string): void => {
-    if (state.disabled || !state.expandedItems.has(itemId)) return;
+    if (store.state.disabled || !store.state.expandedItems.has(itemId)) {
+      return;
+    }
 
-    const newExpanded = new Set(state.expandedItems);
+    const newExpanded = new Set(store.state.expandedItems);
     newExpanded.delete(itemId);
 
-    state = { ...state, expandedItems: newExpanded };
+    store.setState({ expandedItems: newExpanded });
     notifyChange();
   };
 
   const expandAll = (): void => {
-    if (state.disabled || !allowMultiple) return;
+    if (store.state.disabled || !store.state.allowMultiple) {
+      return;
+    }
     // Note: This requires knowing all item IDs, so it's a placeholder
     // In real usage, you'd pass available items
   };
 
   const collapseAll = (): void => {
-    if (state.disabled || state.expandedItems.size === 0) return;
+    if (store.state.disabled || store.state.expandedItems.size === 0) {
+      return;
+    }
 
-    state = { ...state, expandedItems: new Set() };
+    store.setState({ expandedItems: new Set() });
     notifyChange();
   };
 
   const setDisabled = (disabled: boolean): void => {
-    state = { ...state, disabled };
+    store.setState({ disabled });
+  };
+
+  const setAllowMultiple = (allowMultiple: boolean): void => {
+    store.setState({ allowMultiple });
   };
 
   // Queries
   const isExpanded = (itemId: string): boolean => {
-    return state.expandedItems.has(itemId);
+    return store.state.expandedItems.has(itemId);
   };
 
   const getExpandedItems = (): string[] => {
-    return Array.from(state.expandedItems);
+    return Array.from(store.state.expandedItems);
   };
 
   // Get element props
   const getContainerProps = (): AccordionContainerProps => ({
-    "data-orientation": state.orientation,
+    'data-orientation': store.state.orientation,
   });
 
   const getTriggerProps = (itemId: string): AccordionTriggerProps => {
@@ -242,13 +259,13 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
     const contentId = generateId(`content-${itemId}`);
 
     return {
-      "aria-expanded": expanded,
-      "aria-controls": contentId,
-      "aria-disabled": state.disabled,
-      role: "button",
-      tabindex: state.disabled ? -1 : 0,
-      "data-state": expanded ? "open" : "closed",
-      "data-disabled": state.disabled,
+      'aria-expanded': expanded,
+      'aria-controls': contentId,
+      'aria-disabled': store.state.disabled,
+      'role': 'button',
+      'tabindex': store.state.disabled ? -1 : 0,
+      'data-state': expanded ? 'open' : 'closed',
+      'data-disabled': store.state.disabled,
     };
   };
 
@@ -257,17 +274,19 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
     const contentId = generateId(`content-${itemId}`);
 
     return {
-      role: "region",
-      id: contentId,
-      "aria-hidden": !expanded,
-      hidden: !expanded,
-      "data-state": expanded ? "open" : "closed",
+      'role': 'region',
+      'id': contentId,
+      'aria-hidden': !expanded,
+      'hidden': !expanded,
+      'data-state': expanded ? 'open' : 'closed',
     };
   };
 
   // Keyboard navigation
   const handleTriggerKeyDown = (event: KeyboardEvent, itemId: string): void => {
-    if (state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
 
     switch (event.key) {
       case Keys.Enter:
@@ -293,11 +312,10 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
 
   return {
     get state() {
-      return Object.freeze({
-        expandedItems: new Set(state.expandedItems),
-        orientation: state.orientation,
-        disabled: state.disabled,
-      });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       toggle,
@@ -306,6 +324,7 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
       expandAll,
       collapseAll,
       setDisabled,
+      setAllowMultiple,
     },
     queries: {
       isExpanded,

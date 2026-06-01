@@ -9,7 +9,7 @@ const isDev = process.argv.includes('--dev') || process.argv.includes('--watch')
 
 export const config: Config = {
   namespace: 'web-components',
-  globalStyle: 'src/global/global.css',
+  globalStyle: 'src/global/document.css',
   sourceMap: isDev,
   buildEs5: false,
   allowInlineScripts: false,

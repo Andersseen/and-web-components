@@ -34,15 +34,14 @@
  * // Scroll-spy (call in scroll handler)
  * navbar.actions.updateActiveFromScroll();
  * ```
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
-import { createIdGenerator } from "../utils/id";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
+import { createIdGenerator } from '../utils/id';
 
 // ─── Item Definition ────────────────────────────────────────────────
 
@@ -126,7 +125,7 @@ export interface NavbarConfig {
    * - `prefix`: pathname can match nested routes (`/docs/intro` -> `/docs`).
    * @default 'prefix'
    */
-  routeMatchMode?: "exact" | "prefix";
+  routeMatchMode?: 'exact' | 'prefix';
 }
 
 // ─── State ──────────────────────────────────────────────────────────
@@ -149,53 +148,53 @@ export interface NavbarState {
  * Props for the `<nav>` container element
  */
 export interface NavbarContainerProps extends DataAttributes {
-  role: "navigation";
-  "aria-label": string;
+  'role': 'navigation';
+  'aria-label': string;
 }
 
 /**
  * Props for the navigation item list (`<ul>` or `<div>` wrapper)
  */
 export interface NavbarNavListProps extends AriaAttributes, DataAttributes {
-  role: "menubar";
-  "aria-label": string;
+  'role': 'menubar';
+  'aria-label': string;
 }
 
 /**
  * Props for a single navigation item element (button or link)
  */
 export interface NavbarItemProps extends AriaAttributes, DataAttributes {
-  role: "menuitem";
-  "aria-current"?: "page" | undefined;
-  "aria-disabled"?: boolean;
-  "data-active": boolean;
-  "data-state": "active" | "inactive";
-  tabindex: number;
-  id: string;
-  href?: string;
-  target?: string;
+  'role': 'menuitem';
+  'aria-current'?: 'page' | undefined;
+  'aria-disabled'?: boolean;
+  'data-active': boolean;
+  'data-state': 'active' | 'inactive';
+  'tabindex': number;
+  'id': string;
+  'href'?: string;
+  'target'?: string;
 }
 
 /**
  * Props for mobile menu toggle button
  */
 export interface NavbarToggleProps extends AriaAttributes, DataAttributes {
-  "aria-expanded": boolean;
-  "aria-label": string;
-  "aria-controls": string;
-  role: "button";
-  tabindex: number;
+  'aria-expanded': boolean;
+  'aria-label': string;
+  'aria-controls': string;
+  'role': 'button';
+  'tabindex': number;
 }
 
 /**
  * Props for the mobile menu panel
  */
 export interface NavbarMobileMenuProps extends DataAttributes {
-  id: string;
-  role: "menu";
-  "aria-label": string;
-  "data-state": "open" | "closed";
-  hidden: boolean;
+  'id': string;
+  'role': 'menu';
+  'aria-label': string;
+  'data-state': 'open' | 'closed';
+  'hidden': boolean;
 }
 
 // ─── Return Type ────────────────────────────────────────────────────
@@ -208,6 +207,11 @@ export interface NavbarReturn {
    * Current reactive state
    */
   state: Readonly<NavbarState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<NavbarState>) => void) => () => void;
 
   /**
    * Actions to manipulate navbar state
@@ -237,10 +241,7 @@ export interface NavbarReturn {
      * Detect active item from the current pathname.
      * Useful for route-driven apps (`/docs`, `/demo`, etc.).
      */
-    updateActiveFromRoute: (
-      pathname?: string,
-      routeMatchMode?: "exact" | "prefix",
-    ) => void;
+    updateActiveFromRoute: (pathname?: string, routeMatchMode?: 'exact' | 'prefix') => void;
   };
 
   /**
@@ -262,10 +263,7 @@ export interface NavbarReturn {
    */
   getContainerProps: () => NavbarContainerProps;
   getNavListProps: () => NavbarNavListProps;
-  getItemProps: (
-    itemId: string,
-    options?: { href?: string; target?: string },
-  ) => NavbarItemProps;
+  getItemProps: (itemId: string, options?: { href?: string; target?: string }) => NavbarItemProps;
   getToggleProps: () => NavbarToggleProps;
   getMobileMenuProps: () => NavbarMobileMenuProps;
 
@@ -282,54 +280,59 @@ export interface NavbarReturn {
  * Create a headless navbar component
  */
 export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
-  const generateId = createIdGenerator("navbar");
-  const menuId = generateId("mobile-menu");
+  const generateId = createIdGenerator('navbar');
+  const menuId = generateId('mobile-menu');
 
   // Build item lookup
   let items: NavbarItem[] = config.items ?? [];
-  let itemMap = new Map<string, NavbarItem>(items.map((i) => [i.id, i]));
-  let itemIds: string[] = items.map((i) => i.id);
+  let itemMap = new Map<string, NavbarItem>(items.map(i => [i.id, i]));
+  let itemIds: string[] = items.map(i => i.id);
 
   // Resolve default active item
-  const resolveDefault = (): string =>
-    config.defaultActiveItem ?? itemIds[0] ?? "home";
+  const resolveDefault = (): string => config.defaultActiveItem ?? itemIds[0] ?? 'home';
 
   // Internal state
-  let state: NavbarState = {
+  const store = createStore<NavbarState>({
     activeItem: resolveDefault(),
     mobileMenuOpen: config.mobileMenuOpen ?? false,
     itemIds: [...itemIds],
-  };
+  });
 
   // ── Notifications ───────────────────────────────────────────────
 
   const notifyActiveItemChange = (): void => {
-    config.onActiveItemChange?.(state.activeItem);
+    config.onActiveItemChange?.(store.state.activeItem);
   };
 
   const notifyMobileMenuChange = (): void => {
-    config.onMobileMenuChange?.(state.mobileMenuOpen);
+    config.onMobileMenuChange?.(store.state.mobileMenuOpen);
   };
 
   // ── Actions ─────────────────────────────────────────────────────
 
   const setActiveItem = (itemId: string): void => {
-    if (state.activeItem === itemId) return;
+    if (store.state.activeItem === itemId) {
+      return;
+    }
     const item = itemMap.get(itemId);
-    if (item?.disabled) return;
+    if (item?.disabled) {
+      return;
+    }
 
-    state = { ...state, activeItem: itemId };
+    store.setState({ activeItem: itemId });
     notifyActiveItemChange();
   };
 
   const setMobileMenuOpen = (open: boolean): void => {
-    if (state.mobileMenuOpen === open) return;
-    state = { ...state, mobileMenuOpen: open };
+    if (store.state.mobileMenuOpen === open) {
+      return;
+    }
+    store.setState({ mobileMenuOpen: open });
     notifyMobileMenuChange();
   };
 
   const toggleMobileMenu = (): void => {
-    setMobileMenuOpen(!state.mobileMenuOpen);
+    setMobileMenuOpen(!store.state.mobileMenuOpen);
   };
 
   const closeMobileMenu = (): void => {
@@ -337,71 +340,70 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
   };
 
   const normalizePathname = (value: string): string => {
-    if (!value) return "/";
+    if (!value) {
+      return '/';
+    }
 
     // Support callers that may accidentally pass full URLs.
     let input = value;
     try {
-      if (value.startsWith("http://") || value.startsWith("https://")) {
+      if (value.startsWith('http://') || value.startsWith('https://')) {
         input = new URL(value).pathname;
       }
     } catch {
       input = value;
     }
 
-    const withoutQuery = input.split("?")[0] ?? input;
-    const withoutHash = withoutQuery.split("#")[0] ?? withoutQuery;
-    if (!withoutHash) return "/";
+    const withoutQuery = input.split('?')[0] ?? input;
+    const withoutHash = withoutQuery.split('#')[0] ?? withoutQuery;
+    if (!withoutHash) {
+      return '/';
+    }
 
-    let normalized = withoutHash.startsWith("/")
-      ? withoutHash
-      : `/${withoutHash}`;
-    if (normalized.length > 1 && normalized.endsWith("/")) {
+    let normalized = withoutHash.startsWith('/') ? withoutHash : `/${withoutHash}`;
+    if (normalized.length > 1 && normalized.endsWith('/')) {
       normalized = normalized.slice(0, -1);
     }
-    return normalized || "/";
+    return normalized || '/';
   };
 
   const getHrefPathname = (href?: string): string | null => {
-    if (!href) return null;
-    if (href.startsWith("#")) return null;
-    if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("//")) return null;
+    if (!href) {
+      return null;
+    }
+    if (href.startsWith('#')) {
+      return null;
+    }
+    if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith('//')) {
+      return null;
+    }
     return normalizePathname(href);
   };
 
-  const findRouteMatch = (
-    pathname: string,
-    routeMatchMode?: "exact" | "prefix",
-  ): NavbarItem | undefined => {
+  const findRouteMatch = (pathname: string, routeMatchMode?: 'exact' | 'prefix'): NavbarItem | undefined => {
     const normalizedPath = normalizePathname(pathname);
-    const mode = routeMatchMode ?? config.routeMatchMode ?? "prefix";
+    const mode = routeMatchMode ?? config.routeMatchMode ?? 'prefix';
 
     const candidates = items
-      .filter((item) => !item.disabled)
-      .map((item) => ({ item, hrefPath: getHrefPathname(item.href) }))
-      .filter((entry): entry is { item: NavbarItem; hrefPath: string } =>
-        Boolean(entry.hrefPath),
-      );
+      .filter(item => !item.disabled)
+      .map(item => ({ item, hrefPath: getHrefPathname(item.href) }))
+      .filter((entry): entry is { item: NavbarItem; hrefPath: string } => Boolean(entry.hrefPath));
 
-    if (mode === "exact") {
-      return candidates.find(({ hrefPath }) => hrefPath === normalizedPath)
-        ?.item;
+    if (mode === 'exact') {
+      return candidates.find(({ hrefPath }) => hrefPath === normalizedPath)?.item;
     }
 
     // Prefix mode: choose the longest matching path so nested sections
     // prefer the most specific nav item.
     let best: { item: NavbarItem; hrefPath: string } | undefined;
     for (const candidate of candidates) {
-      if (candidate.hrefPath === "/") {
-        if (normalizedPath !== "/") continue;
+      if (candidate.hrefPath === '/') {
+        if (normalizedPath !== '/') {
+          continue;
+        }
       } else {
         const prefix = `${candidate.hrefPath}/`;
-        if (
-          !(
-            normalizedPath === candidate.hrefPath ||
-            normalizedPath.startsWith(prefix)
-          )
-        ) {
+        if (!(normalizedPath === candidate.hrefPath || normalizedPath.startsWith(prefix))) {
           continue;
         }
       }
@@ -416,13 +418,13 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
 
   const setItems = (newItems: NavbarItem[]): void => {
     items = newItems;
-    itemMap = new Map(items.map((i) => [i.id, i]));
-    itemIds = items.map((i) => i.id);
-    state = { ...state, itemIds: [...itemIds] };
+    itemMap = new Map(items.map(i => [i.id, i]));
+    itemIds = items.map(i => i.id);
+    store.setState({ itemIds: [...itemIds] });
 
     // Keep state valid after dynamic item updates.
-    if (!itemMap.has(state.activeItem)) {
-      state = { ...state, activeItem: resolveDefault() };
+    if (!itemMap.has(store.state.activeItem)) {
+      store.setState({ activeItem: resolveDefault() });
       notifyActiveItemChange();
     }
   };
@@ -432,16 +434,22 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
    * is closest to (but above) the scroll-spy offset line.
    */
   const updateActiveFromScroll = (offsetOverride?: number): void => {
-    if (typeof document === "undefined") return;
+    if (typeof document === 'undefined') {
+      return;
+    }
 
     const offset = offsetOverride ?? config.scrollSpyOffset ?? 100;
     let bestId: string | null = null;
     let bestTop = -Infinity;
 
     for (const item of items) {
-      if (!item.href?.startsWith("#")) continue;
+      if (!item.href?.startsWith('#')) {
+        continue;
+      }
       const el = document.querySelector(item.href);
-      if (!el) continue;
+      if (!el) {
+        continue;
+      }
 
       const rect = el.getBoundingClientRect();
       // Section top relative to viewport — consider "in view" when it
@@ -452,7 +460,7 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
       }
     }
 
-    if (bestId && bestId !== state.activeItem) {
+    if (bestId && bestId !== store.state.activeItem) {
       setActiveItem(bestId);
     }
   };
@@ -461,11 +469,15 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
    * Detect active item from current URL hash.
    */
   const updateActiveFromHash = (): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     const hash = window.location.hash;
-    if (!hash) return;
+    if (!hash) {
+      return;
+    }
 
-    const match = items.find((i) => i.href === hash);
+    const match = items.find(i => i.href === hash);
     if (match) {
       setActiveItem(match.id);
     }
@@ -474,11 +486,10 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
   /**
    * Detect active item from pathname.
    */
-  const updateActiveFromRoute = (
-    pathname?: string,
-    routeMatchMode?: "exact" | "prefix",
-  ): void => {
-    if (typeof window === "undefined" && !pathname) return;
+  const updateActiveFromRoute = (pathname?: string, routeMatchMode?: 'exact' | 'prefix'): void => {
+    if (typeof window === 'undefined' && !pathname) {
+      return;
+    }
     const currentPathname = pathname ?? window.location.pathname;
     const match = findRouteMatch(currentPathname, routeMatchMode);
     if (match) {
@@ -489,10 +500,10 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
   // ── Queries ─────────────────────────────────────────────────────
 
   const isActive = (itemId: string): boolean => {
-    return state.activeItem === itemId;
+    return store.state.activeItem === itemId;
   };
 
-  const getActiveItem = (): string => state.activeItem;
+  const getActiveItem = (): string => store.state.activeItem;
 
   const isDisabled = (itemId: string): boolean => {
     return itemMap.get(itemId)?.disabled === true;
@@ -502,16 +513,14 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
 
   // ── Keyboard Navigation ─────────────────────────────────────────
 
-  const getEnabledIds = (): string[] =>
-    itemIds.filter((id) => !itemMap.get(id)?.disabled);
+  const getEnabledIds = (): string[] => itemIds.filter(id => !itemMap.get(id)?.disabled);
 
-  const handleItemKeyDown = (
-    event: KeyboardEvent,
-    currentItemId: string,
-  ): void => {
+  const handleItemKeyDown = (event: KeyboardEvent, currentItemId: string): void => {
     const enabledIds = getEnabledIds();
     const currentIndex = enabledIds.indexOf(currentItemId);
-    if (currentIndex === -1) return;
+    if (currentIndex === -1) {
+      return;
+    }
 
     let nextIndex: number | null = null;
 
@@ -523,8 +532,7 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
 
       case Keys.ArrowLeft:
         event.preventDefault();
-        nextIndex =
-          currentIndex === 0 ? enabledIds.length - 1 : currentIndex - 1;
+        nextIndex = currentIndex === 0 ? enabledIds.length - 1 : currentIndex - 1;
         break;
 
       case Keys.Home:
@@ -556,7 +564,7 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
     if (nextIndex !== null && enabledIds[nextIndex]) {
       setActiveItem(enabledIds[nextIndex]);
       // Note: Actual DOM focus is handled by the consuming component.
-      // The component should listen to state.activeItem changes and
+      // The component should listen to store.state.activeItem changes and
       // call `.focus()` on the corresponding element.
     }
   };
@@ -564,60 +572,58 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
   // ── Get Element Props ───────────────────────────────────────────
 
   const getContainerProps = (): NavbarContainerProps => ({
-    role: "navigation",
-    "aria-label": config.ariaLabel ?? "Main navigation",
+    'role': 'navigation',
+    'aria-label': config.ariaLabel ?? 'Main navigation',
   });
 
   const getNavListProps = (): NavbarNavListProps => ({
-    role: "menubar",
-    "aria-label": config.ariaLabel ?? "Main navigation",
+    'role': 'menubar',
+    'aria-label': config.ariaLabel ?? 'Main navigation',
   });
 
-  const getItemProps = (
-    itemId: string,
-    options?: { href?: string; target?: string },
-  ): NavbarItemProps => {
+  const getItemProps = (itemId: string, options?: { href?: string; target?: string }): NavbarItemProps => {
     const active = isActive(itemId);
     const disabled = isDisabled(itemId);
     const itemEl = generateId(`item-${itemId}`);
 
     return {
-      role: "menuitem",
-      "aria-current": active ? "page" : undefined,
-      "aria-disabled": disabled || undefined,
-      "data-active": active,
-      "data-state": active ? "active" : "inactive",
-      tabindex: active ? 0 : -1,
-      id: itemEl,
+      'role': 'menuitem',
+      'aria-current': active ? 'page' : undefined,
+      'aria-disabled': disabled || undefined,
+      'data-active': active,
+      'data-state': active ? 'active' : 'inactive',
+      'tabindex': active ? 0 : -1,
+      'id': itemEl,
       ...(options?.href && { href: options.href }),
       ...(options?.target && { target: options.target }),
     };
   };
 
   const getToggleProps = (): NavbarToggleProps => ({
-    "aria-expanded": state.mobileMenuOpen,
-    "aria-label": state.mobileMenuOpen
-      ? "Close navigation menu"
-      : "Open navigation menu",
-    "aria-controls": menuId,
-    role: "button",
-    tabindex: 0,
-    "data-state": state.mobileMenuOpen ? "open" : "closed",
+    'aria-expanded': store.state.mobileMenuOpen,
+    'aria-label': store.state.mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu',
+    'aria-controls': menuId,
+    'role': 'button',
+    'tabindex': 0,
+    'data-state': store.state.mobileMenuOpen ? 'open' : 'closed',
   });
 
   const getMobileMenuProps = (): NavbarMobileMenuProps => ({
-    id: menuId,
-    role: "menu",
-    "aria-label": "Navigation menu",
-    "data-state": state.mobileMenuOpen ? "open" : "closed",
-    hidden: !state.mobileMenuOpen,
+    'id': menuId,
+    'role': 'menu',
+    'aria-label': 'Navigation menu',
+    'data-state': store.state.mobileMenuOpen ? 'open' : 'closed',
+    'hidden': !store.state.mobileMenuOpen,
   });
 
   // ── Return ──────────────────────────────────────────────────────
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       setActiveItem,

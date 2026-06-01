@@ -21,7 +21,7 @@ interface AndAccordionItemElement extends HTMLElement {
  */
 @Component({
   tag: 'and-accordion',
-  styleUrl: '../../global/global.css',
+  styleUrls: ['../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndAccordion {
@@ -64,12 +64,28 @@ export class AndAccordion {
     this.accordionLogic?.actions.setDisabled(this.disabled);
   }
 
+  @Watch('allowMultiple')
+  allowMultipleChanged() {
+    this.accordionLogic?.actions.setAllowMultiple(this.allowMultiple);
+  }
+
+  @Watch('orientation')
+  orientationChanged() {
+    // orientation is not reactive in current headless; re-create to sync
+    this.accordionLogic = createAccordion({
+      allowMultiple: this.allowMultiple,
+      defaultValue: Array.from(this.accordionLogic?.state.expandedItems ?? []),
+      orientation: this.orientation,
+      disabled: this.disabled,
+      onValueChange: () => this.updateChildren(),
+    });
+    this.updateChildren();
+  }
+
   /* ── Helpers ────────────────────────────────────────────────────── */
 
   private updateChildren() {
-    const items = Array.from(
-      this.el.querySelectorAll('and-accordion-item'),
-    ) as AndAccordionItemElement[];
+    const items = Array.from(this.el.querySelectorAll('and-accordion-item')) as AndAccordionItemElement[];
 
     items.forEach(item => {
       item.setAccordionLogic?.(this.accordionLogic);
@@ -84,7 +100,9 @@ export class AndAccordion {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    if (!this.accordionLogic) return null;
+    if (!this.accordionLogic) {
+      return null;
+    }
 
     const containerProps = this.accordionLogic.getContainerProps();
 

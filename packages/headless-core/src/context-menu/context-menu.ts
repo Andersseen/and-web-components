@@ -4,8 +4,11 @@
  * Provides state management and accessibility for context (right-click) menus.
  * Handles open/close state, positioning relative to pointer, outside-click
  * dismissal, and Escape-key support.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
+import { createStore } from '../utils/store';
 import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
 import { Keys } from '../types/common';
 import { createMenuSelection, type MenuSelectEvent, type MenuSelectionConfig } from '../menu';
@@ -73,12 +76,17 @@ export interface ContextMenuPanelProps extends AriaAttributes, DataAttributes {
  * Return type of createContextMenu
  */
 export interface ContextMenuReturn {
-  /** Current state. */
+  /** Current store.state. */
   state: Readonly<ContextMenuState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<ContextMenuState>) => void) => () => void;
 
   /** Actions. */
   actions: {
-    open: (position: ContextMenuPosition) => void;
+    open: (position?: ContextMenuPosition) => void;
     close: () => void;
     selectItem: (itemId?: string) => void;
   };
@@ -117,28 +125,31 @@ export interface ContextMenuReturn {
  * ```
  */
 export function createContextMenu(config: ContextMenuConfig = {}): ContextMenuReturn {
-  let state: ContextMenuState = {
+  const store = createStore<ContextMenuState>({
     isOpen: false,
     position: { x: 0, y: 0 },
-  };
+  });
 
   /* ── Internal helpers ────────────────────────────────────────────── */
 
   const notifyOpen = (): void => {
-    config.onOpenChange?.(state.isOpen);
+    config.onOpenChange?.(store.state.isOpen);
   };
 
   /* ── Actions ─────────────────────────────────────────────────────── */
 
-  const open = (position: ContextMenuPosition): void => {
-    state = { ...state, isOpen: true, position };
+  const open = (position?: ContextMenuPosition): void => {
+    const pos = position ?? store.state.position;
+    store.setState({ isOpen: true, position: pos });
     notifyOpen();
-    config.onPosition?.(position);
+    config.onPosition?.(pos);
   };
 
   const close = (): void => {
-    if (!state.isOpen) return;
-    state = { ...state, isOpen: false };
+    if (!store.state.isOpen) {
+      return;
+    }
+    store.setState({ isOpen: false });
     notifyOpen();
   };
 
@@ -151,14 +162,14 @@ export function createContextMenu(config: ContextMenuConfig = {}): ContextMenuRe
   /* ── Props getters ───────────────────────────────────────────────── */
 
   const getTriggerProps = (): ContextMenuTriggerProps => ({
-    'data-state': state.isOpen ? 'open' : 'closed',
+    'data-state': store.state.isOpen ? 'open' : 'closed',
   });
 
   const getPanelProps = (label: string = 'Context menu'): ContextMenuPanelProps => ({
     'role': 'menu',
     'aria-label': label,
-    'data-state': state.isOpen ? 'open' : 'closed',
-    'hidden': !state.isOpen,
+    'data-state': store.state.isOpen ? 'open' : 'closed',
+    'hidden': !store.state.isOpen,
   });
 
   /* ── Event handlers ──────────────────────────────────────────────── */
@@ -173,7 +184,9 @@ export function createContextMenu(config: ContextMenuConfig = {}): ContextMenuRe
   };
 
   const handleKeyDown = (event: KeyboardEvent): void => {
-    if (!state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
 
     if (event.key === Keys.Escape) {
       event.preventDefault();
@@ -185,7 +198,10 @@ export function createContextMenu(config: ContextMenuConfig = {}): ContextMenuRe
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       open,

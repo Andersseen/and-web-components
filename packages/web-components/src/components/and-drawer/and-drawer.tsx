@@ -69,7 +69,7 @@ export type DrawerVariantProps = VariantProps<typeof contentVariants>;
 
 @Component({
   tag: 'and-drawer',
-  styleUrls: ['and-drawer.css', '../../global/global.css'],
+  styleUrls: ['and-drawer.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDrawer {
@@ -141,7 +141,9 @@ export class AndDrawer {
 
   @Watch('open')
   async openChanged(newValue: boolean) {
-    if (newValue === this.isOpen) return;
+    if (newValue === this.isOpen) {
+      return;
+    }
 
     if (newValue) {
       // Phase 1 — position the panel at the correct off-screen spot
@@ -154,7 +156,9 @@ export class AndDrawer {
       await new Promise<void>(r => requestAnimationFrame(() => r()));
 
       // Bail if user already toggled again while we waited.
-      if (seq !== this.openSeq) return;
+      if (seq !== this.openSeq) {
+        return;
+      }
 
       // Phase 2 — re-enable the transition and open.
       this.skipTransition = false;

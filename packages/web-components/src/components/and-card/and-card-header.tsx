@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn';
 
 @Component({
   tag: 'and-card-header',
-  styleUrls: ['and-card-header.css', '../../global/global.css'],
+  styleUrls: ['and-card-header.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndCardHeader {
@@ -16,12 +16,7 @@ export class AndCardHeader {
 
   render() {
     return (
-      <Host
-        class={cn(
-          'flex flex-col gap-y-1.5 p-4 sm:p-6',
-          this.customClass,
-        )}
-      >
+      <Host class={cn('flex flex-col gap-y-1.5 p-4 sm:p-6', this.customClass)}>
         <slot />
       </Host>
     );

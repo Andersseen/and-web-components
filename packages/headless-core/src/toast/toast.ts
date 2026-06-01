@@ -3,8 +3,11 @@
  *
  * Provides state management and accessibility for toast/notification components.
  * Handles toast queue, auto-dismissal, and positioning — no rendering logic.
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
+import { createStore } from '../utils/store';
 import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
 
 /**
@@ -102,6 +105,11 @@ export interface ToastManagerReturn {
   state: Readonly<ToastManagerState>;
 
   /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<ToastManagerState>) => void) => () => void;
+
+  /**
    * Actions
    */
   actions: {
@@ -142,7 +150,7 @@ export interface ToastManagerReturn {
  *
  * // Get props
  * const containerProps = toasts.getContainerProps();
- * toasts.state.toasts.forEach(t => {
+ * toasts.store.state.toasts.forEach(t => {
  *   const props = toasts.getToastProps(t);
  * });
  *
@@ -155,16 +163,16 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
   const maxToasts = config.maxToasts ?? 5;
 
   // Internal state
-  let state: ToastManagerState = {
+  const store = createStore<ToastManagerState>({
     toasts: [],
     position: config.position ?? 'bottom-right',
-  };
+  });
 
   // Timer map for auto-dismiss
   const timers = new Map<number, ReturnType<typeof setTimeout>>();
 
   const notifyChange = (): void => {
-    config.onToastsChange?.([...state.toasts]);
+    config.onToastsChange?.([...store.state.toasts]);
   };
 
   // Actions
@@ -175,10 +183,9 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
       timers.delete(id);
     }
 
-    state = {
-      ...state,
-      toasts: state.toasts.filter(t => t.id !== id),
-    };
+    store.setState({
+      toasts: store.state.toasts.filter(t => t.id !== id),
+    });
     notifyChange();
   };
 
@@ -189,7 +196,7 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
     const toast: ToastItem = { id, message, type, duration: actualDuration };
 
     // Add toast, respecting max limit
-    const toasts = [...state.toasts, toast];
+    const toasts = [...store.state.toasts, toast];
     if (toasts.length > maxToasts) {
       // Remove oldest toasts that exceed limit
       const removed = toasts.splice(0, toasts.length - maxToasts);
@@ -202,7 +209,7 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
       });
     }
 
-    state = { ...state, toasts };
+    store.setState({ toasts });
     notifyChange();
 
     // Auto-dismiss
@@ -220,7 +227,7 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
     timers.forEach(timer => clearTimeout(timer));
     timers.clear();
 
-    state = { ...state, toasts: [] };
+    store.setState({ toasts: [] });
     notifyChange();
   };
 
@@ -230,7 +237,7 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
     'aria-label': 'Notifications',
     'aria-live': 'polite',
     'aria-atomic': false,
-    'data-position': state.position,
+    'data-position': store.state.position,
   });
 
   const getToastProps = (toast: ToastItem): ToastItemProps => ({
@@ -253,10 +260,10 @@ export function createToastManager(config: ToastManagerConfig = {}): ToastManage
 
   return {
     get state() {
-      return Object.freeze({
-        toasts: [...state.toasts],
-        position: state.position,
-      });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       present,

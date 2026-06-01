@@ -7,21 +7,18 @@ import { createBreadcrumb, type BreadcrumbReturn } from '@andersseen/headless-co
  * Variants
  * ──────────────────────────────────────────────────────────────────── */
 
-const breadcrumbVariants = cva(
-  'flex items-center text-muted-foreground font-sans',
-  {
-    variants: {
-      size: {
-        sm: 'text-xs gap-1',
-        md: 'text-sm gap-1.5',
-        lg: 'text-base gap-2',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
+const breadcrumbVariants = cva('flex items-center text-muted-foreground font-sans', {
+  variants: {
+    size: {
+      sm: 'text-xs gap-1',
+      md: 'text-sm gap-1.5',
+      lg: 'text-base gap-2',
     },
   },
-);
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
 export type BreadcrumbVariantProps = VariantProps<typeof breadcrumbVariants>;
 
@@ -31,7 +28,7 @@ export type BreadcrumbVariantProps = VariantProps<typeof breadcrumbVariants>;
 
 @Component({
   tag: 'and-breadcrumb',
-  styleUrls: ['and-breadcrumb.css', '../../global/global.css'],
+  styleUrls: ['and-breadcrumb.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndBreadcrumb {

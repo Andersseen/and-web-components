@@ -34,7 +34,7 @@ export type BadgeVariantProps = VariantProps<typeof badgeVariants>;
 
 @Component({
   tag: 'and-badge',
-  styleUrls: ['and-badge.css', '../../global/global.css'],
+  styleUrls: ['and-badge.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndBadge {
@@ -46,10 +46,7 @@ export class AndBadge {
 
   render() {
     return (
-      <Host
-        role="status"
-        class={cn(badgeVariants({ variant: this.variant }), this.customClass)}
-      >
+      <Host role="status" class={cn(badgeVariants({ variant: this.variant }), this.customClass)}>
         <slot />
       </Host>
     );

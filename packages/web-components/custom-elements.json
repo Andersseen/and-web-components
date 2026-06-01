@@ -3037,7 +3037,7 @@
             },
             {
               "name": "described-by",
-              "description": "ID of element describing this field (e.g. helper or error text).",
+              "description": "ID of element describing this field.",
               "type": {
                 "text": "string"
               },
@@ -3063,7 +3063,7 @@
             },
             {
               "name": "label",
-              "description": "Accessible label for the select (used when no visible label exists).",
+              "description": "Accessible label for the select.",
               "type": {
                 "text": "string"
               },
@@ -3071,12 +3071,13 @@
             },
             {
               "name": "menu-placement",
-              "description": "Menu placement strategy.\n- `auto`: chooses top/bottom based on viewport space\n- `bottom`: always opens below\n- `top`: always opens above",
+              "description": "Menu placement strategy.",
               "type": {
                 "text": "\"auto\" | \"bottom\" | \"top\"",
                 "references": [
                   {
-                    "name": "SelectMenuPlacement"
+                    "name": "SelectMenuPlacement",
+                    "module": "./types"
                   }
                 ]
               },
@@ -3090,6 +3091,21 @@
                 "text": "string"
               },
               "fieldName": "name"
+            },
+            {
+              "name": "options",
+              "description": "Options rendered in the select menu. Can be an array or a JSON string.",
+              "type": {
+                "text": "SelectOption[] | string",
+                "references": [
+                  {
+                    "name": "SelectOption",
+                    "module": "./types"
+                  }
+                ]
+              },
+              "default": "[]",
+              "fieldName": "options"
             },
             {
               "name": "placeholder",
@@ -3133,7 +3149,7 @@
             {
               "kind": "field",
               "name": "describedBy",
-              "description": "ID of element describing this field (e.g. helper or error text).",
+              "description": "ID of element describing this field.",
               "type": {
                 "text": "string"
               },
@@ -3167,7 +3183,7 @@
             {
               "kind": "field",
               "name": "label",
-              "description": "Accessible label for the select (used when no visible label exists).",
+              "description": "Accessible label for the select.",
               "type": {
                 "text": "string"
               },
@@ -3177,12 +3193,13 @@
             {
               "kind": "field",
               "name": "menuPlacement",
-              "description": "Menu placement strategy.\n- `auto`: chooses top/bottom based on viewport space\n- `bottom`: always opens below\n- `top`: always opens above",
+              "description": "Menu placement strategy.",
               "type": {
                 "text": "\"auto\" | \"bottom\" | \"top\"",
                 "references": [
                   {
-                    "name": "SelectMenuPlacement"
+                    "name": "SelectMenuPlacement",
+                    "module": "./types"
                   }
                 ]
               },
@@ -3205,17 +3222,19 @@
             {
               "kind": "field",
               "name": "options",
-              "description": "Options rendered in the select menu.",
+              "description": "Options rendered in the select menu. Can be an array or a JSON string.",
               "type": {
-                "text": "SelectOption[]",
+                "text": "SelectOption[] | string",
                 "references": [
                   {
-                    "name": "SelectOption"
+                    "name": "SelectOption",
+                    "module": "./types"
                   }
                 ]
               },
               "default": "[]",
-              "readonly": true
+              "readonly": true,
+              "attribute": "options"
             },
             {
               "kind": "field",
@@ -3256,7 +3275,7 @@
           "events": [
             {
               "name": "andBlur",
-              "description": "Emitted when select loses focus.",
+              "description": "Emitted when select loses focus / closes.",
               "type": {
                 "text": "CustomEvent<void>"
               }

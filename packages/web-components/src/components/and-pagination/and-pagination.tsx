@@ -39,7 +39,7 @@ const pageButtonVariants = cva(
 
 @Component({
   tag: 'and-pagination',
-  styleUrl: '../../global/global.css',
+  styleUrl: '../../global/component-base.css',
   shadow: true,
 })
 export class AndPagination {
@@ -55,7 +55,9 @@ export class AndPagination {
   /* ── Handlers ───────────────────────────────────────────────────── */
 
   private handlePageChange = (page: number) => {
-    if (page < 1 || page > this.totalPages) return;
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
     this.andPageChange.emit(page);
   };
 

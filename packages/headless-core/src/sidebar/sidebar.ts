@@ -22,14 +22,13 @@
  *   onActiveItemChange: (id) => console.log('Active:', id),
  * });
  * ```
+ *
+ * Now reactive: subscribe to state changes from any framework.
  */
 
-import type {
-  AriaAttributes,
-  DataAttributes,
-  EventCallback,
-} from "../types/common";
-import { Keys } from "../types/common";
+import { createStore } from '../utils/store';
+import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
+import { Keys } from '../types/common';
 
 // ─── Item Definition ────────────────────────────────────────────────
 
@@ -46,7 +45,7 @@ export interface SidebarItemDef {
   /** Whether the item is disabled */
   disabled?: boolean;
   /** Section: 'main' (default) or 'bottom' */
-  section?: "main" | "bottom";
+  section?: 'main' | 'bottom';
 }
 
 /**
@@ -109,43 +108,43 @@ export interface SidebarState {
  * Props for sidebar container element
  */
 export interface SidebarContainerProps extends DataAttributes {
-  role: "navigation";
-  "aria-label": string;
-  "data-collapsed": boolean;
-  "data-mobile-collapsed": boolean;
+  'role': 'navigation';
+  'aria-label': string;
+  'data-collapsed': boolean;
+  'data-mobile-collapsed': boolean;
 }
 
 /**
  * Props for navigation item element (button/link)
  */
 export interface SidebarItemProps extends AriaAttributes, DataAttributes {
-  role: "menuitem";
-  "aria-current"?: "page" | undefined;
-  "aria-disabled"?: boolean;
-  "data-active": boolean;
-  "data-state": "active" | "inactive";
-  "data-collapsed": boolean;
-  tabindex: number;
-  id: string;
+  'role': 'menuitem';
+  'aria-current'?: 'page' | undefined;
+  'aria-disabled'?: boolean;
+  'data-active': boolean;
+  'data-state': 'active' | 'inactive';
+  'data-collapsed': boolean;
+  'tabindex': number;
+  'id': string;
 }
 
 /**
  * Props for the navigation list wrapper
  */
 export interface SidebarNavListProps extends AriaAttributes, DataAttributes {
-  role: "menu";
-  "aria-label": string;
+  'role': 'menu';
+  'aria-label': string;
 }
 
 /**
  * Props for collapse toggle button
  */
 export interface SidebarToggleProps extends AriaAttributes, DataAttributes {
-  "aria-expanded": boolean;
-  "aria-label": string;
-  "data-collapsed": boolean;
-  role: "button";
-  tabindex: number;
+  'aria-expanded': boolean;
+  'aria-label': string;
+  'data-collapsed': boolean;
+  'role': 'button';
+  'tabindex': number;
 }
 
 /**
@@ -156,6 +155,11 @@ export interface SidebarReturn {
    * Current state
    */
   state: Readonly<SidebarState>;
+
+  /**
+   * Subscribe to state changes. Returns unsubscribe function.
+   */
+  subscribe: (callback: (state: Readonly<SidebarState>) => void) => () => void;
 
   /**
    * Actions to manipulate sidebar state
@@ -189,7 +193,7 @@ export interface SidebarReturn {
    * Get props for different elements
    */
   getContainerProps: () => SidebarContainerProps;
-  getNavListProps: (section?: "main" | "bottom") => SidebarNavListProps;
+  getNavListProps: (section?: 'main' | 'bottom') => SidebarNavListProps;
   getItemProps: (itemId: string) => SidebarItemProps;
   getToggleProps: () => SidebarToggleProps;
 
@@ -206,69 +210,73 @@ export interface SidebarReturn {
 export function createSidebar(config: SidebarConfig = {}): SidebarReturn {
   // Build item lookup
   let items: SidebarItemDef[] = config.items ?? [];
-  let itemMap = new Map<string, SidebarItemDef>(
-    items.map((i) => [i.id, i]),
-  );
-  let itemIds: string[] = items.map((i) => i.id);
+  let itemMap = new Map<string, SidebarItemDef>(items.map(i => [i.id, i]));
+  let itemIds: string[] = items.map(i => i.id);
 
   // Internal state
-  let state: SidebarState = {
-    activeItem: config.defaultActiveItem ?? "home",
+  const store = createStore<SidebarState>({
+    activeItem: config.defaultActiveItem ?? 'home',
     collapsed: config.defaultCollapsed ?? false,
     mobileCollapsed: config.mobileCollapse !== false,
-  };
+  });
 
   // Notify of changes
   const notifyActiveItemChange = (): void => {
-    config.onActiveItemChange?.(state.activeItem);
+    config.onActiveItemChange?.(store.state.activeItem);
   };
 
   const notifyCollapsedChange = (): void => {
-    config.onCollapsedChange?.(state.collapsed);
+    config.onCollapsedChange?.(store.state.collapsed);
   };
 
   // Actions
   const setActiveItem = (itemId: string): void => {
-    if (state.activeItem === itemId) return;
+    if (store.state.activeItem === itemId) {
+      return;
+    }
     const item = itemMap.get(itemId);
-    if (item?.disabled) return;
+    if (item?.disabled) {
+      return;
+    }
 
-    state = { ...state, activeItem: itemId };
+    store.setState({ activeItem: itemId });
     notifyActiveItemChange();
   };
 
   const setCollapsed = (collapsed: boolean): void => {
-    if (state.collapsed === collapsed) return;
+    if (store.state.collapsed === collapsed) {
+      return;
+    }
 
-    state = { ...state, collapsed };
+    store.setState({ collapsed });
     notifyCollapsedChange();
   };
 
   const toggleCollapse = (): void => {
-    setCollapsed(!state.collapsed);
+    setCollapsed(!store.state.collapsed);
   };
 
   const setMobileCollapsed = (collapsed: boolean): void => {
-    state = { ...state, mobileCollapsed: collapsed };
+    store.setState({ mobileCollapsed: collapsed });
   };
 
   const setItems = (newItems: SidebarItemDef[]): void => {
     items = newItems;
-    itemMap = new Map(items.map((i) => [i.id, i]));
-    itemIds = items.map((i) => i.id);
+    itemMap = new Map(items.map(i => [i.id, i]));
+    itemIds = items.map(i => i.id);
   };
 
   // Queries
   const isActive = (itemId: string): boolean => {
-    return state.activeItem === itemId;
+    return store.state.activeItem === itemId;
   };
 
   const isCollapsed = (): boolean => {
-    return state.collapsed;
+    return store.state.collapsed;
   };
 
   const isMobileCollapsed = (): boolean => {
-    return state.mobileCollapsed;
+    return store.state.mobileCollapsed;
   };
 
   const isDisabled = (itemId: string): boolean => {
@@ -276,27 +284,25 @@ export function createSidebar(config: SidebarConfig = {}): SidebarReturn {
   };
 
   const getMainItems = (): SidebarItemDef[] => {
-    return items.filter((i) => (i.section ?? "main") === "main");
+    return items.filter(i => (i.section ?? 'main') === 'main');
   };
 
   const getBottomItems = (): SidebarItemDef[] => {
-    return items.filter((i) => i.section === "bottom");
+    return items.filter(i => i.section === 'bottom');
   };
 
   const getItemIds = (): string[] => [...itemIds];
 
   // ── Keyboard Navigation ─────────────────────────────────────────
 
-  const getEnabledIds = (): string[] =>
-    itemIds.filter((id) => !itemMap.get(id)?.disabled);
+  const getEnabledIds = (): string[] => itemIds.filter(id => !itemMap.get(id)?.disabled);
 
-  const handleItemKeyDown = (
-    event: KeyboardEvent,
-    currentItemId: string,
-  ): void => {
+  const handleItemKeyDown = (event: KeyboardEvent, currentItemId: string): void => {
     const enabledIds = getEnabledIds();
     const currentIndex = enabledIds.indexOf(currentItemId);
-    if (currentIndex === -1) return;
+    if (currentIndex === -1) {
+      return;
+    }
 
     let nextIndex: number | null = null;
 
@@ -308,8 +314,7 @@ export function createSidebar(config: SidebarConfig = {}): SidebarReturn {
 
       case Keys.ArrowUp:
         event.preventDefault();
-        nextIndex =
-          currentIndex === 0 ? enabledIds.length - 1 : currentIndex - 1;
+        nextIndex = currentIndex === 0 ? enabledIds.length - 1 : currentIndex - 1;
         break;
 
       case Keys.Home:
@@ -339,46 +344,46 @@ export function createSidebar(config: SidebarConfig = {}): SidebarReturn {
 
   // Get element props
   const getContainerProps = (): SidebarContainerProps => ({
-    role: "navigation",
-    "aria-label": config.ariaLabel ?? "Sidebar navigation",
-    "data-collapsed": state.collapsed,
-    "data-mobile-collapsed": state.mobileCollapsed,
+    'role': 'navigation',
+    'aria-label': config.ariaLabel ?? 'Sidebar navigation',
+    'data-collapsed': store.state.collapsed,
+    'data-mobile-collapsed': store.state.mobileCollapsed,
   });
 
-  const getNavListProps = (
-    section: "main" | "bottom" = "main",
-  ): SidebarNavListProps => ({
-    role: "menu",
-    "aria-label":
-      section === "bottom" ? "Secondary navigation" : "Main navigation",
+  const getNavListProps = (section: 'main' | 'bottom' = 'main'): SidebarNavListProps => ({
+    'role': 'menu',
+    'aria-label': section === 'bottom' ? 'Secondary navigation' : 'Main navigation',
   });
 
   const getItemProps = (itemId: string): SidebarItemProps => {
     const active = isActive(itemId);
     const disabled = isDisabled(itemId);
     return {
-      role: "menuitem",
-      "aria-current": active ? "page" : undefined,
-      "aria-disabled": disabled || undefined,
-      "data-active": active,
-      "data-state": active ? "active" : "inactive",
-      "data-collapsed": state.collapsed,
-      tabindex: active ? 0 : -1,
-      id: `sidebar-item-${itemId}`,
+      'role': 'menuitem',
+      'aria-current': active ? 'page' : undefined,
+      'aria-disabled': disabled || undefined,
+      'data-active': active,
+      'data-state': active ? 'active' : 'inactive',
+      'data-collapsed': store.state.collapsed,
+      'tabindex': active ? 0 : -1,
+      'id': `sidebar-item-${itemId}`,
     };
   };
 
   const getToggleProps = (): SidebarToggleProps => ({
-    "aria-expanded": !state.collapsed,
-    "aria-label": state.collapsed ? "Expand sidebar" : "Collapse sidebar",
-    role: "button",
-    tabindex: 0,
-    "data-collapsed": state.collapsed,
+    'aria-expanded': !store.state.collapsed,
+    'aria-label': store.state.collapsed ? 'Expand sidebar' : 'Collapse sidebar',
+    'role': 'button',
+    'tabindex': 0,
+    'data-collapsed': store.state.collapsed,
   });
 
   return {
     get state() {
-      return Object.freeze({ ...state });
+      return store.state;
+    },
+    subscribe: callback => {
+      return store.subscribe(state => callback(state));
     },
     actions: {
       setActiveItem,

@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn';
 
 @Component({
   tag: 'and-card-content',
-  styleUrls: ['and-card-content.css', '../../global/global.css'],
+  styleUrls: ['and-card-content.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndCardContent {

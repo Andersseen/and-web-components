@@ -1,0 +1,16 @@
+/**
+ * Document-level styles only.
+ * Injected into <head> by Stencil globalStyle.
+ * DO NOT include in component shadow roots.
+ */
+
+@import './themes.css';
+@import './palettes.css';
+
+@tailwind base;
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
