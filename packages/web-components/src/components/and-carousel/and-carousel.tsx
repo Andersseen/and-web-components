@@ -33,7 +33,7 @@ const dotBaseClass = [
 
 @Component({
   tag: 'and-carousel',
-  styleUrl: 'and-carousel.css',
+  styleUrls: ['and-carousel.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndCarousel {

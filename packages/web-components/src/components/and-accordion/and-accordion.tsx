@@ -64,6 +64,24 @@ export class AndAccordion {
     this.accordionLogic?.actions.setDisabled(this.disabled);
   }
 
+  @Watch('allowMultiple')
+  allowMultipleChanged() {
+    this.accordionLogic?.actions.setAllowMultiple(this.allowMultiple);
+  }
+
+  @Watch('orientation')
+  orientationChanged() {
+    // orientation is not reactive in current headless; re-create to sync
+    this.accordionLogic = createAccordion({
+      allowMultiple: this.allowMultiple,
+      defaultValue: Array.from(this.accordionLogic?.state.expandedItems ?? []),
+      orientation: this.orientation,
+      disabled: this.disabled,
+      onValueChange: () => this.updateChildren(),
+    });
+    this.updateChildren();
+  }
+
   /* ── Helpers ────────────────────────────────────────────────────── */
 
   private updateChildren() {

@@ -53,6 +53,7 @@ export interface AccordionState {
   expandedItems: Set<string>;
   orientation: 'horizontal' | 'vertical';
   disabled: boolean;
+  allowMultiple: boolean;
 }
 
 /**
@@ -107,6 +108,7 @@ export interface AccordionReturn {
     expandAll: () => void;
     collapseAll: () => void;
     setDisabled: (disabled: boolean) => void;
+    setAllowMultiple: (allowMultiple: boolean) => void;
   };
 
   /**
@@ -161,9 +163,8 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
     expandedItems: new Set(config.defaultValue || []),
     orientation: config.orientation ?? 'vertical',
     disabled: config.disabled ?? false,
+    allowMultiple: config.allowMultiple ?? false,
   });
-
-  const allowMultiple = config.allowMultiple ?? false;
 
   // Notify of changes
   const notifyChange = (): void => {
@@ -181,7 +182,7 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
     if (newExpanded.has(itemId)) {
       newExpanded.delete(itemId);
     } else {
-      if (!allowMultiple) {
+      if (!store.state.allowMultiple) {
         newExpanded.clear();
       }
       newExpanded.add(itemId);
@@ -196,7 +197,7 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
       return;
     }
 
-    const newExpanded = allowMultiple ? new Set([...store.state.expandedItems, itemId]) : new Set([itemId]);
+    const newExpanded = store.state.allowMultiple ? new Set([...store.state.expandedItems, itemId]) : new Set([itemId]);
 
     store.setState({ expandedItems: newExpanded });
     notifyChange();
@@ -215,7 +216,7 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
   };
 
   const expandAll = (): void => {
-    if (store.state.disabled || !allowMultiple) {
+    if (store.state.disabled || !store.state.allowMultiple) {
       return;
     }
     // Note: This requires knowing all item IDs, so it's a placeholder
@@ -233,6 +234,10 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
 
   const setDisabled = (disabled: boolean): void => {
     store.setState({ disabled });
+  };
+
+  const setAllowMultiple = (allowMultiple: boolean): void => {
+    store.setState({ allowMultiple });
   };
 
   // Queries
@@ -319,6 +324,7 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
       expandAll,
       collapseAll,
       setDisabled,
+      setAllowMultiple,
     },
     queries: {
       isExpanded,

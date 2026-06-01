@@ -16,24 +16,18 @@ import {
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Card
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Card</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Composable card component with optional sub-components for structured
-          layouts. Use header, content, and footer to build consistent cards — or
-          use it plain with the <code class="bg-muted px-1.5 py-0.5 rounded text-sm">padded</code> prop for simple content.
+          Composable card component with optional sub-components for structured layouts. Use header, content, and footer
+          to build consistent cards — or use it plain with the
+          <code class="bg-muted px-1.5 py-0.5 rounded text-sm">padded</code> prop for simple content.
         </p>
       </header>
 
       <!-- Preview: Structured Cards -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Structured Cards
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Structured Cards</h2>
+        <div class="rounded-xl border border-border bg-muted overflow-hidden shadow-sm">
           <div class="p-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <!-- Default -->
@@ -46,8 +40,7 @@ import {
                 </and-card-header>
                 <and-card-content>
                   <p class="text-sm text-muted-foreground leading-relaxed m-0">
-                    Use sub-components to structure your content into clear
-                    sections with consistent spacing.
+                    Use sub-components to structure your content into clear sections with consistent spacing.
                   </p>
                 </and-card-content>
                 <and-card-footer>
@@ -62,14 +55,11 @@ import {
               <and-card variant="elevated">
                 <and-card-header>
                   <and-card-title>Elevated Card</and-card-title>
-                  <and-card-description>
-                    Extra shadow depth for prominent content.
-                  </and-card-description>
+                  <and-card-description> Extra shadow depth for prominent content. </and-card-description>
                 </and-card-header>
                 <and-card-content>
                   <p class="text-sm text-muted-foreground leading-relaxed m-0">
-                    The elevated variant adds deeper shadows, making it ideal
-                    for featured or highlighted sections.
+                    The elevated variant adds deeper shadows, making it ideal for featured or highlighted sections.
                   </p>
                 </and-card-content>
               </and-card>
@@ -78,14 +68,11 @@ import {
               <and-card variant="outline">
                 <and-card-header>
                   <and-card-title>Outline Card</and-card-title>
-                  <and-card-description>
-                    No shadow, just a clean border.
-                  </and-card-description>
+                  <and-card-description> No shadow, just a clean border. </and-card-description>
                 </and-card-header>
                 <and-card-content>
                   <p class="text-sm text-muted-foreground leading-relaxed m-0">
-                    Minimal visual weight — great for secondary content or
-                    settings panels.
+                    Minimal visual weight — great for secondary content or settings panels.
                   </p>
                 </and-card-content>
               </and-card>
@@ -94,14 +81,11 @@ import {
               <and-card variant="ghost">
                 <and-card-header>
                   <and-card-title>Ghost Card</and-card-title>
-                  <and-card-description>
-                    No border, no shadow. Just structure.
-                  </and-card-description>
+                  <and-card-description> No border, no shadow. Just structure. </and-card-description>
                 </and-card-header>
                 <and-card-content>
                   <p class="text-sm text-muted-foreground leading-relaxed m-0">
-                    Invisible container for grouping content with consistent
-                    layout but zero visual chrome.
+                    Invisible container for grouping content with consistent layout but zero visual chrome.
                   </p>
                 </and-card-content>
               </and-card>
@@ -112,12 +96,8 @@ import {
 
       <!-- Simple (padded) -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Simple Card (padded)
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Simple Card (padded)</h2>
+        <div class="rounded-xl border border-border bg-muted overflow-hidden shadow-sm">
           <div class="p-8">
             <and-card padded>
               <p class="text-sm text-muted-foreground leading-relaxed m-0">
@@ -131,9 +111,7 @@ import {
 
       <!-- Real-world Examples -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Real-world Examples
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Real-world Examples</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <and-card>
             <and-card-header>
@@ -167,9 +145,7 @@ import {
 
       <!-- Notification card example -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Notification Card
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Notification Card</h2>
         <div class="max-w-md">
           <and-card>
             <and-card-header>
@@ -203,15 +179,10 @@ import {
 
       <!-- Usage Code -->
       <section>
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Structured</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Structured</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
@@ -232,10 +203,7 @@ import {
 
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Simple (padded)</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Simple (padded)</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
@@ -246,10 +214,7 @@ import {
 
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Variants</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Variants</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
