@@ -86,7 +86,7 @@ export interface ContextMenuReturn {
 
   /** Actions. */
   actions: {
-    open: (position: ContextMenuPosition) => void;
+    open: (position?: ContextMenuPosition) => void;
     close: () => void;
     selectItem: (itemId?: string) => void;
   };
@@ -138,10 +138,11 @@ export function createContextMenu(config: ContextMenuConfig = {}): ContextMenuRe
 
   /* ── Actions ─────────────────────────────────────────────────────── */
 
-  const open = (position: ContextMenuPosition): void => {
-    store.setState({ isOpen: true, position });
+  const open = (position?: ContextMenuPosition): void => {
+    const pos = position ?? store.state.position;
+    store.setState({ isOpen: true, position: pos });
     notifyOpen();
-    config.onPosition?.(position);
+    config.onPosition?.(pos);
   };
 
   const close = (): void => {

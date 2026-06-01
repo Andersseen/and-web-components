@@ -85,9 +85,13 @@ export class AndModal {
 
   private getFocusableElements(): HTMLElement[] {
     const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    return Array.from(this.el.shadowRoot?.querySelectorAll(selector) ?? []).filter((el): el is HTMLElement => {
+    return Array.from(this.el.querySelectorAll(selector)).filter((el): el is HTMLElement => {
       const htmlEl = el as HTMLElement;
-      return htmlEl.offsetParent !== null && !htmlEl.hasAttribute('disabled') && !htmlEl.getAttribute('aria-hidden');
+      return (
+        htmlEl.offsetParent !== null &&
+        !htmlEl.hasAttribute('disabled') &&
+        htmlEl.getAttribute('aria-hidden') !== 'true'
+      );
     });
   }
 

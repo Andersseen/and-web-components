@@ -116,6 +116,8 @@ export interface TabsReturn {
   actions: {
     selectTab: (tabId: string) => void;
     setDisabled: (disabled: boolean) => void;
+    setOrientation: (orientation: 'horizontal' | 'vertical') => void;
+    setActivationMode: (mode: 'automatic' | 'manual') => void;
   };
 
   /**
@@ -186,6 +188,14 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
 
   const setDisabled = (disabled: boolean): void => {
     store.setState({ disabled });
+  };
+
+  const setOrientation = (orientation: 'horizontal' | 'vertical'): void => {
+    store.setState({ orientation });
+  };
+
+  const setActivationMode = (mode: 'automatic' | 'manual'): void => {
+    store.setState({ activationMode: mode });
   };
 
   // Queries
@@ -303,6 +313,8 @@ export function createTabs(config: TabsConfig = {}): TabsReturn {
     actions: {
       selectTab,
       setDisabled,
+      setOrientation,
+      setActivationMode,
     },
     queries: {
       isSelected,

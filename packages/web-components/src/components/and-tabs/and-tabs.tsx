@@ -79,6 +79,18 @@ export class AndTabs {
     this.updateChildren();
   }
 
+  @Watch('orientation')
+  orientationChanged(newValue: 'horizontal' | 'vertical') {
+    this.tabsLogic?.actions.setOrientation(newValue);
+    this.updateChildren();
+  }
+
+  @Watch('activationMode')
+  activationModeChanged(newValue: 'automatic' | 'manual') {
+    this.tabsLogic?.actions.setActivationMode(newValue);
+    this.updateChildren();
+  }
+
   /* ── Helpers ────────────────────────────────────────────────────── */
 
   private updateChildren() {

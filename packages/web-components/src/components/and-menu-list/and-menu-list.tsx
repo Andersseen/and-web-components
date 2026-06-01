@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop, Element, State } from '@stencil/core';
+import { Component, h, Host, Prop, Element, State, Watch } from '@stencil/core';
 import { cn } from '../../utils/cn';
 import { createMenuList, type MenuListReturn } from '@andersseen/headless-components';
 
@@ -33,6 +33,17 @@ export class AndMenuList {
   componentWillLoad() {
     this.menuLogic = createMenuList({
       ariaLabel: this.ariaMenuLabel,
+    });
+  }
+
+  @Watch('ariaMenuLabel')
+  ariaMenuLabelChanged(newValue: string) {
+    this.menuLogic?.actions.setItems(this.menuLogic.state.items);
+    // Note: headless menu-list doesn't expose a setAriaLabel action;
+    // re-creating is the simplest way to update the label.
+    this.menuLogic = createMenuList({
+      ariaLabel: newValue,
+      items: this.menuLogic.state.items,
     });
   }
 

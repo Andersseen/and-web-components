@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen, Watch } from '@stencil/core';
 import { cn } from '../../utils/cn';
 import { createContextMenu, type ContextMenuReturn } from '@andersseen/headless-components';
 
@@ -94,6 +94,17 @@ export class AndContextMenu {
       el.removeEventListener('contextmenu', this.handleContextMenu as EventListener);
     });
     this.triggerEls = [];
+  }
+
+  /* ── Watchers ───────────────────────────────────────────────────── */
+
+  @Watch('open')
+  openChanged(newValue: boolean) {
+    if (newValue) {
+      this.contextMenuLogic?.actions.open();
+    } else {
+      this.contextMenuLogic?.actions.close();
+    }
   }
 
   /* ── Handlers ───────────────────────────────────────────────────── */
