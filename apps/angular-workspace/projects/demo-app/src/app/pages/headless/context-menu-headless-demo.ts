@@ -10,34 +10,24 @@ import { createContextMenu } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Context Menu
-        </h1>
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed"
-        >
-          A right-click contextual menu. Handles positioning relative to the
-          pointer, outside-click dismissal, and Escape-key support.
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Context Menu</h1>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          A right-click contextual menu. Handles positioning relative to the pointer, outside-click dismissal, and
+          Escape-key support.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-10 flex items-center justify-center min-h-[300px]">
             <div
               class="relative w-80 h-48 rounded-lg border-2 border-dashed border-border flex items-center justify-center select-none bg-muted/30"
               (contextmenu)="onContextMenu($event)"
               #triggerArea
             >
-              <span class="text-sm text-muted-foreground pointer-events-none">
-                Right-click here
-              </span>
+              <span class="text-sm text-muted-foreground pointer-events-none"> Right-click here </span>
 
               <!-- Context Menu Panel -->
               @if (isOpen()) {
@@ -85,12 +75,8 @@ import { createContextMenu } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createContextMenu {{ '}' }} from '@andersseen/headless-components';
@@ -119,25 +105,19 @@ ctx.actions.close();</code></pre>
       <!-- Headless Implementation -->
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
 
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
-          The headless core manages open/close state, pointer-relative
-          positioning, and keyboard dismissal — no styling imposed.
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
+          The headless core manages open/close state, pointer-relative positioning, and keyboard dismissal — no styling
+          imposed.
         </p>
 
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <div
             style="position: relative; width: 260px; height: 140px; border: 1px solid #999; display: flex; align-items: center; justify-content: center; user-select: none;"
             (contextmenu)="onHeadlessContextMenu($event)"
@@ -169,10 +149,7 @@ ctx.actions.close();</code></pre>
                 >
                   Paste
                 </li>
-                <li
-                  style="padding: 6px 12px; cursor: pointer; color: red;"
-                  (click)="headlessSelectItem('delete')"
-                >
+                <li style="padding: 6px 12px; cursor: pointer; color: red;" (click)="headlessSelectItem('delete')">
                   Delete
                 </li>
               </ul>
@@ -207,7 +184,14 @@ ctx.actions.close();</code></pre>
 export default class ContextMenuHeadlessDemo {
   @ViewChild('triggerArea') triggerArea!: ElementRef;
 
-  menuItems: any[] = [
+  menuItems: Array<{
+    id?: string;
+    label?: string;
+    icon?: string;
+    shortcut?: string;
+    intent?: string;
+    separator?: boolean;
+  }> = [
     { id: 'back', label: 'Back', icon: '←', shortcut: '⌘[' },
     { id: 'forward', label: 'Forward', icon: '→', shortcut: '⌘]' },
     { id: 'reload', label: 'Reload', icon: '↻', shortcut: '⌘R' },
@@ -221,7 +205,9 @@ export default class ContextMenuHeadlessDemo {
   // Styled context menu
   private _ctx = createContextMenu({
     closeOnSelect: true,
-    onOpenChange: (open: boolean) => console.log('Context menu open:', open),
+    onOpenChange: (_open: boolean) => {
+      // Context menu state changed
+    },
   });
 
   isOpen = signal(false);
@@ -248,8 +234,8 @@ export default class ContextMenuHeadlessDemo {
     this.position.set({ ...this._ctx.state.position });
   }
 
-  selectItem(item: any) {
-    console.log('Selected:', item.label);
+  selectItem(item: { id?: string; label?: string }) {
+    if (!item.id) return;
     this._ctx.actions.selectItem(item.id);
     this.isOpen.set(this._ctx.state.isOpen);
   }

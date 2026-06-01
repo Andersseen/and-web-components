@@ -149,7 +149,6 @@ export class MainLayoutComponent {
     motion: '/motion',
     layout: '/layout',
     docs: '/docs',
-    vanilla: '/vanilla',
   };
 
   private readonly sidebarConfig: Partial<Record<Section, SidebarConfig>> = {
