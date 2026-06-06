@@ -267,9 +267,6 @@ importers:
       '@andersseen/icon':
         specifier: workspace:*
         version: link:../icon-library
-      '@andersseen/motion':
-        specifier: workspace:*
-        version: link:../motion-core
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
