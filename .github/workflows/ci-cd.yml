@@ -89,8 +89,7 @@ jobs:
         run: pnpm build-storybook
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook --branch=${{ github.ref_name }}
+        run: pnpm exec wrangler pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook --branch=${{ github.ref_name }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
