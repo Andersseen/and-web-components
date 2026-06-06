@@ -25,7 +25,10 @@ const Template = args => {
       <and-modal ?open=${args.open} @andClose=${() => console.log('Modal closed')}>
         <div class="flex flex-col space-y-1.5 text-center sm:text-left">
           <h2 class="text-lg font-semibold leading-none tracking-tight">Are you absolutely sure?</h2>
-          <p class="text-sm text-muted-foreground">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+          <p class="text-sm text-muted-foreground">
+            This action cannot be undone. This will permanently delete your account and remove your data from our
+            servers.
+          </p>
         </div>
         <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
           <and-button

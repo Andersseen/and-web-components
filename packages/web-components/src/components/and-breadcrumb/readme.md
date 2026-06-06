@@ -1,9 +1,6 @@
 # and-breadcrumb-item
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -15,14 +12,12 @@
 | `href`          | `href`           | Optional URL. When set, the item renders as a link.        | `string`               | `undefined` |
 | `size`          | `size`           | Size variant — should match the parent breadcrumb size.    | `"lg" \| "md" \| "sm"` | `'md'`      |
 
-
 ## Events
 
 | Event                   | Description                                  | Type                  |
 | ----------------------- | -------------------------------------------- | --------------------- |
 | `andBreadcrumbNavigate` | Emitted when a breadcrumb link is activated. | `CustomEvent<string>` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

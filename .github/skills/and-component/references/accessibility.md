@@ -230,7 +230,8 @@ private announce(message: string, politeness: 'polite' | 'assertive' = 'polite')
 }
 ```
 
-Use `'assertive'` only for critical errors. Prefer `'polite'` for status updates.
+Use `'assertive'` only for critical errors. Prefer `'polite'` for status
+updates.
 
 ### `prefers-reduced-motion`
 

@@ -1,9 +1,6 @@
 # and-accordion-content
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Methods
 
@@ -21,9 +18,6 @@ Receive item properties from parent accordion-item.
 
 Type: `Promise<void>`
 
-
-
-
 ## Dependencies
 
 ### Depends on
@@ -31,12 +25,13 @@ Type: `Promise<void>`
 - [and-icon](../and-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   and-accordion-trigger --> and-icon
   style and-accordion-trigger fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

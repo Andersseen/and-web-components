@@ -1,9 +1,6 @@
 # and-modal
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,13 +8,11 @@
 | -------- | --------- | -------------------------- | --------- | ------- |
 | `open`   | `open`    | Whether the modal is open. | `boolean` | `false` |
 
-
 ## Events
 
 | Event      | Description                       | Type                |
 | ---------- | --------------------------------- | ------------------- |
 | `andClose` | Emitted when the modal is closed. | `CustomEvent<void>` |
-
 
 ## Dependencies
 
@@ -26,12 +21,13 @@
 - [and-icon](../and-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   and-modal --> and-icon
   style and-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -7,6 +7,4 @@ import { initializeAnimations } from './app/app-animations';
 initializeIcons();
 initializeAnimations();
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err),
-);
+bootstrapApplication(AppComponent, appConfig).catch(err => console.error(err));

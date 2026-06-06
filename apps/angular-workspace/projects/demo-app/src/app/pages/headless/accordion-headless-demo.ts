@@ -10,23 +10,16 @@ import { createAccordion } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Accordion
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Accordion</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A vertically stacked set of interactive headings that each reveal a
-          section of content.
+          A vertically stacked set of interactive headings that each reveal a section of content.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8">
           <div class="max-w-xl mx-auto">
             @for (item of faqItems; track item.id) {
               <div class="border-b border-border">
@@ -53,9 +46,7 @@ import { createAccordion } from '@andersseen/headless-components';
                 </button>
                 @if (isExpanded(item.id)) {
                   <div class="overflow-hidden animate-slide-down">
-                    <p
-                      class="m-0 pb-4 text-sm text-muted-foreground leading-relaxed"
-                    >
+                    <p class="m-0 pb-4 text-sm text-muted-foreground leading-relaxed">
                       {{ item.answer }}
                     </p>
                   </div>
@@ -68,12 +59,8 @@ import { createAccordion } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createAccordion {{ '}' }} from '@andersseen/headless-components';
@@ -94,32 +81,22 @@ accordion.state.expandedItems; // Set</code></pre>
       <!-- Raw Example -->
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
 
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
-          Manages expand/collapse state, ARIA attributes, and multi-item logic.
-          No visual opinions.
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
+          Manages expand/collapse state, ARIA attributes, and multi-item logic. No visual opinions.
         </p>
 
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <div>
             @for (item of faqItems; track item.id; let i = $index) {
               <div class="mb-1">
-                <button
-                  (click)="toggleItem(item.id)"
-                  [style.font-weight]="isExpanded(item.id) ? 'bold' : 'normal'"
-                >
+                <button (click)="toggleItem(item.id)" [style.font-weight]="isExpanded(item.id) ? 'bold' : 'normal'">
                   {{ item.question }}
                 </button>
                 @if (isExpanded(item.id)) {

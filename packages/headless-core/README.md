@@ -25,11 +25,11 @@ pnpm add @andersseen/headless-components
 Each component follows the same pattern:
 
 ```ts
-import { createButton } from "@andersseen/headless-components";
+import { createButton } from '@andersseen/headless-components';
 
 const button = createButton({
   disabled: false,
-  onClick: (e) => console.log("clicked"),
+  onClick: e => console.log('clicked'),
 });
 
 // Get accessibility props
@@ -84,70 +84,70 @@ button.getButtonProps();
 ### Accordion
 
 ```ts
-import { createAccordion } from "@andersseen/headless-components/accordion";
+import { createAccordion } from '@andersseen/headless-components/accordion';
 
 const accordion = createAccordion({
   allowMultiple: true,
-  defaultValue: ["item-1"],
-  onValueChange: (items) => console.log(items),
-  orientation: "vertical",
+  defaultValue: ['item-1'],
+  onValueChange: items => console.log(items),
+  orientation: 'vertical',
 });
 
 // Queries
-accordion.queries.isExpanded("item-1");
+accordion.queries.isExpanded('item-1');
 accordion.queries.getExpandedItems();
 
 // Actions
-accordion.actions.toggle("item-1");
-accordion.actions.expand("item-2");
-accordion.actions.collapse("item-1");
+accordion.actions.toggle('item-1');
+accordion.actions.expand('item-2');
+accordion.actions.collapse('item-1');
 
 // Props
 accordion.getContainerProps();
-accordion.getTriggerProps("item-1");
-accordion.getContentProps("item-1");
+accordion.getTriggerProps('item-1');
+accordion.getContentProps('item-1');
 
 // Keyboard
-accordion.handleTriggerKeyDown(event, "item-1");
+accordion.handleTriggerKeyDown(event, 'item-1');
 ```
 
 ### Tabs
 
 ```ts
-import { createTabs } from "@andersseen/headless-components/tabs";
+import { createTabs } from '@andersseen/headless-components/tabs';
 
 const tabs = createTabs({
-  defaultValue: "tab-1",
-  orientation: "horizontal",
-  activationMode: "automatic",
-  onValueChange: (tabId) => console.log(tabId),
+  defaultValue: 'tab-1',
+  orientation: 'horizontal',
+  activationMode: 'automatic',
+  onValueChange: tabId => console.log(tabId),
 });
 
 // Queries
-tabs.queries.isSelected("tab-1");
+tabs.queries.isSelected('tab-1');
 tabs.queries.getSelectedTab();
 
 // Actions
-tabs.actions.selectTab("tab-2");
+tabs.actions.selectTab('tab-2');
 
 // Props
 tabs.getTabListProps();
-tabs.getTabTriggerProps("tab-1");
-tabs.getTabContentProps("tab-1");
+tabs.getTabTriggerProps('tab-1');
+tabs.getTabContentProps('tab-1');
 
 // Keyboard
-tabs.handleTabKeyDown(event, "tab-1", ["tab-1", "tab-2", "tab-3"]);
+tabs.handleTabKeyDown(event, 'tab-1', ['tab-1', 'tab-2', 'tab-3']);
 ```
 
 ### Dropdown
 
 ```ts
-import { createDropdown } from "@andersseen/headless-components/dropdown";
+import { createDropdown } from '@andersseen/headless-components/dropdown';
 
 const dropdown = createDropdown({
-  placement: "bottom",
+  placement: 'bottom',
   closeOnSelect: true,
-  onOpenChange: (isOpen) => console.log(isOpen),
+  onOpenChange: isOpen => console.log(isOpen),
 });
 
 // State
@@ -157,27 +157,30 @@ dropdown.state.isOpen;
 dropdown.actions.open();
 dropdown.actions.close();
 dropdown.actions.toggle();
-dropdown.actions.selectItem("item-1");
+dropdown.actions.selectItem('item-1');
 
 // Props
 dropdown.getTriggerProps();
 dropdown.getMenuProps();
-dropdown.getItemProps("item-1");
+dropdown.getItemProps('item-1');
 
 // Keyboard
 dropdown.handleTriggerKeyDown(event);
-dropdown.handleMenuKeyDown(event, ["item-1", "item-2"]);
+dropdown.handleMenuKeyDown(event, ['item-1', 'item-2']);
 ```
 
 ## 🎨 Usage with Stencil
 
 ```tsx
-import { Component, State, h } from "@stencil/core";
-import { createButton, ButtonReturn } from "@andersseen/headless-components/button";
+import { Component, State, h } from '@stencil/core';
+import {
+  createButton,
+  ButtonReturn,
+} from '@andersseen/headless-components/button';
 
 @Component({
-  tag: "and-button",
-  styleUrl: "and-button.css",
+  tag: 'and-button',
+  styleUrl: 'and-button.css',
   shadow: true,
 })
 export class MyButton {
@@ -185,12 +188,12 @@ export class MyButton {
 
   componentWillLoad() {
     this.buttonLogic = createButton({
-      onClick: (e) => this.handleClick(e),
+      onClick: e => this.handleClick(e),
     });
   }
 
   private handleClick = (e: MouseEvent) => {
-    console.log("Button clicked!");
+    console.log('Button clicked!');
   };
 
   render() {
@@ -200,7 +203,7 @@ export class MyButton {
       <button
         {...props}
         class="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
-        onClick={(e) => this.buttonLogic.actions.click(e)}
+        onClick={e => this.buttonLogic.actions.click(e)}
       >
         <slot />
       </button>
@@ -212,11 +215,14 @@ export class MyButton {
 ## 🌐 Usage with Angular
 
 ```ts
-import { Component, OnInit } from "@angular/core";
-import { createButton, ButtonReturn } from "@andersseen/headless-components/button";
+import { Component, OnInit } from '@angular/core';
+import {
+  createButton,
+  ButtonReturn,
+} from '@andersseen/headless-components/button';
 
 @Component({
-  selector: "app-button",
+  selector: 'app-button',
   template: `
     <button
       [attr.type]="props.type"
@@ -235,7 +241,7 @@ export class ButtonComponent implements OnInit {
 
   ngOnInit() {
     this.button = createButton({
-      onClick: (e) => console.log("clicked"),
+      onClick: e => console.log('clicked'),
     });
     this.props = this.button.getButtonProps();
   }
@@ -283,7 +289,7 @@ import type {
   ButtonConfig,
   ButtonState,
   ButtonReturn,
-} from "@andersseen/headless-components/button";
+} from '@andersseen/headless-components/button';
 ```
 
 ## 📝 License

@@ -18,7 +18,10 @@ import { CommonModule } from '@angular/common';
       <!-- Padding -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Padding</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Padding</span
+          >
           <h2 class="text-xl font-bold mb-1">Padding Scale</h2>
           <p class="text-sm text-muted-foreground">
             Tokens: <code class="text-xs bg-muted px-1 py-0.5 rounded font-mono">p:*</code>,
@@ -45,19 +48,22 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="p:md"&gt;Content&lt;/div&gt;
-&lt;div and-layout="p-x:lg p-y:sm"&gt;Content&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="p:md"&gt;Content&lt;/div&gt; &lt;div and-layout="p-x:lg
+            p-y:sm"&gt;Content&lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- Directional Padding -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Directional</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Directional</span
+          >
           <h2 class="text-xl font-bold mb-1">Directional &amp; Axis Padding</h2>
-          <p class="text-sm text-muted-foreground">
-            Apply padding to specific sides or axes.
-          </p>
+          <p class="text-sm text-muted-foreground">Apply padding to specific sides or axes.</p>
         </div>
 
         <div class="grid grid-cols-2 gap-4 border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
@@ -96,16 +102,20 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="p-t:lg"&gt;Top padding&lt;/div&gt;
-&lt;div and-layout="p-x:xl"&gt;Horizontal padding&lt;/div&gt;
-&lt;div and-layout="p-y:lg"&gt;Vertical padding&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="p-t:lg"&gt;Top padding&lt;/div&gt; &lt;div and-layout="p-x:xl"&gt;Horizontal
+            padding&lt;/div&gt; &lt;div and-layout="p-y:lg"&gt;Vertical padding&lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- Margin -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Margin</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Margin</span
+          >
           <h2 class="text-xl font-bold mb-1">Margin Scale</h2>
           <p class="text-sm text-muted-foreground">
             Same token syntax: <code class="text-xs bg-muted px-1 py-0.5 rounded font-mono">m:*</code>,
@@ -117,7 +127,10 @@ import { CommonModule } from '@angular/common';
         <div class="flex flex-col gap-3 border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
           @for (size of ['xs', 'sm', 'md', 'lg', 'xl']; track size) {
             <div class="bg-secondary/20 rounded-lg inline-block border border-dashed  border-secondary">
-              <div [attr.and-layout]="'m:' + size" class="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded">
+              <div
+                [attr.and-layout]="'m:' + size"
+                class="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded"
+              >
                 m:{{ size }}
               </div>
             </div>
@@ -125,8 +138,10 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="m:md"&gt;Content&lt;/div&gt;
-&lt;div and-layout="m-x:auto"&gt;Centered block&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="m:md"&gt;Content&lt;/div&gt; &lt;div and-layout="m-x:auto"&gt;Centered
+            block&lt;/div&gt;</code
+          >
         </div>
       </section>
 

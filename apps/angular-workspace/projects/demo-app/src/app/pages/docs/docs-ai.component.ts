@@ -1,29 +1,13 @@
 import { Component, computed, signal } from '@angular/core';
-import {
-  AndTabs,
-  AndTabsList,
-  AndTabsTrigger,
-  AndIcon,
-} from '@angular-components/stencil-generated/components';
+import { AndTabs, AndTabsList, AndTabsTrigger, AndIcon } from '@angular-components/stencil-generated/components';
 import { DemoCodeBlockComponent } from '../../shared/demo-code-block.component';
 import { DemoHeaderComponent } from '../../shared/demo-header.component';
 import { DemoPanelComponent } from '../../shared/demo-panel.component';
 import { DemoSectionComponent } from '../../shared/demo-section.component';
-import {
-  HEADLESS_CORE_PROMPT,
-  ICON_PROMPT,
-  LAYOUT_PROMPT,
-  MOTION_PROMPT,
-  WEB_COMPONENTS_PROMPT,
-} from './prompts';
+import { HEADLESS_CORE_PROMPT, ICON_PROMPT, LAYOUT_PROMPT, MOTION_PROMPT, WEB_COMPONENTS_PROMPT } from './prompts';
 
 type PackageManager = 'pnpm' | 'npm' | 'yarn';
-type PromptLibrary =
-  | 'web-components'
-  | 'headless-core'
-  | 'icon'
-  | 'motion'
-  | 'layout';
+type PromptLibrary = 'web-components' | 'headless-core' | 'icon' | 'motion' | 'layout';
 
 @Component({
   selector: 'app-docs-ai',
@@ -38,9 +22,7 @@ type PromptLibrary =
     DemoPanelComponent,
   ],
   template: `
-    <div
-      class="mx-auto w-full min-w-0 max-w-5xl overflow-x-clip px-4 pb-10 sm:px-6 sm:pb-12"
-    >
+    <div class="mx-auto w-full min-w-0 max-w-5xl overflow-x-clip px-4 pb-10 sm:px-6 sm:pb-12">
       <demo-header
         title="Docs for AI-Driven Development"
         description="A specialized toolkit to help you construct the perfect system prompt. Copy the base instructions and append the architectural context of the specific libraries your project needs to drastically reduce LLM hallucinations."
@@ -51,28 +33,17 @@ type PromptLibrary =
           title="Core dependencies"
           description="If you haven't installed the ecosystem in your repository yet, grab the command below."
         >
-          <and-tabs
-            [value]="selectedPm()"
-            (andTabChange)="onPackageManagerTabChange($event)"
-            class="block w-full mt-4"
-          >
-            <and-tabs-list
-              class="grid w-fit grid-cols-3 rounded-xl border border-border bg-muted/60 p-1"
-            >
+          <and-tabs [value]="selectedPm()" (andTabChange)="onPackageManagerTabChange($event)" class="block w-full mt-4">
+            <and-tabs-list class="grid w-fit grid-cols-3 rounded-xl border border-border bg-muted/60 p-1">
               @for (pm of packageManagers; track pm) {
-                <and-tabs-trigger
-                  [value]="pm"
-                  class="px-4 py-1.5 text-xs font-semibold uppercase tracking-wide"
-                >
+                <and-tabs-trigger [value]="pm" class="px-4 py-1.5 text-xs font-semibold uppercase tracking-wide">
                   {{ pm.toUpperCase() }}
                 </and-tabs-trigger>
               }
             </and-tabs-list>
           </and-tabs>
 
-          <div
-            class="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm"
-          >
+          <div class="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
             <div
               class="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between bg-muted/20"
             >
@@ -102,11 +73,7 @@ type PromptLibrary =
           description="Always start your AI discussion with this baseline prompt. It strictly defines the AI's role and sets the rules of engagement."
         >
           <div class="mt-2">
-            <demo-code-block
-              label="system-prompt.txt"
-              [code]="baseSystemPrompt"
-              [copyable]="true"
-            />
+            <demo-code-block label="system-prompt.txt" [code]="baseSystemPrompt" [copyable]="true" />
           </div>
         </demo-panel>
       </demo-section>
@@ -124,10 +91,7 @@ type PromptLibrary =
         >
           <and-tabs-list class="flex w-full flex-wrap gap-2">
             @for (lib of promptLibraries; track lib) {
-              <and-tabs-trigger
-                [value]="lib"
-                class="px-4 py-2 text-sm font-semibold capitalize transition-all"
-              >
+              <and-tabs-trigger [value]="lib" class="px-4 py-2 text-sm font-semibold capitalize transition-all">
                 {{ promptLibraryLabel(lib) }}
               </and-tabs-trigger>
             }
@@ -138,16 +102,11 @@ type PromptLibrary =
           <span
             class="text-xs leading-relaxed text-foreground/70 bg-muted/40 px-3 py-1.5 rounded-md border border-border/50"
           >
-            <strong>Tip:</strong> You can append multiple blocks if using
-            multiple libraries.
+            <strong>Tip:</strong> You can append multiple blocks if using multiple libraries.
           </span>
         </div>
 
-        <demo-code-block
-          [label]="selectedPromptLabel()"
-          [code]="selectedPromptContext()"
-          [copyable]="true"
-        />
+        <demo-code-block [label]="selectedPromptLabel()" [code]="selectedPromptContext()" [copyable]="true" />
       </demo-section>
     </div>
   `,
@@ -156,13 +115,7 @@ export default class DocsAiComponent {
   readonly packageManagers: PackageManager[] = ['pnpm', 'npm', 'yarn'];
   readonly selectedPm = signal<PackageManager>('pnpm');
   readonly copiedInstall = signal(false);
-  readonly promptLibraries: PromptLibrary[] = [
-    'web-components',
-    'headless-core',
-    'icon',
-    'motion',
-    'layout',
-  ];
+  readonly promptLibraries: PromptLibrary[] = ['web-components', 'headless-core', 'icon', 'motion', 'layout'];
   readonly selectedPromptLibrary = signal<PromptLibrary>('web-components');
 
   readonly baseSystemPrompt = `You are an expert web developer building a modern application.
@@ -188,26 +141,22 @@ Now, implement the user's request based ONLY on the provided system capabilities
   private readonly promptLibraryLabels: Record<PromptLibrary, string> = {
     'web-components': 'Web Components (UI)',
     'headless-core': 'Headless Logic',
-    icon: 'Icon System',
-    motion: 'Motion Engine',
-    layout: 'Layout & Typography',
+    'icon': 'Icon System',
+    'motion': 'Motion Engine',
+    'layout': 'Layout & Typography',
   };
 
   private readonly promptByLibrary: Record<PromptLibrary, string> = {
     'web-components': WEB_COMPONENTS_PROMPT,
     'headless-core': HEADLESS_CORE_PROMPT,
-    icon: ICON_PROMPT,
-    motion: MOTION_PROMPT,
-    layout: LAYOUT_PROMPT,
+    'icon': ICON_PROMPT,
+    'motion': MOTION_PROMPT,
+    'layout': LAYOUT_PROMPT,
   };
 
-  readonly selectedPromptContext = computed(
-    () => this.promptByLibrary[this.selectedPromptLibrary()],
-  );
+  readonly selectedPromptContext = computed(() => this.promptByLibrary[this.selectedPromptLibrary()]);
 
-  readonly selectedPromptLabel = computed(
-    () => `${this.selectedPromptLibrary()}.context.xml`,
-  );
+  readonly selectedPromptLabel = computed(() => `${this.selectedPromptLibrary()}.context.xml`);
 
   copyInstallCommand() {
     navigator.clipboard?.writeText(this.installCommand());

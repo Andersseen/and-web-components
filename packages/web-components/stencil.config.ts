@@ -73,10 +73,4 @@ export const config: Config = {
       plugins: [tailwindcss('./tailwind.config.js'), autoprefixer()],
     }),
   ],
-  testing: {
-    browserHeadless: 'shell',
-    moduleNameMapper: {
-      '^@andersseen/icon$': '<rootDir>/../icon-library/dist-cjs/index.js',
-    },
-  },
 };

@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  AndContextMenu,
-  AndMenuList,
-  AndMenuItem,
-  AndIcon,
-} from '@angular-components/stencil-generated/components';
+import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-context-menu-demo',
@@ -13,38 +8,25 @@ import {
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Context Menu
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Context Menu</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A floating menu that appears on right-click. Wraps a menu list
-          with elevation, borders, and smart positioning for contextual
-          actions.
+          A floating menu that appears on right-click. Wraps a menu list with elevation, borders, and smart positioning
+          for contextual actions.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-col items-center justify-center gap-6 min-h-[300px]"
-          >
-            <p class="text-sm text-muted-foreground m-0">
-              Right-click on the area below
-            </p>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-col items-center justify-center gap-6 min-h-[300px]">
+            <p class="text-sm text-muted-foreground m-0">Right-click on the area below</p>
             <and-context-menu>
               <div
                 slot="trigger"
                 class="w-80 h-40 rounded-lg border-2 border-dashed border-border bg-muted/30 flex items-center justify-center cursor-context-menu select-none"
               >
-                <span class="text-sm text-muted-foreground">
-                  Right-click here
-                </span>
+                <span class="text-sm text-muted-foreground"> Right-click here </span>
               </div>
 
               <and-menu-list ariaMenuLabel="Context actions">
@@ -72,15 +54,9 @@ import {
 
       <!-- File manager example -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          File Manager Pattern
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-col items-center justify-center gap-6 min-h-[300px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">File Manager Pattern</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-col items-center justify-center gap-6 min-h-[300px]">
             <and-context-menu>
               <div
                 slot="trigger"
@@ -88,12 +64,8 @@ import {
               >
                 <and-icon name="file-text" size="24" class="text-muted-foreground"></and-icon>
                 <div class="flex flex-col">
-                  <span class="text-sm font-medium text-foreground">
-                    project-report.pdf
-                  </span>
-                  <span class="text-xs text-muted-foreground">
-                    2.4 MB · Modified 2 days ago
-                  </span>
+                  <span class="text-sm font-medium text-foreground"> project-report.pdf </span>
+                  <span class="text-xs text-muted-foreground"> 2.4 MB · Modified 2 days ago </span>
                 </div>
               </div>
 
@@ -126,15 +98,10 @@ import {
 
       <!-- Usage Code -->
       <section>
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Template</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"

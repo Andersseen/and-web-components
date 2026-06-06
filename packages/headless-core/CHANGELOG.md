@@ -4,4 +4,6 @@
 
 ### Patch Changes
 
-- Standardized dual module exports, unified ESLint flat config, configured testing pipelines, and fixed Stencil component hydration bugs for Angular integration.
+- Standardized dual module exports, unified ESLint flat config, configured
+  testing pipelines, and fixed Stencil component hydration bugs for Angular
+  integration.

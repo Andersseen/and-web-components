@@ -1,20 +1,22 @@
-import {
-  Component,
-  OnDestroy,
-  ElementRef,
-  ViewChild,
-  Input,
-} from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
 import { AnimGroup } from '../data/animation-catalogue';
 
 /** Exit animation names end in -out or start with an out direction */
 const EXIT_PATTERNS = [
-  'fade-out', 'slide-out', 'zoom-out', 'bounce-out', 'flip-out',
-  'rotate-out', 'back-out', 'light-speed-out', 'roll-out', 'hinge',
+  'fade-out',
+  'slide-out',
+  'zoom-out',
+  'bounce-out',
+  'flip-out',
+  'rotate-out',
+  'back-out',
+  'light-speed-out',
+  'roll-out',
+  'hinge',
 ];
 
 function isExitAnimation(name: string): boolean {
-  return EXIT_PATTERNS.some((p) => name.startsWith(p) || name === p);
+  return EXIT_PATTERNS.some(p => name.startsWith(p) || name === p);
 }
 
 @Component({
@@ -27,30 +29,33 @@ function isExitAnimation(name: string): boolean {
         <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
           {{ title }}
         </h1>
-        <p class="text-base text-muted-foreground">
-          {{ totalCount }} animations — click <strong>▶</strong> to play.
-        </p>
+        <p class="text-base text-muted-foreground">{{ totalCount }} animations — click <strong>▶</strong> to play.</p>
       </div>
 
       <!-- Developer examples -->
       <section class="border border-border rounded-xl p-6 bg-card">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Code Examples</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Code Examples</span
+          >
           <h2 class="text-xl font-bold mb-1">Using Animations In Your Project</h2>
-          <p class="text-sm text-muted-foreground">
-            Pure HTML attributes — works with any framework or vanilla JS.
-          </p>
+          <p class="text-sm text-muted-foreground">Pure HTML attributes — works with any framework or vanilla JS.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <article class="rounded-xl border border-border bg-muted/30 p-4">
             <h3 class="text-sm font-semibold mb-2">HTML Markup</h3>
-            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ markupSnippet }}</code></pre>
+            <pre
+              class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"
+            ><code>{{ markupSnippet }}</code></pre>
           </article>
 
           <article class="rounded-xl border border-border bg-muted/30 p-4">
             <h3 class="text-sm font-semibold mb-2">Vanilla JS Controller</h3>
-            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ controllerSnippet }}</code></pre>
+            <pre
+              class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"
+            ><code>{{ controllerSnippet }}</code></pre>
           </article>
         </div>
       </section>
@@ -63,7 +68,8 @@ function isExitAnimation(name: string): boolean {
               <span
                 class="inline-block text-xs font-semibold uppercase tracking-wider text-white px-2.5 py-1 rounded-full mb-2 bg-gradient-to-r"
                 [class]="group.color"
-              >{{ group.tag }}</span>
+                >{{ group.tag }}</span
+              >
               <h2 class="text-xl font-bold">{{ group.label }}</h2>
             </div>
             <button
@@ -134,8 +140,8 @@ const cleanup = initMotion({ once: false });
   }
 
   ngOnDestroy() {
-    this.runningTimers.forEach((t) => clearTimeout(t));
-    this.abortControllers.forEach((ac) => ac.abort());
+    this.runningTimers.forEach(t => clearTimeout(t));
+    this.abortControllers.forEach(ac => ac.abort());
   }
 
   playCard(event: Event): void {
@@ -146,9 +152,7 @@ const cleanup = initMotion({ once: false });
 
   playGroup(group: AnimGroup): void {
     const root = this.demoRoot.nativeElement;
-    const cards = root.querySelectorAll<HTMLElement>(
-      `[data-anim-group="${group.label}"]`,
-    );
+    const cards = root.querySelectorAll<HTMLElement>(`[data-anim-group="${group.label}"]`);
     cards.forEach((el, i) => {
       const t = window.setTimeout(() => this.playElement(el), i * 80);
       this.runningTimers.push(t);

@@ -1,10 +1,4 @@
-import {
-  Component,
-  AfterViewInit,
-  OnDestroy,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { MotionController } from '@andersseen/motion';
 import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
 
@@ -14,9 +8,7 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
     <div class="max-w-6xl mx-auto flex flex-col gap-8 pb-16" #demoRoot>
       <!-- ── Header ── -->
       <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
-          Animation Showcase
-        </h1>
+        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">Animation Showcase</h1>
         <p class="text-base text-muted-foreground">
           All {{ totalCount }} animations from
           <code class="bg-muted px-1.5 py-0.5 rounded border border-border text-xs">&#64;andersseen/motion</code>
@@ -27,7 +19,10 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
       <!-- ── Developer Quick Start ── -->
       <section class="border border-border rounded-xl p-6 bg-card">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Quick Start</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Quick Start</span
+          >
           <h2 class="text-xl font-bold mb-1">How To Use {{ '@' }}andersseen/motion</h2>
           <p class="text-sm text-muted-foreground">
             Framework-agnostic — works with vanilla JS, Angular, React, Vue, Svelte, Astro, or any HTML page.
@@ -37,22 +32,30 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <article class="rounded-xl border border-border bg-muted/30 p-4">
             <h3 class="text-sm font-semibold mb-2">1) Install</h3>
-            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetInstall }}</code></pre>
+            <pre
+              class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"
+            ><code>{{ snippetInstall }}</code></pre>
           </article>
 
           <article class="rounded-xl border border-border bg-muted/30 p-4">
             <h3 class="text-sm font-semibold mb-2">2) Initialize</h3>
-            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetInitMotion }}</code></pre>
+            <pre
+              class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"
+            ><code>{{ snippetInitMotion }}</code></pre>
           </article>
 
           <article class="rounded-xl border border-border bg-muted/30 p-4">
             <h3 class="text-sm font-semibold mb-2">3) HTML Attributes</h3>
-            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetAttributes }}</code></pre>
+            <pre
+              class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"
+            ><code>{{ snippetAttributes }}</code></pre>
           </article>
 
           <article class="rounded-xl border border-border bg-muted/30 p-4">
             <h3 class="text-sm font-semibold mb-2">4) Programmatic Replay</h3>
-            <pre class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"><code>{{ snippetControllerReplay }}</code></pre>
+            <pre
+              class="rounded-lg border border-border bg-card p-3 overflow-x-auto text-xs leading-relaxed"
+            ><code>{{ snippetControllerReplay }}</code></pre>
           </article>
         </div>
       </section>
@@ -60,10 +63,14 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
       <!-- ── Trigger Mode Demos (Enter / Hover / Tap) ── -->
       <section class="border border-border rounded-xl p-6 bg-card" #triggerSection>
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Trigger Modes</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Trigger Modes</span
+          >
           <h2 class="text-xl font-bold mb-1">Enter · Hover · Tap</h2>
           <p class="text-sm text-muted-foreground">
-            Three trigger types via <code class="text-xs">and-motion-trigger</code>. Default is <code class="text-xs">enter</code> (viewport).
+            Three trigger types via <code class="text-xs">and-motion-trigger</code>. Default is
+            <code class="text-xs">enter</code> (viewport).
           </p>
         </div>
 
@@ -120,7 +127,8 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
               <span
                 class="inline-block text-xs font-semibold uppercase tracking-wider text-white px-2.5 py-1 rounded-full mb-2 bg-gradient-to-r"
                 [class]="group.color"
-              >{{ group.tag }}</span>
+                >{{ group.tag }}</span
+              >
               <h2 class="text-xl font-bold">{{ group.label }}</h2>
             </div>
             <button
@@ -156,9 +164,7 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
       <div class="flex items-start gap-3 p-4 rounded-xl bg-muted border border-border">
         <span class="text-xl flex-shrink-0">💡</span>
         <div class="text-sm text-muted-foreground leading-relaxed">
-          <p class="m-0 mb-1">
-            Initialize with the class-based API:
-          </p>
+          <p class="m-0 mb-1">Initialize with the class-based API:</p>
           <code class="bg-card px-1.5 py-0.5 rounded border border-border text-xs block">
             const mc = new MotionController({{ '{' }} root {{ '}' }});&nbsp;&nbsp;// later: mc.destroy();
           </code>
@@ -174,9 +180,7 @@ import { AnimGroup, ALL_ANIM_GROUPS } from '../data/animation-catalogue';
   `,
   styles: [],
 })
-export default class AttributeDemoComponent
-  implements AfterViewInit, OnDestroy
-{
+export default class AttributeDemoComponent implements AfterViewInit, OnDestroy {
   @ViewChild('demoRoot') demoRoot!: ElementRef<HTMLElement>;
   @ViewChild('triggerSection') triggerSection!: ElementRef<HTMLElement>;
 
@@ -235,8 +239,8 @@ mc.destroy();`;
 
   ngOnDestroy() {
     this.controller?.destroy();
-    this.runningTimers.forEach((t) => clearTimeout(t));
-    this.abortControllers.forEach((ac) => ac.abort());
+    this.runningTimers.forEach(t => clearTimeout(t));
+    this.abortControllers.forEach(ac => ac.abort());
   }
 
   playCard(event: Event): void {
@@ -247,9 +251,7 @@ mc.destroy();`;
 
   playGroup(group: AnimGroup): void {
     const root = this.demoRoot.nativeElement;
-    const cards = root.querySelectorAll<HTMLElement>(
-      `[data-anim-group="${group.label}"]`,
-    );
+    const cards = root.querySelectorAll<HTMLElement>(`[data-anim-group="${group.label}"]`);
     cards.forEach((el, i) => {
       const t = window.setTimeout(() => this.playElement(el), i * 80);
       this.runningTimers.push(t);

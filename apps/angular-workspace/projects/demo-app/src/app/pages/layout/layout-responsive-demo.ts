@@ -27,11 +27,26 @@ import { CommonModule } from '@angular/common';
               </tr>
             </thead>
             <tbody class="text-muted-foreground">
-              <tr class="border-b border-border/50"><td class="py-2 px-3 font-mono text-xs">&#64;sm</td><td class="py-2 px-3">640px</td></tr>
-              <tr class="border-b border-border/50"><td class="py-2 px-3 font-mono text-xs">&#64;md</td><td class="py-2 px-3">768px</td></tr>
-              <tr class="border-b border-border/50"><td class="py-2 px-3 font-mono text-xs">&#64;lg</td><td class="py-2 px-3">1024px</td></tr>
-              <tr class="border-b border-border/50"><td class="py-2 px-3 font-mono text-xs">&#64;xl</td><td class="py-2 px-3">1280px</td></tr>
-              <tr><td class="py-2 px-3 font-mono text-xs">&#64;2xl</td><td class="py-2 px-3">1536px</td></tr>
+              <tr class="border-b border-border/50">
+                <td class="py-2 px-3 font-mono text-xs">&#64;sm</td>
+                <td class="py-2 px-3">640px</td>
+              </tr>
+              <tr class="border-b border-border/50">
+                <td class="py-2 px-3 font-mono text-xs">&#64;md</td>
+                <td class="py-2 px-3">768px</td>
+              </tr>
+              <tr class="border-b border-border/50">
+                <td class="py-2 px-3 font-mono text-xs">&#64;lg</td>
+                <td class="py-2 px-3">1024px</td>
+              </tr>
+              <tr class="border-b border-border/50">
+                <td class="py-2 px-3 font-mono text-xs">&#64;xl</td>
+                <td class="py-2 px-3">1280px</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3 font-mono text-xs">&#64;2xl</td>
+                <td class="py-2 px-3">1536px</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -40,18 +55,23 @@ import { CommonModule } from '@angular/common';
       <!-- Responsive Grid -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Grid</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Grid</span
+          >
           <h2 class="text-xl font-bold mb-1">Responsive Grid Columns</h2>
-          <p class="text-sm text-muted-foreground">
-            Columns change with viewport size. Try resizing your browser!
-          </p>
+          <p class="text-sm text-muted-foreground">Columns change with viewport size. Try resizing your browser!</p>
         </div>
 
         <div class="border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
-          <p class="text-xs text-muted-foreground font-mono mb-2">cols:1 cols&#64;sm:2 cols&#64;md:3 cols&#64;lg:4 gap:sm</p>
+          <p class="text-xs text-muted-foreground font-mono mb-2">
+            cols:1 cols&#64;sm:2 cols&#64;md:3 cols&#64;lg:4 gap:sm
+          </p>
           <div and-layout="grid cols:1 cols@sm:2 cols@md:3 cols@lg:4 gap:sm">
-            @for (i of [1,2,3,4,5,6,7,8]; track i) {
-              <div class="flex items-center justify-center h-16 rounded-lg bg-primary text-primary-foreground text-sm font-semibold shadow">
+            @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+              <div
+                class="flex items-center justify-center h-16 rounded-lg bg-primary text-primary-foreground text-sm font-semibold shadow"
+              >
                 {{ i }}
               </div>
             }
@@ -59,46 +79,55 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="grid cols:1 cols&#64;sm:2 cols&#64;md:3 cols&#64;lg:4 gap:sm"&gt;
-  &lt;div&gt;1&lt;/div&gt;
-  &lt;div&gt;2&lt;/div&gt;
-  …
-&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="grid cols:1 cols&#64;sm:2 cols&#64;md:3 cols&#64;lg:4 gap:sm"&gt;
+            &lt;div&gt;1&lt;/div&gt; &lt;div&gt;2&lt;/div&gt; … &lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- Responsive Gap -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Gap</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Gap</span
+          >
           <h2 class="text-xl font-bold mb-1">Responsive Gap</h2>
-          <p class="text-sm text-muted-foreground">
-            Gap increases at larger breakpoints.
-          </p>
+          <p class="text-sm text-muted-foreground">Gap increases at larger breakpoints.</p>
         </div>
 
         <div class="border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
-          <p class="text-xs text-muted-foreground font-mono mb-2">horizontal gap:xs gap&#64;md:md gap&#64;lg:xl wrap:wrap</p>
+          <p class="text-xs text-muted-foreground font-mono mb-2">
+            horizontal gap:xs gap&#64;md:md gap&#64;lg:xl wrap:wrap
+          </p>
           <div and-layout="horizontal gap:xs gap@md:md gap@lg:xl wrap:wrap">
-            @for (i of [1,2,3,4,5,6]; track i) {
-              <div class="flex items-center justify-center w-20 h-12 rounded-lg bg-secondary text-secondary-foreground text-sm font-semibold shadow">{{ i }}</div>
+            @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+              <div
+                class="flex items-center justify-center w-20 h-12 rounded-lg bg-secondary text-secondary-foreground text-sm font-semibold shadow"
+              >
+                {{ i }}
+              </div>
             }
           </div>
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="horizontal gap:xs gap&#64;md:md gap&#64;lg:xl wrap:wrap"&gt;…&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="horizontal gap:xs gap&#64;md:md gap&#64;lg:xl wrap:wrap"&gt;…&lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- Responsive Padding -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Spacing</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Spacing</span
+          >
           <h2 class="text-xl font-bold mb-1">Responsive Padding</h2>
-          <p class="text-sm text-muted-foreground">
-            Padding scales up at wider viewports.
-          </p>
+          <p class="text-sm text-muted-foreground">Padding scales up at wider viewports.</p>
         </div>
 
         <div class="border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
@@ -113,40 +142,47 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="p:sm p&#64;md:lg p&#64;lg:xxl"&gt;…&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="p:sm p&#64;md:lg p&#64;lg:xxl"&gt;…&lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- Responsive Typography -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Typography</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Typography</span
+          >
           <h2 class="text-xl font-bold mb-1">Responsive Text Alignment</h2>
-          <p class="text-sm text-muted-foreground">
-            Change text alignment based on viewport.
-          </p>
+          <p class="text-sm text-muted-foreground">Change text alignment based on viewport.</p>
         </div>
 
         <div class="border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
           <p class="text-xs text-muted-foreground font-mono mb-2">and-text: p align:center align&#64;md:left</p>
           <div and-text="p align:center align@md:left" class="border border-border rounded-lg bg-background p-3">
-            This text is centered on small screens and left-aligned from the md breakpoint (768px) up. Resize your browser to see the change.
+            This text is centered on small screens and left-aligned from the md breakpoint (768px) up. Resize your
+            browser to see the change.
           </div>
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-text="p align:center align&#64;md:left"&gt;…&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-text="p align:center align&#64;md:left"&gt;…&lt;/div&gt;</code
+          >
         </div>
       </section>
 
       <!-- Full responsive layout example -->
       <section class="border border-border rounded-xl p-6 bg-card transition-shadow hover:shadow-lg duration-200">
         <div class="mb-5">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2">Full Example</span>
+          <span
+            class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-2"
+            >Full Example</span
+          >
           <h2 class="text-xl font-bold mb-1">Responsive Card Layout</h2>
-          <p class="text-sm text-muted-foreground">
-            A complete responsive layout combining multiple token types.
-          </p>
+          <p class="text-sm text-muted-foreground">A complete responsive layout combining multiple token types.</p>
         </div>
 
         <div class="border border-dashed border-border rounded-lg bg-muted/50 p-4 mb-3">
@@ -162,12 +198,11 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <div class="bg-muted border border-border rounded-lg p-3 overflow-x-auto">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="grid cols:1 cols&#64;sm:2 cols&#64;lg:3 gap:sm gap&#64;md:md"&gt;
-  &lt;div and-layout="vertical p:md gap:xs"&gt;
-    &lt;div and-text="h6 weight:bold"&gt;Title&lt;/div&gt;
-    &lt;div and-text="p-sm"&gt;Description&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="grid cols:1 cols&#64;sm:2 cols&#64;lg:3 gap:sm gap&#64;md:md"&gt; &lt;div
+            and-layout="vertical p:md gap:xs"&gt; &lt;div and-text="h6 weight:bold"&gt;Title&lt;/div&gt; &lt;div
+            and-text="p-sm"&gt;Description&lt;/div&gt; &lt;/div&gt; &lt;/div&gt;</code
+          >
         </div>
       </section>
     </div>

@@ -49,16 +49,15 @@ Sub-components are optional — mix and match as needed:
 
 | Component              | Purpose                                       |
 | ---------------------- | --------------------------------------------- |
-| `and-card-header`      | Top section with vertical flex + spacing       |
-| `and-card-title`       | Heading text (semibold, large)                 |
-| `and-card-description` | Muted subtitle / description text              |
-| `and-card-content`     | Main body area                                 |
-| `and-card-footer`      | Bottom section with horizontal flex alignment  |
+| `and-card-header`      | Top section with vertical flex + spacing      |
+| `and-card-title`       | Heading text (semibold, large)                |
+| `and-card-description` | Muted subtitle / description text             |
+| `and-card-content`     | Main body area                                |
+| `and-card-footer`      | Bottom section with horizontal flex alignment |
 
 All sub-components accept a `class` attribute for custom styling.
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -66,7 +65,6 @@ All sub-components accept a `class` attribute for custom styling.
 | ------------- | --------- | ----------------------------------------- | -------- | ----------- |
 | `customClass` | `class`   | Additional CSS classes from the consumer. | `string` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

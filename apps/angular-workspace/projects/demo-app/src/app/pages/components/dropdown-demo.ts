@@ -1,14 +1,6 @@
 import { Component } from '@angular/core';
-import {
-  AndButton,
-  AndDropdown,
-} from '@angular-components/stencil-generated/components';
-import {
-  DemoHeaderComponent,
-  DemoSectionComponent,
-  DemoPreviewComponent,
-  DemoCodeBlockComponent,
-} from '../../shared';
+import { AndButton, AndDropdown } from '@angular-components/stencil-generated/components';
+import { DemoHeaderComponent, DemoSectionComponent, DemoPreviewComponent, DemoCodeBlockComponent } from '../../shared';
 
 @Component({
   selector: 'app-dropdown-demo',
@@ -30,9 +22,7 @@ import {
       <demo-section title="Preview">
         <demo-preview>
           <div class="flex flex-col items-center gap-6">
-            <p class="text-sm text-muted-foreground m-0">
-              Click the button to reveal the dropdown
-            </p>
+            <p class="text-sm text-muted-foreground m-0">Click the button to reveal the dropdown</p>
             <and-dropdown [items]="actionItems">
               <and-button slot="trigger" variant="outline">
                 Actions

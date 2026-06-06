@@ -8,8 +8,7 @@
   const modeKey = 'andersseen-mode';
   const themeKey = 'andersseen-theme';
   const colorKey = 'andersseen-color';
-  const getSystemMode = () =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const getSystemMode = () => (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
   try {
     const savedMode = localStorage.getItem(modeKey);

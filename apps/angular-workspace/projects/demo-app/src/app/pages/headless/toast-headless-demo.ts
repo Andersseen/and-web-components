@@ -1,10 +1,6 @@
 import { Component, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  createToastManager,
-  type ToastItem,
-  type ToastType,
-} from '@andersseen/headless-components';
+import { createToastManager, type ToastItem, type ToastType } from '@andersseen/headless-components';
 
 @Component({
   selector: 'app-toast-headless-demo',
@@ -13,22 +9,16 @@ import {
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Toast / Notifications
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Toast / Notifications</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A succinct message displayed temporarily to provide feedback. Manages
-          queue, auto-dismiss timers, and ARIA live region semantics.
+          A succinct message displayed temporarily to provide feedback. Manages queue, auto-dismiss timers, and ARIA
+          live region semantics.
         </p>
       </header>
 
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-12 flex items-center justify-center min-h-[200px]">
             <div class="flex flex-wrap gap-3 justify-center">
               <button
@@ -98,12 +88,8 @@ import {
       </section>
 
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createToastManager {{ '}' }} from '@andersseen/headless-components';
@@ -123,22 +109,16 @@ toasts.destroy();</code></pre>
 
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
           The headless core manages the toast queue, timers, and auto-dismiss.
         </p>
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <button (click)="showRaw()">Add Raw Toast</button>
           <button (click)="clearRaw()" style="margin-left:8px;">Clear</button>
           <div style="margin-top:12px;">
@@ -169,12 +149,12 @@ export default class ToastHeadlessDemo implements OnDestroy {
   private _mgr = createToastManager({
     defaultDuration: 4000,
     maxToasts: 5,
-    onToastsChange: (l) => this.list.set(l),
+    onToastsChange: l => this.list.set(l),
   });
   private _raw = createToastManager({
     defaultDuration: 5000,
     maxToasts: 3,
-    onToastsChange: (l) => this.rawList.set(l),
+    onToastsChange: l => this.rawList.set(l),
   });
 
   list = signal<ToastItem[]>([]);

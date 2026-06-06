@@ -21,15 +21,23 @@ export default {
 
 const Template = args => html`
   <div style="max-width: 400px; padding: 20px;">
-    <and-accordion ?allow-multiple=${args.allowMultiple} orientation=${ifDefined(args.orientation)} ?disabled=${args.disabled}>
+    <and-accordion
+      ?allow-multiple=${args.allowMultiple}
+      orientation=${ifDefined(args.orientation)}
+      ?disabled=${args.disabled}
+    >
       <and-accordion-item value="item-1">
         <and-accordion-trigger>Can I use this in React?</and-accordion-trigger>
-        <and-accordion-content> Yes, these are standard Web Components and can be used in React, Vue, Angular, or vanilla HTML. </and-accordion-content>
+        <and-accordion-content>
+          Yes, these are standard Web Components and can be used in React, Vue, Angular, or vanilla HTML.
+        </and-accordion-content>
       </and-accordion-item>
 
       <and-accordion-item value="item-2">
         <and-accordion-trigger>Is it accessible?</and-accordion-trigger>
-        <and-accordion-content> Yes. It adheres to the WAI-ARIA design pattern using the Headless Components library. </and-accordion-content>
+        <and-accordion-content>
+          Yes. It adheres to the WAI-ARIA design pattern using the Headless Components library.
+        </and-accordion-content>
       </and-accordion-item>
 
       <and-accordion-item value="item-3">

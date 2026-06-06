@@ -1,12 +1,10 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { AndNavbar } from '../and-navbar';
+import { describe, it, expect } from 'vitest';
+import { render, h } from '@stencil/vitest';
+import '../and-navbar';
 
 describe('and-navbar', () => {
   it('renders', async () => {
-    const page = await newSpecPage({
-      components: [AndNavbar],
-      html: `<and-navbar></and-navbar>`,
-    });
-    expect(page.root).toBeTruthy();
+    const { root } = await render(<and-navbar></and-navbar>);
+    expect(root).toBeTruthy();
   });
 });

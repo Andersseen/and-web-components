@@ -1,14 +1,5 @@
-import {
-  AndButton,
-  AndIcon,
-  AndSelect,
-} from '@angular-components/stencil-generated/components';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-} from '@angular/core';
+import { AndButton, AndIcon, AndSelect } from '@angular-components/stencil-generated/components';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import type { DropdownOption } from './navigation.data';
 
 @Component({
@@ -35,12 +26,7 @@ import type { DropdownOption } from './navigation.data';
         ></and-select>
       </div>
 
-      <and-button
-        variant="ghost"
-        size="icon"
-        (click)="darkModeToggle.emit()"
-        title="Toggle Dark Mode"
-      >
+      <and-button variant="ghost" size="icon" (click)="darkModeToggle.emit()" title="Toggle Dark Mode">
         <and-icon [name]="isDark() ? 'sun' : 'moon'" />
       </and-button>
 
@@ -49,12 +35,7 @@ import type { DropdownOption } from './navigation.data';
         Home
       </and-button>
 
-      <and-button
-        size="sm"
-        variant="link"
-        href="https://github.com/Andersseen/and-web-components"
-        target="_blank"
-      >
+      <and-button size="sm" variant="link" href="https://github.com/Andersseen/and-web-components" target="_blank">
         <and-icon name="github" size="16" />
         GitHub
       </and-button>

@@ -24,7 +24,7 @@ importers:
         version: 10.1.0(jiti@2.6.1)
       eslint-plugin-import:
         specifier: ^2.32.0
-        version: 2.32.0(@typescript-eslint/parser@8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3))(eslint@10.1.0(jiti@2.6.1))
+        version: 2.32.0(eslint@10.1.0(jiti@2.6.1))
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -286,6 +286,9 @@ importers:
       '@stencil/core':
         specifier: ^4.43.3
         version: 4.43.3
+      '@stencil/vitest':
+        specifier: ^1.12.1
+        version: 1.12.1(@stencil/core@4.43.3)(jsdom@27.4.0)(vitest@4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)))
       '@storybook/addon-a11y':
         specifier: ^10.2.16
         version: 10.2.16(storybook@10.2.16(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
@@ -346,6 +349,9 @@ importers:
       typescript-eslint:
         specifier: ^8.57.1
         version: 8.57.1(eslint@10.1.0(jiti@1.21.7))(typescript@5.9.3)
+      vitest:
+        specifier: ^4.1.0
+        version: 4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2))
 
 packages:
   '@acemir/cssom@0.9.31':
@@ -5244,6 +5250,45 @@ packages:
     engines: { node: '>=16.0.0', npm: '>=7.10.0' }
     hasBin: true
 
+  '@stencil/vitest@1.12.1':
+    resolution:
+      {
+        integrity: sha512-5ke83kEpmyM0t+YUE1VSrAf608G5ZhliSWdOWehJ6sk0E9SnV8KNWoqBaEEDgUcordHF3z//uOrry5pmIBhl2Q==,
+      }
+    engines: { node: ^20.0.0 || ^22.0.0 || >=24.0.0 }
+    hasBin: true
+    peerDependencies:
+      '@playwright/test': '*'
+      '@stencil/core': ^4.0.0 || ^5.0.0-0
+      '@stencil/mock-doc': '*'
+      '@vitest/browser-playwright': '*'
+      '@vitest/browser-preview': '*'
+      '@vitest/browser-webdriverio': '*'
+      '@wdio/globals': '*'
+      happy-dom: '*'
+      jsdom: '*'
+      playwright: '*'
+      vitest: ^4.0.0 || ^3.0.0 || ^2.0.0
+    peerDependenciesMeta:
+      '@playwright/test':
+        optional: true
+      '@stencil/mock-doc':
+        optional: true
+      '@vitest/browser-playwright':
+        optional: true
+      '@vitest/browser-preview':
+        optional: true
+      '@vitest/browser-webdriverio':
+        optional: true
+      '@wdio/globals':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+      playwright:
+        optional: true
+
   '@storybook/addon-a11y@10.2.16':
     resolution:
       {
@@ -7358,6 +7403,18 @@ packages:
       }
     engines: { node: '>=18' }
     hasBin: true
+
+  confbox@0.1.8:
+    resolution:
+      {
+        integrity: sha512-RMtmw0iFkeR4YV+fUOSucriAQNb9g8zFR52MWCtl+cCZOFRNL6zeB395vPzFhEjjn4fMxXudmELnl/KF/WrK6w==,
+      }
+
+  confbox@0.2.4:
+    resolution:
+      {
+        integrity: sha512-ysOGlgTFbN2/Y6Cg3Iye8YKulHw+R2fNXHrgSmXISQdMnomY6eNDprVdW9R5xBguEqI954+S6709UyiO7B+6OQ==,
+      }
 
   connect-history-api-fallback@2.0.0:
     resolution:
@@ -10583,6 +10640,13 @@ packages:
       }
     engines: { node: '>= 12.13.0' }
 
+  local-pkg@1.2.1:
+    resolution:
+      {
+        integrity: sha512-++gUqRDEvcnN6Zhqrr+y/CkVEHhlrR96vZn3nZZPYzMcBUyBtTKzB9NadClFIsIVSsu+3i9tfk/erqy9kAmt7Q==,
+      }
+    engines: { node: '>=14' }
+
   locate-path@5.0.0:
     resolution:
       {
@@ -11284,6 +11348,12 @@ packages:
         integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==,
       }
     hasBin: true
+
+  mlly@1.8.2:
+    resolution:
+      {
+        integrity: sha512-d+ObxMQFmbt10sretNDytwt85VrbkhhUA/JBGm1MPaWJ65Cl4wOgLaB1NYvJSZ0Ef03MMEU/0xpPMXUIQ29UfA==,
+      }
 
   mri@1.2.0:
     resolution:
@@ -12106,6 +12176,18 @@ packages:
         integrity: sha512-4peoBq4Wks0riS0z8741NVv+/8IiTvqnZAr8QGgtdifrtpdXbNw/FxRS1l6NFqm4EMzuS0EDqNNx4XGaz8cuyQ==,
       }
     engines: { node: '>=18' }
+
+  pkg-types@1.3.1:
+    resolution:
+      {
+        integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==,
+      }
+
+  pkg-types@2.3.1:
+    resolution:
+      {
+        integrity: sha512-y+ichcgc2LrADuhLNAx8DFjVfgz91pRxfZdI3UDhxHvcVEZsenLO+7XaU5vOp0u/7V/wZ+plyuQxtrDlZJ+yeg==,
+      }
 
   playwright-core@1.58.2:
     resolution:
@@ -14597,6 +14679,14 @@ packages:
       vite:
         optional: true
 
+  vitest-environment-stencil@1.12.1:
+    resolution:
+      {
+        integrity: sha512-38mjt32BcjhT08SdVkQlTS1VhQe6HTFdVk0n8PETATxVEyeLPahihKOMmjhHRwzc7xfWsP+nW04NqvPobtQNJg==,
+      }
+    peerDependencies:
+      '@stencil/core': ^4.0.0 || ^5.0.0-0
+
   vitest@4.0.18:
     resolution:
       {
@@ -15406,7 +15496,7 @@ snapshots:
       tree-kill: 1.2.2
       tslib: 2.8.1
       typescript: 5.9.3
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
       webpack-dev-middleware: 7.4.5(tslib@2.8.1)(webpack@5.105.0(esbuild@0.17.19))
       webpack-dev-server: 5.2.2(tslib@2.8.1)(webpack@5.105.0(esbuild@0.17.19))
       webpack-merge: 6.0.1
@@ -15445,7 +15535,7 @@ snapshots:
     dependencies:
       '@angular-devkit/architect': 0.2101.3(chokidar@5.0.0)
       rxjs: 7.8.2
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
       webpack-dev-server: 5.2.2(tslib@2.8.1)(webpack@5.105.0(esbuild@0.17.19))
     transitivePeerDependencies:
       - chokidar
@@ -17961,7 +18051,7 @@ snapshots:
     dependencies:
       '@angular/compiler-cli': 21.1.3(@angular/compiler@21.1.3)(typescript@5.9.3)
       typescript: 5.9.3
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -18405,6 +18495,16 @@ snapshots:
       '@rollup/rollup-linux-x64-musl': 4.44.0
       '@rollup/rollup-win32-arm64-msvc': 4.44.0
       '@rollup/rollup-win32-x64-msvc': 4.44.0
+
+  '@stencil/vitest@1.12.1(@stencil/core@4.43.3)(jsdom@27.4.0)(vitest@4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)))':
+    dependencies:
+      '@stencil/core': 4.43.3
+      jiti: 2.6.1
+      local-pkg: 1.2.1
+      vitest: 4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2))
+      vitest-environment-stencil: 1.12.1(@stencil/core@4.43.3)(jsdom@27.4.0)(vitest@4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)))
+    optionalDependencies:
+      jsdom: 27.4.0
 
   '@storybook/addon-a11y@10.2.16(storybook@10.2.16(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))':
     dependencies:
@@ -19031,6 +19131,14 @@ snapshots:
     optionalDependencies:
       vite: 7.3.0(@types/node@25.2.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.31.1)(sass@1.97.1)(terser@5.46.0)(yaml@2.8.2)
 
+  '@vitest/mocker@4.1.0(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2))':
+    dependencies:
+      '@vitest/spy': 4.1.0
+      estree-walker: 3.0.3
+      magic-string: 0.30.21
+    optionalDependencies:
+      vite: 7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)
+
   '@vitest/mocker@4.1.0(vite@7.3.0(@types/node@25.2.1)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2))':
     dependencies:
       '@vitest/spy': 4.1.0
@@ -19534,7 +19642,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.28.5
       find-up: 5.0.0
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   babel-plugin-istanbul@6.1.1:
     dependencies:
@@ -20003,6 +20111,10 @@ snapshots:
       tree-kill: 1.2.2
       yargs: 17.7.2
 
+  confbox@0.1.8: {}
+
+  confbox@0.2.4: {}
+
   connect-history-api-fallback@2.0.0: {}
 
   connect@3.7.0:
@@ -20047,7 +20159,7 @@ snapshots:
       schema-utils: 4.3.3
       serialize-javascript: 6.0.2
       tinyglobby: 0.2.15
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   core-js-compat@3.48.0:
     dependencies:
@@ -20105,7 +20217,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.4
     optionalDependencies:
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   css-select@5.2.2:
     dependencies:
@@ -20642,17 +20754,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@10.1.0(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.9)(eslint@10.1.0(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
-      '@typescript-eslint/parser': 8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3)
       eslint: 10.1.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3))(eslint@10.1.0(jiti@2.6.1)):
+  eslint-plugin-import@2.32.0(eslint@10.1.0(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -20663,7 +20774,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 10.1.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@10.1.0(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.9)(eslint@10.1.0(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -20674,8 +20785,6 @@ snapshots:
       semver: 6.3.1
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
-    optionalDependencies:
-      '@typescript-eslint/parser': 8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -22240,7 +22349,7 @@ snapshots:
     dependencies:
       less: 4.4.2
     optionalDependencies:
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   less@4.4.2:
     dependencies:
@@ -22281,7 +22390,7 @@ snapshots:
     dependencies:
       webpack-sources: 3.3.3
     optionalDependencies:
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   lightningcss-android-arm64@1.31.1:
     optional: true
@@ -22396,6 +22505,12 @@ snapshots:
       json5: 2.2.3
 
   loader-utils@3.3.1: {}
+
+  local-pkg@1.2.1:
+    dependencies:
+      mlly: 1.8.2
+      pkg-types: 2.3.1
+      quansync: 0.2.11
 
   locate-path@5.0.0:
     dependencies:
@@ -22909,7 +23024,7 @@ snapshots:
     dependencies:
       schema-utils: 4.3.3
       tapable: 2.3.0
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   miniflare@3.20250718.3:
     dependencies:
@@ -22999,6 +23114,13 @@ snapshots:
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
+
+  mlly@1.8.2:
+    dependencies:
+      acorn: 8.16.0
+      pathe: 2.0.3
+      pkg-types: 1.3.1
+      ufo: 1.6.3
 
   mri@1.2.0: {}
 
@@ -23526,6 +23648,18 @@ snapshots:
     dependencies:
       find-up-simple: 1.0.1
 
+  pkg-types@1.3.1:
+    dependencies:
+      confbox: 0.1.8
+      mlly: 1.8.2
+      pathe: 2.0.3
+
+  pkg-types@2.3.1:
+    dependencies:
+      confbox: 0.2.4
+      exsolve: 1.0.8
+      pathe: 2.0.3
+
   playwright-core@1.58.2: {}
 
   playwright@1.58.2:
@@ -23563,7 +23697,7 @@ snapshots:
       postcss: 8.5.6
       semver: 7.7.4
     optionalDependencies:
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
     transitivePeerDependencies:
       - typescript
 
@@ -24137,7 +24271,7 @@ snapshots:
       neo-async: 2.6.2
     optionalDependencies:
       sass: 1.97.1
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   sass@1.97.1:
     dependencies:
@@ -24478,7 +24612,7 @@ snapshots:
     dependencies:
       iconv-lite: 0.6.3
       source-map-js: 1.2.1
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   source-map-support@0.5.13:
     dependencies:
@@ -24808,7 +24942,7 @@ snapshots:
       schema-utils: 4.3.3
       serialize-javascript: 6.0.2
       terser: 5.46.0
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
     optionalDependencies:
       esbuild: 0.27.2
 
@@ -25334,6 +25468,22 @@ snapshots:
     optionalDependencies:
       vite: 6.4.1(@types/node@22.19.9)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)
 
+  vitest-environment-stencil@1.12.1(@stencil/core@4.43.3)(jsdom@27.4.0)(vitest@4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2))):
+    dependencies:
+      '@stencil/core': 4.43.3
+      '@stencil/vitest': 1.12.1(@stencil/core@4.43.3)(jsdom@27.4.0)(vitest@4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)))
+    transitivePeerDependencies:
+      - '@playwright/test'
+      - '@stencil/mock-doc'
+      - '@vitest/browser-playwright'
+      - '@vitest/browser-preview'
+      - '@vitest/browser-webdriverio'
+      - '@wdio/globals'
+      - happy-dom
+      - jsdom
+      - playwright
+      - vitest
+
   vitest@4.0.18(@types/node@22.19.9)(jiti@2.6.1)(jsdom@27.4.0)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2):
     dependencies:
       '@vitest/expect': 4.0.18
@@ -25410,6 +25560,34 @@ snapshots:
       - tsx
       - yaml
 
+  vitest@4.1.0(@types/node@22.19.9)(jsdom@27.4.0)(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)):
+    dependencies:
+      '@vitest/expect': 4.1.0
+      '@vitest/mocker': 4.1.0(vite@7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2))
+      '@vitest/pretty-format': 4.1.0
+      '@vitest/runner': 4.1.0
+      '@vitest/snapshot': 4.1.0
+      '@vitest/spy': 4.1.0
+      '@vitest/utils': 4.1.0
+      es-module-lexer: 2.0.0
+      expect-type: 1.3.0
+      magic-string: 0.30.21
+      obug: 2.1.1
+      pathe: 2.0.3
+      picomatch: 4.0.3
+      std-env: 4.0.0
+      tinybench: 2.9.0
+      tinyexec: 1.0.2
+      tinyglobby: 0.2.15
+      tinyrainbow: 3.0.3
+      vite: 7.3.0(@types/node@22.19.9)(jiti@1.21.7)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 22.19.9
+      jsdom: 27.4.0
+    transitivePeerDependencies:
+      - msw
+
   vitest@4.1.0(@types/node@25.2.1)(jsdom@27.4.0)(vite@7.3.0(@types/node@25.2.1)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.2)):
     dependencies:
       '@vitest/expect': 4.1.0
@@ -25480,7 +25658,7 @@ snapshots:
       range-parser: 1.2.1
       schema-utils: 4.3.3
     optionalDependencies:
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
     transitivePeerDependencies:
       - tslib
 
@@ -25515,7 +25693,7 @@ snapshots:
       webpack-dev-middleware: 7.4.5(tslib@2.8.1)(webpack@5.105.0(esbuild@0.17.19))
       ws: 8.19.0
     optionalDependencies:
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -25534,11 +25712,11 @@ snapshots:
   webpack-subresource-integrity@5.1.0(webpack@5.105.0(esbuild@0.27.2)):
     dependencies:
       typed-assert: 1.0.9
-      webpack: 5.105.0(esbuild@0.17.19)
+      webpack: 5.105.0(esbuild@0.27.2)
 
   webpack-virtual-modules@0.6.2: {}
 
-  webpack@5.105.0(esbuild@0.17.19):
+  webpack@5.105.0(esbuild@0.27.2):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.8

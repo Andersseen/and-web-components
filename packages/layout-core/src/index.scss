@@ -1,11 +1,11 @@
 // Core
-@use "variables" as *;
-@use "mixins" as *;
+@use 'variables' as *;
+@use 'mixins' as *;
 
 // Layout
-@use "flex";
-@use "grid";
+@use 'flex';
+@use 'grid';
 
 // Utilities
-@use "spacing";
-@use "typography";
+@use 'spacing';
+@use 'typography';

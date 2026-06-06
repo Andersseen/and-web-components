@@ -1,9 +1,6 @@
 # and-carousel-item
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | -------- | --------- | -------------------------------- | -------- | ----------- |
 | `label`  | `label`   | Accessible label for this slide. | `string` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

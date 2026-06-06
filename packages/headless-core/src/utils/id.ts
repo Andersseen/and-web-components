@@ -7,7 +7,7 @@ let idCounter = 0;
 /**
  * Generate a unique ID with an optional prefix
  */
-export function generateId(prefix = "headless"): string {
+export function generateId(prefix = 'headless'): string {
   idCounter += 1;
   return `${prefix}-${idCounter}-${Math.random().toString(36).substring(2, 11)}`;
 }

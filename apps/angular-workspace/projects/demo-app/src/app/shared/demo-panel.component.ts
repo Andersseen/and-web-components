@@ -12,14 +12,10 @@ import { Component, input } from '@angular/core';
       [class.p-5]="padding() === 'lg'"
     >
       @if (title() || description()) {
-        <header
-          class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
-        >
+        <header class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div class="min-w-0">
             @if (title()) {
-              <h3
-                class="m-0 text-sm font-semibold tracking-tight text-foreground"
-              >
+              <h3 class="m-0 text-sm font-semibold tracking-tight text-foreground">
                 {{ title() }}
               </h3>
             }

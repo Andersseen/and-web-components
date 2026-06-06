@@ -1,9 +1,6 @@
 # and-sidebar
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -20,14 +17,12 @@
 | `mobileCollapse`   | `mobile-collapse`   | Enable auto-collapse on mobile viewports.                                              | `boolean`                                        | `true`                 |
 | `variant`          | `variant`           | Visual variant of the sidebar.                                                         | `"default" \| "filled" \| "floating" \| "glass"` | `'default'`            |
 
-
 ## Events
 
 | Event                 | Description                                      | Type                   |
 | --------------------- | ------------------------------------------------ | ---------------------- |
 | `andSidebarItemClick` | Emitted when a navigation item is clicked.       | `CustomEvent<string>`  |
 | `andSidebarToggle`    | Emitted when the sidebar collapse state changes. | `CustomEvent<boolean>` |
-
 
 ## Dependencies
 
@@ -36,12 +31,13 @@
 - [and-icon](../and-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   and-sidebar --> and-icon
   style and-sidebar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

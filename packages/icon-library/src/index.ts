@@ -1,8 +1,8 @@
-export * from "./icons";
-export * from "./registry";
+export * from './icons';
+export * from './registry';
 
-import { registerIcons } from "./registry";
-import { ALL_ICONS } from "./icons";
+import { registerIcons } from './registry';
+import { ALL_ICONS } from './icons';
 
 /**
  * Convenience function to register ALL icons at once.

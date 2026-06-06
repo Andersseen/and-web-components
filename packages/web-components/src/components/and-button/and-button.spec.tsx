@@ -1,14 +1,12 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { AndButton } from './and-button';
+import { describe, it, expect } from 'vitest';
+import { render, h } from '@stencil/vitest';
+import './and-button';
 
 describe('and-button', () => {
   it('renders with accessibility attributes', async () => {
-    const page = await newSpecPage({
-      components: [AndButton],
-      html: `<and-button>Click me</and-button>`,
-    });
+    const { root } = await render(<and-button>Click me</and-button>);
 
-    const button = page.root.shadowRoot.querySelector('button');
+    const button = root.shadowRoot.querySelector('button');
     expect(button).toBeTruthy();
     expect(button.getAttribute('type')).toBe('button');
     expect(button.getAttribute('data-state')).toBe('active');
@@ -17,28 +15,20 @@ describe('and-button', () => {
   });
 
   it('applies destructive variant', async () => {
-    const page = await newSpecPage({
-      components: [AndButton],
-      html: `<and-button variant="destructive">Delete</and-button>`,
-    });
+    const { root } = await render(<and-button variant="destructive">Delete</and-button>);
 
-    const button = page.root.shadowRoot.querySelector('button');
+    const button = root.shadowRoot.querySelector('button');
     expect(button.className).toContain('bg-destructive');
   });
 
   it('emits andButtonClick on click', async () => {
-    const page = await newSpecPage({
-      components: [AndButton],
-      html: `<and-button>Click me</and-button>`,
-    });
+    const { root, waitForChanges, spyOnEvent } = await render(<and-button>Click me</and-button>);
 
-    const listener = jest.fn();
-    page.root.addEventListener('andButtonClick', listener);
-
-    const button = page.root.shadowRoot.querySelector('button');
+    const clickSpy = spyOnEvent('andButtonClick');
+    const button = root.shadowRoot.querySelector('button');
     button.click();
-    await page.waitForChanges();
+    await waitForChanges();
 
-    expect(listener).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveReceivedEventTimes(1);
   });
 });

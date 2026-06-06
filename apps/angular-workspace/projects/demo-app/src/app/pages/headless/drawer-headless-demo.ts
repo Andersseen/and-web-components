@@ -9,19 +9,15 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-compone
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Drawer / Sheet
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Drawer / Sheet</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A panel that slides out from the edge of the screen. Manages
-          open/close state, keyboard navigation, and ARIA dialog semantics.
+          A panel that slides out from the edge of the screen. Manages open/close state, keyboard navigation, and ARIA
+          dialog semantics.
         </p>
       </header>
 
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
         <div class="rounded-xl border border-border bg-card shadow-sm">
           <div class="p-12 flex items-center justify-center min-h-[200px]">
             <div class="flex flex-wrap gap-3 justify-center">
@@ -67,12 +63,8 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-compone
             aria-modal="true"
             tabindex="-1"
           >
-            <div
-              class="flex items-center justify-between p-5 border-b border-border"
-            >
-              <h3 class="text-lg font-semibold text-foreground m-0">
-                Drawer ({{ placement() }})
-              </h3>
+            <div class="flex items-center justify-between p-5 border-b border-border">
+              <h3 class="text-lg font-semibold text-foreground m-0">Drawer ({{ placement() }})</h3>
               <button
                 class="w-7 h-7 flex items-center justify-center rounded bg-transparent border-0 text-muted-foreground cursor-pointer hover:bg-accent hover:text-foreground text-sm"
                 aria-label="Close"
@@ -81,23 +73,15 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-compone
                 ✕
               </button>
             </div>
-            <div
-              class="flex-1 p-6 overflow-y-auto text-muted-foreground text-sm leading-relaxed"
-            >
+            <div class="flex-1 p-6 overflow-y-auto text-muted-foreground text-sm leading-relaxed">
               <p>
                 This drawer slides in from the <strong>{{ placement() }}</strong
                 >. Press <kbd>Escape</kbd> or click the overlay to close.
               </p>
               <div class="mt-4 grid gap-2">
-                <div class="text-[13px] text-foreground">
-                  ✓ Escape key to close
-                </div>
-                <div class="text-[13px] text-foreground">
-                  ✓ Overlay click to close
-                </div>
-                <div class="text-[13px] text-foreground">
-                  ✓ ARIA dialog role
-                </div>
+                <div class="text-[13px] text-foreground">✓ Escape key to close</div>
+                <div class="text-[13px] text-foreground">✓ Overlay click to close</div>
+                <div class="text-[13px] text-foreground">✓ ARIA dialog role</div>
                 <div class="text-[13px] text-foreground">✓ 4 placements</div>
               </div>
             </div>
@@ -120,12 +104,8 @@ import { createDrawer, type DrawerPlacement } from '@andersseen/headless-compone
       </section>
 
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createDrawer {{ '}' }} from '@andersseen/headless-components';
@@ -144,22 +124,16 @@ drawer.actions.setPlacement('right');</code></pre>
 
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
           The headless core manages open/close, Escape key, and overlay click.
         </p>
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <button (click)="openRaw()">Open Raw Drawer</button>
           @if (isRawOpen()) {
             <div
@@ -170,9 +144,7 @@ drawer.actions.setPlacement('right');</code></pre>
               style="position:fixed;top:0;left:0;bottom:0;width:280px;background:white;border-right:1px solid #999;z-index:101;padding:16px;"
             >
               <h4 style="margin:0 0 8px;">Raw Drawer</h4>
-              <p style="color:#555;font-size:14px;">
-                Unstyled drawer powered by headless core.
-              </p>
+              <p style="color:#555;font-size:14px;">Unstyled drawer powered by headless core.</p>
               <button (click)="closeRaw()">Close</button>
             </div>
           }

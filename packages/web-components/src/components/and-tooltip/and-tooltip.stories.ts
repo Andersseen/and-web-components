@@ -23,7 +23,12 @@ export default {
 
 const Template = args => html`
   <div style="padding: 100px; display: flex; justify-content: center;">
-    <and-tooltip content=${ifDefined(args.content)} placement=${ifDefined(args.placement)} open-delay=${args.openDelay} close-delay=${args.closeDelay}>
+    <and-tooltip
+      content=${ifDefined(args.content)}
+      placement=${ifDefined(args.placement)}
+      open-delay=${args.openDelay}
+      close-delay=${args.closeDelay}
+    >
       <and-button variant="outline" size="icon">
         <and-icon name="plus"></and-icon>
       </and-button>

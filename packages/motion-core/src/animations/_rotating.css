@@ -4,27 +4,69 @@
 
 /* ─── Selectors — Clean names (preferred) ───────────────────────────────── */
 
-[and-motion="rotate"][and-motion-state="active"]                   { animation-name: and-rotate-in; }
-[and-motion="rotate-down-left"][and-motion-state="active"]         { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
-[and-motion="rotate-down-right"][and-motion-state="active"]        { animation-name: and-rotate-in-down-right; transform-origin: right bottom; }
-[and-motion="rotate-up-left"][and-motion-state="active"]           { animation-name: and-rotate-in-up-left; transform-origin: left bottom; }
-[and-motion="rotate-up-right"][and-motion-state="active"]          { animation-name: and-rotate-in-up-right; transform-origin: right bottom; }
+[and-motion='rotate'][and-motion-state='active'] {
+  animation-name: and-rotate-in;
+}
+[and-motion='rotate-down-left'][and-motion-state='active'] {
+  animation-name: and-rotate-in-down-left;
+  transform-origin: left bottom;
+}
+[and-motion='rotate-down-right'][and-motion-state='active'] {
+  animation-name: and-rotate-in-down-right;
+  transform-origin: right bottom;
+}
+[and-motion='rotate-up-left'][and-motion-state='active'] {
+  animation-name: and-rotate-in-up-left;
+  transform-origin: left bottom;
+}
+[and-motion='rotate-up-right'][and-motion-state='active'] {
+  animation-name: and-rotate-in-up-right;
+  transform-origin: right bottom;
+}
 
 /* ─── Selectors — Entrances (shortcuts with auto-inferred trigger) ──────── */
 
-[and-motion="rotate-in"][and-motion-state="active"]                { animation-name: and-rotate-in; }
-[and-motion="rotate-in-down-left"][and-motion-state="active"]      { animation-name: and-rotate-in-down-left; transform-origin: left bottom; }
-[and-motion="rotate-in-down-right"][and-motion-state="active"]     { animation-name: and-rotate-in-down-right; transform-origin: right bottom; }
-[and-motion="rotate-in-up-left"][and-motion-state="active"]        { animation-name: and-rotate-in-up-left; transform-origin: left bottom; }
-[and-motion="rotate-in-up-right"][and-motion-state="active"]       { animation-name: and-rotate-in-up-right; transform-origin: right bottom; }
+[and-motion='rotate-in'][and-motion-state='active'] {
+  animation-name: and-rotate-in;
+}
+[and-motion='rotate-in-down-left'][and-motion-state='active'] {
+  animation-name: and-rotate-in-down-left;
+  transform-origin: left bottom;
+}
+[and-motion='rotate-in-down-right'][and-motion-state='active'] {
+  animation-name: and-rotate-in-down-right;
+  transform-origin: right bottom;
+}
+[and-motion='rotate-in-up-left'][and-motion-state='active'] {
+  animation-name: and-rotate-in-up-left;
+  transform-origin: left bottom;
+}
+[and-motion='rotate-in-up-right'][and-motion-state='active'] {
+  animation-name: and-rotate-in-up-right;
+  transform-origin: right bottom;
+}
 
 /* ─── Selectors — Exits (shortcuts with auto-inferred trigger) ──────────── */
 
-[and-motion="rotate-out"][and-motion-state="active"]               { animation-name: and-rotate-out; }
-[and-motion="rotate-out-down-left"][and-motion-state="active"]     { animation-name: and-rotate-out-down-left; transform-origin: left bottom; }
-[and-motion="rotate-out-down-right"][and-motion-state="active"]    { animation-name: and-rotate-out-down-right; transform-origin: right bottom; }
-[and-motion="rotate-out-up-left"][and-motion-state="active"]       { animation-name: and-rotate-out-up-left; transform-origin: left bottom; }
-[and-motion="rotate-out-up-right"][and-motion-state="active"]      { animation-name: and-rotate-out-up-right; transform-origin: right bottom; }
+[and-motion='rotate-out'][and-motion-state='active'] {
+  animation-name: and-rotate-out;
+}
+[and-motion='rotate-out-down-left'][and-motion-state='active'] {
+  animation-name: and-rotate-out-down-left;
+  transform-origin: left bottom;
+}
+[and-motion='rotate-out-down-right'][and-motion-state='active'] {
+  animation-name: and-rotate-out-down-right;
+  transform-origin: right bottom;
+}
+[and-motion='rotate-out-up-left'][and-motion-state='active'] {
+  animation-name: and-rotate-out-up-left;
+  transform-origin: left bottom;
+}
+[and-motion='rotate-out-up-right'][and-motion-state='active'] {
+  animation-name: and-rotate-out-up-right;
+  transform-origin: right bottom;
+}
 
 /* ─── Keyframes — Entrances ──────────────────────────────────────────────
  * Rotation entrances use a spring-settle pattern: overshoot the final
@@ -32,28 +74,58 @@
  * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-rotate-in {
-  from { transform: rotate(-200deg); opacity: 0; }
-  to   { transform: rotate(0); opacity: 1; }
+  from {
+    transform: rotate(-200deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
 }
 
 @keyframes and-rotate-in-down-left {
-  from { transform: rotate(-45deg); opacity: 0; }
-  to   { transform: rotate(0); opacity: 1; }
+  from {
+    transform: rotate(-45deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
 }
 
 @keyframes and-rotate-in-down-right {
-  from { transform: rotate(45deg); opacity: 0; }
-  to   { transform: rotate(0); opacity: 1; }
+  from {
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
 }
 
 @keyframes and-rotate-in-up-left {
-  from { transform: rotate(45deg); opacity: 0; }
-  to   { transform: rotate(0); opacity: 1; }
+  from {
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
 }
 
 @keyframes and-rotate-in-up-right {
-  from { transform: rotate(-90deg); opacity: 0; }
-  to   { transform: rotate(0); opacity: 1; }
+  from {
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
 }
 
 /* ─── Keyframes — Exits ─────────────────────────────────────────────────
@@ -61,26 +133,51 @@
  * ────────────────────────────────────────────────────────────────────────── */
 
 @keyframes and-rotate-out {
-  from { opacity: 1; }
-  to   { transform: rotate(200deg); opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(200deg);
+    opacity: 0;
+  }
 }
 
 @keyframes and-rotate-out-down-left {
-  from { opacity: 1; }
-  to   { transform: rotate(45deg); opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(45deg);
+    opacity: 0;
+  }
 }
 
 @keyframes and-rotate-out-down-right {
-  from { opacity: 1; }
-  to   { transform: rotate(-45deg); opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(-45deg);
+    opacity: 0;
+  }
 }
 
 @keyframes and-rotate-out-up-left {
-  from { opacity: 1; }
-  to   { transform: rotate(-45deg); opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(-45deg);
+    opacity: 0;
+  }
 }
 
 @keyframes and-rotate-out-up-right {
-  from { opacity: 1; }
-  to   { transform: rotate(90deg); opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
 }

@@ -9,30 +9,18 @@ import { CommonModule } from '@angular/common';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Hero -->
       <div class="mb-12">
-        <h2 class="text-4xl font-bold tracking-tight text-foreground m-0">
-          Headless UI
-        </h2>
+        <h2 class="text-4xl font-bold tracking-tight text-foreground m-0">Headless UI</h2>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Unstyled, accessible UI primitives for building robust design systems.
-          <strong class="text-foreground"
-            >You bring the styles, we handle the logic.</strong
-          >
+          <strong class="text-foreground">You bring the styles, we handle the logic.</strong>
         </p>
       </div>
 
       <!-- Benefits Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-        <div
-          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
-        >
+        <div class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring">
           <div class="mb-4 text-primary">
-            <svg
-              width="32"
-              height="32"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -41,27 +29,16 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="text-base font-semibold text-foreground mb-2">
-            Total Control
-          </h3>
+          <h3 class="text-base font-semibold text-foreground mb-2">Total Control</h3>
           <p class="text-sm text-muted-foreground leading-relaxed m-0">
-            No Shadow DOM, no style overrides. You have direct access to every
-            DOM element and can style them with Tailwind, CSS Modules, or
-            anything else.
+            No Shadow DOM, no style overrides. You have direct access to every DOM element and can style them with
+            Tailwind, CSS Modules, or anything else.
           </p>
         </div>
 
-        <div
-          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
-        >
+        <div class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring">
           <div class="mb-4 text-success">
-            <svg
-              width="32"
-              height="32"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -70,54 +47,27 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="text-base font-semibold text-foreground mb-2">
-            Accessible by Default
-          </h3>
+          <h3 class="text-base font-semibold text-foreground mb-2">Accessible by Default</h3>
           <p class="text-sm text-muted-foreground leading-relaxed m-0">
-            We handle the hard parts: ARIA attributes, keyboard navigation,
-            focus management, and state logic.
+            We handle the hard parts: ARIA attributes, keyboard navigation, focus management, and state logic.
           </p>
         </div>
 
-        <div
-          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
-        >
+        <div class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring">
           <div class="mb-4 text-warning">
-            <svg
-              width="32"
-              height="32"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h3 class="text-base font-semibold text-foreground mb-2">
-            Framework Agnostic
-          </h3>
+          <h3 class="text-base font-semibold text-foreground mb-2">Framework Agnostic</h3>
           <p class="text-sm text-muted-foreground leading-relaxed m-0">
-            Pure JavaScript core — works with Angular, React, Vue, or vanilla
-            JS. No framework lock-in.
+            Pure JavaScript core — works with Angular, React, Vue, or vanilla JS. No framework lock-in.
           </p>
         </div>
 
-        <div
-          class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring"
-        >
+        <div class="p-6 rounded-xl border border-border bg-card transition-all hover:shadow-sm hover:border-ring">
           <div class="mb-4 text-secondary-500">
-            <svg
-              width="32"
-              height="32"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -126,12 +76,9 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h3 class="text-base font-semibold text-foreground mb-2">
-            Type Safe
-          </h3>
+          <h3 class="text-base font-semibold text-foreground mb-2">Type Safe</h3>
           <p class="text-sm text-muted-foreground leading-relaxed m-0">
-            Full TypeScript support with strongly typed state, actions, and
-            configuration options.
+            Full TypeScript support with strongly typed state, actions, and configuration options.
           </p>
         </div>
       </div>
@@ -139,9 +86,7 @@ import { CommonModule } from '@angular/common';
       <!-- How it Works -->
       <div class="mb-12">
         <h3 class="text-xl font-semibold text-foreground mb-5">How it works</h3>
-        <div
-          class="rounded-xl border border-border bg-muted/30 p-6 grid grid-cols-1 sm:grid-cols-2 gap-8 items-center"
-        >
+        <div class="rounded-xl border border-border bg-muted/30 p-6 grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
           <div class="flex flex-col gap-5">
             <div class="flex gap-3">
               <span
@@ -149,9 +94,7 @@ import { CommonModule } from '@angular/common';
                 >1</span
               >
               <div>
-                <p class="text-sm font-medium text-foreground m-0">
-                  Initialize Logic
-                </p>
+                <p class="text-sm font-medium text-foreground m-0">Initialize Logic</p>
                 <p class="text-xs text-muted-foreground mt-1 m-0">
                   Create the component logic with a simple function call.
                 </p>
@@ -163,9 +106,7 @@ import { CommonModule } from '@angular/common';
                 >2</span
               >
               <div>
-                <p class="text-sm font-medium text-foreground m-0">
-                  Connect to UI
-                </p>
+                <p class="text-sm font-medium text-foreground m-0">Connect to UI</p>
                 <p class="text-xs text-muted-foreground mt-1 m-0">
                   Bind state and actions to your native HTML elements.
                 </p>
@@ -177,12 +118,8 @@ import { CommonModule } from '@angular/common';
                 >3</span
               >
               <div>
-                <p class="text-sm font-medium text-foreground m-0">
-                  Style Away
-                </p>
-                <p class="text-xs text-muted-foreground mt-1 m-0">
-                  Apply your classes dynamically based on the state.
-                </p>
+                <p class="text-sm font-medium text-foreground m-0">Style Away</p>
+                <p class="text-xs text-muted-foreground mt-1 m-0">Apply your classes dynamically based on the state.</p>
               </div>
             </div>
           </div>
@@ -206,33 +143,23 @@ import { CommonModule } from '@angular/common';
 
       <!-- Available Components -->
       <div class="mb-12">
-        <h3 class="text-xl font-semibold text-foreground mb-5">
-          Available Components
-        </h3>
+        <h3 class="text-xl font-semibold text-foreground mb-5">Available Components</h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <a
             class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
             href="/headless/button"
           >
             <span class="text-3xl mb-3">🔘</span>
-            <span class="text-sm font-semibold text-foreground mb-1"
-              >Button</span
-            >
-            <span class="text-[11px] text-muted-foreground leading-snug"
-              >Loading, disabled, click handling</span
-            >
+            <span class="text-sm font-semibold text-foreground mb-1">Button</span>
+            <span class="text-[11px] text-muted-foreground leading-snug">Loading, disabled, click handling</span>
           </a>
           <a
             class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
             href="/headless/dropdown"
           >
             <span class="text-3xl mb-3">📋</span>
-            <span class="text-sm font-semibold text-foreground mb-1"
-              >Dropdown</span
-            >
-            <span class="text-[11px] text-muted-foreground leading-snug"
-              >Menu, keyboard nav, outside click</span
-            >
+            <span class="text-sm font-semibold text-foreground mb-1">Dropdown</span>
+            <span class="text-[11px] text-muted-foreground leading-snug">Menu, keyboard nav, outside click</span>
           </a>
           <a
             class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
@@ -240,21 +167,15 @@ import { CommonModule } from '@angular/common';
           >
             <span class="text-3xl mb-3">📑</span>
             <span class="text-sm font-semibold text-foreground mb-1">Tabs</span>
-            <span class="text-[11px] text-muted-foreground leading-snug"
-              >Tab panels, ARIA, keyboard support</span
-            >
+            <span class="text-[11px] text-muted-foreground leading-snug">Tab panels, ARIA, keyboard support</span>
           </a>
           <a
             class="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card no-underline transition-all duration-200 cursor-pointer hover:border-primary hover:shadow-sm hover:-translate-y-0.5"
             href="/headless/accordion"
           >
             <span class="text-3xl mb-3">🪗</span>
-            <span class="text-sm font-semibold text-foreground mb-1"
-              >Accordion</span
-            >
-            <span class="text-[11px] text-muted-foreground leading-snug"
-              >Expand/collapse, multi-select</span
-            >
+            <span class="text-sm font-semibold text-foreground mb-1">Accordion</span>
+            <span class="text-[11px] text-muted-foreground leading-snug">Expand/collapse, multi-select</span>
           </a>
         </div>
       </div>

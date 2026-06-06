@@ -19,7 +19,11 @@ export default {
 
 const Template = args => html`
   <div style="max-width: 500px; padding: 20px;">
-    <and-alert variant=${ifDefined(args.variant)} ?dismissible=${args.dismissible} @andDismiss=${() => console.log('Alert dismissed')}>
+    <and-alert
+      variant=${ifDefined(args.variant)}
+      ?dismissible=${args.dismissible}
+      @andDismiss=${() => console.log('Alert dismissed')}
+    >
       <and-icon name="info" slot="icon" class="h-4 w-4"></and-icon>
       <p>This is an alert message checking the various variants!</p>
     </and-alert>

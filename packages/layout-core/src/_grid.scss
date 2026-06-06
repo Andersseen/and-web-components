@@ -1,10 +1,10 @@
-@use "sass:map";
-@use "sass:string";
-@use "variables" as *;
-@use "mixins" as *;
+@use 'sass:map';
+@use 'sass:string';
+@use 'variables' as *;
+@use 'mixins' as *;
 
 // Base Grid Layout
-[and-layout~="grid"] {
+[and-layout~='grid'] {
   display: grid;
 }
 
@@ -19,11 +19,16 @@ $grid-spans: ();
 @for $i from 1 through 12 {
   $grid-spans: map.merge($grid-spans, (#{$i}: span $i / span $i));
 }
-$grid-spans: map.merge($grid-spans, ("full": string.unquote("1 / -1")));
+$grid-spans: map.merge(
+  $grid-spans,
+  (
+    'full': string.unquote('1 / -1'),
+  )
+);
 
 // Generate Classes
-@include generate-responsive("and-layout", "cols", $grid-cols, "grid-template-columns");
-@include generate-responsive("and-layout", "span", $grid-spans, "grid-column");
+@include generate-responsive('and-layout', 'cols', $grid-cols, 'grid-template-columns');
+@include generate-responsive('and-layout', 'span', $grid-spans, 'grid-column');
 
 // Start/End Utilities (optional but useful)
 // col-start:1
@@ -31,7 +36,12 @@ $grid-starts: ();
 @for $i from 1 through 13 {
   $grid-starts: map.merge($grid-starts, (#{$i}: $i));
 }
-$grid-starts: map.merge($grid-starts, ("auto": auto));
+$grid-starts: map.merge(
+  $grid-starts,
+  (
+    'auto': auto,
+  )
+);
 
-@include generate-responsive("and-layout", "col-start", $grid-starts, "grid-column-start");
-@include generate-responsive("and-layout", "col-end", $grid-starts, "grid-column-end");
+@include generate-responsive('and-layout', 'col-start', $grid-starts, 'grid-column-start');
+@include generate-responsive('and-layout', 'col-end', $grid-starts, 'grid-column-end');

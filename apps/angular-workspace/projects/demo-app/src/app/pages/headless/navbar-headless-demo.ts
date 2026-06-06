@@ -10,24 +10,17 @@ import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-com
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Navbar
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Navbar</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A responsive navigation header with support for branding, navigation
-          items, keyboard navigation (Arrow keys, Home, End), and mobile menu
-          toggling. Built on the headless core with full ARIA roles.
+          A responsive navigation header with support for branding, navigation items, keyboard navigation (Arrow keys,
+          Home, End), and mobile menu toggling. Built on the headless core with full ARIA roles.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8">
           <div class="border rounded-md bg-background">
             <nav
               class="flex items-center justify-between p-4 h-16 border-b"
@@ -48,21 +41,13 @@ import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-com
                     class="relative px-3 py-2 text-sm font-medium rounded-md transition-all duration-200"
                     [class.text-foreground]="navbar.queries.isActive(item.id)"
                     [class.font-semibold]="navbar.queries.isActive(item.id)"
-                    [class.text-muted-foreground]="
-                      !navbar.queries.isActive(item.id)
-                    "
-                    [class.hover:text-foreground]="
-                      !navbar.queries.isActive(item.id)
-                    "
+                    [class.text-muted-foreground]="!navbar.queries.isActive(item.id)"
+                    [class.hover:text-foreground]="!navbar.queries.isActive(item.id)"
                     [class.hover:bg-accent]="!navbar.queries.isActive(item.id)"
                     (click)="setActiveItem(item.id)"
                     (keydown)="handleKeyDown($event, item.id)"
-                    [attr.aria-current]="
-                      navbar.getItemProps(item.id)['aria-current']
-                    "
-                    [attr.data-state]="
-                      navbar.getItemProps(item.id)['data-state']
-                    "
+                    [attr.aria-current]="navbar.getItemProps(item.id)['aria-current']"
+                    [attr.data-state]="navbar.getItemProps(item.id)['data-state']"
                     [attr.role]="navbar.getItemProps(item.id).role"
                     [attr.tabindex]="navbar.getItemProps(item.id).tabindex"
                   >
@@ -123,9 +108,7 @@ import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-com
                     [class.bg-accent]="navbar.queries.isActive(item.id)"
                     [class.text-foreground]="navbar.queries.isActive(item.id)"
                     [class.font-semibold]="navbar.queries.isActive(item.id)"
-                    [class.text-muted-foreground]="
-                      !navbar.queries.isActive(item.id)
-                    "
+                    [class.text-muted-foreground]="!navbar.queries.isActive(item.id)"
                     (click)="setActiveItem(item.id)"
                   >
                     {{ item.label }}
@@ -139,9 +122,7 @@ import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-com
 
       <!-- API Reference -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          API
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">API</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="rounded-xl border border-border bg-card p-5">
             <h3 class="text-sm font-semibold text-foreground mb-2">Actions</h3>
@@ -170,12 +151,8 @@ import { createNavbar, NavbarReturn, NavbarItem } from '@andersseen/headless-com
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createNavbar {{ '}' }} from '&#64;andersseen/headless-core';
@@ -222,9 +199,9 @@ export default class NavbarHeadlessDemo {
     this.navbar = createNavbar({
       items: this.items,
       defaultActiveItem: this.activeItem(),
-      onActiveItemChange: (id) => this.activeItem.set(id),
+      onActiveItemChange: id => this.activeItem.set(id),
       mobileMenuOpen: this.mobileMenuOpen(),
-      onMobileMenuChange: (open) => this.mobileMenuOpen.set(open),
+      onMobileMenuChange: open => this.mobileMenuOpen.set(open),
     });
   }
 

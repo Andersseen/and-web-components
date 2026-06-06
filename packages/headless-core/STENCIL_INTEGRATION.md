@@ -1,6 +1,7 @@
 # Integrating Headless Components with Stencil
 
-This guide shows how to use `@andersseen/headless-components` components in your Stencil Web Components.
+This guide shows how to use `@andersseen/headless-components` components in your
+Stencil Web Components.
 
 ## 🎯 Architecture Overview
 
@@ -36,25 +37,28 @@ pnpm add @andersseen/headless-components
 **File: `src/components/and-button/and-button.tsx`**
 
 ```tsx
-import { Component, Prop, State, h } from "@stencil/core";
-import { createButton, ButtonReturn } from "@andersseen/headless-components/button";
-import { cn } from "../../utils/cn"; // tailwind-merge utility
+import { Component, Prop, State, h } from '@stencil/core';
+import {
+  createButton,
+  ButtonReturn,
+} from '@andersseen/headless-components/button';
+import { cn } from '../../utils/cn'; // tailwind-merge utility
 
 @Component({
-  tag: "and-button",
-  styleUrl: "and-button.css",
+  tag: 'and-button',
+  styleUrl: 'and-button.css',
   shadow: true,
 })
 export class MyButton {
   /**
    * Button variant
    */
-  @Prop() variant: "default" | "primary" | "secondary" | "ghost" = "default";
+  @Prop() variant: 'default' | 'primary' | 'secondary' | 'ghost' = 'default';
 
   /**
    * Button size
    */
-  @Prop() size: "sm" | "md" | "lg" = "md";
+  @Prop() size: 'sm' | 'md' | 'lg' = 'md';
 
   /**
    * Disabled state
@@ -69,7 +73,7 @@ export class MyButton {
   /**
    * Button type
    */
-  @Prop() type: "button" | "submit" | "reset" = "button";
+  @Prop() type: 'button' | 'submit' | 'reset' = 'button';
 
   /**
    * Internal headless button instance
@@ -84,7 +88,7 @@ export class MyButton {
       disabled: this.disabled,
       loading: this.loading,
       type: this.type,
-      onClick: (e) => this.handleClick(e),
+      onClick: e => this.handleClick(e),
     });
   }
 
@@ -97,7 +101,7 @@ export class MyButton {
   }
 
   private handleClick = (e: MouseEvent) => {
-    console.log("Button clicked!", e);
+    console.log('Button clicked!', e);
   };
 
   /**
@@ -105,20 +109,20 @@ export class MyButton {
    */
   private getClassNames(): string {
     const baseClasses =
-      "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
+      'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50';
 
     const variantClasses = {
       default:
-        "bg-background text-foreground border border-input hover:bg-accent",
-      primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-      ghost: "hover:bg-accent hover:text-accent-foreground",
+        'bg-background text-foreground border border-input hover:bg-accent',
+      primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+      ghost: 'hover:bg-accent hover:text-accent-foreground',
     };
 
     const sizeClasses = {
-      sm: "h-9 px-3 text-sm",
-      md: "h-10 px-4 py-2",
-      lg: "h-11 px-8",
+      sm: 'h-9 px-3 text-sm',
+      md: 'h-10 px-4 py-2',
+      lg: 'h-11 px-8',
     };
 
     return cn(
@@ -136,7 +140,7 @@ export class MyButton {
       <button
         {...props}
         class={this.getClassNames()}
-        onClick={(e) => this.buttonLogic.actions.click(e)}
+        onClick={e => this.buttonLogic.actions.click(e)}
       >
         {this.loading && <span class="mr-2 h-4 w-4 animate-spin">⏳</span>}
         <slot />
@@ -153,15 +157,15 @@ export class MyButton {
 **File: `src/components/and-accordion/and-accordion.tsx`**
 
 ```tsx
-import { Component, Prop, State, h } from "@stencil/core";
+import { Component, Prop, State, h } from '@stencil/core';
 import {
   createAccordion,
   AccordionReturn,
-} from "@andersseen/headless-components/accordion";
+} from '@andersseen/headless-components/accordion';
 
 @Component({
-  tag: "and-accordion",
-  styleUrl: "and-accordion.css",
+  tag: 'and-accordion',
+  styleUrl: 'and-accordion.css',
   shadow: true,
 })
 export class MyAccordion {
@@ -189,9 +193,9 @@ export class MyAccordion {
     this.accordionLogic = createAccordion({
       allowMultiple: this.allowMultiple,
       defaultValue: this.defaultValue,
-      onValueChange: (items) => {
+      onValueChange: items => {
         this.expandedItems = items;
-        console.log("Expanded items:", items);
+        console.log('Expanded items:', items);
       },
     });
   }
@@ -214,12 +218,12 @@ export class MyAccordion {
 **File: `src/components/and-accordion-item/and-accordion-item.tsx`**
 
 ```tsx
-import { Component, Prop, Element, State, h } from "@stencil/core";
-import { AccordionReturn } from "@andersseen/headless-components/accordion";
+import { Component, Prop, Element, State, h } from '@stencil/core';
+import { AccordionReturn } from '@andersseen/headless-components/accordion';
 
 @Component({
-  tag: "and-accordion-item",
-  styleUrl: "and-accordion-item.css",
+  tag: 'and-accordion-item',
+  styleUrl: 'and-accordion-item.css',
   shadow: true,
 })
 export class MyAccordionItem {
@@ -233,7 +237,7 @@ export class MyAccordionItem {
   /**
    * Title for the accordion trigger
    */
-  @Prop() title: string = "";
+  @Prop() title: string = '';
 
   /**
    * Reference to parent accordion logic
@@ -243,7 +247,7 @@ export class MyAccordionItem {
 
   componentWillLoad() {
     // Get accordion logic from parent
-    const parent = this.el.closest("and-accordion") as any;
+    const parent = this.el.closest('and-accordion') as any;
     if (parent && parent.accordionLogic) {
       this.accordionLogic = parent.accordionLogic;
       this.isExpanded = this.accordionLogic.queries.isExpanded(this.itemId);
@@ -278,7 +282,7 @@ export class MyAccordionItem {
         >
           <span>{this.title}</span>
           <span
-            class={`transform transition-transform ${this.isExpanded ? "rotate-180" : ""}`}
+            class={`transform transition-transform ${this.isExpanded ? 'rotate-180' : ''}`}
           >
             ▼
           </span>
@@ -287,7 +291,7 @@ export class MyAccordionItem {
         {/* Content */}
         <div
           {...contentProps}
-          class={`overflow-hidden transition-all ${this.isExpanded ? "max-h-screen" : "max-h-0"}`}
+          class={`overflow-hidden transition-all ${this.isExpanded ? 'max-h-screen' : 'max-h-0'}`}
         >
           <div class="p-4 pt-0">
             <slot />
@@ -306,17 +310,17 @@ export class MyAccordionItem {
 **File: `src/components/and-tabs/and-tabs.tsx`**
 
 ```tsx
-import { Component, Prop, State, h } from "@stencil/core";
-import { createTabs, TabsReturn } from "@andersseen/headless-components/tabs";
+import { Component, Prop, State, h } from '@stencil/core';
+import { createTabs, TabsReturn } from '@andersseen/headless-components/tabs';
 
 @Component({
-  tag: "and-tabs",
-  styleUrl: "and-tabs.css",
+  tag: 'and-tabs',
+  styleUrl: 'and-tabs.css',
   shadow: true,
 })
 export class MyTabs {
   @Prop() defaultValue?: string;
-  @Prop() orientation: "horizontal" | "vertical" = "horizontal";
+  @Prop() orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   @State() tabsLogic: TabsReturn;
   @State() selectedTab: string | null = null;
@@ -325,7 +329,7 @@ export class MyTabs {
     this.tabsLogic = createTabs({
       defaultValue: this.defaultValue,
       orientation: this.orientation,
-      onValueChange: (tabId) => {
+      onValueChange: tabId => {
         this.selectedTab = tabId;
       },
     });
@@ -373,8 +377,10 @@ export class MyTabs {
 
 ## 🔑 Key Principles
 
-1. **Headless handles logic** - State management, accessibility, keyboard navigation
-2. **Stencil handles presentation** - Rendering, styling with Tailwind, Shadow DOM
+1. **Headless handles logic** - State management, accessibility, keyboard
+   navigation
+2. **Stencil handles presentation** - Rendering, styling with Tailwind, Shadow
+   DOM
 3. **Props sync both ways** - Stencil props update headless state
 4. **Events notify changes** - Headless callbacks trigger Stencil re-renders
 

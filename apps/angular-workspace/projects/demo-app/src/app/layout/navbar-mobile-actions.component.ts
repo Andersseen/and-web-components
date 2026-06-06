@@ -1,14 +1,5 @@
-import {
-  AndButton,
-  AndIcon,
-  AndSelect,
-} from '@angular-components/stencil-generated/components';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-} from '@angular/core';
+import { AndButton, AndIcon, AndSelect } from '@angular-components/stencil-generated/components';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import type { DropdownOption } from './navigation.data';
 
 @Component({
@@ -36,12 +27,7 @@ import type { DropdownOption } from './navigation.data';
       </div>
 
       <div class="grid grid-cols-2 gap-2">
-        <and-button
-          size="sm"
-          variant="ghost"
-          class="w-full justify-start"
-          href="https://libs.andersseen.dev"
-        >
+        <and-button size="sm" variant="ghost" class="w-full justify-start" href="https://libs.andersseen.dev">
           <and-icon name="app-window" size="16" />
           Home
         </and-button>

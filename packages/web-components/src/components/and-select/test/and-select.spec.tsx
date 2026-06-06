@@ -1,5 +1,6 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { AndSelect } from '../and-select';
+import { describe, it, expect } from 'vitest';
+import { render, h } from '@stencil/vitest';
+import '../and-select';
 
 describe('and-select', () => {
   const options = [
@@ -9,99 +10,78 @@ describe('and-select', () => {
   ];
 
   it('renders as closed combobox with correct aria', async () => {
-    const page = await newSpecPage({
-      components: [AndSelect],
-      html: `<and-select></and-select>`,
-    });
+    const { root, waitForChanges } = await render(<and-select options={options}></and-select>);
+    await waitForChanges();
 
-    (page.root as any).options = options;
-    await page.waitForChanges();
-
-    const trigger = page.root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
+    const trigger = root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
     expect(trigger).toBeTruthy();
     expect(trigger.getAttribute('aria-expanded')).toBe('false');
     expect(trigger.getAttribute('aria-haspopup')).toBe('listbox');
   });
 
   it('opens menu on click and highlights selected option', async () => {
-    const page = await newSpecPage({
-      components: [AndSelect],
-      html: `<and-select></and-select>`,
-    });
+    const { root, waitForChanges } = await render(<and-select options={options} value="banana"></and-select>);
+    await waitForChanges();
 
-    (page.root as any).options = options;
-    (page.root as any).value = 'banana';
-    await page.waitForChanges();
-
-    const trigger = page.root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
+    const trigger = root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
     trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    await page.waitForChanges();
+    await waitForChanges();
 
     expect(trigger.getAttribute('aria-expanded')).toBe('true');
 
-    const listbox = page.root.shadowRoot.querySelector('[role="listbox"]');
+    const listbox = root.shadowRoot.querySelector('[role="listbox"]');
     expect(listbox.classList.contains('select-menu--open')).toBe(true);
 
-    const highlighted = page.root.shadowRoot.querySelector('.select-option--highlighted');
+    const highlighted = root.shadowRoot.querySelector('.select-option--highlighted');
     expect(highlighted).toBeTruthy();
     expect(highlighted.getAttribute('aria-selected')).toBe('true'); // banana is selected
   });
 
   it('navigates with ArrowDown and selects with Enter', async () => {
-    const page = await newSpecPage({
-      components: [AndSelect],
-      html: `<and-select></and-select>`,
-    });
+    const { root, waitForChanges, spyOnEvent } = await render(<and-select options={options}></and-select>);
+    await waitForChanges();
 
-    (page.root as any).options = options;
-    await page.waitForChanges();
-
-    const trigger = page.root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
+    const trigger = root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
+    trigger.focus();
 
     // Open with ArrowDown
-    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    await page.waitForChanges();
+    trigger.dispatchEvent(new KeyboardEvent('keyDown', { key: 'ArrowDown', bubbles: true }));
+    await new Promise(r => setTimeout(r, 0));
+    await waitForChanges();
 
     expect(trigger.getAttribute('aria-expanded')).toBe('true');
 
     // ArrowDown again should move to next
-    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-    await page.waitForChanges();
+    trigger.dispatchEvent(new KeyboardEvent('keyDown', { key: 'ArrowDown', bubbles: true }));
+    await waitForChanges();
 
-    const highlighted = page.root.shadowRoot.querySelector('.select-option--highlighted');
+    const highlighted = root.shadowRoot.querySelector('.select-option--highlighted');
     expect(highlighted).toBeTruthy();
 
     // Enter to select
-    const changeListener = jest.fn();
-    page.root.addEventListener('andSelectChange', changeListener);
-
-    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    await page.waitForChanges();
+    const changeSpy = spyOnEvent('andSelectChange');
+    trigger.dispatchEvent(new KeyboardEvent('keyDown', { key: 'Enter', bubbles: true }));
+    await waitForChanges();
 
     expect(trigger.getAttribute('aria-expanded')).toBe('false');
-    expect(changeListener).toHaveBeenCalledTimes(1);
+    expect(changeSpy).toHaveReceivedEventTimes(1);
   });
 
   it('closes with Escape and emits blur', async () => {
-    const page = await newSpecPage({
-      components: [AndSelect],
-      html: `<and-select></and-select>`,
-    });
+    const { root, waitForChanges, spyOnEvent } = await render(<and-select options={options}></and-select>);
+    await waitForChanges();
 
-    (page.root as any).options = options;
-    await page.waitForChanges();
-
-    const trigger = page.root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
+    const trigger = root.shadowRoot.querySelector('[role="combobox"]') as HTMLButtonElement;
+    trigger.focus();
     trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    await page.waitForChanges();
+    await waitForChanges();
 
-    const blurListener = jest.fn();
-    page.root.addEventListener('andBlur', blurListener);
-
-    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    await page.waitForChanges();
+    const blurSpy = spyOnEvent('andBlur');
+    trigger.dispatchEvent(new KeyboardEvent('keyDown', { key: 'Escape', bubbles: true }));
+    await new Promise(r => setTimeout(r, 0));
+    await waitForChanges();
 
     expect(trigger.getAttribute('aria-expanded')).toBe('false');
-    expect(blurListener).toHaveBeenCalledTimes(1);
+    expect(blurSpy).toHaveReceivedEventTimes(1);
   });
 });

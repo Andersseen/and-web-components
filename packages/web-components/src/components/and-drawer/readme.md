@@ -1,9 +1,6 @@
 # and-drawer
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -14,7 +11,6 @@
 | `placement` | `placement`  | The direction the drawer slides in from.                | `"bottom" \| "left" \| "right" \| "top"` | `'left'`    |
 | `showClose` | `show-close` | Whether to show the default close button in the header. | `boolean`                                | `true`      |
 
-
 ## Events
 
 | Event            | Description                                                                  | Type                |
@@ -22,18 +18,18 @@
 | `andDrawerClose` | Emitted when the drawer is closed (backdrop click, close button, or Escape). | `CustomEvent<void>` |
 | `andDrawerOpen`  | Emitted when the drawer is opened.                                           | `CustomEvent<void>` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [and-navbar](../and-navbar)
+- [and-navbar](../and-navbar)
 
 ### Depends on
 
 - [and-icon](../and-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   and-drawer --> and-icon
@@ -41,6 +37,6 @@ graph TD;
   style and-drawer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

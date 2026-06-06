@@ -4,16 +4,11 @@ import { Component, input, signal } from '@angular/core';
   selector: 'demo-code-block',
   host: { class: 'block w-full min-w-0 max-w-full' },
   template: `
-    <div
-      class="w-full min-w-0 max-w-full overflow-x-hidden rounded-xl border border-border bg-card shadow-sm"
-    >
+    <div class="w-full min-w-0 max-w-full overflow-x-hidden rounded-xl border border-border bg-card shadow-sm">
       <div
         class="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-card px-4 py-3 sm:px-5"
       >
-        <span
-          class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-          >{{ label() }}</span
-        >
+        <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">{{ label() }}</span>
         @if (copyable()) {
           <button
             type="button"

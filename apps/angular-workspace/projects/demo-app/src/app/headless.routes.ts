@@ -56,18 +56,15 @@ const headlessRoutes: Routes = [
   },
   {
     path: 'breadcrumb',
-    loadComponent: () =>
-      import('./pages/headless/breadcrumb-headless-demo'),
+    loadComponent: () => import('./pages/headless/breadcrumb-headless-demo'),
   },
   {
     path: 'menu-list',
-    loadComponent: () =>
-      import('./pages/headless/menu-list-headless-demo'),
+    loadComponent: () => import('./pages/headless/menu-list-headless-demo'),
   },
   {
     path: 'context-menu',
-    loadComponent: () =>
-      import('./pages/headless/context-menu-headless-demo'),
+    loadComponent: () => import('./pages/headless/context-menu-headless-demo'),
   },
 ];
 

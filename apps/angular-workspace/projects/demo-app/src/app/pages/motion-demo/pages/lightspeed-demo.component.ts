@@ -9,5 +9,5 @@ import { ANIM_CATEGORIES } from '../data/animation-catalogue';
   template: `<app-category-demo [title]="'Light Speed'" [groups]="groups" />`,
 })
 export default class LightspeedDemoComponent {
-  groups = ANIM_CATEGORIES.find((c) => c.id === 'lightspeed')!.groups;
+  groups = ANIM_CATEGORIES.find(c => c.id === 'lightspeed')!.groups;
 }

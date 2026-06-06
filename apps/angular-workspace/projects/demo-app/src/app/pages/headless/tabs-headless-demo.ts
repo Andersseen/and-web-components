@@ -10,23 +10,16 @@ import { createTabs } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Tabs
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Tabs</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A set of layered sections of content — known as tab panels — that are
-          displayed one at a time.
+          A set of layered sections of content — known as tab panels — that are displayed one at a time.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8">
           <div class="max-w-md mx-auto">
             <!-- Tabs Root -->
             <div>
@@ -58,22 +51,14 @@ import { createTabs } from '@andersseen/headless-components';
 
               <!-- Account Panel -->
               @if (activeTab() === 'account') {
-                <div
-                  class="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
-                >
-                  <h3 class="text-lg font-semibold text-foreground mb-1">
-                    Account
-                  </h3>
+                <div class="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
+                  <h3 class="text-lg font-semibold text-foreground mb-1">Account</h3>
                   <p class="text-sm text-muted-foreground mb-5 leading-relaxed">
-                    Make changes to your account here. Click save when you're
-                    done.
+                    Make changes to your account here. Click save when you're done.
                   </p>
 
                   <div class="mb-4">
-                    <label
-                      class="block text-sm font-medium text-foreground mb-1.5"
-                      >Name</label
-                    >
+                    <label class="block text-sm font-medium text-foreground mb-1.5">Name</label>
                     <input
                       class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                       type="text"
@@ -82,10 +67,7 @@ import { createTabs } from '@andersseen/headless-components';
                   </div>
 
                   <div class="mb-4">
-                    <label
-                      class="block text-sm font-medium text-foreground mb-1.5"
-                      >Username</label
-                    >
+                    <label class="block text-sm font-medium text-foreground mb-1.5">Username</label>
                     <input
                       class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                       type="text"
@@ -105,22 +87,14 @@ import { createTabs } from '@andersseen/headless-components';
 
               <!-- Password Panel -->
               @if (activeTab() === 'password') {
-                <div
-                  class="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
-                >
-                  <h3 class="text-lg font-semibold text-foreground mb-1">
-                    Password
-                  </h3>
+                <div class="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
+                  <h3 class="text-lg font-semibold text-foreground mb-1">Password</h3>
                   <p class="text-sm text-muted-foreground mb-5 leading-relaxed">
-                    Change your password here. After saving, you'll be logged
-                    out.
+                    Change your password here. After saving, you'll be logged out.
                   </p>
 
                   <div class="mb-4">
-                    <label
-                      class="block text-sm font-medium text-foreground mb-1.5"
-                      >Current password</label
-                    >
+                    <label class="block text-sm font-medium text-foreground mb-1.5">Current password</label>
                     <input
                       class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                       type="password"
@@ -128,10 +102,7 @@ import { createTabs } from '@andersseen/headless-components';
                   </div>
 
                   <div class="mb-4">
-                    <label
-                      class="block text-sm font-medium text-foreground mb-1.5"
-                      >New password</label
-                    >
+                    <label class="block text-sm font-medium text-foreground mb-1.5">New password</label>
                     <input
                       class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                       type="password"
@@ -139,10 +110,7 @@ import { createTabs } from '@andersseen/headless-components';
                   </div>
 
                   <div class="mb-4">
-                    <label
-                      class="block text-sm font-medium text-foreground mb-1.5"
-                      >Confirm password</label
-                    >
+                    <label class="block text-sm font-medium text-foreground mb-1.5">Confirm password</label>
                     <input
                       class="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                       type="password"
@@ -165,12 +133,8 @@ import { createTabs } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createTabs {{ '}' }} from '@andersseen/headless-components';
@@ -190,39 +154,28 @@ tabs.queries.isSelected('account'); // true</code></pre>
       <!-- Raw Example -->
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
 
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
-          Manages tab selection, ARIA roles, and keyboard navigation — you
-          control the rendering.
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
+          Manages tab selection, ARIA roles, and keyboard navigation — you control the rendering.
         </p>
 
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <div>
             <div style="display: flex; gap: 4px; margin-bottom: 8px;">
               <button
-                [style.font-weight]="
-                  activeTab() === 'account' ? 'bold' : 'normal'
-                "
+                [style.font-weight]="activeTab() === 'account' ? 'bold' : 'normal'"
                 (click)="selectTab('account')"
               >
                 Account
               </button>
               <button
-                [style.font-weight]="
-                  activeTab() === 'password' ? 'bold' : 'normal'
-                "
+                [style.font-weight]="activeTab() === 'password' ? 'bold' : 'normal'"
                 (click)="selectTab('password')"
               >
                 Password

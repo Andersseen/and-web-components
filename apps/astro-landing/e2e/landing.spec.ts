@@ -11,7 +11,10 @@ test.describe('Landing Page Basics', () => {
 
     // Check meta description
     const metaDescription = page.locator('meta[name="description"]');
-    await expect(metaDescription).toHaveAttribute('content', 'Andersseen — A powerful, framework-agnostic web component ecosystem');
+    await expect(metaDescription).toHaveAttribute(
+      'content',
+      'Andersseen — A powerful, framework-agnostic web component ecosystem',
+    );
   });
 
   test('all main sections are visible', async ({ page }) => {

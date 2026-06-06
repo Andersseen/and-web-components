@@ -23,7 +23,12 @@ export default {
 
 const Template = args => html`
   <div style="padding: 20px; color: #666;">
-    <and-icon name=${ifDefined(args.name)} size=${ifDefined(args.size)} color=${ifDefined(args.color)} stroke-width=${ifDefined(args.strokeWidth)}></and-icon>
+    <and-icon
+      name=${ifDefined(args.name)}
+      size=${ifDefined(args.size)}
+      color=${ifDefined(args.color)}
+      stroke-width=${ifDefined(args.strokeWidth)}
+    ></and-icon>
   </div>
 `;
 

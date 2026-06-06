@@ -1,9 +1,6 @@
 # and-toast
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Methods
 
@@ -23,9 +20,6 @@ Present a new toast notification.
 
 Type: `Promise<number>`
 
-
-
-
 ## Dependencies
 
 ### Depends on
@@ -33,12 +27,13 @@ Type: `Promise<number>`
 - [and-icon](../and-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   and-toast --> and-icon
   style and-toast fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

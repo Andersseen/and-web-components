@@ -9,5 +9,5 @@ import { ANIM_CATEGORIES } from '../data/animation-catalogue';
   template: `<app-category-demo [title]="'Sliding Animations'" [groups]="groups" />`,
 })
 export default class SlidingDemoComponent {
-  groups = ANIM_CATEGORIES.find((c) => c.id === 'sliding')!.groups;
+  groups = ANIM_CATEGORIES.find(c => c.id === 'sliding')!.groups;
 }

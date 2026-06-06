@@ -64,7 +64,7 @@ test.describe('Interactive Components', () => {
   // We will check for it just in case, or skip if not found.
   test('carousel navigates if present', async ({ page }) => {
     const carousel = page.locator('and-carousel');
-    if (await carousel.count() > 0) {
+    if ((await carousel.count()) > 0) {
       const nextButton = carousel.locator('.next-button'); // hypothetical class
       if (await nextButton.isVisible()) {
         await nextButton.click();

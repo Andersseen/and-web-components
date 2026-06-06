@@ -36,7 +36,9 @@ const Template = args => html`
 
       <and-tabs-content value="account" class="p-4 border border-t-0 border-border rounded-b-md">
         <h3 class="text-lg font-medium">Account Settings</h3>
-        <p class="text-sm text-muted-foreground mt-2">Make changes to your account here. Click save when you're done.</p>
+        <p class="text-sm text-muted-foreground mt-2">
+          Make changes to your account here. Click save when you're done.
+        </p>
       </and-tabs-content>
 
       <and-tabs-content value="password" class="p-4 border border-t-0 border-border rounded-b-md">
@@ -44,7 +46,9 @@ const Template = args => html`
         <p class="text-sm text-muted-foreground mt-2">Change your password here. After saving, you'll be logged out.</p>
       </and-tabs-content>
 
-      <and-tabs-content value="settings" class="p-4 border border-t-0 border-border rounded-b-md"> Settings Content </and-tabs-content>
+      <and-tabs-content value="settings" class="p-4 border border-t-0 border-border rounded-b-md">
+        Settings Content
+      </and-tabs-content>
     </and-tabs>
   </div>
 `;

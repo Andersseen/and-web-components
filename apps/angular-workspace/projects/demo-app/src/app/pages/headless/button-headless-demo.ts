@@ -10,26 +10,18 @@ import { createButton } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Button
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Button</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Displays a button or a component that looks like a button. Handles
-          loading states, disabled states, and accessibility automatically.
+          Displays a button or a component that looks like a button. Handles loading states, disabled states, and
+          accessibility automatically.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-wrap items-center justify-center gap-3 min-h-[160px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-wrap items-center justify-center gap-3 min-h-[160px]">
             <!-- Primary -->
             <button
               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border-0 cursor-pointer transition-colors outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-primary text-primary-foreground hover:opacity-90"
@@ -37,20 +29,8 @@ import { createButton } from '@andersseen/headless-components';
               (click)="handleClick('Primary')"
             >
               @if (loading()) {
-                <svg
-                  class="w-4 h-4 animate-spin"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    class="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
+                <svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path
                     class="opacity-75"
                     fill="currentColor"
@@ -95,18 +75,9 @@ import { createButton } from '@andersseen/headless-components';
           </div>
 
           <!-- Controls -->
-          <div
-            class="border-t border-border bg-muted px-6 py-4 flex justify-center"
-          >
-            <label
-              class="flex items-center gap-2 text-sm text-foreground cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                class="accent-primary"
-                [checked]="loading()"
-                (change)="toggleLoading()"
-              />
+          <div class="border-t border-border bg-muted px-6 py-4 flex justify-center">
+            <label class="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+              <input type="checkbox" class="accent-primary" [checked]="loading()" (change)="toggleLoading()" />
               Simulate Loading
             </label>
           </div>
@@ -115,12 +86,8 @@ import { createButton } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createButton {{ '}' }} from '@andersseen/headless-components';
@@ -142,37 +109,25 @@ btn.actions.setDisabled(true);</code></pre>
       <!-- Raw Example -->
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
 
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
-          This is the naked, unstyled behavior. It handles state logic (like
-          disabled attributes) but doesn't prescribe any look.
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
+          This is the naked, unstyled behavior. It handles state logic (like disabled attributes) but doesn't prescribe
+          any look.
         </p>
 
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           <div class="flex flex-col gap-3 max-w-[300px]">
-            <button
-              type="button"
-              [attr.disabled]="btnState().disabled ? '' : null"
-              (click)="headlessClick()"
-            >
+            <button type="button" [attr.disabled]="btnState().disabled ? '' : null" (click)="headlessClick()">
               Native Button {{ btnState().loading ? '(Loading...)' : '' }}
             </button>
 
-            <button type="button" (click)="btnActions.toggleLoading()">
-              Toggle Loading State
-            </button>
+            <button type="button" (click)="btnActions.toggleLoading()">Toggle Loading State</button>
           </div>
         </div>
       </section>
@@ -197,7 +152,7 @@ export default class ButtonHeadlessDemo {
   }
 
   toggleLoading() {
-    this.loading.update((v) => !v);
+    this.loading.update(v => !v);
   }
 
   headlessClick() {

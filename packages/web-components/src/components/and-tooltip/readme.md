@@ -1,9 +1,6 @@
 # and-tooltip
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -14,7 +11,6 @@
 | `openDelay`  | `open-delay`  | Delay in ms before showing the tooltip.                            | `number`                                 | `0`         |
 | `placement`  | `placement`   | Preferred placement of the tooltip relative to its trigger.        | `"bottom" \| "left" \| "right" \| "top"` | `'top'`     |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

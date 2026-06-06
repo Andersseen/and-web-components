@@ -21,7 +21,7 @@ describe('and-button e2e', () => {
 
     const anchor = await page.find('and-button >>> a');
     expect(anchor).not.toBeNull();
-    
+
     // Check that button doesn't exist
     const button = await page.find('and-button >>> button');
     expect(button).toBeNull();

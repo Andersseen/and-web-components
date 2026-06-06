@@ -9,5 +9,5 @@ import { ANIM_CATEGORIES } from '../data/animation-catalogue';
   template: `<app-category-demo [title]="'Back Animations'" [groups]="groups" />`,
 })
 export default class BackDemoComponent {
-  groups = ANIM_CATEGORIES.find((c) => c.id === 'back')!.groups;
+  groups = ANIM_CATEGORIES.find(c => c.id === 'back')!.groups;
 }

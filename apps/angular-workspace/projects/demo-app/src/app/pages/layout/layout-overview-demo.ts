@@ -7,12 +7,10 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="max-w-4xl mx-auto flex flex-col gap-6">
       <div class="mb-2">
-        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">
-          And Layout
-        </h1>
+        <h1 class="text-3xl font-extrabold mb-2 tracking-tight">And Layout</h1>
         <p class="text-base text-muted-foreground">
-          A pure CSS layout &amp; typography library driven entirely by HTML
-          attributes. No classes, no JavaScript — just the
+          A pure CSS layout &amp; typography library driven entirely by HTML attributes. No classes, no JavaScript —
+          just the
           <code class="text-sm bg-muted px-1.5 py-0.5 rounded font-mono">and-layout</code>
           and
           <code class="text-sm bg-muted px-1.5 py-0.5 rounded font-mono">and-text</code>
@@ -24,18 +22,16 @@ import { CommonModule } from '@angular/common';
       <section class="border border-border rounded-xl p-6 bg-card">
         <h2 class="text-xl font-bold mb-4">How It Works</h2>
         <p class="text-sm text-muted-foreground mb-4">
-          Instead of utility classes, you declare layout through space-separated
-          tokens inside a single attribute:
+          Instead of utility classes, you declare layout through space-separated tokens inside a single attribute:
         </p>
         <div class="bg-muted border border-border rounded-lg p-4 overflow-x-auto mb-4">
-          <code class="text-xs font-mono whitespace-pre">&lt;div and-layout="horizontal justify:center align:center gap:md"&gt;
-  &lt;div&gt;Item 1&lt;/div&gt;
-  &lt;div&gt;Item 2&lt;/div&gt;
-&lt;/div&gt;</code>
+          <code class="text-xs font-mono whitespace-pre"
+            >&lt;div and-layout="horizontal justify:center align:center gap:md"&gt; &lt;div&gt;Item 1&lt;/div&gt;
+            &lt;div&gt;Item 2&lt;/div&gt; &lt;/div&gt;</code
+          >
         </div>
         <p class="text-sm text-muted-foreground">
-          Each token maps to a CSS rule through attribute selectors. Responsive
-          modifiers use the
+          Each token maps to a CSS rule through attribute selectors. Responsive modifiers use the
           <code class="text-sm bg-muted px-1.5 py-0.5 rounded font-mono">&#64;breakpoint</code>
           syntax, e.g.
           <code class="text-sm bg-muted px-1.5 py-0.5 rounded font-mono">cols&#64;md:3</code>.
@@ -48,27 +44,19 @@ import { CommonModule } from '@angular/common';
         <div and-layout="grid cols:2 gap:md cols@md:3">
           <div class="border border-border rounded-lg p-4 bg-muted/50">
             <h3 class="font-semibold mb-1">Flexbox</h3>
-            <p class="text-xs text-muted-foreground">
-              horizontal / vertical, align, justify, wrap, gap
-            </p>
+            <p class="text-xs text-muted-foreground">horizontal / vertical, align, justify, wrap, gap</p>
           </div>
           <div class="border border-border rounded-lg p-4 bg-muted/50">
             <h3 class="font-semibold mb-1">Grid</h3>
-            <p class="text-xs text-muted-foreground">
-              cols, span, col-start, col-end, gap
-            </p>
+            <p class="text-xs text-muted-foreground">cols, span, col-start, col-end, gap</p>
           </div>
           <div class="border border-border rounded-lg p-4 bg-muted/50">
             <h3 class="font-semibold mb-1">Spacing</h3>
-            <p class="text-xs text-muted-foreground">
-              padding, margin with directional and axis modifiers
-            </p>
+            <p class="text-xs text-muted-foreground">padding, margin with directional and axis modifiers</p>
           </div>
           <div class="border border-border rounded-lg p-4 bg-muted/50">
             <h3 class="font-semibold mb-1">Typography</h3>
-            <p class="text-xs text-muted-foreground">
-              Headings, paragraphs, alignment, weight, color via and-text
-            </p>
+            <p class="text-xs text-muted-foreground">Headings, paragraphs, alignment, weight, color via and-text</p>
           </div>
           <div class="border border-border rounded-lg p-4 bg-muted/50">
             <h3 class="font-semibold mb-1">Responsive</h3>
@@ -78,9 +66,7 @@ import { CommonModule } from '@angular/common';
           </div>
           <div class="border border-border rounded-lg p-4 bg-muted/50">
             <h3 class="font-semibold mb-1">Zero JS</h3>
-            <p class="text-xs text-muted-foreground">
-              Pure CSS attribute selectors — works with any framework
-            </p>
+            <p class="text-xs text-muted-foreground">Pure CSS attribute selectors — works with any framework</p>
           </div>
         </div>
       </section>

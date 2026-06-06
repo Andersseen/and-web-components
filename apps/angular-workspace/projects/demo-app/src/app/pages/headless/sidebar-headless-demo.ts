@@ -10,26 +10,17 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Sidebar
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Sidebar</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          A collapsible side navigation panel with support for active items and
-          expand/collapse states.
+          A collapsible side navigation panel with support for active items and expand/collapse states.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8"
-        >
-          <div
-            class="border rounded-md bg-background flex h-96 overflow-hidden"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm p-8">
+          <div class="border rounded-md bg-background flex h-96 overflow-hidden">
             <!-- Sidebar -->
             <aside
               class="border-r border-border flex flex-col transition-all duration-300 bg-muted/20"
@@ -37,9 +28,7 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
               [class.w-16]="collapsed()"
               [attr.data-collapsed]="sidebar.queries.isCollapsed()"
             >
-              <div
-                class="h-16 flex items-center justify-between px-4 border-b border-border"
-              >
+              <div class="h-16 flex items-center justify-between px-4 border-b border-border">
                 @if (!collapsed()) {
                   <span class="font-bold truncate">My App</span>
                 }
@@ -47,9 +36,7 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
                   class="p-1 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground"
                   (click)="toggleCollapse()"
                   [attr.aria-label]="sidebar.getToggleProps()['aria-label']"
-                  [attr.aria-expanded]="
-                    sidebar.getToggleProps()['aria-expanded']
-                  "
+                  [attr.aria-expanded]="sidebar.getToggleProps()['aria-expanded']"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -77,16 +64,10 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
                     class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors"
                     [class.justify-center]="collapsed()"
                     [class.bg-accent]="sidebar.queries.isActive(item.id)"
-                    [class.text-accent-foreground]="
-                      sidebar.queries.isActive(item.id)
-                    "
-                    [class.text-muted-foreground]="
-                      !sidebar.queries.isActive(item.id)
-                    "
+                    [class.text-accent-foreground]="sidebar.queries.isActive(item.id)"
+                    [class.text-muted-foreground]="!sidebar.queries.isActive(item.id)"
                     [class.hover:bg-accent]="!sidebar.queries.isActive(item.id)"
-                    [class.hover:text-accent-foreground]="
-                      !sidebar.queries.isActive(item.id)
-                    "
+                    [class.hover:text-accent-foreground]="!sidebar.queries.isActive(item.id)"
                     (click)="setActiveItem(item.id)"
                     [attr.title]="collapsed() ? item.label : null"
                   >
@@ -121,9 +102,7 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
                     <div class="h-8 w-8 rounded-full bg-accent"></div>
                     <div class="text-xs">
                       <div class="font-medium">User Name</div>
-                      <div class="text-muted-foreground">
-                        user&#64;example.com
-                      </div>
+                      <div class="text-muted-foreground">user&#64;example.com</div>
                     </div>
                   </div>
                 } @else {
@@ -138,12 +117,8 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
                 {{ getActiveLabel() }}
               </h2>
               <div class="grid gap-4">
-                <div
-                  class="h-32 rounded-md bg-muted/20 border-2 border-dashed border-muted"
-                ></div>
-                <div
-                  class="h-64 rounded-md bg-muted/20 border-2 border-dashed border-muted"
-                ></div>
+                <div class="h-32 rounded-md bg-muted/20 border-2 border-dashed border-muted"></div>
+                <div class="h-64 rounded-md bg-muted/20 border-2 border-dashed border-muted"></div>
               </div>
             </main>
           </div>
@@ -152,12 +127,8 @@ import { createSidebar, SidebarReturn } from '@andersseen/headless-components';
 
       <!-- Usage Code -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createSidebar {{ '}' }} from '@andersseen/headless-components';
@@ -194,9 +165,9 @@ export default class SidebarHeadlessDemo {
   constructor() {
     this.sidebar = createSidebar({
       defaultActiveItem: this.activeItem(),
-      onActiveItemChange: (id) => this.activeItem.set(id),
+      onActiveItemChange: id => this.activeItem.set(id),
       defaultCollapsed: this.collapsed(),
-      onCollapsedChange: (val) => this.collapsed.set(val),
+      onCollapsedChange: val => this.collapsed.set(val),
     });
   }
 
@@ -209,8 +180,6 @@ export default class SidebarHeadlessDemo {
   }
 
   getActiveLabel() {
-    return (
-      this.items.find((i) => i.id === this.activeItem())?.label || 'Unknown'
-    );
+    return this.items.find(i => i.id === this.activeItem())?.label || 'Unknown';
   }
 }

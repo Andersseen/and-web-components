@@ -9,5 +9,5 @@ import { ANIM_CATEGORIES } from '../data/animation-catalogue';
   template: `<app-category-demo [title]="'Attention Seekers'" [groups]="groups" />`,
 })
 export default class AttentionSeekersDemoComponent {
-  groups = ANIM_CATEGORIES.find((c) => c.id === 'attention-seekers')!.groups;
+  groups = ANIM_CATEGORIES.find(c => c.id === 'attention-seekers')!.groups;
 }

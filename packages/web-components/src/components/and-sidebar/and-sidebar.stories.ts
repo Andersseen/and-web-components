@@ -23,7 +23,9 @@ export default {
 };
 
 const Template = args => html`
-  <div style="display: flex; height: 500px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: #f8fafc;">
+  <div
+    style="display: flex; height: 500px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: #f8fafc;"
+  >
     <and-sidebar
       variant=${ifDefined(args.variant)}
       ?collapsed=${args.collapsed}

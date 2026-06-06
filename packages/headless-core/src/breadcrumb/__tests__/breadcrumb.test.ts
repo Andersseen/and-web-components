@@ -12,7 +12,7 @@ describe('createBreadcrumb', () => {
   it('can explicitly set initial items', () => {
     const items = [
       { id: '1', label: 'Home', href: '/' },
-      { id: '2', label: 'Current', current: true }
+      { id: '2', label: 'Current', current: true },
     ];
     const breadcrumb = createBreadcrumb({ items, ariaLabel: 'Nav' });
     expect(breadcrumb.state.items).toEqual(items);
@@ -29,7 +29,7 @@ describe('createBreadcrumb', () => {
   it('can set current item', () => {
     const items = [
       { id: '1', label: 'Home', href: '/' },
-      { id: '2', label: 'Current' }
+      { id: '2', label: 'Current' },
     ];
     const breadcrumb = createBreadcrumb({ items });
     breadcrumb.actions.setCurrentItem('2');

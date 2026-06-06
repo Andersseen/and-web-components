@@ -8,26 +8,18 @@ import { AndPagination } from '@angular-components/stencil-generated/components'
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Pagination
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Pagination</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Navigate through pages of content. Provides clear affordances for
-          moving between data sets, tables, or result lists.
+          Navigate through pages of content. Provides clear affordances for moving between data sets, tables, or result
+          lists.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-col items-center justify-center gap-6 min-h-[160px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-col items-center justify-center gap-6 min-h-[160px]">
             <and-pagination total-pages="10" current-page="1"></and-pagination>
           </div>
         </div>
@@ -35,12 +27,8 @@ import { AndPagination } from '@angular-components/stencil-generated/components'
 
       <!-- Contextual Example -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          In Context
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">In Context</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-6">
             <!-- Simulated table -->
             <div class="border border-border rounded-lg overflow-hidden mb-6">
@@ -58,11 +46,7 @@ import { AndPagination } from '@angular-components/stencil-generated/components'
                   <span>{{ row.name }}</span>
                   <span
                     class="text-xs px-2 py-0.5 rounded-full w-fit"
-                    [class]="
-                      row.status === 'Active'
-                        ? 'bg-primary/10 text-primary'
-                        : 'bg-muted text-muted-foreground'
-                    "
+                    [class]="row.status === 'Active' ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'"
                   >
                     {{ row.status }}
                   </span>
@@ -71,10 +55,7 @@ import { AndPagination } from '@angular-components/stencil-generated/components'
               }
             </div>
             <div class="flex justify-center">
-              <and-pagination
-                total-pages="5"
-                current-page="1"
-              ></and-pagination>
+              <and-pagination total-pages="5" current-page="1"></and-pagination>
             </div>
           </div>
         </div>
@@ -82,15 +63,10 @@ import { AndPagination } from '@angular-components/stencil-generated/components'
 
       <!-- Usage Code -->
       <section>
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Template</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"

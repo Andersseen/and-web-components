@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  AndButton,
-  AndTooltip,
-} from '@angular-components/stencil-generated/components';
+import { AndButton, AndTooltip } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tooltip-demo',
@@ -11,26 +8,18 @@ import {
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Tooltip
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Tooltip</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Contextual information revealed on hover or focus. Tooltips provide
-          brief, helpful text for UI elements without cluttering the interface.
+          Contextual information revealed on hover or focus. Tooltips provide brief, helpful text for UI elements
+          without cluttering the interface.
         </p>
       </header>
 
       <!-- Preview Section -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Placements
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-wrap items-center justify-center gap-4 min-h-[180px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Placements</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-wrap items-center justify-center gap-4 min-h-[180px]">
             <and-tooltip content="Appears on top" placement="top">
               <and-button variant="outline">Top</and-button>
             </and-tooltip>
@@ -52,15 +41,9 @@ import {
 
       <!-- Real-world Examples -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Real-world Examples
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-wrap items-center justify-center gap-4 min-h-[120px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Real-world Examples</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-wrap items-center justify-center gap-4 min-h-[120px]">
             <and-tooltip content="Edit this item" placement="top">
               <and-button variant="ghost" size="icon">
                 <svg
@@ -73,12 +56,8 @@ import {
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <path
-                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                  />
-                  <path
-                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                  />
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                 </svg>
               </and-button>
             </and-tooltip>
@@ -117,9 +96,7 @@ import {
                   stroke-linejoin="round"
                 >
                   <polyline points="3 6 5 6 21 6" />
-                  <path
-                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                  />
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                 </svg>
               </and-button>
             </and-tooltip>
@@ -148,15 +125,10 @@ import {
 
       <!-- Usage Code -->
       <section>
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Template</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"

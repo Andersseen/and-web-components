@@ -175,7 +175,13 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
         label: 'Rotating Exits',
         tag: 'Rotate Out',
         color: 'from-indigo-700 to-indigo-900',
-        items: ['rotate-out', 'rotate-out-down-left', 'rotate-out-down-right', 'rotate-out-up-left', 'rotate-out-up-right'],
+        items: [
+          'rotate-out',
+          'rotate-out-down-left',
+          'rotate-out-down-right',
+          'rotate-out-up-left',
+          'rotate-out-up-right',
+        ],
       },
     ],
   },
@@ -227,4 +233,4 @@ export const ANIM_CATEGORIES: AnimCategory[] = [
 ];
 
 /** Flat list of ALL groups across every category */
-export const ALL_ANIM_GROUPS: AnimGroup[] = ANIM_CATEGORIES.flatMap((c) => c.groups);
+export const ALL_ANIM_GROUPS: AnimGroup[] = ANIM_CATEGORIES.flatMap(c => c.groups);

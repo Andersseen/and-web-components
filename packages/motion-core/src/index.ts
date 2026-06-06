@@ -5,14 +5,10 @@
  * `initMotion()` function for drop-in backwards compatibility.
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-export {
-  MotionController,
-  type MotionControllerOptions,
-  type TriggerType,
-} from "./motion-controller";
+export { MotionController, type MotionControllerOptions, type TriggerType } from './motion-controller';
 
-import { MotionController } from "./motion-controller";
-import type { MotionControllerOptions } from "./motion-controller";
+import { MotionController } from './motion-controller';
+import type { MotionControllerOptions } from './motion-controller';
 
 /**
  * One-liner convenience function.
@@ -28,10 +24,7 @@ import type { MotionControllerOptions } from "./motion-controller";
  * cleanup();
  * ```
  */
-export function initMotion(
-  options?: MotionControllerOptions,
-): () => void {
+export function initMotion(options?: MotionControllerOptions): () => void {
   const controller = new MotionController(options);
   return () => controller.destroy();
 }
-

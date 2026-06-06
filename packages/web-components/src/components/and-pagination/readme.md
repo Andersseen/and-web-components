@@ -1,9 +1,6 @@
 # and-pagination
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -12,13 +9,11 @@
 | `currentPage` | `current-page` | Current active page (1-based). | `number` | `1`     |
 | `totalPages`  | `total-pages`  | Total number of pages.         | `number` | `1`     |
 
-
 ## Events
 
 | Event           | Description                    | Type                  |
 | --------------- | ------------------------------ | --------------------- |
 | `andPageChange` | Emitted when the page changes. | `CustomEvent<number>` |
-
 
 ## Dependencies
 
@@ -27,12 +22,13 @@
 - [and-icon](../and-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   and-pagination --> and-icon
   style and-pagination fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

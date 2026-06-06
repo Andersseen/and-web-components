@@ -12,7 +12,9 @@
       "@andersseen/web-components/components/*": [
         "../../node_modules/@andersseen/web-components/dist/components/*"
       ],
-      "@andersseen/web-components": ["../../node_modules/@andersseen/web-components/dist/types/index.d.ts"]
+      "@andersseen/web-components": [
+        "../../node_modules/@andersseen/web-components/dist/types/index.d.ts"
+      ]
     }
   },
   "include": [

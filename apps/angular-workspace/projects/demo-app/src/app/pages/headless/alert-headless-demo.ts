@@ -9,19 +9,15 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-components'
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Alert
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Alert</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Displays a callout for user attention. Manages variants, dismissible
-          state, and ARIA alert/status semantics based on urgency.
+          Displays a callout for user attention. Manages variants, dismissible state, and ARIA alert/status semantics
+          based on urgency.
         </p>
       </header>
 
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Preview
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
         <div class="rounded-xl border border-border bg-card shadow-sm">
           <div class="p-8">
             <div class="flex flex-col gap-3">
@@ -32,11 +28,7 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-components'
                       'flex items-start gap-3 p-4 rounded-lg border text-sm animate-fade-in ' +
                       getVariantClasses(a.variant)
                     "
-                    [attr.role]="
-                      a.variant === 'destructive' || a.variant === 'warning'
-                        ? 'alert'
-                        : 'status'
-                    "
+                    [attr.role]="a.variant === 'destructive' || a.variant === 'warning' ? 'alert' : 'status'"
                   >
                     <div class="text-lg shrink-0 mt-0.5">{{ a.icon }}</div>
                     <div class="flex-1">
@@ -67,12 +59,8 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-components'
       </section>
 
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
-        <div
-          class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm"
-        >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
+        <div class="rounded-xl bg-primary-950 border border-primary-900 overflow-x-auto shadow-sm">
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-primary-200"
           ><code>import {{ '{' }} createAlert {{ '}' }} from '@andersseen/headless-components';
@@ -95,22 +83,16 @@ alert.actions.setVariant('success');</code></pre>
 
       <section class="mb-12">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">
-            Headless Implementation
-          </h2>
+          <h2 class="text-xl font-semibold tracking-tight text-foreground m-0">Headless Implementation</h2>
           <span
             class="text-[11px] font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground border border-border tracking-wide"
             >Zero Styles</span
           >
         </div>
-        <p
-          class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6"
-        >
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed mb-6">
           The headless core manages variant, visibility, and ARIA semantics.
         </p>
-        <div
-          class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30"
-        >
+        <div class="rounded-xl border-2 border-dashed border-border p-8 bg-muted/30">
           @if (rawVisible()) {
             <div
               role="alert"
@@ -216,7 +198,7 @@ export default class AlertHeadlessDemo {
   }
 
   resetAll() {
-    this.alerts.forEach((a) => a.instance.actions.show());
+    this.alerts.forEach(a => a.instance.actions.show());
   }
 
   dismissRaw() {

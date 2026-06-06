@@ -1,11 +1,11 @@
-@import "tailwindcss";
-@import "@fontsource/inter";
-@import "@andersseen/web-components/dist/web-components/web-components.css";
-@import "@andersseen/layout/dist/layout.css";
-@import "@andersseen/motion/style.css";
+@import 'tailwindcss';
+@import '@fontsource/inter';
+@import '@andersseen/web-components/dist/web-components/web-components.css';
+@import '@andersseen/layout/dist/layout.css';
+@import '@andersseen/motion/style.css';
 
 @theme {
-  --font-sans: var(--font-family, "Inter", sans-serif);
+  --font-sans: var(--font-family, 'Inter', sans-serif);
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -93,7 +93,7 @@
 
 body {
   margin: 0;
-  font-family: var(--font-family, "Inter", sans-serif);
+  font-family: var(--font-family, 'Inter', sans-serif);
 }
 
 /* Icons Grid */

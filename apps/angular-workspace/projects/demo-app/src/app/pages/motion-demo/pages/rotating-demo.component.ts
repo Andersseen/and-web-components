@@ -9,5 +9,5 @@ import { ANIM_CATEGORIES } from '../data/animation-catalogue';
   template: `<app-category-demo [title]="'Rotating Animations'" [groups]="groups" />`,
 })
 export default class RotatingDemoComponent {
-  groups = ANIM_CATEGORIES.find((c) => c.id === 'rotating')!.groups;
+  groups = ANIM_CATEGORIES.find(c => c.id === 'rotating')!.groups;
 }

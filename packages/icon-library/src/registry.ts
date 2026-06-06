@@ -1,7 +1,5 @@
 const getGlobalRegistry = (): Map<string, string> => {
-  const globalObject = (
-    typeof window !== "undefined" ? window : globalThis
-  ) as any;
+  const globalObject = (typeof window !== 'undefined' ? window : globalThis) as any;
   if (!globalObject.__AND_ICONS_REGISTRY__) {
     globalObject.__AND_ICONS_REGISTRY__ = new Map<string, string>();
   }

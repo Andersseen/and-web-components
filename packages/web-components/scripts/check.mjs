@@ -6,7 +6,9 @@ import puppeteer from 'puppeteer';
 
   page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 
-  await page.goto('http://localhost:6006/iframe.html?id=components-accordion--default&viewMode=story', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:6006/iframe.html?id=components-accordion--default&viewMode=story', {
+    waitUntil: 'networkidle0',
+  });
 
   const results = await page.evaluate(() => {
     let hasHiddenClass = false;

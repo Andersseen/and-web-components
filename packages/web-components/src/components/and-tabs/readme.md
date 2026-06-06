@@ -1,9 +1,6 @@
 # and-tabs-trigger
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -14,14 +11,12 @@
 | `tabsLogic` | --         | Reference to the parent tabs headless logic (set by parent). | `TabsReturn` | `undefined` |
 | `value`     | `value`    | The value that identifies this tab.                          | `string`     | `undefined` |
 
-
 ## Events
 
 | Event             | Description                           | Type                  |
 | ----------------- | ------------------------------------- | --------------------- |
 | `tabTriggerClick` | Emitted when this trigger is clicked. | `CustomEvent<string>` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -17,7 +17,12 @@ export default {
 
 const Template = args => html`
   <div style="max-width: 600px; padding: 20px;">
-    <and-carousel ?autoplay=${args.autoplay} interval=${args.interval} label=${args.label} @andSlideChange=${e => console.log('Slide changed to:', e.detail)}>
+    <and-carousel
+      ?autoplay=${args.autoplay}
+      interval=${args.interval}
+      label=${args.label}
+      @andSlideChange=${e => console.log('Slide changed to:', e.detail)}
+    >
       <and-carousel-item>
         <div class="flex aspect-video items-center justify-center bg-muted">
           <span class="text-4xl font-semibold">1</span>

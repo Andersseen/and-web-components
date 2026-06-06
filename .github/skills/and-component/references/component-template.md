@@ -1,6 +1,7 @@
 # Component Scaffold — Andersseen Web Components
 
-Full TSX boilerplate. Copy, rename all `[name]`/`[Name]` placeholders, then implement.
+Full TSX boilerplate. Copy, rename all `[name]`/`[Name]` placeholders, then
+implement.
 
 ## `and-[name].types.ts`
 
@@ -265,20 +266,20 @@ export class And[Name] {
 ## `and-[name].stories.ts`
 
 ```ts
-import type { Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit";
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit';
 
 const meta: Meta = {
-  title: "Components/[Name]",
-  component: "and-[name]",
-  tags: ["autodocs"],
+  title: 'Components/[Name]',
+  component: 'and-[name]',
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["default", "secondary", "outline", "ghost", "destructive"],
+      control: 'select',
+      options: ['default', 'secondary', 'outline', 'ghost', 'destructive'],
     },
-    size: { control: "select", options: ["sm", "md", "lg"] },
-    disabled: { control: "boolean" },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
   },
 };
 export default meta;
@@ -286,8 +287,8 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  args: { variant: "default", size: "md", disabled: false },
-  render: (args) => html`
+  args: { variant: 'default', size: 'md', disabled: false },
+  render: args => html`
     <and-[name]
       variant=${args.variant}
       size=${args.size}

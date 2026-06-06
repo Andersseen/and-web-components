@@ -8,26 +8,18 @@ import { AndButton } from '@angular-components/stencil-generated/components';
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
       <header class="mb-10 border-b border-border pb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">
-          Button
-        </h1>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Button</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Interactive button component with multiple variants, sizes, and
-          states. Designed for consistent interactions across your application.
+          Interactive button component with multiple variants, sizes, and states. Designed for consistent interactions
+          across your application.
         </p>
       </header>
 
       <!-- Variants Preview -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Variants
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-wrap items-center justify-center gap-3 min-h-[160px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Variants</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-wrap items-center justify-center gap-3 min-h-[160px]">
             <and-button variant="default">Default</and-button>
             <and-button variant="destructive">Destructive</and-button>
             <and-button variant="outline">Outline</and-button>
@@ -40,15 +32,9 @@ import { AndButton } from '@angular-components/stencil-generated/components';
 
       <!-- Sizes Preview -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Sizes
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-wrap items-center justify-center gap-4 min-h-[120px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Sizes</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-wrap items-center justify-center gap-4 min-h-[120px]">
             <and-button size="sm">Small</and-button>
             <and-button size="default">Default</and-button>
             <and-button size="lg">Large</and-button>
@@ -74,32 +60,17 @@ import { AndButton } from '@angular-components/stencil-generated/components';
 
       <!-- Interactive -->
       <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Interactive
-        </h2>
-        <div
-          class="rounded-xl border border-border bg-card overflow-hidden shadow-sm"
-        >
-          <div
-            class="p-10 flex flex-col items-center justify-center gap-4 min-h-[140px]"
-          >
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Interactive</h2>
+        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div class="p-10 flex flex-col items-center justify-center gap-4 min-h-[140px]">
             <div class="flex gap-3">
-              <and-button
-                variant="default"
-                (click)="handleClick()"
-              >
-                Click Me
-              </and-button>
-              <and-button variant="outline" (click)="resetCount()">
-                Reset
-              </and-button>
+              <and-button variant="default" (click)="handleClick()"> Click Me </and-button>
+              <and-button variant="outline" (click)="resetCount()"> Reset </and-button>
             </div>
             @if (clickCount() > 0) {
               <p class="text-sm text-muted-foreground m-0">
                 Clicked
-                <span class="font-semibold text-foreground">{{
-                  clickCount()
-                }}</span>
+                <span class="font-semibold text-foreground">{{ clickCount() }}</span>
                 {{ clickCount() === 1 ? 'time' : 'times' }}
               </p>
             }
@@ -109,15 +80,10 @@ import { AndButton } from '@angular-components/stencil-generated/components';
 
       <!-- Usage Code -->
       <section>
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">
-          Usage
-        </h2>
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
         <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
           <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span
-              class="text-xs font-medium text-muted-foreground tracking-wide uppercase"
-              >Template</span
-            >
+            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
           </div>
           <pre
             class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
@@ -143,7 +109,7 @@ export default class ButtonDemo {
   clickCount = signal(0);
 
   handleClick() {
-    this.clickCount.update((c) => c + 1);
+    this.clickCount.update(c => c + 1);
   }
 
   resetCount() {

@@ -15,7 +15,11 @@ export default {
 
 const Template = args => html`
   <div style="padding: 20px;">
-    <and-pagination total-pages=${args.totalPages} current-page=${args.currentPage} @andPageChange=${e => console.log('Page changed to:', e.detail)}></and-pagination>
+    <and-pagination
+      total-pages=${args.totalPages}
+      current-page=${args.currentPage}
+      @andPageChange=${e => console.log('Page changed to:', e.detail)}
+    ></and-pagination>
   </div>
 `;
 

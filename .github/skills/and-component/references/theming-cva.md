@@ -81,13 +81,13 @@ These are what components use. **Never use primitives or raw Tailwind colors.**
 
 ```css
 /* Light mode (default) */
-@import "@andersseen/web-components/themes/default.css";
+@import '@andersseen/web-components/themes/default.css';
 
 /* Specific palette + base */
-@import "@andersseen/web-components/themes/emerald-dark.css";
+@import '@andersseen/web-components/themes/emerald-dark.css';
 
 /* Bring your own tokens */
-@import "@andersseen/web-components/themes/base.css";
+@import '@andersseen/web-components/themes/base.css';
 ```
 
 ### Runtime Palette / Mode Switching
@@ -111,8 +111,8 @@ Tokens automatically respond to:
 
 ### When to Use
 
-CVA is **mandatory** for any component with 2+ visual variants.
-Import from `class-variance-authority`.
+CVA is **mandatory** for any component with 2+ visual variants. Import from
+`class-variance-authority`.
 
 ### Basic Pattern
 
@@ -192,27 +192,27 @@ Used when a combination of variants needs special treatment:
 
 ```tsx
 const menuItemVariants = cva(
-  "flex items-center w-full cursor-pointer select-none outline-none" +
-    " transition-colors focus:bg-[--[name]-item-focus-bg]",
+  'flex items-center w-full cursor-pointer select-none outline-none' +
+    ' transition-colors focus:bg-[--[name]-item-focus-bg]',
   {
     variants: {
       variant: {
-        default: "text-[hsl(var(--and-foreground))]",
-        destructive: "text-[--[name]-item-destructive-color]",
+        default: 'text-[hsl(var(--and-foreground))]',
+        destructive: 'text-[--[name]-item-destructive-color]',
       },
       inset: {
-        true: "pl-8",
-        false: "",
+        true: 'pl-8',
+        false: '',
       },
     },
     compoundVariants: [
       {
-        variant: "destructive",
+        variant: 'destructive',
         inset: false,
-        class: "focus:bg-[hsl(var(--and-destructive)/0.1)]",
+        class: 'focus:bg-[hsl(var(--and-destructive)/0.1)]',
       },
     ],
-    defaultVariants: { variant: "default", inset: false },
+    defaultVariants: { variant: 'default', inset: false },
   },
 );
 ```
@@ -223,15 +223,15 @@ Reference component-scoped tokens in Tailwind classes using bracket notation:
 
 ```tsx
 // ✅ Component-scoped CSS var
-"min-w-[--dropdown-min-width]";
-"max-h-[--dropdown-max-height]";
-"rounded-[--dropdown-radius]";
-"shadow-[--dropdown-shadow]";
+'min-w-[--dropdown-min-width]';
+'max-h-[--dropdown-max-height]';
+'rounded-[--dropdown-radius]';
+'shadow-[--dropdown-shadow]';
 
 // ✅ Semantic token (always via hsl())
-"bg-[hsl(var(--and-surface-elevated))]";
-"text-[hsl(var(--and-foreground))]";
-"border-[hsl(var(--and-border))]";
+'bg-[hsl(var(--and-surface-elevated))]';
+'text-[hsl(var(--and-foreground))]';
+'border-[hsl(var(--and-border))]';
 ```
 
 ---
