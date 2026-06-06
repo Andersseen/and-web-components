@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+dist-cjs/
+www/
+loader/
+storybook-static/
+
+# Angular
+.angular/
+
+# Generated files
+packages/web-components/src/components/*/readme.md
+packages/web-components/custom-elements.json
+apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/
+pnpm-lock.yaml
+
+# Logs
+*.log

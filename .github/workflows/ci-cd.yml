@@ -51,6 +51,8 @@ jobs:
             packages/*/dist-cjs/
             apps/angular-workspace/dist/
             packages/web-components/www/
+            packages/web-components/loader/
+            packages/web-components/custom-elements.json
           retention-days: 1
 
   # Job 2: Deploy Storybook
