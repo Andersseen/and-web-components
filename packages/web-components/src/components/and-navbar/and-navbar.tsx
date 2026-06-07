@@ -918,7 +918,7 @@ export class AndNavbar {
             <slot name="mobile-title">Menu</slot>
           </span>
 
-          <nav class="mobile-menu-content">
+          <nav class="mobile-menu-content" {...this.navbar.getMobileMenuProps()}>
             {/* Items-based mobile menu */}
             {renderMobileItems && items.map(item => this.renderNavItem(item, true))}
 

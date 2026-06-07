@@ -52,6 +52,7 @@ export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
   tag: 'and-button',
   styleUrls: ['and-button.css', '../../global/component-base.css'],
   shadow: true,
+  delegatesFocus: true,
 })
 export class AndButton {
   @Element() el: HTMLElement;
@@ -89,11 +90,25 @@ export class AndButton {
   @State() private renderTick = 0;
   private buttonLogic: ButtonReturn;
   private unsubscribe: () => void;
+  private hostRole: string | null = null;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
     const ariaLabel = this.el.getAttribute('aria-label') || undefined;
+
+    // Prevent nested interactive elements: if the host has an explicit
+    // ARIA role, forward it to the inner button/anchor and remove it
+    // from the host so only one interactive surface exists.
+    this.hostRole = this.el.getAttribute('role');
+    if (this.hostRole) {
+      this.el.removeAttribute('role');
+    }
+    // Also remove any tabindex from the host to avoid duplicate
+    // focusable elements (the inner button already manages focus).
+    if (this.el.hasAttribute('tabindex')) {
+      this.el.removeAttribute('tabindex');
+    }
 
     this.buttonLogic = createButton({
       disabled: this.disabled,
@@ -147,6 +162,7 @@ export class AndButton {
           class={classes}
           aria-disabled={this.disabled ? 'true' : undefined}
           tabindex={this.disabled ? '-1' : undefined}
+          role={this.hostRole || undefined}
         >
           {content}
         </a>
@@ -154,7 +170,12 @@ export class AndButton {
     }
 
     return (
-      <button {...props} onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)} class={classes}>
+      <button
+        {...props}
+        onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)}
+        class={classes}
+        role={this.hostRole || undefined}
+      >
         {content}
       </button>
     );

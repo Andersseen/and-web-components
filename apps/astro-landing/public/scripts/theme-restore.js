@@ -13,7 +13,7 @@
   try {
     const savedMode = localStorage.getItem(modeKey);
     const savedTheme = localStorage.getItem(themeKey) || 'default';
-    const savedColor = localStorage.getItem(colorKey) || 'indigo-rose';
+    const savedColor = localStorage.getItem(colorKey) || 'warm-gold';
     const mode = savedMode === 'light' || savedMode === 'dark' ? savedMode : getSystemMode();
 
     root.classList.toggle('dark', mode === 'dark');
@@ -26,7 +26,7 @@
     }
   } catch {
     root.classList.toggle('dark', getSystemMode() === 'dark');
-    root.setAttribute('data-color', 'indigo-rose');
+    root.setAttribute('data-color', 'warm-gold');
     root.removeAttribute('data-theme');
   }
 })();

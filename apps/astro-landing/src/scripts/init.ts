@@ -40,7 +40,7 @@ const THEME_STORAGE_KEYS = {
 
 const THEME_DEFAULTS = {
   theme: 'default',
-  color: 'indigo-rose',
+  color: 'warm-gold',
 } as const;
 
 const getSystemMode = (): Mode => (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
