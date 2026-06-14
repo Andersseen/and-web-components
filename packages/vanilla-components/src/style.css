@@ -1,0 +1,55 @@
+/* @andersseen/vanilla-components — base styles
+ *
+ * Optional minimal stylesheet for the vanilla custom elements.
+ * Consumers can also import @andersseen/motion/style.css for animations.
+ */
+
+and-button {
+  display: inline-flex;
+}
+
+and-modal {
+  display: contents;
+}
+
+.and-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+.and-modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 51;
+  min-width: 20rem;
+  max-width: 90vw;
+}
+
+.and-accordion-item {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.and-accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.and-accordion-content {
+  overflow: hidden;
+  transition: height 200ms ease;
+}

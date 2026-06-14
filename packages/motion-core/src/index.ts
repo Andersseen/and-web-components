@@ -6,6 +6,7 @@
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 export { MotionController, type MotionControllerOptions, type TriggerType } from './motion-controller';
+export { createMotionPlayer, type MotionPlayer, type MotionPlayerOptions } from './motion-player';
 
 import { MotionController } from './motion-controller';
 import type { MotionControllerOptions } from './motion-controller';

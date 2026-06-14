@@ -1,9 +1,10 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch, Element } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch, Element, State } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { createModal, type ModalReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
-import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import { applyGlobalAnimationFlag, isAnimationsEnabled } from '../../utils/animation-config';
 import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
+import { createOpenCloseAnimation } from '../../utils/animation';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -41,22 +42,49 @@ export class AndModal {
   /** Whether the modal is open. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
+  /** Whether to animate the modal entrance and exit. */
+  @Prop({ reflect: true }) animated: boolean = false;
+
   /** Emitted when the modal is closed. */
   @Event({ bubbles: true, composed: true }) andClose: EventEmitter<void>;
 
+  @State() private isClosing = false;
+
   private modalLogic: ModalReturn;
   private previouslyFocused: Element | null = null;
+  private animation = createOpenCloseAnimation(
+    () => this.el.shadowRoot?.querySelector<HTMLElement>('.and-modal-content') ?? null,
+    'modal',
+    {
+      onExitEnd: () => {
+        this.isClosing = false;
+        this.open = false;
+        this.andClose.emit();
+      },
+    },
+  );
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
     applyGlobalAnimationFlag(this.el);
+    if (isAnimationsEnabled()) {
+      this.animated = true;
+    }
     this.modalLogic = createModal({
       defaultOpen: this.open,
       onOpenChange: (isOpen: boolean) => {
-        this.open = isOpen;
-        if (!isOpen) {
-          this.andClose.emit();
+        if (isOpen === this.open) {
+          return;
+        }
+        if (this.animated && !isOpen) {
+          this.isClosing = true;
+          void this.animation.exit();
+        } else {
+          this.open = isOpen;
+          if (!isOpen) {
+            this.andClose.emit();
+          }
         }
       },
     });
@@ -76,9 +104,17 @@ export class AndModal {
       this.modalLogic.actions.open();
       // Wait for render before trapping focus
       requestAnimationFrame(() => this.trapFocus());
+      if (this.animated) {
+        requestAnimationFrame(() => void this.animation.enter());
+      }
     } else {
-      this.modalLogic.actions.close();
-      this.restoreFocus();
+      if (this.animated) {
+        this.isClosing = true;
+        void this.animation.exit();
+      } else {
+        this.modalLogic.actions.close();
+        this.restoreFocus();
+      }
     }
   }
 
@@ -127,22 +163,28 @@ export class AndModal {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    if (!this.open) {
+    if (!this.open && !this.isClosing) {
       return <Host />;
     }
 
     const overlayProps = this.modalLogic.getOverlayProps();
     const contentProps = this.modalLogic.getContentProps();
     const closeButtonProps = this.modalLogic.getCloseButtonProps();
+    const state = this.isClosing ? 'closed' : 'open';
 
     return (
-      <Host>
+      <Host animated={this.animated}>
         {/* Backdrop */}
-        <div class={overlayClass} {...overlayProps} onClick={() => this.modalLogic.handleOverlayClick()} />
+        <div
+          class={overlayClass}
+          {...overlayProps}
+          onClick={() => this.modalLogic.handleOverlayClick()}
+          data-state={state}
+        />
 
         {/* Modal Container */}
         <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
-          <div class={cn(contentVariants())} data-state="open" {...contentProps}>
+          <div class={cn(contentVariants())} data-state={state} {...contentProps}>
             <div class="flex flex-col gap-4">
               <slot />
               <button class={closeButtonClass} onClick={() => this.modalLogic.actions.close()} {...closeButtonProps}>
