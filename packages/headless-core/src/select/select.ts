@@ -85,7 +85,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
   let options = config.options ?? [];
 
   const findIndex = (value: string | null) => {
-    if (value === null) return -1;
+    if (value === null) {
+      return -1;
+    }
     return options.findIndex(o => o.value === value);
   };
 
@@ -132,7 +134,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
     for (let i = 0; i < len; i++) {
       const idx = (start + i) % len;
       const option = options[idx];
-      if (option.disabled) continue;
+      if (option.disabled) {
+        continue;
+      }
       if (option.text.toLowerCase().startsWith(searchQuery)) {
         store.setState({ highlightedIndex: idx });
         return;
@@ -142,7 +146,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
     // If no match from cursor, search from beginning
     for (let i = 0; i < len; i++) {
       const option = options[i];
-      if (option.disabled) continue;
+      if (option.disabled) {
+        continue;
+      }
       if (option.text.toLowerCase().startsWith(searchQuery)) {
         store.setState({ highlightedIndex: i });
         return;
@@ -162,8 +168,12 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
     const len = options.length;
 
     for (let i = 0; i < len; i++) {
-      if (index >= len) index = 0;
-      if (index < 0) index = len - 1;
+      if (index >= len) {
+        index = 0;
+      }
+      if (index < 0) {
+        index = len - 1;
+      }
 
       if (!options[index].disabled) {
         store.setState({ highlightedIndex: index });
@@ -176,13 +186,17 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
   };
 
   const highlightNext = () => {
-    if (options.length === 0) return;
+    if (options.length === 0) {
+      return;
+    }
     const start = store.state.highlightedIndex >= 0 ? store.state.highlightedIndex : -1;
     highlightTo(start + 1, 1);
   };
 
   const highlightPrev = () => {
-    if (options.length === 0) return;
+    if (options.length === 0) {
+      return;
+    }
     const start = store.state.highlightedIndex >= 0 ? store.state.highlightedIndex : options.length;
     highlightTo(start - 1, -1);
   };
@@ -194,8 +208,12 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
 
   const selectIndex = (index: number) => {
     const option = options[index];
-    if (!option || option.disabled) return;
-    if (store.state.selectedValue === option.value) return;
+    if (!option || option.disabled) {
+      return;
+    }
+    if (store.state.selectedValue === option.value) {
+      return;
+    }
     store.setState({ selectedValue: option.value, highlightedIndex: index });
     config.onValueChange?.(option.value);
   };
@@ -211,7 +229,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
 
   const selectValue = (value: string) => {
     const idx = findIndex(value);
-    if (idx >= 0) selectIndex(idx);
+    if (idx >= 0) {
+      selectIndex(idx);
+    }
   };
 
   /* ── Open / Close ──────────────────────────────────────────────── */
@@ -219,7 +239,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
   const notifyOpen = () => config.onOpenChange?.(store.state.isOpen);
 
   const open = () => {
-    if (store.state.disabled || store.state.isOpen) return;
+    if (store.state.disabled || store.state.isOpen) {
+      return;
+    }
     const idx = findIndex(store.state.selectedValue);
     const nextIndex = idx >= 0 ? idx : options.findIndex(o => !o.disabled);
     store.setState({ isOpen: true, highlightedIndex: nextIndex >= 0 ? nextIndex : -1 });
@@ -227,19 +249,29 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
   };
 
   const close = () => {
-    if (!store.state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
     store.setState({ isOpen: false });
     resetSearch();
     notifyOpen();
   };
 
-  const toggle = () => (store.state.isOpen ? close() : open());
+  const toggle = () => {
+    if (store.state.isOpen) {
+      close();
+    } else {
+      open();
+    }
+  };
 
   /* ── Actions ───────────────────────────────────────────────────── */
 
   const setDisabled = (disabled: boolean) => {
     store.setState({ disabled });
-    if (disabled && store.state.isOpen) close();
+    if (disabled && store.state.isOpen) {
+      close();
+    }
   };
 
   const setOptions = (nextOptions: SelectOption[]) => {
@@ -290,7 +322,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
   /* ── Keyboard handlers ─────────────────────────────────────────── */
 
   const handleTriggerKeyDown = (event: KeyboardEvent) => {
-    if (store.state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
     const { key } = event;
 
     switch (key) {
@@ -315,7 +349,9 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
   };
 
   const handleMenuKeyDown = (event: KeyboardEvent) => {
-    if (!store.state.isOpen) return;
+    if (!store.state.isOpen) {
+      return;
+    }
     const { key, altKey } = event;
 
     switch (key) {

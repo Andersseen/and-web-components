@@ -202,7 +202,11 @@ export function createDrawer(config: DrawerConfig = {}): DrawerReturn {
       return;
     }
 
-    store.state.isOpen ? close() : open();
+    if (store.state.isOpen) {
+      close();
+    } else {
+      open();
+    }
   };
 
   const setPlacement = (placement: DrawerPlacement): void => {

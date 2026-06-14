@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-components';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -114,6 +115,8 @@ export class AndDrawer {
   /** Guard against stale rAF callbacks from rapid open/close toggling. */
   private openSeq: number = 0;
 
+  private previouslyFocused: Element | null = null;
+
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
@@ -162,12 +165,17 @@ export class AndDrawer {
 
       // Phase 2 — re-enable the transition and open.
       this.skipTransition = false;
+      this.previouslyFocused = document.activeElement;
       this.drawer.actions.open();
+
+      // Focus the first focusable element once the panel is visible.
+      requestAnimationFrame(() => focusFirst(this.getTrapRoot()));
     } else {
       // Close: always animate.
       this.openSeq++;
       this.skipTransition = false;
       this.drawer.actions.close();
+      this.restoreFocus();
     }
   }
 
@@ -182,11 +190,30 @@ export class AndDrawer {
     }
   }
 
+  /* ── Focus Trap ─────────────────────────────────────────────────── */
+
+  private getTrapRoot(): HTMLElement | ShadowRoot {
+    return this.el.shadowRoot ?? this.el;
+  }
+
+  private restoreFocus() {
+    if (this.previouslyFocused instanceof HTMLElement) {
+      this.previouslyFocused.focus();
+      this.previouslyFocused = null;
+    }
+  }
+
   /* ── Keyboard ───────────────────────────────────────────────────── */
 
   @Listen('keydown', { target: 'window' })
   handleKeyDown(ev: KeyboardEvent) {
     this.drawer.handleKeyDown(ev);
+
+    if (!this.isOpen) {
+      return;
+    }
+
+    handleTabInFocusTrap(ev, this.getTrapRoot());
   }
 
   /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
@@ -196,6 +223,7 @@ export class AndDrawer {
     if (this.open) {
       this.drawer.actions.close();
       document.body.style.overflow = '';
+      this.restoreFocus();
     }
   }
 

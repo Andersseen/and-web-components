@@ -13,12 +13,16 @@ headless-core    →  Pure TypeScript state machines & a11y logic (no UI)
 web-components   →  StencilJS custom elements that consume headless-core
      ↓
 angular-components → Auto-generated Angular wrappers (via Stencil output target)
+
+headless-core    →  Pure TypeScript state machines & a11y logic (no UI)
+     ↓
+vanilla-components → Native Custom Elements that consume headless-core + motion-core
 ```
 
 Satellite packages (used by all layers):
 
 - `icon-library` — SVG icon registry with tree-shaking
-- `motion-core` — Attribute-driven animation system
+- `motion-core` — Attribute-driven animation system + imperative `MotionPlayer`
 - `layout-core` — CSS layout primitives compiled from SCSS
 
 ## Golden Rules
@@ -126,23 +130,27 @@ Dependencies must build in this order:
 
 1. `headless-core`
 2. `icon-library`
-3. `web-components` (depends on 1 and 2)
-4. `motion-core`
-5. `layout-core`
-6. `angular-workspace` (depends on 3, 4, 5)
+3. `motion-core`
+4. `web-components` (depends on 1, 2 and 3)
+5. `vanilla-components` (depends on 1 and 3)
+6. `layout-core`
+7. `angular-workspace` (depends on 3, 4, 5, 6)
 
 Use `pnpm build:all` from root to build everything.
 
 ## Testing
 
 - **Headless tests**: `pnpm test:headless` (Vitest)
-- **Stencil unit tests**: `pnpm -C packages/web-components test:spec` (Jest via
-  Stencil)
+- **Stencil unit tests**: `pnpm -C packages/web-components test:spec`
+- **Vanilla component tests**: `pnpm -C packages/vanilla-components test`
+  (Vitest)
+- **Motion tests**: `pnpm -C packages/motion-core test` (Vitest)
 - **Stencil e2e tests**: `pnpm -C packages/web-components test` (Puppeteer —
   deprecated in Stencil v5)
 
 If you add a new headless component, you **must** add Vitest tests. If you add a
-new Stencil component, add at least a `.spec.tsx` file.
+new Stencil component, add at least a `.spec.tsx` file. If you add a new vanilla
+component, add a Vitest test in `packages/vanilla-components/src/components/`.
 
 ## Publishing
 
@@ -153,6 +161,31 @@ pnpm changeset   # select changed packages
 pnpm version-packages
 pnpm release
 ```
+
+## Animation
+
+`packages/motion-core` provides two APIs:
+
+- `MotionController` — attribute-driven animations triggered by scroll, hover or
+  tap (`and-motion`, `and-motion-trigger`).
+- `createMotionPlayer(element)` — imperative player for component-level
+  open/close animations (modal, drawer, toast, accordion, etc.). Use it from
+  `web-components` or `vanilla-components` when you need to play an animation
+  programmatically.
+
+When adding an `animated` prop to a Stencil component, wire it through
+`packages/web-components/src/utils/animation.ts` and keep the DOM present while
+exit animations run (use an `isClosing` flag).
+
+## Adding a Vanilla Component
+
+Location: `packages/vanilla-components/src/components/vanilla-<name>.ts`
+
+- Consume `@andersseen/headless-components` for state and a11y props.
+- Use `@andersseen/motion` for animations via `createMotionPlayer`.
+- Keep the public API surface small: expose attributes/props/events that match
+  the equivalent Stencil component when one exists.
+- Add a Vitest test next to the component file.
 
 ## Common Mistakes to Avoid
 
@@ -169,12 +202,13 @@ pnpm release
 
 ## Package Boundaries
 
-| Package             | Can depend on                                  |
-| ------------------- | ---------------------------------------------- |
-| `headless-core`     | Nothing in this repo (only dev deps)           |
-| `icon-library`      | Nothing in this repo                           |
-| `motion-core`       | Nothing in this repo                           |
-| `layout-core`       | Nothing in this repo                           |
-| `web-components`    | `headless-core`, `icon-library`, `motion-core` |
-| `angular-workspace` | All `packages/*`                               |
-| `astro-landing`     | All `packages/*`                               |
+| Package              | Can depend on                                  |
+| -------------------- | ---------------------------------------------- |
+| `headless-core`      | Nothing in this repo (only dev deps)           |
+| `icon-library`       | Nothing in this repo                           |
+| `motion-core`        | Nothing in this repo                           |
+| `layout-core`        | Nothing in this repo                           |
+| `web-components`     | `headless-core`, `icon-library`, `motion-core` |
+| `vanilla-components` | `headless-core`, `motion-core`                 |
+| `angular-workspace`  | All `packages/*`                               |
+| `astro-landing`      | All `packages/*`                               |

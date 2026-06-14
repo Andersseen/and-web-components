@@ -126,6 +126,18 @@ export interface NavbarConfig {
    * @default 'prefix'
    */
   routeMatchMode?: 'exact' | 'prefix';
+
+  /**
+   * Optional adapter to resolve an element from a hash href (e.g. '#section').
+   * Keeps the headless core free of direct DOM queries.
+   */
+  getElementByHash?: (hash: string) => Element | null;
+
+  /**
+   * Optional adapter to read the current location (hash/pathname).
+   * Keeps the headless core free of direct `window.location` access.
+   */
+  getLocation?: () => { hash: string; pathname: string };
 }
 
 // ─── State ──────────────────────────────────────────────────────────
@@ -432,11 +444,14 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
   /**
    * Scroll-spy: iterate href targets and find the one whose section
    * is closest to (but above) the scroll-spy offset line.
+   *
+   * Uses `config.getElementByHash` when provided; otherwise falls back
+   * to `document.querySelector` only when running in a browser.
    */
   const updateActiveFromScroll = (offsetOverride?: number): void => {
-    if (typeof document === 'undefined') {
-      return;
-    }
+    const resolveElement =
+      config.getElementByHash ??
+      (typeof document !== 'undefined' ? (hash: string) => document.querySelector(hash) : () => null);
 
     const offset = offsetOverride ?? config.scrollSpyOffset ?? 100;
     let bestId: string | null = null;
@@ -446,8 +461,8 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
       if (!item.href?.startsWith('#')) {
         continue;
       }
-      const el = document.querySelector(item.href);
-      if (!el) {
+      const el = resolveElement(item.href);
+      if (!el || typeof (el as Element).getBoundingClientRect !== 'function') {
         continue;
       }
 
@@ -467,12 +482,21 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
 
   /**
    * Detect active item from current URL hash.
+   *
+   * Uses `config.getLocation` when provided; otherwise falls back
+   * to `window.location` only when running in a browser.
    */
   const updateActiveFromHash = (): void => {
-    if (typeof window === 'undefined') {
+    const getLocation =
+      config.getLocation ??
+      (typeof window !== 'undefined'
+        ? () => ({ hash: window.location.hash, pathname: window.location.pathname })
+        : undefined);
+    if (!getLocation) {
       return;
     }
-    const hash = window.location.hash;
+
+    const { hash } = getLocation();
     if (!hash) {
       return;
     }
@@ -485,12 +509,22 @@ export function createNavbar(config: NavbarConfig = {}): NavbarReturn {
 
   /**
    * Detect active item from pathname.
+   *
+   * Uses `config.getLocation` when provided; otherwise falls back
+   * to `window.location` only when running in a browser.
    */
   const updateActiveFromRoute = (pathname?: string, routeMatchMode?: 'exact' | 'prefix'): void => {
-    if (typeof window === 'undefined' && !pathname) {
+    const getLocation =
+      config.getLocation ??
+      (typeof window !== 'undefined'
+        ? () => ({ hash: window.location.hash, pathname: window.location.pathname })
+        : undefined);
+
+    if (!getLocation && !pathname) {
       return;
     }
-    const currentPathname = pathname ?? window.location.pathname;
+
+    const currentPathname = pathname ?? getLocation?.().pathname ?? '';
     const match = findRouteMatch(currentPathname, routeMatchMode);
     if (match) {
       setActiveItem(match.id);

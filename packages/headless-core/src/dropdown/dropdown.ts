@@ -189,7 +189,11 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
       return;
     }
 
-    store.state.isOpen ? close() : open();
+    if (store.state.isOpen) {
+      close();
+    } else {
+      open();
+    }
   };
 
   const selectItem = (itemId?: string): void => {

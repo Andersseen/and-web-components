@@ -72,9 +72,13 @@ export function createCarousel(config: CarouselConfig = {}): CarouselReturn {
 
   const setActiveIndex = (index: number) => {
     const { slideCount } = store.state;
-    if (slideCount === 0) return;
+    if (slideCount === 0) {
+      return;
+    }
     const clamped = ((index % slideCount) + slideCount) % slideCount;
-    if (clamped === store.state.activeIndex) return;
+    if (clamped === store.state.activeIndex) {
+      return;
+    }
     store.setState({ activeIndex: clamped });
     config.onIndexChange?.(clamped);
   };

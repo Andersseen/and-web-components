@@ -1,5 +1,5 @@
 import { Component, h, Host, State, Element, Prop, Event, EventEmitter, Listen, Watch } from '@stencil/core';
-import { createCarousel, type CarouselReturn } from '@andersseen/headless-components';
+import { createCarousel, type CarouselReturn, createIdGenerator } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 
 /* ────────────────────────────────────────────────────────────────────
@@ -54,7 +54,7 @@ export class AndCarousel {
   @State() private renderTick = 0;
   private carouselLogic: CarouselReturn;
   private autoplayTimer: ReturnType<typeof setInterval> | undefined;
-  private trackId: string = `carousel-track-${Math.random().toString(36).slice(2)}`;
+  private trackId: string = createIdGenerator('carousel')('track');
   private unsubscribe: () => void;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */

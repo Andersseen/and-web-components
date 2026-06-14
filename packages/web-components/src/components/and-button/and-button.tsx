@@ -2,7 +2,7 @@ import { Component, h, Prop, Element, Event, EventEmitter, State, Watch } from '
 
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import { createButton, type ButtonReturn } from '@andersseen/headless-components';
+import { createButton, type ButtonReturn, type ButtonElementProps } from '@andersseen/headless-components';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -51,8 +51,7 @@ export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 @Component({
   tag: 'and-button',
   styleUrls: ['and-button.css', '../../global/component-base.css'],
-  shadow: true,
-  delegatesFocus: true,
+  shadow: { delegatesFocus: true },
 })
 export class AndButton {
   @Element() el: HTMLElement;
@@ -141,7 +140,7 @@ export class AndButton {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    const props = this.buttonLogic?.getButtonProps() || {};
+    const props = this.buttonLogic?.getButtonProps() ?? ({} as ButtonElementProps);
     const classes = cn(buttonVariants({ variant: this.variant, size: this.size }), this.customClass);
 
     const content = [
@@ -153,6 +152,7 @@ export class AndButton {
 
     if (this.href) {
       const relAttr = this.rel || (this.target === '_blank' ? 'noopener noreferrer' : undefined);
+      const { 'aria-busy': ariaBusy, 'aria-label': ariaLabel } = props;
 
       return (
         <a
@@ -160,9 +160,12 @@ export class AndButton {
           target={this.target}
           rel={relAttr}
           class={classes}
-          aria-disabled={this.disabled ? 'true' : undefined}
-          tabindex={this.disabled ? '-1' : undefined}
+          aria-disabled={this.disabled || this.loading ? 'true' : undefined}
+          aria-busy={ariaBusy}
+          aria-label={ariaLabel}
+          tabindex={this.disabled || this.loading ? '-1' : undefined}
           role={this.hostRole || undefined}
+          onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)}
         >
           {content}
         </a>

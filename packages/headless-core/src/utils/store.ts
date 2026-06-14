@@ -16,7 +16,7 @@
  * unsubscribe();
  */
 
-export class StateStore<T extends Record<string, any>> {
+export class StateStore<T extends object> {
   private _state: T;
   private _listeners = new Set<(state: Readonly<T>, prev: Readonly<T>) => void>();
 
@@ -31,11 +31,11 @@ export class StateStore<T extends Record<string, any>> {
 
   /** Merge partial updates and notify all subscribers */
   setState(partial: Partial<T>): void {
-    const prev = { ...this._state };
+    const prev = { ...this._state } as Record<string, unknown>;
     let changed = false;
 
     for (const key of Object.keys(partial)) {
-      if ((prev as any)[key] !== (partial as any)[key]) {
+      if (prev[key] !== (partial as Record<string, unknown>)[key]) {
         changed = true;
         break;
       }
@@ -47,7 +47,7 @@ export class StateStore<T extends Record<string, any>> {
 
     this._state = { ...this._state, ...partial };
     const frozenState = this.state;
-    const frozenPrev = Object.freeze(prev);
+    const frozenPrev = Object.freeze(prev) as Readonly<T>;
 
     // Notify all subscribers
     this._listeners.forEach(cb => cb(frozenState, frozenPrev));
@@ -67,6 +67,6 @@ export class StateStore<T extends Record<string, any>> {
  * Create a store from an initial state object.
  * Shorthand for `new StateStore(initial)`.
  */
-export function createStore<T extends Record<string, any>>(initial: T): StateStore<T> {
+export function createStore<T extends object>(initial: T): StateStore<T> {
   return new StateStore(initial);
 }

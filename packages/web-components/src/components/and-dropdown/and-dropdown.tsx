@@ -99,6 +99,9 @@ export class AndDropdown {
 
   @State() private dropdownLogic: DropdownReturn;
   @State() private isOpen: boolean = false;
+  @State() private focusedIndex: number = -1;
+
+  private itemRefs = new Map<number, HTMLDivElement>();
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -109,6 +112,11 @@ export class AndDropdown {
       closeOnSelect: this.closeOnSelect,
       onOpenChange: (isOpen: boolean) => {
         this.isOpen = isOpen;
+        if (!isOpen) {
+          this.focusedIndex = -1;
+        } else {
+          this.focusFirstItem();
+        }
         this.andDropdownOpenChange.emit(isOpen);
       },
       onSelect: ({ itemId }) => {
@@ -161,6 +169,63 @@ export class AndDropdown {
     }
   }
 
+  private getEnabledIndices(): number[] {
+    return this.items.reduce<number[]>((acc, item, i) => {
+      if (!item.disabled) {
+        acc.push(i);
+      }
+      return acc;
+    }, []);
+  }
+
+  private focusItem(index: number) {
+    const enabled = this.getEnabledIndices();
+    if (!enabled.length) {
+      this.focusedIndex = -1;
+      return;
+    }
+
+    const pos = enabled.indexOf(index);
+    const nextIndex = pos >= 0 ? index : enabled[0];
+    this.focusedIndex = nextIndex;
+    this.itemRefs.get(nextIndex)?.focus();
+  }
+
+  private focusNext() {
+    const enabled = this.getEnabledIndices();
+    if (!enabled.length) {
+      return;
+    }
+    const pos = enabled.indexOf(this.focusedIndex);
+    const next = pos < enabled.length - 1 ? enabled[pos + 1] : enabled[0];
+    this.focusItem(next);
+  }
+
+  private focusPrev() {
+    const enabled = this.getEnabledIndices();
+    if (!enabled.length) {
+      return;
+    }
+    const pos = enabled.indexOf(this.focusedIndex);
+    const prev = pos > 0 ? enabled[pos - 1] : enabled[enabled.length - 1];
+    this.focusItem(prev);
+  }
+
+  private focusFirstItem() {
+    const enabled = this.getEnabledIndices();
+    if (enabled.length) {
+      // Defer focus until after render.
+      requestAnimationFrame(() => this.focusItem(enabled[0]));
+    }
+  }
+
+  private focusLastItem() {
+    const enabled = this.getEnabledIndices();
+    if (enabled.length) {
+      this.focusItem(enabled[enabled.length - 1]);
+    }
+  }
+
   private handleSelect = (value: string) => {
     this.dropdownLogic.actions.selectItem(value);
   };
@@ -170,8 +235,40 @@ export class AndDropdown {
   };
 
   private handleContentKeyDown = (e: KeyboardEvent) => {
-    const itemIds = this.items.filter(item => !item.disabled).map(item => item.value);
-    this.dropdownLogic.handleContentKeyDown(e, itemIds);
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        this.focusNext();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        this.focusPrev();
+        break;
+      case 'Home':
+        e.preventDefault();
+        this.focusFirstItem();
+        break;
+      case 'End':
+        e.preventDefault();
+        this.focusLastItem();
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        if (this.focusedIndex >= 0) {
+          this.handleSelect(this.items[this.focusedIndex].value);
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        this.dropdownLogic.actions.close();
+        break;
+      case 'Tab':
+        this.dropdownLogic.actions.close();
+        break;
+      default:
+        break;
+    }
   };
 
   /* ── Render ─────────────────────────────────────────────────────── */
@@ -216,13 +313,21 @@ export class AndDropdown {
             data-side={this.placement}
             onKeyDown={this.handleContentKeyDown}
           >
-            {this.items.map(item => {
+            {this.items.map((item, index) => {
               const itemProps = this.dropdownLogic?.getItemProps(item.value) || {};
+              const isFocused = index === this.focusedIndex;
               return (
                 <div
                   {...itemProps}
+                  ref={(el: HTMLDivElement) => {
+                    if (el) {
+                      this.itemRefs.set(index, el);
+                    }
+                  }}
                   class={cn(menuItemClass, item.disabled && 'pointer-events-none opacity-50')}
+                  tabindex={item.disabled ? -1 : isFocused ? 0 : -1}
                   onClick={() => !item.disabled && this.handleSelect(item.value)}
+                  onMouseEnter={() => this.focusItem(index)}
                 >
                   {item.text}
                 </div>

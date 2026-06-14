@@ -1,8 +1,10 @@
-import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch, Element } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch, Element, State } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import { createModal, type ModalReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
-import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import { applyGlobalAnimationFlag, isAnimationsEnabled } from '../../utils/animation-config';
+import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
+import { createOpenCloseAnimation } from '../../utils/animation';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -40,22 +42,49 @@ export class AndModal {
   /** Whether the modal is open. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
+  /** Whether to animate the modal entrance and exit. */
+  @Prop({ reflect: true }) animated: boolean = false;
+
   /** Emitted when the modal is closed. */
   @Event({ bubbles: true, composed: true }) andClose: EventEmitter<void>;
 
+  @State() private isClosing = false;
+
   private modalLogic: ModalReturn;
   private previouslyFocused: Element | null = null;
+  private animation = createOpenCloseAnimation(
+    () => this.el.shadowRoot?.querySelector<HTMLElement>('.and-modal-content') ?? null,
+    'modal',
+    {
+      onExitEnd: () => {
+        this.isClosing = false;
+        this.open = false;
+        this.andClose.emit();
+      },
+    },
+  );
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
     applyGlobalAnimationFlag(this.el);
+    if (isAnimationsEnabled()) {
+      this.animated = true;
+    }
     this.modalLogic = createModal({
       defaultOpen: this.open,
       onOpenChange: (isOpen: boolean) => {
-        this.open = isOpen;
-        if (!isOpen) {
-          this.andClose.emit();
+        if (isOpen === this.open) {
+          return;
+        }
+        if (this.animated && !isOpen) {
+          this.isClosing = true;
+          void this.animation.exit();
+        } else {
+          this.open = isOpen;
+          if (!isOpen) {
+            this.andClose.emit();
+          }
         }
       },
     });
@@ -75,33 +104,32 @@ export class AndModal {
       this.modalLogic.actions.open();
       // Wait for render before trapping focus
       requestAnimationFrame(() => this.trapFocus());
+      if (this.animated) {
+        requestAnimationFrame(() => void this.animation.enter());
+      }
     } else {
-      this.modalLogic.actions.close();
-      this.restoreFocus();
+      if (this.animated) {
+        this.isClosing = true;
+        void this.animation.exit();
+      } else {
+        this.modalLogic.actions.close();
+        this.restoreFocus();
+      }
     }
   }
 
   /* ── Focus Trap ─────────────────────────────────────────────────── */
 
-  private getFocusableElements(): HTMLElement[] {
-    const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    return Array.from(this.el.querySelectorAll(selector)).filter((el): el is HTMLElement => {
-      const htmlEl = el as HTMLElement;
-      return (
-        htmlEl.offsetParent !== null &&
-        !htmlEl.hasAttribute('disabled') &&
-        htmlEl.getAttribute('aria-hidden') !== 'true'
-      );
-    });
+  private getTrapRoot(): HTMLElement | ShadowRoot {
+    return this.el.shadowRoot ?? this.el;
   }
 
   private trapFocus() {
-    if (!this.open) return;
-    this.previouslyFocused = document.activeElement;
-    const focusable = this.getFocusableElements();
-    if (focusable.length > 0) {
-      focusable[0].focus();
+    if (!this.open) {
+      return;
     }
+    this.previouslyFocused = document.activeElement;
+    focusFirst(this.getTrapRoot());
   }
 
   private restoreFocus() {
@@ -117,25 +145,11 @@ export class AndModal {
   handleKeyDown(ev: KeyboardEvent) {
     this.modalLogic.handleKeyDown(ev);
 
-    if (!this.open) return;
-
-    if (ev.key === 'Tab') {
-      const focusable = this.getFocusableElements();
-      if (focusable.length === 0) {
-        ev.preventDefault();
-        return;
-      }
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (ev.shiftKey && document.activeElement === first) {
-        ev.preventDefault();
-        last.focus();
-      } else if (!ev.shiftKey && document.activeElement === last) {
-        ev.preventDefault();
-        first.focus();
-      }
+    if (!this.open) {
+      return;
     }
+
+    handleTabInFocusTrap(ev, this.getTrapRoot());
   }
 
   /* ── Lifecycle Cleanup ──────────────────────────────────────────── */
@@ -149,22 +163,28 @@ export class AndModal {
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
-    if (!this.open) {
+    if (!this.open && !this.isClosing) {
       return <Host />;
     }
 
     const overlayProps = this.modalLogic.getOverlayProps();
     const contentProps = this.modalLogic.getContentProps();
     const closeButtonProps = this.modalLogic.getCloseButtonProps();
+    const state = this.isClosing ? 'closed' : 'open';
 
     return (
-      <Host>
+      <Host animated={this.animated}>
         {/* Backdrop */}
-        <div class={overlayClass} {...overlayProps} onClick={() => this.modalLogic.handleOverlayClick()} />
+        <div
+          class={overlayClass}
+          {...overlayProps}
+          onClick={() => this.modalLogic.handleOverlayClick()}
+          data-state={state}
+        />
 
         {/* Modal Container */}
         <div class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
-          <div class={cn(contentVariants())} data-state="open" {...contentProps}>
+          <div class={cn(contentVariants())} data-state={state} {...contentProps}>
             <div class="flex flex-col gap-4">
               <slot />
               <button class={closeButtonClass} onClick={() => this.modalLogic.actions.close()} {...closeButtonProps}>

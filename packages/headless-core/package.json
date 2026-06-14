@@ -63,6 +63,26 @@
     "./context-menu": {
       "types": "./dist/context-menu/index.d.ts",
       "import": "./dist/context-menu/index.js"
+    },
+    "./input": {
+      "types": "./dist/input/index.d.ts",
+      "import": "./dist/input/index.js"
+    },
+    "./navbar": {
+      "types": "./dist/navbar/index.d.ts",
+      "import": "./dist/navbar/index.js"
+    },
+    "./sidebar": {
+      "types": "./dist/sidebar/index.d.ts",
+      "import": "./dist/sidebar/index.js"
+    },
+    "./carousel": {
+      "types": "./dist/carousel/index.d.ts",
+      "import": "./dist/carousel/index.js"
+    },
+    "./select": {
+      "types": "./dist/select/index.d.ts",
+      "import": "./dist/select/index.js"
     }
   },
   "files": [

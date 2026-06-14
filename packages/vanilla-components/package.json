@@ -1,0 +1,60 @@
+{
+  "name": "@andersseen/vanilla-components",
+  "version": "0.0.1",
+  "description": "Framework-agnostic vanilla web components powered by @andersseen/headless and @andersseen/motion",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist-cjs/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "dist-cjs",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cp src/style.css dist/style.css",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "vanilla",
+    "typescript",
+    "framework-agnostic"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "dependencies": {
+    "@andersseen/headless-components": "workspace:*",
+    "@andersseen/motion": "workspace:*"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.1.0",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.57.1",
+    "vitest": "^4.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/vanilla-components"
+  }
+}
