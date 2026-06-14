@@ -13,6 +13,7 @@ storybook-static/
 .angular/
 
 # Generated files
+packages/web-components/src/components.d.ts
 packages/web-components/src/components/*/readme.md
 packages/web-components/custom-elements.json
 apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/

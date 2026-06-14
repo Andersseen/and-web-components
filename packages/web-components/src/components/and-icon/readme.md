@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property      | Attribute      | Description                                                                | Type                    | Default          |
@@ -11,24 +12,24 @@
 | `size`        | `size`         | The size of the icon in pixels.                                            | `number \| string`      | `24`             |
 | `strokeWidth` | `stroke-width` | SVG stroke width.                                                          | `number \| string`      | `2`              |
 
+
 ## Dependencies
 
 ### Used by
 
-- [and-accordion-trigger](../and-accordion)
-- [and-alert](../and-alert)
-- [and-carousel](../and-carousel)
-- [and-drawer](../and-drawer)
-- [and-dropdown](../and-dropdown)
-- [and-modal](../and-modal)
-- [and-navbar](../and-navbar)
-- [and-pagination](../and-pagination)
-- [and-select](../and-select)
-- [and-sidebar](../and-sidebar)
-- [and-toast](../and-toast)
+ - [and-accordion-trigger](../and-accordion)
+ - [and-alert](../and-alert)
+ - [and-carousel](../and-carousel)
+ - [and-drawer](../and-drawer)
+ - [and-dropdown](../and-dropdown)
+ - [and-modal](../and-modal)
+ - [and-navbar](../and-navbar)
+ - [and-pagination](../and-pagination)
+ - [and-select](../and-select)
+ - [and-sidebar](../and-sidebar)
+ - [and-toast](../and-toast)
 
 ### Graph
-
 ```mermaid
 graph TD;
   and-accordion-trigger --> and-icon
@@ -45,6 +46,6 @@ graph TD;
   style and-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

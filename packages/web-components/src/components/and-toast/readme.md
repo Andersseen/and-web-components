@@ -2,6 +2,14 @@
 
 <!-- Auto Generated Below -->
 
+
+## Properties
+
+| Property   | Attribute  | Description                                | Type                                                                                              | Default          |
+| ---------- | ---------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------- | ---------------- |
+| `position` | `position` | Position of the toast container on screen. | `"bottom-center" \| "bottom-left" \| "bottom-right" \| "top-center" \| "top-left" \| "top-right"` | `'bottom-right'` |
+
+
 ## Methods
 
 ### `present(message: string, type?: ToastType, duration?: number) => Promise<number>`
@@ -20,6 +28,9 @@ Present a new toast notification.
 
 Type: `Promise<number>`
 
+
+
+
 ## Dependencies
 
 ### Depends on
@@ -27,13 +38,12 @@ Type: `Promise<number>`
 - [and-icon](../and-icon)
 
 ### Graph
-
 ```mermaid
 graph TD;
   and-toast --> and-icon
   style and-toast fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

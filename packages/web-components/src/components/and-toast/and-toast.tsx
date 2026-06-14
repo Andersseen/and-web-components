@@ -1,7 +1,8 @@
-import { Component, Host, h, State, Method, Element } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method, Element } from '@stencil/core';
 import { cva } from 'class-variance-authority';
 import {
   createToastManager,
+  type ToastPosition,
   type ToastType,
   type ToastManagerReturn,
   type ToastItem,
@@ -42,6 +43,15 @@ const dismissButtonClass = [
   'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
 ].join(' ');
 
+const positionClasses: Record<ToastPosition, string> = {
+  'top-right': 'top-t-gap right-t-gap items-end',
+  'top-left': 'top-t-gap left-t-gap items-start',
+  'bottom-right': 'bottom-t-gap right-t-gap items-end',
+  'bottom-left': 'bottom-t-gap left-t-gap items-start',
+  'top-center': 'top-t-gap left-1/2 -translate-x-1/2 items-center',
+  'bottom-center': 'bottom-t-gap left-1/2 -translate-x-1/2 items-center',
+};
+
 /* ────────────────────────────────────────────────────────────────────
  * Component
  * ──────────────────────────────────────────────────────────────────── */
@@ -54,6 +64,9 @@ const dismissButtonClass = [
 export class AndToast {
   @Element() el: HTMLElement;
 
+  /** Position of the toast container on screen. */
+  @Prop({ reflect: true }) position: ToastPosition = 'bottom-right';
+
   @State() private toasts: ToastItem[] = [];
 
   private toastManager: ToastManagerReturn;
@@ -63,6 +76,7 @@ export class AndToast {
   componentWillLoad() {
     applyGlobalAnimationFlag(this.el);
     this.toastManager = createToastManager({
+      position: this.position,
       onToastsChange: (toasts: ToastItem[]) => {
         this.toasts = toasts;
       },
@@ -95,14 +109,15 @@ export class AndToast {
   render() {
     const containerProps = this.toastManager.getContainerProps();
     const dismissProps = this.toastManager.getDismissProps();
+    const position = containerProps['data-position'];
 
     return (
       <Host class="block relative z-[100]">
         <div
-          class="fixed bottom-t-gap right-t-gap z-[100] flex flex-col gap-t-gap-sm w-full max-w-md pointer-events-none"
-          role="region"
-          aria-label="Notifications"
-          aria-live="polite"
+          class={cn(
+            'fixed z-[100] flex flex-col gap-t-gap-sm w-full max-w-md pointer-events-none',
+            positionClasses[position],
+          )}
           {...containerProps}
         >
           {this.toasts.map(toast => {

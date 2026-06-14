@@ -88,6 +88,22 @@ describe('createAccordion', () => {
     expect(contentProps['aria-hidden']).toBe(false);
   });
 
+  it('keeps aria-controls and content id in sync and stable', () => {
+    const accordion = createAccordion();
+
+    const triggerProps1 = accordion.getTriggerProps('item-1');
+    const contentProps1 = accordion.getContentProps('item-1');
+
+    expect(triggerProps1['aria-controls']).toBe(contentProps1.id);
+    expect(triggerProps1['aria-controls']).toBeTruthy();
+
+    // IDs must remain stable across repeated calls
+    const triggerProps2 = accordion.getTriggerProps('item-1');
+    const contentProps2 = accordion.getContentProps('item-1');
+    expect(triggerProps2['aria-controls']).toBe(triggerProps1['aria-controls']);
+    expect(contentProps2.id).toBe(contentProps1.id);
+  });
+
   it('handles keyboard navigation (Enter/Space to toggle)', () => {
     const accordion = createAccordion();
     const preventDefault = vi.fn();

@@ -50,6 +50,7 @@ export class AndSelect {
   private listboxId = this.generateId('listbox');
   private prevHighlightedIndex = -1;
   private prevIsOpen = false;
+  private unsubscribe?: () => void;
 
   /** Options rendered in the select menu. Can be an array or a JSON string. */
   @Prop() options: SelectOption[] | string = [];
@@ -113,7 +114,7 @@ export class AndSelect {
     this.prevIsOpen = this.selectState.isOpen;
     this.prevHighlightedIndex = this.selectState.highlightedIndex;
 
-    this.selectLogic.subscribe(s => {
+    this.unsubscribe = this.selectLogic.subscribe(s => {
       this.selectState = s;
 
       if (this.prevIsOpen && !s.isOpen) {
@@ -134,7 +135,7 @@ export class AndSelect {
   }
 
   disconnectedCallback() {
-    // No explicit cleanup needed; store subscriptions are lightweight
+    this.unsubscribe?.();
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */

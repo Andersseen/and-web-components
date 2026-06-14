@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property      | Attribute  | Description                                                                              | Type                                                                          | Default     |
@@ -16,12 +17,14 @@
 | `type`        | `type`     | HTML button type attribute.                                                              | `"button" \| "reset" \| "submit"`                                             | `'button'`  |
 | `variant`     | `variant`  | Visual variant of the button.                                                            | `"default" \| "destructive" \| "ghost" \| "link" \| "outline" \| "secondary"` | `'default'` |
 
+
 ## Events
 
 | Event            | Description              | Type                      |
 | ---------------- | ------------------------ | ------------------------- |
 | `andButtonClick` | Emitted on button click. | `CustomEvent<MouseEvent>` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

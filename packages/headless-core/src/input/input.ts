@@ -67,7 +67,9 @@ export function createInput(config: InputConfig = {}): InputReturn {
   });
 
   const setValue = (value: string) => {
-    if (store.state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
     store.setState({ value });
     config.onValueChange?.(value);
   };
@@ -81,7 +83,9 @@ export function createInput(config: InputConfig = {}): InputReturn {
   };
 
   const focus = () => {
-    if (store.state.disabled) return;
+    if (store.state.disabled) {
+      return;
+    }
     store.setState({ focused: true });
   };
 
@@ -91,7 +95,9 @@ export function createInput(config: InputConfig = {}): InputReturn {
 
   const isEmpty = () => store.state.value.length === 0;
   const isValid = () => {
-    if (!store.state.required) return true;
+    if (!store.state.required) {
+      return true;
+    }
     return !isEmpty();
   };
 

@@ -189,7 +189,11 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
     if (store.state.disabled) {
       return;
     }
-    store.state.isOpen ? close() : open();
+    if (store.state.isOpen) {
+      close();
+    } else {
+      open();
+    }
   };
 
   const setDisabled = (disabled: boolean): void => {

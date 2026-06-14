@@ -8,29 +8,13 @@ for the @andersseen monorepo.
 ### Deploy from Local Machine
 
 ```bash
-# Deploy everything (Storybook, MCP Worker, Landing, Demo)
+# Deploy everything (Storybook, Landing, Demo)
 pnpm deploy:all
 
 # Or deploy specific services
 pnpm deploy:storybook    # Deploy Storybook only
-pnpm deploy:mcp         # Deploy MCP Worker only
-pnpm deploy:landing     # Deploy Landing Page only
-```
-
-### Using the Deploy Script
-
-```bash
-# Make sure you're logged in to Wrangler
-npx wrangler login
-
-# Deploy all services
-./scripts/deploy.sh all
-
-# Deploy specific service
-./scripts/deploy.sh storybook
-./scripts/deploy.sh mcp
-./scripts/deploy.sh landing
-./scripts/deploy.sh demo
+pnpm deploy:landing      # Deploy Landing Page only
+pnpm deploy:cloudflare   # Deploy Angular Demo App only
 ```
 
 ## 🔄 CI/CD Pipeline
@@ -48,21 +32,17 @@ The GitHub Actions workflow (`.github/workflows/ci-cd.yml`) automatically:
    - Deploys to Cloudflare Pages
    - URL: `https://and-web-components-storybook.pages.dev`
 
-3. **Deploy MCP Worker** - On main branch only
-   - Deploys MCP server to Cloudflare Workers
-   - URL: `https://andersseen-mcp.your-account.workers.dev`
-
-4. **Deploy Landing Page** - On main branch only
+3. **Deploy Landing Page** - On main branch only
    - Builds Astro landing page
    - Deploys to Cloudflare Pages
    - URL: `https://and-web-components-landing.pages.dev`
 
-5. **Deploy Demo App** - On main branch only
+4. **Deploy Demo App** - On main branch only
    - Builds Angular demo app
    - Deploys to Cloudflare Pages
    - URL: `https://and-web-components-demo.pages.dev`
 
-6. **Publish to NPM** - On main with "version bump" commit
+5. **Publish to NPM** - On main with "version bump" commit
    - Publishes updated packages
 
 ## 🔧 Prerequisites
@@ -115,65 +95,30 @@ Add these secrets to your GitHub repository:
 
 ```bash
 # Development
-pnpm wrangler:dev        # Run MCP Worker locally (http://localhost:8787)
 pnpm storybook          # Run Storybook locally
 
 # Building
 pnpm build-storybook    # Build Storybook for production
-pnpm build:all         # Build all packages
+pnpm build:all          # Build all packages
 
 # Deployment
 pnpm deploy:storybook   # Deploy Storybook
-pnpm deploy:mcp        # Deploy MCP Worker
-pnpm deploy:landing    # Deploy Landing Page
-pnpm deploy:cloudflare # Deploy Demo App
-pnpm deploy:all        # Deploy everything
-```
-
-### MCP Worker Scripts (in packages/mcp-server)
-
-```bash
-cd packages/mcp-server
-
-# Development
-pnpm dev              # Run locally with hot reload
-
-# Deployment
-pnpm deploy           # Deploy to production
+pnpm deploy:landing     # Deploy Landing Page
+pnpm deploy:cloudflare  # Deploy Demo App
+pnpm deploy:all         # Deploy all services
 ```
 
 ## 🌍 Service URLs
 
 After deployment, your services will be available at:
 
-| Service    | URL                                               | Environment |
-| ---------- | ------------------------------------------------- | ----------- |
-| Storybook  | `https://and-web-components-storybook.pages.dev`  | Production  |
-| MCP Worker | `https://andersseen-mcp.your-account.workers.dev` | Production  |
-| Landing    | `https://and-web-components-landing.pages.dev`    | Production  |
-| Demo       | `https://and-web-components-demo.pages.dev`       | Production  |
+| Service   | URL                                              | Environment |
+| --------- | ------------------------------------------------ | ----------- |
+| Storybook | `https://and-web-components-storybook.pages.dev` | Production  |
+| Landing   | `https://and-web-components-landing.pages.dev`   | Production  |
+| Demo      | `https://and-web-components-demo.pages.dev`      | Production  |
 
 ## 🧪 Testing Deployments Locally
-
-### Test MCP Worker
-
-```bash
-# Start local worker
-pnpm wrangler:dev
-
-# In another terminal, test endpoints:
-curl http://localhost:8787/health
-curl http://localhost:8787/info
-
-# Test MCP protocol
-curl -X POST http://localhost:8787/mcp \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "method": "tools/list",
-    "id": 1
-  }'
-```
 
 ### Test Storybook
 
@@ -195,7 +140,6 @@ Before running `pnpm deploy:all`:
   - `and-web-components-storybook`
   - `and-web-components-landing`
   - `and-web-components-demo`
-- [ ] Cloudflare Worker named `andersseen-mcp`
 
 ## 🐛 Troubleshooting
 
@@ -224,18 +168,10 @@ pnpm install
 pnpm build:all
 ```
 
-### Worker deployment fails
-
-Check `packages/mcp-server/wrangler.toml`:
-
-- Ensure `name` field matches your worker name
-- Verify `account_id` in `.wrangler/state/config.json` or set via env var
-
 ## 📚 Additional Resources
 
 - [Wrangler Documentation](https://developers.cloudflare.com/workers/wrangler/)
 - [Cloudflare Pages Documentation](https://developers.cloudflare.com/pages/)
-- [MCP Protocol Specification](https://modelcontextprotocol.io/)
 
 ---
 
@@ -247,18 +183,9 @@ pnpm deploy:all
 
 # Individual deployments
 pnpm deploy:storybook
-pnpm deploy:mcp
 pnpm deploy:landing
 pnpm deploy:cloudflare
 
-# Using the script
-./scripts/deploy.sh all
-./scripts/deploy.sh storybook
-./scripts/deploy.sh mcp
-./scripts/deploy.sh landing
-./scripts/deploy.sh demo
-
 # Development
-pnpm wrangler:dev     # MCP Worker local
 pnpm storybook        # Storybook local
 ```

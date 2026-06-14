@@ -3955,7 +3955,42 @@
           "customElement": true,
           "tagName": "and-toast",
           "name": "AndToast",
+          "attributes": [
+            {
+              "name": "position",
+              "description": "Position of the toast container on screen.",
+              "type": {
+                "text": "\"bottom-center\" | \"bottom-left\" | \"bottom-right\" | \"top-center\" | \"top-left\" | \"top-right\"",
+                "references": [
+                  {
+                    "name": "ToastPosition",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'bottom-right'",
+              "fieldName": "position"
+            }
+          ],
           "members": [
+            {
+              "kind": "field",
+              "name": "position",
+              "description": "Position of the toast container on screen.",
+              "type": {
+                "text": "\"bottom-center\" | \"bottom-left\" | \"bottom-right\" | \"top-center\" | \"top-left\" | \"top-right\"",
+                "references": [
+                  {
+                    "name": "ToastPosition",
+                    "module": "@andersseen/headless-components"
+                  }
+                ]
+              },
+              "default": "'bottom-right'",
+              "readonly": true,
+              "attribute": "position",
+              "reflects": true
+            },
             {
               "kind": "method",
               "name": "present",

@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property      | Attribute      | Description                                                         | Type                                                                        | Default     |
@@ -16,6 +17,7 @@
 | `type`        | `type`         | HTML input type.                                                    | `"email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"` | `'text'`    |
 | `value`       | `value`        | Current value of the input.                                         | `string`                                                                    | `undefined` |
 
+
 ## Events
 
 | Event      | Description                           | Type                  |
@@ -23,6 +25,7 @@
 | `andBlur`  | Emitted when the input loses focus.   | `CustomEvent<void>`   |
 | `andInput` | Emitted when the input value changes. | `CustomEvent<string>` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

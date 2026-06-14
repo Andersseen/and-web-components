@@ -96,7 +96,9 @@ export class AndModal {
   }
 
   private trapFocus() {
-    if (!this.open) return;
+    if (!this.open) {
+      return;
+    }
     this.previouslyFocused = document.activeElement;
     const focusable = this.getFocusableElements();
     if (focusable.length > 0) {
@@ -117,7 +119,9 @@ export class AndModal {
   handleKeyDown(ev: KeyboardEvent) {
     this.modalLogic.handleKeyDown(ev);
 
-    if (!this.open) return;
+    if (!this.open) {
+      return;
+    }
 
     if (ev.key === 'Tab') {
       const focusable = this.getFocusableElements();

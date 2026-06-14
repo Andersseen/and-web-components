@@ -101,6 +101,24 @@ describe('createTabs', () => {
     expect(unselectedProps['data-state']).toBe('inactive');
   });
 
+  it('keeps aria-controls, aria-labelledby and ids in sync and stable', () => {
+    const tabs = createTabs({ defaultValue: 'tab-1' });
+
+    const triggerProps = tabs.getTriggerProps('tab-1');
+    const contentProps = tabs.getContentProps('tab-1');
+
+    expect(triggerProps['aria-controls']).toBe(contentProps.id);
+    expect(contentProps['aria-labelledby']).toBe(triggerProps.id);
+    expect(triggerProps.id).toBeTruthy();
+    expect(contentProps.id).toBeTruthy();
+
+    // IDs must remain stable across repeated calls
+    const triggerProps2 = tabs.getTriggerProps('tab-1');
+    const contentProps2 = tabs.getContentProps('tab-1');
+    expect(triggerProps2.id).toBe(triggerProps.id);
+    expect(contentProps2.id).toBe(contentProps.id);
+  });
+
   describe('keyboard navigation', () => {
     const tabIds = ['tab-1', 'tab-2', 'tab-3'];
 

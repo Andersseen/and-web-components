@@ -10,7 +10,7 @@
 
 import { createStore } from '../utils/store';
 import type { AriaAttributes, DataAttributes, EventCallback } from '../types/common';
-import { generateId } from '../utils/id';
+import { createIdGenerator } from '../utils/id';
 
 /**
  * Tooltip placement options
@@ -152,7 +152,8 @@ export interface TooltipReturn {
 export function createTooltip(config: TooltipConfig = {}): TooltipReturn {
   const openDelay = config.openDelay ?? 0;
   const closeDelay = config.closeDelay ?? 0;
-  const tooltipId = generateId('tooltip');
+  const generateId = createIdGenerator('tooltip');
+  const tooltipId = generateId('content');
 
   // Internal state
   const store = createStore<TooltipState>({

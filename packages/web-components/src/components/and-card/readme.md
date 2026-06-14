@@ -59,12 +59,14 @@ All sub-components accept a `class` attribute for custom styling.
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property      | Attribute | Description                               | Type     | Default     |
 | ------------- | --------- | ----------------------------------------- | -------- | ----------- |
 | `customClass` | `class`   | Additional CSS classes from the consumer. | `string` | `undefined` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

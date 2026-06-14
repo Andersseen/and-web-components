@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property        | Attribute        | Description                                                            | Type                          | Default              |
@@ -18,12 +19,14 @@
 | `required`      | `required`       | Marks the field as required.                                           | `boolean`                     | `false`              |
 | `value`         | `value`          | Current selected value.                                                | `string`                      | `''`                 |
 
+
 ## Events
 
 | Event             | Description                               | Type                  |
 | ----------------- | ----------------------------------------- | --------------------- |
 | `andBlur`         | Emitted when select loses focus / closes. | `CustomEvent<void>`   |
 | `andSelectChange` | Emitted when selected value changes.      | `CustomEvent<string>` |
+
 
 ## Dependencies
 
@@ -32,13 +35,12 @@
 - [and-icon](../and-icon)
 
 ### Graph
-
 ```mermaid
 graph TD;
   and-select --> and-icon
   style and-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

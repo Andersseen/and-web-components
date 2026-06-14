@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property    | Attribute  | Description                                                  | Type         | Default     |
@@ -11,12 +12,14 @@
 | `tabsLogic` | --         | Reference to the parent tabs headless logic (set by parent). | `TabsReturn` | `undefined` |
 | `value`     | `value`    | The value that identifies this tab.                          | `string`     | `undefined` |
 
+
 ## Events
 
 | Event             | Description                           | Type                  |
 | ----------------- | ------------------------------------- | --------------------- |
 | `tabTriggerClick` | Emitted when this trigger is clicked. | `CustomEvent<string>` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
