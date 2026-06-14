@@ -3,6 +3,7 @@ import { cva } from 'class-variance-authority';
 import { createModal, type ModalReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
 
 /* ────────────────────────────────────────────────────────────────────
  * Variants
@@ -83,16 +84,8 @@ export class AndModal {
 
   /* ── Focus Trap ─────────────────────────────────────────────────── */
 
-  private getFocusableElements(): HTMLElement[] {
-    const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    return Array.from(this.el.querySelectorAll(selector)).filter((el): el is HTMLElement => {
-      const htmlEl = el as HTMLElement;
-      return (
-        htmlEl.offsetParent !== null &&
-        !htmlEl.hasAttribute('disabled') &&
-        htmlEl.getAttribute('aria-hidden') !== 'true'
-      );
-    });
+  private getTrapRoot(): HTMLElement | ShadowRoot {
+    return this.el.shadowRoot ?? this.el;
   }
 
   private trapFocus() {
@@ -100,10 +93,7 @@ export class AndModal {
       return;
     }
     this.previouslyFocused = document.activeElement;
-    const focusable = this.getFocusableElements();
-    if (focusable.length > 0) {
-      focusable[0].focus();
-    }
+    focusFirst(this.getTrapRoot());
   }
 
   private restoreFocus() {
@@ -123,23 +113,7 @@ export class AndModal {
       return;
     }
 
-    if (ev.key === 'Tab') {
-      const focusable = this.getFocusableElements();
-      if (focusable.length === 0) {
-        ev.preventDefault();
-        return;
-      }
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (ev.shiftKey && document.activeElement === first) {
-        ev.preventDefault();
-        last.focus();
-      } else if (!ev.shiftKey && document.activeElement === last) {
-        ev.preventDefault();
-        first.focus();
-      }
-    }
+    handleTabInFocusTrap(ev, this.getTrapRoot());
   }
 
   /* ── Lifecycle Cleanup ──────────────────────────────────────────── */

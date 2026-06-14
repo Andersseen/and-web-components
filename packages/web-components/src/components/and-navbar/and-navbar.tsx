@@ -326,6 +326,11 @@ export class AndNavbar {
       scrollSpy: this.scrollSpy,
       scrollSpyOffset: this.scrollSpyOffset,
       ariaLabel: this.ariaNavLabel,
+      getElementByHash: (hash: string) => (typeof document !== 'undefined' ? document.querySelector(hash) : null),
+      getLocation: () =>
+        typeof window !== 'undefined'
+          ? { hash: window.location.hash, pathname: window.location.pathname }
+          : { hash: '', pathname: '' },
     });
 
     // Sync initial active from headless if the prop was empty
