@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { VanillaAccordion } from './vanilla-accordion';
 
-if (!customElements.get('and-accordion')) {
-  customElements.define('and-accordion', VanillaAccordion);
+if (!customElements.get('and-vanilla-accordion')) {
+  customElements.define('and-vanilla-accordion', VanillaAccordion);
 }
 
 describe('VanillaAccordion', () => {
@@ -18,7 +18,7 @@ describe('VanillaAccordion', () => {
   });
 
   it('renders items from slotted children', async () => {
-    const el = document.createElement('and-accordion') as VanillaAccordion;
+    const el = document.createElement('and-vanilla-accordion') as VanillaAccordion;
     el.innerHTML = `
       <div title="First" value="first">Content 1</div>
       <div title="Second" value="second">Content 2</div>
@@ -32,7 +32,7 @@ describe('VanillaAccordion', () => {
   });
 
   it('expands an item when its trigger is clicked', async () => {
-    const el = document.createElement('and-accordion') as VanillaAccordion;
+    const el = document.createElement('and-vanilla-accordion') as VanillaAccordion;
     el.innerHTML = `<div title="Only" value="only">Only content</div>`;
     container.appendChild(el);
 

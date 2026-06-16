@@ -1,5 +1,5 @@
 import { createButton, type ButtonReturn } from '@andersseen/headless-components';
-import { createMotionPlayer, type MotionPlayer } from '@andersseen/motion';
+import { loadMotionPlayer, type MotionPlayerLike } from '../utils/motion-loader';
 
 const ATTRS = {
   VARIANT: 'variant',
@@ -9,16 +9,19 @@ const ATTRS = {
 };
 
 /**
- * `<and-button>` — Vanilla custom element wrapper around the headless button.
+ * `<and-vanilla-button>` — Vanilla custom element wrapper around the headless button.
  *
  * Supports variant, size, disabled and animated attributes, and delegates
  * all accessibility and state logic to @andersseen/headless-components.
+ *
+ * Motion is optional: add `animated` and install `@andersseen/motion` to get
+ * a tap animation.
  */
 export class VanillaButton extends HTMLElement {
   static observedAttributes = [ATTRS.VARIANT, ATTRS.SIZE, ATTRS.DISABLED, ATTRS.ANIMATED];
 
   private buttonLogic: ButtonReturn | null = null;
-  private motionPlayer: MotionPlayer | null = null;
+  private motionPlayer: MotionPlayerLike | null = null;
   private buttonEl: HTMLButtonElement | null = null;
   private originalContent: Node[] = [];
 
@@ -29,10 +32,6 @@ export class VanillaButton extends HTMLElement {
     this.buttonLogic = createButton({
       disabled: this.hasAttribute(ATTRS.DISABLED),
     });
-
-    if (this.hasAttribute(ATTRS.ANIMATED)) {
-      this.motionPlayer = createMotionPlayer(this);
-    }
 
     this.render();
   }
@@ -54,8 +53,10 @@ export class VanillaButton extends HTMLElement {
         break;
       case ATTRS.VARIANT:
       case ATTRS.SIZE:
-      case ATTRS.ANIMATED:
         this.render();
+        break;
+      case ATTRS.ANIMATED:
+        this.ensureMotion();
         break;
     }
   }
@@ -91,8 +92,20 @@ export class VanillaButton extends HTMLElement {
     this.buttonEl.onclick = () => {
       this.buttonLogic?.handleClick(new MouseEvent('click'));
       if (this.hasAttribute(ATTRS.ANIMATED)) {
+        this.ensureMotion();
         void this.motionPlayer?.play('pulse');
       }
     };
+  }
+
+  private ensureMotion(): void {
+    if (!this.hasAttribute(ATTRS.ANIMATED) || this.motionPlayer || !this.buttonEl) {
+      return;
+    }
+    void loadMotionPlayer(this.buttonEl).then(player => {
+      if (this.hasAttribute(ATTRS.ANIMATED)) {
+        this.motionPlayer = player;
+      }
+    });
   }
 }

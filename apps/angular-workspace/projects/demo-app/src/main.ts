@@ -3,8 +3,10 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { initializeIcons } from './app/app-icons';
 import { initializeAnimations } from './app/app-animations';
+import { defineAndComponents } from '@andersseen/vanilla-components';
 
 initializeIcons();
 initializeAnimations();
+defineAndComponents();
 
 bootstrapApplication(AppComponent, appConfig).catch(err => console.error(err));

@@ -32,6 +32,10 @@ export const routes: Routes = [
         loadChildren: () => import('./layout.routes'),
       },
       {
+        path: 'vanilla',
+        loadChildren: () => import('./vanilla.routes'),
+      },
+      {
         path: 'docs',
         loadComponent: () => import('./pages/docs/docs-ai.component'),
       },

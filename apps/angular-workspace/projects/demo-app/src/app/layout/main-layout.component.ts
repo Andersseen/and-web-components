@@ -12,6 +12,7 @@ import {
   type Section,
   type SidebarItem,
   THEME_OPTIONS,
+  VANILLA_ITEMS,
 } from './navigation.data';
 import { NavbarDesktopActionsComponent } from './navbar-desktop-actions.component';
 import { NavbarMobileActionsComponent } from './navbar-mobile-actions.component';
@@ -101,6 +102,14 @@ interface SidebarConfig {
               (andSidebarItemClick)="onSidebarItemClick($event)"
             />
           }
+          @case ('vanilla') {
+            <and-sidebar
+              class="bg-background"
+              [items]="vanillaItems"
+              [activeItem]="activeVanilla()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
         }
 
         <div class="flex-1 overflow-y-auto bg-background text-foreground" and-layout="p:xl">
@@ -125,6 +134,8 @@ export class MainLayoutComponent {
 
   readonly layoutItems: SidebarItem[] = LAYOUT_ITEMS;
 
+  readonly vanillaItems: SidebarItem[] = VANILLA_ITEMS;
+
   // ── Theme / Color options ──
   readonly themeOptions = THEME_OPTIONS;
 
@@ -136,6 +147,7 @@ export class MainLayoutComponent {
   readonly activeHeadless = signal('overview');
   readonly activeMotion = signal('attribute');
   readonly activeLayout = signal('overview');
+  readonly activeVanilla = signal('overview');
   readonly currentTheme = signal('default');
   readonly currentColor = signal('indigo-rose');
   readonly isDark = signal(false);
@@ -148,6 +160,7 @@ export class MainLayoutComponent {
     themes: '/themes',
     motion: '/motion',
     layout: '/layout',
+    vanilla: '/vanilla',
     docs: '/docs',
   };
 
@@ -171,6 +184,11 @@ export class MainLayoutComponent {
       items: this.layoutItems,
       active: this.activeLayout,
       route: '/layout',
+    },
+    vanilla: {
+      items: this.vanillaItems,
+      active: this.activeVanilla,
+      route: '/vanilla',
     },
   };
 

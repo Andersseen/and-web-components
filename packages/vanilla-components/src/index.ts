@@ -5,14 +5,14 @@ import { VanillaAccordion } from './components/vanilla-accordion';
 export { VanillaButton, VanillaModal, VanillaAccordion };
 
 export function defineAndComponents(): void {
-  if (!customElements.get('and-button')) {
-    customElements.define('and-button', VanillaButton);
+  if (!customElements.get('and-vanilla-button')) {
+    customElements.define('and-vanilla-button', VanillaButton);
   }
-  if (!customElements.get('and-modal')) {
-    customElements.define('and-modal', VanillaModal);
+  if (!customElements.get('and-vanilla-modal')) {
+    customElements.define('and-vanilla-modal', VanillaModal);
   }
-  if (!customElements.get('and-accordion')) {
-    customElements.define('and-accordion', VanillaAccordion);
+  if (!customElements.get('and-vanilla-accordion')) {
+    customElements.define('and-vanilla-accordion', VanillaAccordion);
   }
 }
 

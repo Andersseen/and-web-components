@@ -16,7 +16,7 @@ angular-components → Auto-generated Angular wrappers (via Stencil output targe
 
 headless-core    →  Pure TypeScript state machines & a11y logic (no UI)
      ↓
-vanilla-components → Native Custom Elements that consume headless-core + motion-core
+vanilla-components → Zero-runtime-dependency native Custom Elements (optional @andersseen/motion)
 ```
 
 Satellite packages (used by all layers):
@@ -36,8 +36,9 @@ Satellite packages (used by all layers):
 3. **Stencil components must subscribe to headless stores if external mutation
    is possible.** Use the `renderTick` pattern (see `and-button.tsx`) or
    callbacks (`onOpenChange`, `onValueChange`) to trigger re-renders.
-4. **Do not add runtime dependencies to `web-components` lightly.** It ships to
-   browsers. Every KB matters.
+4. **Do not add runtime dependencies to `web-components` or `vanilla-components`
+   lightly.** They ship to browsers. Every KB matters. `vanilla-components` must
+   keep zero production dependencies.
 
 ## Adding a New Headless Component
 
@@ -182,7 +183,9 @@ exit animations run (use an `isClosing` flag).
 Location: `packages/vanilla-components/src/components/vanilla-<name>.ts`
 
 - Consume `@andersseen/headless-components` for state and a11y props.
-- Use `@andersseen/motion` for animations via `createMotionPlayer`.
+- **Do not add runtime dependencies.** `vanilla-components` ships with zero
+  production dependencies; `@andersseen/motion` must be loaded dynamically only
+  when the `animated` attribute is present (see `src/utils/motion-loader.ts`).
 - Keep the public API surface small: expose attributes/props/events that match
   the equivalent Stencil component when one exists.
 - Add a Vitest test next to the component file.
@@ -202,13 +205,13 @@ Location: `packages/vanilla-components/src/components/vanilla-<name>.ts`
 
 ## Package Boundaries
 
-| Package              | Can depend on                                  |
-| -------------------- | ---------------------------------------------- |
-| `headless-core`      | Nothing in this repo (only dev deps)           |
-| `icon-library`       | Nothing in this repo                           |
-| `motion-core`        | Nothing in this repo                           |
-| `layout-core`        | Nothing in this repo                           |
-| `web-components`     | `headless-core`, `icon-library`, `motion-core` |
-| `vanilla-components` | `headless-core`, `motion-core`                 |
-| `angular-workspace`  | All `packages/*`                               |
-| `astro-landing`      | All `packages/*`                               |
+| Package              | Can depend on                                                          |
+| -------------------- | ---------------------------------------------------------------------- |
+| `headless-core`      | Nothing in this repo (only dev deps)                                   |
+| `icon-library`       | Nothing in this repo                                                   |
+| `motion-core`        | Nothing in this repo                                                   |
+| `layout-core`        | Nothing in this repo                                                   |
+| `web-components`     | `headless-core`, `icon-library`, `motion-core`                         |
+| `vanilla-components` | None in this repo (peer deps: `headless-core`, optional `motion-core`) |
+| `angular-workspace`  | All `packages/*`                                                       |
+| `astro-landing`      | All `packages/*`                                                       |

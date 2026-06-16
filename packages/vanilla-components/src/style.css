@@ -4,12 +4,94 @@
  * Consumers can also import @andersseen/motion/style.css for animations.
  */
 
-and-button {
+and-vanilla-button {
   display: inline-flex;
 }
 
-and-modal {
+and-vanilla-modal {
   display: contents;
+}
+
+and-vanilla-modal:not(:defined) {
+  display: none;
+}
+
+/* Button */
+.and-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  background-color: #e5e7eb;
+  color: #111827;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.and-button:hover:not(:disabled, .and-button--disabled) {
+  background-color: #d1d5db;
+}
+
+.and-button:disabled,
+.and-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.and-button--primary {
+  background-color: #4f46e5;
+  color: #ffffff;
+}
+
+.and-button--primary:hover:not(:disabled, .and-button--disabled) {
+  background-color: #4338ca;
+}
+
+.and-button--secondary {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.and-button--secondary:hover:not(:disabled, .and-button--disabled) {
+  background-color: #e5e7eb;
+}
+
+.and-button--ghost {
+  background-color: transparent;
+  color: #374151;
+}
+
+.and-button--ghost:hover:not(:disabled, .and-button--disabled) {
+  background-color: #f3f4f6;
+}
+
+.and-button--outline {
+  background-color: transparent;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.and-button--outline:hover:not(:disabled, .and-button--disabled) {
+  background-color: #f3f4f6;
+}
+
+.and-button--sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.and-button--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
 }
 
 .and-modal-backdrop {
@@ -19,18 +101,74 @@ and-modal {
   z-index: 50;
 }
 
-.and-modal-content {
+.and-modal-viewport {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  z-index: 51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.and-modal-content {
+  position: relative;
+  width: min(100%, 32rem);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
   background: white;
   border-radius: 0.5rem;
   padding: 1.5rem;
+  padding-top: 2rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  z-index: 51;
-  min-width: 20rem;
-  max-width: 90vw;
+  pointer-events: auto;
+}
+
+.and-modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.5rem;
+}
+
+.and-modal-body {
+  color: #4b5563;
+}
+
+.and-modal-body > *:first-child {
+  margin-top: 0;
+}
+
+.and-modal-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.and-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.and-modal-close:hover {
+  color: #111827;
+  background-color: #f3f4f6;
 }
 
 .and-accordion-item {

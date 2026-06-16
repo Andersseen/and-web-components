@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { VanillaButton } from './vanilla-button';
 
-if (!customElements.get('and-button')) {
-  customElements.define('and-button', VanillaButton);
+if (!customElements.get('and-vanilla-button')) {
+  customElements.define('and-vanilla-button', VanillaButton);
 }
 
 describe('VanillaButton', () => {
@@ -18,7 +18,7 @@ describe('VanillaButton', () => {
   });
 
   it('renders a button with the provided text', async () => {
-    const el = document.createElement('and-button') as VanillaButton;
+    const el = document.createElement('and-vanilla-button') as VanillaButton;
     el.textContent = 'Click me';
     container.appendChild(el);
 
@@ -26,7 +26,7 @@ describe('VanillaButton', () => {
   });
 
   it('reflects the disabled attribute', async () => {
-    const el = document.createElement('and-button') as VanillaButton;
+    const el = document.createElement('and-vanilla-button') as VanillaButton;
     el.setAttribute('disabled', '');
     container.appendChild(el);
 

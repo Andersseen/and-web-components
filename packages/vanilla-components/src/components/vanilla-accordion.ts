@@ -1,5 +1,5 @@
 import { createAccordion, type AccordionReturn, type AccordionContentProps } from '@andersseen/headless-components';
-import { createMotionPlayer, type MotionPlayer } from '@andersseen/motion';
+import { loadMotionPlayer, type MotionPlayerLike } from '../utils/motion-loader';
 
 const ATTR_ALLOW_MULTIPLE = 'allow-multiple';
 const ATTR_ANIMATED = 'animated';
@@ -8,12 +8,14 @@ const ATTR_ANIMATED = 'animated';
  * `<and-accordion>` — Vanilla custom element accordion backed by the headless accordion.
  *
  * Items are provided as `<div title="..." value="...">...</div>` children.
+ *
+ * Motion is optional: add `animated` and install `@andersseen/motion`.
  */
 export class VanillaAccordion extends HTMLElement {
   static observedAttributes = [ATTR_ALLOW_MULTIPLE, ATTR_ANIMATED];
 
   private accordionLogic: AccordionReturn | null = null;
-  private contentPlayers = new Map<string, MotionPlayer>();
+  private contentPlayers = new Map<string, MotionPlayerLike>();
   private originalItems: Element[] = [];
 
   connectedCallback(): void {
@@ -24,7 +26,9 @@ export class VanillaAccordion extends HTMLElement {
       allowMultiple: this.hasAttribute(ATTR_ALLOW_MULTIPLE),
       onValueChange: () => {
         this.dispatchEvent(new CustomEvent('andValueChange', { bubbles: true, composed: true }));
-        this.render();
+        if (!this.hasAttribute(ATTR_ANIMATED)) {
+          this.render();
+        }
       },
     });
 
@@ -56,6 +60,22 @@ export class VanillaAccordion extends HTMLElement {
     const values = state ? Array.from(state.expandedItems) : [];
 
     this.innerHTML = `
+      <style>
+        :host { display: block; }
+        .and-accordion { border: 1px solid #e5e7eb; border-radius: 0.5rem; overflow: hidden; }
+        .and-accordion-item { border-bottom: 1px solid #e5e7eb; }
+        .and-accordion-item:last-child { border-bottom: none; }
+        .and-accordion-trigger {
+          width: 100%; display: flex; align-items: center; justify-content: space-between;
+          padding: 0.875rem 1rem; background: transparent; border: none; cursor: pointer;
+          font-weight: 500; font-size: 0.9375rem; text-align: left;
+        }
+        .and-accordion-trigger:hover { background: #f9fafb; }
+        .and-accordion-trigger:focus-visible { outline: 2px solid #171717; outline-offset: -2px; }
+        .and-accordion-content { overflow: hidden; }
+        .and-accordion-content[hidden] { display: none; }
+        .and-accordion-content-inner { padding: 0 1rem 1rem; color: #4b5563; }
+      </style>
       <div class="and-accordion" role="region">
         ${this.originalItems
           .map((item, index) => {
@@ -71,10 +91,10 @@ export class VanillaAccordion extends HTMLElement {
               <div class="and-accordion-item" data-value="${value}">
                 <button class="and-accordion-trigger" ${this.attrString(triggerProps)} data-value="${value}">
                   ${title}
-                  <span aria-hidden="true">${isOpen ? '−' : '+'}</span>
+                  <span class="and-accordion-icon" aria-hidden="true">${isOpen ? '−' : '+'}</span>
                 </button>
-                <div class="and-accordion-content" ${this.attrString(contentAttrs)} ${isOpen ? '' : 'hidden'}>
-                  ${item.innerHTML}
+                <div class="and-accordion-content" ${this.attrString(contentAttrs)} ${isOpen ? '' : 'hidden'} data-value="${value}">
+                  <div class="and-accordion-content-inner">${item.innerHTML}</div>
                 </div>
               </div>
             `;
@@ -87,31 +107,37 @@ export class VanillaAccordion extends HTMLElement {
       trigger.addEventListener('click', () => {
         const value = trigger.getAttribute('data-value') ?? '';
         const wasOpen = values.includes(value);
+
         this.accordionLogic?.actions.toggle(value);
 
         if (this.hasAttribute(ATTR_ANIMATED)) {
-          const item = trigger.closest('.and-accordion-item');
-          const content = item?.querySelector('.and-accordion-content') as HTMLElement | null;
-          if (content) {
-            this.ensurePlayer(value, content);
-            void this.contentPlayers.get(value)?.play(wasOpen ? 'fade-out' : 'fade-in');
+          if (wasOpen) {
+            this.render();
+            const content = this.querySelector<HTMLElement>(`.and-accordion-content[data-value="${value}"]`);
+            if (content) {
+              this.ensurePlayer(value, content);
+              void this.contentPlayers.get(value)?.play('fade-out');
+            }
+          } else {
+            this.render();
+            const content = this.querySelector<HTMLElement>(`.and-accordion-content[data-value="${value}"]`);
+            if (content) {
+              this.ensurePlayer(value, content);
+              void this.contentPlayers.get(value)?.play('fade-in');
+            }
           }
         }
       });
     });
-
-    if (this.hasAttribute(ATTR_ANIMATED)) {
-      this.querySelectorAll<HTMLElement>('.and-accordion-content').forEach(content => {
-        const item = content.closest('.and-accordion-item');
-        const value = item?.getAttribute('data-value') ?? '';
-        this.ensurePlayer(value, content);
-      });
-    }
   }
 
   private ensurePlayer(value: string, content: HTMLElement): void {
     if (!this.contentPlayers.has(value)) {
-      this.contentPlayers.set(value, createMotionPlayer(content));
+      loadMotionPlayer(content).then(player => {
+        if (player) {
+          this.contentPlayers.set(value, player);
+        }
+      });
     }
   }
 

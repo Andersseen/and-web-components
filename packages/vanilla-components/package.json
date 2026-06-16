@@ -1,8 +1,9 @@
 {
   "name": "@andersseen/vanilla-components",
   "version": "0.0.1",
-  "description": "Framework-agnostic vanilla web components powered by @andersseen/headless and @andersseen/motion",
+  "description": "Zero-runtime-dependency vanilla web components. Optionally wire @andersseen/motion for animations.",
   "type": "module",
+  "sideEffects": true,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -34,15 +35,24 @@
     "custom-elements",
     "vanilla",
     "typescript",
-    "framework-agnostic"
+    "framework-agnostic",
+    "zero-dependencies"
   ],
   "author": "Andersseen",
   "license": "MIT",
-  "dependencies": {
-    "@andersseen/headless-components": "workspace:*",
-    "@andersseen/motion": "workspace:*"
+  "dependencies": {},
+  "peerDependencies": {
+    "@andersseen/headless-components": ">=0.1.2",
+    "@andersseen/motion": ">=0.1.1"
+  },
+  "peerDependenciesMeta": {
+    "@andersseen/motion": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@andersseen/headless-components": "workspace:*",
+    "@andersseen/motion": "workspace:*",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.1.0",
     "typescript": "^5.3.3",
