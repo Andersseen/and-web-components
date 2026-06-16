@@ -21,7 +21,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json && cp src/style.css dist/style.css",
+    "build": "rm -rf dist dist-cjs && tsc && node ../../scripts/fix-esm-extensions.cjs dist && tsc -p tsconfig.cjs.json && cp src/style.css dist/style.css",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src --ext .ts,.tsx",

@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '@fontsource/inter';
 @import '@andersseen/web-components/dist/web-components/web-components.css';
 @import '@andersseen/layout/dist/layout.css';
 @import '@andersseen/motion/style.css';

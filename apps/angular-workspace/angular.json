@@ -11,11 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/demo-app",
+            "outputPath": "dist/demo-app/browser",
             "index": "projects/demo-app/src/index.html",
-            "browser": "projects/demo-app/src/main.ts",
+            "main": "projects/demo-app/src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "projects/demo-app/tsconfig.app.json",
             "assets": [

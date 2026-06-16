@@ -20,7 +20,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist dist-cjs && tsc && tsc -p tsconfig.cjs.json",
+    "build": "rm -rf dist dist-cjs && tsc && node ../../scripts/fix-esm-extensions.cjs dist && tsc -p tsconfig.cjs.json",
     "clean": "rm -rf dist dist-cjs",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
