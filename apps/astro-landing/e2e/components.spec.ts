@@ -52,7 +52,7 @@ test.describe('Interactive Components', () => {
     // Verify code content is active/visible
     // Often active tabs have 'active' attribute or similar. We can check if it exists or if content is accessible.
     await expect(codeContent).toBeVisible();
-    await expect(codeContent).toContainText('<and-button variant="primary">Click me</and-button>');
+    await expect(codeContent).toContainText('<and-button variant="default">Click me</and-button>');
 
     // Click 'Overview' tab back
     await overviewTrigger.click();

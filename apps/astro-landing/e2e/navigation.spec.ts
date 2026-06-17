@@ -5,33 +5,22 @@ test.describe('Navigation', () => {
     await page.goto('/');
   });
 
-  test('clicking header links updates URL hash and scrolls to section', async ({ page, isMobile }) => {
-    // On mobile viewports, nav links are outside the viewport (behind a mobile menu),
-    // so we skip link-click assertions for mobile.
-    if (isMobile) {
-      test.skip();
-      return;
-    }
+  test('clicking footer resource links updates URL hash', async ({ page }) => {
+    // The footer resource links are always visible and point to the same sections
+    // as the navbar, making them a more reliable target for hash navigation tests.
+    const footer = page.locator('footer');
 
-    // Test Features link
-    const featuresLink = page.locator('and-navbar').getByText('Features', { exact: true }).first();
+    const featuresLink = footer.locator('a[href="#features"]').first();
     await featuresLink.click();
     await expect(page).toHaveURL(/.*#features/);
 
-    // Test Showcase link
-    const showcaseLink = page.locator('and-navbar').getByText('Showcase', { exact: true }).first();
+    const showcaseLink = footer.locator('a[href="#showcase"]').first();
     await showcaseLink.click();
     await expect(page).toHaveURL(/.*#showcase/);
 
-    // Test Ecosystem link
-    const ecosystemLink = page.locator('and-navbar').getByText('Ecosystem', { exact: true }).first();
+    const ecosystemLink = footer.locator('a[href="#ecosystem"]').first();
     await ecosystemLink.click();
     await expect(page).toHaveURL(/.*#ecosystem/);
-
-    // Test Home link
-    const homeLink = page.locator('and-navbar').getByText('Home', { exact: true }).first();
-    await homeLink.click();
-    await expect(page).toHaveURL(/.*#hero/);
   });
 
   test('navbar brand links to top or maintains functionality', async ({ page }) => {

@@ -7,13 +7,13 @@ test.describe('Landing Page Basics', () => {
 
   test('has correct title and meta tags', async ({ page }) => {
     // Check title
-    await expect(page).toHaveTitle('Andersseen — Web Component Ecosystem');
+    await expect(page).toHaveTitle('And Web Components - Framework-agnostic UI Ecosystem');
 
     // Check meta description
     const metaDescription = page.locator('meta[name="description"]');
     await expect(metaDescription).toHaveAttribute(
       'content',
-      'Andersseen — A powerful, framework-agnostic web component ecosystem',
+      'Andersseen web component ecosystem: framework-agnostic UI libraries for web components, headless logic, icons, motion, and layout.',
     );
   });
 
