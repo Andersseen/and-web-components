@@ -69,7 +69,7 @@
   "scripts": {
     "build": "stencil build && node scripts/generate-all-barrel.cjs",
     "start": "stencil build --dev --watch --serve",
-    "test": "vitest run",
+    "test": "node scripts/ensure-built.cjs && vitest run",
     "test:spec": "vitest run --project spec",
     "test:watch": "vitest --watch",
     "lint": "eslint src --ext .ts,.tsx",

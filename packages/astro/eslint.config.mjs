@@ -2,7 +2,7 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 /**
- * ESLint Configuration for web-components package
+ * ESLint Configuration for @andersseen/astro package
  */
 export default [
   eslint.configs.recommended,
@@ -25,8 +25,6 @@ export default [
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
-      '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
       'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
       'prefer-const': 'error',
       'no-var': 'error',
@@ -34,20 +32,9 @@ export default [
       'prefer-template': 'error',
       'eqeqeq': ['warn', 'always'],
       'curly': ['warn', 'all'],
-      'no-constant-binary-expression': 'warn',
     },
   },
   {
-    ignores: [
-      'dist/**',
-      'dist-cjs/**',
-      'www/**',
-      'loader/**',
-      'collection/**',
-      'node_modules/**',
-      '**/*.d.ts',
-      '**/*.stories.ts',
-      '.storybook/**',
-    ],
+    ignores: ['dist/**', 'node_modules/**', '**/*.d.ts'],
   },
 ];
