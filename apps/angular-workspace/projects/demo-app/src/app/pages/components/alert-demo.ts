@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndAlert, AndIcon } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-alert-demo',
-  imports: [AndAlert, AndIcon],
+  imports: [AndAlert, AndIcon, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -66,24 +67,19 @@ import { AndAlert, AndIcon } from '@angular-components/stencil-generated/compone
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-alert variant="default"&gt;
-  &lt;and-icon slot="icon" name="info" size="18"&gt;&lt;/and-icon&gt;
-  This is a default alert message.
-&lt;/and-alert&gt;
-
-&lt;and-alert variant="destructive" dismissible&gt;
-  &lt;and-icon slot="icon" name="alert-circle" size="18"&gt;&lt;/and-icon&gt;
-  This alert can be dismissed.
-&lt;/and-alert&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class AlertDemo {}
+export default class AlertDemo {
+  templateCode = `<and-alert variant="default">
+  <and-icon slot="icon" name="info" size="18"></and-icon>
+  This is a default alert message.
+</and-alert>
+
+<and-alert variant="destructive" dismissible>
+  <and-icon slot="icon" name="alert-circle" size="18"></and-icon>
+  This alert can be dismissed.
+</and-alert>`;
+}

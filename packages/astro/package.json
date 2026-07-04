@@ -1,0 +1,50 @@
+{
+  "name": "@andersseen/astro",
+  "version": "0.0.1",
+  "description": "Astro integration for @andersseen/web-components",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fix-esm-extensions.cjs dist",
+    "test": "vitest run",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\""
+  },
+  "peerDependencies": {
+    "astro": ">=4.0.0"
+  },
+  "devDependencies": {
+    "astro": "^5.7.10",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.0"
+  },
+  "keywords": [
+    "astro",
+    "integration",
+    "web-components"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/astro"
+  }
+}

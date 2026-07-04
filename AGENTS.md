@@ -25,6 +25,11 @@ Satellite packages (used by all layers):
 - `motion-core` — Attribute-driven animation system + imperative `MotionPlayer`
 - `layout-core` — CSS layout primitives compiled from SCSS
 
+Framework-specific integrations:
+
+- `astro` — Official Astro integration that injects custom element and icon
+  registration scripts automatically
+
 ## Golden Rules
 
 1. **Headless-core must remain framework-agnostic.** Never import Stencil,
@@ -215,3 +220,4 @@ Location: `packages/vanilla-components/src/components/vanilla-<name>.ts`
 | `vanilla-components` | None in this repo (peer deps: `headless-core`, optional `motion-core`) |
 | `angular-workspace`  | All `packages/*`                                                       |
 | `astro-landing`      | All `packages/*`                                                       |
+| `astro`              | `web-components`, `icon-library` (peer/dev only)                       |

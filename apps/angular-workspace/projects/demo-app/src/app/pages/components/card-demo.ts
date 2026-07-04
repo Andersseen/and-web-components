@@ -1,3 +1,4 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import {
   AndCard,
@@ -11,7 +12,16 @@ import {
 
 @Component({
   selector: 'app-card-demo',
-  imports: [AndCard, AndCardHeader, AndCardTitle, AndCardDescription, AndCardContent, AndCardFooter, AndButton],
+  imports: [
+    AndCard,
+    AndCardHeader,
+    AndCardTitle,
+    AndCardDescription,
+    AndCardContent,
+    AndCardFooter,
+    AndButton,
+    DemoCodeBlockComponent,
+  ],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -180,51 +190,34 @@ import {
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Structured</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-card&gt;
-  &lt;and-card-header&gt;
-    &lt;and-card-title&gt;Card Title&lt;/and-card-title&gt;
-    &lt;and-card-description&gt;Optional subtitle.&lt;/and-card-description&gt;
-  &lt;/and-card-header&gt;
-  &lt;and-card-content&gt;
-    &lt;p&gt;Body content here.&lt;/p&gt;
-  &lt;/and-card-content&gt;
-  &lt;and-card-footer&gt;
-    &lt;and-button variant="outline"&gt;Cancel&lt;/and-button&gt;
-    &lt;and-button&gt;Save&lt;/and-button&gt;
-  &lt;/and-card-footer&gt;
-&lt;/and-card&gt;</code></pre>
-        </div>
+        <demo-code-block label="Structured" [code]="structuredCode" />
 
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Simple (padded)</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-card padded&gt;
-  &lt;p&gt;Quick content without sub-components.&lt;/p&gt;
-&lt;/and-card&gt;</code></pre>
-        </div>
+        <demo-code-block label="Simple (padded)" [code]="simplePaddedCode" />
 
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Variants</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-card variant="elevated"&gt;...&lt;/and-card&gt;
-&lt;and-card variant="outline"&gt;...&lt;/and-card&gt;
-&lt;and-card variant="ghost"&gt;...&lt;/and-card&gt;
-&lt;and-card variant="destructive"&gt;...&lt;/and-card&gt;</code></pre>
-        </div>
+        <demo-code-block label="Variants" [code]="variantsCode" />
       </section>
     </div>
   `,
 })
-export default class CardDemo {}
+export default class CardDemo {
+  structuredCode = `<and-card>
+  <and-card-header>
+    <and-card-title>Card Title</and-card-title>
+    <and-card-description>Optional subtitle.</and-card-description>
+  </and-card-header>
+  <and-card-content>
+    <p>Body content here.</p>
+  </and-card-content>
+  <and-card-footer>
+    <and-button variant="outline">Cancel</and-button>
+    <and-button>Save</and-button>
+  </and-card-footer>
+</and-card>`;
+  simplePaddedCode = `<and-card padded>
+  <p>Quick content without sub-components.</p>
+</and-card>`;
+  variantsCode = `<and-card variant="elevated">...</and-card>
+<and-card variant="outline">...</and-card>
+<and-card variant="ghost">...</and-card>
+<and-card variant="destructive">...</and-card>`;
+}

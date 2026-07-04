@@ -19,6 +19,18 @@ export default defineVitestConfig({
           },
         },
       },
+      {
+        test: {
+          name: 'integration',
+          include: ['src/__tests__/**/*.test.ts'],
+          environment: 'node',
+        },
+        resolve: {
+          alias: {
+            '@andersseen/icon': path.resolve(__dirname, '../icon-library/dist/index.js'),
+          },
+        },
+      },
     ],
   },
 });

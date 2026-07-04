@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndCarousel, AndCarouselItem } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-carousel-demo',
-  imports: [AndCarousel, AndCarouselItem],
+  imports: [AndCarousel, AndCarouselItem, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -93,21 +94,7 @@ import { AndCarousel, AndCarouselItem } from '@angular-components/stencil-genera
       <!-- Usage Code -->
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-carousel autoplay="true"&gt;
-  &lt;and-carousel-item&gt;
-    &lt;div&gt;Slide 1 content&lt;/div&gt;
-  &lt;/and-carousel-item&gt;
-  &lt;and-carousel-item&gt;
-    &lt;div&gt;Slide 2 content&lt;/div&gt;
-  &lt;/and-carousel-item&gt;
-&lt;/and-carousel&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
 
       <!-- Features -->
@@ -137,4 +124,13 @@ import { AndCarousel, AndCarouselItem } from '@angular-components/stencil-genera
     </div>
   `,
 })
-export default class CarouselDemo {}
+export default class CarouselDemo {
+  templateCode = `<and-carousel autoplay="true">
+  <and-carousel-item>
+    <div>Slide 1 content</div>
+  </and-carousel-item>
+  <and-carousel-item>
+    <div>Slide 2 content</div>
+  </and-carousel-item>
+</and-carousel>`;
+}

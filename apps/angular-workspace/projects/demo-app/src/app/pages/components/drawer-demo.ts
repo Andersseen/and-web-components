@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
 import { AndDrawer, AndButton } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-drawer-demo',
-  imports: [AndDrawer, AndButton],
+  imports: [AndDrawer, AndButton, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -68,19 +69,7 @@ import { AndDrawer, AndButton } from '@angular-components/stencil-generated/comp
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-button (click)="isOpen = true"&gt;Open&lt;/and-button&gt;
-
-&lt;and-drawer [open]="isOpen" placement="right" (andDrawerClose)="isOpen = false"&gt;
-  &lt;h3 slot="header"&gt;Drawer Title&lt;/h3&gt;
-  &lt;p&gt;Drawer content goes here.&lt;/p&gt;
-&lt;/and-drawer&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
@@ -98,4 +87,11 @@ export default class DrawerDemo {
   closeDrawer() {
     this.drawerOpen.set(false);
   }
+
+  templateCode = `<and-button (click)="isOpen = true">Open</and-button>
+
+<and-drawer [open]="isOpen" placement="right" (andDrawerClose)="isOpen = false">
+  <h3 slot="header">Drawer Title</h3>
+  <p>Drawer content goes here.</p>
+</and-drawer>`;
 }

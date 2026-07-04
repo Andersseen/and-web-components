@@ -75,6 +75,10 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/sidebar-demo'),
   },
   {
+    path: 'skeleton',
+    loadComponent: () => import('./pages/components/skeleton-demo'),
+  },
+  {
     path: 'tabs',
     loadComponent: () => import('./pages/components/tabs-demo'),
   },

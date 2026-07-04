@@ -1,3 +1,4 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -9,7 +10,14 @@ import {
 
 @Component({
   selector: 'app-accordion-demo',
-  imports: [AndAccordion, AndAccordionItem, AndAccordionTrigger, AndAccordionContent, FormsModule],
+  imports: [
+    AndAccordion,
+    AndAccordionItem,
+    AndAccordionTrigger,
+    AndAccordionContent,
+    FormsModule,
+    DemoCodeBlockComponent,
+  ],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -79,21 +87,7 @@ import {
       <!-- Usage Code -->
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-accordion [allowMultiple]="true"&gt;
-  &lt;and-accordion-item value="item-1"&gt;
-    &lt;and-accordion-trigger&gt;Section Title&lt;/and-accordion-trigger&gt;
-    &lt;and-accordion-content&gt;
-      Content goes here...
-    &lt;/and-accordion-content&gt;
-  &lt;/and-accordion-item&gt;
-&lt;/and-accordion&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
 
       <!-- Features -->
@@ -126,4 +120,13 @@ import {
 export default class AccordionDemo {
   allowMultiple = signal(false);
   disabled = signal(false);
+
+  templateCode = `<and-accordion [allowMultiple]="true">
+  <and-accordion-item value="item-1">
+    <and-accordion-trigger>Section Title</and-accordion-trigger>
+    <and-accordion-content>
+      Content goes here...
+    </and-accordion-content>
+  </and-accordion-item>
+</and-accordion>`;
 }

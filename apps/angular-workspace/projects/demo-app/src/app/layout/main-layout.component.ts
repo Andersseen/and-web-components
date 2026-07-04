@@ -1,5 +1,13 @@
 import { AndIcon, AndNavbar, AndSidebar } from '@angular-components/stencil-generated/components';
-import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+  WritableSignal,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import {
@@ -30,10 +38,12 @@ interface SidebarConfig {
   template: `
     <div class="h-screen overflow-hidden bg-background text-foreground" and-layout="vertical">
       <and-navbar
+        #mainNavbar
         class="bg-background"
         style="--navbar-max-width: 100%; --navbar-px: 0.5rem; --navbar-px-sm: 0.75rem; --navbar-px-lg: 1rem"
         [items]="navItems"
         [activeItem]="activeSection()"
+        active-mode="manual"
         [autoCollapse]="false"
         [compactBreakpoint]="0"
         [minimalBreakpoint]="0"
@@ -72,6 +82,7 @@ interface SidebarConfig {
         @switch (activeSection()) {
           @case ('components') {
             <and-sidebar
+              #mainSidebar
               class="bg-background"
               [items]="componentItems"
               [activeItem]="activeComponent()"
@@ -80,6 +91,7 @@ interface SidebarConfig {
           }
           @case ('headless') {
             <and-sidebar
+              #mainSidebar
               class="bg-background"
               [items]="headlessItems"
               [activeItem]="activeHeadless()"
@@ -88,6 +100,7 @@ interface SidebarConfig {
           }
           @case ('motion') {
             <and-sidebar
+              #mainSidebar
               class="bg-background"
               [items]="motionItems"
               [activeItem]="activeMotion()"
@@ -96,6 +109,7 @@ interface SidebarConfig {
           }
           @case ('layout') {
             <and-sidebar
+              #mainSidebar
               class="bg-background"
               [items]="layoutItems"
               [activeItem]="activeLayout()"
@@ -104,6 +118,7 @@ interface SidebarConfig {
           }
           @case ('vanilla') {
             <and-sidebar
+              #mainSidebar
               class="bg-background"
               [items]="vanillaItems"
               [activeItem]="activeVanilla()"
@@ -121,6 +136,9 @@ interface SidebarConfig {
 })
 export class MainLayoutComponent {
   private readonly router = inject(Router);
+
+  @ViewChild('mainNavbar', { read: ElementRef }) mainNavbarRef?: ElementRef<HTMLElement>;
+  @ViewChild('mainSidebar', { read: ElementRef }) mainSidebarRef?: ElementRef<HTMLElement>;
 
   // ── Navigation ──
   readonly navItems = NAV_ITEMS;
@@ -219,6 +237,10 @@ export class MainLayoutComponent {
   }
 
   onNavItemClick(event: CustomEvent<unknown>) {
+    // Ignore events bubbled up from nested navbars inside demo components.
+    if (event.target !== this.mainNavbarRef?.nativeElement) {
+      return;
+    }
     const section = event.detail;
     if (!this.isSection(section)) return;
     this.activeSection.set(section);
@@ -226,6 +248,10 @@ export class MainLayoutComponent {
   }
 
   onSidebarItemClick(event: CustomEvent<unknown>) {
+    // Ignore events bubbled up from nested sidebars inside demo components.
+    if (event.target !== this.mainSidebarRef?.nativeElement) {
+      return;
+    }
     const config = this.sidebarConfig[this.activeSection()];
     if (!config) return;
     if (typeof event.detail !== 'string' || event.detail.length === 0) return;

@@ -13,11 +13,11 @@ export const routes: Routes = [
       },
       {
         path: 'components',
-        loadChildren: () => import('./components.routes'),
+        loadChildren: () => import('./components.routes').then(m => m.default),
       },
       {
         path: 'headless',
-        loadChildren: () => import('./headless.routes'),
+        loadChildren: () => import('./headless.routes').then(m => m.default),
       },
       {
         path: 'icons',
@@ -25,15 +25,15 @@ export const routes: Routes = [
       },
       {
         path: 'motion',
-        loadChildren: () => import('./motion.routes'),
+        loadChildren: () => import('./motion.routes').then(m => m.default),
       },
       {
         path: 'layout',
-        loadChildren: () => import('./layout.routes'),
+        loadChildren: () => import('./layout.routes').then(m => m.default),
       },
       {
         path: 'vanilla',
-        loadChildren: () => import('./vanilla.routes'),
+        loadChildren: () => import('./vanilla.routes').then(m => m.default),
       },
       {
         path: 'docs',

@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
 import { AndButton, AndModal } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-modal-demo',
-  imports: [AndButton, AndModal],
+  imports: [AndButton, AndModal, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -82,20 +83,7 @@ import { AndButton, AndModal } from '@angular-components/stencil-generated/compo
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-button (click)="isOpen = true"&gt;Open Modal&lt;/and-button&gt;
-
-&lt;and-modal [open]="isOpen" (myClose)="isOpen = false"&gt;
-  &lt;h3&gt;Title&lt;/h3&gt;
-  &lt;p&gt;Modal content goes here.&lt;/p&gt;
-  &lt;and-button (click)="isOpen = false"&gt;Close&lt;/and-button&gt;
-&lt;/and-modal&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
@@ -111,4 +99,12 @@ export default class ModalDemo {
   openConfirm() {
     this.confirmOpen.set(true);
   }
+
+  templateCode = `<and-button (click)="isOpen = true">Open Modal</and-button>
+
+<and-modal [open]="isOpen" (myClose)="isOpen = false">
+  <h3>Title</h3>
+  <p>Modal content goes here.</p>
+  <and-button (click)="isOpen = false">Close</and-button>
+</and-modal>`;
 }

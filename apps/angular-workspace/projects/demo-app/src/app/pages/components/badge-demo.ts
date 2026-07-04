@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndBadge } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-badge-demo',
-  imports: [AndBadge],
+  imports: [AndBadge, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -59,19 +60,14 @@ import { AndBadge } from '@angular-components/stencil-generated/components';
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-badge variant="default"&gt;Default&lt;/and-badge&gt;
-&lt;and-badge variant="secondary"&gt;Secondary&lt;/and-badge&gt;
-&lt;and-badge variant="destructive"&gt;Destructive&lt;/and-badge&gt;
-&lt;and-badge variant="outline"&gt;Outline&lt;/and-badge&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class BadgeDemo {}
+export default class BadgeDemo {
+  templateCode = `<and-badge variant="default">Default</and-badge>
+<and-badge variant="secondary">Secondary</and-badge>
+<and-badge variant="destructive">Destructive</and-badge>
+<and-badge variant="outline">Outline</and-badge>`;
+}
