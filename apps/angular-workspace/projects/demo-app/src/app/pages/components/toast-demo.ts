@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component, ViewChild } from '@angular/core';
 import { AndButton, AndToast } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-toast-demo',
-  imports: [AndToast, AndButton],
+  imports: [AndToast, AndButton, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -69,27 +70,8 @@ import { AndButton, AndToast } from '@angular-components/stencil-generated/compo
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-button (click)="showToast()"&gt;Show Toast&lt;/and-button&gt;
-&lt;and-toast #toast&gt;&lt;/and-toast&gt;</code></pre>
-        </div>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Component</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&#64;ViewChild('toast') toast!: AndToast;
-
-async showToast() {{ '{' }}
-  await this.toast.present('Message!', 'success');
-{{ '}' }}</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
+        <demo-code-block label="Component" [code]="componentCode" />
       </section>
     </div>
   `,
@@ -107,4 +89,12 @@ export default class ToastDemo {
       await this.toastElement.present(messages[type] || messages['default'], type as any);
     }
   }
+
+  templateCode = `<and-button (click)="showToast()">Show Toast</and-button>
+<and-toast #toast></and-toast>`;
+  componentCode = `&#64;ViewChild('toast') toast!: AndToast;
+
+async showToast() {{ '{' }}
+  await this.toast.present('Message!', 'success');
+{{ '}' }}`;
 }

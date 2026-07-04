@@ -1,3 +1,4 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import {
   AndButton,
@@ -11,7 +12,16 @@ import {
 
 @Component({
   selector: 'app-navbar-demo',
-  imports: [AndButton, AndIcon, AndNavbar, AndTabs, AndTabsList, AndTabsTrigger, AndTabsContent],
+  imports: [
+    AndButton,
+    AndIcon,
+    AndNavbar,
+    AndTabs,
+    AndTabsList,
+    AndTabsTrigger,
+    AndTabsContent,
+    DemoCodeBlockComponent,
+  ],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -356,25 +366,7 @@ import {
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"><code>&lt;and-navbar
-  [items]="navItems"
-  [activeItem]="active"
-  variant="default"
-  itemVariant="underline"
-  [compactBreakpoint]="1024"
-  [minimalBreakpoint]="768"
-  [mobileBreakpoint]="640"
-&gt;
-  &lt;span slot="start"&gt;My App&lt;/span&gt;
-  &lt;div slot="end"&gt;
-    &lt;and-button size="sm"&gt;Sign Up&lt;/and-button&gt;
-  &lt;/div&gt;
-&lt;/and-navbar&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
@@ -420,4 +412,19 @@ export default class NavbarDemo {
     { id: 'm2', label: 'Mobile Item 2' },
     { id: 'm3', label: 'Mobile Item 3' },
   ]);
+
+  templateCode = `<and-navbar
+  [items]="navItems"
+  [activeItem]="active"
+  variant="default"
+  itemVariant="underline"
+  [compactBreakpoint]="1024"
+  [minimalBreakpoint]="768"
+  [mobileBreakpoint]="640"
+>
+  <span slot="start">My App</span>
+  <div slot="end">
+    <and-button size="sm">Sign Up</and-button>
+  </div>
+</and-navbar>`;
 }

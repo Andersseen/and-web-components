@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndBreadcrumb, AndBreadcrumbItem } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-breadcrumb-demo',
-  imports: [AndBreadcrumb, AndBreadcrumbItem],
+  imports: [AndBreadcrumb, AndBreadcrumbItem, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -86,20 +87,15 @@ import { AndBreadcrumb, AndBreadcrumbItem } from '@angular-components/stencil-ge
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-breadcrumb size="md"&gt;
-  &lt;and-breadcrumb-item href="/" hideSeparator&gt;Home&lt;/and-breadcrumb-item&gt;
-  &lt;and-breadcrumb-item href="/components"&gt;Components&lt;/and-breadcrumb-item&gt;
-  &lt;and-breadcrumb-item current&gt;Breadcrumb&lt;/and-breadcrumb-item&gt;
-&lt;/and-breadcrumb&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class BreadcrumbDemo {}
+export default class BreadcrumbDemo {
+  templateCode = `<and-breadcrumb size="md">
+  <and-breadcrumb-item href="/" hideSeparator>Home</and-breadcrumb-item>
+  <and-breadcrumb-item href="/components">Components</and-breadcrumb-item>
+  <and-breadcrumb-item current>Breadcrumb</and-breadcrumb-item>
+</and-breadcrumb>`;
+}

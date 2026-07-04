@@ -40,6 +40,7 @@ export const COMPONENT_ITEMS: SidebarItem[] = [
   { id: 'pagination', label: 'Pagination', icon: 'list-ordered' },
   { id: 'select', label: 'Select', icon: 'chevron-down' },
   { id: 'sidebar', label: 'Sidebar', icon: 'panel-left-open' },
+  { id: 'skeleton', label: 'Skeleton', icon: 'loader' },
   { id: 'tabs', label: 'Tabs', icon: 'folder-open' },
   { id: 'toast', label: 'Toast', icon: 'bell' },
   { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },

@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-context-menu-demo',
-  imports: [AndContextMenu, AndMenuList, AndMenuItem, AndIcon],
+  imports: [AndContextMenu, AndMenuList, AndMenuItem, AndIcon, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -99,25 +100,20 @@ import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@angular-comp
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-context-menu&gt;
-  &lt;div slot="trigger" class="..."&gt;Right-click here&lt;/div&gt;
-
-  &lt;and-menu-list ariaMenuLabel="Actions"&gt;
-    &lt;and-menu-item value="cut"&gt;Cut&lt;/and-menu-item&gt;
-    &lt;and-menu-item value="copy"&gt;Copy&lt;/and-menu-item&gt;
-    &lt;and-menu-item value="paste"&gt;Paste&lt;/and-menu-item&gt;
-    &lt;and-menu-item value="delete" intent="destructive"&gt;Delete&lt;/and-menu-item&gt;
-  &lt;/and-menu-list&gt;
-&lt;/and-context-menu&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class ContextMenuDemo {}
+export default class ContextMenuDemo {
+  templateCode = `<and-context-menu>
+  <div slot="trigger" class="...">Right-click here</div>
+
+  <and-menu-list ariaMenuLabel="Actions">
+    <and-menu-item value="cut">Cut</and-menu-item>
+    <and-menu-item value="copy">Copy</and-menu-item>
+    <and-menu-item value="paste">Paste</and-menu-item>
+    <and-menu-item value="delete" intent="destructive">Delete</and-menu-item>
+  </and-menu-list>
+</and-context-menu>`;
+}

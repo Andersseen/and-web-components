@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
 import { AndButton } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-button-demo',
-  imports: [AndButton],
+  imports: [AndButton, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -81,26 +82,7 @@ import { AndButton } from '@angular-components/stencil-generated/components';
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;!-- Variants --&gt;
-&lt;and-button variant="default"&gt;Default&lt;/and-button&gt;
-&lt;and-button variant="destructive"&gt;Destructive&lt;/and-button&gt;
-&lt;and-button variant="outline"&gt;Outline&lt;/and-button&gt;
-&lt;and-button variant="secondary"&gt;Secondary&lt;/and-button&gt;
-&lt;and-button variant="ghost"&gt;Ghost&lt;/and-button&gt;
-&lt;and-button variant="link"&gt;Link&lt;/and-button&gt;
-
-&lt;!-- Sizes --&gt;
-&lt;and-button size="sm"&gt;Small&lt;/and-button&gt;
-&lt;and-button size="default"&gt;Default&lt;/and-button&gt;
-&lt;and-button size="lg"&gt;Large&lt;/and-button&gt;
-&lt;and-button size="icon"&gt;🚀&lt;/and-button&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
@@ -115,4 +97,18 @@ export default class ButtonDemo {
   resetCount() {
     this.clickCount.set(0);
   }
+
+  templateCode = `<!-- Variants -->
+<and-button variant="default">Default</and-button>
+<and-button variant="destructive">Destructive</and-button>
+<and-button variant="outline">Outline</and-button>
+<and-button variant="secondary">Secondary</and-button>
+<and-button variant="ghost">Ghost</and-button>
+<and-button variant="link">Link</and-button>
+
+<!-- Sizes -->
+<and-button size="sm">Small</and-button>
+<and-button size="default">Default</and-button>
+<and-button size="lg">Large</and-button>
+<and-button size="icon">🚀</and-button>`;
 }

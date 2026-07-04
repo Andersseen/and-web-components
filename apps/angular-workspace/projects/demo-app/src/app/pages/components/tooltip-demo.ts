@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndButton, AndTooltip } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tooltip-demo',
-  imports: [AndButton, AndTooltip],
+  imports: [AndButton, AndTooltip, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -126,20 +127,15 @@ import { AndButton, AndTooltip } from '@angular-components/stencil-generated/com
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-tooltip content="Tooltip text" placement="top"&gt;
-  &lt;and-button&gt;Hover me&lt;/and-button&gt;
-&lt;/and-tooltip&gt;
-
-&lt;!-- Placements: top | right | bottom | left --&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class TooltipDemo {}
+export default class TooltipDemo {
+  templateCode = `<and-tooltip content="Tooltip text" placement="top">
+  <and-button>Hover me</and-button>
+</and-tooltip>
+
+<!-- Placements: top | right | bottom | left -->`;
+}

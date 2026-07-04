@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-tabs-demo',
-  imports: [AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger],
+  imports: [AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -88,27 +89,22 @@ import { AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger } from '@angular-c
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-tabs value="tab1"&gt;
-  &lt;and-tabs-list&gt;
-    &lt;and-tabs-trigger value="tab1"&gt;Tab 1&lt;/and-tabs-trigger&gt;
-    &lt;and-tabs-trigger value="tab2"&gt;Tab 2&lt;/and-tabs-trigger&gt;
-  &lt;/and-tabs-list&gt;
-  &lt;and-tabs-content value="tab1"&gt;
-    Content for tab 1
-  &lt;/and-tabs-content&gt;
-  &lt;and-tabs-content value="tab2"&gt;
-    Content for tab 2
-  &lt;/and-tabs-content&gt;
-&lt;/and-tabs&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class TabsDemo {}
+export default class TabsDemo {
+  templateCode = `<and-tabs value="tab1">
+  <and-tabs-list>
+    <and-tabs-trigger value="tab1">Tab 1</and-tabs-trigger>
+    <and-tabs-trigger value="tab2">Tab 2</and-tabs-trigger>
+  </and-tabs-list>
+  <and-tabs-content value="tab1">
+    Content for tab 1
+  </and-tabs-content>
+  <and-tabs-content value="tab2">
+    Content for tab 2
+  </and-tabs-content>
+</and-tabs>`;
+}

@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndSidebar } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-sidebar-demo',
-  imports: [AndSidebar],
+  imports: [AndSidebar, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -144,40 +145,8 @@ import { AndSidebar } from '@angular-components/stencil-generated/components';
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-sidebar
-  [items]="sidebarItems"
-  [activeItem]="activeItem"
-  variant="default"
-  [mobileCollapse]="true"
-  [mobileBreakpoint]="768"
-  (andSidebarItemClick)="onItemClick($event)"
-&gt;
-  &lt;div slot="footer"&gt;
-    &lt;!-- Custom footer content --&gt;
-  &lt;/div&gt;
-&lt;/and-sidebar&gt;</code></pre>
-        </div>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm mt-4">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Component</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>sidebarItems = [
-  {{ '{' }} id: 'dashboard', label: 'Dashboard', icon: 'layout' {{ '}' }},
-  {{ '{' }} id: 'analytics', label: 'Analytics', icon: 'bar-chart' {{ '}' }},
-  {{ '{' }} id: 'users', label: 'Users', icon: 'users' {{ '}' }},
-  // Bottom section items
-  {{ '{' }} id: 'settings', label: 'Settings', icon: 'sliders', section: 'bottom' {{ '}' }},
-  {{ '{' }} id: 'profile', label: 'Profile', icon: 'user', section: 'bottom' {{ '}' }},
-];</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
+        <demo-code-block label="Component" [code]="componentCode" />
       </section>
     </div>
   `,
@@ -210,4 +179,25 @@ export default class SidebarDemo {
     { name: 'Underline — left accent bar', value: 'underline' },
     { name: 'Filled — solid primary bg', value: 'filled' },
   ];
+
+  templateCode = `<and-sidebar
+  [items]="sidebarItems"
+  [activeItem]="activeItem"
+  variant="default"
+  [mobileCollapse]="true"
+  [mobileBreakpoint]="768"
+  (andSidebarItemClick)="onItemClick($event)"
+>
+  <div slot="footer">
+    <!-- Custom footer content -->
+  </div>
+</and-sidebar>`;
+  componentCode = `sidebarItems = [
+  {{ '{' }} id: 'dashboard', label: 'Dashboard', icon: 'layout' {{ '}' }},
+  {{ '{' }} id: 'analytics', label: 'Analytics', icon: 'bar-chart' {{ '}' }},
+  {{ '{' }} id: 'users', label: 'Users', icon: 'users' {{ '}' }},
+  // Bottom section items
+  {{ '{' }} id: 'settings', label: 'Settings', icon: 'sliders', section: 'bottom' {{ '}' }},
+  {{ '{' }} id: 'profile', label: 'Profile', icon: 'user', section: 'bottom' {{ '}' }},
+];`;
 }

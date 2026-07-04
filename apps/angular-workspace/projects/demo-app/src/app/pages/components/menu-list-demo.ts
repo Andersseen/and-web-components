@@ -1,9 +1,10 @@
+import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
 import { AndMenuList, AndMenuItem, AndIcon } from '@angular-components/stencil-generated/components';
 
 @Component({
   selector: 'app-menu-list-demo',
-  imports: [AndMenuList, AndMenuItem, AndIcon],
+  imports: [AndMenuList, AndMenuItem, AndIcon, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <!-- Header -->
@@ -91,21 +92,16 @@ import { AndMenuList, AndMenuItem, AndIcon } from '@angular-components/stencil-g
       <!-- Usage Code -->
       <section>
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Usage</h2>
-        <div class="rounded-xl border border-border overflow-x-auto shadow-sm">
-          <div class="bg-muted/50 px-5 py-3 border-b border-border">
-            <span class="text-xs font-medium text-muted-foreground tracking-wide uppercase">Template</span>
-          </div>
-          <pre
-            class="m-0 p-5 font-mono text-[13px] leading-relaxed text-foreground/80 bg-muted/20"
-          ><code>&lt;and-menu-list ariaMenuLabel="Actions"&gt;
-  &lt;and-menu-item value="edit"&gt;Edit&lt;/and-menu-item&gt;
-  &lt;and-menu-item value="duplicate"&gt;Duplicate&lt;/and-menu-item&gt;
-  &lt;and-menu-item value="delete" intent="destructive"&gt;Delete&lt;/and-menu-item&gt;
-  &lt;and-menu-item value="locked" disabled&gt;Locked&lt;/and-menu-item&gt;
-&lt;/and-menu-list&gt;</code></pre>
-        </div>
+        <demo-code-block label="Template" [code]="templateCode" />
       </section>
     </div>
   `,
 })
-export default class MenuListDemo {}
+export default class MenuListDemo {
+  templateCode = `<and-menu-list ariaMenuLabel="Actions">
+  <and-menu-item value="edit">Edit</and-menu-item>
+  <and-menu-item value="duplicate">Duplicate</and-menu-item>
+  <and-menu-item value="delete" intent="destructive">Delete</and-menu-item>
+  <and-menu-item value="locked" disabled>Locked</and-menu-item>
+</and-menu-list>`;
+}
