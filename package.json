@@ -33,7 +33,7 @@
     "lint:fix": "pnpm -r lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,md,scss,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,md,scss,css}\"",
-    "storybook": "pnpm -C packages/web-components storybook",
+    "storybook": "node scripts/ensure-storybook-deps.cjs && pnpm -C packages/web-components storybook",
     "build-storybook": "pnpm -C packages/web-components build-storybook",
     "prepare": "husky",
     "deploy:storybook": "pnpm build-storybook && wrangler pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook",

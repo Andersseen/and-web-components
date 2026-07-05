@@ -108,6 +108,7 @@ Add these secrets to your GitHub repository:
    - Zone:Read (for Pages)
    - Workers Scripts:Edit
    - Account:Read
+   - Account:Edit (needed to create Pages projects from CI)
    - Cloudflare Pages:Edit
 6. Copy the token and add to GitHub secrets
 
@@ -158,7 +159,7 @@ Before running `pnpm deploy:all`:
 - [ ] `pnpm build:all` - All packages build successfully
 - [ ] `pnpm lint` - No linting errors
 - [ ] `pnpm test:headless` - All tests pass
-- [ ] Cloudflare Pages projects created:
+- [ ] Cloudflare Pages projects created (CI will auto-create them if missing):
   - `and-web-components-storybook`
   - `and-web-components-landing`
   - `and-web-components-demo`
@@ -174,7 +175,11 @@ wrangler login
 
 ### "Project not found"
 
-Create the project first in Cloudflare Dashboard:
+GitHub Actions now attempts to create Cloudflare Pages projects automatically
+before deploying. If a deploy still fails with "Project not found", verify that
+`CLOUDFLARE_API_TOKEN` has the `Cloudflare Pages:Edit` permission.
+
+To create a project manually:
 
 1. Go to [Cloudflare Pages](https://dash.cloudflare.com/pages)
 2. Click "Create a project"

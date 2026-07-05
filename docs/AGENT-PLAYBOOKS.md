@@ -105,7 +105,7 @@ returns nothing).
 pnpm build:stencil                          # must succeed; regenerates readme.md, components.d.ts, Angular wrappers
 pnpm -C packages/web-components test:spec
 pnpm -C packages/web-components lint
-pnpm storybook                              # open the new story; check the a11y addon panel
+pnpm storybook                              # auto-builds missing deps on first run; open the new story and check the a11y addon panel
 ```
 
 **Definition of Done:** build + specs + lint pass; story renders in Storybook
@@ -164,8 +164,10 @@ existing theme file (same variable set, light + dark), then add the subpath
 export in `packages/web-components/package.json`
 (`"./<name>": "./themes/<name>.css"`).
 
-**Verify:** `pnpm build:stencil && pnpm storybook` — toggle the theme in a story
-and check both light and dark modes.
+**Verify:** `pnpm build:stencil && pnpm storybook` — rebuild after theme/token
+changes, then toggle the theme in a story and check both light and dark modes.
+(Note: `pnpm storybook` alone auto-builds missing artifacts after a fresh
+clone.)
 
 ---
 

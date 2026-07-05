@@ -94,6 +94,32 @@ jobs:
       - name: Build Storybook
         run: pnpm build-storybook
 
+      - name: Ensure Cloudflare Pages project exists
+        run: |
+          PROJECT_NAME="and-web-components-storybook"
+          HTTP_CODE=$(curl -s -o /tmp/cf-project-check.json -w "%{http_code}" \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${PROJECT_NAME}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+          if [ "$HTTP_CODE" = "404" ]; then
+            echo "Creating Cloudflare Pages project: ${PROJECT_NAME}"
+            curl -s -o /tmp/cf-project-create.json -w "%{http_code}" \
+              -X POST \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"name\":\"${PROJECT_NAME}\",\"production_branch\":\"main\"}"
+            echo ""
+          elif [ "$HTTP_CODE" = "200" ]; then
+            echo "Cloudflare Pages project ${PROJECT_NAME} already exists."
+          else
+            echo "Unexpected response (${HTTP_CODE}) while checking project:"
+            cat /tmp/cf-project-check.json
+            exit 1
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Deploy to Cloudflare Pages
         run: pnpm exec wrangler pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook --branch=${{ github.ref_name }}
         env:
