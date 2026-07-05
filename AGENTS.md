@@ -3,6 +3,14 @@
 This document helps AI agents understand how to work safely and effectively in
 this monorepo.
 
+**Companion documents:**
+
+- [docs/SSD.md](./docs/SSD.md) — full architecture spec, package contracts,
+  ADRs, and machine-checkable invariants (self-check your change against §13).
+- [docs/CODEMAP.md](./docs/CODEMAP.md) — "task → files" lookup table.
+- [docs/AGENT-PLAYBOOKS.md](./docs/AGENT-PLAYBOOKS.md) — step-by-step recipes
+  with verification commands and Definition of Done per task type.
+
 ## Architecture Overview
 
 This is a **pnpm workspace** with a layered component architecture:
