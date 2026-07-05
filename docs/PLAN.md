@@ -30,7 +30,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | 3     | Documentation sync                                      | none   | ☑ done    |
 | 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☑ done    |
 | 5     | CI completeness & pre-commit truth                      | low    | ☑ done    |
-| 6     | Headless test coverage (carousel, input, menu)          | low    | ☐ pending |
+| 6     | Headless test coverage (carousel, input, menu)          | low    | ☑ done    |
 | 7     | Stencil specs — batch 1 (static components)             | low    | ☐ pending |
 | 8     | Stencil specs — batch 2 (interactive) + missing stories | medium | ☐ pending |
 | 9     | Angular package integration (decision needed)           | high   | ☐ pending |
@@ -177,9 +177,9 @@ runs headless + stencil + vanilla + motion tests; hook behavior and docs agree.
 time; if the session runs long, finishing fewer modules well is fine — update
 the checkboxes honestly.
 
-- [ ] `packages/headless-core/src/carousel/__tests__/carousel.test.ts`
-- [ ] `packages/headless-core/src/input/__tests__/input.test.ts`
-- [ ] `packages/headless-core/src/menu/__tests__/menu.test.ts`
+- [x] `packages/headless-core/src/carousel/__tests__/carousel.test.ts`
+- [x] `packages/headless-core/src/input/__tests__/input.test.ts`
+- [x] `packages/headless-core/src/menu/__tests__/menu.test.ts`
 
 For each: read the module first; copy the structure of a good sibling test (e.g.
 `tabs` or `dropdown` tests). Cover: initial state (defaults + config overrides),

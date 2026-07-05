@@ -110,8 +110,8 @@ landing / demo).
   build icons) before stencil tests. `scripts/ensure-built.cjs` guards
   `pnpm test` only.
 - Test coverage (counted 2026-07-05):
-  - headless: 16 of 19 non-util modules tested; **missing: carousel, input,
-    menu**.
+  - headless: **19 of 19 non-util modules tested** (carousel, input, menu tests
+    added in Phase 6).
   - stencil specs: 15/23; **missing: badge, breadcrumb, card, carousel, code,
     context-menu, menu-list, pagination**.
   - stories: 21/23; **missing: code, skeleton**.
@@ -145,7 +145,8 @@ landing / demo).
    Phase 2.
 2. **TD-5 (high):** `@andersseen/angular-components` outside workspace +
    Changesets; publishing path undocumented.
-3. **TD-3 (high):** test gaps listed in §6.
+3. **TD-3 (high):** ~~test gaps listed in §6 for headless carousel/input/menu~~
+   covered in Phase 6; remaining gaps are Stencil specs and stories.
 4. **TD-7 (medium):** ~~`packages/web-components` devDeps mix Storybook 10 with
    `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`,
    `jest-cli`, `@types/jest`, `puppeteer`, `lit`~~ cleaned up in Phase 4 (kept
@@ -197,3 +198,4 @@ landing / demo).
 | 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                 | 3              |
 | 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit      | 4              |
 | 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                 | 5              |
+| 2026-07-05 | Phase 6: added headless tests for carousel, input, menu; 19/19 modules covered                             | 6              |
