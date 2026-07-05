@@ -112,8 +112,8 @@ landing / demo).
 - Test coverage (counted 2026-07-05):
   - headless: **19 of 19 non-util modules tested** (carousel, input, menu tests
     added in Phase 6).
-  - stencil specs: 15/23; **missing: badge, breadcrumb, card, carousel, code,
-    context-menu, menu-list, pagination**.
+  - stencil specs: 19/23; **missing: carousel, code, context-menu, menu-list**
+    (badge, breadcrumb, card, pagination added in Phase 7).
   - stories: 21/23; **missing: code, skeleton**.
   - e2e: ~~3 `*.e2e.ts` files~~ removed in Phase 4 (deprecated Puppeteer tests).
 - Husky pre-commit = `pnpm exec lint-staged` = **Prettier only** (AGENTS.md
@@ -199,3 +199,4 @@ landing / demo).
 | 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit      | 4              |
 | 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                 | 5              |
 | 2026-07-05 | Phase 6: added headless tests for carousel, input, menu; 19/19 modules covered                             | 6              |
+| 2026-07-05 | Phase 7: added Stencil specs for badge, breadcrumb, card, pagination                                       | 7              |

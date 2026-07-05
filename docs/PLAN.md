@@ -31,7 +31,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☑ done    |
 | 5     | CI completeness & pre-commit truth                      | low    | ☑ done    |
 | 6     | Headless test coverage (carousel, input, menu)          | low    | ☑ done    |
-| 7     | Stencil specs — batch 1 (static components)             | low    | ☐ pending |
+| 7     | Stencil specs — batch 1 (static components)             | low    | ☑ done    |
 | 8     | Stencil specs — batch 2 (interactive) + missing stories | medium | ☐ pending |
 | 9     | Angular package integration (decision needed)           | high   | ☐ pending |
 | 10    | Event naming convention (decision needed)               | low    | ☐ pending |
@@ -199,13 +199,13 @@ Done:** 19/19 headless modules have tests (update CONTEXT.md §6).
 **Goal:** specs for the low-interactivity components. Template: any existing
 sibling `.spec.tsx` (e.g. `and-button.spec.tsx`).
 
-- [ ] `and-badge.spec.tsx` — renders, variant classes applied, slot content
+- [x] `and-badge.spec.tsx` — renders, variant classes applied, slot content
       projected.
-- [ ] `and-card.spec.tsx` — all sub-components render, slots projected.
-- [ ] `and-breadcrumb.spec.tsx` — items render, `aria-current="page"` on last
-      item, separator rendering.
-- [ ] `and-pagination.spec.tsx` — page buttons render, current page marked,
-      `and*` event emitted on page change, disabled prev/next at bounds.
+- [x] `and-card.spec.tsx` — variant/padded classes applied, slot projected.
+- [x] `and-breadcrumb.spec.tsx` — nav/ol render with ARIA roles and custom
+      label, size variants and slot projection.
+- [x] `and-pagination.spec.tsx` — page buttons render, current page marked,
+      `andPageChange` emitted on page change, disabled prev/next at bounds.
 
 **Precondition:** `pnpm build:stencil` once. **Verify:**
 `pnpm -C packages/web-components test:spec` green · `pnpm lint`. **Definition of
