@@ -115,15 +115,15 @@ landing / demo).
   - stencil specs: 15/23; **missing: badge, breadcrumb, card, carousel, code,
     context-menu, menu-list, pagination**.
   - stories: 21/23; **missing: code, skeleton**.
-  - e2e: 3 `*.e2e.ts` files (Puppeteer — deprecated in Stencil; do not extend).
+  - e2e: ~~3 `*.e2e.ts` files~~ removed in Phase 4 (deprecated Puppeteer tests).
 - Husky pre-commit = `pnpm exec lint-staged` = **Prettier only** (AGENTS.md
   previously claimed ESLint too — inaccurate).
 
 ## 7. CI/CD & release facts (verified from workflow files)
 
 - `.github/workflows/ci-cd.yml` (push main/develop, PR→main): lint → `build:all`
-  → `test:headless` → stencil `test:spec` → upload artifacts → deploy Storybook
-  to CF Pages (main/develop). **Does NOT run vanilla or motion tests.**
+  → `test:headless` → stencil `test:spec` → vanilla tests → motion tests →
+  upload artifacts → deploy Storybook to CF Pages (main/develop).
 - `.github/workflows/release.yml` (push main): builds libs in order, then
   `changesets/action@v1` (version PR titled "chore: version packages" / publish
   with `NPM_TOKEN`).
@@ -158,8 +158,8 @@ landing / demo).
    `playwright-report/` (ignored, untracked).
 7. **TD-8 (medium):** no root `LICENSE` (only
    `packages/web-components/LICENSE`), no `CONTRIBUTING.md`, no `engines`.
-8. **TD-9 (medium):** CI missing vanilla/motion tests; pre-commit is
-   Prettier-only.
+8. **TD-9 (medium):** ~~CI missing vanilla/motion tests; pre-commit is
+   Prettier-only~~ fixed in Phase 5.
 9. **TD-10 (low):** event naming inconsistent: `and-button` emits
    `andButtonClick` (component name embedded) vs skill convention
    `andOpen`/`andSelect`.
@@ -196,3 +196,4 @@ landing / demo).
 | 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md   | 2              |
 | 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                 | 3              |
 | 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit      | 4              |
+| 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                 | 5              |

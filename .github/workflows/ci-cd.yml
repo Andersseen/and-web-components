@@ -42,6 +42,12 @@ jobs:
       - name: Run Stencil component tests
         run: pnpm -C packages/web-components test:spec
 
+      - name: Run vanilla component tests
+        run: pnpm -C packages/vanilla-components test
+
+      - name: Run motion tests
+        run: pnpm -C packages/motion-core test
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:

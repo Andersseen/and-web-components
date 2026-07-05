@@ -29,7 +29,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | 2     | Release safety (kill legacy publish path)               | low    | ☑ done    |
 | 3     | Documentation sync                                      | none   | ☑ done    |
 | 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☑ done    |
-| 5     | CI completeness & pre-commit truth                      | low    | ☐ pending |
+| 5     | CI completeness & pre-commit truth                      | low    | ☑ done    |
 | 6     | Headless test coverage (carousel, input, menu)          | low    | ☐ pending |
 | 7     | Stencil specs — batch 1 (static components)             | low    | ☐ pending |
 | 8     | Stencil specs — batch 2 (interactive) + missing stories | medium | ☐ pending |
@@ -150,10 +150,10 @@ Storybook builds and looks unchanged.
 
 **Goal:** CI tests everything that has tests; hooks do what docs claim.
 
-- [ ] `ci-cd.yml`: after the stencil spec step, add steps:
+- [x] `ci-cd.yml`: after the stencil spec step, add steps:
       `pnpm -C packages/vanilla-components test` and
       `pnpm -C packages/motion-core test`.
-- [ ] Decide pre-commit scope (pick one, document it):
+- [x] Decide pre-commit scope (pick one, document it):
   - (a) add ESLint to lint-staged
     (`"*.{ts,tsx}": ["eslint --fix", "prettier --write"]`) — matches what
     AGENTS.md claims; slower commits; or
@@ -161,7 +161,7 @@ Storybook builds and looks unchanged.
     run `pnpm lint` yourself before pushing").
   - Default recommendation: **(b)** — CI already gates lint, and (a) can be slow
     on Stencil files.
-- [ ] Update `AGENTS.md` "Common Mistakes" item 5 accordingly.
+- [x] Update `AGENTS.md` "Common Mistakes" item 5 accordingly.
 
 **Verify:** YAML valid (`npx yaml-lint` or push to a branch and watch Actions) ·
 run both new test commands locally first — they must pass before adding them to
