@@ -1,13 +1,15 @@
 /**
  * Client-side bootstrap for @andersseen web components.
  *
- * Uses dist-custom-elements (auto-define) so Vite can bundle everything
- * statically — the lazy-loader's runtime dynamic imports break in
- * production because the entry-file chunks aren't emitted by Astro.
+ * Uses dist-custom-elements so Vite can bundle everything statically —
+ * the lazy-loader's runtime dynamic imports break in production because
+ * the entry-file chunks aren't emitted by Astro.
  *
  * Import options:
- *   - All at once:   import "@andersseen/web-components/components/all";
- *   - Tree-shaking:  import "@andersseen/web-components/components/and-navbar.js";
+ *   - All at once:   import { defineAllCustomElements } from "@andersseen/web-components";
+ *                    defineAllCustomElements();
+ *   - Tree-shaking:  import { defineAndNavbar } from "@andersseen/web-components";
+ *                    defineAndNavbar();
  *
  * NOTE: Component animations are opt-in.  The global flag
  *       `window.__AND_ANIMATED__` is set by an inline <script> in
@@ -17,11 +19,11 @@
  */
 
 // ── Enable component animations ──
-import { enableAnimations } from '@andersseen/web-components';
+import { defineAllCustomElements, enableAnimations } from '@andersseen/web-components';
 enableAnimations();
 
 // ── Web Components (register all) ──
-import '@andersseen/web-components/components/all';
+defineAllCustomElements();
 
 // ── Icons ──
 import { registerAllIcons } from '@andersseen/icon';

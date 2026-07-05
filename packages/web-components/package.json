@@ -59,7 +59,9 @@
   "author": "Andersseen",
   "sideEffects": [
     "*.css",
-    "./dist/web-components/web-components.css"
+    "./dist/web-components/web-components.css",
+    "./dist/components/*.js",
+    "./dist/define-all-custom-elements.js"
   ],
   "files": [
     "dist/",
