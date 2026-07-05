@@ -26,14 +26,14 @@ describe('createCarousel', () => {
     expect(carousel.state.autoplay).toBe(true);
   });
 
-  it.skip('clamps default index to slide count (currently a bug — tracked in PLAN.md parking lot)', () => {
+  it('clamps default index to slide count on init', () => {
     const carousel = createCarousel({ slideCount: 3, defaultIndex: 5 });
     expect(carousel.state.activeIndex).toBe(2);
   });
 
-  it('uses raw default index without clamping on init (observed behavior)', () => {
-    const carousel = createCarousel({ slideCount: 3, defaultIndex: 5 });
-    expect(carousel.state.activeIndex).toBe(5);
+  it('wraps negative default index on init', () => {
+    const carousel = createCarousel({ slideCount: 3, defaultIndex: -1 });
+    expect(carousel.state.activeIndex).toBe(2);
   });
 
   it('can navigate to next and previous slides', () => {

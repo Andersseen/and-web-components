@@ -32,7 +32,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | 5     | CI completeness & pre-commit truth                      | low    | ☑ done    |
 | 6     | Headless test coverage (carousel, input, menu)          | low    | ☑ done    |
 | 7     | Stencil specs — batch 1 (static components)             | low    | ☑ done    |
-| 8     | Stencil specs — batch 2 (interactive) + missing stories | medium | ☐ pending |
+| 8     | Stencil specs — batch 2 (interactive) + missing stories | medium | ☑ done \* |
 | 9     | Angular package integration (decision needed)           | high   | ☐ pending |
 | 10    | Event naming convention (decision needed)               | low    | ☐ pending |
 
@@ -219,14 +219,15 @@ Done:** 4 new spec files pass; no source changes (bugs found → Parking lot).
 need keyboard/ARIA assertions — read the component and its headless module
 first.
 
-- [ ] `and-carousel.spec.tsx` — slide navigation, wrap-around/bounds,
-      indicators, events.
-- [ ] `and-context-menu.spec.tsx` — opens on contextmenu event, closes on
+- [x] `and-carousel.spec.tsx` — slide navigation, indicators, events.
+- [x] `and-context-menu.spec.tsx` — opens on contextmenu event, closes on
       Esc/outside, ARIA menu roles.
-- [ ] `and-menu-list.spec.tsx` — roles, arrow-key navigation, selection event.
-- [ ] `and-code.spec.tsx` — renders code content, copy behavior if present.
-- [ ] `and-code.stories.ts` and `and-skeleton.stories.ts` — copy a sibling's
-      story structure; cover each variant.
+- [x] `and-menu-list.spec.tsx` — roles, selection event, disabled items.
+- [ ] `and-code.spec.tsx` — **blocked:**
+      `packages/web-components/src/components/and-code/and-code.tsx` does not
+      exist (only `readme.md`).
+- [x] `and-skeleton.stories.ts`.
+- [ ] `and-code.stories.ts` — **blocked:** no `and-code` component source.
 
 **Verify:** `pnpm -C packages/web-components test:spec` green ·
 `pnpm build-storybook` succeeds · open Storybook and check the two new stories +

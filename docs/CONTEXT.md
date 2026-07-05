@@ -112,9 +112,10 @@ landing / demo).
 - Test coverage (counted 2026-07-05):
   - headless: **19 of 19 non-util modules tested** (carousel, input, menu tests
     added in Phase 6).
-  - stencil specs: 19/23; **missing: carousel, code, context-menu, menu-list**
-    (badge, breadcrumb, card, pagination added in Phase 7).
-  - stories: 21/23; **missing: code, skeleton**.
+  - stencil specs: 22/23; **missing: code** (carousel, context-menu, menu-list
+    added in Phase 8; `and-code.tsx` source does not exist).
+  - stories: 22/23; **missing: code** (skeleton story added in Phase 8;
+    `and-code` source does not exist).
   - e2e: ~~3 `*.e2e.ts` files~~ removed in Phase 4 (deprecated Puppeteer tests).
 - Husky pre-commit = `pnpm exec lint-staged` = **Prettier only** (AGENTS.md
   previously claimed ESLint too — inaccurate).
@@ -190,13 +191,14 @@ landing / demo).
 
 ## 11. Session log (append one line per work session)
 
-| Date       | Session did                                                                                                | Phases touched |
-| ---------- | ---------------------------------------------------------------------------------------------------------- | -------------- |
-| 2026-07-05 | Full repo analysis; created SSD/CODEMAP/PLAYBOOKS/CLAUDE.md/CONTEXT/PLAN                                   | —              |
-| 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores | 1              |
-| 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md   | 2              |
-| 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                 | 3              |
-| 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit      | 4              |
-| 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                 | 5              |
-| 2026-07-05 | Phase 6: added headless tests for carousel, input, menu; 19/19 modules covered                             | 6              |
-| 2026-07-05 | Phase 7: added Stencil specs for badge, breadcrumb, card, pagination                                       | 7              |
+| Date       | Session did                                                                                                 | Phases touched |
+| ---------- | ----------------------------------------------------------------------------------------------------------- | -------------- |
+| 2026-07-05 | Full repo analysis; created SSD/CODEMAP/PLAYBOOKS/CLAUDE.md/CONTEXT/PLAN                                    | —              |
+| 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores  | 1              |
+| 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md    | 2              |
+| 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                  | 3              |
+| 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit       | 4              |
+| 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                  | 5              |
+| 2026-07-05 | Phase 6: added headless tests for carousel, input, menu; 19/19 modules covered                              | 6              |
+| 2026-07-05 | Phase 7: added Stencil specs for badge, breadcrumb, card, pagination                                        | 7              |
+| 2026-07-05 | Phase 8: added Stencil specs for carousel, context-menu, menu-list; skeleton story; fixed carousel clamping | 8              |
