@@ -12,6 +12,10 @@ storybook-static/
 # Angular
 .angular/
 
+# Astro generated files
+apps/astro-landing/.astro/
+apps/astro-landing/test-results/
+
 # Generated files
 packages/web-components/src/components.d.ts
 packages/web-components/src/components/*/readme.md

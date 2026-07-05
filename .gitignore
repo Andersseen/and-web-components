@@ -16,3 +16,9 @@ apps/angular-workspace/.angular/
 
 # Logs
 *.log
+
+# Test coverage
+coverage/
+
+# macOS
+.DS_Store

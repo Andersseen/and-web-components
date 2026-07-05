@@ -1,7 +1,7 @@
 # Andersseen Web Components
 
 A complete, framework-agnostic web component ecosystem: headless logic, design
-tokens, layout primitives, animations, icons, and **24+ accessible UI
+tokens, layout primitives, animations, icons, and **23 accessible UI
 components** — built with [StencilJS](https://stenciljs.com/), ready for any
 framework or plain HTML.
 
@@ -12,7 +12,9 @@ framework or plain HTML.
 | `@andersseen/icon`                | [![npm](https://img.shields.io/npm/v/@andersseen/icon)](https://www.npmjs.com/package/@andersseen/icon)                               | 70+ SVG icon library with tree-shaking           |
 | `@andersseen/motion`              | [![npm](https://img.shields.io/npm/v/@andersseen/motion)](https://www.npmjs.com/package/@andersseen/motion)                           | Attribute-driven CSS/JS animations               |
 | `@andersseen/layout`              | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout)                           | Pure CSS layout & typography via HTML attributes |
+| `@andersseen/vanilla-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/vanilla-components)](https://www.npmjs.com/package/@andersseen/vanilla-components)   | Zero-dependency native Custom Elements           |
 | `@andersseen/angular-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone directive wrappers            |
+| `@andersseen/astro`               | [![npm](https://img.shields.io/npm/v/@andersseen/astro)](https://www.npmjs.com/package/@andersseen/astro)                             | Official Astro integration                       |
 
 ## Features
 
@@ -39,13 +41,15 @@ and-web-components/
 │   ├── icon-library/          # @andersseen/icon
 │   ├── layout-core/           # @andersseen/layout  (SCSS → CSS)
 │   ├── motion-core/           # @andersseen/motion  (TS + CSS)
-│   └── web-components/        # @andersseen/web-components (Stencil)
+│   ├── web-components/        # @andersseen/web-components (Stencil)
+│   ├── vanilla-components/    # @andersseen/vanilla-components (zero-dep CE)
+│   └── astro/                 # @andersseen/astro integration
 ├── apps/
 │   ├── angular-workspace/     # Angular demo app + @andersseen/angular-components
 │   │   └── projects/
 │   │       ├── angular-components/  # Auto-generated Angular wrappers
 │   │       └── demo-app/            # Component showcase app
-│   └── astro-landing/         # Landing page built with Astro
+│   └── astro-landing/         # Landing page built with Astro (Playwright e2e)
 ├── package.json               # Root scripts
 ├── pnpm-workspace.yaml        # Workspace config
 
@@ -55,7 +59,7 @@ and-web-components/
 
 ### Prerequisites
 
-- **Node.js** v18+
+- **Node.js** v20+
 - **pnpm** v10+ (`corepack enable && corepack prepare pnpm@latest --activate`)
 
 ### Install
@@ -212,6 +216,7 @@ import '@andersseen/motion/style.css';
 | Button       | `and-button`       | 6 variants, loading state, link mode       |
 | Card         | `and-card`         | Content container with slots               |
 | Carousel     | `and-carousel`     | Image/content slider                       |
+| Code         | `and-code`         | Code display / copy                        |
 | Context Menu | `and-context-menu` | Right-click menus                          |
 | Drawer       | `and-drawer`       | Slide-out panels                           |
 | Dropdown     | `and-dropdown`     | Menu overlays                              |
@@ -221,7 +226,9 @@ import '@andersseen/motion/style.css';
 | Modal        | `and-modal`        | Dialog overlays with focus trap            |
 | Navbar       | `and-navbar`       | Fixed/sticky navigation with scroll spy    |
 | Pagination   | `and-pagination`   | Page navigation                            |
+| Select       | `and-select`       | Dropdown selection                         |
 | Sidebar      | `and-sidebar`      | Collapsible side navigation                |
+| Skeleton     | `and-skeleton`     | Loading placeholders                       |
 | Tabs         | `and-tabs`         | Tabbed content switching                   |
 | Toast        | `and-toast`        | Notification messages                      |
 | Tooltip      | `and-tooltip`      | Info popups on hover/focus                 |
@@ -302,15 +309,20 @@ pnpm deploy:landing
 ## Publishing to npm
 
 Libraries use [Changesets](https://github.com/changesets/changesets) with
-independent versioning:
+independent versioning. The only sanctioned publish path is via CI:
 
 ```bash
-# Build all libraries first
-pnpm build:stencil && pnpm build:motion && pnpm build:layout
+# 1. Add a changeset for your changes
+pnpm changeset
 
-# Publish changed packages
-pnpm release
+# 2. Commit and open a PR; merge to main
 ```
+
+Merging to `main` triggers `.github/workflows/release.yml`, which uses
+`changesets/action` to either open a "chore: version packages" PR (if there are
+pending changesets) or publish the newly-versioned packages to npm (when that PR
+is merged). Do not run `pnpm release` or `pnpm publish` locally except in
+emergencies, because it bypasses Changesets and risks version drift.
 
 Each package under `packages/` is scoped to `@andersseen/` and configured with
 `"publishConfig": { "access": "public" }`.

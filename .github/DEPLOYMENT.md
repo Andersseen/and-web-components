@@ -19,31 +19,53 @@ pnpm deploy:cloudflare   # Deploy Angular Demo App only
 
 ## 🔄 CI/CD Pipeline
 
-The GitHub Actions workflow (`.github/workflows/ci-cd.yml`) automatically:
+The pipeline is split across four workflow files in `.github/workflows/`:
 
-1. **Build & Test** - On every push/PR
-   - Runs linter
-   - Builds all packages
-   - Runs tests
-   - Uploads artifacts
+### 1. `ci-cd.yml` — Build, Test & Storybook Deploy
 
-2. **Deploy Storybook** - On main/develop branches
-   - Builds Storybook
-   - Deploys to Cloudflare Pages
-   - URL: `https://and-web-components-storybook.pages.dev`
+**Triggers:** push to `main`/`develop`, pull requests to `main`.
 
-3. **Deploy Landing Page** - On main branch only
-   - Builds Astro landing page
-   - Deploys to Cloudflare Pages
-   - URL: `https://and-web-components-landing.pages.dev`
+| Job                | What it does                                                                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `build-and-test`   | Lints, runs `pnpm build:all`, runs `pnpm test:headless`, runs Stencil spec tests (`pnpm -C packages/web-components test:spec`), uploads build artifacts |
+| `deploy-storybook` | Downloads artifacts, builds Storybook, deploys to Cloudflare Pages (`and-web-components-storybook`) — `main`/`develop` only                             |
 
-4. **Deploy Demo App** - On main branch only
-   - Builds Angular demo app
-   - Deploys to Cloudflare Pages
-   - URL: `https://and-web-components-demo.pages.dev`
+**URLs:**
 
-5. **Publish to NPM** - On main with "version bump" commit
-   - Publishes updated packages
+- Storybook: `https://and-web-components-storybook.pages.dev`
+
+### 2. `release.yml` — Version & Publish
+
+**Trigger:** push to `main`.
+
+Builds all publishable libraries in dependency order, then uses
+`changesets/action@v1` to:
+
+1. Open (or update) a "chore: version packages" PR when there are pending
+   changesets.
+2. Publish the newly-versioned packages to npm when that version PR is merged.
+
+There is no "version bump commit" — versioning and publishing are managed by
+Changesets.
+
+### 3. `deploy-demo.yml` — Deploy Angular Demo
+
+**Trigger:** push to `main`.
+
+Builds the Angular demo app via `pnpm deploy:cloudflare:actions` and deploys to
+Cloudflare Pages.
+
+**URL:** `https://and-web-components-demo.pages.dev`
+
+### 4. `deploy-landing.yml` — Deploy Astro Landing
+
+**Trigger:** push to `main`.
+
+Builds the Astro landing page via `pnpm deploy:landing:actions` and deploys to
+Cloudflare Pages. The landing app also has Playwright e2e tests run locally with
+`pnpm -C apps/astro-landing test:e2e`.
+
+**URL:** `https://and-web-components-landing.pages.dev`
 
 ## 🔧 Prerequisites
 
@@ -172,6 +194,7 @@ pnpm build:all
 
 - [Wrangler Documentation](https://developers.cloudflare.com/workers/wrangler/)
 - [Cloudflare Pages Documentation](https://developers.cloudflare.com/pages/)
+- [Changesets Documentation](https://github.com/changesets/changesets)
 
 ---
 

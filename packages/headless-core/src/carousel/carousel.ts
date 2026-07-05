@@ -64,9 +64,13 @@ export interface CarouselReturn {
 }
 
 export function createCarousel(config: CarouselConfig = {}): CarouselReturn {
+  const slideCount = config.slideCount ?? 0;
+  const rawDefaultIndex = config.defaultIndex ?? 0;
+  const normalizedDefaultIndex = slideCount === 0 ? 0 : ((rawDefaultIndex % slideCount) + slideCount) % slideCount;
+
   const store = createStore<CarouselState>({
-    activeIndex: config.defaultIndex ?? 0,
-    slideCount: config.slideCount ?? 0,
+    activeIndex: normalizedDefaultIndex,
+    slideCount,
     autoplay: config.autoplay ?? false,
   });
 
