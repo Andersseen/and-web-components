@@ -146,11 +146,10 @@ landing / demo).
 2. **TD-5 (high):** `@andersseen/angular-components` outside workspace +
    Changesets; publishing path undocumented.
 3. **TD-3 (high):** test gaps listed in §6.
-4. **TD-7 (medium):** `packages/web-components` devDeps mix
-   `storybook@^10.2.16` + `@storybook/web-components*@10` with
-   `@storybook/manager-api@^8.6.14` + `@storybook/theming@^8.6.14`; leftover
-   unused `jest`, `jest-cli`, `@types/jest`, `puppeteer`, `lit`; root
-   `wrangler@^3.99`.
+4. **TD-7 (medium):** ~~`packages/web-components` devDeps mix Storybook 10 with
+   `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`,
+   `jest-cli`, `@types/jest`, `puppeteer`, `lit`~~ cleaned up in Phase 4 (kept
+   `lit`; root `wrangler@^3.99` bump remains optional).
 5. **TD-1/TD-2 (medium):** ~~README table and DEPLOYMENT.md drift~~ fixed in
    Phase 3.
 6. **TD-6 (low):** tracked `.DS_Store` (root + `packages/`), `.DS_Store` not
@@ -196,3 +195,4 @@ landing / demo).
 | 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores | 1              |
 | 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md   | 2              |
 | 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                 | 3              |
+| 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit      | 4              |

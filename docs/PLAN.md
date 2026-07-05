@@ -28,7 +28,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | 1     | Repo hygiene & governance                               | none   | ☑ done    |
 | 2     | Release safety (kill legacy publish path)               | low    | ☑ done    |
 | 3     | Documentation sync                                      | none   | ☑ done    |
-| 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☐ pending |
+| 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☑ done    |
 | 5     | CI completeness & pre-commit truth                      | low    | ☐ pending |
 | 6     | Headless test coverage (carousel, input, menu)          | low    | ☐ pending |
 | 7     | Stencil specs — batch 1 (static components)             | low    | ☐ pending |
@@ -118,24 +118,24 @@ references to nonexistent scripts/jobs/flows in README + DEPLOYMENT.md.
 **Goal:** remove version-mix time bombs in `packages/web-components`
 devDependencies. **Medium risk — verify Storybook thoroughly.**
 
-- [ ] Remove `@storybook/manager-api@^8` and `@storybook/theming@^8`; in
+- [x] Remove `@storybook/manager-api@^8` and `@storybook/theming@^8`; in
       Storybook 10 these APIs are provided by the `storybook` core package —
       update imports in `.storybook/manager.ts` and
       `.storybook/AndersseenTheme.ts` to `storybook/manager-api` /
       `storybook/theming` (check current SB10 docs for exact specifiers).
-- [ ] Remove unused test leftovers: `jest`, `jest-cli`, `@types/jest`,
+- [x] Remove unused test leftovers: `jest`, `jest-cli`, `@types/jest`,
       `puppeteer` (first
       `grep -rn "from 'jest\|require('jest\|puppeteer" packages/web-components/src`
       and check `*.e2e.ts` files — if the 3 e2e files import puppeteer/jest,
       either delete those e2e files in this phase or keep the deps and only note
       it in the parking lot; do NOT leave half).
-- [ ] Check whether `lit` devDep is actually used
+- [x] Check whether `lit` devDep is actually used
       (`grep -rn "from 'lit'" packages/web-components`); remove if not
       (Storybook web-components framework may need it — if so, keep and comment
       why in SSD).
 - [ ] Optional (separate commit): bump root `wrangler` ^3 → ^4 and run one
       manual deploy command in dry-run/verify mode.
-- [ ] `pnpm install` to refresh lockfile.
+- [x] `pnpm install` to refresh lockfile.
 
 **Verify:** `pnpm -C packages/web-components build` ·
 `pnpm -C packages/web-components test:spec` · `pnpm build-storybook` succeeds
