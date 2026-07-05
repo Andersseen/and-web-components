@@ -61,8 +61,7 @@ landing / demo).
   `types/common.ts`, `utils/store.ts`, `utils/id.ts`, `template.ts.example`).
 - **Vanilla components (3):** vanilla-button, vanilla-accordion, vanilla-modal
   (each with colocated `.test.ts`).
-- README component table lists only **20** (missing `and-code`, `and-select`,
-  `and-skeleton`) — known drift.
+- README component table lists all **23** components; synced in Phase 3.
 
 ## 5. Key architecture facts
 
@@ -134,8 +133,8 @@ landing / demo).
   `angular-workspace`; `updateInternalDependencies: patch`; access public.
 - Secrets required: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`,
   `NPM_TOKEN`.
-- `.github/DEPLOYMENT.md` is **outdated**: describes a 5-job ci-cd.yml and
-  "version bump commit" publishing that don't exist.
+- `.github/DEPLOYMENT.md` reflects the 4 real workflow files and the Changesets
+  release flow (updated in Phase 3).
 - Root `package.json` no longer has legacy `publish:headless` /
   `publish:web-components` scripts. The only publish path is Changesets via
   `release.yml`.
@@ -152,8 +151,8 @@ landing / demo).
    `@storybook/manager-api@^8.6.14` + `@storybook/theming@^8.6.14`; leftover
    unused `jest`, `jest-cli`, `@types/jest`, `puppeteer`, `lit`; root
    `wrangler@^3.99`.
-5. **TD-1/TD-2 (medium):** README table (20 vs 23 components; no vanilla/astro
-   packages in tables) and DEPLOYMENT.md drift.
+5. **TD-1/TD-2 (medium):** ~~README table and DEPLOYMENT.md drift~~ fixed in
+   Phase 3.
 6. **TD-6 (low):** tracked `.DS_Store` (root + `packages/`), `.DS_Store` not
    gitignored; one-off codemods `migrate-store.mjs`, `refactor-stories.mjs` at
    repo root; local clutter `debug-storybook.log`, `storybook-static/`,
@@ -196,3 +195,4 @@ landing / demo).
 | 2026-07-05 | Full repo analysis; created SSD/CODEMAP/PLAYBOOKS/CLAUDE.md/CONTEXT/PLAN                                   | —              |
 | 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores | 1              |
 | 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md   | 2              |
+| 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                 | 3              |

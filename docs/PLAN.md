@@ -27,7 +27,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | ----- | ------------------------------------------------------- | ------ | --------- |
 | 1     | Repo hygiene & governance                               | none   | ☑ done    |
 | 2     | Release safety (kill legacy publish path)               | low    | ☑ done    |
-| 3     | Documentation sync                                      | none   | ☐ pending |
+| 3     | Documentation sync                                      | none   | ☑ done    |
 | 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☐ pending |
 | 5     | CI completeness & pre-commit truth                      | low    | ☐ pending |
 | 6     | Headless test coverage (carousel, input, menu)          | low    | ☐ pending |
@@ -89,20 +89,20 @@ direct-publish scripts gone (or explicitly marked emergency-only), docs updated.
 
 **Goal:** make README and DEPLOYMENT.md tell the truth. No code changes.
 
-- [ ] README component table: add `and-code`, `and-select`, `and-skeleton`
+- [x] README component table: add `and-code`, `and-select`, `and-skeleton`
       (verify the live list against
       `ls packages/web-components/src/components/`).
-- [ ] README package table + structure diagram: add
+- [x] README package table + structure diagram: add
       `@andersseen/vanilla-components` and `@andersseen/astro`; mention
       `apps/astro-landing`'s Playwright e2e.
-- [ ] README "24+ components" claim → use the real count.
-- [ ] README prerequisites: align Node version with the `engines` field from
+- [x] README "24+ components" claim → use the real count.
+- [x] README prerequisites: align Node version with the `engines` field from
       Phase 1.
-- [ ] Rewrite `.github/DEPLOYMENT.md` to match reality: 4 workflow files
+- [x] Rewrite `.github/DEPLOYMENT.md` to match reality: 4 workflow files
       (`ci-cd.yml`, `release.yml`, `deploy-demo.yml`, `deploy-landing.yml`),
       Changesets release flow (no "version bump commit"), correct job list. Keep
       the local-deploy and troubleshooting sections (still valid).
-- [ ] README "Publishing to npm" section: describe the Changesets flow
+- [x] README "Publishing to npm" section: describe the Changesets flow
       (`pnpm changeset` → merge → version PR → publish), not manual
       `pnpm release`.
 
