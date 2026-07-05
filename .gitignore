@@ -16,3 +16,6 @@ apps/angular-workspace/.angular/
 
 # Logs
 *.log
+
+# macOS
+.DS_Store

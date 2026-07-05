@@ -1,6 +1,9 @@
 {
   "name": "and-web-components",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "clean:angular": "rm -rf apps/angular-workspace/.angular/cache",
     "clean:stencil": "rm -rf packages/web-components/dist packages/web-components/www packages/web-components/loader",
