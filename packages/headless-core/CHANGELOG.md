@@ -1,5 +1,12 @@
 # @andersseen/headless-components
 
+## 0.1.3
+
+### Patch Changes
+
+- Clamp `defaultIndex` to the valid slide range when `createCarousel` is
+  initialized.
+
 ## 0.1.1
 
 ### Patch Changes

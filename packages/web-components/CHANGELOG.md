@@ -1,5 +1,12 @@
 # @andersseen/web-components
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  - @andersseen/headless-components@0.1.3
+
 ## 0.0.8
 
 ### Patch Changes
