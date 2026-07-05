@@ -136,13 +136,14 @@ landing / demo).
   `NPM_TOKEN`.
 - `.github/DEPLOYMENT.md` is **outdated**: describes a 5-job ci-cd.yml and
   "version bump commit" publishing that don't exist.
-- Root `package.json` has legacy `publish:headless` / `publish:web-components`
-  scripts that bypass Changesets (`pnpm publish --no-git-checks`, hardcoded
-  `NPM_CONFIG_CACHE=/private/tmp/...`). Dangerous — slated for removal.
+- Root `package.json` no longer has legacy `publish:headless` /
+  `publish:web-components` scripts. The only publish path is Changesets via
+  `release.yml`.
 
 ## 8. Verified issues / debt (full register: SSD.md §15, TD-1…TD-10)
 
-1. **TD-4 (high):** legacy publish scripts bypass Changesets (see §7).
+1. **TD-4 (high):** ~~legacy publish scripts bypass Changesets~~ removed in
+   Phase 2.
 2. **TD-5 (high):** `@andersseen/angular-components` outside workspace +
    Changesets; publishing path undocumented.
 3. **TD-3 (high):** test gaps listed in §6.
@@ -194,3 +195,4 @@ landing / demo).
 | ---------- | ---------------------------------------------------------------------------------------------------------- | -------------- |
 | 2026-07-05 | Full repo analysis; created SSD/CODEMAP/PLAYBOOKS/CLAUDE.md/CONTEXT/PLAN                                   | —              |
 | 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores | 1              |
+| 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md   | 2              |

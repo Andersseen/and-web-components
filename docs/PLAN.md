@@ -26,7 +26,7 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | Phase | Theme                                                   | Risk   | Status    |
 | ----- | ------------------------------------------------------- | ------ | --------- |
 | 1     | Repo hygiene & governance                               | none   | ☑ done    |
-| 2     | Release safety (kill legacy publish path)               | low    | ☐ pending |
+| 2     | Release safety (kill legacy publish path)               | low    | ☑ done    |
 | 3     | Documentation sync                                      | none   | ☐ pending |
 | 4     | Dependency cleanup (Storybook v8/v10 mix, dead deps)    | medium | ☐ pending |
 | 5     | CI completeness & pre-commit truth                      | low    | ☐ pending |
@@ -67,15 +67,15 @@ else changed.
 
 **Goal:** one and only one publish path (Changesets via CI).
 
-- [ ] Remove `publish:headless` and `publish:web-components` scripts from root
+- [x] Remove `publish:headless` and `publish:web-components` scripts from root
       `package.json` (they use `--no-git-checks` and a hardcoded `/private/tmp`
       npm cache — bypassing Changesets risks version drift). If the owner wants
       an emergency hatch, rename to `publish:emergency:*` with a `echo WARNING`
       prefix instead of deleting.
-- [ ] Confirm `release.yml` remains the only publish trigger; grep the repo for
+- [x] Confirm `release.yml` remains the only publish trigger; grep the repo for
       other `pnpm publish` / `npm publish` invocations (check
       `.github/scripts/deploy.sh` too) and remove/flag any found.
-- [ ] Update `docs/SSD.md` §11.2 and `docs/CONTEXT.md` §7 to reflect the
+- [x] Update `docs/SSD.md` §11.2 and `docs/CONTEXT.md` §7 to reflect the
       removal.
 
 **Verify:**

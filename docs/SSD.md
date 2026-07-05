@@ -538,9 +538,10 @@ skeleton.
 Changesets ignores `@andersseen/astro-landing` and `angular-workspace` (apps).
 Everything else in `packages/*` is publishable with `access: public`.
 
-**Do not** use the legacy `publish:headless` / `publish:web-components` root
-scripts (direct `pnpm publish --no-git-checks`) — they bypass Changesets and can
-cause version drift. They exist for emergencies only.
+The legacy `publish:headless` / `publish:web-components` root scripts (direct
+`pnpm publish --no-git-checks` with a hardcoded `/private/tmp` npm cache) were
+removed. They bypassed Changesets and could cause version drift. Use the
+Changesets flow above for every release.
 
 ### 11.3 Required repository secrets
 
