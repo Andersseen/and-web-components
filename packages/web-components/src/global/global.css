@@ -74,7 +74,43 @@
   /* -----------------------------------------------------------------------
      Fallback defaults (Indigo & Rose — Dark)
      ----------------------------------------------------------------------- */
-  .dark,
+  .dark {
+    --primary: 234 89% 74%;
+    --primary-foreground: 244 47% 20%;
+    --secondary: 343 80% 35%;
+    --secondary-foreground: 356 100% 95%;
+
+    --background: 229 50% 6%;
+    --foreground: 226 100% 97%;
+    --card: 230 40% 9%;
+    --card-foreground: 226 100% 97%;
+    --popover: 230 40% 9%;
+    --popover-foreground: 226 100% 97%;
+
+    --muted: 230 30% 14%;
+    --muted-foreground: 220 15% 60%;
+    --accent: 244 47% 20%;
+    --accent-foreground: 226 100% 94%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 86% 97%;
+    --border: 230 25% 18%;
+    --input: 230 25% 18%;
+    --ring: 234 89% 74%;
+
+    /* Status Colors */
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 90% 56%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 85% 65%;
+    --info-foreground: 0 0% 100%;
+  }
+
+  /* :host-context() is unsupported in WebKit/Safari. A combined selector
+     list (`.dark, :host-context(.dark)`) is invalid as a whole there,
+     which drops these declarations even for the plain `.dark` case.
+     Duplicating as a standalone rule keeps light-DOM usage working. */
   :host-context(.dark) {
     --primary: 234 89% 74%;
     --primary-foreground: 244 47% 20%;
