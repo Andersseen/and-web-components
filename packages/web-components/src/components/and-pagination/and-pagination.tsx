@@ -1,42 +1,18 @@
 import { Component, Prop, h, Event, EventEmitter, Host } from '@stencil/core';
-import { cva } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
+import { pageButtonVariants } from './and-pagination-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const pageButtonVariants = cva(
-  [
-    'inline-flex items-center justify-center rounded-md text-sm font-medium',
-    'transition-colors bg-transparent text-foreground border border-transparent cursor-pointer',
-    'disabled:opacity-50 disabled:pointer-events-none',
-    'hover:bg-accent hover:text-accent-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-    'h-11 w-11 sm:h-10 sm:w-10',
-  ].join(' '),
-  {
-    variants: {
-      active: {
-        true: 'bg-primary text-primary-foreground border-primary hover:bg-primary hover:text-primary-foreground',
-        false: '',
-      },
-      isNav: {
-        true: 'w-auto px-3',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      active: false,
-      isNav: false,
-    },
-  },
-);
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Page-number navigation (`nav aria-label="Pagination"`) with previous/next
+ * controls. Renders one button per page — for very large `totalPages`,
+ * consider paging through results some other way, since this doesn't
+ * truncate with an ellipsis.
+ *
+ * @example
+ * ```html
+ * <and-pagination total-pages="10" current-page="1"></and-pagination>
+ * ```
+ */
 @Component({
   tag: 'and-pagination',
   styleUrl: '../../global/component-base.css',

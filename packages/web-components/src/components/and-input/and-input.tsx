@@ -1,36 +1,7 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Element, Watch } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { createInput, type InputReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
-
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const inputVariants = cva(
-  [
-    'flex h-11 sm:h-10 w-full rounded-md border border-input bg-background',
-    'px-3 py-2 text-sm font-sans shadow-sm',
-    'transition-all duration-fast ring-offset-background',
-    'file:border-0 file:bg-transparent file:text-sm file:font-medium',
-    'placeholder:text-muted-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-  ].join(' '),
-  {
-    variants: {
-      hasError: {
-        true: 'border-destructive focus-visible:ring-destructive',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      hasError: false,
-    },
-  },
-);
-
-export type InputVariantProps = VariantProps<typeof inputVariants>;
+import { inputVariants } from './and-input-variants';
 
 export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search';
 
@@ -38,6 +9,18 @@ export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
  * Component
  * ──────────────────────────────────────────────────────────────────── */
 
+/**
+ * Single-line text input. Since it renders a plain `<input>` with no
+ * associated `<label>`, always set `label` (used as `aria-label`) — and
+ * when `hasError` is true, also set `describedBy` to point at the id of
+ * your visible error message, otherwise screen readers announce the
+ * field as invalid without saying why.
+ *
+ * @example
+ * ```html
+ * <and-input label="Email" type="email" required="true"></and-input>
+ * ```
+ */
 @Component({
   tag: 'and-input',
   styleUrls: ['and-input.css', '../../global/component-base.css'],
@@ -47,10 +30,10 @@ export class AndInput {
   @Element() el!: HTMLElement;
 
   /** Placeholder text for the input. */
-  @Prop({ reflect: true }) placeholder!: string;
+  @Prop({ reflect: true }) placeholder: string = '';
 
   /** Current value of the input. */
-  @Prop({ reflect: true, mutable: true }) value!: string;
+  @Prop({ reflect: true, mutable: true }) value: string = '';
 
   /** HTML input type. */
   @Prop({ reflect: true }) type: InputType = 'text';
@@ -65,13 +48,13 @@ export class AndInput {
   @Prop({ reflect: true }) hasError: boolean = false;
 
   /** Accessible label for the input (used when no visible label exists). */
-  @Prop() label!: string;
+  @Prop() label: string = '';
 
   /** ID of the element that describes this input (e.g. error message). */
-  @Prop() describedBy!: string;
+  @Prop() describedBy: string = '';
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass!: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   /** Emitted when the input value changes. */
   @Event({ bubbles: true, composed: true }) andInputChange!: EventEmitter<string>;

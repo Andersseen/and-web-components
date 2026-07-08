@@ -1,36 +1,24 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Listen, Watch, Element, State } from '@stencil/core';
-import { cva } from 'class-variance-authority';
 import { createModal, type ModalReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 import { applyGlobalAnimationFlag, isAnimationsEnabled } from '../../utils/animation-config';
 import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
 import { createOpenCloseAnimation } from '../../utils/animation';
+import { overlayVariants, contentVariants, closeButtonVariants } from './and-modal-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const overlayClass = ['and-modal-backdrop fixed inset-0 z-50 bg-foreground/80 backdrop-blur-sm'].join(' ');
-
-const contentVariants = cva(
-  [
-    'and-modal-content relative z-50 grid w-full max-w-lg gap-4 border border-border bg-background p-6 shadow-lg pointer-events-auto',
-    'rounded-lg',
-  ].join(' '),
-);
-
-const closeButtonClass = [
-  'absolute right-4 top-4 rounded-sm opacity-70',
-  'ring-offset-background transition-opacity',
-  'hover:opacity-100',
-  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-  'disabled:pointer-events-none',
-].join(' ');
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Centered dialog (`role="dialog"`, `aria-modal="true"`) with a focus
+ * trap, Escape-to-close, backdrop click, and focus restoration on close.
+ * Renders nothing (`<Host />`, no DOM) while closed.
+ *
+ * @example
+ * ```html
+ * <and-modal open="true" animated="true">
+ *   <h2>Confirm</h2>
+ *   <p>Are you sure?</p>
+ * </and-modal>
+ * ```
+ */
 @Component({
   tag: 'and-modal',
   styleUrls: ['and-modal.css', '../../global/component-base.css', '../../global/animations.css'],
@@ -176,7 +164,7 @@ export class AndModal {
       <Host animated={this.animated}>
         {/* Backdrop */}
         <div
-          class={overlayClass}
+          class={cn(overlayVariants())}
           {...overlayProps}
           onClick={() => this.modalLogic.handleOverlayClick()}
           data-state={state}
@@ -187,7 +175,11 @@ export class AndModal {
           <div class={cn(contentVariants())} data-state={state} {...contentProps}>
             <div class="flex flex-col gap-4">
               <slot />
-              <button class={closeButtonClass} onClick={() => this.modalLogic.actions.close()} {...closeButtonProps}>
+              <button
+                class={cn(closeButtonVariants())}
+                onClick={() => this.modalLogic.actions.close()}
+                {...closeButtonProps}
+              >
                 <and-icon name="close" class="h-4 w-4" />
                 <span class="sr-only">Close</span>
               </button>

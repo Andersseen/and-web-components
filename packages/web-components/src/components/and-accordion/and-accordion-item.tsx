@@ -11,7 +11,16 @@ interface AndAccordionChildElement extends HTMLElement {
 }
 
 /**
- * Accordion item component.
+ * Wraps one trigger/content pair and bridges it to the parent `and-accordion`'s
+ * headless logic. Auto-generates `value` if omitted, so it's safe to skip.
+ *
+ * @example
+ * ```html
+ * <and-accordion-item value="item-1">
+ *   <and-accordion-trigger>Item 1</and-accordion-trigger>
+ *   <and-accordion-content>Content 1</and-accordion-content>
+ * </and-accordion-item>
+ * ```
  */
 @Component({
   tag: 'and-accordion-item',
@@ -21,10 +30,10 @@ interface AndAccordionChildElement extends HTMLElement {
 export class AndAccordionItem {
   @Element() el!: HTMLElement;
 
-  /** Unique value for this accordion item. */
+  /** Unique value identifying this item. Auto-generated if omitted. */
   @Prop({ reflect: true }) value!: string;
 
-  /** Whether this item is disabled. */
+  /** Whether this item is disabled (non-interactive, visually dimmed). */
   @Prop({ reflect: true }) disabled: boolean = false;
 
   @State() private accordionLogic: AccordionReturn | null = null;

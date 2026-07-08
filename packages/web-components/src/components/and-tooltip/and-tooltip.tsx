@@ -1,42 +1,28 @@
 import { Component, Host, h, Prop, State, Element, Watch } from '@stencil/core';
-import { cva } from 'class-variance-authority';
 import { createTooltip, type TooltipPlacement, type TooltipReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import { tooltipVariants } from './and-tooltip-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const tooltipVariants = cva(
-  [
-    'and-tooltip absolute z-50 overflow-hidden rounded-md border border-border',
-    'bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md whitespace-nowrap',
-  ].join(' '),
-  {
-    variants: {
-      placement: {
-        top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
-        bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
-        left: 'right-full top-1/2 -translate-y-1/2 mr-2',
-        right: 'left-full top-1/2 -translate-y-1/2 ml-2',
-      },
-      visible: {
-        true: 'opacity-100 visible',
-        false: 'opacity-0 invisible pointer-events-none',
-      },
-    },
-    defaultVariants: {
-      placement: 'top',
-      visible: false,
-    },
-  },
-);
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Wraps its slotted trigger and shows a `role="tooltip"` popup on hover
+ * *or* keyboard focus (via `focusin`/`focusout`, not just mouse), per
+ * WCAG 1.4.13.
+ *
+ * Known limitation: `aria-describedby` is applied to the `<and-tooltip>`
+ * host element, not to the slotted trigger itself (a custom element can't
+ * reach into and mutate arbitrary slotted content). If your trigger is a
+ * focusable element like a `<button>`, consider also adding
+ * `aria-describedby` on it directly, pointing at this tooltip, for the
+ * most reliable screen-reader announcement.
+ *
+ * @example
+ * ```html
+ * <and-tooltip content="More info" placement="top">
+ *   <button>Hover me</button>
+ * </and-tooltip>
+ * ```
+ */
 @Component({
   tag: 'and-tooltip',
   styleUrls: ['../../global/component-base.css', '../../global/animations.css', 'and-tooltip.css'],

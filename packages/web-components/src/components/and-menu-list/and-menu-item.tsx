@@ -1,51 +1,20 @@
 import { Component, h, Host, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createMenuList, type MenuListReturn } from '@andersseen/headless-components';
+import { menuItemVariants, type MenuItemVariantProps } from './and-menu-item-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const menuItemVariants = cva(
-  [
-    'relative flex w-full cursor-pointer select-none items-center',
-    'rounded-md px-2 py-1.5 text-sm font-sans outline-none',
-    'transition-colors duration-normal',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-  ].join(' '),
-  {
-    variants: {
-      intent: {
-        default: [
-          'text-foreground',
-          'hover:bg-accent hover:text-accent-foreground',
-          'focus:bg-accent focus:text-accent-foreground',
-        ].join(' '),
-        destructive: [
-          'text-destructive',
-          'hover:bg-destructive/10 hover:text-destructive',
-          'focus:bg-destructive/10 focus:text-destructive',
-        ].join(' '),
-      },
-      disabled: {
-        true: 'opacity-50 pointer-events-none cursor-default',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      intent: 'default',
-      disabled: false,
-    },
-  },
-);
-
-export type MenuItemVariantProps = VariantProps<typeof menuItemVariants>;
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Standalone menu item (`role="menuitem"`), self-contained rather than
+ * coordinated by a parent `and-menu-list` — use it when you want to slot
+ * individual items directly (e.g. inside `and-dropdown`'s `trigger` slot
+ * content) instead of driving `and-menu-list` from an `items` array.
+ * Responds to click and Enter/Space.
+ *
+ * @example
+ * ```html
+ * <and-menu-item value="delete" intent="destructive">Delete</and-menu-item>
+ * ```
+ */
 @Component({
   tag: 'and-menu-item',
   styleUrls: ['and-menu-list.css', '../../global/component-base.css'],
@@ -64,7 +33,7 @@ export class AndMenuItem {
   @Prop() value!: string;
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass!: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   /** Emitted when the item is selected (clicked or Enter/Space pressed). */
   @Event({ bubbles: true, composed: true }) andMenuItemSelect!: EventEmitter<string>;

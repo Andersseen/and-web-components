@@ -18,6 +18,18 @@ export interface ContentItemProps {
   accordionLogic: AccordionReturn;
 }
 
+/**
+ * Collapsible panel revealed when its sibling `and-accordion-trigger` is expanded.
+ *
+ * Must be a child of `and-accordion-item`. Renders `role="region"` and
+ * `aria-hidden` from the shared headless logic, and is hidden via the
+ * `hidden` attribute (not just CSS) when collapsed.
+ *
+ * @example
+ * ```html
+ * <and-accordion-content>Panel content</and-accordion-content>
+ * ```
+ */
 @Component({
   tag: 'and-accordion-content',
   styleUrls: ['../../global/component-base.css', '../../global/animations.css'],

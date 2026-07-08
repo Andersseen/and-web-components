@@ -5,6 +5,17 @@ import { cn } from '../../utils/cn';
  * Component
  * ──────────────────────────────────────────────────────────────────── */
 
+/**
+ * Header region of an `and-card` — typically wraps `and-card-title` and
+ * `and-card-description`.
+ *
+ * @example
+ * ```html
+ * <and-card-header>
+ *   <and-card-title>Title</and-card-title>
+ * </and-card-header>
+ * ```
+ */
 @Component({
   tag: 'and-card-header',
   styleUrls: ['and-card-header.css', '../../global/component-base.css'],
@@ -12,7 +23,7 @@ import { cn } from '../../utils/cn';
 })
 export class AndCardHeader {
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass!: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   render() {
     return (

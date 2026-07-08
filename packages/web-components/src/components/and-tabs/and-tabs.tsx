@@ -2,6 +2,24 @@ import { Component, h, Host, Prop, Element, Event, EventEmitter, Listen, Watch, 
 import { cn } from '../../utils/cn';
 import { createTabs, type TabsReturn } from '@andersseen/headless-components';
 
+/**
+ * Tabs root — coordinates `and-tabs-list` > `and-tabs-trigger` and
+ * `and-tabs-content` children via shared headless logic, injected into
+ * each child automatically. Arrow keys, Home/End, and roving tabindex
+ * are handled for you.
+ *
+ * @example
+ * ```html
+ * <and-tabs default-value="tab-1">
+ *   <and-tabs-list>
+ *     <and-tabs-trigger value="tab-1">Tab 1</and-tabs-trigger>
+ *     <and-tabs-trigger value="tab-2">Tab 2</and-tabs-trigger>
+ *   </and-tabs-list>
+ *   <and-tabs-content value="tab-1">Content 1</and-tabs-content>
+ *   <and-tabs-content value="tab-2">Content 2</and-tabs-content>
+ * </and-tabs>
+ * ```
+ */
 @Component({
   tag: 'and-tabs',
   styleUrls: ['and-tabs.css', '../../global/component-base.css', '../../global/animations.css'],
@@ -11,10 +29,10 @@ export class AndTabs {
   @Element() el!: HTMLElement;
 
   /** The currently selected tab value. */
-  @Prop({ mutable: true, reflect: true }) value!: string;
+  @Prop({ mutable: true, reflect: true }) value: string = '';
 
   /** The initial tab value when uncontrolled. */
-  @Prop() defaultValue!: string;
+  @Prop() defaultValue: string = '';
 
   /** Orientation of the tab list. */
   @Prop({ reflect: true }) orientation: 'horizontal' | 'vertical' = 'horizontal';
@@ -106,6 +124,7 @@ export class AndTabs {
 
     contents.forEach((content: HTMLAndTabsContentElement) => {
       content.selected = content.value === this.value;
+      content.tabsLogic = this.tabsLogic;
     });
   }
 

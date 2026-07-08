@@ -1,6 +1,18 @@
 import { Component, Prop, h, Host, Watch, State } from '@stencil/core';
 import { getIcon, type IconName } from '@andersseen/icon';
 
+/**
+ * Renders an SVG icon registered via `registerIcons()`/`registerAllIcons()`
+ * from `@andersseen/icon`. Always `aria-hidden="true"` — it's treated as
+ * purely decorative, so any accessible name (e.g. "Close", "Copy") must
+ * come from the interactive element it's inside of (`aria-label` on a
+ * button, visible text, etc.), never from the icon itself.
+ *
+ * @example
+ * ```html
+ * <and-icon name="chevron-down" size="16"></and-icon>
+ * ```
+ */
 @Component({
   tag: 'and-icon',
   styleUrl: 'and-icon.css',

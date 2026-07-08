@@ -1,37 +1,25 @@
 import { Component, h, Host, Prop, Element, State, Event, EventEmitter } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createBreadcrumb, type BreadcrumbReturn, type BreadcrumbItemConfig } from '@andersseen/headless-components';
+import {
+  breadcrumbItemVariants,
+  separatorSizeMap,
+  type BreadcrumbItemVariantProps,
+} from './and-breadcrumb-item-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const breadcrumbItemVariants = cva('inline-flex items-center font-sans transition-colors', {
-  variants: {
-    size: {
-      sm: 'text-xs gap-1',
-      md: 'text-sm gap-1.5',
-      lg: 'text-base gap-2',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-const separatorSizeMap: Record<string, string> = {
-  sm: 'text-xs',
-  md: 'text-sm',
-  lg: 'text-base',
-};
-
-export type BreadcrumbItemVariantProps = VariantProps<typeof breadcrumbItemVariants>;
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * One entry in an `and-breadcrumb` trail. Renders as a link when `href` is
+ * set, or a non-interactive `<span>` for the current page. The current
+ * item automatically gets `aria-current="page"` — don't set both `current`
+ * and `href` expecting a clickable "you are here" link, since `current`
+ * disables pointer interaction on purpose.
+ *
+ * @example
+ * ```html
+ * <and-breadcrumb-item href="/docs">Docs</and-breadcrumb-item>
+ * <and-breadcrumb-item current="true">Current page</and-breadcrumb-item>
+ * ```
+ */
 @Component({
   tag: 'and-breadcrumb-item',
   styleUrls: ['and-breadcrumb.css', '../../global/component-base.css'],
@@ -53,7 +41,7 @@ export class AndBreadcrumbItem {
   @Prop({ reflect: true }) hideSeparator: boolean = false;
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass!: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   /** Emitted when a breadcrumb link is activated. */
   @Event({ bubbles: true, composed: true }) andBreadcrumbNavigate!: EventEmitter<string>;

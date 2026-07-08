@@ -1,22 +1,19 @@
 import { Component, h, Host, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { cn } from '../../utils/cn';
 import type { TabsReturn } from '@andersseen/headless-components';
+import { tabsTriggerVariants } from './and-tabs-trigger-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Styles
- * ──────────────────────────────────────────────────────────────────── */
-
-const triggerBaseClass = [
-  'flex flex-1 items-center justify-center rounded-sm text-sm font-medium',
-  'transition-all cursor-pointer ring-offset-background',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-  'px-4 py-3 sm:px-3 sm:py-1.5',
-].join(' ');
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Clickable tab header (`role="tab"`). Must be inside `and-tabs-list`,
+ * which must itself be inside `and-tabs` — the root injects `tabsLogic`
+ * and `selected` into each trigger automatically, which is what drives
+ * `aria-selected`, `aria-controls`, and the roving `tabindex`.
+ *
+ * @example
+ * ```html
+ * <and-tabs-trigger value="tab-1">Tab 1</and-tabs-trigger>
+ * ```
+ */
 @Component({
   tag: 'and-tabs-trigger',
   styleUrl: 'and-tabs.css',
@@ -35,7 +32,7 @@ export class AndTabsTrigger {
   @Prop() selected: boolean = false;
 
   /** Reference to the parent tabs headless logic (set by parent). */
-  @Prop() tabsLogic!: TabsReturn;
+  @Prop() tabsLogic?: TabsReturn;
 
   /** Emitted when this trigger is clicked. */
   @Event({ bubbles: true, composed: true }) andTabTriggerClick!: EventEmitter<string>;
@@ -78,7 +75,7 @@ export class AndTabsTrigger {
         onKeyDown={this.handleKeyDown}
         tabIndex={this.selected ? 0 : -1}
         class={cn(
-          triggerBaseClass,
+          tabsTriggerVariants(),
           this.selected ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
           this.disabled && 'opacity-50 pointer-events-none',
         )}

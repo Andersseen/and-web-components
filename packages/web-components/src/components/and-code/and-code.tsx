@@ -6,6 +6,16 @@ import { codeBlockVariants, copyButtonVariants, promptVariants } from './and-cod
  * Component
  * ──────────────────────────────────────────────────────────────────── */
 
+/**
+ * Read-only command/code snippet block with a copy-to-clipboard button.
+ * Plain text only — it doesn't do syntax highlighting, and `prompt` is
+ * just a display hint (no relation to any actual shell or language).
+ *
+ * @example
+ * ```html
+ * <and-code prompt="$" value="pnpm install"></and-code>
+ * ```
+ */
 @Component({
   tag: 'and-code',
   styleUrls: ['and-code.css', '../../global/component-base.css'],
@@ -28,7 +38,7 @@ export class AndCode {
   @Prop({ reflect: true }) height: string = 'auto';
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass!: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   /** Emitted when the content is copied to the clipboard. */
   @Event({ bubbles: true, composed: true }) andCodeCopy!: EventEmitter<{ value: string; success: boolean }>;

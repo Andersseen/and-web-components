@@ -1,45 +1,23 @@
 import { Component, Prop, h, Host, State, Event, EventEmitter, Watch } from '@stencil/core';
-import { cva } from 'class-variance-authority';
 import { createAlert, type AlertVariant, type AlertReturn } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import { alertVariants, dismissButtonClass } from './and-alert-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const alertVariants = cva(
-  [
-    'relative w-full rounded-lg border p-t-gap',
-    '[&>svg~*]:pl-t-gap-lg [&>svg+div]:translate-y-[-3px]',
-    '[&>svg]:absolute [&>svg]:left-t-gap [&>svg]:top-t-gap [&>svg]:text-foreground',
-  ].join(' '),
-  {
-    variants: {
-      variant: {
-        default: 'bg-background text-foreground border-border',
-        destructive: 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
-        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success',
-        warning: 'border-warning/50 text-warning dark:border-warning [&>svg]:text-warning',
-        info: 'border-info/50 text-info dark:border-info [&>svg]:text-info',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  },
-);
-
-const dismissButtonClass = [
-  'absolute right-t-gap top-t-gap rounded-sm opacity-70',
-  'ring-offset-background transition-opacity',
-  'hover:opacity-100',
-  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-].join(' ');
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Contextual message banner for feedback, warnings, or errors.
+ *
+ * Renders with `role="alert"` so assistive tech announces it as soon as it
+ * mounts — don't use it for content that appears well before it's relevant,
+ * since that triggers an announcement immediately on page load too.
+ *
+ * @example
+ * ```html
+ * <and-alert variant="destructive" dismissible="true">
+ *   <and-icon slot="icon" name="alert-circle"></and-icon>
+ *   Something went wrong with your request.
+ * </and-alert>
+ * ```
+ */
 @Component({
   tag: 'and-alert',
   styleUrls: ['and-alert.css', '../../global/component-base.css'],

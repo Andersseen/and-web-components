@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Method, Element } from '@stencil/core';
-import { cva } from 'class-variance-authority';
 import {
   createToastManager,
   type ToastPosition,
@@ -9,53 +8,23 @@ import {
 } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import { toastVariants, dismissButtonVariants, positionClasses } from './and-toast-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const toastVariants = cva(
-  [
-    'pointer-events-auto flex w-full max-w-md items-center justify-between',
-    'space-x-t-gap overflow-hidden rounded-md border p-t-gap shadow-lg transition-all',
-  ].join(' '),
-  {
-    variants: {
-      variant: {
-        default: 'bg-background text-foreground border-border',
-        destructive: 'bg-destructive text-destructive-foreground border-destructive',
-        success: 'bg-background text-foreground border-success',
-        error: 'bg-destructive text-destructive-foreground border-destructive',
-        info: 'bg-background text-foreground border-info',
-        warning: 'bg-background text-foreground border-warning',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  },
-);
-
-const dismissButtonClass = [
-  'ml-auto inline-flex h-6 w-6 shrink-0 items-center justify-center',
-  'rounded-md p-0.5 opacity-50 transition-opacity',
-  'hover:opacity-100',
-  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-].join(' ');
-
-const positionClasses: Record<ToastPosition, string> = {
-  'top-right': 'top-t-gap right-t-gap items-end',
-  'top-left': 'top-t-gap left-t-gap items-start',
-  'bottom-right': 'bottom-t-gap right-t-gap items-end',
-  'bottom-left': 'bottom-t-gap left-t-gap items-start',
-  'top-center': 'top-t-gap left-1/2 -translate-x-1/2 items-center',
-  'bottom-center': 'bottom-t-gap left-1/2 -translate-x-1/2 items-center',
-};
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Toast notification host and manager. The container is a
+ * `role="region"` + `aria-live="polite"` landmark; each toast is
+ * `role="alert"` with `aria-live="assertive"` so it's announced
+ * immediately. Call `present()` imperatively to show a toast — this
+ * component renders no visible content until then.
+ *
+ * @example
+ * ```html
+ * <and-toast id="toaster" position="bottom-right"></and-toast>
+ * <script>
+ *   document.getElementById('toaster').present('Saved!', 'success');
+ * </script>
+ * ```
+ */
 @Component({
   tag: 'and-toast',
   styleUrls: ['and-toast.css', '../../global/component-base.css', '../../global/animations.css'],
@@ -123,15 +92,10 @@ export class AndToast {
           {this.toasts.map(toast => {
             const toastProps = this.toastManager.getToastProps(toast);
             return (
-              <div
-                key={toast.id}
-                class={cn(toastVariants({ variant: toast.type }), 'and-toast-item')}
-                role="alert"
-                {...toastProps}
-              >
+              <div key={toast.id} class={cn(toastVariants({ variant: toast.type }), 'and-toast-item')} {...toastProps}>
                 <div class="text-sm font-medium opacity-90">{toast.message}</div>
                 <button
-                  class={dismissButtonClass}
+                  class={cn(dismissButtonVariants())}
                   onClick={() => this.handleDismiss(toast.id)}
                   aria-label="Dismiss notification"
                   {...dismissProps}

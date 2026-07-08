@@ -6,10 +6,15 @@ describe('and-badge', () => {
   it('renders with default variant', async () => {
     const { root } = await render(<and-badge>Default</and-badge>);
 
-    expect(root.getAttribute('role')).toBe('status');
     expect(root.className).toContain('bg-primary');
     expect(root.className).toContain('text-primary-foreground');
     expect(root.textContent).toContain('Default');
+  });
+
+  it('has no default role, so static labels are not announced as live regions', async () => {
+    const { root } = await render(<and-badge>Default</and-badge>);
+
+    expect(root.getAttribute('role')).toBeNull();
   });
 
   it('applies secondary variant', async () => {
