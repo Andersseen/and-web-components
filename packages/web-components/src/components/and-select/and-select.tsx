@@ -10,8 +10,12 @@ import { selectVariants } from './and-select-variants';
  * Implements the ARIA combobox pattern: `aria-expanded`, `aria-controls`,
  * `aria-activedescendant` tracks the highlighted option while focus stays
  * on the trigger, and the listbox options get `aria-selected`. A hidden
- * native `<input>` mirrors `value` when `name` is set, so it still
- * participates in native form submission.
+ * native `<input>` mirrors `value` when `name` is set.
+ *
+ * Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: that
+ * hidden input is a real descendant of whatever `<form>` wraps this
+ * component, so it actually shows up in `FormData` on submit — inside a
+ * Shadow DOM it would be invisible to the enclosing form.
  *
  * @example
  * ```html
@@ -22,7 +26,7 @@ import { selectVariants } from './and-select-variants';
 @Component({
   tag: 'and-select',
   styleUrls: ['and-select.css', '../../global/component-base.css'],
-  shadow: true,
+  scoped: true,
 })
 export class AndSelect {
   @Element() el!: HTMLElement;

@@ -10,10 +10,11 @@ import { codeBlockVariants, copyButtonVariants, promptVariants } from './and-cod
  * Read-only command/code snippet block with a copy-to-clipboard button.
  * Plain text only — it doesn't do syntax highlighting, and `prompt` is
  * just a display hint (no relation to any actual shell or language).
+ * The prompt character is hidden by default; opt in with `showPrompt`.
  *
  * @example
  * ```html
- * <and-code prompt="$" value="pnpm install"></and-code>
+ * <and-code show-prompt="true" prompt="$" value="pnpm install"></and-code>
  * ```
  */
 @Component({
@@ -25,14 +26,14 @@ export class AndCode {
   /** Code or command to display. */
   @Prop({ reflect: true }) value: string = '';
 
-  /** Prompt character shown before each line (e.g. `$`, `>`, `#`). Ignored when `showPrompt` is `false`. */
+  /** Prompt character shown before each line (e.g. `$`, `>`, `#`). Ignored unless `showPrompt` is `true`. */
   @Prop({ reflect: true }) prompt: string = '$';
 
   /** Whether to show the copy button. */
   @Prop({ reflect: true }) copyable: boolean = true;
 
-  /** Whether to show the `prompt` character before each line. */
-  @Prop({ reflect: true }) showPrompt: boolean = true;
+  /** Whether to show the `prompt` character before each line. Off by default — opt in per instance. */
+  @Prop({ reflect: true }) showPrompt: boolean = false;
 
   /** Fixed height of the block (CSS length). */
   @Prop({ reflect: true }) height: string = 'auto';

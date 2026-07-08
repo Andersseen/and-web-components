@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/vanilla-components",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Zero-runtime-dependency vanilla web components. Optionally wire @andersseen/motion for animations.",
   "type": "module",
   "sideEffects": true,

@@ -24,7 +24,7 @@ import { AndBreadcrumb, AndBreadcrumbItem } from '@andersseen/angular-components
             <and-breadcrumb>
               <and-breadcrumb-item href="/" hideSeparator> Home </and-breadcrumb-item>
               <and-breadcrumb-item href="/components"> Components </and-breadcrumb-item>
-              <and-breadcrumb-item current> Breadcrumb </and-breadcrumb-item>
+              <and-breadcrumb-item href="/breadcrumb" current> Breadcrumb </and-breadcrumb-item>
             </and-breadcrumb>
           </div>
         </div>
@@ -41,7 +41,7 @@ import { AndBreadcrumb, AndBreadcrumbItem } from '@andersseen/angular-components
               <and-breadcrumb size="sm">
                 <and-breadcrumb-item href="/" hideSeparator size="sm"> Home </and-breadcrumb-item>
                 <and-breadcrumb-item href="/docs" size="sm"> Docs </and-breadcrumb-item>
-                <and-breadcrumb-item current size="sm"> API </and-breadcrumb-item>
+                <and-breadcrumb-item href="/breadcrumb" current size="sm"> API </and-breadcrumb-item>
               </and-breadcrumb>
             </div>
 
@@ -51,7 +51,7 @@ import { AndBreadcrumb, AndBreadcrumbItem } from '@andersseen/angular-components
               <and-breadcrumb size="md">
                 <and-breadcrumb-item href="/" hideSeparator> Home </and-breadcrumb-item>
                 <and-breadcrumb-item href="/docs"> Docs </and-breadcrumb-item>
-                <and-breadcrumb-item current> API </and-breadcrumb-item>
+                <and-breadcrumb-item href="/breadcrumb" current> API </and-breadcrumb-item>
               </and-breadcrumb>
             </div>
 
@@ -61,7 +61,7 @@ import { AndBreadcrumb, AndBreadcrumbItem } from '@andersseen/angular-components
               <and-breadcrumb size="lg">
                 <and-breadcrumb-item href="/" hideSeparator size="lg"> Home </and-breadcrumb-item>
                 <and-breadcrumb-item href="/docs" size="lg"> Docs </and-breadcrumb-item>
-                <and-breadcrumb-item current size="lg"> API </and-breadcrumb-item>
+                <and-breadcrumb-item href="/breadcrumb" current size="lg"> API </and-breadcrumb-item>
               </and-breadcrumb>
             </div>
           </div>
@@ -78,7 +78,7 @@ import { AndBreadcrumb, AndBreadcrumbItem } from '@andersseen/angular-components
               <and-breadcrumb-item href="/products"> Products </and-breadcrumb-item>
               <and-breadcrumb-item href="/products/electronics"> Electronics </and-breadcrumb-item>
               <and-breadcrumb-item href="/products/electronics/phones"> Phones </and-breadcrumb-item>
-              <and-breadcrumb-item current> iPhone 16 Pro </and-breadcrumb-item>
+              <and-breadcrumb-item href="/breadcrumb" current> iPhone 16 Pro </and-breadcrumb-item>
             </and-breadcrumb>
           </div>
         </div>

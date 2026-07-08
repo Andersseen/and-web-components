@@ -14,22 +14,22 @@ describe('and-code', () => {
     expect(getText(root)).toContain('npm install');
   });
 
-  it('shows a $ prompt by default', async () => {
+  it('hides the prompt by default (opt-in via showPrompt)', async () => {
     const { root } = await render(<and-code value="npm install"></and-code>);
+
+    expect(getText(root)).not.toContain('$');
+  });
+
+  it('shows the $ prompt when showPrompt is true', async () => {
+    const { root } = await render(<and-code value="npm install" showPrompt={true}></and-code>);
 
     expect(getText(root)).toContain('$');
   });
 
   it('supports a custom prompt character', async () => {
-    const { root } = await render(<and-code value="install" prompt=">"></and-code>);
+    const { root } = await render(<and-code value="install" prompt=">" showPrompt={true}></and-code>);
 
     expect(getText(root)).toContain('>');
-  });
-
-  it('hides the prompt when showPrompt is false', async () => {
-    const { root } = await render(<and-code value="npm install" showPrompt={false}></and-code>);
-
-    expect(getText(root)).not.toContain('$');
   });
 
   it('renders multiple lines', async () => {

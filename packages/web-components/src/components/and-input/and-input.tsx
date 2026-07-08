@@ -16,6 +16,12 @@ export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
  * your visible error message, otherwise screen readers announce the
  * field as invalid without saying why.
  *
+ * Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: the
+ * `<input>` this component renders is a real descendant of whatever
+ * `<form>` wraps it, so `FormData`, native `required`/`pattern`
+ * validation, autofill, and password managers all work without any
+ * extra wiring.
+ *
  * @example
  * ```html
  * <and-input label="Email" type="email" required="true"></and-input>
@@ -24,7 +30,7 @@ export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
 @Component({
   tag: 'and-input',
   styleUrls: ['and-input.css', '../../global/component-base.css'],
-  shadow: true,
+  scoped: true,
 })
 export class AndInput {
   @Element() el!: HTMLElement;
@@ -37,6 +43,9 @@ export class AndInput {
 
   /** HTML input type. */
   @Prop({ reflect: true }) type: InputType = 'text';
+
+  /** Name attribute forwarded to the native input — required for it to show up in `FormData`. */
+  @Prop({ reflect: true }) name: string = '';
 
   /** Disables interaction when true. */
   @Prop({ reflect: true }) disabled: boolean = false;
@@ -125,6 +134,7 @@ export class AndInput {
         <input
           {...props}
           type={this.type}
+          name={this.name || undefined}
           class={cn(inputVariants({ hasError: this.hasError }), this.customClass)}
           placeholder={this.placeholder}
           aria-label={this.label}

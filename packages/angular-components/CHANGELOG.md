@@ -1,0 +1,40 @@
+# @andersseen/angular-components
+
+## 0.1.0
+
+### Minor Changes
+
+- bc6b1e7: Move Angular wrappers into the monorepo and add React/Vue wrapper
+  packages
+  - Relocated `@andersseen/angular-components` from
+    `apps/angular-workspace/projects/angular-components` to
+    `packages/angular-components` so it is a first-class pnpm workspace package
+    published via Changesets.
+  - Added auto-generated `@andersseen/react-components` and
+    `@andersseen/vue-components` packages produced by Stencil output targets.
+  - Updated `stencil.config.ts`, root `package.json` build scripts
+    (`build:angular`, `build:react`, `build:vue`, `build:all`), CI workflows,
+    and `.gitignore` for the new wrapper locations.
+  - Renamed all library custom events to the single `and<Component><Action>`
+    convention (e.g. `andInputChange`, `andInputBlur`, `andSelectBlur`,
+    `andModalClose`, `andNavItemClick`, `andNavLinkClick`,
+    `andMobileMenuChange`, `andResponsiveStageChange`, `andTabTriggerClick`) and
+    updated every test, story, demo, and README reference.
+
+### Patch Changes
+
+- a28bb5a: Fix Angular wrapper runtime injection error (NG0203)
+  - Set `preserveSymlinks: false` in `apps/angular-workspace/angular.json` so
+    pnpm workspace symlinks resolve correctly and avoid duplicate
+    `@angular/core` instances at runtime.
+  - Mark `@andersseen/angular-components` as `sideEffects: true` to prevent
+    bundlers from tree-shaking the custom-element registration side effects of
+    the generated wrappers.
+  - Update `@stencil/angular-output-target` to `^1.4.0`.
+
+- Updated dependencies [a28bb5a]
+- Updated dependencies [a28bb5a]
+- Updated dependencies [79c1d88]
+- Updated dependencies
+- Updated dependencies [bc6b1e7]
+  - @andersseen/web-components@0.1.0

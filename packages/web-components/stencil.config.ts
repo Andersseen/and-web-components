@@ -41,6 +41,7 @@ export const config: Config = {
     { components: ['and-input'] },
     { components: ['and-icon'] },
     { components: ['and-code'] },
+    { components: ['and-control'] },
   ],
   extras: {
     enableImportInjection: false,

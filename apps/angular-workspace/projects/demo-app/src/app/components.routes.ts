@@ -43,6 +43,10 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/context-menu-demo'),
   },
   {
+    path: 'control',
+    loadComponent: () => import('./pages/components/control-demo'),
+  },
+  {
     path: 'drawer',
     loadComponent: () => import('./pages/components/drawer-demo'),
   },

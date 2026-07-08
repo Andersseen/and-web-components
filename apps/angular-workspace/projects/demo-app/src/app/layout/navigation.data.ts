@@ -32,6 +32,7 @@ export const COMPONENT_ITEMS: SidebarItem[] = [
   { id: 'code', label: 'Code', icon: 'terminal' },
   { id: 'carousel', label: 'Carousel', icon: 'gallery' },
   { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
+  { id: 'control', label: 'Control', icon: 'sliders' },
   { id: 'drawer', label: 'Drawer', icon: 'panel-left' },
   { id: 'dropdown', label: 'Dropdown', icon: 'chevron-down' },
   { id: 'input', label: 'Input', icon: 'text-cursor' },

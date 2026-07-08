@@ -16,7 +16,7 @@ export default {
   args: {
     prompt: '$',
     copyable: true,
-    showPrompt: true,
+    showPrompt: false,
     height: 'auto',
   },
 };
@@ -43,16 +43,17 @@ MultiLine.args = {
   value: 'npm install\nnpm run build\nnpm run test',
 };
 
-export const CustomPrompt = Template.bind({});
-CustomPrompt.args = {
-  prompt: '>',
-  value: 'install @andersseen/web-components @andersseen/icon',
+export const WithPrompt = Template.bind({});
+WithPrompt.args = {
+  showPrompt: true,
+  value: 'pnpm build:all',
 };
 
-export const NoPrompt = Template.bind({});
-NoPrompt.args = {
-  showPrompt: false,
-  value: 'pnpm build:all',
+export const CustomPrompt = Template.bind({});
+CustomPrompt.args = {
+  showPrompt: true,
+  prompt: '>',
+  value: 'install @andersseen/web-components @andersseen/icon',
 };
 
 export const NotCopyable = Template.bind({});
