@@ -1,6 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, h } from '@stencil/vitest';
+import { registerIcons, COPY } from '@andersseen/icon';
 import './and-code';
+
+registerIcons({ copy: COPY });
 
 describe('and-code', () => {
   const getText = (root: HTMLElement) => root.shadowRoot?.textContent ?? '';
@@ -11,21 +14,16 @@ describe('and-code', () => {
     expect(getText(root)).toContain('npm install');
   });
 
-  it('shows a bash prompt by default', async () => {
+  it('shows a $ prompt by default', async () => {
     const { root } = await render(<and-code value="npm install"></and-code>);
 
     expect(getText(root)).toContain('$');
   });
 
-  it('shows a package-manager prompt for npm/yarn/pnpm', async () => {
-    const { root: npmRoot } = await render(<and-code value="install" language="npm"></and-code>);
-    expect(getText(npmRoot)).toContain('>');
+  it('supports a custom prompt character', async () => {
+    const { root } = await render(<and-code value="install" prompt=">"></and-code>);
 
-    const { root: yarnRoot } = await render(<and-code value="add" language="yarn"></and-code>);
-    expect(getText(yarnRoot)).toContain('>');
-
-    const { root: pnpmRoot } = await render(<and-code value="add" language="pnpm"></and-code>);
-    expect(getText(pnpmRoot)).toContain('>');
+    expect(getText(root)).toContain('>');
   });
 
   it('hides the prompt when showPrompt is false', async () => {
@@ -42,16 +40,12 @@ describe('and-code', () => {
     expect(getText(root)).toContain('npm run test');
   });
 
-  it('applies the dark theme by default', async () => {
+  it('uses semantic design tokens so it follows the global dark/light theme', async () => {
     const { root } = await render(<and-code value="cmd"></and-code>);
 
-    expect(root.className).toContain('bg-[#0d1117]');
-  });
-
-  it('applies the light theme when set', async () => {
-    const { root } = await render(<and-code value="cmd" theme="light"></and-code>);
-
     expect(root.className).toContain('bg-muted');
+    expect(root.className).toContain('text-foreground');
+    expect(root.className).not.toMatch(/#[0-9a-f]{3,6}/i);
   });
 
   it('emits andCodeCopy event when copy button is clicked', async () => {
@@ -75,6 +69,17 @@ describe('and-code', () => {
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('npm install');
     expect(copySpy).toHaveReceivedEventTimes(1);
+  });
+
+  it('renders a visible copy icon once icons are registered', async () => {
+    const { root, waitForChanges } = await render(<and-code value="npm install"></and-code>);
+    await waitForChanges();
+
+    const icon = root.shadowRoot?.querySelector('and-icon[name="copy"]');
+    expect(icon).toBeTruthy();
+
+    const svg = icon?.shadowRoot?.querySelector('svg');
+    expect(svg?.innerHTML.trim()).not.toBe('');
   });
 
   it('merges custom classes', async () => {

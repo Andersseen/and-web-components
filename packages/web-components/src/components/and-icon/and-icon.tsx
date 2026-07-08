@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, Watch, State, Element } from '@stencil/core';
+import { Component, Prop, h, Host, Watch, State } from '@stencil/core';
 import { getIcon, type IconName } from '@andersseen/icon';
 
 @Component({
@@ -7,8 +7,6 @@ import { getIcon, type IconName } from '@andersseen/icon';
   shadow: true,
 })
 export class AndIcon {
-  @Element() el: HTMLElement;
-
   /** The name of the icon to render (must be registered via `registerIcons()`). */
   @Prop({ reflect: true }) name: IconName;
 
@@ -27,13 +25,6 @@ export class AndIcon {
 
   componentWillLoad() {
     this.loadIcon();
-  }
-
-  componentDidRender() {
-    const svg = this.el.shadowRoot?.querySelector('svg');
-    if (svg && this.svgContent) {
-      svg.innerHTML = this.svgContent;
-    }
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -70,6 +61,11 @@ export class AndIcon {
           stroke-width={this.strokeWidth}
           stroke-linecap="round"
           stroke-linejoin="round"
+          ref={svg => {
+            if (svg) {
+              svg.innerHTML = this.svgContent ?? '';
+            }
+          }}
         />
       </Host>
     );

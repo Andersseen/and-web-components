@@ -1,10 +1,12 @@
 import { setCustomElementsManifest } from '@storybook/web-components-vite';
 import customElements from '../custom-elements.json';
+import { registerAllIcons } from '@andersseen/icon';
 
 // Initialize the web components
 import { defineCustomElements } from '../loader';
 
 defineCustomElements();
+registerAllIcons();
 
 setCustomElementsManifest(customElements);
 import '../src/global/global.css';
