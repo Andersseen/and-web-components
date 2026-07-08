@@ -16,10 +16,10 @@ describe('and-modal', () => {
     expect(backdrop).toBeTruthy();
   });
 
-  it('emits andClose when overlay is clicked', async () => {
+  it('emits andModalClose when overlay is clicked', async () => {
     const { root, waitForChanges, spyOnEvent } = await render(<and-modal open></and-modal>);
 
-    const closeSpy = spyOnEvent('andClose');
+    const closeSpy = spyOnEvent('andModalClose');
     const backdrop = root.shadowRoot.querySelector('.and-modal-backdrop') as HTMLElement;
     backdrop.click();
     await waitForChanges();

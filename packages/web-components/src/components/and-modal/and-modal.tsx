@@ -46,7 +46,7 @@ export class AndModal {
   @Prop({ reflect: true }) animated: boolean = false;
 
   /** Emitted when the modal is closed. */
-  @Event({ bubbles: true, composed: true }) andClose: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andModalClose: EventEmitter<void>;
 
   @State() private isClosing = false;
 
@@ -59,7 +59,7 @@ export class AndModal {
       onExitEnd: () => {
         this.isClosing = false;
         this.open = false;
-        this.andClose.emit();
+        this.andModalClose.emit();
       },
     },
   );
@@ -83,7 +83,7 @@ export class AndModal {
         } else {
           this.open = isOpen;
           if (!isOpen) {
-            this.andClose.emit();
+            this.andModalClose.emit();
           }
         }
       },

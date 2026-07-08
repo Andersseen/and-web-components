@@ -1,4 +1,4 @@
-import { AndButton, AndIcon, AndSelect } from '@angular-components/stencil-generated/components';
+import { AndButton, AndIcon, AndSelect } from '@andersseen/angular-components';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import type { DropdownOption } from './navigation.data';
 

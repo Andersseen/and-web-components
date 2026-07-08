@@ -74,10 +74,10 @@ export class AndInput {
   @Prop({ attribute: 'class' }) customClass: string;
 
   /** Emitted when the input value changes. */
-  @Event({ bubbles: true, composed: true }) andInput: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andInputChange: EventEmitter<string>;
 
   /** Emitted when the input loses focus. */
-  @Event({ bubbles: true, composed: true }) andBlur: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andInputBlur: EventEmitter<void>;
 
   private inputLogic: InputReturn;
   private unsubscribe: () => void;
@@ -91,7 +91,7 @@ export class AndInput {
       required: this.required,
       onValueChange: (value: string) => {
         this.value = value;
-        this.andInput.emit(value);
+        this.andInputChange.emit(value);
       },
     });
     this.unsubscribe = this.inputLogic.subscribe(() => {
@@ -125,7 +125,7 @@ export class AndInput {
 
   private handleBlur = () => {
     this.inputLogic.actions.blur();
-    this.andBlur.emit();
+    this.andInputBlur.emit();
   };
 
   private handleFocus = () => {

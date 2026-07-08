@@ -67,7 +67,7 @@ describe('and-select', () => {
     expect(changeSpy).toHaveReceivedEventTimes(1);
   });
 
-  it('closes with Escape and emits blur', async () => {
+  it('closes with Escape and emits select blur', async () => {
     const { root, waitForChanges, spyOnEvent } = await render(<and-select options={options}></and-select>);
     await waitForChanges();
 
@@ -76,7 +76,7 @@ describe('and-select', () => {
     trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await waitForChanges();
 
-    const blurSpy = spyOnEvent('andBlur');
+    const blurSpy = spyOnEvent('andSelectBlur');
     trigger.dispatchEvent(new KeyboardEvent('keyDown', { key: 'Escape', bubbles: true }));
     await new Promise(r => setTimeout(r, 0));
     await waitForChanges();

@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndInput } from '@angular-components/stencil-generated/components';
+import { AndInput } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-input-demo',

@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndAlert, AndIcon } from '@angular-components/stencil-generated/components';
+import { AndAlert, AndIcon } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-alert-demo',

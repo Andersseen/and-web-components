@@ -11,10 +11,10 @@ describe('and-input', () => {
     expect(input?.getAttribute('placeholder')).toBe('Type here');
   });
 
-  it('emits andInput on input event', async () => {
+  it('emits andInputChange on input event', async () => {
     const { root, waitForChanges, spyOnEvent } = await render(<and-input></and-input>);
 
-    const inputSpy = spyOnEvent('andInput');
+    const inputSpy = spyOnEvent('andInputChange');
     const input = root.shadowRoot.querySelector('input') as HTMLInputElement;
     input.value = 'hello';
     input.dispatchEvent(new Event('input'));

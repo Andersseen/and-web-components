@@ -52,7 +52,7 @@ const Template = args => html`
         { id: 'about', label: 'About', href: '#' },
         { id: 'contact', label: 'Contact', href: '#' },
       ]}
-      @navItemClick=${e => console.log('Nav item clicked:', e.detail)}
+      @andNavItemClick=${e => console.log('Nav item clicked:', e.detail)}
     >
       <span slot="brand" class="font-bold text-lg">Acme Corp</span>
       <div slot="end" class="flex gap-2">

@@ -92,7 +92,7 @@ describe('VanillaModal', () => {
     await vi.waitFor(() => expect(el.querySelector('.and-modal-content')).toBeFalsy());
   });
 
-  it('emits andClose event after closing', async () => {
+  it('emits andModalClose event after closing', async () => {
     const el = document.createElement('and-vanilla-modal') as VanillaModal;
     el.setAttribute('open', '');
     container.appendChild(el);
@@ -100,7 +100,7 @@ describe('VanillaModal', () => {
     await vi.waitFor(() => expect(el.querySelector('.and-modal-content')).toBeTruthy());
 
     const closeHandler = vi.fn();
-    el.addEventListener('andClose', closeHandler);
+    el.addEventListener('andModalClose', closeHandler);
 
     el.removeAttribute('open');
 

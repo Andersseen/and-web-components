@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndPagination } from '@angular-components/stencil-generated/components';
+import { AndPagination } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-pagination-demo',

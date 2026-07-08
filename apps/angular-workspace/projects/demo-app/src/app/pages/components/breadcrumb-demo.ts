@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndBreadcrumb, AndBreadcrumbItem } from '@angular-components/stencil-generated/components';
+import { AndBreadcrumb, AndBreadcrumbItem } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-breadcrumb-demo',

@@ -22,7 +22,7 @@ const Template = args => {
         Open Modal
       </and-button>
 
-      <and-modal ?open=${args.open} @andClose=${() => console.log('Modal closed')}>
+      <and-modal ?open=${args.open} @andModalClose=${() => console.log('Modal closed')}>
         <div class="flex flex-col space-y-1.5 text-center sm:text-left">
           <h2 class="text-lg font-semibold leading-none tracking-tight">Are you absolutely sure?</h2>
           <p class="text-sm text-muted-foreground">

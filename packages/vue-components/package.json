@@ -1,0 +1,52 @@
+{
+  "name": "@andersseen/vue-components",
+  "version": "0.0.1",
+  "description": "Vue wrappers for @andersseen/web-components Stencil library",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./components/*": {
+      "types": "./dist/components/stencil-generated/*.d.ts",
+      "import": "./dist/components/stencil-generated/*.js",
+      "require": "./dist/components/stencil-generated/*.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/vue-components"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "@andersseen/web-components": "workspace:*"
+  },
+  "dependencies": {
+    "@stencil/vue-output-target": "^0.14.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vue": "^3.5.13"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\""
+  },
+  "author": "Andersseen",
+  "license": "MIT"
+}

@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndSelect } from '@angular-components/stencil-generated/components';
+import { AndSelect } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-select-demo',

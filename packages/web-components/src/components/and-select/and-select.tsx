@@ -91,7 +91,7 @@ export class AndSelect {
   @Event({ bubbles: true, composed: true }) andSelectChange: EventEmitter<string>;
 
   /** Emitted when select loses focus / closes. */
-  @Event({ bubbles: true, composed: true }) andBlur: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andSelectBlur: EventEmitter<void>;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -106,7 +106,7 @@ export class AndSelect {
       },
       onOpenChange: isOpen => {
         if (!isOpen) {
-          this.andBlur.emit();
+          this.andSelectBlur.emit();
         }
       },
     });

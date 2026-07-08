@@ -9,7 +9,9 @@ storybook-static/
 packages/web-components/src/components.d.ts
 packages/web-components/custom-elements.json
 packages/web-components/src/components/*/readme.md
-apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/
+packages/angular-components/src/lib/stencil-generated/
+packages/react-components/src/components/stencil-generated/
+packages/vue-components/src/components/stencil-generated/
 
 # Angular cache
 apps/angular-workspace/.angular/

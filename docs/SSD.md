@@ -94,8 +94,9 @@ All three deploy to **Cloudflare Pages**.
 
 - **NG1** — Supporting Tailwind v4 inside the Stencil package (incompatible with
   per-component Shadow DOM build; see ADR-4).
-- **NG2** — React/Vue wrapper packages (consumers use the custom elements
-  directly; only Angular gets generated wrappers today).
+- **NG2** — Hand-written framework wrappers beyond Stencil's generated output
+  targets. React and Vue consumers are served by auto-generated thin wrappers,
+  not maintained by hand.
 - **NG3** — SSR/hydration guarantees for the Stencil components (no
   `dist-hydrate-script` output target is configured).
 - **NG4** — Supporting ES5 / legacy browsers (`buildEs5: false`).
@@ -113,6 +114,9 @@ and-web-components/
 │   ├── headless-core/            # @andersseen/headless-components — state machines, a11y logic
 │   ├── web-components/           # @andersseen/web-components — Stencil UI components
 │   ├── vanilla-components/       # @andersseen/vanilla-components — zero-dep Custom Elements
+│   ├── angular-components/       # @andersseen/angular-components — generated Angular standalone directives
+│   ├── react-components/         # @andersseen/react-components — generated React wrappers
+│   ├── vue-components/           # @andersseen/vue-components — generated Vue wrappers
 │   ├── icon-library/             # @andersseen/icon — 87 SVG icons + registry
 │   ├── motion-core/              # @andersseen/motion — animation system
 │   ├── layout-core/              # @andersseen/layout — SCSS→CSS attribute-driven layout
@@ -120,7 +124,6 @@ and-web-components/
 ├── apps/                         # Non-published applications
 │   ├── angular-workspace/        # Angular CLI workspace
 │   │   └── projects/
-│   │       ├── angular-components/   # @andersseen/angular-components (generated wrappers)
 │   │       └── demo-app/             # Component showcase
 │   └── astro-landing/            # Marketing/landing site (Astro + Playwright e2e)
 ├── docs/                         # ← You are here (SSD, CODEMAP, PLAYBOOKS)
@@ -135,11 +138,12 @@ and-web-components/
 └── pnpm-workspace.yaml
 ```
 
-**Important subtlety:** `apps/angular-workspace/projects/angular-components` is
-**not** a pnpm workspace package (the workspace glob only covers `apps/*`, not
-`apps/*/projects/*`). It is an Angular CLI library built with
-`ng build angular-components` and versioned/published separately from the
-Changesets flow.
+**Important subtlety:** `@andersseen/angular-components` lives under
+`packages/angular-components` and is a first-class pnpm workspace package. The
+old location (`apps/angular-workspace/projects/angular-components`) is no longer
+used. All three framework wrapper packages (Angular, React, Vue) contain
+auto-generated code under `stencil-generated/` directories that must never be
+hand-edited.
 
 ---
 
@@ -156,6 +160,12 @@ Changesets flow.
    │ @andersseen/             │   │ @andersseen/               │
    │ angular-components       │   │ astro (integration)        │
    │ (generated wrappers)     │   │ (injects registration)     │
+   └────────────┬─────────────┘   └─────────────┬──────────────┘
+                │                               │
+   ┌────────────▼─────────────┐   ┌─────────────▼──────────────┐
+   │ @andersseen/             │   │ @andersseen/               │
+   │ react-components         │   │ vue-components             │
+   │ (generated wrappers)     │   │ (generated wrappers)       │
    └────────────┬─────────────┘   └─────────────┬──────────────┘
                 │                               │
    ┌────────────▼───────────────────────────────▼──────────────┐
@@ -189,6 +199,9 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
 | `web-components`          | `headless-core`, `icon-library`, `motion-core`                        |
 | `vanilla-components`      | `headless-core` (peer), `motion-core` (optional, dynamic import only) |
 | `astro`                   | `web-components`, `icon-library` (peer/dev only)                      |
+| `angular-components`      | `web-components` (peer)                                               |
+| `react-components`        | `web-components` (peer), `@stencil/react-output-target`               |
+| `vue-components`          | `web-components` (peer), `@stencil/vue-output-target`                 |
 | `angular-workspace` (app) | everything in `packages/*`                                            |
 | `astro-landing` (app)     | everything in `packages/*`                                            |
 
@@ -326,13 +339,30 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
   scripts. Options: `components: 'all' | string[]` (list preserves
   tree-shaking), `icons: boolean`.
 
-### 5.8 `@andersseen/angular-components` (`apps/angular-workspace/projects/angular-components`)
+### 5.8 `@andersseen/angular-components` (`packages/angular-components`)
 
 - **Purpose:** standalone Angular directives generated by Stencil's
   `angularOutputTarget`. Human-authored code is limited to packaging; everything
   in `src/lib/stencil-generated/` is regenerated on every Stencil build.
-- **Caveat:** not part of the pnpm workspace or the Changesets release flow;
-  built via `pnpm build:angular`.
+- **Build:** `ng-packagr` via `pnpm build:angular`.
+- **Integration:** first-class pnpm workspace package; published through
+  Changesets alongside the other `packages/*` libraries.
+
+### 5.9 `@andersseen/react-components` (`packages/react-components`)
+
+- **Purpose:** thin React wrappers generated by Stencil's `reactOutputTarget`,
+  re-exporting every custom element as a typed React component.
+- **Build:** `tsc` via `pnpm build:react`.
+- **Integration:** first-class pnpm workspace package; published through
+  Changesets.
+
+### 5.10 `@andersseen/vue-components` (`packages/vue-components`)
+
+- **Purpose:** thin Vue 3 wrappers generated by Stencil's `vueOutputTarget`,
+  re-exporting every custom element as a typed Vue component.
+- **Build:** `tsc` via `pnpm build:vue`.
+- **Integration:** first-class pnpm workspace package; published through
+  Changesets.
 
 ---
 
@@ -382,8 +412,8 @@ Every Stencil component must define its contract in this order (see
    selectors need them; `mutable: true` only when internal mutation is required.
    No `any`.
 2. **Events** — named `and<Component><Action>` in camelCase (`andButtonClick`,
-   `andToggle`), payload typed, emitted **after** state changes,
-   `bubbles + composed`.
+   `andModalClose`, `andInputChange`), payload typed, emitted **after** state
+   changes, `bubbles + composed`. See SKILL.md for the full rule and rationale.
 3. **Slots** — standard names: default, `trigger`, `prefix`/`start`,
    `suffix`/`end`, `header`, `footer`, `empty`. Documented with JSDoc.
 4. **Parts** — `part="..."` on internal elements that consumers may style.
@@ -460,26 +490,29 @@ Rendering-layer integration patterns (in order of preference):
                              ▼
                     4. web-components        5. vanilla-components (needs 1,3)
                              ▼
-6. layout-core (independent)  →  7. angular-components + demo-app (needs 3,4,5,6)
+        6. angular-components / react-components / vue-components (need 4)
+                             ▼
+7. layout-core (independent)  →  8. angular demo-app (needs 3,4,5,6,7)
 ```
 
 Root scripts encode this: `build:stencil` = headless + icons + motion +
-web-components; `build:all` = build:stencil + layout + vanilla + angular.
+web-components; `build:all` = build:stencil + layout + vanilla + angular +
+react + vue.
 
 ### 9.3 Root script inventory (source of truth: root `package.json`)
 
-| Script                                                                                                      | What it does                                            |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `pnpm build:all`                                                                                            | Full dependency-ordered build                           |
-| `pnpm build:stencil`                                                                                        | headless → icons → motion → Stencil                     |
-| `pnpm build:headless` / `build:icons` / `build:motion` / `build:layout` / `build:vanilla` / `build:angular` | Individual packages                                     |
-| `pnpm start:demo` / `start:demo:dev`                                                                        | Angular demo (full build / watch mode)                  |
-| `pnpm start:astro:dev` / `build:astro`                                                                      | Landing page dev/build                                  |
-| `pnpm test:headless`                                                                                        | Headless Vitest suite                                   |
-| `pnpm lint` / `lint:fix` / `format` / `format:check`                                                        | Quality gates (recursive)                               |
-| `pnpm storybook` / `build-storybook`                                                                        | Storybook dev/build                                     |
-| `pnpm changeset` / `version-packages` / `release`                                                           | Changesets flow                                         |
-| `pnpm deploy:storybook` / `deploy:landing` / `deploy:cloudflare` / `deploy:all`                             | Cloudflare Pages deploys (local, need `wrangler login`) |
+| Script                                                                                                                                    | What it does                                            |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `pnpm build:all`                                                                                                                          | Full dependency-ordered build                           |
+| `pnpm build:stencil`                                                                                                                      | headless → icons → motion → Stencil                     |
+| `pnpm build:headless` / `build:icons` / `build:motion` / `build:layout` / `build:vanilla` / `build:angular` / `build:react` / `build:vue` | Individual packages                                     |
+| `pnpm start:demo` / `start:demo:dev`                                                                                                      | Angular demo (full build / watch mode)                  |
+| `pnpm start:astro:dev` / `build:astro`                                                                                                    | Landing page dev/build                                  |
+| `pnpm test:headless`                                                                                                                      | Headless Vitest suite                                   |
+| `pnpm lint` / `lint:fix` / `format` / `format:check`                                                                                      | Quality gates (recursive)                               |
+| `pnpm storybook` / `build-storybook`                                                                                                      | Storybook dev/build                                     |
+| `pnpm changeset` / `version-packages` / `release`                                                                                         | Changesets flow                                         |
+| `pnpm deploy:storybook` / `deploy:landing` / `deploy:cloudflare` / `deploy:all`                                                           | Cloudflare Pages deploys (local, need `wrangler login`) |
 
 ### 9.4 Special build machinery
 
@@ -514,10 +547,10 @@ web-components; `build:all` = build:stencil + layout + vanilla + angular.
 - Stencil spec tests require `icon-library` (and siblings) to be built first —
   run `pnpm build:stencil` once before testing.
 
-**Current coverage gaps (as of 2026-07):** headless `carousel`, `input`, `menu`
-have no tests; Stencil components without specs: badge, breadcrumb, card,
-carousel, code, context-menu, menu-list, pagination; without stories: code,
-skeleton.
+**Current coverage gaps (as of 2026-07):** headless coverage is complete.
+Stencil components without specs: `and-code`; without stories: `and-code`. The
+React and Vue wrapper packages currently have no package-specific tests; they
+are validated by TypeScript compilation (`pnpm build:react`, `pnpm build:vue`).
 
 ---
 
@@ -525,12 +558,12 @@ skeleton.
 
 ### 11.1 Workflows (`.github/workflows/`)
 
-| Workflow             | Trigger                          | Does                                                                                                                                       |
-| -------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ci-cd.yml`          | push to main/develop, PR to main | lint → `build:all` → headless tests → Stencil spec tests → upload artifacts; then deploy Storybook to Cloudflare Pages (main/develop only) |
-| `release.yml`        | push to main                     | builds all publishable libs in order, then `changesets/action` opens a "version packages" PR or publishes to npm (`NPM_TOKEN`)             |
-| `deploy-demo.yml`    | push to main                     | `pnpm deploy:cloudflare:actions` (Angular demo)                                                                                            |
-| `deploy-landing.yml` | push to main                     | `pnpm deploy:landing:actions` (Astro landing)                                                                                              |
+| Workflow             | Trigger                          | Does                                                                                                                                                                      |
+| -------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ci-cd.yml`          | push to main/develop, PR to main | lint → `build:all` → headless tests → Stencil spec tests → vanilla tests → motion tests → upload artifacts; then deploy Storybook to Cloudflare Pages (main/develop only) |
+| `release.yml`        | push to main                     | `pnpm build:all`, then `changesets/action` opens a "version packages" PR or publishes to npm (`NPM_TOKEN`)                                                                |
+| `deploy-demo.yml`    | push to main                     | `pnpm deploy:cloudflare:actions` (Angular demo)                                                                                                                           |
+| `deploy-landing.yml` | push to main                     | `pnpm deploy:landing:actions` (Astro landing)                                                                                                                             |
 
 ### 11.2 Release flow (Changesets — the only sanctioned path)
 
@@ -539,7 +572,9 @@ skeleton.
 3. Merging that PR triggers actual npm publish.
 
 Changesets ignores `@andersseen/astro-landing` and `angular-workspace` (apps).
-Everything else in `packages/*` is publishable with `access: public`.
+Everything else in `packages/*` — including the new
+`@andersseen/angular-components`, `@andersseen/react-components`, and
+`@andersseen/vue-components` — is publishable with `access: public`.
 
 The legacy `publish:headless` / `publish:web-components` root scripts (direct
 `pnpm publish --no-git-checks` with a hardcoded `/private/tmp` npm cache) were
@@ -596,10 +631,11 @@ rule is phrased so a simple grep/check can verify it.
 8. No raw Tailwind color classes (`bg-blue-500`, `text-red-*`) and no hex/rgb
    literals in component classes/styles — only semantic tokens.
 9. Custom events are named `and[A-Z]...` and typed via `EventEmitter<T>`.
-10. Files under
-    `apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/`
-    and `packages/web-components/src/components/*/readme.md` and
-    `src/components.d.ts` are never hand-edited.
+10. Files under `packages/angular-components/src/lib/stencil-generated/`,
+    `packages/react-components/src/components/stencil-generated/`,
+    `packages/vue-components/src/components/stencil-generated/`,
+    `packages/web-components/src/components/*/readme.md`, and
+    `packages/web-components/src/components.d.ts` are never hand-edited.
 11. New Stencil components appear in a `bundles` entry in `stencil.config.ts`
     and follow the `and-<name>` tag convention.
 12. Tailwind v4 syntax (`@theme`, `@import "tailwindcss"`) never appears inside
@@ -657,6 +693,25 @@ with `fix-esm-extensions.cjs`, then emit CJS into `dist-cjs/`. **Rationale:**
 avoids a bundler dependency for simple libraries while satisfying both Node ESM
 resolution and legacy `require()` consumers.
 
+### ADR-7: Generated Angular, React, and Vue wrapper packages
+
+**Decision:** move `@andersseen/angular-components` into `packages/` as a
+first-class workspace package and add `@stencil/react-output-target` and
+`@stencil/vue-output-target` to generate `packages/react-components` and
+`packages/vue-components`. **Rationale:**
+
+1. **One release flow.** All wrapper packages now participate in Changesets and
+   are built by the same `pnpm build:all` orchestration, eliminating the
+   undocumented/manual Angular publish path.
+2. **Framework parity.** Consumers can install thin, typed wrappers for Angular,
+   React, and Vue without writing their own custom-element bindings.
+3. **Generated, not maintained.** The wrapper source is regenerated on every
+   Stencil build; hand-edits are forbidden (see invariant §13.10), keeping
+   maintenance cost near zero as the component set grows.
+4. **Workspace simplicity.** Keeping the Angular library under `packages/`
+   removes the special-case `apps/angular-workspace/projects/*` layout and lets
+   `ng-packagr` build against workspace-resolved `@andersseen/web-components`.
+
 ---
 
 ## 15. Known Gaps and Technical Debt Register
@@ -664,18 +719,18 @@ resolution and legacy `require()` consumers.
 Tracked here so agents don't "fix" them accidentally in unrelated PRs — pick
 them up as explicit tasks.
 
-| ID    | Area               | Description                                                                                                                                                                                                                                             | Severity |
-| ----- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| TD-1  | Docs drift         | README component table lists 20 components; source has 23 (`and-code`, `and-select`, `and-skeleton` missing from table). Structure diagram omits `vanilla-components` and `astro` packages.                                                             | Medium   |
-| TD-2  | Docs drift         | `.github/DEPLOYMENT.md` describes a 5-job `ci-cd.yml`; the real pipeline is split across 4 workflow files and releases via Changesets, not "version bump commits".                                                                                      | Medium   |
-| TD-3  | Tests              | Headless `carousel`, `input`, `menu` now tested; only `and-code` lacks a spec and story because `and-code.tsx` source does not exist yet. `and-skeleton` story added.                                                                                   | High     |
-| TD-4  | Release            | Legacy `publish:*` root scripts bypass Changesets (`--no-git-checks`, hardcoded `/private/tmp` npm cache).                                                                                                                                              | High     |
-| TD-5  | Packaging          | `@andersseen/angular-components` sits outside the pnpm workspace and the Changesets flow; its versioning/publishing path is undocumented.                                                                                                               | High     |
-| TD-6  | Repo hygiene       | Committed `.DS_Store` files; one-off codemods `migrate-store.mjs`, `refactor-stories.mjs` at repo root; `debug-storybook.log`, `storybook-static/`, `playwright-report/` present locally (ignored but clutter). `.DS_Store` not in `.gitignore`.        | Low      |
-| TD-7  | Dependencies       | ~~`packages/web-components` mixes Storybook 10 core with `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`, `jest-cli`, `@types/jest`, `puppeteer` devDeps~~ cleaned up in Phase 4. Root `wrangler` still pinned to v3 (optional bump). | Medium   |
-| TD-8  | Governance         | No root `LICENSE` file (README claims MIT; only `packages/web-components` has one). No `CONTRIBUTING.md`. No `engines` field in root `package.json`.                                                                                                    | Medium   |
-| TD-9  | CI                 | Pre-commit hook only runs Prettier (AGENTS.md claims ESLint too). CI does not run vanilla/motion tests.                                                                                                                                                 | Medium   |
-| TD-10 | A11y/docs mismatch | AGENTS.md event convention (`andOpen`) vs SKILL.md examples are consistent, but some components (e.g. `and-button` emits `andButtonClick`) embed the component name — convention should be stated once, authoritatively (see §7).                       | Low      |
+| ID    | Area               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Severity |
+| ----- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| TD-1  | Docs drift         | README component table lists 20 components; source has 23 (`and-code`, `and-select`, `and-skeleton` missing from table). Structure diagram omits `vanilla-components` and `astro` packages.                                                                                                                                                                                                                                                                                       | Medium   |
+| TD-2  | Docs drift         | `.github/DEPLOYMENT.md` describes a 5-job `ci-cd.yml`; the real pipeline is split across 4 workflow files and releases via Changesets, not "version bump commits".                                                                                                                                                                                                                                                                                                                | Medium   |
+| TD-3  | Tests              | Headless `carousel`, `input`, `menu` now tested; only `and-code` lacks a spec and story because `and-code.tsx` source does not exist yet. `and-skeleton` story added.                                                                                                                                                                                                                                                                                                             | High     |
+| TD-4  | Release            | Legacy `publish:*` root scripts bypass Changesets (`--no-git-checks`, hardcoded `/private/tmp` npm cache).                                                                                                                                                                                                                                                                                                                                                                        | High     |
+| TD-5  | Packaging          | ~~`@andersseen/angular-components` sits outside the pnpm workspace and the Changesets flow; its versioning/publishing path is undocumented.~~ Resolved: moved to `packages/angular-components`; React/Vue wrappers added; all three built by `build:all` and published via Changesets (ADR-7).                                                                                                                                                                                    | High     |
+| TD-6  | Repo hygiene       | Committed `.DS_Store` files; one-off codemods `migrate-store.mjs`, `refactor-stories.mjs` at repo root; `debug-storybook.log`, `storybook-static/`, `playwright-report/` present locally (ignored but clutter). `.DS_Store` not in `.gitignore`.                                                                                                                                                                                                                                  | Low      |
+| TD-7  | Dependencies       | ~~`packages/web-components` mixes Storybook 10 core with `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`, `jest-cli`, `@types/jest`, `puppeteer` devDeps~~ cleaned up in Phase 4. Root `wrangler` still pinned to v3 (optional bump).                                                                                                                                                                                                                           | Medium   |
+| TD-8  | Governance         | No root `LICENSE` file (README claims MIT; only `packages/web-components` has one). No `CONTRIBUTING.md`. No `engines` field in root `package.json`.                                                                                                                                                                                                                                                                                                                              | Medium   |
+| TD-9  | CI                 | Pre-commit hook only runs Prettier (AGENTS.md claims ESLint too). CI does not run vanilla/motion tests.                                                                                                                                                                                                                                                                                                                                                                           | Medium   |
+| TD-10 | A11y/docs mismatch | ~~AGENTS.md event convention (`andOpen`) vs SKILL.md examples are consistent, but some components (e.g. `and-button` emits `andButtonClick`) embed the component name — convention should be stated once, authoritatively.~~ Resolved: all events now follow the single `and<Component><Action>` convention; ambiguous names (`andInput`, `andBlur`, `andClose`, `navItemClick`, etc.) were renamed and all references updated. See SKILL.md §Event Naming Convention and SSD §7. | Low      |
 
 ---
 

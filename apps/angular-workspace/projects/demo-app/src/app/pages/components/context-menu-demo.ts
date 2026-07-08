@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@angular-components/stencil-generated/components';
+import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-context-menu-demo',

@@ -8,7 +8,7 @@ import {
   AndCardContent,
   AndCardFooter,
   AndButton,
-} from '@angular-components/stencil-generated/components';
+} from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-card-demo',

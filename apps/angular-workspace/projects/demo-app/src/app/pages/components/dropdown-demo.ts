@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AndButton, AndDropdown } from '@angular-components/stencil-generated/components';
+import { AndButton, AndDropdown } from '@andersseen/angular-components';
 import { DemoHeaderComponent, DemoSectionComponent, DemoPreviewComponent, DemoCodeBlockComponent } from '../../shared';
 
 @Component({

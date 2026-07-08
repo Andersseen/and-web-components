@@ -259,13 +259,13 @@ export class AndNavbar {
   /* ── Events ─────────────────────────────────────────────────────── */
 
   /** Emitted when active item changes */
-  @Event() navItemClick: EventEmitter<string>;
+  @Event() andNavItemClick: EventEmitter<string>;
 
   /** Emitted when a navigation link is clicked */
-  @Event() navLinkClick: EventEmitter<{ id: string; href: string }>;
+  @Event() andNavLinkClick: EventEmitter<{ id: string; href: string }>;
 
   /** Emitted when mobile menu state changes */
-  @Event() mobileMenuChange: EventEmitter<boolean>;
+  @Event() andMobileMenuChange: EventEmitter<boolean>;
 
   /* ── State ──────────────────────────────────────────────────────── */
 
@@ -283,7 +283,7 @@ export class AndNavbar {
   @State() responsiveStage: ResponsiveStage = 'full';
 
   /** Emitted when responsive stage changes */
-  @Event() responsiveStageChange: EventEmitter<ResponsiveStage>;
+  @Event() andResponsiveStageChange: EventEmitter<ResponsiveStage>;
 
   /* ── Parsed items (handle string JSON from HTML attributes) ───── */
 
@@ -316,12 +316,12 @@ export class AndNavbar {
       defaultActiveItem: this.activeItem || undefined,
       onActiveItemChange: id => {
         this.activeItem = id;
-        this.navItemClick.emit(id);
+        this.andNavItemClick.emit(id);
       },
       mobileMenuOpen: this.mobileMenuOpen,
       onMobileMenuChange: open => {
         this.mobileMenuOpen = open;
-        this.mobileMenuChange.emit(open);
+        this.andMobileMenuChange.emit(open);
       },
       scrollSpy: this.scrollSpy,
       scrollSpyOffset: this.scrollSpyOffset,
@@ -635,7 +635,7 @@ export class AndNavbar {
 
     if (stage !== this.responsiveStage) {
       this.responsiveStage = stage;
-      this.responsiveStageChange.emit(stage);
+      this.andResponsiveStageChange.emit(stage);
     }
   }
 
@@ -694,7 +694,7 @@ export class AndNavbar {
     }
     this.navbar.actions.setActiveItem(item.id);
     if (item.href) {
-      this.navLinkClick.emit({ id: item.id, href: item.href });
+      this.andNavLinkClick.emit({ id: item.id, href: item.href });
     }
   };
 

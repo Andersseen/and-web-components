@@ -33,8 +33,8 @@ independent quick wins; 6–8 are test work; 9–10 need a human decision first.
 | 6     | Headless test coverage (carousel, input, menu)          | low    | ☑ done    |
 | 7     | Stencil specs — batch 1 (static components)             | low    | ☑ done    |
 | 8     | Stencil specs — batch 2 (interactive) + missing stories | medium | ☑ done \* |
-| 9     | Angular package integration (decision needed)           | high   | ☐ pending |
-| 10    | Event naming convention (decision needed)               | low    | ☐ pending |
+| 9     | Angular package integration (decision needed)           | high   | ☑ done    |
+| 10    | Event naming convention (decision needed)               | low    | ☑ done    |
 
 ---
 
@@ -236,51 +236,56 @@ have stories (update CONTEXT.md §6 and SSD.md §10).
 
 ---
 
-## Phase 9 — Angular package integration (TD-5) — ⚠ needs owner decision first
+## Phase 9 — Angular package integration (TD-5) ✅
 
-**Goal:** give `@andersseen/angular-components` a sanctioned
-versioning/publishing path. **Ask the user which option before implementing.**
+**Decision:** Option A — relocated `@andersseen/angular-components` to
+`packages/angular-components`, added generated `@andersseen/react-components`
+and `@andersseen/vue-components`, and wired all three into `build:all` and the
+Changesets release flow.
 
-Options to present:
+- [x] Move Angular library to `packages/angular-components` with `ng-packagr`
+      packaging and workspace dependency on `@andersseen/web-components`.
+- [x] Add `@stencil/react-output-target` → `packages/react-components`.
+- [x] Add `@stencil/vue-output-target` → `packages/vue-components`.
+- [x] Update `stencil.config.ts` output-target paths.
+- [x] Update root `package.json` scripts: `build:angular`, `build:react`,
+      `build:vue`, `build:all`, `release`.
+- [x] Add `.gitignore` entries for the three `stencil-generated/` directories.
+- [x] Add per-package `eslint.config.mjs` files that ignore generated wrapper
+      code.
+- [x] Document ADR-7 in `docs/SSD.md` §14.
 
-- **A (recommended, larger):** move the library into the pnpm workspace — add
-  `apps/angular-workspace/projects/*` to `pnpm-workspace.yaml` (or relocate the
-  lib to `packages/angular-components`), keep `ng build` as its build script,
-  remove it from `.changeset/config.json` ignore-list implications, wire
-  `release.yml` to build it before publish. Risks: Angular CLI expects its
-  workspace layout; `ng-packagr` output dir handling; `angularOutputTarget`
-  paths in `stencil.config.ts` must be updated if relocated.
-- **B (smaller):** keep it outside; add an explicit `publish:angular` CI job
-  (manual `workflow_dispatch`) that runs `pnpm build:angular` and publishes
-  `dist/angular-components`; document the flow in DEPLOYMENT.md and SSD §5.8.
-
-Either way: document the decision as ADR-7 in `docs/SSD.md` §14.
-
-**Verify (A):** `pnpm install` clean, `pnpm build:all` green, `changeset status`
-lists the package. **(B):** dry-run the publish job
-(`pnpm -C ... pack --dry-run`). **Definition of Done:** a documented, repeatable
-publish path exists; ADR-7 written; CONTEXT.md §3/§8 updated.
+**Verify:** `pnpm install` clean, `pnpm build:all` green, `pnpm lint` green,
+`pnpm format:check` green, `changeset status` lists the three new packages.
+**Definition of Done:** all wrapper packages build and are publishable through
+Changesets.
 
 ---
 
-## Phase 10 — Event naming convention (TD-10) — needs owner decision
+## Phase 10 — Event naming convention (TD-10) ✅
 
-**Goal:** one authoritative event-naming rule. Today: skill docs say
-`and<Action>` (`andOpen`), but `and-button` emits `andButtonClick`.
+**Decision:** adopt a single `and<Component><Action>` convention (Ionic-style)
+for all library custom events. Renamed ambiguous events across the codebase.
 
-- [ ] Inventory actual event names:
-      `grep -rn "@Event()" packages/web-components/src/components/ -A1`.
-- [ ] Present the split to the owner and pick a rule (recommendation: **keep
-      existing names as-is** — renaming is a breaking change for consumers — and
-      declare the rule _for new events only_: short-form `and<Action>` unless
-      ambiguous when bubbling, e.g. click events may embed the component name).
-- [ ] Write the chosen rule in exactly one place (SSD §7), and make
-      `AGENTS.md` + `.github/skills/and-component/SKILL.md` reference it instead
-      of restating examples that conflict.
+- [x] Inventory actual event names and identify ambiguous collisions.
+- [x] Rename:
+  - `andInput` → `andInputChange`
+  - input `andBlur` → `andInputBlur`
+  - select `andBlur` → `andSelectBlur`
+  - modal `andClose` → `andModalClose`
+  - `navItemClick` → `andNavItemClick`
+  - `navLinkClick` → `andNavLinkClick`
+  - `mobileMenuChange` → `andMobileMenuChange`
+  - `responsiveStageChange` → `andResponsiveStageChange`
+  - `tabTriggerClick` → `andTabTriggerClick`
+  - vanilla modal `andClose` → `andModalClose`
+- [x] Update all tests, stories, readmes, demo-app handlers, and SKILL.md
+      examples.
+- [x] Write the rule in `docs/SSD.md` §7 and
+      `.github/skills/and-component/SKILL.md`.
 
-**Verify:** grep shows docs no longer contradict each other. **Definition of
-Done:** single documented rule; no consumer-facing renames unless the owner
-explicitly approves a major bump.
+**Verify:** `pnpm build:all` green; grep shows no legacy ambiguous names remain.
+**Definition of Done:** single documented rule; all references consistent.
 
 ---
 

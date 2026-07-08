@@ -71,7 +71,7 @@ export class AndTabs {
 
   /* ── Listeners & Watchers ──────────────────────────────────────── */
 
-  @Listen('tabTriggerClick')
+  @Listen('andTabTriggerClick')
   handleTabClick(ev: CustomEvent) {
     this.tabsLogic.actions.selectTab(ev.detail);
   }

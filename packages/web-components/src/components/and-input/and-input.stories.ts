@@ -38,7 +38,7 @@ const Template = args => html`
       ?required=${args.required}
       ?has-error=${args.hasError}
       label=${ifDefined(args.label)}
-      @andInput=${e => console.log('Input value:', e.detail)}
+      @andInputChange=${e => console.log('Input value:', e.detail)}
     ></and-input>
     ${args.hasError ? html`<p class="mt-1 text-sm text-destructive">This field has an error.</p>` : ''}
   </div>

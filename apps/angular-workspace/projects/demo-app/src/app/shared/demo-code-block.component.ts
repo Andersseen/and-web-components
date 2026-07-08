@@ -8,7 +8,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { AndSkeleton } from '@angular-components/stencil-generated/components';
+import { AndSkeleton } from '@andersseen/angular-components';
 
 function getDocumentTheme(): 'dark' | 'light' {
   return document.documentElement.classList.contains('dark') ? 'dark' : 'light';

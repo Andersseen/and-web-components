@@ -42,7 +42,7 @@ export class VanillaModal extends HTMLElement {
         if (isOpen) {
           this.playEnter();
         } else if (!this.isClosing) {
-          this.dispatchEvent(new CustomEvent('andClose', { bubbles: true, composed: true }));
+          this.dispatchEvent(new CustomEvent('andModalClose', { bubbles: true, composed: true }));
         }
       },
     });

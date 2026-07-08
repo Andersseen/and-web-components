@@ -38,7 +38,7 @@ export class AndTabsTrigger {
   @Prop() tabsLogic: TabsReturn;
 
   /** Emitted when this trigger is clicked. */
-  @Event({ bubbles: true, composed: true }) tabTriggerClick: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andTabTriggerClick: EventEmitter<string>;
 
   /* ── Handlers ───────────────────────────────────────────────────── */
 
@@ -74,7 +74,7 @@ export class AndTabsTrigger {
     return (
       <Host
         {...triggerProps}
-        onClick={() => !this.disabled && this.tabTriggerClick.emit(this.value)}
+        onClick={() => !this.disabled && this.andTabTriggerClick.emit(this.value)}
         onKeyDown={this.handleKeyDown}
         tabIndex={this.selected ? 0 : -1}
         class={cn(

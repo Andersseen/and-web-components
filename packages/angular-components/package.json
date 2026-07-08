@@ -1,0 +1,52 @@
+{
+  "name": "@andersseen/angular-components",
+  "version": "0.0.1",
+  "description": "Angular wrappers for @andersseen/web-components Stencil library",
+  "main": "./dist/fesm2022/andersseen-angular-components.mjs",
+  "module": "./dist/fesm2022/andersseen-angular-components.mjs",
+  "types": "./dist/types/andersseen-angular-components.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/andersseen-angular-components.d.ts",
+      "import": "./dist/fesm2022/andersseen-angular-components.mjs",
+      "require": "./dist/fesm2022/andersseen-angular-components.mjs"
+    }
+  },
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "rxjs": "^7.8.0",
+    "@andersseen/web-components": "workspace:*"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/common": "^21.1.3",
+    "@angular/compiler": "^21.1.3",
+    "@angular/compiler-cli": "^21.1.3",
+    "@angular/core": "^21.1.3",
+    "ng-packagr": "^21.1.0",
+    "rxjs": "^7.8.2",
+    "typescript": "^5.9.3"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/angular-components"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json",
+    "test": "vitest run",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\""
+  },
+  "author": "Andersseen",
+  "license": "MIT"
+}
