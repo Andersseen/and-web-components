@@ -28,6 +28,16 @@ jobs:
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Restore Stencil build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            packages/web-components/.stencil
+            node_modules/.cache
+          key: stencil-${{ runner.os }}-${{ hashFiles('packages/web-components/src/**/*.tsx', 'packages/web-components/src/**/*.ts', 'packages/web-components/stencil.config.ts', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            stencil-${{ runner.os }}-
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
