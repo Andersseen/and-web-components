@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  --and-code-height: auto;
+}
+
+:host([height]) {
+  height: var(--and-code-height);
+}

@@ -547,10 +547,10 @@ react + vue.
 - Stencil spec tests require `icon-library` (and siblings) to be built first —
   run `pnpm build:stencil` once before testing.
 
-**Current coverage gaps (as of 2026-07):** headless coverage is complete.
-Stencil components without specs: `and-code`; without stories: `and-code`. The
-React and Vue wrapper packages currently have no package-specific tests; they
-are validated by TypeScript compilation (`pnpm build:react`, `pnpm build:vue`).
+**Current coverage gaps (as of 2026-07-08):** headless coverage is complete. All
+23 Stencil components have specs and stories. The React and Vue wrapper packages
+currently have no package-specific tests; they are validated by TypeScript
+compilation (`pnpm build:react`, `pnpm build:vue`).
 
 ---
 

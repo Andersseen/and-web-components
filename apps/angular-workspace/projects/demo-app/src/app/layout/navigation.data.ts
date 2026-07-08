@@ -29,6 +29,7 @@ export const COMPONENT_ITEMS: SidebarItem[] = [
   { id: 'breadcrumb', label: 'Breadcrumb', icon: 'chevron-right' },
   { id: 'button', label: 'Button', icon: 'circle-dot' },
   { id: 'card', label: 'Card', icon: 'credit-card' },
+  { id: 'code', label: 'Code', icon: 'terminal' },
   { id: 'carousel', label: 'Carousel', icon: 'gallery' },
   { id: 'context-menu', label: 'Context Menu', icon: 'mouse-pointer' },
   { id: 'drawer', label: 'Drawer', icon: 'panel-left' },

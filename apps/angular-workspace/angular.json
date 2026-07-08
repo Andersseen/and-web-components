@@ -24,7 +24,7 @@
             ],
             "styles": ["projects/demo-app/src/styles.css"],
             "scripts": [],
-            "preserveSymlinks": true
+            "preserveSymlinks": false
           },
           "configurations": {
             "production": {

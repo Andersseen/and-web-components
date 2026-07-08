@@ -40,6 +40,7 @@ export const config: Config = {
     { components: ['and-pagination'] },
     { components: ['and-input'] },
     { components: ['and-icon'] },
+    { components: ['and-code'] },
   ],
   extras: {
     enableImportInjection: false,

@@ -31,6 +31,10 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/card-demo'),
   },
   {
+    path: 'code',
+    loadComponent: () => import('./pages/components/code-demo'),
+  },
+  {
     path: 'carousel',
     loadComponent: () => import('./pages/components/carousel-demo'),
   },

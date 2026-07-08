@@ -56,7 +56,7 @@ landing / demo).
   `packages/web-components/src/components/`):** accordion, alert, badge,
   breadcrumb, button, card, carousel, code, context-menu, drawer, dropdown,
   icon, input, menu-list, modal, navbar, pagination, select, sidebar, skeleton,
-  tabs, toast, tooltip.
+  tabs, toast, tooltip. `and-code` now has source, spec, and story.
 - **Headless modules (19 in `packages/headless-core/src/`):** accordion, alert,
   breadcrumb, button, carousel, context-menu, drawer, dropdown, input, machine,
   menu, menu-list, modal, navbar, select, sidebar, tabs, toast, tooltip (+
@@ -111,13 +111,10 @@ landing / demo).
   `../icon-library/dist/index.js`** ⇒ must run `pnpm build:stencil` (or at least
   build icons) before stencil tests. `scripts/ensure-built.cjs` guards
   `pnpm test` only.
-- Test coverage (counted 2026-07-05):
-  - headless: **19 of 19 non-util modules tested** (carousel, input, menu tests
-    added in Phase 6).
-  - stencil specs: 22/23; **missing: code** (carousel, context-menu, menu-list
-    added in Phase 8; `and-code.tsx` source does not exist).
-  - stories: 22/23; **missing: code** (skeleton story added in Phase 8;
-    `and-code` source does not exist).
+- **Test coverage (counted 2026-07-08):**
+  - headless: **19 of 19 non-util modules tested**.
+  - stencil specs: **23/23** (`and-code` spec added in wrapper move session).
+  - stories: **23/23** (`and-code` story added in wrapper move session).
   - e2e: ~~3 `*.e2e.ts` files~~ removed in Phase 4 (deprecated Puppeteer tests).
 - Husky pre-commit = `pnpm exec lint-staged` = **Prettier only** (AGENTS.md
   previously claimed ESLint too — inaccurate).
