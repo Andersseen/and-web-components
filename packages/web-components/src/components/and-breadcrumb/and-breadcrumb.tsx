@@ -1,38 +1,29 @@
 import { Component, h, Host, Prop, Element, State } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createBreadcrumb, type BreadcrumbReturn } from '@andersseen/headless-components';
+import { breadcrumbVariants, type BreadcrumbVariantProps } from './and-breadcrumb-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const breadcrumbVariants = cva('flex items-center text-muted-foreground font-sans', {
-  variants: {
-    size: {
-      sm: 'text-xs gap-1',
-      md: 'text-sm gap-1.5',
-      lg: 'text-base gap-2',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-export type BreadcrumbVariantProps = VariantProps<typeof breadcrumbVariants>;
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Navigation trail showing the user's location in a hierarchy. Renders a
+ * `<nav aria-label>` wrapping an `<ol>` — group `and-breadcrumb-item`
+ * children inside it, marking the last one `current`.
+ *
+ * @example
+ * ```html
+ * <and-breadcrumb>
+ *   <and-breadcrumb-item href="/">Home</and-breadcrumb-item>
+ *   <and-breadcrumb-item href="/docs">Docs</and-breadcrumb-item>
+ *   <and-breadcrumb-item current="true">Current page</and-breadcrumb-item>
+ * </and-breadcrumb>
+ * ```
+ */
 @Component({
   tag: 'and-breadcrumb',
   styleUrls: ['and-breadcrumb.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndBreadcrumb {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Size variant for the breadcrumb trail. */
   @Prop({ reflect: true }) size: BreadcrumbVariantProps['size'] = 'md';
@@ -41,9 +32,9 @@ export class AndBreadcrumb {
   @Prop({ attribute: 'aria-label' }) navLabel: string = 'Breadcrumb';
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
-  @State() private breadcrumbLogic: BreadcrumbReturn;
+  @State() private breadcrumbLogic!: BreadcrumbReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

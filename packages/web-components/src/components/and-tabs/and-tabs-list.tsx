@@ -1,10 +1,19 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import { cn } from '../../utils/cn';
+import { tabsListVariants } from './and-tabs-list-variants';
 
-const tabsListClass = ['flex flex-row w-full h-10 items-center rounded-md', 'bg-muted p-1 text-muted-foreground'].join(
-  ' ',
-);
-
+/**
+ * `role="tablist"` wrapper for `and-tabs-trigger` children. Purely a
+ * layout/labeling wrapper — keyboard navigation lives in the triggers,
+ * driven by the headless logic from the `and-tabs` ancestor.
+ *
+ * @example
+ * ```html
+ * <and-tabs-list>
+ *   <and-tabs-trigger value="tab-1">Tab 1</and-tabs-trigger>
+ * </and-tabs-list>
+ * ```
+ */
 @Component({
   tag: 'and-tabs-list',
   styleUrls: ['and-tabs.css', '../../global/component-base.css'],
@@ -16,7 +25,7 @@ export class AndTabsList {
 
   render() {
     return (
-      <Host role="tablist" aria-orientation={this.orientation} class={cn(tabsListClass)}>
+      <Host role="tablist" aria-orientation={this.orientation} class={cn(tabsListVariants())}>
         <slot />
       </Host>
     );

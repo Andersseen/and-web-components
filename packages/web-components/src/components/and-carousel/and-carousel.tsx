@@ -1,45 +1,42 @@
 import { Component, h, Host, State, Element, Prop, Event, EventEmitter, Listen, Watch } from '@stencil/core';
 import { createCarousel, type CarouselReturn, createIdGenerator } from '@andersseen/headless-components';
 import { cn } from '../../utils/cn';
+import {
+  carouselClass,
+  trackContainerClass,
+  trackClass,
+  controlBaseClass,
+  dotBaseClass,
+  playPauseClass,
+} from './and-carousel-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Styles
- * ──────────────────────────────────────────────────────────────────── */
-
-const carouselClass = 'relative overflow-hidden rounded-lg';
-
-const trackContainerClass = 'overflow-hidden';
-
-const trackClass = 'flex transition-transform duration-300 ease-out';
-
-const controlBaseClass = [
-  'absolute top-1/2 -translate-y-1/2 z-10',
-  'inline-flex h-10 w-10 items-center justify-center rounded-full',
-  'bg-background/80 text-foreground border border-border',
-  'shadow-sm backdrop-blur-sm transition-colors',
-  'hover:bg-accent hover:text-accent-foreground',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-  'disabled:opacity-50 disabled:pointer-events-none',
-].join(' ');
-
-const dotBaseClass = [
-  'h-2 w-2 rounded-full border-none cursor-pointer transition-colors',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-].join(' ');
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Slideshow of `and-carousel-item` slides with previous/next controls,
+ * dot indicators, and optional autoplay.
+ *
+ * When `autoplay` is on, a pause/play button is shown (required for WCAG
+ * 2.2.2 — content that moves for more than 5s must be user-pausable, and
+ * pausing only on `mouseenter` leaves keyboard and screen-reader users
+ * with no way to stop it). Autoplay also pauses automatically while any
+ * control inside the carousel has focus.
+ *
+ * @example
+ * ```html
+ * <and-carousel label="Featured products" autoplay="true">
+ *   <and-carousel-item label="Slide 1">...</and-carousel-item>
+ *   <and-carousel-item label="Slide 2">...</and-carousel-item>
+ * </and-carousel>
+ * ```
+ */
 @Component({
   tag: 'and-carousel',
   styleUrls: ['and-carousel.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndCarousel {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  /** Whether the carousel auto-advances. */
+  /** Whether the carousel auto-advances. A pause/play control is shown whenever this is true. */
   @Prop({ reflect: true }) autoplay: boolean = false;
 
   /** Interval in ms between auto-advances. */
@@ -49,13 +46,14 @@ export class AndCarousel {
   @Prop() label: string = 'Carousel';
 
   /** Emitted when the active slide changes. */
-  @Event({ bubbles: true, composed: true }) andSlideChange: EventEmitter<number>;
+  @Event({ bubbles: true, composed: true }) andSlideChange!: EventEmitter<number>;
 
   @State() private renderTick = 0;
-  private carouselLogic: CarouselReturn;
+  @State() private userPaused: boolean = false;
+  private carouselLogic!: CarouselReturn;
   private autoplayTimer: ReturnType<typeof setInterval> | undefined;
   private trackId: string = createIdGenerator('carousel')('track');
-  private unsubscribe: () => void;
+  private unsubscribe!: () => void;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -89,7 +87,7 @@ export class AndCarousel {
   @Watch('autoplay')
   autoplayChanged(newValue: boolean) {
     this.carouselLogic.actions.setAutoplay(newValue);
-    if (newValue) {
+    if (newValue && !this.userPaused) {
       this.startAutoplay();
     } else {
       this.stopAutoplay();
@@ -110,16 +108,25 @@ export class AndCarousel {
     }
   }
 
+  private togglePause = () => {
+    this.userPaused = !this.userPaused;
+    if (this.userPaused) {
+      this.stopAutoplay();
+    } else {
+      this.startAutoplay();
+    }
+  };
+
   /* ── Interaction ────────────────────────────────────────────────── */
 
-  private handleMouseEnter = () => {
-    if (this.autoplay) {
+  private handlePauseTrigger = () => {
+    if (this.autoplay && !this.userPaused) {
       this.stopAutoplay();
     }
   };
 
-  private handleMouseLeave = () => {
-    if (this.autoplay) {
+  private handleResumeTrigger = () => {
+    if (this.autoplay && !this.userPaused) {
       this.startAutoplay();
     }
   };
@@ -154,8 +161,10 @@ export class AndCarousel {
           role="region"
           aria-roledescription="carousel"
           aria-label={this.label}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
+          onMouseEnter={this.handlePauseTrigger}
+          onMouseLeave={this.handleResumeTrigger}
+          onFocusin={this.handlePauseTrigger}
+          onFocusout={this.handleResumeTrigger}
         >
           <div class={trackContainerClass}>
             <div
@@ -185,6 +194,19 @@ export class AndCarousel {
           >
             <and-icon name="chevron-right" size={16} class="h-4 w-4" />
           </button>
+
+          {/* Pause/play — required so autoplay can be stopped without a mouse (WCAG 2.2.2) */}
+          {this.autoplay && (
+            <button
+              type="button"
+              class={playPauseClass}
+              onClick={this.togglePause}
+              aria-label={this.userPaused ? 'Play carousel' : 'Pause carousel'}
+              aria-pressed={this.userPaused ? 'true' : 'false'}
+            >
+              <and-icon name={this.userPaused ? 'play' : 'pause'} size={14} class="h-3.5 w-3.5" />
+            </button>
+          )}
 
           {/* Dot indicators */}
           {state.slideCount > 1 && (

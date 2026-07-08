@@ -5,6 +5,15 @@ import { cn } from '../../utils/cn';
  * Component
  * ──────────────────────────────────────────────────────────────────── */
 
+/**
+ * Main body region of an `and-card`, padded on all sides except the top
+ * (so it sits flush under `and-card-header`).
+ *
+ * @example
+ * ```html
+ * <and-card-content>Body content</and-card-content>
+ * ```
+ */
 @Component({
   tag: 'and-card-content',
   styleUrls: ['and-card-content.css', '../../global/component-base.css'],
@@ -12,7 +21,7 @@ import { cn } from '../../utils/cn';
 })
 export class AndCardContent {
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   render() {
     return (

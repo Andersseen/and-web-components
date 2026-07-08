@@ -1,5 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
-import { AndTabs, AndTabsList, AndTabsTrigger, AndIcon } from '@angular-components/stencil-generated/components';
+import { AndTabs, AndTabsList, AndTabsTrigger, AndIcon } from '@andersseen/angular-components';
 import { DemoCodeBlockComponent } from '../../shared/demo-code-block.component';
 import { DemoHeaderComponent } from '../../shared/demo-header.component';
 import { DemoPanelComponent } from '../../shared/demo-panel.component';

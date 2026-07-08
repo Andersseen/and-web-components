@@ -1,37 +1,24 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
+import { cardVariants, type CardVariantProps } from './and-card-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow-md transition-shadow duration-normal', {
-  variants: {
-    variant: {
-      default: 'border-border',
-      destructive: 'border-destructive/50 text-destructive dark:border-destructive',
-      elevated: 'shadow-lg border-border',
-      outline: 'shadow-none border-border',
-      ghost: 'border-transparent shadow-none',
-    },
-    padded: {
-      true: 'p-4 sm:p-6',
-      false: '',
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-    padded: false,
-  },
-});
-
-export type CardVariantProps = VariantProps<typeof cardVariants>;
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Generic content container. Purely presentational — compose it with
+ * `and-card-header`, `and-card-title`, `and-card-description`,
+ * `and-card-content`, and `and-card-footer` for the standard layout, or
+ * use it alone with `padded="true"` for simple content.
+ *
+ * @example
+ * ```html
+ * <and-card>
+ *   <and-card-header>
+ *     <and-card-title>Title</and-card-title>
+ *     <and-card-description>Supporting text</and-card-description>
+ *   </and-card-header>
+ *   <and-card-content>Body content</and-card-content>
+ * </and-card>
+ * ```
+ */
 @Component({
   tag: 'and-card',
   styleUrls: ['and-card.css', '../../global/component-base.css'],
@@ -49,7 +36,7 @@ export class AndCard {
   @Prop({ reflect: true }) padded: boolean = false;
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   render() {
     return (

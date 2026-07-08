@@ -31,12 +31,20 @@ const componentsRoutes: Routes = [
     loadComponent: () => import('./pages/components/card-demo'),
   },
   {
+    path: 'code',
+    loadComponent: () => import('./pages/components/code-demo'),
+  },
+  {
     path: 'carousel',
     loadComponent: () => import('./pages/components/carousel-demo'),
   },
   {
     path: 'context-menu',
     loadComponent: () => import('./pages/components/context-menu-demo'),
+  },
+  {
+    path: 'control',
+    loadComponent: () => import('./pages/components/control-demo'),
   },
   {
     path: 'drawer',

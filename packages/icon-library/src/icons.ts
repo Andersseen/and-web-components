@@ -56,6 +56,7 @@ export const ROTATE_CW =
 export const ROTATE_CCW =
   '<polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>';
 export const PLAY = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+export const PAUSE = '<line x1="9" y1="4" x2="9" y2="20"></line><line x1="15" y1="4" x2="15" y2="20"></line>';
 export const EYE =
   '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
 export const EYE_OFF =
@@ -192,6 +193,7 @@ export const ALL_ICONS: Record<string, string> = {
   'rotate-cw': ROTATE_CW,
   'rotate-ccw': ROTATE_CCW,
   'play': PLAY,
+  'pause': PAUSE,
   'eye': EYE,
   'eye-off': EYE_OFF,
   'accessibility': ACCESSIBILITY,

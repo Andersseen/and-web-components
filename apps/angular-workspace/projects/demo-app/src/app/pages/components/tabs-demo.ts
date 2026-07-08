@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger } from '@angular-components/stencil-generated/components';
+import { AndTabs, AndTabsContent, AndTabsList, AndTabsTrigger } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-tabs-demo',

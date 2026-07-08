@@ -1,17 +1,19 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndSelect } from '@angular-components/stencil-generated/components';
+import { AndSelect, AndControl } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-select-demo',
-  imports: [AndSelect, DemoCodeBlockComponent],
+  imports: [AndSelect, AndControl, DemoCodeBlockComponent],
   template: `
     <div class="max-w-4xl mx-auto pb-12">
       <header class="mb-10 border-b border-border pb-10">
         <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Select</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Form select input for choosing one option from a list, with support for placeholder, disabled options, and
-          error state.
+          error state. Renders in light DOM (not Shadow DOM) via a hidden mirror input, so it's a real descendant of
+          whatever <code class="text-sm bg-muted px-1.5 py-0.5 rounded">&lt;form&gt;</code> wraps it and shows up in
+          <code class="text-sm bg-muted px-1.5 py-0.5 rounded">FormData</code>.
         </p>
       </header>
 
@@ -20,18 +22,15 @@ import { AndSelect } from '@angular-components/stencil-generated/components';
         <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-8">
             <div class="max-w-md mx-auto flex flex-col gap-5">
-              <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium text-foreground">Framework</label>
-                <and-select [options]="frameworkOptions" placeholder="Choose a framework"></and-select>
-              </div>
-              <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium text-foreground">Plan</label>
-                <and-select [options]="planOptions" value="pro"></and-select>
-              </div>
-              <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium text-muted-foreground">Disabled</label>
+              <and-control label="Framework">
+                <and-select name="framework" [options]="frameworkOptions" placeholder="Choose a framework"></and-select>
+              </and-control>
+              <and-control label="Plan">
+                <and-select name="plan" [options]="planOptions" value="pro"></and-select>
+              </and-control>
+              <and-control label="Disabled">
                 <and-select [options]="frameworkOptions" value="angular" [disabled]="true"></and-select>
-              </div>
+              </and-control>
             </div>
           </div>
         </div>
@@ -41,15 +40,15 @@ import { AndSelect } from '@angular-components/stencil-generated/components';
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Validation Example</h2>
         <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-8">
-            <div class="max-w-md mx-auto flex flex-col gap-2">
-              <label class="text-sm font-medium text-foreground">Country</label>
-              <and-select
-                [options]="countryOptions"
-                [hasError]="true"
-                describedBy="country-error"
-                placeholder="Select your country"
-              ></and-select>
-              <span id="country-error" class="text-xs text-destructive"> Please select a country. </span>
+            <div class="max-w-md mx-auto">
+              <and-control label="Country" error="Please select a country.">
+                <and-select
+                  name="country"
+                  [options]="countryOptions"
+                  [hasError]="true"
+                  placeholder="Select your country"
+                ></and-select>
+              </and-control>
             </div>
           </div>
         </div>
@@ -83,8 +82,7 @@ export default class SelectDemo {
     { text: 'Germany', value: 'de' },
   ];
 
-  templateCode = `<and-select
-  [options]="frameworkOptions"
-  placeholder="Choose framework"
-></and-select>`;
+  templateCode = `<and-control label="Framework">
+  <and-select name="framework" [options]="frameworkOptions" placeholder="Choose framework"></and-select>
+</and-control>`;
 }

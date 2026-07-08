@@ -1,48 +1,41 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Element, State, Listen, Watch } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createIdGenerator, createSelect } from '@andersseen/headless-components';
 import type { SelectReturn, SelectState } from '@andersseen/headless-components';
 import type { SelectOption, SelectMenuPlacement } from './types';
+import { selectVariants } from './and-select-variants';
 
-const selectVariants = cva(
-  [
-    'inline-flex h-10 w-full items-center rounded-md border border-border bg-background',
-    'px-3 py-2 pr-10 text-sm font-sans text-left text-foreground shadow-sm',
-    'cursor-pointer',
-    'transition-all duration-fast ring-offset-background',
-    'hover:bg-accent/60 hover:text-accent-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-  ].join(' '),
-  {
-    variants: {
-      hasError: {
-        true: 'border-destructive focus-visible:ring-destructive',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      hasError: false,
-    },
-  },
-);
-
-export type SelectVariantProps = VariantProps<typeof selectVariants>;
-
+/**
+ * Custom `role="combobox"` select, styleable unlike a native `<select>`.
+ * Implements the ARIA combobox pattern: `aria-expanded`, `aria-controls`,
+ * `aria-activedescendant` tracks the highlighted option while focus stays
+ * on the trigger, and the listbox options get `aria-selected`. A hidden
+ * native `<input>` mirrors `value` when `name` is set.
+ *
+ * Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: that
+ * hidden input is a real descendant of whatever `<form>` wraps this
+ * component, so it actually shows up in `FormData` on submit — inside a
+ * Shadow DOM it would be invisible to the enclosing form.
+ *
+ * @example
+ * ```html
+ * <and-select label="Country" name="country" options='[{"value":"us","text":"United States"}]'>
+ * </and-select>
+ * ```
+ */
 @Component({
   tag: 'and-select',
   styleUrls: ['and-select.css', '../../global/component-base.css'],
-  shadow: true,
+  scoped: true,
 })
 export class AndSelect {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @State() private selectState: SelectState;
+  @State() private selectState!: SelectState;
   @State() private resolvedPlacement: 'bottom' | 'top' = 'bottom';
   @State() private menuMaxHeight: number = 256;
 
-  private selectLogic: SelectReturn;
+  private selectLogic!: SelectReturn;
   private wrapperEl?: HTMLDivElement;
   private menuEl?: HTMLDivElement;
   private triggerEl?: HTMLButtonElement;
@@ -62,7 +55,7 @@ export class AndSelect {
   @Prop({ reflect: true, mutable: true }) value: string = '';
 
   /** Name attribute forwarded to native select. */
-  @Prop({ reflect: true }) name: string;
+  @Prop({ reflect: true }) name: string = '';
 
   /** Disables interaction when true. */
   @Prop({ reflect: true }) disabled: boolean = false;
@@ -79,19 +72,19 @@ export class AndSelect {
   @Prop({ reflect: true }) menuPlacement: SelectMenuPlacement = 'auto';
 
   /** Accessible label for the select. */
-  @Prop() label: string;
+  @Prop() label: string = '';
 
   /** ID of element describing this field. */
-  @Prop() describedBy: string;
+  @Prop() describedBy: string = '';
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   /** Emitted when selected value changes. */
-  @Event({ bubbles: true, composed: true }) andSelectChange: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andSelectChange!: EventEmitter<string>;
 
   /** Emitted when select loses focus / closes. */
-  @Event({ bubbles: true, composed: true }) andBlur: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andSelectBlur!: EventEmitter<void>;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -106,7 +99,7 @@ export class AndSelect {
       },
       onOpenChange: isOpen => {
         if (!isOpen) {
-          this.andBlur.emit();
+          this.andSelectBlur.emit();
         }
       },
     });

@@ -182,14 +182,52 @@ Props    : name (IconName — must be registered)   size (default 24)   color (d
 \`\`\`
 
 ### and-input
-Props    : value (mutable string)   type   placeholder   disabled   required   hasError   label   describedBy   customClass
-Events   : andInput → string (current value)   andBlur → void
+Renders in light DOM (not Shadow DOM) — the real \`<input>\` is a descendant of any wrapping \`<form>\`,
+so \`FormData\`, native validation, and autofill work with no extra wiring. Set \`name\` for it to show up in \`FormData\`.
+Props    : value (mutable string)   type   name   placeholder   disabled   required   hasError   label   describedBy   customClass
+Events   : andInputChange → string (current value)   andInputBlur → void
 \`\`\`html
-<and-input id="email" type="email" placeholder="you@example.com" required></and-input>
+<and-input id="email" name="email" type="email" placeholder="you@example.com" required></and-input>
 \`\`\`
 \`\`\`ts
 document.getElementById('email')
-  .addEventListener('andInput', (e: CustomEvent<string>) => console.log(e.detail));
+  .addEventListener('andInputChange', (e: CustomEvent<string>) => console.log(e.detail));
+\`\`\`
+
+### and-select
+Custom \`role="combobox"\` select — styleable unlike a native \`<select>\`, full keyboard support (arrow keys, Home/End, typeahead).
+Also renders in light DOM: set \`name\` and its hidden mirror input shows up in \`FormData\`.
+Props    : options (array or JSON string of {text,value,disabled?})   value (mutable string)   name   placeholder
+           disabled   required   hasError   menuPlacement (auto|top|bottom)   label   describedBy   customClass
+Events   : andSelectChange → string (selected value)   andSelectBlur → void
+\`\`\`html
+<and-select name="country" placeholder="Choose a country"></and-select>
+\`\`\`
+\`\`\`ts
+document.querySelector('and-select').options = [{ text: 'Spain', value: 'es' }];
+\`\`\`
+
+### and-control
+Generic form-field wrapper for anything and-input/and-select don't cover — it renders no control of its own.
+Slot in a native \`<textarea>\`, native \`<select>\`, third-party widget, or and-input/and-select, and it wires the
+label's \`for\`/\`id\` and the message's \`aria-describedby\` to the first slotted element automatically.
+Props    : label   hint   error (shown instead of hint, sets aria-invalid on the control)   required (visual only)
+\`\`\`html
+<and-control label="Bio" hint="Max 200 characters">
+  <textarea name="bio" maxlength="200"></textarea>
+</and-control>
+<and-control label="Country" error="Required">
+  <and-select name="country" placeholder="Choose a country"></and-select>
+</and-control>
+\`\`\`
+
+### and-code
+Read-only command/code snippet block with a copy-to-clipboard button. Plain text only — no syntax highlighting,
+and \`prompt\` is just a display hint (not tied to any real shell/language). Prompt is hidden unless \`show-prompt\` is set.
+Props    : value   prompt (default \`$\`)   showPrompt (default false)   copyable (default true)   height   customClass
+Events   : andCodeCopy → { value: string; success: boolean }
+\`\`\`html
+<and-code show-prompt="true" prompt="$" value="pnpm install"></and-code>
 \`\`\`
 
 ### and-menu-list + and-menu-item

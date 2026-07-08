@@ -8,7 +8,7 @@ import {
   AndTabsList,
   AndTabsTrigger,
   AndTabsContent,
-} from '@angular-components/stencil-generated/components';
+} from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-navbar-demo',

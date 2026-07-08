@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
-import { AndSkeleton } from '@angular-components/stencil-generated/components';
+import { AndSkeleton } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-skeleton-demo',

@@ -1,4 +1,4 @@
-import { AndIcon, AndNavbar, AndSidebar } from '@angular-components/stencil-generated/components';
+import { AndIcon, AndNavbar, AndSidebar } from '@andersseen/angular-components';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -48,7 +48,7 @@ interface SidebarConfig {
         [compactBreakpoint]="0"
         [minimalBreakpoint]="0"
         [mobileBreakpoint]="760"
-        (navItemClick)="onNavItemClick($event)"
+        (andNavItemClick)="onNavItemClick($event)"
       >
         <span slot="start" class="flex min-w-0 items-center gap-2">
           <and-icon name="layout"></and-icon>

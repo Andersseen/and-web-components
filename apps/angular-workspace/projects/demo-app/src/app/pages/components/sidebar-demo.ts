@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndSidebar } from '@angular-components/stencil-generated/components';
+import { AndSidebar } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-sidebar-demo',

@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
-import { AndDrawer, AndButton } from '@angular-components/stencil-generated/components';
+import { AndDrawer, AndButton } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-drawer-demo',

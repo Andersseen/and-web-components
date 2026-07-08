@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen, Watch } from '@stencil/core';
 import { cn } from '../../utils/cn';
 import { createContextMenu, type ContextMenuReturn } from '@andersseen/headless-components';
+import { contextMenuPanelVariants } from './and-context-menu-variants';
 
 export type ContextMenuItem = {
   text: string;
@@ -8,29 +9,26 @@ export type ContextMenuItem = {
   disabled?: boolean;
 };
 
-/* ────────────────────────────────────────────────────────────────────
- * Base Styles
- * ──────────────────────────────────────────────────────────────────── */
-
-const contextMenuPanelClass = [
-  'absolute z-50 min-w-[8rem] overflow-hidden',
-  'rounded-md border border-border',
-  'bg-popover text-popover-foreground',
-  'shadow-md',
-  'transition-opacity duration-normal',
-].join(' ');
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Right-click (or long-press) menu that opens over its `trigger`-slotted
+ * content. Supports two usage modes: pass `items` for a built-in,
+ * keyboard-navigable list (arrow keys, Home/End, Enter/Space, Escape), or
+ * omit `items` and slot your own menu content into the default slot.
+ *
+ * @example
+ * ```html
+ * <and-context-menu items='[{"text":"Copy","value":"copy"},{"text":"Delete","value":"delete"}]'>
+ *   <div slot="trigger">Right-click me</div>
+ * </and-context-menu>
+ * ```
+ */
 @Component({
   tag: 'and-context-menu',
   styleUrls: ['and-context-menu.css', '../../global/component-base.css'],
   shadow: true,
 })
 export class AndContextMenu {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Whether the context menu is currently open (controlled). */
   @Prop({ mutable: true, reflect: true }) open: boolean = false;
@@ -42,17 +40,17 @@ export class AndContextMenu {
   @Prop() menuLabel: string = 'Context menu';
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   /** Emitted when the open state changes. */
-  @Event({ bubbles: true, composed: true }) andContextMenuOpenChange: EventEmitter<boolean>;
+  @Event({ bubbles: true, composed: true }) andContextMenuOpenChange!: EventEmitter<boolean>;
 
   /** Emitted when an item is selected. */
-  @Event({ bubbles: true, composed: true }) andContextMenuSelect: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andContextMenuSelect!: EventEmitter<string>;
 
   @State() private posX: number = 0;
   @State() private posY: number = 0;
-  @State() private contextMenuLogic: ContextMenuReturn;
+  @State() private contextMenuLogic!: ContextMenuReturn;
   @State() private focusedIndex: number = -1;
 
   private itemRefs = new Map<number, HTMLDivElement>();
@@ -268,7 +266,7 @@ export class AndContextMenu {
     const panelProps = this.contextMenuLogic?.getPanelProps(this.menuLabel) || {};
 
     const panelClasses = cn(
-      contextMenuPanelClass,
+      contextMenuPanelVariants(),
       this.open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none',
       this.customClass,
     );

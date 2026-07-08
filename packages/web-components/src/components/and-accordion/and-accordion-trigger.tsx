@@ -25,13 +25,26 @@ export interface TriggerItemProps {
   disabled?: boolean;
 }
 
+/**
+ * Clickable header that toggles an `and-accordion-item`.
+ *
+ * Must be a child of `and-accordion-item`, which injects the shared headless
+ * logic via `setItemProps()`. Renders `aria-expanded`/`aria-controls`/`role="button"`
+ * from that logic, so screen readers and keyboard users get the same contract
+ * as the visual state.
+ *
+ * @example
+ * ```html
+ * <and-accordion-trigger>Section title</and-accordion-trigger>
+ * ```
+ */
 @Component({
   tag: 'and-accordion-trigger',
   styleUrls: ['../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndAccordionTrigger {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() private itemId: string = '';
   @State() private accordionLogic: AccordionReturn | null = null;

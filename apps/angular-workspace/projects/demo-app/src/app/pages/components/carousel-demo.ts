@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndCarousel, AndCarouselItem } from '@angular-components/stencil-generated/components';
+import { AndCarousel, AndCarouselItem } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-carousel-demo',

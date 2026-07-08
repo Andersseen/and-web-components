@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component, ViewChild } from '@angular/core';
-import { AndButton, AndToast } from '@angular-components/stencil-generated/components';
+import { AndButton, AndToast } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-toast-demo',

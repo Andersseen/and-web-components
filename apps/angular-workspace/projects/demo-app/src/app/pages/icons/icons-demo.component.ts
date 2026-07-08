@@ -1,4 +1,4 @@
-import { AndIcon } from '@angular-components/stencil-generated/components';
+import { AndIcon } from '@andersseen/angular-components';
 import { Component } from '@angular/core';
 import { ALL_ICONS } from '@andersseen/icon';
 

@@ -1,8 +1,14 @@
 import { Component, Host, h, Prop, State, Element, Event, EventEmitter, Listen, Watch } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createDropdown, type DropdownReturn } from '@andersseen/headless-components';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
+import {
+  dropdownTriggerVariants,
+  menuClass,
+  menuPlacementClass,
+  menuItemClass,
+  type DropdownVariantProps,
+} from './and-dropdown-variants';
 
 /* ────────────────────────────────────────────────────────────────────
  * Types
@@ -17,64 +23,30 @@ export type DropdownItem = {
 export type DropdownPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 /* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const dropdownTriggerVariants = cva(
-  [
-    'inline-flex w-full items-center justify-between gap-x-2',
-    'rounded-md px-3 py-3 sm:py-2 text-sm font-medium shadow-sm',
-    'ring-1 ring-inset transition-colors',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-  ].join(' '),
-  {
-    variants: {
-      variant: {
-        default: 'bg-background text-foreground ring-border hover:bg-accent',
-        primary: 'bg-primary text-primary-foreground ring-primary hover:bg-primary/80',
-        secondary: 'bg-secondary text-secondary-foreground ring-secondary hover:bg-secondary/80',
-        ghost: 'bg-transparent text-foreground ring-transparent hover:bg-accent',
-        outline: 'border border-border bg-background text-foreground hover:bg-accent',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  },
-);
-
-const menuClass = [
-  'absolute z-50 min-w-[8rem]',
-  'overflow-hidden rounded-md border border-border',
-  'bg-popover p-1 shadow-md transition-opacity',
-].join(' ');
-
-const menuPlacementClass: Record<DropdownPlacement, string> = {
-  bottom: 'left-0 top-full mt-2 origin-top-left',
-  top: 'left-0 bottom-full mb-2 origin-bottom-left',
-  left: 'right-full top-0 mr-2 origin-right',
-  right: 'left-full top-0 ml-2 origin-left',
-};
-
-const menuItemClass = [
-  'relative flex w-full cursor-pointer select-none items-center rounded-sm text-sm',
-  'outline-none transition-colors px-3 py-3 sm:py-1.5',
-  'text-popover-foreground hover:bg-accent hover:text-accent-foreground',
-].join(' ');
-
-export type DropdownVariantProps = VariantProps<typeof dropdownTriggerVariants>;
-
-/* ────────────────────────────────────────────────────────────────────
  * Component
  * ──────────────────────────────────────────────────────────────────── */
 
+/**
+ * Menu button that opens a list of `items` on click. The trigger gets
+ * `aria-haspopup`/`aria-expanded` automatically, and the menu supports
+ * arrow keys, Home/End, Enter/Space, and Escape. If you slot a custom
+ * `trigger` instead of using the default button, you're responsible for
+ * adding those ARIA attributes yourself — they can't be forwarded onto
+ * arbitrary slotted content.
+ *
+ * @example
+ * ```html
+ * <and-dropdown label="Options" items='[{"text":"Edit","value":"edit"},{"text":"Delete","value":"delete"}]'>
+ * </and-dropdown>
+ * ```
+ */
 @Component({
   tag: 'and-dropdown',
   styleUrls: ['and-dropdown.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDropdown {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Items to render in the dropdown menu. */
   @Prop() items: DropdownItem[] = [];
@@ -92,12 +64,12 @@ export class AndDropdown {
   @Prop() closeOnSelect: boolean = true;
 
   /** Emitted when an item is selected. */
-  @Event({ bubbles: true, composed: true }) andDropdownSelect: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andDropdownSelect!: EventEmitter<string>;
 
   /** Emitted when the dropdown open state changes. */
-  @Event({ bubbles: true, composed: true }) andDropdownOpenChange: EventEmitter<boolean>;
+  @Event({ bubbles: true, composed: true }) andDropdownOpenChange!: EventEmitter<boolean>;
 
-  @State() private dropdownLogic: DropdownReturn;
+  @State() private dropdownLogic!: DropdownReturn;
   @State() private isOpen: boolean = false;
   @State() private focusedIndex: number = -1;
 

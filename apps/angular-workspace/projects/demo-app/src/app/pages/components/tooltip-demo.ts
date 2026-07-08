@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndButton, AndTooltip } from '@angular-components/stencil-generated/components';
+import { AndButton, AndTooltip } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-tooltip-demo',

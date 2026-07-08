@@ -5,6 +5,15 @@ import { cn } from '../../utils/cn';
  * Component
  * ──────────────────────────────────────────────────────────────────── */
 
+/**
+ * Footer region of an `and-card` — a flex row typically used for actions
+ * (buttons) below `and-card-content`.
+ *
+ * @example
+ * ```html
+ * <and-card-footer><and-button>Confirm</and-button></and-card-footer>
+ * ```
+ */
 @Component({
   tag: 'and-card-footer',
   styleUrls: ['and-card-footer.css', '../../global/component-base.css'],
@@ -12,7 +21,7 @@ import { cn } from '../../utils/cn';
 })
 export class AndCardFooter {
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass: string = '';
 
   render() {
     return (

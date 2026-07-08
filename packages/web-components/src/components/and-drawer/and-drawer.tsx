@@ -1,80 +1,31 @@
 import { Component, Prop, h, Host, Event, EventEmitter, Watch, Listen, State, Element } from '@stencil/core';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-components';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
+import { overlayVariants, contentVariants, closeBtnVariants } from './and-drawer-variants';
 
-/* ────────────────────────────────────────────────────────────────────
- * Variants
- * ──────────────────────────────────────────────────────────────────── */
-
-const overlayVariants = cva('and-drawer-overlay fixed inset-0 z-[9999] bg-foreground/60', {
-  variants: {
-    open: {
-      true: 'opacity-100 pointer-events-auto',
-      false: 'opacity-0 pointer-events-none',
-    },
-  },
-  defaultVariants: { open: false },
-});
-
-const contentVariants = cva(
-  'and-drawer-content fixed z-[10000] flex flex-col bg-background shadow-xl outline-none overflow-y-auto overflow-x-hidden',
-  {
-    variants: {
-      placement: {
-        left: 'top-0 left-0 bottom-0 w-[min(85vw,20rem)] border-r border-border',
-        right: 'top-0 right-0 bottom-0 w-[min(85vw,20rem)] border-l border-border',
-        top: 'top-0 left-0 right-0 max-h-[50vh] border-b border-border',
-        bottom: 'bottom-0 left-0 right-0 max-h-[50vh] border-t border-border',
-      },
-      open: {
-        true: 'translate-x-0 translate-y-0',
-        false: '',
-      },
-      animate: {
-        true: '',
-        false: '',
-      },
-    },
-    compoundVariants: [
-      { placement: 'left', open: false, class: '-translate-x-full' },
-      { placement: 'right', open: false, class: 'translate-x-full' },
-      { placement: 'top', open: false, class: '-translate-y-full' },
-      { placement: 'bottom', open: false, class: 'translate-y-full' },
-    ],
-    defaultVariants: {
-      placement: 'left',
-      open: false,
-      animate: true,
-    },
-  },
-);
-
-const closeBtnVariants = cva(
-  [
-    'inline-flex items-center justify-center w-8 h-8 shrink-0',
-    'border-none bg-transparent rounded-md cursor-pointer',
-    'text-muted-foreground transition-colors duration-150',
-    'hover:bg-accent hover:text-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-  ].join(' '),
-);
-
-export type DrawerVariantProps = VariantProps<typeof contentVariants>;
-
-/* ────────────────────────────────────────────────────────────────────
- * Component
- * ──────────────────────────────────────────────────────────────────── */
-
+/**
+ * Off-canvas panel that slides in from an edge of the screen, with a
+ * focus trap, Escape-to-close, backdrop click, and focus restoration to
+ * whatever was focused before it opened — all handled for you via the
+ * shared headless drawer logic.
+ *
+ * @example
+ * ```html
+ * <and-drawer placement="right" label="Settings">
+ *   <span slot="header">Settings</span>
+ *   Drawer content
+ * </and-drawer>
+ * ```
+ */
 @Component({
   tag: 'and-drawer',
   styleUrls: ['and-drawer.css', '../../global/component-base.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDrawer {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * Whether the drawer is open.
@@ -94,13 +45,13 @@ export class AndDrawer {
   /**
    * Accessible label for the drawer.
    */
-  @Prop() label: string;
+  @Prop() label: string = '';
 
   /** Emitted when the drawer is closed (backdrop click, close button, or Escape). */
-  @Event({ bubbles: true, composed: true }) andDrawerClose: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andDrawerClose!: EventEmitter<void>;
 
   /** Emitted when the drawer is opened. */
-  @Event({ bubbles: true, composed: true }) andDrawerOpen: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andDrawerOpen!: EventEmitter<void>;
 
   @State() private isOpen: boolean = false;
 
@@ -110,7 +61,7 @@ export class AndDrawer {
    */
   @State() private skipTransition: boolean = false;
 
-  private drawer: DrawerReturn;
+  private drawer!: DrawerReturn;
 
   /** Guard against stale rAF callbacks from rapid open/close toggling. */
   private openSeq: number = 0;

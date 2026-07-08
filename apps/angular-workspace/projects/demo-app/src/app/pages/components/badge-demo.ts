@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component } from '@angular/core';
-import { AndBadge } from '@angular-components/stencil-generated/components';
+import { AndBadge } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-badge-demo',

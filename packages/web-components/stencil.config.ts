@@ -1,5 +1,7 @@
 import { Config } from '@stencil/core';
 import { angularOutputTarget } from '@stencil/angular-output-target';
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 import { postcss } from '@stencil-community/postcss';
 import autoprefixer from 'autoprefixer';
@@ -38,6 +40,8 @@ export const config: Config = {
     { components: ['and-pagination'] },
     { components: ['and-input'] },
     { components: ['and-icon'] },
+    { components: ['and-code'] },
+    { components: ['and-control'] },
   ],
   extras: {
     enableImportInjection: false,
@@ -62,10 +66,18 @@ export const config: Config = {
     angularOutputTarget({
       componentCorePackage: '@andersseen/web-components',
       outputType: 'standalone',
-      directivesProxyFile:
-        '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/components.ts',
-      directivesArrayFile:
-        '../../apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/index.ts',
+      directivesProxyFile: '../../packages/angular-components/src/lib/stencil-generated/components.ts',
+      directivesArrayFile: '../../packages/angular-components/src/lib/stencil-generated/index.ts',
+    }),
+    reactOutputTarget({
+      outDir: '../../packages/react-components/src/components/stencil-generated',
+      esModules: true,
+    }),
+    vueOutputTarget({
+      componentCorePackage: '@andersseen/web-components',
+      proxiesFile: '../../packages/vue-components/src/components/stencil-generated/index.ts',
+      includeImportCustomElements: true,
+      esModules: true,
     }),
   ],
   plugins: [

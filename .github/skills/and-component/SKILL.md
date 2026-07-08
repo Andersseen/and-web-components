@@ -131,17 +131,43 @@ Real HTML examples covering all key variants.
 
 ### Events Naming Convention
 
+All library events are prefixed with `and` and use camelCase/PascalCase action
+names.
+
 ```
-and[ComponentName][Action]  — PascalCase, 'and' prefix
+and[Action]               — semantic component-specific events
+and[Component][Action]    — generic/native-like events that may bubble or collide
 ```
+
+Use `and[Action]` for events that are clearly owned by the component's
+semantics:
 
 ```tsx
 @Event() andOpen: EventEmitter<void>;
-@Event() andClose: EventEmitter<void>;
-@Event() andToggle: EventEmitter<{ open: boolean }>;
 @Event() andSelect: EventEmitter<{ value: string; label: string }>;
 @Event() andChange: EventEmitter<{ value: string; previousValue: string }>;
+@Event() andInputChange: EventEmitter<string>;
+@Event() andSelectChange: EventEmitter<string>;
 ```
+
+Use `and[Component][Action]` when the action is a generic DOM-like event
+(`click`, `blur`, `focus`) or when several Andersseen components could emit the
+same event and bubbling would be ambiguous:
+
+```tsx
+@Event() andButtonClick: EventEmitter<MouseEvent>;
+@Event() andInputBlur: EventEmitter<void>;
+@Event() andSelectBlur: EventEmitter<void>;
+@Event() andNavItemClick: EventEmitter<string>;
+@Event() andTabTriggerClick: EventEmitter<string>;
+@Event() andModalClose: EventEmitter<void>;
+@Event() andDrawerClose: EventEmitter<void>;
+```
+
+**Why:** plain `andClick`, `andBlur`, or `andClose` would be ambiguous the
+moment multiple wrapped components are placed in the same container. Prefixing
+the component name keeps events predictable and matches the pattern used by
+Ionic (`ionButtonClick`, `ionModalDidDismiss`) and other mature design systems.
 
 Emit **after** state update. For form elements, also call
 `this.internals.setFormValue(...)`.

@@ -1,16 +1,26 @@
-import { Component, Prop, h, Host, Watch, State, Element } from '@stencil/core';
+import { Component, Prop, h, Host, Watch, State } from '@stencil/core';
 import { getIcon, type IconName } from '@andersseen/icon';
 
+/**
+ * Renders an SVG icon registered via `registerIcons()`/`registerAllIcons()`
+ * from `@andersseen/icon`. Always `aria-hidden="true"` — it's treated as
+ * purely decorative, so any accessible name (e.g. "Close", "Copy") must
+ * come from the interactive element it's inside of (`aria-label` on a
+ * button, visible text, etc.), never from the icon itself.
+ *
+ * @example
+ * ```html
+ * <and-icon name="chevron-down" size="16"></and-icon>
+ * ```
+ */
 @Component({
   tag: 'and-icon',
   styleUrl: 'and-icon.css',
   shadow: true,
 })
 export class AndIcon {
-  @Element() el: HTMLElement;
-
   /** The name of the icon to render (must be registered via `registerIcons()`). */
-  @Prop({ reflect: true }) name: IconName;
+  @Prop({ reflect: true }) name!: IconName;
 
   /** The size of the icon in pixels. */
   @Prop({ reflect: true }) size: string | number = 24;
@@ -27,13 +37,6 @@ export class AndIcon {
 
   componentWillLoad() {
     this.loadIcon();
-  }
-
-  componentDidRender() {
-    const svg = this.el.shadowRoot?.querySelector('svg');
-    if (svg && this.svgContent) {
-      svg.innerHTML = this.svgContent;
-    }
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -70,6 +73,11 @@ export class AndIcon {
           stroke-width={this.strokeWidth}
           stroke-linecap="round"
           stroke-linejoin="round"
+          ref={svg => {
+            if (svg) {
+              svg.innerHTML = this.svgContent ?? '';
+            }
+          }}
         />
       </Host>
     );

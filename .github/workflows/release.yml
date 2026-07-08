@@ -26,26 +26,24 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Restore Stencil build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            packages/web-components/.stencil
+            node_modules/.cache
+          key: stencil-${{ runner.os }}-${{ hashFiles('packages/web-components/src/**/*.tsx', 'packages/web-components/src/**/*.ts', 'packages/web-components/stencil.config.ts', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            stencil-${{ runner.os }}-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Build all publishable libraries in dependency order
-      - name: Build headless-core
-        run: pnpm -C packages/headless-core build
-
-      - name: Build icon-library
-        run: pnpm -C packages/icon-library build
-
-      - name: Build motion-core
-        run: pnpm -C packages/motion-core build
-
-      - name: Build layout-core
-        run: pnpm -C packages/layout-core build
-
-      - name: Build web-components
-        run: pnpm -C packages/web-components build
+      # Build all publishable libraries in dependency order (includes new Angular/React/Vue wrappers)
+      - name: Build all packages
+        run: pnpm build:all
 
       - name: Create Release PR or Publish
         id: changesets
@@ -53,8 +51,8 @@ jobs:
         with:
           version: pnpm version-packages
           publish: pnpm release
-          title: "chore: version packages"
-          commit: "chore: version packages"
+          title: 'chore: version packages'
+          commit: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

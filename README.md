@@ -14,6 +14,8 @@ framework or plain HTML.
 | `@andersseen/layout`              | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout)                           | Pure CSS layout & typography via HTML attributes |
 | `@andersseen/vanilla-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/vanilla-components)](https://www.npmjs.com/package/@andersseen/vanilla-components)   | Zero-dependency native Custom Elements           |
 | `@andersseen/angular-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone directive wrappers            |
+| `@andersseen/react-components`    | [![npm](https://img.shields.io/npm/v/@andersseen/react-components)](https://www.npmjs.com/package/@andersseen/react-components)       | Generated React wrappers                         |
+| `@andersseen/vue-components`      | [![npm](https://img.shields.io/npm/v/@andersseen/vue-components)](https://www.npmjs.com/package/@andersseen/vue-components)           | Generated Vue 3 wrappers                         |
 | `@andersseen/astro`               | [![npm](https://img.shields.io/npm/v/@andersseen/astro)](https://www.npmjs.com/package/@andersseen/astro)                             | Official Astro integration                       |
 
 ## Features
@@ -43,11 +45,13 @@ and-web-components/
 │   ├── motion-core/           # @andersseen/motion  (TS + CSS)
 │   ├── web-components/        # @andersseen/web-components (Stencil)
 │   ├── vanilla-components/    # @andersseen/vanilla-components (zero-dep CE)
+│   ├── angular-components/    # @andersseen/angular-components (generated Angular)
+│   ├── react-components/      # @andersseen/react-components (generated React)
+│   ├── vue-components/        # @andersseen/vue-components (generated Vue)
 │   └── astro/                 # @andersseen/astro integration
 ├── apps/
-│   ├── angular-workspace/     # Angular demo app + @andersseen/angular-components
+│   ├── angular-workspace/     # Angular CLI workspace (demo app only)
 │   │   └── projects/
-│   │       ├── angular-components/  # Auto-generated Angular wrappers
 │   │       └── demo-app/            # Component showcase app
 │   └── astro-landing/         # Landing page built with Astro (Playwright e2e)
 ├── package.json               # Root scripts
@@ -76,8 +80,9 @@ pnpm install
 pnpm build:all
 ```
 
-This builds: `headless-core` → `icon-library` → `web-components` → `motion-core`
-→ `layout-core` → `angular-components` → `demo-app`.
+This builds: `headless-core` → `icon-library` → `motion-core` → `web-components`
+→ `vanilla-components` → `layout-core` → `angular-components` →
+`react-components` → `vue-components` → `demo-app`.
 
 ## Development
 
@@ -116,6 +121,8 @@ pnpm -C packages/web-components start
 | `pnpm build:layout`    | Build SCSS → CSS layout library             |
 | `pnpm build:stencil`   | Build headless + icons + Stencil components |
 | `pnpm build:angular`   | Build Angular wrappers + demo app           |
+| `pnpm build:react`     | Build React wrappers                        |
+| `pnpm build:vue`       | Build Vue wrappers                          |
 | `pnpm build:all`       | Build everything                            |
 | `pnpm build:astro`     | Build Astro landing page                    |
 | `pnpm start:demo`      | Build libs + serve Angular demo             |
@@ -184,6 +191,40 @@ import { AndButton, AndModal, AndIcon } from '@andersseen/angular-components';
   template: `<and-button variant="default">Click me</and-button>`,
 })
 export class AppComponent {}
+```
+
+### In React
+
+```bash
+npm install @andersseen/web-components @andersseen/react-components @andersseen/icon
+```
+
+```tsx
+// App.tsx
+import { AndButton } from '@andersseen/react-components';
+import '@andersseen/web-components/dist/web-components/web-components.css';
+
+export function App() {
+  return <AndButton variant="default">Click me</AndButton>;
+}
+```
+
+### In Vue
+
+```bash
+npm install @andersseen/web-components @andersseen/vue-components @andersseen/icon
+```
+
+```vue
+<!-- App.vue -->
+<script setup lang="ts">
+import { AndButton } from '@andersseen/vue-components';
+import '@andersseen/web-components/dist/web-components/web-components.css';
+</script>
+
+<template>
+  <AndButton variant="default">Click me</AndButton>
+</template>
 ```
 
 ### In Astro

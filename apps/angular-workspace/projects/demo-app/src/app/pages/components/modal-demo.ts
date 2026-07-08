@@ -1,6 +1,6 @@
 import { DemoCodeBlockComponent } from '../../shared';
 import { Component, signal } from '@angular/core';
-import { AndButton, AndModal } from '@angular-components/stencil-generated/components';
+import { AndButton, AndModal } from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-modal-demo',

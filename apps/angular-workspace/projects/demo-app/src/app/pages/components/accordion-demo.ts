@@ -6,7 +6,7 @@ import {
   AndAccordionItem,
   AndAccordionTrigger,
   AndAccordionContent,
-} from '@angular-components/stencil-generated/components';
+} from '@andersseen/angular-components';
 
 @Component({
   selector: 'app-accordion-demo',
