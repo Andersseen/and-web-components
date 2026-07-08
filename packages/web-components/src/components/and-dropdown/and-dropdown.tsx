@@ -74,7 +74,7 @@ export type DropdownVariantProps = VariantProps<typeof dropdownTriggerVariants>;
   shadow: true,
 })
 export class AndDropdown {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Items to render in the dropdown menu. */
   @Prop() items: DropdownItem[] = [];
@@ -92,12 +92,12 @@ export class AndDropdown {
   @Prop() closeOnSelect: boolean = true;
 
   /** Emitted when an item is selected. */
-  @Event({ bubbles: true, composed: true }) andDropdownSelect: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andDropdownSelect!: EventEmitter<string>;
 
   /** Emitted when the dropdown open state changes. */
-  @Event({ bubbles: true, composed: true }) andDropdownOpenChange: EventEmitter<boolean>;
+  @Event({ bubbles: true, composed: true }) andDropdownOpenChange!: EventEmitter<boolean>;
 
-  @State() private dropdownLogic: DropdownReturn;
+  @State() private dropdownLogic!: DropdownReturn;
   @State() private isOpen: boolean = false;
   @State() private focusedIndex: number = -1;
 

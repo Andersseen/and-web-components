@@ -23,10 +23,10 @@ const triggerBaseClass = [
   shadow: true,
 })
 export class AndTabsTrigger {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** The value that identifies this tab. */
-  @Prop({ reflect: true }) value: string;
+  @Prop({ reflect: true }) value!: string;
 
   /** Whether this tab trigger is disabled. */
   @Prop({ reflect: true }) disabled: boolean = false;
@@ -35,10 +35,10 @@ export class AndTabsTrigger {
   @Prop() selected: boolean = false;
 
   /** Reference to the parent tabs headless logic (set by parent). */
-  @Prop() tabsLogic: TabsReturn;
+  @Prop() tabsLogic!: TabsReturn;
 
   /** Emitted when this trigger is clicked. */
-  @Event({ bubbles: true, composed: true }) andTabTriggerClick: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andTabTriggerClick!: EventEmitter<string>;
 
   /* ── Handlers ───────────────────────────────────────────────────── */
 

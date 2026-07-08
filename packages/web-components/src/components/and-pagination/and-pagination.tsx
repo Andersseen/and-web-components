@@ -50,7 +50,7 @@ export class AndPagination {
   @Prop({ reflect: true }) currentPage: number = 1;
 
   /** Emitted when the page changes. */
-  @Event({ bubbles: true, composed: true }) andPageChange: EventEmitter<number>;
+  @Event({ bubbles: true, composed: true }) andPageChange!: EventEmitter<number>;
 
   /* ── Handlers ───────────────────────────────────────────────────── */
 

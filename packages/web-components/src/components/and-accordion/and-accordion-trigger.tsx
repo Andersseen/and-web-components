@@ -31,7 +31,7 @@ export interface TriggerItemProps {
   shadow: true,
 })
 export class AndAccordionTrigger {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() private itemId: string = '';
   @State() private accordionLogic: AccordionReturn | null = null;

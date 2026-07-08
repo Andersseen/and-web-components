@@ -43,10 +43,10 @@ const tooltipVariants = cva(
   shadow: true,
 })
 export class AndTooltip {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Text content of the tooltip (alternative: use the `content` slot). */
-  @Prop() content: string;
+  @Prop() content!: string;
 
   /** Preferred placement of the tooltip relative to its trigger. */
   @Prop({ reflect: true }) placement: TooltipPlacement = 'top';
@@ -59,7 +59,7 @@ export class AndTooltip {
 
   @State() private isVisible: boolean = false;
 
-  private tooltipLogic: TooltipReturn;
+  private tooltipLogic!: TooltipReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

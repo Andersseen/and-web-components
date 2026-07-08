@@ -52,7 +52,7 @@ export type MenuItemVariantProps = VariantProps<typeof menuItemVariants>;
   shadow: true,
 })
 export class AndMenuItem {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Intent variant (default or destructive). */
   @Prop({ reflect: true }) intent: MenuItemVariantProps['intent'] = 'default';
@@ -61,15 +61,15 @@ export class AndMenuItem {
   @Prop({ reflect: true }) disabled: boolean = false;
 
   /** Optional value identifier for the item. */
-  @Prop() value: string;
+  @Prop() value!: string;
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when the item is selected (clicked or Enter/Space pressed). */
-  @Event({ bubbles: true, composed: true }) andMenuItemSelect: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andMenuItemSelect!: EventEmitter<string>;
 
-  @State() private menuItemLogic: MenuListReturn;
+  @State() private menuItemLogic!: MenuListReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

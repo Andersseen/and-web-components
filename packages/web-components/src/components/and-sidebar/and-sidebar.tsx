@@ -79,11 +79,11 @@ export type SidebarVariantProps = VariantProps<typeof sidebarVariants>;
   shadow: true,
 })
 export class AndSidebar {
-  private sidebar: SidebarReturn;
+  private sidebar!: SidebarReturn;
   private itemElements = new Map<string, HTMLElement>();
   private resizeObserver?: ResizeObserver;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /* ── Props ──────────────────────────────────────────────────────── */
 
@@ -139,10 +139,10 @@ export class AndSidebar {
   /* ── Events ─────────────────────────────────────────────────────── */
 
   /** Emitted when a navigation item is clicked. */
-  @Event({ bubbles: true, composed: true }) andSidebarItemClick: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andSidebarItemClick!: EventEmitter<string>;
 
   /** Emitted when the sidebar collapse state changes. */
-  @Event({ bubbles: true, composed: true }) andSidebarToggle: EventEmitter<boolean>;
+  @Event({ bubbles: true, composed: true }) andSidebarToggle!: EventEmitter<boolean>;
 
   /* ── State ──────────────────────────────────────────────────────── */
 

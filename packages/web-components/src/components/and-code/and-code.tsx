@@ -28,10 +28,10 @@ export class AndCode {
   @Prop({ reflect: true }) height: string = 'auto';
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when the content is copied to the clipboard. */
-  @Event({ bubbles: true, composed: true }) andCodeCopy: EventEmitter<{ value: string; success: boolean }>;
+  @Event({ bubbles: true, composed: true }) andCodeCopy!: EventEmitter<{ value: string; success: boolean }>;
 
   @State() private copied: boolean = false;
   @State() private codeContent: string = '';

@@ -19,7 +19,7 @@ export class AndSkeleton {
   @Prop({ reflect: true }) height: string = '16px';
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   render() {
     return (

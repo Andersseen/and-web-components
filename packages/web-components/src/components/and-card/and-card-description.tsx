@@ -12,7 +12,7 @@ import { cn } from '../../utils/cn';
 })
 export class AndCardDescription {
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   render() {
     return (

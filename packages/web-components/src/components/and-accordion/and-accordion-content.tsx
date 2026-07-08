@@ -24,7 +24,7 @@ export interface ContentItemProps {
   shadow: true,
 })
 export class AndAccordionContent {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() private itemId: string = '';
   @State() private accordionLogic: AccordionReturn | null = null;

@@ -32,7 +32,7 @@ export type BreadcrumbVariantProps = VariantProps<typeof breadcrumbVariants>;
   shadow: true,
 })
 export class AndBreadcrumb {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Size variant for the breadcrumb trail. */
   @Prop({ reflect: true }) size: BreadcrumbVariantProps['size'] = 'md';
@@ -41,9 +41,9 @@ export class AndBreadcrumb {
   @Prop({ attribute: 'aria-label' }) navLabel: string = 'Breadcrumb';
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
-  @State() private breadcrumbLogic: BreadcrumbReturn;
+  @State() private breadcrumbLogic!: BreadcrumbReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

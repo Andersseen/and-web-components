@@ -38,10 +38,10 @@ export type BreadcrumbItemVariantProps = VariantProps<typeof breadcrumbItemVaria
   shadow: true,
 })
 export class AndBreadcrumbItem {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Optional URL. When set, the item renders as a link. */
-  @Prop() href: string;
+  @Prop() href!: string;
 
   /** Marks this item as the current page (adds aria-current). */
   @Prop({ reflect: true }) current: boolean = false;
@@ -53,12 +53,12 @@ export class AndBreadcrumbItem {
   @Prop({ reflect: true }) hideSeparator: boolean = false;
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when a breadcrumb link is activated. */
-  @Event({ bubbles: true, composed: true }) andBreadcrumbNavigate: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andBreadcrumbNavigate!: EventEmitter<string>;
 
-  @State() private itemLogic: BreadcrumbReturn;
+  @State() private itemLogic!: BreadcrumbReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

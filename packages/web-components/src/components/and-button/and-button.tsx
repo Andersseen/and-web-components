@@ -54,7 +54,7 @@ export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
   shadow: { delegatesFocus: true },
 })
 export class AndButton {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Visual variant of the button. */
   @Prop({ reflect: true }) variant: ButtonVariantProps['variant'] = 'default';
@@ -72,23 +72,23 @@ export class AndButton {
   @Prop({ reflect: true }) loading: boolean = false;
 
   /** Additional CSS classes to merge with the internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** When set, renders as an anchor (`<a>`) instead of `<button>`. */
-  @Prop({ reflect: true }) href: string;
+  @Prop({ reflect: true }) href!: string;
 
   /** Target for the anchor (e.g. `_blank`). Only used when `href` is set. */
-  @Prop({ reflect: true }) target: string;
+  @Prop({ reflect: true }) target!: string;
 
   /** Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`. */
-  @Prop({ reflect: true }) rel: string;
+  @Prop({ reflect: true }) rel!: string;
 
   /** Emitted on button click. */
-  @Event({ bubbles: true, composed: true }) andButtonClick: EventEmitter<MouseEvent>;
+  @Event({ bubbles: true, composed: true }) andButtonClick!: EventEmitter<MouseEvent>;
 
   @State() private renderTick = 0;
-  private buttonLogic: ButtonReturn;
-  private unsubscribe: () => void;
+  private buttonLogic!: ButtonReturn;
+  private unsubscribe!: () => void;
   private hostRole: string | null = null;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */

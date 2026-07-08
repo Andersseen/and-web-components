@@ -62,14 +62,14 @@ const positionClasses: Record<ToastPosition, string> = {
   shadow: true,
 })
 export class AndToast {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Position of the toast container on screen. */
   @Prop({ reflect: true }) position: ToastPosition = 'bottom-right';
 
   @State() private toasts: ToastItem[] = [];
 
-  private toastManager: ToastManagerReturn;
+  private toastManager!: ToastManagerReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

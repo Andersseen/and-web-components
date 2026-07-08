@@ -8,7 +8,7 @@ import { getIcon, type IconName } from '@andersseen/icon';
 })
 export class AndIcon {
   /** The name of the icon to render (must be registered via `registerIcons()`). */
-  @Prop({ reflect: true }) name: IconName;
+  @Prop({ reflect: true }) name!: IconName;
 
   /** The size of the icon in pixels. */
   @Prop({ reflect: true }) size: string | number = 24;

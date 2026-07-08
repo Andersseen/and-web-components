@@ -29,7 +29,7 @@ const menuItemClass = [
   shadow: true,
 })
 export class AndMenuList {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Accessible label for the menu. */
   @Prop() ariaMenuLabel: string = 'Menu';
@@ -38,12 +38,12 @@ export class AndMenuList {
   @Prop() items: MenuItemConfig[] = [];
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when an item is selected. */
-  @Event({ bubbles: true, composed: true }) andMenuItemSelect: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andMenuItemSelect!: EventEmitter<string>;
 
-  @State() private menuLogic: MenuListReturn;
+  @State() private menuLogic!: MenuListReturn;
   @State() private renderTick = 0;
 
   private unsubscribe?: () => void;

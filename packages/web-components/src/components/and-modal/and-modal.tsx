@@ -37,7 +37,7 @@ const closeButtonClass = [
   shadow: true,
 })
 export class AndModal {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Whether the modal is open. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
@@ -46,11 +46,11 @@ export class AndModal {
   @Prop({ reflect: true }) animated: boolean = false;
 
   /** Emitted when the modal is closed. */
-  @Event({ bubbles: true, composed: true }) andModalClose: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andModalClose!: EventEmitter<void>;
 
   @State() private isClosing = false;
 
-  private modalLogic: ModalReturn;
+  private modalLogic!: ModalReturn;
   private previouslyFocused: Element | null = null;
   private animation = createOpenCloseAnimation(
     () => this.el.shadowRoot?.querySelector<HTMLElement>('.and-modal-content') ?? null,

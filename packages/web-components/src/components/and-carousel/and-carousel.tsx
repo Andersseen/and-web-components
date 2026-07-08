@@ -37,7 +37,7 @@ const dotBaseClass = [
   shadow: true,
 })
 export class AndCarousel {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Whether the carousel auto-advances. */
   @Prop({ reflect: true }) autoplay: boolean = false;
@@ -49,13 +49,13 @@ export class AndCarousel {
   @Prop() label: string = 'Carousel';
 
   /** Emitted when the active slide changes. */
-  @Event({ bubbles: true, composed: true }) andSlideChange: EventEmitter<number>;
+  @Event({ bubbles: true, composed: true }) andSlideChange!: EventEmitter<number>;
 
   @State() private renderTick = 0;
-  private carouselLogic: CarouselReturn;
+  private carouselLogic!: CarouselReturn;
   private autoplayTimer: ReturnType<typeof setInterval> | undefined;
   private trackId: string = createIdGenerator('carousel')('track');
-  private unsubscribe: () => void;
+  private unsubscribe!: () => void;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

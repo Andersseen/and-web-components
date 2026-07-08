@@ -53,11 +53,11 @@ export class AndAlert {
   @Prop({ reflect: true }) dismissible: boolean = false;
 
   /** Emitted when the alert is dismissed. */
-  @Event({ bubbles: true, composed: true }) andDismiss: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andDismiss!: EventEmitter<void>;
 
   @State() private visible: boolean = true;
 
-  private alertLogic: AlertReturn;
+  private alertLogic!: AlertReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

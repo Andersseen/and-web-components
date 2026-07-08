@@ -42,7 +42,7 @@ export class AndBadge {
   @Prop({ reflect: true }) variant: BadgeVariantProps['variant'] = 'default';
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   render() {
     return (

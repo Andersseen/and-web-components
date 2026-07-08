@@ -7,7 +7,7 @@ import { Component, h, Host, Prop } from '@stencil/core';
 })
 export class AndCarouselItem {
   /** Accessible label for this slide. */
-  @Prop() label: string;
+  @Prop() label!: string;
 
   render() {
     return (

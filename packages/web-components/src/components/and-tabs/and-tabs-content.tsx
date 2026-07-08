@@ -10,10 +10,10 @@ const contentBaseClass = ['mt-2', 'focus-visible:outline-none focus-visible:ring
   shadow: true,
 })
 export class AndTabsContent {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** The value that identifies which tab this content belongs to. */
-  @Prop({ reflect: true }) value: string;
+  @Prop({ reflect: true }) value!: string;
 
   /** Whether this content panel is currently selected (set by parent). */
   @Prop() selected: boolean = false;

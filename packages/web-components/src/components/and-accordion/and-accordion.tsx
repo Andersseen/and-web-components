@@ -25,7 +25,7 @@ interface AndAccordionItemElement extends HTMLElement {
   shadow: true,
 })
 export class AndAccordion {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Allow multiple items to be expanded simultaneously. */
   @Prop({ reflect: true }) allowMultiple: boolean = false;
@@ -39,7 +39,7 @@ export class AndAccordion {
   /** Whether the accordion is disabled. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
-  @State() private accordionLogic: AccordionReturn;
+  @State() private accordionLogic!: AccordionReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

@@ -36,13 +36,13 @@ export type SelectVariantProps = VariantProps<typeof selectVariants>;
   shadow: true,
 })
 export class AndSelect {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @State() private selectState: SelectState;
+  @State() private selectState!: SelectState;
   @State() private resolvedPlacement: 'bottom' | 'top' = 'bottom';
   @State() private menuMaxHeight: number = 256;
 
-  private selectLogic: SelectReturn;
+  private selectLogic!: SelectReturn;
   private wrapperEl?: HTMLDivElement;
   private menuEl?: HTMLDivElement;
   private triggerEl?: HTMLButtonElement;
@@ -62,7 +62,7 @@ export class AndSelect {
   @Prop({ reflect: true, mutable: true }) value: string = '';
 
   /** Name attribute forwarded to native select. */
-  @Prop({ reflect: true }) name: string;
+  @Prop({ reflect: true }) name!: string;
 
   /** Disables interaction when true. */
   @Prop({ reflect: true }) disabled: boolean = false;
@@ -79,19 +79,19 @@ export class AndSelect {
   @Prop({ reflect: true }) menuPlacement: SelectMenuPlacement = 'auto';
 
   /** Accessible label for the select. */
-  @Prop() label: string;
+  @Prop() label!: string;
 
   /** ID of element describing this field. */
-  @Prop() describedBy: string;
+  @Prop() describedBy!: string;
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when selected value changes. */
-  @Event({ bubbles: true, composed: true }) andSelectChange: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andSelectChange!: EventEmitter<string>;
 
   /** Emitted when select loses focus / closes. */
-  @Event({ bubbles: true, composed: true }) andSelectBlur: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andSelectBlur!: EventEmitter<void>;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

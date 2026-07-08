@@ -19,7 +19,7 @@ interface AndAccordionChildElement extends HTMLElement {
   shadow: true,
 })
 export class AndAccordionItem {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Unique value for this accordion item. */
   @Prop({ reflect: true }) value!: string;

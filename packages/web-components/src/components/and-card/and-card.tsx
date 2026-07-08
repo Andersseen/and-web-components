@@ -49,7 +49,7 @@ export class AndCard {
   @Prop({ reflect: true }) padded: boolean = false;
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   render() {
     return (

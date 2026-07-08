@@ -44,13 +44,13 @@ export type InputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
   shadow: true,
 })
 export class AndInput {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Placeholder text for the input. */
-  @Prop({ reflect: true }) placeholder: string;
+  @Prop({ reflect: true }) placeholder!: string;
 
   /** Current value of the input. */
-  @Prop({ reflect: true, mutable: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value!: string;
 
   /** HTML input type. */
   @Prop({ reflect: true }) type: InputType = 'text';
@@ -65,22 +65,22 @@ export class AndInput {
   @Prop({ reflect: true }) hasError: boolean = false;
 
   /** Accessible label for the input (used when no visible label exists). */
-  @Prop() label: string;
+  @Prop() label!: string;
 
   /** ID of the element that describes this input (e.g. error message). */
-  @Prop() describedBy: string;
+  @Prop() describedBy!: string;
 
   /** Additional CSS classes from the consumer. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when the input value changes. */
-  @Event({ bubbles: true, composed: true }) andInputChange: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andInputChange!: EventEmitter<string>;
 
   /** Emitted when the input loses focus. */
-  @Event({ bubbles: true, composed: true }) andInputBlur: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andInputBlur!: EventEmitter<void>;
 
-  private inputLogic: InputReturn;
-  private unsubscribe: () => void;
+  private inputLogic!: InputReturn;
+  private unsubscribe!: () => void;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

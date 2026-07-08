@@ -8,13 +8,13 @@ import { createTabs, type TabsReturn } from '@andersseen/headless-components';
   shadow: true,
 })
 export class AndTabs {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** The currently selected tab value. */
-  @Prop({ mutable: true, reflect: true }) value: string;
+  @Prop({ mutable: true, reflect: true }) value!: string;
 
   /** The initial tab value when uncontrolled. */
-  @Prop() defaultValue: string;
+  @Prop() defaultValue!: string;
 
   /** Orientation of the tab list. */
   @Prop({ reflect: true }) orientation: 'horizontal' | 'vertical' = 'horizontal';
@@ -23,9 +23,9 @@ export class AndTabs {
   @Prop({ reflect: true }) activationMode: 'automatic' | 'manual' = 'automatic';
 
   /** Emitted when the selected tab changes. */
-  @Event({ bubbles: true, composed: true }) andTabChange: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andTabChange!: EventEmitter<string>;
 
-  @State() private tabsLogic: TabsReturn;
+  @State() private tabsLogic!: TabsReturn;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 

@@ -74,7 +74,7 @@ export type DrawerVariantProps = VariantProps<typeof contentVariants>;
   shadow: true,
 })
 export class AndDrawer {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * Whether the drawer is open.
@@ -94,13 +94,13 @@ export class AndDrawer {
   /**
    * Accessible label for the drawer.
    */
-  @Prop() label: string;
+  @Prop() label!: string;
 
   /** Emitted when the drawer is closed (backdrop click, close button, or Escape). */
-  @Event({ bubbles: true, composed: true }) andDrawerClose: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andDrawerClose!: EventEmitter<void>;
 
   /** Emitted when the drawer is opened. */
-  @Event({ bubbles: true, composed: true }) andDrawerOpen: EventEmitter<void>;
+  @Event({ bubbles: true, composed: true }) andDrawerOpen!: EventEmitter<void>;
 
   @State() private isOpen: boolean = false;
 
@@ -110,7 +110,7 @@ export class AndDrawer {
    */
   @State() private skipTransition: boolean = false;
 
-  private drawer: DrawerReturn;
+  private drawer!: DrawerReturn;
 
   /** Guard against stale rAF callbacks from rapid open/close toggling. */
   private openSeq: number = 0;

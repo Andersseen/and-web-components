@@ -148,14 +148,14 @@ export type NavbarProps = VariantProps<typeof navbarVariants>;
   shadow: true,
 })
 export class AndNavbar {
-  private navbar: NavbarReturn;
+  private navbar!: NavbarReturn;
   private itemElements = new Map<string, HTMLElement>();
   private scrollHandler?: () => void;
   private locationHandler?: () => void;
   private resizeObserver?: ResizeObserver;
   private slotObserver?: MutationObserver;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /* ── Props ──────────────────────────────────────────────────────── */
 
@@ -259,13 +259,13 @@ export class AndNavbar {
   /* ── Events ─────────────────────────────────────────────────────── */
 
   /** Emitted when active item changes */
-  @Event() andNavItemClick: EventEmitter<string>;
+  @Event() andNavItemClick!: EventEmitter<string>;
 
   /** Emitted when a navigation link is clicked */
-  @Event() andNavLinkClick: EventEmitter<{ id: string; href: string }>;
+  @Event() andNavLinkClick!: EventEmitter<{ id: string; href: string }>;
 
   /** Emitted when mobile menu state changes */
-  @Event() andMobileMenuChange: EventEmitter<boolean>;
+  @Event() andMobileMenuChange!: EventEmitter<boolean>;
 
   /* ── State ──────────────────────────────────────────────────────── */
 
@@ -283,7 +283,7 @@ export class AndNavbar {
   @State() responsiveStage: ResponsiveStage = 'full';
 
   /** Emitted when responsive stage changes */
-  @Event() andResponsiveStageChange: EventEmitter<ResponsiveStage>;
+  @Event() andResponsiveStageChange!: EventEmitter<ResponsiveStage>;
 
   /* ── Parsed items (handle string JSON from HTML attributes) ───── */
 

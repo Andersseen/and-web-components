@@ -30,7 +30,7 @@ const contextMenuPanelClass = [
   shadow: true,
 })
 export class AndContextMenu {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /** Whether the context menu is currently open (controlled). */
   @Prop({ mutable: true, reflect: true }) open: boolean = false;
@@ -42,17 +42,17 @@ export class AndContextMenu {
   @Prop() menuLabel: string = 'Context menu';
 
   /** Additional CSS classes to merge with internal styles. */
-  @Prop({ attribute: 'class' }) customClass: string;
+  @Prop({ attribute: 'class' }) customClass!: string;
 
   /** Emitted when the open state changes. */
-  @Event({ bubbles: true, composed: true }) andContextMenuOpenChange: EventEmitter<boolean>;
+  @Event({ bubbles: true, composed: true }) andContextMenuOpenChange!: EventEmitter<boolean>;
 
   /** Emitted when an item is selected. */
-  @Event({ bubbles: true, composed: true }) andContextMenuSelect: EventEmitter<string>;
+  @Event({ bubbles: true, composed: true }) andContextMenuSelect!: EventEmitter<string>;
 
   @State() private posX: number = 0;
   @State() private posY: number = 0;
-  @State() private contextMenuLogic: ContextMenuReturn;
+  @State() private contextMenuLogic!: ContextMenuReturn;
   @State() private focusedIndex: number = -1;
 
   private itemRefs = new Map<number, HTMLDivElement>();
