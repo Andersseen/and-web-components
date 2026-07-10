@@ -40,6 +40,16 @@ import { enableAnimations } from '@andersseen/web-components';
 enableAnimations();
 ```
 
+Choose one default color theme in the application stylesheet:
+
+```css
+@import '@andersseen/web-components/style.css';
+@import '@andersseen/web-components/colors/violet-cyan.css';
+```
+
+Other color themes: `indigo-rose`, `slate-amber`, `emerald-orange`, and
+`rose-teal`.
+
 ## Design tokens
 
 All tokens use HSL and are applied via CSS variables on `:root`. Dark mode: add

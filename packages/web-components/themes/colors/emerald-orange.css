@@ -3,7 +3,7 @@
    @andersseen/web-components
 
    Usage:
-     @import "@andersseen/web-components/themes/colors/emerald-orange";
+     @import "@andersseen/web-components/colors/emerald-orange.css";
    or shorthand:
      @import "@andersseen/web-components/emerald-orange";
    ============================================================================= */

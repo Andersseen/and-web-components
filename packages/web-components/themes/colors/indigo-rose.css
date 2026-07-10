@@ -3,7 +3,7 @@
    @andersseen/web-components
 
    Usage:
-     @import "@andersseen/web-components/themes/colors/indigo-rose";
+     @import "@andersseen/web-components/colors/indigo-rose.css";
    or shorthand:
      @import "@andersseen/web-components/indigo-rose";
    ============================================================================= */

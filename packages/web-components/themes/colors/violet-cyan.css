@@ -3,7 +3,7 @@
    @andersseen/web-components
 
    Usage:
-     @import "@andersseen/web-components/themes/colors/violet-cyan";
+     @import "@andersseen/web-components/colors/violet-cyan.css";
    or shorthand:
      @import "@andersseen/web-components/violet-cyan";
    ============================================================================= */

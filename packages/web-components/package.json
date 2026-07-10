@@ -38,6 +38,8 @@
     },
     "./style.css": "./dist/web-components/web-components.css",
     "./dist/web-components/web-components.css": "./dist/web-components/web-components.css",
+    "./colors/*.css": "./themes/colors/*.css",
+    "./colors/*": "./themes/colors/*.css",
     "./themes": "./themes/index.css",
     "./themes/*": "./themes/*",
     "./themes/colors": "./themes/colors/index.css",

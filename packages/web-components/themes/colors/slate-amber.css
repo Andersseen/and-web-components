@@ -3,7 +3,7 @@
    @andersseen/web-components
 
    Usage:
-     @import "@andersseen/web-components/themes/colors/slate-amber";
+     @import "@andersseen/web-components/colors/slate-amber.css";
    or shorthand:
      @import "@andersseen/web-components/slate-amber";
    ============================================================================= */

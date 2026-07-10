@@ -277,7 +277,22 @@ import '@andersseen/motion/style.css';
 ## Theming
 
 Components use CSS custom properties with HSL values. Set a `data-color`
-attribute on `<html>` to switch palettes, or override variables directly:
+attribute on `<html>` to switch between every bundled palette:
+
+```html
+<html data-color="violet-cyan"></html>
+```
+
+To make one palette the application default, import it after the component
+stylesheet. The available color themes are `indigo-rose`, `slate-amber`,
+`emerald-orange`, `violet-cyan`, and `rose-teal`:
+
+```css
+@import '@andersseen/web-components/style.css';
+@import '@andersseen/web-components/colors/violet-cyan.css';
+```
+
+You can also override variables directly:
 
 ```css
 :root {

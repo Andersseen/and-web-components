@@ -26,6 +26,13 @@ import { enableAnimations } from '@andersseen/web-components';
 enableAnimations();
 \`\`\`
 
+## Optional default color theme
+\`\`\`css
+@import '@andersseen/web-components/style.css';
+@import '@andersseen/web-components/colors/violet-cyan.css';
+\`\`\`
+Available colors: indigo-rose, slate-amber, emerald-orange, violet-cyan, rose-teal.
+
 ## Design tokens
 All tokens use HSL and are applied via CSS variables on \`:root\`.
 Dark mode: add class \`dark\` (or \`data-theme="dark"\`) to \`<html>\` or any ancestor.
