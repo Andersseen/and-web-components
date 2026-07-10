@@ -1,5 +1,5 @@
 ---
-'@andersseen/web-components': patch
+'@andersseen/web-components': minor
 ---
 
 Publish host utility styles in the global stylesheet and expose the stable

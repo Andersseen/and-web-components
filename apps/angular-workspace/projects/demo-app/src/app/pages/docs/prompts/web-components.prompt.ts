@@ -15,7 +15,6 @@ npm i @andersseen/web-components @andersseen/icon
 \`\`\`ts
 // Register all custom elements
 import '@andersseen/web-components/components/all';
-import '@andersseen/web-components/style.css';
 
 // Register icons used by internal components (minimum required)
 import { registerIcons, COMPONENT_ICONS } from '@andersseen/icon';
@@ -26,16 +25,39 @@ import { enableAnimations } from '@andersseen/web-components';
 enableAnimations();
 \`\`\`
 
-## Optional default color theme
+## Styles and color themes
+Import the precompiled stylesheet once in the application CSS. It contains the
+host utilities; do NOT add a Tailwind \`@source\` rule for this package.
+
 \`\`\`css
 @import '@andersseen/web-components/style.css';
+\`\`\`
+
+Optionally import exactly one default color theme after the base stylesheet:
+
+\`\`\`css
 @import '@andersseen/web-components/colors/violet-cyan.css';
 \`\`\`
-Available colors: indigo-rose, slate-amber, emerald-orange, violet-cyan, rose-teal.
+
+Available color imports:
+  @andersseen/web-components/colors/indigo-rose.css
+  @andersseen/web-components/colors/slate-amber.css
+  @andersseen/web-components/colors/emerald-orange.css
+  @andersseen/web-components/colors/violet-cyan.css
+  @andersseen/web-components/colors/rose-teal.css
+
+The base stylesheet includes every palette for runtime switching. Set
+\`data-color\` on an ancestor, normally \`<html>\`:
+
+\`\`\`html
+<html data-color="emerald-orange" class="dark">
+\`\`\`
 
 ## Design tokens
 All tokens use HSL and are applied via CSS variables on \`:root\`.
-Dark mode: add class \`dark\` (or \`data-theme="dark"\`) to \`<html>\` or any ancestor.
+Dark mode: add class \`dark\` to \`<html>\` or any ancestor.
+\`data-theme\` selects a visual style such as compact, playful, retro, or elegant;
+it is not the dark-mode API.
 
 Key semantic tokens:
   --primary / --primary-foreground
