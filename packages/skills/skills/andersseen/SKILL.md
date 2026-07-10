@@ -5,9 +5,10 @@ description:
   Andersseen library to reach for and route to its focused skill before writing
   code. Trigger phrases: andersseen, @andersseen, and-* component, andersseen
   design system, which andersseen package, build a UI with andersseen, headless
-  logic, icon, motion animation, layout attributes. Routes to:
+  logic, icon, motion animation, layout attributes, attribute behaviors,
+  progressive enhancement, splitter, drag and drop, tooltip, dialog. Routes to:
   andersseen-web-components, andersseen-headless-core, andersseen-icon,
-  andersseen-motion, andersseen-layout.'
+  andersseen-motion, andersseen-layout, andersseen-behaviors.'
 ---
 
 # Andersseen — ecosystem orchestrator
@@ -23,13 +24,14 @@ sibling skill is not installed, tell the user how to add it (see _Install_).
 
 ## Routing table — task → library → skill
 
-| The user wants to…                                            | Library                           | Skill                       |
-| ------------------------------------------------------------- | --------------------------------- | --------------------------- |
-| Drop styled, ready-made UI (`<and-button>`, `<and-modal>`, …) | `@andersseen/web-components`      | `andersseen-web-components` |
-| Build a **custom** UI but reuse state/a11y/keyboard logic     | `@andersseen/headless-components` | `andersseen-headless-core`  |
-| Render or register SVG icons (`<and-icon>`, `getIcon`)        | `@andersseen/icon`                | `andersseen-icon`           |
-| Animate on scroll/hover/tap via HTML attributes               | `@andersseen/motion`              | `andersseen-motion`         |
-| Compose layout & typography with `and-layout` / `and-text`    | `@andersseen/layout`              | `andersseen-layout`         |
+| The user wants to…                                                                    | Library                           | Skill                       |
+| ------------------------------------------------------------------------------------- | --------------------------------- | --------------------------- |
+| Drop styled, ready-made UI (`<and-button>`, `<and-modal>`, …)                         | `@andersseen/web-components`      | `andersseen-web-components` |
+| Build a **custom** UI but reuse state/a11y/keyboard logic                             | `@andersseen/headless-components` | `andersseen-headless-core`  |
+| Render or register SVG icons (`<and-icon>`, `getIcon`)                                | `@andersseen/icon`                | `andersseen-icon`           |
+| Animate on scroll/hover/tap via HTML attributes                                       | `@andersseen/motion`              | `andersseen-motion`         |
+| Compose layout & typography with `and-layout` / `and-text`                            | `@andersseen/layout`              | `andersseen-layout`         |
+| Enhance existing HTML with `and-*` behaviors (splitter, drag & drop, tooltip, dialog) | `@andersseen/behaviors`           | `andersseen-behaviors`      |
 
 ## How the layers relate
 
@@ -55,6 +57,11 @@ framework or from plain HTML.
 4. **Just motion/entrance animation?** → `motion` (attribute-driven, respects
    `prefers-reduced-motion`).
 5. **Just layout/spacing/typography without a utility framework?** → `layout`.
+6. **Enhancing existing HTML in place** with resizable splitters, HTML5 drag &
+   drop, hover/focus tooltips, or modal dialogs — no framework, no new custom
+   element? → `behaviors` (attribute-driven `defineBehaviors()` or imperative
+   `create*`). Distinct from `headless-core` (pure logic, no DOM) and from
+   vanilla custom elements (new tags).
 
 You can combine several — e.g. `web-components` + `icon` + `motion`. When you
 do, follow each library's own skill rules; never invent props, classes, or
@@ -64,7 +71,7 @@ attributes that a skill does not document.
 
 - Use the **real package names** exactly: `@andersseen/web-components`,
   `@andersseen/headless-components`, `@andersseen/icon`, `@andersseen/motion`,
-  `@andersseen/layout`.
+  `@andersseen/layout`, `@andersseen/behaviors`.
 - Only use public props, slots, events, attributes, and exported functions that
   the relevant skill documents. Never target internal Shadow DOM parts.
 - Prefer design-token CSS variables over hardcoded colors.

@@ -25,6 +25,7 @@
     "@andersseen/icon": "workspace:*",
     "@andersseen/motion": "workspace:*",
     "@andersseen/vanilla-components": "workspace:*",
+    "@andersseen/behaviors": "workspace:*",
     "@andersseen/web-components": "workspace:*",
     "@andersseen/angular-components": "workspace:*",
     "class-variance-authority": "^0.7.1",

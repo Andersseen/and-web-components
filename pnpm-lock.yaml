@@ -50,6 +50,9 @@ importers:
       '@andersseen/angular-components':
         specifier: workspace:*
         version: link:../../packages/angular-components
+      '@andersseen/behaviors':
+        specifier: workspace:*
+        version: link:../../packages/behaviors
       '@andersseen/headless-components':
         specifier: workspace:*
         version: link:../../packages/headless-core

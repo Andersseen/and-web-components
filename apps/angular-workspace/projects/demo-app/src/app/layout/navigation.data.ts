@@ -4,7 +4,16 @@ export interface SidebarItem {
   icon?: string;
 }
 
-export type Section = 'components' | 'icons' | 'themes' | 'headless' | 'motion' | 'layout' | 'vanilla' | 'docs';
+export type Section =
+  | 'components'
+  | 'icons'
+  | 'themes'
+  | 'headless'
+  | 'motion'
+  | 'layout'
+  | 'vanilla'
+  | 'behaviors'
+  | 'docs';
 
 export interface DropdownOption {
   text: string;
@@ -18,6 +27,7 @@ export const NAV_ITEMS: Array<{ id: Section; label: string }> = [
   { id: 'motion', label: 'Motion' },
   { id: 'layout', label: 'Layout' },
   { id: 'vanilla', label: 'Vanilla' },
+  { id: 'behaviors', label: 'Behaviors' },
 
   { id: 'docs', label: 'Docs' },
 ];
@@ -94,6 +104,14 @@ export const VANILLA_ITEMS: SidebarItem[] = [
   { id: 'button', label: 'Button', icon: 'circle-dot' },
   { id: 'modal', label: 'Modal', icon: 'app-window' },
   { id: 'accordion', label: 'Accordion', icon: 'layers' },
+];
+
+export const BEHAVIORS_ITEMS: SidebarItem[] = [
+  { id: 'overview', label: 'Overview', icon: 'compass' },
+  { id: 'splitter', label: 'Splitter', icon: 'columns' },
+  { id: 'drag-drop', label: 'Drag & Drop', icon: 'move' },
+  { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
+  { id: 'dialog', label: 'Dialog', icon: 'app-window' },
 ];
 
 export const THEME_OPTIONS: DropdownOption[] = [

@@ -36,6 +36,10 @@ export const routes: Routes = [
         loadChildren: () => import('./vanilla.routes').then(m => m.default),
       },
       {
+        path: 'behaviors',
+        loadChildren: () => import('./behaviors.routes').then(m => m.default),
+      },
+      {
         path: 'docs',
         loadComponent: () => import('./pages/docs/docs-ai.component'),
       },
