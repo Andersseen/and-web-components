@@ -5,7 +5,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
   selector: 'app-drag-drop-demo',
   template: `
     <div class="max-w-4xl mx-auto pb-12">
-      <header class="mb-10 border-b border-border pb-10">
+      <header class="mb-8 sm:mb-10 border-b border-border pb-8 sm:pb-10">
         <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Drag &amp; Drop</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           HTML5 drag sources and drop zones. A sortable zone auto-reorders its children on drop — no extra wiring
@@ -65,7 +65,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
     </div>
   `,
 })
-export default class DragDropDemoComponent implements AfterViewInit, OnDestroy {
+export default class DragDropDemo implements AfterViewInit, OnDestroy {
   private readonly host = inject(ElementRef<HTMLElement>);
   private cleanup?: () => void;
 

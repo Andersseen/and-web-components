@@ -5,7 +5,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
   selector: 'app-tooltip-demo',
   template: `
     <div class="max-w-4xl mx-auto pb-12">
-      <header class="mb-10 border-b border-border pb-10">
+      <header class="mb-8 sm:mb-10 border-b border-border pb-8 sm:pb-10">
         <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Tooltip</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Hover or focus a trigger to reveal its tooltip. Positions flip to stay in the viewport, and
@@ -16,7 +16,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Placements</h2>
         <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
-          <div class="p-12 flex flex-wrap items-center justify-center gap-4">
+          <div class="p-6 sm:p-12 flex flex-wrap items-center justify-center gap-4">
             <button
               and-tooltip="Appears above"
               and-tooltip-placement="top"
@@ -72,7 +72,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
     </div>
   `,
 })
-export default class TooltipDemoComponent implements AfterViewInit, OnDestroy {
+export default class TooltipDemo implements AfterViewInit, OnDestroy {
   private readonly host = inject(ElementRef<HTMLElement>);
   private cleanup?: () => void;
 

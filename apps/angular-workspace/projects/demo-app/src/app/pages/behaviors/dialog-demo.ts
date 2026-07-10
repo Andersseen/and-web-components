@@ -5,7 +5,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
   selector: 'app-dialog-demo',
   template: `
     <div class="max-w-4xl mx-auto pb-12">
-      <header class="mb-10 border-b border-border pb-10">
+      <header class="mb-8 sm:mb-10 border-b border-border pb-8 sm:pb-10">
         <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Dialog</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           A trigger opens a modal dialog with a backdrop. Focus is trapped inside, body scroll is locked, and
@@ -17,7 +17,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
       <section class="mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
         <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
-          <div class="p-12 flex flex-wrap items-center justify-center gap-4">
+          <div class="p-6 sm:p-12 flex flex-wrap items-center justify-center gap-4">
             <button
               and-dialog-trigger="behaviors-dialog-center"
               class="inline-flex h-10 items-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
@@ -93,7 +93,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
     </div>
   `,
 })
-export default class DialogDemoComponent implements AfterViewInit, OnDestroy {
+export default class DialogDemo implements AfterViewInit, OnDestroy {
   private readonly host = inject(ElementRef<HTMLElement>);
   private cleanup?: () => void;
 

@@ -5,7 +5,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
   selector: 'app-splitter-demo',
   template: `
     <div class="max-w-4xl mx-auto pb-12">
-      <header class="mb-10 border-b border-border pb-10">
+      <header class="mb-8 sm:mb-10 border-b border-border pb-8 sm:pb-10">
         <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Splitter</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Resizable panel container. Drag the handle with the mouse or touch, or focus it and use the arrow keys,
@@ -80,7 +80,7 @@ import { defineBehaviors } from '@andersseen/behaviors';
     </div>
   `,
 })
-export default class SplitterDemoComponent implements AfterViewInit, OnDestroy {
+export default class SplitterDemo implements AfterViewInit, OnDestroy {
   private readonly host = inject(ElementRef<HTMLElement>);
   private cleanup?: () => void;
 

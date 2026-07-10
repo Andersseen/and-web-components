@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-behaviors-overview',
   template: `
     <div class="max-w-4xl mx-auto pb-12">
-      <header class="mb-10 border-b border-border pb-10">
+      <header class="mb-8 sm:mb-10 border-b border-border pb-8 sm:pb-10">
         <h1 class="text-3xl font-bold tracking-tight text-foreground m-0">Behaviors</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Framework-agnostic DOM behaviors driven by
@@ -72,7 +72,7 @@ import { Component } from '@angular/core';
     </div>
   `,
 })
-export default class BehaviorsOverviewComponent {
+export default class BehaviorsOverview {
   readonly items = [
     {
       id: 'splitter',
