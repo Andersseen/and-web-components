@@ -1,9 +1,9 @@
 # Andersseen Web Components
 
-A complete, framework-agnostic web component ecosystem: headless logic, design
-tokens, layout primitives, animations, icons, and **23 accessible UI
-components** — built with [StencilJS](https://stenciljs.com/), ready for any
-framework or plain HTML.
+A complete, framework-agnostic web component ecosystem: headless logic, DOM
+behaviors, design tokens, layout primitives, animations, icons, and **23
+accessible UI components** — built with [StencilJS](https://stenciljs.com/),
+ready for any framework or plain HTML.
 
 | Package                           | npm                                                                                                                                   | Description                                      |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
@@ -13,6 +13,7 @@ framework or plain HTML.
 | `@andersseen/motion`              | [![npm](https://img.shields.io/npm/v/@andersseen/motion)](https://www.npmjs.com/package/@andersseen/motion)                           | Attribute-driven CSS/JS animations               |
 | `@andersseen/layout`              | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout)                           | Pure CSS layout & typography via HTML attributes |
 | `@andersseen/vanilla-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/vanilla-components)](https://www.npmjs.com/package/@andersseen/vanilla-components)   | Zero-dependency native Custom Elements           |
+| `@andersseen/behaviors`           | [![npm](https://img.shields.io/npm/v/@andersseen/behaviors)](https://www.npmjs.com/package/@andersseen/behaviors)                     | Attribute-driven DOM behaviors                   |
 | `@andersseen/angular-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone directive wrappers            |
 | `@andersseen/react-components`    | [![npm](https://img.shields.io/npm/v/@andersseen/react-components)](https://www.npmjs.com/package/@andersseen/react-components)       | Generated React wrappers                         |
 | `@andersseen/vue-components`      | [![npm](https://img.shields.io/npm/v/@andersseen/vue-components)](https://www.npmjs.com/package/@andersseen/vue-components)           | Generated Vue 3 wrappers                         |
@@ -28,6 +29,8 @@ framework or plain HTML.
   palettes.
 - **Attribute-driven layout** — Flexbox, grid, spacing, and typography from HTML
   attributes.
+- **Progressive DOM behaviors** — Add splitters, drag & drop, tooltips, and
+  dialogs to existing HTML with `and-*` attributes or imperative APIs.
 - **Animation system** — Enter, hover, and tap animations via `and-motion`
   attributes with reduced-motion support.
 - **70+ icons** — Tree-shakeable SVG icons with a global registry.
@@ -45,6 +48,7 @@ and-web-components/
 │   ├── motion-core/           # @andersseen/motion  (TS + CSS)
 │   ├── web-components/        # @andersseen/web-components (Stencil)
 │   ├── vanilla-components/    # @andersseen/vanilla-components (zero-dep CE)
+│   ├── behaviors/             # @andersseen/behaviors (attribute-driven DOM)
 │   ├── angular-components/    # @andersseen/angular-components (generated Angular)
 │   ├── react-components/      # @andersseen/react-components (generated React)
 │   ├── vue-components/        # @andersseen/vue-components (generated Vue)
@@ -81,7 +85,7 @@ pnpm build:all
 ```
 
 This builds: `headless-core` → `icon-library` → `motion-core` → `web-components`
-→ `vanilla-components` → `layout-core` → `angular-components` →
+→ `layout-core` → `vanilla-components` → `behaviors` → `angular-components` →
 `react-components` → `vue-components` → `demo-app`.
 
 ## Development
@@ -119,12 +123,14 @@ pnpm -C packages/web-components start
 | `pnpm build:icons`     | Build icon library                          |
 | `pnpm build:motion`    | Build animation library                     |
 | `pnpm build:layout`    | Build SCSS → CSS layout library             |
+| `pnpm build:behaviors` | Build attribute-driven DOM behaviors        |
 | `pnpm build:stencil`   | Build headless + icons + Stencil components |
 | `pnpm build:angular`   | Build Angular wrappers + demo app           |
 | `pnpm build:react`     | Build React wrappers                        |
 | `pnpm build:vue`       | Build Vue wrappers                          |
 | `pnpm build:all`       | Build everything                            |
 | `pnpm build:astro`     | Build Astro landing page                    |
+| `pnpm test:behaviors`  | Run DOM behavior tests with Vitest          |
 | `pnpm start:demo`      | Build libs + serve Angular demo             |
 | `pnpm start:demo:dev`  | Stencil watch + Angular serve (concurrent)  |
 | `pnpm start:astro:dev` | Build libs + Astro dev server               |
@@ -149,7 +155,7 @@ pnpm -C packages/web-components start
 ### In a bundled app (Vite, Webpack, etc.)
 
 ```bash
-npm install @andersseen/web-components @andersseen/icon @andersseen/motion @andersseen/layout
+npm install @andersseen/web-components @andersseen/icon @andersseen/motion @andersseen/layout @andersseen/behaviors
 ```
 
 ```ts
@@ -167,6 +173,10 @@ enableAnimations();
 // Attribute-driven animations
 import { initMotion } from '@andersseen/motion';
 initMotion();
+
+// Enhance existing HTML with and-* interaction behaviors
+import { defineBehaviors } from '@andersseen/behaviors';
+defineBehaviors({ observe: true });
 ```
 
 ```css
@@ -365,6 +375,82 @@ Declarative animations via HTML attributes:
 ```
 
 Supports `prefers-reduced-motion` automatically.
+
+## Behaviors
+
+`@andersseen/behaviors` progressively enhances existing DOM without a framework
+runtime. Unlike `@andersseen/headless-components`, which contains pure state
+machines and never touches the DOM, behaviors attach interaction directly to
+elements through `and-*` attributes.
+
+Install it independently when you only need DOM behaviors:
+
+```bash
+npm install @andersseen/behaviors
+```
+
+Call `defineBehaviors()` after the document body is available. Passing
+`observe: true` also initializes matching elements added later:
+
+```html
+<div and-splitter="horizontal" and-splitter-default-position="30">
+  <aside and-splitter-panel="primary">Navigation</aside>
+  <div and-splitter-handle></div>
+  <main and-splitter-panel="secondary">Content</main>
+</div>
+
+<button and-tooltip="Save changes" and-tooltip-placement="top">Save</button>
+
+<button and-dialog-trigger="settings-dialog">Settings</button>
+<div id="settings-dialog" and-dialog-position="center">
+  <h2>Settings</h2>
+  <button and-dialog-close>Close</button>
+</div>
+
+<script type="module">
+  import { defineBehaviors } from '@andersseen/behaviors';
+
+  const cleanup = defineBehaviors({ observe: true });
+  // Call cleanup() to destroy all behaviors and stop observing the DOM.
+</script>
+```
+
+| Attribute            | Behavior                          | Imperative API                         |
+| -------------------- | --------------------------------- | -------------------------------------- |
+| `and-splitter`       | Resizable panel container         | `createSplitter(container, options)`   |
+| `and-draggable`      | HTML5 drag source                 | `createDraggable(element, config)`     |
+| `and-drop-zone`      | Drop target with optional sorting | `createDropZone(element, config)`      |
+| `and-tooltip`        | Hover/focus tooltip               | `createTooltip(element, options)`      |
+| `and-dialog-trigger` | Modal or drawer trigger           | `createDialog(targetElement, options)` |
+
+For manual lifecycle control and tighter tree-shaking, import the root API or a
+behavior-specific subpath:
+
+```ts
+import { createSplitter } from '@andersseen/behaviors/splitter';
+import { createTooltip } from '@andersseen/behaviors/tooltip';
+
+const splitter = createSplitter(document.querySelector('#workspace')!, {
+  orientation: 'vertical',
+});
+const tooltip = createTooltip(document.querySelector('#save')!, {
+  content: 'Save changes',
+  placement: 'top',
+});
+
+// Later:
+splitter.destroy();
+tooltip.destroy();
+```
+
+Available subpaths are `@andersseen/behaviors/splitter`,
+`@andersseen/behaviors/drag-drop`, `@andersseen/behaviors/tooltip`, and
+`@andersseen/behaviors/dialog`. The behaviors package has no production
+dependencies and includes accessibility support such as keyboard resizing for
+splitters, `aria-describedby` and Escape dismissal for tooltips, and focus
+trapping/restoration for dialogs. See the
+[package README](./packages/behaviors/README.md) for the complete attribute and
+event reference.
 
 ## Deployment
 
