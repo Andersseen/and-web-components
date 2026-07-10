@@ -1,30 +1,28 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { render } from '@testing-library/angular';
+import { describe, expect, it } from 'vitest';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, AppComponent],
-    }).compileComponents();
+  async function setup() {
+    return render(AppComponent, {
+      providers: [provideZonelessChangeDetection(), provideRouter([])],
+    });
+  }
+
+  it('creates the app', async () => {
+    const { fixture } = await setup();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('exposes the demo title', async () => {
+    const { fixture } = await setup();
+    expect(fixture.componentInstance.title).toBe('Andersseen Web Components Demo');
   });
 
-  it(`should have as title 'Stencil Component Library Demo'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Stencil Component Library Demo');
-  });
-
-  it('should render navbar', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('and-navbar')).toBeTruthy();
+  it('renders the router outlet', async () => {
+    const { container } = await setup();
+    expect(container.querySelector('router-outlet')).toBeInTheDocument();
   });
 });

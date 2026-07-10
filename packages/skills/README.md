@@ -40,6 +40,7 @@ npx @andersseen/skills add andersseen web-components icon
 | `andersseen-icon`           | `icon`           | `@andersseen/icon`                |
 | `andersseen-motion`         | `motion`         | `@andersseen/motion`              |
 | `andersseen-layout`         | `layout`         | `@andersseen/layout`              |
+| `andersseen-behaviors`      | `behaviors`      | `@andersseen/behaviors`           |
 
 ```bash
 npx @andersseen/skills list   # print the same table with descriptions
@@ -67,6 +68,6 @@ library fits a task and defers to the focused skill — so the agent reaches for
 the right package instead of guessing.
 
 ```bash
-npx @andersseen/skills add andersseen web-components headless-core icon motion layout
+npx @andersseen/skills add andersseen web-components headless-core icon motion layout behaviors
 # ≡ npx @andersseen/skills add --all
 ```

@@ -11,6 +11,7 @@ import {
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import {
+  BEHAVIORS_ITEMS,
   COLOR_OPTIONS,
   COMPONENT_ITEMS,
   HEADLESS_ITEMS,
@@ -125,9 +126,18 @@ interface SidebarConfig {
               (andSidebarItemClick)="onSidebarItemClick($event)"
             />
           }
+          @case ('behaviors') {
+            <and-sidebar
+              #mainSidebar
+              class="bg-background"
+              [items]="behaviorsItems"
+              [activeItem]="activeBehaviors()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
         }
 
-        <div class="flex-1 overflow-y-auto bg-background text-foreground" and-layout="p:xl">
+        <div class="flex-1 overflow-y-auto bg-background text-foreground p-4 sm:p-6 lg:p-8">
           <router-outlet />
         </div>
       </div>
@@ -154,6 +164,8 @@ export class MainLayoutComponent {
 
   readonly vanillaItems: SidebarItem[] = VANILLA_ITEMS;
 
+  readonly behaviorsItems: SidebarItem[] = BEHAVIORS_ITEMS;
+
   // ── Theme / Color options ──
   readonly themeOptions = THEME_OPTIONS;
 
@@ -166,6 +178,7 @@ export class MainLayoutComponent {
   readonly activeMotion = signal('attribute');
   readonly activeLayout = signal('overview');
   readonly activeVanilla = signal('overview');
+  readonly activeBehaviors = signal('overview');
   readonly currentTheme = signal('default');
   readonly currentColor = signal('indigo-rose');
   readonly isDark = signal(false);
@@ -179,6 +192,7 @@ export class MainLayoutComponent {
     motion: '/motion',
     layout: '/layout',
     vanilla: '/vanilla',
+    behaviors: '/behaviors',
     docs: '/docs',
   };
 
@@ -207,6 +221,11 @@ export class MainLayoutComponent {
       items: this.vanillaItems,
       active: this.activeVanilla,
       route: '/vanilla',
+    },
+    behaviors: {
+      items: this.behaviorsItems,
+      active: this.activeBehaviors,
+      route: '/behaviors',
     },
   };
 
