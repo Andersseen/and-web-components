@@ -32,7 +32,7 @@
     "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:angular && pnpm build:react && pnpm build:vue && changeset publish",
+    "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:vanilla && pnpm build:behaviors && pnpm build:angular && pnpm build:react && pnpm build:vue && changeset publish",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,md,scss,css}\"",
