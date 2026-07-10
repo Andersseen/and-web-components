@@ -1,5 +1,12 @@
 # @andersseen/vue-components
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [907cf76]
+  - @andersseen/web-components@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes
