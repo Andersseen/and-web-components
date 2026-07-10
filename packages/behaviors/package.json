@@ -1,0 +1,81 @@
+{
+  "name": "@andersseen/behaviors",
+  "version": "0.1.0",
+  "description": "Framework-agnostic DOM behaviors driven by `and-*` attributes (splitter, drag & drop, tooltip, dialog). Progressive enhancement, no framework required.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist-cjs/index.js"
+    },
+    "./splitter": {
+      "types": "./dist/splitter/index.d.ts",
+      "import": "./dist/splitter/index.js"
+    },
+    "./drag-drop": {
+      "types": "./dist/drag-drop/index.d.ts",
+      "import": "./dist/drag-drop/index.js"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip/index.d.ts",
+      "import": "./dist/tooltip/index.js"
+    },
+    "./dialog": {
+      "types": "./dist/dialog/index.d.ts",
+      "import": "./dist/dialog/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dist-cjs",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist dist-cjs && tsc && node ../../scripts/fix-esm-extensions.cjs dist && tsc -p tsconfig.cjs.json",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "behaviors",
+    "web-components",
+    "progressive-enhancement",
+    "attributes",
+    "directives",
+    "tooltip",
+    "dialog",
+    "splitter",
+    "drag-and-drop",
+    "typescript",
+    "accessibility"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.13.5",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^10.1.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1",
+    "vitest": "^4.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/behaviors"
+  }
+}

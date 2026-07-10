@@ -32,6 +32,10 @@ Satellite packages (used by all layers):
 - `icon-library` — SVG icon registry with tree-shaking
 - `motion-core` — Attribute-driven animation system + imperative `MotionPlayer`
 - `layout-core` — CSS layout primitives compiled from SCSS
+- `behaviors` — Framework-agnostic DOM behaviors driven by `and-*` attributes
+  (splitter, drag & drop, tooltip, dialog). Unlike `headless-core` (pure state
+  machines, no DOM), these attach interaction directly onto existing elements
+  via `defineBehaviors()` or imperative `create*` factories. Zero runtime deps.
 
 Framework-specific integrations:
 
@@ -226,6 +230,7 @@ Location: `packages/vanilla-components/src/components/vanilla-<name>.ts`
 | `layout-core`        | Nothing in this repo                                                   |
 | `web-components`     | `headless-core`, `icon-library`, `motion-core`                         |
 | `vanilla-components` | None in this repo (peer deps: `headless-core`, optional `motion-core`) |
+| `behaviors`          | Nothing in this repo (only dev deps; zero runtime deps)                |
 | `angular-workspace`  | All `packages/*`                                                       |
 | `astro-landing`      | All `packages/*`                                                       |
 | `astro`              | `web-components`, `icon-library` (peer/dev only)                       |
