@@ -17,16 +17,16 @@
     const mode = savedMode === 'light' || savedMode === 'dark' ? savedMode : getSystemMode();
 
     root.classList.toggle('dark', mode === 'dark');
-    root.setAttribute('data-color', savedColor);
+    root.setAttribute('and-color', savedColor);
 
     if (savedTheme !== 'default') {
-      root.setAttribute('data-theme', savedTheme);
+      root.setAttribute('and-theme', savedTheme);
     } else {
-      root.removeAttribute('data-theme');
+      root.removeAttribute('and-theme');
     }
   } catch {
     root.classList.toggle('dark', getSystemMode() === 'dark');
-    root.setAttribute('data-color', 'warm-gold');
-    root.removeAttribute('data-theme');
+    root.setAttribute('and-color', 'warm-gold');
+    root.removeAttribute('and-theme');
   }
 })();

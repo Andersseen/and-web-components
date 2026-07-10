@@ -480,7 +480,7 @@ export class AndNavbar {
         return;
       case 'scroll':
         if (this.shouldUseScrollSpy()) {
-          (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
+          this.navbar.actions.updateActiveFromScroll(this.scrollSpyOffset);
         } else {
           runRoute();
           this.navbar.actions.updateActiveFromHash();
@@ -489,7 +489,7 @@ export class AndNavbar {
       case 'auto':
       default:
         if (this.shouldUseScrollSpy()) {
-          (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
+          this.navbar.actions.updateActiveFromScroll(this.scrollSpyOffset);
           return;
         }
         runRoute();
@@ -617,7 +617,7 @@ export class AndNavbar {
     }
     this.teardownScrollSpy();
     this.scrollHandler = () => {
-      (this.navbar.actions.updateActiveFromScroll as any)(this.scrollSpyOffset);
+      this.navbar.actions.updateActiveFromScroll(this.scrollSpyOffset);
     };
     window.addEventListener('scroll', this.scrollHandler, { passive: true });
   }

@@ -4,11 +4,11 @@
    GROUPED IMPORTS:
 
    COLORS (palettes):
-     @import "@andersseen/web-components/themes/colors/indigo-rose";  ← default
-     @import "@andersseen/web-components/themes/colors/slate-amber";
-     @import "@andersseen/web-components/themes/colors/emerald-orange";
-     @import "@andersseen/web-components/themes/colors/violet-cyan";
-     @import "@andersseen/web-components/themes/colors/rose-teal";
+     @import "@andersseen/web-components/colors/indigo-rose.css";  ← default
+     @import "@andersseen/web-components/colors/slate-amber.css";
+     @import "@andersseen/web-components/colors/emerald-orange.css";
+     @import "@andersseen/web-components/colors/violet-cyan.css";
+     @import "@andersseen/web-components/colors/rose-teal.css";
 
    STYLES (layout/shape/motion density):
      @import "@andersseen/web-components/themes/styles/default";       ← default
@@ -23,6 +23,6 @@
 
    DARK MODE is supported automatically via:
      • System preference  → prefers-color-scheme: dark (zero config)
-     • Manual toggle      → add class .dark or attribute data-mode="dark"
-     • Force light        → add attribute data-mode="light"
+     • Manual toggle      → add class .dark or attribute and-mode="dark"
+     • Force light        → add attribute and-mode="light"
    ============================================================================= */

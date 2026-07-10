@@ -9,7 +9,7 @@
 @layer base {
   /* -----------------------------------------------------------------------
      Fallback defaults (Indigo & Rose — Light)
-     Applied when no data-color attribute is present on the document.
+     Applied when no and-color attribute is present on the document.
      ----------------------------------------------------------------------- */
   :root {
     /* Primary Scale — Indigo */

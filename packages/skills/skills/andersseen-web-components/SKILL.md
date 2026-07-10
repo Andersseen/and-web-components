@@ -29,7 +29,6 @@ npm i @andersseen/web-components @andersseen/icon
 ```ts
 // Register all custom elements
 import '@andersseen/web-components/components/all';
-import '@andersseen/web-components/dist/web-components/web-components.css';
 
 // Register icons used by internal components (minimum required)
 import { registerIcons, COMPONENT_ICONS } from '@andersseen/icon';
@@ -40,10 +39,53 @@ import { enableAnimations } from '@andersseen/web-components';
 enableAnimations();
 ```
 
+Import the precompiled component stylesheet once in the application stylesheet.
+It already contains the host utilities, so never add a Tailwind `@source` rule
+for this package:
+
+```css
+@import '@andersseen/web-components/style.css';
+```
+
+Optionally import one color theme after it to make that palette the default:
+
+```css
+@import '@andersseen/web-components/colors/violet-cyan.css';
+```
+
+Available color imports:
+
+```css
+@import '@andersseen/web-components/colors/indigo-rose.css';
+@import '@andersseen/web-components/colors/slate-amber.css';
+@import '@andersseen/web-components/colors/emerald-orange.css';
+@import '@andersseen/web-components/colors/violet-cyan.css';
+@import '@andersseen/web-components/colors/rose-teal.css';
+```
+
+The base stylesheet also contains all palettes for runtime switching. Set the
+namespaced `and-color` attribute on an ancestor, normally `<html>`, without
+loading another file:
+
+```html
+<html and-color="emerald-orange" class="dark"></html>
+```
+
+Color and visual style are separate axes. Use `and-color` for the palette and
+`and-theme` for shape and density:
+
+```html
+<html and-color="emerald-orange" and-theme="compact" class="dark"></html>
+```
+
 ## Design tokens
 
 All tokens use HSL and are applied via CSS variables on `:root`. Dark mode: add
-class `dark` (or `data-theme="dark"`) to `<html>` or any ancestor.
+class `dark` (or `and-mode="dark"`) to `<html>` or any ancestor. `and-theme`
+selects a visual style such as `compact`, `playful`, `retro`, or `elegant`; it
+is not the color or dark-mode API. Legacy `data-color`, `data-theme`, and
+`data-mode` attributes are compatibility-only and should not be used in new
+code.
 
 Key semantic tokens:
 

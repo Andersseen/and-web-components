@@ -60,12 +60,12 @@ const applyThemeState = (mode: Mode, theme: string, color: string): void => {
   const root = document.documentElement;
 
   root.classList.toggle('dark', mode === 'dark');
-  root.setAttribute('data-color', color);
+  root.setAttribute('and-color', color);
 
   if (theme !== THEME_DEFAULTS.theme) {
-    root.setAttribute('data-theme', theme);
+    root.setAttribute('and-theme', theme);
   } else {
-    root.removeAttribute('data-theme');
+    root.removeAttribute('and-theme');
   }
 
   const modeIcon = document.getElementById('theme-mode-icon') as HTMLElement | null;

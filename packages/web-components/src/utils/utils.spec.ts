@@ -8,7 +8,7 @@ describe('cn', () => {
   });
 
   it('handles conditional classes', () => {
-    expect(cn('base', false && 'hidden', 'extra')).toEqual('base extra');
+    expect(cn('base', undefined, 'extra')).toEqual('base extra');
   });
 
   it('resolves tailwind conflicts', () => {

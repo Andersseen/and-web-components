@@ -171,7 +171,7 @@ initMotion();
 
 ```css
 /* Import styles */
-@import '@andersseen/web-components/dist/web-components/web-components.css';
+@import '@andersseen/web-components/style.css';
 @import '@andersseen/motion/style.css';
 @import '@andersseen/layout/dist/layout.css';
 ```
@@ -202,7 +202,7 @@ npm install @andersseen/web-components @andersseen/react-components @andersseen/
 ```tsx
 // App.tsx
 import { AndButton } from '@andersseen/react-components';
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 
 export function App() {
   return <AndButton variant="default">Click me</AndButton>;
@@ -219,7 +219,7 @@ npm install @andersseen/web-components @andersseen/vue-components @andersseen/ic
 <!-- App.vue -->
 <script setup lang="ts">
 import { AndButton } from '@andersseen/vue-components';
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 </script>
 
 <template>
@@ -231,7 +231,7 @@ import '@andersseen/web-components/dist/web-components/web-components.css';
 
 ```astro
 ---
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 import '@andersseen/motion/style.css';
 ---
 
@@ -276,8 +276,39 @@ import '@andersseen/motion/style.css';
 
 ## Theming
 
-Components use CSS custom properties with HSL values. Set a `data-color`
-attribute on `<html>` to switch palettes, or override variables directly:
+Components use CSS custom properties with HSL values. Set an `and-color`
+attribute on `<html>` to switch between every bundled palette:
+
+```html
+<html and-color="violet-cyan"></html>
+```
+
+The public document attributes are namespaced to avoid collisions with
+application-owned `data-*` attributes:
+
+```html
+<html and-color="violet-cyan" and-theme="compact" and-mode="dark"></html>
+```
+
+- `and-color`: `indigo-rose`, `slate-amber`, `emerald-orange`, `violet-cyan`,
+  `rose-teal`, or `warm-gold`.
+- `and-theme`: `default`, `compact`, `playful`, `retro`, or `elegant`.
+- `and-mode`: `light` or `dark`. The existing `class="dark"` API is also
+  supported.
+
+The former `data-color`, `data-theme`, and `data-mode` selectors remain as
+deprecated compatibility aliases.
+
+To make one palette the application default, import it after the component
+stylesheet. The available color themes are `indigo-rose`, `slate-amber`,
+`emerald-orange`, `violet-cyan`, and `rose-teal`:
+
+```css
+@import '@andersseen/web-components/style.css';
+@import '@andersseen/web-components/colors/violet-cyan.css';
+```
+
+You can also override variables directly:
 
 ```css
 :root {

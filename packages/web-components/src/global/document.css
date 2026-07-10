@@ -9,6 +9,14 @@
 
 @tailwind base;
 
+/*
+ * Components apply some utilities to their custom-element host. Shadow DOM
+ * styles cannot style the host through a normal `.utility` selector, so these
+ * rules must also be present in the published document stylesheet. Shipping
+ * them precompiled keeps consumers independent from Tailwind content scanning.
+ */
+@tailwind utilities;
+
 @layer base {
   body {
     @apply bg-background text-foreground;

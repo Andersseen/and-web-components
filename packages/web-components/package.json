@@ -15,8 +15,7 @@
       "require": "./dist/index.cjs.js"
     },
     "./lazy": {
-      "import": "./dist/web-components/web-components.esm.js",
-      "require": "./dist/web-components/web-components.cjs.js"
+      "import": "./dist/web-components/web-components.esm.js"
     },
     "./components": {
       "types": "./dist/types/components.d.ts",
@@ -34,9 +33,12 @@
     "./loader": {
       "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
-      "require": "./loader/index.cjs"
+      "require": "./loader/index.cjs.js"
     },
+    "./style.css": "./dist/web-components/web-components.css",
     "./dist/web-components/web-components.css": "./dist/web-components/web-components.css",
+    "./colors/*.css": "./themes/colors/*.css",
+    "./colors/*": "./themes/colors/*.css",
     "./themes": "./themes/index.css",
     "./themes/*": "./themes/*",
     "./themes/colors": "./themes/colors/index.css",

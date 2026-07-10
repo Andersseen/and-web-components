@@ -3,7 +3,7 @@
    @andersseen/web-components
 
    Usage:
-     @import "@andersseen/web-components/themes/colors/indigo-rose";
+     @import "@andersseen/web-components/colors/indigo-rose.css";
    or shorthand:
      @import "@andersseen/web-components/indigo-rose";
    ============================================================================= */
@@ -77,7 +77,7 @@
 
 /* ── Dark Mode — system preference ──────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-mode='light']) {
+  :root:not([and-mode='light']):not([data-mode='light']) {
     --primary: 234 89% 74%;
     --primary-foreground: 244 47% 20%;
     --secondary: 343 80% 35%;
@@ -112,6 +112,7 @@
 
 /* ── Dark Mode — explicit class or attribute ─────────────────────────── */
 .dark,
+[and-mode='dark'],
 [data-mode='dark'] {
   --primary: 234 89% 74%;
   --primary-foreground: 244 47% 20%;
