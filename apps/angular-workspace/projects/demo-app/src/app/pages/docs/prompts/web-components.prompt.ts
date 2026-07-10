@@ -15,7 +15,7 @@ npm i @andersseen/web-components @andersseen/icon
 \`\`\`ts
 // Register all custom elements
 import '@andersseen/web-components/components/all';
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 
 // Register icons used by internal components (minimum required)
 import { registerIcons, COMPONENT_ICONS } from '@andersseen/icon';

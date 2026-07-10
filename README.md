@@ -171,7 +171,7 @@ initMotion();
 
 ```css
 /* Import styles */
-@import '@andersseen/web-components/dist/web-components/web-components.css';
+@import '@andersseen/web-components/style.css';
 @import '@andersseen/motion/style.css';
 @import '@andersseen/layout/dist/layout.css';
 ```
@@ -202,7 +202,7 @@ npm install @andersseen/web-components @andersseen/react-components @andersseen/
 ```tsx
 // App.tsx
 import { AndButton } from '@andersseen/react-components';
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 
 export function App() {
   return <AndButton variant="default">Click me</AndButton>;
@@ -219,7 +219,7 @@ npm install @andersseen/web-components @andersseen/vue-components @andersseen/ic
 <!-- App.vue -->
 <script setup lang="ts">
 import { AndButton } from '@andersseen/vue-components';
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 </script>
 
 <template>
@@ -231,7 +231,7 @@ import '@andersseen/web-components/dist/web-components/web-components.css';
 
 ```astro
 ---
-import '@andersseen/web-components/dist/web-components/web-components.css';
+import '@andersseen/web-components/style.css';
 import '@andersseen/motion/style.css';
 ---
 

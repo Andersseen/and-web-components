@@ -36,6 +36,7 @@
       "import": "./loader/index.js",
       "require": "./loader/index.cjs"
     },
+    "./style.css": "./dist/web-components/web-components.css",
     "./dist/web-components/web-components.css": "./dist/web-components/web-components.css",
     "./themes": "./themes/index.css",
     "./themes/*": "./themes/*",
