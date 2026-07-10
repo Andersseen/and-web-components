@@ -1,0 +1,38 @@
+{
+  "name": "@andersseen/skills",
+  "version": "0.0.1",
+  "description": "Installable AI agent skills (Claude Code, Cursor, ...) for the Andersseen ecosystem. One focused skill per library, plus an orchestrator.",
+  "type": "module",
+  "bin": {
+    "andersseen-skills": "bin/cli.mjs",
+    "and-skills": "bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "skills",
+    "README.md"
+  ],
+  "scripts": {
+    "lint": "node bin/cli.mjs list >/dev/null",
+    "format": "prettier --write \"**/*.{md,mjs,json}\"",
+    "format:check": "prettier --check \"**/*.{md,mjs,json}\""
+  },
+  "keywords": [
+    "claude-code",
+    "agent-skills",
+    "cursor",
+    "web-components",
+    "andersseen",
+    "ai"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/skills"
+  }
+}
