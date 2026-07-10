@@ -76,7 +76,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-mode='light']) {
+  :root:not([and-mode='light']):not([data-mode='light']) {
     --primary: 351 95% 71%;
     --primary-foreground: 343 88% 16%;
     --secondary: 176 69% 22%;
@@ -110,6 +110,7 @@
 }
 
 .dark,
+[and-mode='dark'],
 [data-mode='dark'] {
   --primary: 351 95% 71%;
   --primary-foreground: 343 88% 16%;

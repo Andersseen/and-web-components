@@ -46,18 +46,25 @@ Available color imports:
   @andersseen/web-components/colors/violet-cyan.css
   @andersseen/web-components/colors/rose-teal.css
 
-The base stylesheet includes every palette for runtime switching. Set
-\`data-color\` on an ancestor, normally \`<html>\`:
+The base stylesheet includes every palette for runtime switching. Set the
+namespaced \`and-color\` attribute on an ancestor, normally \`<html>\`:
 
 \`\`\`html
-<html data-color="emerald-orange" class="dark">
+<html and-color="emerald-orange" class="dark">
+\`\`\`
+
+Color and visual style are separate axes:
+
+\`\`\`html
+<html and-color="emerald-orange" and-theme="compact" class="dark">
 \`\`\`
 
 ## Design tokens
 All tokens use HSL and are applied via CSS variables on \`:root\`.
-Dark mode: add class \`dark\` to \`<html>\` or any ancestor.
-\`data-theme\` selects a visual style such as compact, playful, retro, or elegant;
-it is not the dark-mode API.
+Dark mode: add class \`dark\` (or \`and-mode="dark"\`) to \`<html>\` or any ancestor.
+\`and-theme\` selects a visual style such as compact, playful, retro, or elegant;
+it is not the color or dark-mode API. Legacy \`data-color\`, \`data-theme\`, and
+\`data-mode\` attributes are compatibility-only and should not be used in new code.
 
 Key semantic tokens:
   --primary / --primary-foreground

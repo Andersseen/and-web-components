@@ -226,14 +226,14 @@ export class MainLayoutComponent {
         }
       });
 
-    const currentThemeAttr = document.documentElement.getAttribute('data-theme') || 'default';
-    const currentColorAttr = document.documentElement.getAttribute('data-color') || 'indigo-rose';
+    const currentThemeAttr = document.documentElement.getAttribute('and-theme') || 'default';
+    const currentColorAttr = document.documentElement.getAttribute('and-color') || 'indigo-rose';
 
     this.currentTheme.set(currentThemeAttr);
     this.currentColor.set(currentColorAttr);
 
-    document.documentElement.setAttribute('data-theme', currentThemeAttr);
-    document.documentElement.setAttribute('data-color', currentColorAttr);
+    document.documentElement.setAttribute('and-theme', currentThemeAttr);
+    document.documentElement.setAttribute('and-color', currentColorAttr);
   }
 
   onNavItemClick(event: CustomEvent<unknown>) {
@@ -263,13 +263,13 @@ export class MainLayoutComponent {
   applyTheme(theme: string) {
     if (theme.length === 0) return;
     this.currentTheme.set(theme);
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('and-theme', theme);
   }
 
   applyColor(color: string) {
     if (color.length === 0) return;
     this.currentColor.set(color);
-    document.documentElement.setAttribute('data-color', color);
+    document.documentElement.setAttribute('and-color', color);
   }
 
   toggleDarkMode() {

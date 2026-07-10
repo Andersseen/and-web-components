@@ -276,12 +276,28 @@ import '@andersseen/motion/style.css';
 
 ## Theming
 
-Components use CSS custom properties with HSL values. Set a `data-color`
+Components use CSS custom properties with HSL values. Set an `and-color`
 attribute on `<html>` to switch between every bundled palette:
 
 ```html
-<html data-color="violet-cyan"></html>
+<html and-color="violet-cyan"></html>
 ```
+
+The public document attributes are namespaced to avoid collisions with
+application-owned `data-*` attributes:
+
+```html
+<html and-color="violet-cyan" and-theme="compact" and-mode="dark"></html>
+```
+
+- `and-color`: `indigo-rose`, `slate-amber`, `emerald-orange`, `violet-cyan`,
+  `rose-teal`, or `warm-gold`.
+- `and-theme`: `default`, `compact`, `playful`, `retro`, or `elegant`.
+- `and-mode`: `light` or `dark`. The existing `class="dark"` API is also
+  supported.
+
+The former `data-color`, `data-theme`, and `data-mode` selectors remain as
+deprecated compatibility aliases.
 
 To make one palette the application default, import it after the component
 stylesheet. The available color themes are `indigo-rose`, `slate-amber`,

@@ -9,10 +9,11 @@
 }
 
 /* :host-context() is unsupported in WebKit/Safari. A combined selector
-   list (e.g. `[data-theme='compact'], :host-context(...)`) is invalid as
+   list (e.g. `[and-theme='compact'], :host-context(...)`) is invalid as
    a whole there, which drops the plain attribute-selector rule too.
    Each variant is duplicated as its own standalone rule so light-DOM
    usage keeps working across browsers. */
+[and-theme='compact'],
 [data-theme='compact'] {
   --radius: 0.25rem;
   --spacing-factor: 0.75;
@@ -22,6 +23,7 @@
   --navbar-link-text-transform: none;
 }
 
+:host-context([and-theme='compact']),
 :host-context([data-theme='compact']) {
   --radius: 0.25rem;
   --spacing-factor: 0.75;
@@ -31,6 +33,7 @@
   --navbar-link-text-transform: none;
 }
 
+[and-theme='playful'],
 [data-theme='playful'] {
   --radius: 1rem;
   --spacing-factor: 1.25;
@@ -40,6 +43,7 @@
   --navbar-link-text-transform: none;
 }
 
+:host-context([and-theme='playful']),
 :host-context([data-theme='playful']) {
   --radius: 1rem;
   --spacing-factor: 1.25;
@@ -49,6 +53,7 @@
   --navbar-link-text-transform: none;
 }
 
+[and-theme='retro'],
 [data-theme='retro'] {
   --radius: 0;
   --spacing-factor: 1;
@@ -58,6 +63,7 @@
   --navbar-link-text-transform: uppercase;
 }
 
+:host-context([and-theme='retro']),
 :host-context([data-theme='retro']) {
   --radius: 0;
   --spacing-factor: 1;
@@ -67,6 +73,7 @@
   --navbar-link-text-transform: uppercase;
 }
 
+[and-theme='elegant'],
 [data-theme='elegant'] {
   --radius: 0.75rem;
   --spacing-factor: 1.1;
@@ -76,6 +83,7 @@
   --navbar-link-text-transform: none;
 }
 
+:host-context([and-theme='elegant']),
 :host-context([data-theme='elegant']) {
   --radius: 0.75rem;
   --spacing-factor: 1.1;

@@ -371,7 +371,7 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
 ### 6.1 Token layers
 
 1. **Palette tokens** (`src/global/palettes.css`): raw HSL triplets per named
-   palette, switched via `data-color` attribute on `<html>`.
+   palette, switched via the namespaced `and-color` attribute on `<html>`.
 2. **Semantic tokens** (`src/global/themes.css` + `themes/*.css`): `--primary`,
    `--primary-foreground`, `--background`, `--foreground`, `--accent`,
    `--destructive`, `--ring`, `--radius`, etc. Values are **bare HSL component

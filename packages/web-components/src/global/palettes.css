@@ -23,6 +23,7 @@
 /* =========================================================================
      1. Indigo & Rose — Sophisticated & Warm (Default)
      ========================================================================= */
+[and-color='indigo-rose'],
 [data-color='indigo-rose'] {
   /* Primary Scale — Indigo */
   --primary-50: 226 100% 97%;
@@ -83,6 +84,7 @@
   --info-foreground: 0 0% 100%;
 }
 
+:host-context([and-color='indigo-rose']),
 :host-context([data-color='indigo-rose']) {
   --primary-50: 226 100% 97%;
   --primary-100: 226 100% 94%;
@@ -139,7 +141,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-[data-color='indigo-rose'].dark {
+[and-color='indigo-rose'].dark,
+[and-color='indigo-rose'][and-mode='dark'],
+[data-color='indigo-rose'].dark,
+[data-color='indigo-rose'][data-mode='dark'] {
   --primary: 234 89% 74%;
   --primary-foreground: 244 47% 20%;
   --secondary: 343 80% 35%;
@@ -171,7 +176,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-:host-context([data-color='indigo-rose'].dark) {
+:host-context([and-color='indigo-rose'].dark),
+:host-context([and-color='indigo-rose'][and-mode='dark']),
+:host-context([data-color='indigo-rose'].dark),
+:host-context([data-color='indigo-rose'][data-mode='dark']) {
   --primary: 234 89% 74%;
   --primary-foreground: 244 47% 20%;
   --secondary: 343 80% 35%;
@@ -210,6 +218,7 @@
      for compatibility with the existing hsl(var(--token)) pipeline.
      All normal-text pairings verified ≥4.5:1.
      ========================================================================= */
+[and-color='warm-gold'],
 [data-color='warm-gold'] {
   /* Primary Scale — Warm Amber (OKLCH-derived, clamped to sRGB) */
   --primary-50: 34 81.4% 95.1%;
@@ -269,6 +278,7 @@
   --info-foreground: 208 99.2% 98.8%;
 }
 
+:host-context([and-color='warm-gold']),
 :host-context([data-color='warm-gold']) {
   --primary-50: 34 81.4% 95.1%;
   --primary-100: 34 79% 90.2%;
@@ -325,7 +335,10 @@
   --info-foreground: 208 99.2% 98.8%;
 }
 
-[data-color='warm-gold'].dark {
+[and-color='warm-gold'].dark,
+[and-color='warm-gold'][and-mode='dark'],
+[data-color='warm-gold'].dark,
+[data-color='warm-gold'][data-mode='dark'] {
   --primary: 35 63% 64.8%;
   --primary-foreground: 35 70.5% 9.8%;
   --secondary: 8 42.7% 24.6%;
@@ -357,7 +370,10 @@
   --info-foreground: 208 99.2% 98.8%;
 }
 
-:host-context([data-color='warm-gold'].dark) {
+:host-context([and-color='warm-gold'].dark),
+:host-context([and-color='warm-gold'][and-mode='dark']),
+:host-context([data-color='warm-gold'].dark),
+:host-context([data-color='warm-gold'][data-mode='dark']) {
   --primary: 35 63% 64.8%;
   --primary-foreground: 35 70.5% 9.8%;
   --secondary: 8 42.7% 24.6%;
@@ -392,6 +408,7 @@
 /* =========================================================================
      2. Slate & Amber — Corporate Warm
      ========================================================================= */
+[and-color='slate-amber'],
 [data-color='slate-amber'] {
   /* Primary Scale — Slate */
   --primary-50: 210 40% 98%;
@@ -451,6 +468,7 @@
   --info-foreground: 0 0% 100%;
 }
 
+:host-context([and-color='slate-amber']),
 :host-context([data-color='slate-amber']) {
   --primary-50: 210 40% 98%;
   --primary-100: 210 40% 96%;
@@ -507,7 +525,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-[data-color='slate-amber'].dark {
+[and-color='slate-amber'].dark,
+[and-color='slate-amber'][and-mode='dark'],
+[data-color='slate-amber'].dark,
+[data-color='slate-amber'][data-mode='dark'] {
   --primary: 213 27% 84%;
   --primary-foreground: 229 84% 5%;
   --secondary: 23 83% 31%;
@@ -539,7 +560,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-:host-context([data-color='slate-amber'].dark) {
+:host-context([and-color='slate-amber'].dark),
+:host-context([and-color='slate-amber'][and-mode='dark']),
+:host-context([data-color='slate-amber'].dark),
+:host-context([data-color='slate-amber'][data-mode='dark']) {
   --primary: 213 27% 84%;
   --primary-foreground: 229 84% 5%;
   --secondary: 23 83% 31%;
@@ -574,6 +598,7 @@
 /* =========================================================================
      3. Emerald & Orange — Natural Energy
      ========================================================================= */
+[and-color='emerald-orange'],
 [data-color='emerald-orange'] {
   /* Primary Scale — Emerald */
   --primary-50: 152 81% 96%;
@@ -633,6 +658,7 @@
   --info-foreground: 0 0% 100%;
 }
 
+:host-context([and-color='emerald-orange']),
 :host-context([data-color='emerald-orange']) {
   --primary-50: 152 81% 96%;
   --primary-100: 149 80% 90%;
@@ -689,7 +715,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-[data-color='emerald-orange'].dark {
+[and-color='emerald-orange'].dark,
+[and-color='emerald-orange'][and-mode='dark'],
+[data-color='emerald-orange'].dark,
+[data-color='emerald-orange'][data-mode='dark'] {
   --primary: 158 64% 52%;
   --primary-foreground: 166 91% 9%;
   --secondary: 15 79% 34%;
@@ -721,7 +750,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-:host-context([data-color='emerald-orange'].dark) {
+:host-context([and-color='emerald-orange'].dark),
+:host-context([and-color='emerald-orange'][and-mode='dark']),
+:host-context([data-color='emerald-orange'].dark),
+:host-context([data-color='emerald-orange'][data-mode='dark']) {
   --primary: 158 64% 52%;
   --primary-foreground: 166 91% 9%;
   --secondary: 15 79% 34%;
@@ -756,6 +788,7 @@
 /* =========================================================================
      4. Violet & Cyan — Creative Tech
      ========================================================================= */
+[and-color='violet-cyan'],
 [data-color='violet-cyan'] {
   /* Primary Scale — Violet */
   --primary-50: 250 100% 98%;
@@ -815,6 +848,7 @@
   --info-foreground: 0 0% 100%;
 }
 
+:host-context([and-color='violet-cyan']),
 :host-context([data-color='violet-cyan']) {
   --primary-50: 250 100% 98%;
   --primary-100: 251 91% 95%;
@@ -871,7 +905,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-[data-color='violet-cyan'].dark {
+[and-color='violet-cyan'].dark,
+[and-color='violet-cyan'][and-mode='dark'],
+[data-color='violet-cyan'].dark,
+[data-color='violet-cyan'][data-mode='dark'] {
   --primary: 255 92% 76%;
   --primary-foreground: 261 73% 23%;
   --secondary: 194 70% 27%;
@@ -903,7 +940,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-:host-context([data-color='violet-cyan'].dark) {
+:host-context([and-color='violet-cyan'].dark),
+:host-context([and-color='violet-cyan'][and-mode='dark']),
+:host-context([data-color='violet-cyan'].dark),
+:host-context([data-color='violet-cyan'][data-mode='dark']) {
   --primary: 255 92% 76%;
   --primary-foreground: 261 73% 23%;
   --secondary: 194 70% 27%;
@@ -938,6 +978,7 @@
 /* =========================================================================
      5. Rose & Teal — Modern Bold
      ========================================================================= */
+[and-color='rose-teal'],
 [data-color='rose-teal'] {
   /* Primary Scale — Rose */
   --primary-50: 356 100% 97%;
@@ -997,6 +1038,7 @@
   --info-foreground: 0 0% 100%;
 }
 
+:host-context([and-color='rose-teal']),
 :host-context([data-color='rose-teal']) {
   --primary-50: 356 100% 97%;
   --primary-100: 356 100% 95%;
@@ -1053,7 +1095,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-[data-color='rose-teal'].dark {
+[and-color='rose-teal'].dark,
+[and-color='rose-teal'][and-mode='dark'],
+[data-color='rose-teal'].dark,
+[data-color='rose-teal'][data-mode='dark'] {
   --primary: 351 95% 71%;
   --primary-foreground: 343 88% 16%;
   --secondary: 176 69% 22%;
@@ -1085,7 +1130,10 @@
   --info-foreground: 0 0% 100%;
 }
 
-:host-context([data-color='rose-teal'].dark) {
+:host-context([and-color='rose-teal'].dark),
+:host-context([and-color='rose-teal'][and-mode='dark']),
+:host-context([data-color='rose-teal'].dark),
+:host-context([data-color='rose-teal'][data-mode='dark']) {
   --primary: 351 95% 71%;
   --primary-foreground: 343 88% 16%;
   --secondary: 176 69% 22%;
