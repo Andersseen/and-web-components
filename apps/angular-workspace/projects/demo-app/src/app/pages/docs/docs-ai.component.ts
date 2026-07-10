@@ -8,6 +8,7 @@ import { HEADLESS_CORE_PROMPT, ICON_PROMPT, LAYOUT_PROMPT, MOTION_PROMPT, WEB_CO
 
 type PackageManager = 'pnpm' | 'npm' | 'yarn';
 type PromptLibrary = 'web-components' | 'headless-core' | 'icon' | 'motion' | 'layout';
+type SkillTarget = 'all' | 'orchestrator' | 'web-components' | 'headless-core' | 'icon' | 'motion' | 'layout';
 
 @Component({
   selector: 'app-docs-ai',
@@ -108,6 +109,84 @@ type PromptLibrary = 'web-components' | 'headless-core' | 'icon' | 'motion' | 'l
 
         <demo-code-block [label]="selectedPromptLabel()" [code]="selectedPromptContext()" [copyable]="true" />
       </demo-section>
+
+      <demo-section title="3. Agent Skills (Claude Code, Cursor, …)">
+        <demo-panel
+          title="Installable, per-library skills"
+          description="Prefer skills over pasting prompts when your agent supports them. Each skill teaches one library — pick only what your project uses. Start with the orchestrator: it decides which library fits a task and routes to the focused skill. Commands respect the package manager selected above."
+        />
+
+        <and-tabs
+          [value]="selectedSkillTarget()"
+          (andTabChange)="onSkillTargetTabChange($event)"
+          class="mb-3 block w-full mt-4"
+        >
+          <and-tabs-list class="flex w-full flex-wrap gap-2">
+            @for (target of skillTargets; track target) {
+              <and-tabs-trigger [value]="target" class="px-4 py-2 text-sm font-semibold capitalize transition-all">
+                {{ skillTargetLabel(target) }}
+              </and-tabs-trigger>
+            }
+          </and-tabs-list>
+        </and-tabs>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <div class="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+            <div class="flex items-center justify-between gap-3 border-b border-border bg-muted/20 px-4 py-3">
+              <span
+                class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+              >
+                <and-icon name="terminal" size="14"></and-icon> Install
+              </span>
+              <button
+                type="button"
+                class="h-8 rounded-md border border-border bg-background px-4 text-xs font-semibold text-foreground transition-all hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
+                (click)="copySkillInstall()"
+              >
+                {{ copiedSkillInstall() ? 'Copied ✓' : 'Copy' }}
+              </button>
+            </div>
+            <pre
+              class="m-0 max-w-full overflow-x-auto p-4 font-mono text-sm text-foreground whitespace-pre-wrap break-all sm:whitespace-pre sm:break-normal"
+            ><code>{{ skillInstallCommand() }}</code></pre>
+            <p class="m-0 border-t border-border/60 px-4 py-2 text-xs text-muted-foreground">
+              Activates in <code>.claude/skills/</code> — your agent uses it right away.
+            </p>
+          </div>
+
+          <div class="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+            <div class="flex items-center justify-between gap-3 border-b border-border bg-muted/20 px-4 py-3">
+              <span
+                class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+              >
+                <and-icon name="download" size="14"></and-icon> Download only
+              </span>
+              <button
+                type="button"
+                class="h-8 rounded-md border border-border bg-background px-4 text-xs font-semibold text-foreground transition-all hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
+                (click)="copySkillDownload()"
+              >
+                {{ copiedSkillDownload() ? 'Copied ✓' : 'Copy' }}
+              </button>
+            </div>
+            <pre
+              class="m-0 max-w-full overflow-x-auto p-4 font-mono text-sm text-foreground whitespace-pre-wrap break-all sm:whitespace-pre sm:break-normal"
+            ><code>{{ skillDownloadCommand() }}</code></pre>
+            <p class="m-0 border-t border-border/60 px-4 py-2 text-xs text-muted-foreground">
+              Writes to <code>andersseen-skills/</code> to review before activating.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <span
+            class="text-xs leading-relaxed text-foreground/70 bg-muted/40 px-3 py-1.5 rounded-md border border-border/50"
+          >
+            <strong>Tip:</strong> run <code>{{ skillRunner() }} &#64;andersseen/skills</code> with no arguments for an
+            interactive picker, or add <code>--all</code> to install every skill at once.
+          </span>
+        </div>
+      </demo-section>
     </div>
   `,
 })
@@ -158,6 +237,54 @@ Now, implement the user's request based ONLY on the provided system capabilities
 
   readonly selectedPromptLabel = computed(() => `${this.selectedPromptLibrary()}.context.xml`);
 
+  readonly skillTargets: SkillTarget[] = [
+    'all',
+    'orchestrator',
+    'web-components',
+    'headless-core',
+    'icon',
+    'motion',
+    'layout',
+  ];
+  readonly selectedSkillTarget = signal<SkillTarget>('all');
+  readonly copiedSkillInstall = signal(false);
+  readonly copiedSkillDownload = signal(false);
+
+  private readonly skillTargetLabels: Record<SkillTarget, string> = {
+    'all': 'All (recommended)',
+    'orchestrator': 'Orchestrator',
+    'web-components': 'Web Components',
+    'headless-core': 'Headless Logic',
+    'icon': 'Icon System',
+    'motion': 'Motion Engine',
+    'layout': 'Layout & Typography',
+  };
+
+  // Maps a picker choice to the argument passed to `@andersseen/skills add`.
+  private readonly skillTargetArg: Record<SkillTarget, string> = {
+    'all': '--all',
+    'orchestrator': 'andersseen',
+    'web-components': 'web-components',
+    'headless-core': 'headless-core',
+    'icon': 'icon',
+    'motion': 'motion',
+    'layout': 'layout',
+  };
+
+  private readonly runnerByPm: Record<PackageManager, string> = {
+    pnpm: 'pnpm dlx',
+    npm: 'npx',
+    yarn: 'yarn dlx',
+  };
+
+  readonly skillRunner = computed(() => this.runnerByPm[this.selectedPm()]);
+
+  readonly skillInstallCommand = computed(
+    () => `${this.skillRunner()} @andersseen/skills add ${this.skillTargetArg[this.selectedSkillTarget()]}`,
+  );
+
+  readonly skillDownloadCommand = computed(() => `${this.skillInstallCommand()} --download`);
+
   copyInstallCommand() {
     navigator.clipboard?.writeText(this.installCommand());
     this.copiedInstall.set(true);
@@ -166,6 +293,29 @@ Now, implement the user's request based ONLY on the provided system capabilities
 
   promptLibraryLabel(lib: PromptLibrary) {
     return this.promptLibraryLabels[lib];
+  }
+
+  skillTargetLabel(target: SkillTarget) {
+    return this.skillTargetLabels[target];
+  }
+
+  onSkillTargetTabChange(event: CustomEvent<string>) {
+    const value = event.detail;
+    if (this.skillTargets.includes(value as SkillTarget)) {
+      this.selectedSkillTarget.set(value as SkillTarget);
+    }
+  }
+
+  copySkillInstall() {
+    navigator.clipboard?.writeText(this.skillInstallCommand());
+    this.copiedSkillInstall.set(true);
+    setTimeout(() => this.copiedSkillInstall.set(false), 1200);
+  }
+
+  copySkillDownload() {
+    navigator.clipboard?.writeText(this.skillDownloadCommand());
+    this.copiedSkillDownload.set(true);
+    setTimeout(() => this.copiedSkillDownload.set(false), 1200);
   }
 
   onPackageManagerTabChange(event: CustomEvent<string>) {
