@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/skills",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Installable AI agent skills (Claude Code, Cursor, ...) for the Andersseen ecosystem. One focused skill per library, plus an orchestrator.",
   "type": "module",
   "bin": {
