@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/angular-components",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Angular wrappers for @andersseen/web-components Stencil library",
   "main": "./dist/fesm2022/andersseen-angular-components.mjs",
   "module": "./dist/fesm2022/andersseen-angular-components.mjs",
