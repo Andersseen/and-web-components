@@ -254,8 +254,10 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
 
 ### 5.2 `@andersseen/web-components` (`packages/web-components`)
 
-- **Purpose:** the styled, shippable UI layer. StencilJS custom elements, Shadow
-  DOM always on.
+- **Purpose:** the styled, shippable UI layer. StencilJS custom elements use
+  Shadow DOM by default. Form controls that rely on native light-DOM form
+  participation (`and-input`, `and-select`) are documented exceptions using
+  scoped styles.
 - **Runtime dependencies (keep minimal):** `@andersseen/headless-components`,
   `@andersseen/icon`, `@andersseen/motion` (workspace), plus
   `class-variance-authority`, `clsx`, `tailwind-merge`.
@@ -382,7 +384,9 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
 
 ### 6.2 Theming rules
 
-- Dark mode: `.dark` class on a root element overrides semantic tokens.
+- Public document API: `and-color` selects a palette, `and-theme` selects
+  shape/density, and `and-mode` selects light/dark mode. `.dark` remains a
+  supported dark-mode shorthand; legacy `data-*` names are compatibility-only.
 - Prebuilt themes: `packages/web-components/themes/*.css` (default, compact,
   elegant, playful, retro, emerald-orange, indigo-rose, rose-teal, slate-amber,
   violet-cyan), each importable via a package subpath export.
