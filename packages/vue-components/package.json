@@ -38,10 +38,12 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3",
+    "vitest": "^4.1.0",
     "vue": "^3.5.13"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",

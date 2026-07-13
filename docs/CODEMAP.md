@@ -68,6 +68,9 @@ pnpm test:headless                              # headless unit tests
 pnpm -C packages/web-components test:spec       # stencil component specs
 pnpm -C packages/vanilla-components test        # vanilla tests
 pnpm -C packages/motion-core test               # motion tests
+pnpm -C packages/angular-components test        # Angular wrapper smoke test (needs build:stencil first)
+pnpm -C packages/react-components test          # React wrapper smoke test (needs build:stencil first)
+pnpm -C packages/vue-components test             # Vue wrapper smoke test (needs build:stencil first)
 pnpm lint && pnpm format:check                  # quality gates (CI runs these)
 pnpm storybook                                  # visual check at localhost:6006
 ```
