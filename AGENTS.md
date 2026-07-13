@@ -163,6 +163,14 @@ Use `pnpm build:all` from root to build everything.
 - **Vanilla component tests**: `pnpm -C packages/vanilla-components test`
   (Vitest)
 - **Motion tests**: `pnpm -C packages/motion-core test` (Vitest)
+- **Layout tests**: `pnpm -C packages/layout-core test` (Vitest, build-output
+  smoke test — needs `pnpm build:layout` first)
+- **Icon tests**: `pnpm -C packages/icon-library test` (Vitest)
+- **Behaviors tests**: `pnpm test:behaviors` (Vitest, jsdom)
+- **Framework adapter smoke tests**: `pnpm -C packages/angular-components test`,
+  `pnpm -C packages/react-components test`,
+  `pnpm -C packages/vue-components test` (Vitest — need `pnpm build:stencil`
+  first)
 - **Stencil e2e tests**: `pnpm -C packages/web-components test` (Puppeteer —
   deprecated in Stencil v5)
 
