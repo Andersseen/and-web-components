@@ -1,9 +1,10 @@
 # Andersseen Web Components
 
-A complete, framework-agnostic web component ecosystem: headless logic, DOM
-behaviors, design tokens, layout primitives, animations, icons, and **23
-accessible UI components** — built with [StencilJS](https://stenciljs.com/),
-ready for any framework or plain HTML.
+A modular, framework-agnostic UI ecosystem: headless logic, DOM behaviors,
+design tokens, layout primitives, animations, icons, and **24 accessible UI
+components** — built with [StencilJS](https://stenciljs.com/), ready for any
+framework or plain HTML. Each package below can be installed and used on its
+own; see [Package Roles](#package-roles) for how they fit together.
 
 | Package                           | npm                                                                                                                                   | Description                                      |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
@@ -18,6 +19,29 @@ ready for any framework or plain HTML.
 | `@andersseen/react-components`    | [![npm](https://img.shields.io/npm/v/@andersseen/react-components)](https://www.npmjs.com/package/@andersseen/react-components)       | Generated React wrappers                         |
 | `@andersseen/vue-components`      | [![npm](https://img.shields.io/npm/v/@andersseen/vue-components)](https://www.npmjs.com/package/@andersseen/vue-components)           | Generated Vue 3 wrappers                         |
 | `@andersseen/astro`               | [![npm](https://img.shields.io/npm/v/@andersseen/astro)](https://www.npmjs.com/package/@andersseen/astro)                             | Official Astro integration                       |
+
+## Package Roles
+
+Andersseen is not one library — it's a stack of independently-installable
+packages. Each tier can be adopted on its own or combined:
+
+- **Product core** — the packages most consumers reach for directly:
+  `@andersseen/web-components` (styled UI), `@andersseen/icon`,
+  `@andersseen/motion`, `@andersseen/layout`, `@andersseen/behaviors`.
+- **Foundation** — `@andersseen/headless-components`: framework-agnostic state
+  machines and a11y/keyboard logic with zero styling. It powers `web-components`
+  and `vanilla-components` internally, and is also published standalone for
+  teams building their own design system on top of it.
+- **Framework adapters** — thin, mostly-generated wrappers around
+  `web-components` for a specific framework: `@andersseen/angular-components`,
+  `@andersseen/react-components`, `@andersseen/vue-components`,
+  `@andersseen/astro`. These follow the core package's release cadence and don't
+  carry independent design decisions.
+
+Packages don't require each other unless documented. For example, an Angular app
+that only wants attribute-driven layout/typography can install just
+`@andersseen/layout` — a pure CSS package with no JS runtime — without pulling
+in `web-components`, `headless-components`, or any framework adapter.
 
 ## Features
 
@@ -258,31 +282,32 @@ import '@andersseen/motion/style.css';
 
 ## Components
 
-| Component    | Tag                | Features                                   |
-| ------------ | ------------------ | ------------------------------------------ |
-| Accordion    | `and-accordion`    | Expandable panels with keyboard navigation |
-| Alert        | `and-alert`        | Dismissible status messages                |
-| Badge        | `and-badge`        | Labels and status indicators               |
-| Breadcrumb   | `and-breadcrumb`   | Navigation breadcrumbs                     |
-| Button       | `and-button`       | 6 variants, loading state, link mode       |
-| Card         | `and-card`         | Content container with slots               |
-| Carousel     | `and-carousel`     | Image/content slider                       |
-| Code         | `and-code`         | Code display / copy                        |
-| Context Menu | `and-context-menu` | Right-click menus                          |
-| Drawer       | `and-drawer`       | Slide-out panels                           |
-| Dropdown     | `and-dropdown`     | Menu overlays                              |
-| Icon         | `and-icon`         | 70+ SVG icons                              |
-| Input        | `and-input`        | Form input with validation                 |
-| Menu List    | `and-menu-list`    | Navigable menu items                       |
-| Modal        | `and-modal`        | Dialog overlays with focus trap            |
-| Navbar       | `and-navbar`       | Fixed/sticky navigation with scroll spy    |
-| Pagination   | `and-pagination`   | Page navigation                            |
-| Select       | `and-select`       | Dropdown selection                         |
-| Sidebar      | `and-sidebar`      | Collapsible side navigation                |
-| Skeleton     | `and-skeleton`     | Loading placeholders                       |
-| Tabs         | `and-tabs`         | Tabbed content switching                   |
-| Toast        | `and-toast`        | Notification messages                      |
-| Tooltip      | `and-tooltip`      | Info popups on hover/focus                 |
+| Component    | Tag                | Features                                                 |
+| ------------ | ------------------ | -------------------------------------------------------- |
+| Accordion    | `and-accordion`    | Expandable panels with keyboard navigation               |
+| Alert        | `and-alert`        | Dismissible status messages                              |
+| Badge        | `and-badge`        | Labels and status indicators                             |
+| Breadcrumb   | `and-breadcrumb`   | Navigation breadcrumbs                                   |
+| Button       | `and-button`       | 6 variants, loading state, link mode                     |
+| Card         | `and-card`         | Content container with slots                             |
+| Carousel     | `and-carousel`     | Image/content slider                                     |
+| Code         | `and-code`         | Code display / copy                                      |
+| Context Menu | `and-context-menu` | Right-click menus                                        |
+| Control      | `and-control`      | Label/hint/error wrapper around any slotted form control |
+| Drawer       | `and-drawer`       | Slide-out panels                                         |
+| Dropdown     | `and-dropdown`     | Menu overlays                                            |
+| Icon         | `and-icon`         | 70+ SVG icons                                            |
+| Input        | `and-input`        | Form input with validation                               |
+| Menu List    | `and-menu-list`    | Navigable menu items                                     |
+| Modal        | `and-modal`        | Dialog overlays with focus trap                          |
+| Navbar       | `and-navbar`       | Fixed/sticky navigation with scroll spy                  |
+| Pagination   | `and-pagination`   | Page navigation                                          |
+| Select       | `and-select`       | Dropdown selection                                       |
+| Sidebar      | `and-sidebar`      | Collapsible side navigation                              |
+| Skeleton     | `and-skeleton`     | Loading placeholders                                     |
+| Tabs         | `and-tabs`         | Tabbed content switching                                 |
+| Toast        | `and-toast`        | Notification messages                                    |
+| Tooltip      | `and-tooltip`      | Info popups on hover/focus                               |
 
 ## Theming
 

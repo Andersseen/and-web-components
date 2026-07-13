@@ -40,7 +40,7 @@ Andersseen Web Components is a **framework-agnostic UI component ecosystem**
 published as independent npm packages under the `@andersseen/` scope. It
 provides:
 
-- **~23 accessible UI components** (`and-button`, `and-modal`, `and-tabs`, …)
+- **~24 accessible UI components** (`and-button`, `and-modal`, `and-tabs`, …)
   built with **StencilJS** and Shadow DOM.
 - A **headless core**: pure-TypeScript state machines with ARIA/keyboard logic
   and zero UI, consumable from any framework or vanilla JS.
@@ -56,6 +56,33 @@ provides:
 
 Consumers range from plain `<script type="module">` HTML pages (via unpkg CDN)
 to bundled Angular/Astro/Vite applications.
+
+### 1.1 Positioning: product core, foundation, and adapters
+
+Andersseen is a stack of independently-publishable packages, not a single
+library. Three tiers, in order of what most consumers touch first:
+
+1. **Product core** — packages a typical consumer installs directly:
+   `@andersseen/web-components`, `@andersseen/icon`, `@andersseen/motion`,
+   `@andersseen/layout`, `@andersseen/behaviors`. Each ships its own design
+   decisions and can be adopted alone (e.g. `@andersseen/layout` is pure CSS
+   with zero JS and zero in-repo dependencies — see §4.2).
+2. **Foundation** — `@andersseen/headless-components`
+   (`packages/headless-core`). The single source of behavioral truth (state,
+   a11y, keyboard) that `web-components` and `vanilla-components` are built on.
+   It is strong and reusable on its own for advanced consumers building a custom
+   rendering layer, but it is not the primary integration point for a typical
+   website — most consumers should reach for `web-components` or
+   `vanilla-components` instead.
+3. **Framework adapters** — `@andersseen/angular-components`,
+   `@andersseen/react-components`, `@andersseen/vue-components`,
+   `@andersseen/astro`. Thin, mostly-generated wrappers around `web-components`
+   (see ADR-7). They exist for framework ergonomics, follow `web-components`'
+   release cadence, and should not carry independent roadmap weight.
+
+This tiering does not change the dependency rules in §4.2 — it is a
+consumer-facing framing of the same graph, useful when deciding where a new
+feature or doc belongs.
 
 ### Deployed surfaces
 
@@ -170,7 +197,7 @@ hand-edited.
                 │                               │
    ┌────────────▼───────────────────────────────▼──────────────┐
    │ @andersseen/web-components (StencilJS, Shadow DOM,        │
-   │ Tailwind v3 + CVA, ~23 components)                        │
+   │ Tailwind v3 + CVA, ~24 components)                        │
    └──────┬───────────────┬───────────────┬────────────────────┘
           │               │               │
 ┌─────────▼─────┐ ┌───────▼──────┐ ┌──────▼────────┐
@@ -261,10 +288,11 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
 - **Runtime dependencies (keep minimal):** `@andersseen/headless-components`,
   `@andersseen/icon`, `@andersseen/motion` (workspace), plus
   `class-variance-authority`, `clsx`, `tailwind-merge`.
-- **Components (23 folders):** accordion, alert, badge, breadcrumb, button,
-  card, carousel, code, context-menu, drawer, dropdown, icon, input, menu-list,
-  modal, navbar, pagination, select, sidebar, skeleton, tabs, toast, tooltip.
-  Compound components (e.g. `and-accordion-item`) live in the parent's folder.
+- **Components (24 folders):** accordion, alert, badge, breadcrumb, button,
+  card, carousel, code, context-menu, control, drawer, dropdown, icon, input,
+  menu-list, modal, navbar, pagination, select, sidebar, skeleton, tabs, toast,
+  tooltip. Compound components (e.g. `and-accordion-item`) live in the parent's
+  folder.
 - **Per-component files:** `and-<name>.tsx` (logic), `and-<name>.css` (`:host`
   custom properties only), `and-<name>.stories.ts` (Storybook),
   `and-<name>.spec.tsx` (Vitest spec), and optionally `and-<name>.types.ts`.
@@ -278,8 +306,8 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
     produces `components/all`)
   - `docs-readme`, `docs-custom-elements-manifest` (`custom-elements.json`)
   - `angularOutputTarget` → writes generated wrappers into
-    `apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/`
-    (**never edit those files manually**)
+    `packages/angular-components/src/lib/stencil-generated/` (**never edit those
+    files manually**)
 - **Styling pipeline:** Tailwind **v3** via `@stencil-community/postcss` per
   component; global styles in `src/global/` (`document.css` is the Stencil
   `globalStyle`; also `themes.css`, `palettes.css`, `animations.css`,
@@ -551,10 +579,12 @@ react + vue.
 - Stencil spec tests require `icon-library` (and siblings) to be built first —
   run `pnpm build:stencil` once before testing.
 
-**Current coverage gaps (as of 2026-07-08):** headless coverage is complete. All
-23 Stencil components have specs and stories. The React and Vue wrapper packages
+**Current coverage gaps (as of 2026-07-13):** headless coverage is complete. All
+24 Stencil components have specs and stories. The React and Vue wrapper packages
 currently have no package-specific tests; they are validated by TypeScript
 compilation (`pnpm build:react`, `pnpm build:vue`).
+`@andersseen/angular-components` now has a minimal smoke test
+(`pnpm -C packages/angular-components test`) covering its public API surface.
 
 ---
 
@@ -723,18 +753,18 @@ first-class workspace package and add `@stencil/react-output-target` and
 Tracked here so agents don't "fix" them accidentally in unrelated PRs — pick
 them up as explicit tasks.
 
-| ID    | Area               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Severity |
-| ----- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| TD-1  | Docs drift         | README component table lists 20 components; source has 23 (`and-code`, `and-select`, `and-skeleton` missing from table). Structure diagram omits `vanilla-components` and `astro` packages.                                                                                                                                                                                                                                                                                       | Medium   |
-| TD-2  | Docs drift         | `.github/DEPLOYMENT.md` describes a 5-job `ci-cd.yml`; the real pipeline is split across 4 workflow files and releases via Changesets, not "version bump commits".                                                                                                                                                                                                                                                                                                                | Medium   |
-| TD-3  | Tests              | Headless `carousel`, `input`, `menu` now tested; only `and-code` lacks a spec and story because `and-code.tsx` source does not exist yet. `and-skeleton` story added.                                                                                                                                                                                                                                                                                                             | High     |
-| TD-4  | Release            | Legacy `publish:*` root scripts bypass Changesets (`--no-git-checks`, hardcoded `/private/tmp` npm cache).                                                                                                                                                                                                                                                                                                                                                                        | High     |
-| TD-5  | Packaging          | ~~`@andersseen/angular-components` sits outside the pnpm workspace and the Changesets flow; its versioning/publishing path is undocumented.~~ Resolved: moved to `packages/angular-components`; React/Vue wrappers added; all three built by `build:all` and published via Changesets (ADR-7).                                                                                                                                                                                    | High     |
-| TD-6  | Repo hygiene       | Committed `.DS_Store` files; one-off codemods `migrate-store.mjs`, `refactor-stories.mjs` at repo root; `debug-storybook.log`, `storybook-static/`, `playwright-report/` present locally (ignored but clutter). `.DS_Store` not in `.gitignore`.                                                                                                                                                                                                                                  | Low      |
-| TD-7  | Dependencies       | ~~`packages/web-components` mixes Storybook 10 core with `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`, `jest-cli`, `@types/jest`, `puppeteer` devDeps~~ cleaned up in Phase 4. Root `wrangler` still pinned to v3 (optional bump).                                                                                                                                                                                                                           | Medium   |
-| TD-8  | Governance         | No root `LICENSE` file (README claims MIT; only `packages/web-components` has one). No `CONTRIBUTING.md`. No `engines` field in root `package.json`.                                                                                                                                                                                                                                                                                                                              | Medium   |
-| TD-9  | CI                 | Pre-commit hook only runs Prettier (AGENTS.md claims ESLint too). CI does not run vanilla/motion tests.                                                                                                                                                                                                                                                                                                                                                                           | Medium   |
-| TD-10 | A11y/docs mismatch | ~~AGENTS.md event convention (`andOpen`) vs SKILL.md examples are consistent, but some components (e.g. `and-button` emits `andButtonClick`) embed the component name — convention should be stated once, authoritatively.~~ Resolved: all events now follow the single `and<Component><Action>` convention; ambiguous names (`andInput`, `andBlur`, `andClose`, `navItemClick`, etc.) were renamed and all references updated. See SKILL.md §Event Naming Convention and SSD §7. | Low      |
+| ID    | Area               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Severity |
+| ----- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| TD-1  | Docs drift         | ~~README component table lists 20 components; source has 23 (`and-code`, `and-select`, `and-skeleton` missing from table). Structure diagram omits `vanilla-components` and `astro` packages.~~ Resolved (2026-07-13): README table now lists all 24 components (added `and-control`); component counts corrected to 24 across README/SSD; stale `apps/angular-workspace/projects/angular-components` path references corrected to `packages/angular-components` in AGENTS.md, CODEMAP.md, SSD.md. | Medium   |
+| TD-2  | Docs drift         | `.github/DEPLOYMENT.md` describes a 5-job `ci-cd.yml`; the real pipeline is split across 4 workflow files and releases via Changesets, not "version bump commits".                                                                                                                                                                                                                                                                                                                                 | Medium   |
+| TD-3  | Tests              | Headless `carousel`, `input`, `menu` now tested; only `and-code` lacks a spec and story because `and-code.tsx` source does not exist yet. `and-skeleton` story added.                                                                                                                                                                                                                                                                                                                              | High     |
+| TD-4  | Release            | Legacy `publish:*` root scripts bypass Changesets (`--no-git-checks`, hardcoded `/private/tmp` npm cache).                                                                                                                                                                                                                                                                                                                                                                                         | High     |
+| TD-5  | Packaging          | ~~`@andersseen/angular-components` sits outside the pnpm workspace and the Changesets flow; its versioning/publishing path is undocumented.~~ Resolved: moved to `packages/angular-components`; React/Vue wrappers added; all three built by `build:all` and published via Changesets (ADR-7).                                                                                                                                                                                                     | High     |
+| TD-6  | Repo hygiene       | Committed `.DS_Store` files; one-off codemods `migrate-store.mjs`, `refactor-stories.mjs` at repo root; `debug-storybook.log`, `storybook-static/`, `playwright-report/` present locally (ignored but clutter). `.DS_Store` not in `.gitignore`.                                                                                                                                                                                                                                                   | Low      |
+| TD-7  | Dependencies       | ~~`packages/web-components` mixes Storybook 10 core with `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`, `jest-cli`, `@types/jest`, `puppeteer` devDeps~~ cleaned up in Phase 4. Root `wrangler` still pinned to v3 (optional bump).                                                                                                                                                                                                                                            | Medium   |
+| TD-8  | Governance         | No root `LICENSE` file (README claims MIT; only `packages/web-components` has one). No `CONTRIBUTING.md`. No `engines` field in root `package.json`.                                                                                                                                                                                                                                                                                                                                               | Medium   |
+| TD-9  | CI                 | Pre-commit hook only runs Prettier (AGENTS.md claims ESLint too). CI does not run vanilla/motion tests.                                                                                                                                                                                                                                                                                                                                                                                            | Medium   |
+| TD-10 | A11y/docs mismatch | ~~AGENTS.md event convention (`andOpen`) vs SKILL.md examples are consistent, but some components (e.g. `and-button` emits `andButtonClick`) embed the component name — convention should be stated once, authoritatively.~~ Resolved: all events now follow the single `and<Component><Action>` convention; ambiguous names (`andInput`, `andBlur`, `andClose`, `navItemClick`, etc.) were renamed and all references updated. See SKILL.md §Event Naming Convention and SSD §7.                  | Low      |
 
 ---
 
