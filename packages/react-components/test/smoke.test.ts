@@ -1,6 +1,9 @@
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
 import * as ReactComponents from '../src/index';
+import { AndButton } from '../src/index';
 
 describe('@andersseen/react-components public API', () => {
   it('exports a non-empty set of wrapped components', () => {
@@ -12,5 +15,11 @@ describe('@andersseen/react-components public API', () => {
     for (const [name, value] of Object.entries(ReactComponents)) {
       expect(value, `${name} should be defined`).toBeDefined();
     }
+  });
+
+  it('AndButton actually renders to the underlying custom element markup', () => {
+    const html = renderToStaticMarkup(createElement(AndButton, { variant: 'default' }, 'Click me'));
+    expect(html).toContain('<and-button');
+    expect(html).toContain('Click me');
   });
 });
