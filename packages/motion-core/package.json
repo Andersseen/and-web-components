@@ -40,7 +40,7 @@
   "author": "Andersseen",
   "license": "MIT",
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/coverage-v8": "4.1.0",
     "eslint": "^10.1.0",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.57.1",
