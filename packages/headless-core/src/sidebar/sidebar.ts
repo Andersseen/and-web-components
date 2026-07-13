@@ -304,38 +304,34 @@ export function createSidebar(config: SidebarConfig = {}): SidebarReturn {
       return;
     }
 
-    let nextIndex: number | null = null;
+    const nextIndex = ((): number | null => {
+      switch (event.key) {
+        case Keys.ArrowDown:
+          event.preventDefault();
+          return (currentIndex + 1) % enabledIds.length;
 
-    switch (event.key) {
-      case Keys.ArrowDown:
-        event.preventDefault();
-        nextIndex = (currentIndex + 1) % enabledIds.length;
-        break;
+        case Keys.ArrowUp:
+          event.preventDefault();
+          return currentIndex === 0 ? enabledIds.length - 1 : currentIndex - 1;
 
-      case Keys.ArrowUp:
-        event.preventDefault();
-        nextIndex = currentIndex === 0 ? enabledIds.length - 1 : currentIndex - 1;
-        break;
+        case Keys.Home:
+          event.preventDefault();
+          return 0;
 
-      case Keys.Home:
-        event.preventDefault();
-        nextIndex = 0;
-        break;
+        case Keys.End:
+          event.preventDefault();
+          return enabledIds.length - 1;
 
-      case Keys.End:
-        event.preventDefault();
-        nextIndex = enabledIds.length - 1;
-        break;
+        case Keys.Enter:
+        case Keys.Space:
+          event.preventDefault();
+          setActiveItem(currentItemId);
+          return null;
 
-      case Keys.Enter:
-      case Keys.Space:
-        event.preventDefault();
-        setActiveItem(currentItemId);
-        return;
-
-      default:
-        return;
-    }
+        default:
+          return null;
+      }
+    })();
 
     if (nextIndex !== null && enabledIds[nextIndex]) {
       setActiveItem(enabledIds[nextIndex]);
