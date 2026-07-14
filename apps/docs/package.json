@@ -1,0 +1,25 @@
+{
+  "name": "@andersseen/docs",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@andersseen/astro": "workspace:*",
+    "@andersseen/icon": "workspace:*",
+    "@andersseen/motion": "workspace:*",
+    "@andersseen/web-components": "workspace:*",
+    "@astrojs/starlight": "^0.37.7",
+    "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

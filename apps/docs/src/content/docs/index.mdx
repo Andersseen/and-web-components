@@ -1,0 +1,44 @@
+---
+title: And Web Components
+description: Framework-agnostic UI component library — headless core, Stencil web components, and generated framework wrappers.
+template: splash
+hero:
+  tagline: One component core, built once as Custom Elements. Angular, React, and Vue wrappers generated from the same source.
+  actions:
+    - text: Getting Started
+      link: /guides/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/Andersseen/and-web-components
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Framework-agnostic" icon="puzzle">
+    Components are authored once with Stencil and compiled to standards-based
+    Custom Elements. Angular, React, and Vue wrappers are generated from that
+    same source — no parallel reimplementation to keep in sync.
+  </Card>
+  <Card title="Themeable" icon="setting">
+    Five built-in themes and five color palettes, driven entirely by CSS
+    custom properties. Swap a theme without touching component markup.
+  </Card>
+  <Card title="Accessible by default" icon="approve-check">
+    Keyboard models, focus traps, and ARIA wiring live once in the headless
+    core and are shared by every component built on top of it.
+  </Card>
+</CardGrid>
+
+<div style="margin-top: 2rem;" />
+
+## This is a work-in-progress base
+
+This docs site is an early skeleton (Starlight, dogfooding `@andersseen/astro`)
+covering **3 of 24+ components** as a preview of the format: generated API
+tables from each component's `readme.md` plus a hand-written usage example.
+See the [Button](/components/button/), [Alert](/components/alert/), and
+[Badge](/components/badge/) pages.
