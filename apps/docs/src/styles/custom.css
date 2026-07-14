@@ -19,13 +19,41 @@
    fixes this generically: CSS lets a later `@layer` statement insert a
    brand-new name ahead of an already-declared one, so this makes Starlight
    win every such collision, while <and-*> elements (which Starlight has no
-   opinion about at all) are unaffected either way. */
-@layer and-design-system, starlight.utils;
+   opinion about at all) are unaffected either way.
+
+   `@andersseen/layout` is the one exception that must go ABOVE Starlight, in
+   `and-layout-utils`. Unlike the packages above (whose stylesheets carry broad
+   `button`/`a`/`*` resets that collide with Starlight's own chrome), every
+   layout rule is an attribute selector — `[and-layout~='…']` / `[and-text~='…']`
+   — that only ever matches elements an author explicitly opted in, never
+   Starlight's DOM. Left in `and-design-system` (below `starlight.reset`), its
+   `p:*` / `m:*` utilities lose to Starlight's `* { margin: 0 }` reset and
+   silently do nothing; placing it in a layer after `starlight.utils` makes the
+   spacing utilities actually apply, with zero collateral on Starlight chrome. */
+@layer and-design-system, starlight.utils, and-layout-utils;
 
 @import '@andersseen/web-components/style.css' layer(and-design-system);
 @import '@andersseen/motion/style.css' layer(and-design-system);
-@import '@andersseen/layout' layer(and-design-system);
+@import '@andersseen/layout' layer(and-layout-utils);
 @import '@andersseen/vanilla-components/style.css' layer(and-design-system);
+
+/* @andersseen/layout's color utilities (`and-text="color:*"`, and the `caption`
+   preset) resolve through `--color-*` custom properties, but web-components'
+   palettes expose bare HSL triplets (e.g. `--primary: 243 75% 59%`) with no
+   `--color-` prefix — the exact gap the Layout page's color caution describes.
+   Bridge them here so the Layout color examples on this docs site render
+   truthfully; a standalone consumer combining the two packages must define the
+   same mapping. `muted` maps to the muted *foreground* so muted text stays
+   legible (that's what the `caption` preset is for). */
+:root {
+  --color-primary: hsl(var(--primary));
+  --color-secondary: hsl(var(--secondary));
+  --color-accent: hsl(var(--accent));
+  --color-muted: hsl(var(--muted-foreground, var(--muted)));
+  --color-destructive: hsl(var(--destructive));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+}
 
 .and-live-example {
   display: flex;

@@ -130,7 +130,10 @@ export default defineConfig({
         },
         {
           label: 'Layout',
-          items: [{ label: 'Overview', slug: 'layout/overview' }],
+          items: [
+            { label: 'Overview', slug: 'layout/overview' },
+            { label: 'Recipes', slug: 'layout/recipes' },
+          ],
         },
         {
           label: 'Behaviors',
