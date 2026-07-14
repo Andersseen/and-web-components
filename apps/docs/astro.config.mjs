@@ -2,6 +2,31 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import andersseen from '@andersseen/astro';
 
+// `@andersseen/astro` only registers web-components + icons (see its own
+// README). It doesn't know about `@andersseen/motion`, so the Motion docs'
+// live examples need their own tiny integration to run `initMotion()` on
+// every page, using the same `injectScript('page', ...)` mechanism the real
+// integration uses (a raw <script> in page content can't `import` a bare
+// module specifier like '@andersseen/motion' — that only resolves through
+// Vite). It also exposes `createMotionPlayer` as `window.andMotion` so a
+// plain content <script> (e.g. on the Imperative Player page) can call it
+// without needing its own module import.
+function motionInit() {
+  return {
+    name: 'motion-init',
+    hooks: {
+      'astro:config:setup': ({ injectScript }) => {
+        injectScript(
+          'page',
+          `import { initMotion, createMotionPlayer } from '@andersseen/motion';
+           window.andMotion = { createMotionPlayer };
+           initMotion();`,
+        );
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -67,8 +92,21 @@ export default defineConfig({
             { label: 'Tooltip', slug: 'components/tooltip' },
           ],
         },
+        {
+          // A second library's docs living alongside web-components — same
+          // page format (overview + live example + reference tables), its
+          // own top-level sidebar group. `@andersseen/motion` is framework-
+          // agnostic and usable standalone, so it isn't nested under
+          // Components.
+          label: 'Motion',
+          items: [
+            { label: 'Overview', slug: 'motion/overview' },
+            { label: 'Imperative Player', slug: 'motion/imperative-player' },
+          ],
+        },
       ],
     }),
     andersseen(),
+    motionInit(),
   ],
 });
