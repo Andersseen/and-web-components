@@ -1,0 +1,84 @@
+/* Components apply some Tailwind utility classes directly to their own
+   custom-element host (e.g. and-alert's `text-destructive` per variant).
+   Shadow DOM can't style the host via a plain `.class` selector from the
+   inside, so the library re-publishes those utilities at the document level
+   (see packages/web-components/src/global/document.css) — we need that full
+   stylesheet, not just the bare tokens, or per-variant colors silently stop
+   applying.
+
+   That stylesheet is Tailwind (base/utilities), which Tailwind v3 compiles
+   into real CSS cascade layers. Starlight declares its OWN layer order early
+   (`@layer starlight.base, starlight.reset, starlight.core, starlight.content,
+   starlight.components, starlight.utils;`) — since Starlight always loads
+   `customCss` last, any *unlayered* Tailwind rule from a plain `@import` would
+   land in an implicit final layer that beats every `starlight.*` layer
+   regardless of specificity (that's what broke the sidebar's active-item
+   text, the hero button, and the theme picker: all Starlight-owned elements
+   colliding with Tailwind's `button`/`select`/`a` resets and generated
+   utilities). Importing into a named layer placed BEFORE `starlight.utils`
+   fixes this generically: CSS lets a later `@layer` statement insert a
+   brand-new name ahead of an already-declared one, so this makes Starlight
+   win every such collision, while <and-*> elements (which Starlight has no
+   opinion about at all) are unaffected either way.
+
+   `@andersseen/layout` is the one exception that must go ABOVE Starlight, in
+   `and-layout-utils`. Unlike the packages above (whose stylesheets carry broad
+   `button`/`a`/`*` resets that collide with Starlight's own chrome), every
+   layout rule is an attribute selector — `[and-layout~='…']` / `[and-text~='…']`
+   — that only ever matches elements an author explicitly opted in, never
+   Starlight's DOM. Left in `and-design-system` (below `starlight.reset`), its
+   `p:*` / `m:*` utilities lose to Starlight's `* { margin: 0 }` reset and
+   silently do nothing; placing it in a layer after `starlight.utils` makes the
+   spacing utilities actually apply, with zero collateral on Starlight chrome. */
+@layer and-design-system, starlight.utils, and-layout-utils;
+
+@import '@andersseen/web-components/style.css' layer(and-design-system);
+@import '@andersseen/motion/style.css' layer(and-design-system);
+@import '@andersseen/layout' layer(and-layout-utils);
+@import '@andersseen/vanilla-components/style.css' layer(and-design-system);
+
+/* @andersseen/layout's color utilities (`and-text="color:*"`, and the `caption`
+   preset) resolve through `--color-*` custom properties, but web-components'
+   palettes expose bare HSL triplets (e.g. `--primary: 243 75% 59%`) with no
+   `--color-` prefix — the exact gap the Layout page's color caution describes.
+   Bridge them here so the Layout color examples on this docs site render
+   truthfully; a standalone consumer combining the two packages must define the
+   same mapping. `muted` maps to the muted *foreground* so muted text stays
+   legible (that's what the `caption` preset is for). */
+:root {
+  --color-primary: hsl(var(--primary));
+  --color-secondary: hsl(var(--secondary));
+  --color-accent: hsl(var(--accent));
+  --color-muted: hsl(var(--muted-foreground, var(--muted)));
+  --color-destructive: hsl(var(--destructive));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+}
+
+.and-live-example {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.5rem;
+  background: var(--sl-color-bg-sidebar);
+}
+
+/* Starlight's markdown content adds `margin-top` to flow siblings (0 on the
+   first, ~1rem on every following one). Inside a live example that leaks in
+   two ways: (a) the flex row is misaligned — the first item keeps 0 while the
+   rest are pushed down, so they no longer share a baseline and the box grows
+   taller than the content; (b) it reaches the light-DOM internals of scoped
+   components (e.g. and-select renders its trigger + chevron in light DOM, so
+   the absolutely-positioned chevron inherits the injected margin and drifts
+   out of the trigger). Spacing inside these examples comes from `gap` and each
+   component's own layout, never Starlight's flow-margins — so strip the
+   injected margin from every non-prose descendant. Prose elements (the body
+   copy a few modal/drawer demos contain) are excluded so their real spacing
+   stands. This rule is intentionally unlayered so it wins over Starlight's
+   layered content styles regardless of specificity. */
+.and-live-example *:not(p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, dl, dt, dd) {
+  margin-top: 0;
+}

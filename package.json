@@ -23,6 +23,9 @@
     "start:demo": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm clean:angular && NODE_OPTIONS=--max-old-space-size=8192 pnpm -C apps/angular-workspace start",
     "start:astro:dev": "pnpm build:stencil && pnpm build:motion && pnpm -C apps/astro-landing dev",
     "build:astro": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C apps/astro-landing build",
+    "start:docs:dev": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:behaviors && pnpm build:vanilla && pnpm -C apps/docs dev",
+    "build:docs": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:behaviors && pnpm build:vanilla && pnpm -C apps/docs build",
+    "test:docs": "pnpm -C apps/docs test",
     "test:headless": "pnpm -C packages/headless-core test",
     "test:behaviors": "pnpm -C packages/behaviors test",
     "deploy:cloudflare": "pnpm build:all && pnpm -C apps/angular-workspace exec wrangler pages deploy",
@@ -30,6 +33,9 @@
     "test:e2e:landing": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm -C apps/astro-landing test:e2e",
     "deploy:landing": "pnpm build:astro && pnpm -C apps/astro-landing exec wrangler pages deploy",
     "deploy:landing:actions": "pnpm build:astro && npx wrangler pages deploy apps/astro-landing/dist --project-name=and-web-components-landing",
+    "test:e2e:docs": "pnpm build:docs && pnpm -C apps/docs test:e2e",
+    "deploy:docs": "pnpm build:docs && pnpm -C apps/docs exec wrangler pages deploy",
+    "deploy:docs:actions": "pnpm build:docs && npx wrangler pages deploy apps/docs/dist --project-name=and-web-components-docs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build:stencil && pnpm build:motion && pnpm build:layout && pnpm build:vanilla && pnpm build:behaviors && pnpm build:angular && pnpm build:react && pnpm build:vue && changeset publish",
@@ -41,7 +47,7 @@
     "build-storybook": "pnpm -C packages/web-components build-storybook",
     "prepare": "husky",
     "deploy:storybook": "pnpm build-storybook && wrangler pages deploy packages/web-components/storybook-static --project-name=and-web-components-storybook",
-    "deploy:all": "pnpm deploy:storybook && pnpm deploy:landing && pnpm deploy:cloudflare"
+    "deploy:all": "pnpm deploy:storybook && pnpm deploy:landing && pnpm deploy:docs && pnpm deploy:cloudflare"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,json,md,scss,css,yaml,yml}": [

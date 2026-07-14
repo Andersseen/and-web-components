@@ -1,0 +1,34 @@
+{
+  "name": "@andersseen/docs",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@andersseen/astro": "workspace:*",
+    "@andersseen/behaviors": "workspace:*",
+    "@andersseen/headless-components": "workspace:*",
+    "@andersseen/icon": "workspace:*",
+    "@andersseen/layout": "workspace:*",
+    "@andersseen/motion": "workspace:*",
+    "@andersseen/vanilla-components": "workspace:*",
+    "@andersseen/web-components": "workspace:*",
+    "@astrojs/starlight": "^0.37.7",
+    "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.0"
+  }
+}

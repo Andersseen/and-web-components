@@ -1,0 +1,60 @@
+name: Deploy Docs to Cloudflare Pages
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build & Deploy Docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Ensure Cloudflare Pages project exists
+        run: |
+          PROJECT_NAME="and-web-components-docs"
+          HTTP_CODE=$(curl -s -o /tmp/cf-project-check.json -w "%{http_code}" \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${PROJECT_NAME}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
+          if [ "$HTTP_CODE" = "404" ]; then
+            echo "Creating Cloudflare Pages project: ${PROJECT_NAME}"
+            curl -s -o /tmp/cf-project-create.json -w "%{http_code}" \
+              -X POST \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"name\":\"${PROJECT_NAME}\",\"production_branch\":\"main\"}"
+            echo ""
+          elif [ "$HTTP_CODE" = "200" ]; then
+            echo "Cloudflare Pages project ${PROJECT_NAME} already exists."
+          else
+            echo "Unexpected response (${HTTP_CODE}) while checking project:"
+            cat /tmp/cf-project-check.json
+            exit 1
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Build & Deploy
+        run: pnpm deploy:docs:actions
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

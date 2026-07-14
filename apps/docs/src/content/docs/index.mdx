@@ -1,0 +1,61 @@
+---
+title: And Web Components
+description: Framework-agnostic UI component library — headless core, Stencil web components, and generated framework wrappers.
+template: splash
+hero:
+  tagline: One component core, built once as Custom Elements. Angular, React, and Vue wrappers generated from the same source.
+  actions:
+    - text: Getting Started
+      link: /guides/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/Andersseen/and-web-components
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Framework-agnostic" icon="puzzle">
+    Components are authored once with Stencil and compiled to standards-based
+    Custom Elements. Angular, React, and Vue wrappers are generated from that
+    same source — no parallel reimplementation to keep in sync.
+  </Card>
+  <Card title="Themeable" icon="setting">
+    Five built-in themes and five color palettes, driven entirely by CSS
+    custom properties. Swap a theme without touching component markup.
+  </Card>
+  <Card title="Accessible by default" icon="approve-check">
+    Keyboard models, focus traps, and ARIA wiring live once in the headless
+    core and are shared by every component built on top of it.
+  </Card>
+  <Card title="Zero lock-in" icon="rocket">
+    Every component is a plain Custom Element first. No build step or
+    framework at all? `@andersseen/vanilla-components` gives you the same
+    behavior with zero dependencies.
+  </Card>
+</CardGrid>
+
+<div style="margin-top: 2rem;" />
+
+## Status
+
+Every package in the stack has at least a base page now, each with a live
+example:
+
+- All 24 [`web-components`](/components/accordion/) components: overview,
+  live example, and property/event tables sourced from each component's
+  generated `readme.md` (or read directly from source for the handful of
+  compound components where Stencil's docs-readme output currently
+  collides — see the note on the [Accordion](/components/accordion/) page).
+- [Headless Core](/headless/overview/) (foundation tier), and the rest of
+  the product core — [Motion](/motion/overview/), [Icon](/icon/overview/),
+  [Layout](/layout/overview/), [Behaviors](/behaviors/overview/),
+  [Vanilla Components](/vanilla/overview/).
+- [Framework Adapters](/framework-adapters/astro/) — Astro, Angular, React,
+  Vue.
+
+Each of those has one overview page so far, not the full per-API depth the
+Components section has — expand as needed.
