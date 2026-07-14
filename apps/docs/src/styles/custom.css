@@ -1,9 +1,29 @@
-/* Loads the design tokens + component Shadow DOM styles so <and-*> elements
-   render correctly wherever they're used inside doc pages (live examples,
-   MDX components, etc). Starlight's own chrome uses its --sl-* variables and
-   is unaffected. */
-@import '@andersseen/web-components/style.css';
-@import '@andersseen/motion/style.css';
+/* Components apply some Tailwind utility classes directly to their own
+   custom-element host (e.g. and-alert's `text-destructive` per variant).
+   Shadow DOM can't style the host via a plain `.class` selector from the
+   inside, so the library re-publishes those utilities at the document level
+   (see packages/web-components/src/global/document.css) — we need that full
+   stylesheet, not just the bare tokens, or per-variant colors silently stop
+   applying.
+
+   That stylesheet is Tailwind (base/utilities), which Tailwind v3 compiles
+   into real CSS cascade layers. Starlight declares its OWN layer order early
+   (`@layer starlight.base, starlight.reset, starlight.core, starlight.content,
+   starlight.components, starlight.utils;`) — since Starlight always loads
+   `customCss` last, any *unlayered* Tailwind rule from a plain `@import` would
+   land in an implicit final layer that beats every `starlight.*` layer
+   regardless of specificity (that's what broke the sidebar's active-item
+   text, the hero button, and the theme picker: all Starlight-owned elements
+   colliding with Tailwind's `button`/`select`/`a` resets and generated
+   utilities). Importing into a named layer placed BEFORE `starlight.utils`
+   fixes this generically: CSS lets a later `@layer` statement insert a
+   brand-new name ahead of an already-declared one, so this makes Starlight
+   win every such collision, while <and-*> elements (which Starlight has no
+   opinion about at all) are unaffected either way. */
+@layer and-design-system, starlight.utils;
+
+@import '@andersseen/web-components/style.css' layer(and-design-system);
+@import '@andersseen/motion/style.css' layer(and-design-system);
 
 .and-live-example {
   display: flex;

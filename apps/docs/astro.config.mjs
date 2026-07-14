@@ -12,11 +12,25 @@ export default defineConfig({
       customCss: ['./src/styles/custom.css'],
       head: [
         {
-          // Design tokens (colors, spacing) are scoped under `[and-color]`/`[and-theme]`
-          // attribute selectors, not bare `:root` — see packages/web-components/src/global/palettes.css.
-          // Set a default palette before first paint so <and-*> components aren't unstyled black.
+          // Sets the default color palette, and mirrors Starlight's own
+          // light/dark toggle (`data-theme` on <html>) onto `and-mode` so
+          // <and-*> components track it too — see palettes.css, which scopes
+          // its dark values under `.dark`/`[and-mode='dark']`/`[data-mode='dark']`,
+          // not `data-theme`. Starlight persists <html> across client-router
+          // navigations, so one observer set up here covers the whole session.
           tag: 'script',
-          content: "document.documentElement.setAttribute('and-color', 'indigo-rose');",
+          content: `
+            (function () {
+              var root = document.documentElement;
+              root.setAttribute('and-color', 'indigo-rose');
+              var sync = function () {
+                var mode = root.getAttribute('data-theme');
+                if (mode === 'dark' || mode === 'light') root.setAttribute('and-mode', mode);
+              };
+              sync();
+              new MutationObserver(sync).observe(root, { attributeFilter: ['data-theme'] });
+            })();
+          `,
         },
       ],
       sidebar: [
