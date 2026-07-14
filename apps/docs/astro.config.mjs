@@ -121,6 +121,7 @@ export default defineConfig({
           items: [
             { label: 'Overview', slug: 'motion/overview' },
             { label: 'Imperative Player', slug: 'motion/imperative-player' },
+            { label: 'Recipes', slug: 'motion/recipes' },
           ],
         },
         {

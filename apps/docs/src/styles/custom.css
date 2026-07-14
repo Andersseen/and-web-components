@@ -37,3 +37,20 @@
   border-radius: 0.5rem;
   background: var(--sl-color-bg-sidebar);
 }
+
+/* Starlight's markdown content adds `margin-top` to flow siblings (0 on the
+   first, ~1rem on every following one). Inside a live example that leaks in
+   two ways: (a) the flex row is misaligned — the first item keeps 0 while the
+   rest are pushed down, so they no longer share a baseline and the box grows
+   taller than the content; (b) it reaches the light-DOM internals of scoped
+   components (e.g. and-select renders its trigger + chevron in light DOM, so
+   the absolutely-positioned chevron inherits the injected margin and drifts
+   out of the trigger). Spacing inside these examples comes from `gap` and each
+   component's own layout, never Starlight's flow-margins — so strip the
+   injected margin from every non-prose descendant. Prose elements (the body
+   copy a few modal/drawer demos contain) are excluded so their real spacing
+   stands. This rule is intentionally unlayered so it wins over Starlight's
+   layered content styles regardless of specificity. */
+.and-live-example *:not(p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, dl, dt, dd) {
+  margin-top: 0;
+}
