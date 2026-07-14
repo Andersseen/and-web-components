@@ -58,6 +58,24 @@ jobs:
       - name: Run motion tests
         run: pnpm -C packages/motion-core test
 
+      - name: Run behaviors tests
+        run: pnpm test:behaviors
+
+      - name: Run icon-library tests
+        run: pnpm -C packages/icon-library test
+
+      - name: Run layout-core tests
+        run: pnpm -C packages/layout-core test
+
+      - name: Run Angular wrapper tests
+        run: pnpm -C packages/angular-components test
+
+      - name: Run React wrapper tests
+        run: pnpm -C packages/react-components test
+
+      - name: Run Vue wrapper tests
+        run: pnpm -C packages/vue-components test
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:

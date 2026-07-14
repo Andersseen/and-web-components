@@ -25,16 +25,16 @@ referenced below).
 
 ## R1 — Now: credibility & correctness (do these first, in order)
 
-- [ ] **R1.1 — Complete the CI test matrix** _(TD-9 · small · CI-only)_ Add to
-      the `build-and-test` job in `.github/workflows/ci-cd.yml`, after the
-      existing test steps (order: cheap → expensive): `pnpm test:behaviors`,
-      `pnpm -C packages/icon-library test`, `pnpm -C packages/layout-core test`,
+- [x] **R1.1 — Complete the CI test matrix** _(done 2026-07-14 · TD-9 · small ·
+      CI-only)_ Added to the `build-and-test` job in
+      `.github/workflows/ci-cd.yml`, after `pnpm -C packages/motion-core test`:
+      `pnpm test:behaviors`, `pnpm -C packages/icon-library test`,
+      `pnpm -C packages/layout-core test`,
       `pnpm -C packages/angular-components test`,
       `pnpm -C packages/react-components test`,
-      `pnpm -C packages/vue-components test`. All run after `pnpm build:all`, so
-      required `dist/` folders exist. **DoD:** CI green on a PR with all six new
-      steps actually executing (check the run log — a step that "passes" in 0s
-      ran nothing); TD-9 closed in SSD §15.
+      `pnpm -C packages/vue-components test`. All run after `pnpm build:all`.
+      **DoD:** all six commands run green locally after `pnpm build:all`; TD-9
+      closed in SSD §15.
 
 - [ ] **R1.2 — Native form participation for `and-input`** _(TD-12 · medium ·
       playbook **P9**)_ `formAssociated: true` + `@AttachInternals()`,

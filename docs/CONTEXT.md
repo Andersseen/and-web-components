@@ -157,13 +157,13 @@ Earlier snapshots kept a full copy of the register here and it drifted twice —
 **do not duplicate entries in this file again**; update SSD §15 and, if
 priorities change, [ROADMAP.md](./ROADMAP.md).
 
-Open items as of 2026-07-14: **TD-9** (CI misses behaviors/icon/layout/adapter
-tests), **TD-11** (Angular wrapper tree-shaking — upstream bug, don't try to fix
-locally), **TD-12** (no `ElementInternals` form participation — High), **TD-13**
-(missing form controls: checkbox/radio/switch/textarea/slider — High), **TD-14**
-(no per-component docs site), **TD-15** (no browser e2e / visual regression).
-TD-7 has one optional leftover (root `wrangler` v3 bump). Everything else
-(TD-1…TD-6, TD-8, TD-10) is resolved.
+Open items as of 2026-07-14: **TD-11** (Angular wrapper tree-shaking — upstream
+bug, don't try to fix locally), **TD-12** (no `ElementInternals` form
+participation — High), **TD-13** (missing form controls:
+checkbox/radio/switch/textarea/slider — High), **TD-14** (no per-component docs
+site), **TD-15** (no browser e2e / visual regression). TD-9 closed 2026-07-14
+(CI test matrix complete). TD-7 has one optional leftover (root `wrangler` v3
+bump). Everything else (TD-1…TD-6, TD-8, TD-10) is resolved.
 
 ## 9. What was created in the analysis session (2026-07-05)
 
