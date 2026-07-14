@@ -12,6 +12,11 @@ Read these, in this order, before making changes:
 4. [docs/SSD.md](./docs/SSD.md) — full architecture spec, contracts, ADRs, and
    invariants (§13 is a self-check list).
 
+Starting a session without a specific task, or told to "continue the roadmap"?
+Read [docs/CONTEXT.md](./docs/CONTEXT.md) (verified repo snapshot — skips
+re-analysis) and pick the first unchecked item in
+[docs/ROADMAP.md](./docs/ROADMAP.md).
+
 Quick facts:
 
 - pnpm 10 monorepo (`packages/*`, `apps/*`). Node 22. Always `pnpm`, never
@@ -27,3 +32,5 @@ Quick facts:
 - Never edit generated files: `stencil-generated/**`, component `readme.md`,
   `src/components.d.ts`, `custom-elements.json`.
 - Releases go through Changesets (`pnpm changeset`); never publish directly.
+- Known debt lives ONLY in SSD §15 (TD-IDs); the prioritized backlog lives in
+  docs/ROADMAP.md. Don't fix TD items in unrelated PRs.

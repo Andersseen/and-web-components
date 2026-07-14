@@ -214,6 +214,68 @@ passes; `pnpm build:stencil` still succeeds.
 
 ---
 
+## P9 — Make a component form-associated (ElementInternals)
+
+**Scope:** let a Shadow DOM form control (`and-input`, `and-select`, and every
+future checkbox/radio/switch/textarea/slider) participate in native `<form>`
+submission, reset, disabling, and constraint validation. Tracked as **TD-12** in
+SSD §15. Supported natively since Stencil 4.5; the repo's `@stencil/core` 4.43.3
+has it — no dependency changes needed.
+
+1. In the component options set `formAssociated: true`:
+   `@Component({ tag: 'and-input', shadow: true, formAssociated: true })`, and
+   add `@AttachInternals() internals!: ElementInternals;` (import
+   `AttachInternals` from `@stencil/core`).
+2. Add a tiny guard helper in the component (mock-doc's `ElementInternals` is
+   partial, so call sites must no-op safely in spec tests):
+
+   ```ts
+   private setFormValue(value: string | null) {
+     this.internals?.setFormValue?.(value);
+   }
+   ```
+
+3. Call `this.setFormValue(initialValue)` in `componentWillLoad()` and again on
+   **every** value change (user input handler + `@Watch('value')`).
+4. Implicit submission: Enter inside the inner `<input>` does not bubble a
+   submit out of Shadow DOM. In the inner input's `keydown` handler:
+   `if (e.key === 'Enter') this.internals?.form?.requestSubmit();` (skip for
+   textarea-like controls).
+5. Validation: validity **rules** stay in the headless module; the component
+   only mirrors them:
+   `this.internals?.setValidity?.({ valueMissing: true }, message, innerInputEl)`
+   when invalid, `this.internals?.setValidity?.({})` when valid.
+6. Lifecycle callbacks on the component class:
+   - `formResetCallback()` → restore the default value and call `setFormValue`
+     with it.
+   - `formDisabledCallback(disabled: boolean)` → mirror into the disabled
+     prop/state (covers `<fieldset disabled>`).
+7. Vanilla equivalent (`packages/vanilla-components`): no Stencil decorators —
+   use `static formAssociated = true;` on the class and
+   `this.#internals = this.attachInternals();` in the constructor. Same guard
+   pattern, zero new dependencies.
+8. Spec test (`.spec.tsx`): assert the value handler calls the guard helper
+   (spy), and that `formResetCallback` restores defaults. Real `FormData` /
+   submit behavior cannot be proven in mock-doc — cover it with a Storybook
+   story containing a real `<form>` + submit button that prints
+   `JSON.stringify(Object.fromEntries(new FormData(form)))`.
+
+**Verify:**
+
+```bash
+pnpm build:stencil
+pnpm -C packages/web-components test:spec
+pnpm -C packages/web-components lint
+pnpm storybook   # open the new "In a form" story: submit, reset, fieldset-disabled
+```
+
+**Definition of Done:** component value appears in `new FormData(form)` under
+its `name`; Enter submits; `form.reset()` restores the default;
+`<fieldset disabled>` disables it; specs + lint + build pass; SSD §15 TD-12
+updated if this closes it.
+
+---
+
 ## Common failure modes and their real causes
 
 | Symptom                                                                | Real cause                                                                                                    | Fix                                                                            |
