@@ -1,0 +1,63 @@
+---
+title: Modal
+description:
+  Centered dialog with a focus trap, Escape-to-close, backdrop click, and focus
+  restoration on close.
+---
+
+Centered dialog (`role="dialog"`, `aria-modal="true"`) with a focus trap,
+Escape-to-close, backdrop click, and focus restoration on close. Renders nothing
+while closed.
+
+## Example
+
+<div class="and-live-example">
+  <and-button id="modal-trigger" variant="outline">Open modal</and-button>
+  <and-modal id="demo-modal">
+    <div style="padding: 1.5rem; max-width: 24rem;">
+      <h3 style="margin-top: 0;">Delete this item?</h3>
+      <p>This action can't be undone.</p>
+      <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <and-button id="modal-cancel" variant="outline">Cancel</and-button>
+        <and-button variant="destructive">Delete</and-button>
+      </div>
+    </div>
+  </and-modal>
+</div>
+
+<script>
+  const modalTrigger = document.getElementById('modal-trigger');
+  const demoModal = document.getElementById('demo-modal');
+  const modalCancel = document.getElementById('modal-cancel');
+  modalTrigger?.addEventListener('click', () => { demoModal.open = true; });
+  modalCancel?.addEventListener('click', () => { demoModal.open = false; });
+  demoModal?.addEventListener('andModalClose', () => { demoModal.open = false; });
+</script>
+
+```html
+<and-button id="modal-trigger">Open modal</and-button>
+<and-modal id="my-modal">
+  <div style="padding: 1.5rem;">
+    <h3>Delete this item?</h3>
+    <p>This action can't be undone.</p>
+  </div>
+</and-modal>
+
+<script>
+  modalTrigger.addEventListener('click', () => (myModal.open = true));
+  myModal.addEventListener('andModalClose', () => (myModal.open = false));
+</script>
+```
+
+## Properties
+
+| Property   | Attribute  | Description                                     | Type      | Default |
+| ---------- | ---------- | ----------------------------------------------- | --------- | ------- |
+| `animated` | `animated` | Whether to animate the modal entrance and exit. | `boolean` | `false` |
+| `open`     | `open`     | Whether the modal is open.                      | `boolean` | `false` |
+
+## Events
+
+| Event           | Description                       | Type                |
+| --------------- | --------------------------------- | ------------------- |
+| `andModalClose` | Emitted when the modal is closed. | `CustomEvent<void>` |

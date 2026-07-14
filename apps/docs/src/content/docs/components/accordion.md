@@ -1,0 +1,73 @@
+---
+title: Accordion
+description:
+  Vertically stacked collapsible sections, composed from and-accordion,
+  and-accordion-item, and-accordion-trigger and and-accordion-content.
+---
+
+Vertically stacked collapsible sections. Composed from four elements:
+`and-accordion` (the root), `and-accordion-item` (one trigger/content pair),
+`and-accordion-trigger`, and `and-accordion-content`. The root injects the
+shared expand/collapse logic into each item automatically — you don't wire
+anything yourself.
+
+## Example
+
+<div class="and-live-example" style="flex-direction: column; align-items: stretch; padding: 1rem 2rem;">
+  <and-accordion>
+    <and-accordion-item value="item-1">
+      <and-accordion-trigger>Is it accessible?</and-accordion-trigger>
+      <and-accordion-content>Yes — it uses `aria-expanded`, `aria-controls`, and a `role="region"` panel, all driven by the headless core.</and-accordion-content>
+    </and-accordion-item>
+    <and-accordion-item value="item-2">
+      <and-accordion-trigger>Can multiple items be open?</and-accordion-trigger>
+      <and-accordion-content>Only if you set `allow-multiple="true"` on the root — by default opening one item closes the others.</and-accordion-content>
+    </and-accordion-item>
+  </and-accordion>
+</div>
+
+```html
+<and-accordion allow-multiple="false">
+  <and-accordion-item value="item-1">
+    <and-accordion-trigger>Is it accessible?</and-accordion-trigger>
+    <and-accordion-content
+      >Yes — it uses aria-expanded, aria-controls, and a role="region"
+      panel.</and-accordion-content
+    >
+  </and-accordion-item>
+  <and-accordion-item value="item-2">
+    <and-accordion-trigger>Can multiple items be open?</and-accordion-trigger>
+    <and-accordion-content
+      >Only if you set allow-multiple="true" on the root.</and-accordion-content
+    >
+  </and-accordion-item>
+</and-accordion>
+```
+
+## Properties
+
+### `and-accordion` (root)
+
+| Property        | Attribute        | Description                                         | Type                         | Default      |
+| --------------- | ---------------- | --------------------------------------------------- | ---------------------------- | ------------ |
+| `allowMultiple` | `allow-multiple` | Allow multiple items to be expanded simultaneously. | `boolean`                    | `false`      |
+| `defaultValue`  | --               | Default expanded item values (JS property only).    | `string[]`                   | `undefined`  |
+| `orientation`   | `orientation`    | Orientation of the accordion.                       | `"horizontal" \| "vertical"` | `'vertical'` |
+| `disabled`      | `disabled`       | Whether the accordion is disabled.                  | `boolean`                    | `false`      |
+
+### `and-accordion-item`
+
+| Property   | Attribute  | Description                                                       | Type      | Default     |
+| ---------- | ---------- | ----------------------------------------------------------------- | --------- | ----------- |
+| `value`    | `value`    | Unique value identifying this item. Auto-generated if omitted.    | `string`  | `undefined` |
+| `disabled` | `disabled` | Whether this item is disabled (non-interactive, visually dimmed). | `boolean` | `false`     |
+
+<small>
+  Note: at the time of writing, the generated `readme.md` in
+  `packages/web-components/src/components/and-accordion/` documents
+  `and-accordion-trigger` instead of the root `and-accordion` — several
+  compound components share a directory and Stencil's docs-readme output
+  writes all of them to the same `readme.md` filename, so only the
+  last-processed one survives. The tables above come from reading
+  `and-accordion.tsx`/`and-accordion-item.tsx` directly.
+</small>
