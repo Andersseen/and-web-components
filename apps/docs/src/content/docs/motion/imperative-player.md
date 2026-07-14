@@ -27,6 +27,82 @@ This is the mechanism [`@andersseen/web-components`](/components/modal/) and
 `@andersseen/vanilla-components` use internally for the `animated` prop; use it
 directly if you're building your own component layer.
 
+## Options
+
+```ts
+createMotionPlayer(element, {
+  respectReducedMotion: true, // default
+  fillMode: 'both', // default
+});
+```
+
+| Option                 | Type                                            | Default  | Notes                                                                                                                                |
+| ---------------------- | ----------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `respectReducedMotion` | `boolean`                                       | `true`   | When the user prefers reduced motion, `play()` resolves immediately and skips the animation entirely — no separate code path needed. |
+| `fillMode`             | `'none' \| 'forwards' \| 'backwards' \| 'both'` | `'both'` | Forwarded to `animation-fill-mode`. `'both'` keeps the end-state applied after `animationend` and the start-state during any delay.  |
+
+## Methods
+
+| Method       | Signature                         | Notes                                                                                                                                                                                            |
+| ------------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `play(name)` | `(name: string) => Promise<void>` | Starts `name`, resolving on `animationend`. Calling `play()` again before that cancels the pending promise's wait and starts fresh — safe to call repeatedly (e.g. on rapid open/close toggles). |
+| `stop()`     | `() => void`                      | Cancels the current animation and clears all `and-motion*` attributes/inline styles, without destroying the player — you can call `play()` again afterward.                                      |
+| `destroy()`  | `() => void`                      | Same cleanup as `stop()`; call this when the element itself is being removed and you won't call `play()` again.                                                                                  |
+
+## Playing internal component tokens
+
+`play(name)` isn't limited to the
+[declarative catalog](/motion/overview/#animation-catalog) — it sets
+`animation-name: and-${name}` directly, so it can trigger **any**
+`@keyframes and-*` defined in `core.css`, including a smaller set of
+component-oriented tokens that have **no** `[and-motion="..."]` selector and
+therefore can't be triggered by the attribute at all:
+
+| Name                                           | Used by (internally)                                       |
+| ---------------------------------------------- | ---------------------------------------------------------- |
+| `fade-zoom-in` / `fade-zoom-out`               | [Modal](/components/modal/) open/close                     |
+| `slide-in-from-right` / `slide-out-to-right`   | [Drawer](/components/drawer/), [Toast](/components/toast/) |
+| `slide-in-from-left` / `slide-out-to-left`     | available, unused by a built-in component                  |
+| `slide-in-from-top` / `slide-out-to-top`       | available, unused by a built-in component                  |
+| `slide-in-from-bottom` / `slide-out-to-bottom` | available, unused by a built-in component                  |
+| `accordion-open` / `accordion-close`           | [Accordion](/components/accordion/) content panel          |
+| `spin`                                         | Button loading spinner                                     |
+| `rotate-180` / `rotate-180-reverse`            | Accordion trigger chevron                                  |
+
+`fade-in`/`fade-out` (from the main catalog) are also the entrance/exit used by
+[Dropdown](/components/dropdown/), [Tooltip](/components/tooltip/), and
+[Alert](/components/alert/) — the full entrance/exit map
+`@andersseen/web-components` wires per component:
+
+| Component | Entrance              | Exit                 |
+| --------- | --------------------- | -------------------- |
+| Modal     | `fade-zoom-in`        | `fade-zoom-out`      |
+| Drawer    | `slide-in-from-right` | `slide-out-to-right` |
+| Toast     | `slide-in-from-right` | `slide-out-to-right` |
+| Dropdown  | `fade-in`             | `fade-out`           |
+| Tooltip   | `fade-in`             | `fade-out`           |
+| Accordion | `fade-in`             | `fade-out`           |
+| Alert     | `fade-in`             | `fade-out`           |
+
+This map lives in `@andersseen/web-components`'s internal `utils/animation.ts`
+(not part of the public API — the table above is the useful part). If you're
+building a custom component that should feel consistent with the rest of the
+library, reuse the same names via your own `createMotionPlayer` call rather than
+inventing new keyframes:
+
+```ts
+import { createMotionPlayer } from '@andersseen/motion';
+
+const player = createMotionPlayer(myPanelElement);
+
+async function open() {
+  await player.play('slide-in-from-bottom');
+}
+async function close() {
+  await player.play('slide-out-to-bottom');
+}
+```
+
 ## Example
 
 <div class="and-live-example" style="flex-direction: column; align-items: flex-start;">
