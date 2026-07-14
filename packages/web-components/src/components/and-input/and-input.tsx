@@ -73,10 +73,13 @@ export class AndInput {
 
   private inputLogic!: InputReturn;
   private unsubscribe!: () => void;
+  private defaultValue: string = '';
+  private formEl: HTMLFormElement | null = null;
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    this.defaultValue = this.value;
     this.inputLogic = createInput({
       defaultValue: this.value,
       disabled: this.disabled,
@@ -92,8 +95,24 @@ export class AndInput {
     });
   }
 
+  // connectedCallback (unlike componentWillLoad) re-fires whenever the
+  // element is (re)inserted into the DOM, so it also catches the element
+  // being moved into a <form> after its first mount.
+  connectedCallback() {
+    // The inner <input> is a real light-DOM descendant of any wrapping
+    // <form> (see class doc comment), so FormData/required/Enter-to-submit
+    // already work natively with zero extra wiring. The one thing the
+    // browser's native form-reset algorithm can't do for us is notify this
+    // component: it resets the real <input>'s displayed value directly,
+    // bypassing our controlled render, which would otherwise re-stamp the
+    // stale value back in on the next state change.
+    this.formEl = this.el.closest('form');
+    this.formEl?.addEventListener('reset', this.handleFormReset);
+  }
+
   disconnectedCallback() {
     this.unsubscribe?.();
+    this.formEl?.removeEventListener('reset', this.handleFormReset);
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -109,6 +128,10 @@ export class AndInput {
   }
 
   /* ── Handlers ───────────────────────────────────────────────────── */
+
+  private handleFormReset = () => {
+    this.inputLogic?.actions.setValue(this.defaultValue);
+  };
 
   private handleInput = (ev: Event) => {
     const target = ev.target as HTMLInputElement;

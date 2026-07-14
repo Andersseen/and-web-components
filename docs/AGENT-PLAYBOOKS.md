@@ -214,13 +214,42 @@ passes; `pnpm build:stencil` still succeeds.
 
 ---
 
-## P9 — Make a component form-associated (ElementInternals)
+## P9 — Make a component form-associated
 
-**Scope:** let a Shadow DOM form control (`and-input`, `and-select`, and every
-future checkbox/radio/switch/textarea/slider) participate in native `<form>`
-submission, reset, disabling, and constraint validation. Tracked as **TD-12** in
-SSD §15. Supported natively since Stencil 4.5; the repo's `@stencil/core` 4.43.3
-has it — no dependency changes needed.
+**Scope:** let a form control participate in native `<form>` submission, reset,
+disabling, and constraint validation. Tracked as **TD-12** in SSD §15.
+
+**Step 0 — check the architecture first, before reaching for
+`ElementInternals`.** Two shapes exist in this repo and they need different
+fixes:
+
+- **Wraps a real native control in light DOM** (`scoped: true`, not
+  `shadow: true`) — e.g. `and-input`. The inner `<input>`/`<select>`/etc. is
+  already a genuine descendant of the wrapping `<form>` in the actual DOM tree,
+  so `FormData`, `required`/`pattern`/`type` constraint validation,
+  Enter-to-submit (implicit submission), and autofill **all already work
+  natively — do not add `shadow: true` or `ElementInternals`.** Doing so would
+  move the real control behind a shadow boundary (breaking the native behavior
+  you already have for free) and — since the host's `name` prop is usually
+  already reflected onto both the host **and** the inner control — risks the
+  same field submitting twice under one key once `setFormValue` is added on top.
+  Verified 2026-07-14 by driving `and-input` in a real browser (Playwright):
+  `FormData`, Enter-submit, and `<fieldset disabled>` all worked with zero
+  `ElementInternals` code. The one real gap for this shape: the browser's native
+  form-reset algorithm resets the real control's _displayed_ value directly,
+  without notifying the wrapping Stencil component, so its internal state and
+  next controlled render go stale. Fix: listen for the `reset` event on
+  `this.el.closest('form')` in `connectedCallback()` (not `componentWillLoad()`
+  — it must re-resolve if the element is later moved into a form), restore the
+  value captured at first `componentWillLoad()`, and remove the listener in
+  `disconnectedCallback()`. See `and-input.tsx` for the reference
+  implementation. Skip the rest of this playbook for this shape.
+- **Custom widget with no real nested form control** (e.g. `and-select`, which
+  renders a `<button>` + ARIA listbox, not a real `<select>`) — there is nothing
+  in the light DOM for `FormData` to find, so it genuinely needs
+  `shadow: true` + `@AttachInternals()`. Continue with steps 1-8 below.
+  Supported natively since Stencil 4.5; the repo's `@stencil/core` 4.43.3 has it
+  — no dependency changes needed.
 
 1. In the component options set `formAssociated: true`:
    `@Component({ tag: 'and-input', shadow: true, formAssociated: true })`, and

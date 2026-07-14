@@ -36,17 +36,29 @@ referenced below).
       **DoD:** all six commands run green locally after `pnpm build:all`; TD-9
       closed in SSD §15.
 
-- [ ] **R1.2 — Native form participation for `and-input`** _(TD-12 · medium ·
-      playbook **P9**)_ `formAssociated: true` + `@AttachInternals()`,
-      `setFormValue` on every value change, Enter → `form.requestSubmit()`,
-      `formResetCallback`, `formDisabledCallback`, "In a form" Storybook story.
-      **DoD:** per P9. Changeset: `minor` for `@andersseen/web-components`.
+- [x] **R1.2 — Native form participation for `and-input`** _(done 2026-07-14 ·
+      TD-12 · playbook **P9** step 0)_ Turned out `and-input` already uses light
+      DOM (`scoped: true`), so its inner `<input>` is a real descendant of the
+      wrapping `<form>` — `FormData`, `required` validation, and Enter-to-submit
+      already worked natively, verified live in a browser. `shadow: true` +
+      `ElementInternals` would have broken that (and risked double-submitting
+      the field, since `name` is reflected onto both host and inner input).
+      Implemented instead: a `reset` listener on `this.el.closest('form')`
+      (added in `connectedCallback`, removed in `disconnectedCallback`) so the
+      component's internal state resyncs after a native `form.reset()`. Added
+      spec tests + an "In a form" Storybook story (submit/reset, prints
+      `FormData`). P9 and TD-12 corrected to reflect this. **DoD:** met — see
+      P9. Changeset: `minor` for `@andersseen/web-components`.
 
 - [ ] **R1.3 — Native form participation for `and-select`** _(TD-12 · medium ·
-      playbook **P9**)_ Same as R1.2 minus implicit submission (no
-      Enter-to-submit for listbox-style controls). Closing this item closes
-      TD-12 for existing components; keep TD-12 noted as a requirement for
-      future controls.
+      playbook **P9** steps 1-8)_ Unlike `and-input`, `and-select` renders a
+      `<button>` + ARIA listbox with no real nested form control (confirmed
+      2026-07-14), so it genuinely needs the full `shadow: true` +
+      `@AttachInternals()` treatment — `setFormValue` on every value change,
+      `formResetCallback`, `formDisabledCallback`; no implicit Enter-to-submit
+      for listbox-style controls. Closing this item closes TD-12 for existing
+      components; keep TD-12/P9 step 0 as the required first check for future
+      controls.
 
 - [x] **R1.4 — Debt-register hygiene** _(done 2026-07-14)_ TD-4 marked resolved;
       TD-9 narrowed; TD-12…TD-15 added; CONTEXT §8 de-duplicated into a pointer;

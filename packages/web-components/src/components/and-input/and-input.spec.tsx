@@ -47,4 +47,44 @@ describe('and-input', () => {
 
     form.remove();
   });
+
+  it('restores its default value when the wrapping <form> is reset', async () => {
+    const { root, waitForChanges } = await render(<and-input name="email" value="a@b.com"></and-input>);
+
+    const form = root.ownerDocument.createElement('form');
+    form.appendChild(root);
+    root.ownerDocument.body.appendChild(form);
+
+    const input = root.querySelector('input') as HTMLInputElement;
+    input.value = 'changed@b.com';
+    input.dispatchEvent(new Event('input'));
+    await waitForChanges();
+    expect((root as HTMLAndInputElement).value).toBe('changed@b.com');
+
+    form.dispatchEvent(new Event('reset'));
+    await waitForChanges();
+
+    expect((root as HTMLAndInputElement).value).toBe('a@b.com');
+
+    form.remove();
+  });
+
+  it('stops listening for reset after being removed from the DOM', async () => {
+    const { root, waitForChanges } = await render(<and-input name="email" value="a@b.com"></and-input>);
+
+    const form = root.ownerDocument.createElement('form');
+    form.appendChild(root);
+    root.ownerDocument.body.appendChild(form);
+
+    root.remove();
+
+    const input = document.createElement('input');
+    form.appendChild(input);
+    input.value = 'noop';
+    // Dispatching reset after disconnection must not throw (listener removed).
+    expect(() => form.dispatchEvent(new Event('reset'))).not.toThrow();
+    await waitForChanges();
+
+    form.remove();
+  });
 });
