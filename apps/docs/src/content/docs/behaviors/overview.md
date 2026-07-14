@@ -36,11 +36,17 @@ attributes and wires up the corresponding behaviors.
 </script>
 ```
 
-`defineBehaviors({ observe: true })` uses a `MutationObserver` so elements added
-after the initial scan are wired up automatically — this docs site calls it
-once, globally, so any `and-*` attribute in a live example below just works.
+`defineBehaviors(options)` takes two options and returns a cleanup function:
 
-## Example
+| Option    | Type          | Default         | Notes                                                                                              |
+| --------- | ------------- | --------------- | -------------------------------------------------------------------------------------------------- |
+| `root`    | `HTMLElement` | `document.body` | Only elements inside this root are scanned.                                                        |
+| `observe` | `boolean`     | `false`         | Watch for later-added `[and-*]` elements with a `MutationObserver` and wire them up automatically. |
+
+This docs site calls `defineBehaviors({ observe: true })` once, globally, so
+every `and-*` attribute in the live examples below just works.
+
+## Tooltip
 
 <div class="and-live-example">
   <button and-tooltip="Saves your changes" and-tooltip-placement="top" style="padding: 0.5rem 1rem; border-radius: 0.375rem; border: 1px solid hsl(var(--border)); background: hsl(var(--background)); color: hsl(var(--foreground)); cursor: pointer;">Hover me</button>
@@ -52,21 +58,63 @@ once, globally, so any `and-*` attribute in a live example below just works.
 </button>
 ```
 
-## Imperative APIs
+## Splitter
 
-For advanced use cases, create and destroy behaviors manually. Import the whole
-surface or a per-behavior subpath for tighter tree-shaking:
+Two resizable panels separated by a draggable handle. Drag the divider, or focus
+it and use the arrow keys (`Home`/`End` jump to the min/max):
 
-```ts
-import { createSplitter } from '@andersseen/behaviors';
-import { createTooltip } from '@andersseen/behaviors/tooltip';
+<div class="and-live-example" style="display: block;">
+  <div and-splitter="horizontal" and-splitter-min="15" and-splitter-max="85" style="height: 8rem; border: 1px solid hsl(var(--border)); border-radius: 0.5rem; overflow: hidden;">
+    <div and-splitter-panel="primary" style="background: hsl(var(--muted)); color: hsl(var(--foreground)); display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">Primary</div>
+    <div and-splitter-handle style="width: 6px; background: hsl(var(--border));"></div>
+    <div and-splitter-panel="secondary" style="background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">Secondary</div>
+  </div>
+</div>
 
-const splitter = createSplitter(document.getElementById('splitter'), {
-  orientation: 'vertical',
-});
-// ...later
-splitter.destroy();
+```html
+<div
+  and-splitter="horizontal"
+  and-splitter-min="15"
+  and-splitter-max="85"
+  style="height: 8rem;"
+>
+  <div and-splitter-panel="primary">Primary</div>
+  <div and-splitter-handle style="width: 6px;"></div>
+  <div and-splitter-panel="secondary">Secondary</div>
+</div>
 ```
+
+The behavior applies its own flex sizing, cursor, and `role="separator"` — you
+only style the surfaces (backgrounds, the handle's width/color). The container
+needs a height for `horizontal`, since panels fill it.
+
+## Drag & drop (sortable)
+
+A `[and-drop-zone-sortable]` zone auto-reorders its `[and-draggable]` children
+on drop. Drag an item to a new position:
+
+<div class="and-live-example" style="display: block;">
+  <div and-drop-zone and-drop-zone-sortable style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <div and-draggable style="padding: 0.6rem 0.9rem; border-radius: 0.5rem; background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">🍎 Apple</div>
+    <div and-draggable style="padding: 0.6rem 0.9rem; border-radius: 0.5rem; background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">🍌 Banana</div>
+    <div and-draggable style="padding: 0.6rem 0.9rem; border-radius: 0.5rem; background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">🍒 Cherry</div>
+    <div and-draggable style="padding: 0.6rem 0.9rem; border-radius: 0.5rem; background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">🍇 Grape</div>
+  </div>
+</div>
+
+```html
+<div and-drop-zone and-drop-zone-sortable>
+  <div and-draggable>🍎 Apple</div>
+  <div and-draggable>🍌 Banana</div>
+  <div and-draggable>🍒 Cherry</div>
+</div>
+```
+
+:::note[Auto-reorder is a declarative-only convenience] The automatic DOM
+reordering is wired up by `defineBehaviors` when it sees
+`and-drop-zone-sortable`, **not** by `createDropZone` itself. Imperative
+`createDropZone(el, { sortable: true })` emits the `and-drop` event (with a
+`detail.index`) but leaves the actual re-insertion to you. :::
 
 ## Behaviors
 
@@ -104,6 +152,77 @@ trigger accept `and-dialog-position`, `and-dialog-backdrop`,
 `and-dialog-width`, `and-dialog-height`, `and-dialog-panel-class`,
 `and-dialog-backdrop-class`. Any `[and-dialog-close]` inside closes it. Focus is
 trapped (disabled/hidden controls skipped) and restored on close.
+
+## Imperative API reference
+
+Every behavior has a factory you can call directly — for when you build the DOM
+in code, or want a handle to control it. Each returns an instance with a
+`destroy()` (and usually `updateOptions`/`updateConfig`). Import from the root
+or a per-behavior subpath for tighter tree-shaking.
+
+### `createSplitter(container, options?)` → `SplitterInstance`
+
+| Option            | Type                         | Default        |
+| ----------------- | ---------------------------- | -------------- |
+| `orientation`     | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `minSize`         | `number` (%)                 | `0`            |
+| `maxSize`         | `number` (%)                 | `100`          |
+| `step`            | `number` (% per arrow key)   | `1`            |
+| `defaultPosition` | `number` (%)                 | `50`           |
+
+Instance: `container`, `controller`, `setPosition(percent)`,
+`updateOptions(partial)`, `destroy()`. `DEFAULT_SPLITTER_OPTIONS` is exported.
+
+### `createTooltip(element, config?)` → `TooltipInstance`
+
+| Option        | Type               | Default | Notes                                                       |
+| ------------- | ------------------ | ------- | ----------------------------------------------------------- |
+| `content`     | `string`           | `''`    | Also settable via the `and-tooltip` attribute.              |
+| `placement`   | `TooltipPlacement` | `'top'` | 12 values: `top`/`bottom`/`left`/`right` + `-start`/`-end`. |
+| `showDelay`   | `number` (ms)      | `200`   |                                                             |
+| `hideDelay`   | `number` (ms)      | `0`     |                                                             |
+| `offset`      | `number` (px)      | `8`     | Gap between anchor and tooltip.                             |
+| `disabled`    | `boolean`          | `false` |                                                             |
+| `interactive` | `boolean`          | `false` | Allow hovering onto the tooltip content.                    |
+
+Instance: `element`, `show()`, `hide()`, `updateOptions(partial)`, `destroy()`.
+`DEFAULT_TOOLTIP_CONFIG` is exported.
+
+### `createDialog(target, config?)` → `DialogRef`
+
+Opens `target` as a modal immediately. `DialogRef` is `{ close(), closed }`
+where `closed` is a `Promise<void>` that resolves when the dialog is dismissed.
+
+| Option                 | Type                                         | Default    |
+| ---------------------- | -------------------------------------------- | ---------- |
+| `position`             | `'center'\|'top'\|'bottom'\|'left'\|'right'` | `'center'` |
+| `backdrop`             | `boolean`                                    | `true`     |
+| `closeOnBackdropClick` | `boolean`                                    | `true`     |
+| `closeOnEscape`        | `boolean`                                    | `true`     |
+| `width` / `height`     | `string` (any CSS length)                    | —          |
+| `panelClass`           | `string \| string[]`                         | —          |
+| `backdropClass`        | `string \| string[]`                         | —          |
+
+```ts
+import { createDialog } from '@andersseen/behaviors/dialog';
+
+const dialog = createDialog(document.getElementById('panel'), {
+  position: 'right',
+});
+dialog.closed.then(() => console.log('dialog dismissed'));
+// dialog.close();
+```
+
+### `createDraggable(el, config?)` / `createDropZone(el, config?)`
+
+`createDraggable` config: `data?` (any value transferred on drag), `disabled?`,
+`handle?` (selector for a drag handle), `animationDuration?`. It sets
+`draggable="true"` and `cursor: grab`.
+
+`createDropZone` config: `accept?` (`string[]` of draggable types), `disabled?`,
+`sortable?`. Both instances expose `element`, `updateConfig(config)`, and
+`destroy()`. Also exported: `startDrag` / `endDrag` / `getDragState` for reading
+or driving the shared drag state directly.
 
 ## Accessibility
 
