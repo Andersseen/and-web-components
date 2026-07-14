@@ -3,24 +3,38 @@ import starlight from '@astrojs/starlight';
 import andersseen from '@andersseen/astro';
 
 // `@andersseen/astro` only registers web-components + icons (see its own
-// README). It doesn't know about `@andersseen/motion`, so the Motion docs'
-// live examples need their own tiny integration to run `initMotion()` on
-// every page, using the same `injectScript('page', ...)` mechanism the real
-// integration uses (a raw <script> in page content can't `import` a bare
-// module specifier like '@andersseen/motion' — that only resolves through
-// Vite). It also exposes `createMotionPlayer` as `window.andMotion` so a
-// plain content <script> (e.g. on the Imperative Player page) can call it
-// without needing its own module import.
-function motionInit() {
+// README) — it doesn't know about the other product-core packages this docs
+// site now also documents. Their live examples need this site's own tiny
+// integration to initialize them on every page, using the same
+// `injectScript('page', ...)` mechanism the real integration uses (a raw
+// <script> in page content can't `import` a bare module specifier like
+// '@andersseen/motion' — that only resolves through Vite):
+//   - `initMotion()` for the Motion pages' `[and-motion]` examples, plus
+//     `createMotionPlayer` exposed as `window.andMotion` so a plain content
+//     <script> (e.g. the Imperative Player page) can call it directly.
+//   - `defineBehaviors({ observe: true })` for the Behaviors page's
+//     `and-tooltip`/`and-splitter`/etc. attribute examples.
+//   - a side-effect import of `@andersseen/vanilla-components`, which
+//     self-registers its custom elements (`and-vanilla-button` etc.) on
+//     import — see packages/vanilla-components/src/index.ts.
+//   - `createButton`/`createAccordion` from `@andersseen/headless-components`
+//     exposed as `window.andHeadless`, so the Headless Core page can print
+//     its actual (unstyled, DOM-free) return value live.
+function productCoreInit() {
   return {
-    name: 'motion-init',
+    name: 'product-core-init',
     hooks: {
       'astro:config:setup': ({ injectScript }) => {
         injectScript(
           'page',
           `import { initMotion, createMotionPlayer } from '@andersseen/motion';
+           import { defineBehaviors } from '@andersseen/behaviors';
+           import { createButton, createAccordion } from '@andersseen/headless-components';
+           import '@andersseen/vanilla-components';
            window.andMotion = { createMotionPlayer };
-           initMotion();`,
+           window.andHeadless = { createButton, createAccordion };
+           initMotion();
+           defineBehaviors({ observe: true });`,
         );
       },
     },
@@ -93,20 +107,53 @@ export default defineConfig({
           ],
         },
         {
-          // A second library's docs living alongside web-components — same
-          // page format (overview + live example + reference tables), its
-          // own top-level sidebar group. `@andersseen/motion` is framework-
-          // agnostic and usable standalone, so it isn't nested under
-          // Components.
+          // Foundation tier (see root README's "Package Roles"): pure state
+          // machines/a11y logic, zero DOM, powers both web-components and
+          // vanilla-components internally.
+          label: 'Headless Core',
+          items: [{ label: 'Overview', slug: 'headless/overview' }],
+        },
+        {
+          // Everything below is "product core" (root README) — usable
+          // standalone, without web-components — each gets its own
+          // top-level group rather than nesting under Components.
           label: 'Motion',
           items: [
             { label: 'Overview', slug: 'motion/overview' },
             { label: 'Imperative Player', slug: 'motion/imperative-player' },
           ],
         },
+        {
+          label: 'Icon',
+          items: [{ label: 'Overview', slug: 'icon/overview' }],
+        },
+        {
+          label: 'Layout',
+          items: [{ label: 'Overview', slug: 'layout/overview' }],
+        },
+        {
+          label: 'Behaviors',
+          items: [{ label: 'Overview', slug: 'behaviors/overview' }],
+        },
+        {
+          label: 'Vanilla Components',
+          items: [{ label: 'Overview', slug: 'vanilla/overview' }],
+        },
+        {
+          // Framework adapters (root README tier): thin, mostly-generated
+          // wrappers around web-components, grouped together the same way
+          // the README groups them.
+          label: 'Framework Adapters',
+          items: [
+            { label: 'Astro', slug: 'framework-adapters/astro' },
+            { label: 'Angular', slug: 'framework-adapters/angular' },
+            { label: 'React', slug: 'framework-adapters/react' },
+            { label: 'Vue', slug: 'framework-adapters/vue' },
+          ],
+        },
       ],
     }),
     andersseen(),
-    motionInit(),
+    productCoreInit(),
   ],
 });

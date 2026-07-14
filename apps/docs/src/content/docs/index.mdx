@@ -42,10 +42,20 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## Status
 
-All 24 `web-components` components have a page: an overview, a live example,
-and property/event tables sourced from each component's generated
-`readme.md` (or read directly from source for the handful of compound
-components where Stencil's docs-readme output currently collides — see the
-note on the [Accordion](/components/accordion/) page). Framework-specific
-wrapper docs (Angular/React/Vue) and the headless-core/behaviors/motion/
-layout packages aren't covered yet.
+Every package in the stack has at least a base page now, each with a live
+example:
+
+- All 24 [`web-components`](/components/accordion/) components: overview,
+  live example, and property/event tables sourced from each component's
+  generated `readme.md` (or read directly from source for the handful of
+  compound components where Stencil's docs-readme output currently
+  collides — see the note on the [Accordion](/components/accordion/) page).
+- [Headless Core](/headless/overview/) (foundation tier), and the rest of
+  the product core — [Motion](/motion/overview/), [Icon](/icon/overview/),
+  [Layout](/layout/overview/), [Behaviors](/behaviors/overview/),
+  [Vanilla Components](/vanilla/overview/).
+- [Framework Adapters](/framework-adapters/astro/) — Astro, Angular, React,
+  Vue.
+
+Each of those has one overview page so far, not the full per-API depth the
+Components section has — expand as needed.

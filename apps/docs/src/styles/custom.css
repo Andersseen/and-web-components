@@ -24,6 +24,8 @@
 
 @import '@andersseen/web-components/style.css' layer(and-design-system);
 @import '@andersseen/motion/style.css' layer(and-design-system);
+@import '@andersseen/layout' layer(and-design-system);
+@import '@andersseen/vanilla-components/style.css' layer(and-design-system);
 
 .and-live-example {
   display: flex;

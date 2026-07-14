@@ -26,10 +26,10 @@ test.describe('Docs site basics', () => {
 
   test('motion section is reachable from the sidebar', async ({ page }) => {
     await page.goto('/guides/getting-started/');
-    // Scoped to the left nav — the page's own "On this page" TOC also has
-    // an "Overview" entry (its first heading anchor), which is otherwise
-    // ambiguous with the sidebar link of the same name.
-    await page.getByLabel('Main').getByRole('link', { name: 'Overview', exact: true }).click();
+    // Every product-core package's page is titled "Overview" (Motion, Icon,
+    // Layout, Behaviors, Vanilla Components all have one), so matching by
+    // link text is ambiguous — target the href instead.
+    await page.getByLabel('Main').locator('a[href="/motion/overview/"]').click();
     await expect(page).toHaveURL(/\/motion\/overview\/?$/);
     await expect(page.getByRole('heading', { name: 'Motion — Overview', level: 1 })).toBeVisible();
   });

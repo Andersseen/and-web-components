@@ -187,12 +187,24 @@ importers:
       '@andersseen/astro':
         specifier: workspace:*
         version: link:../../packages/astro
+      '@andersseen/behaviors':
+        specifier: workspace:*
+        version: link:../../packages/behaviors
+      '@andersseen/headless-components':
+        specifier: workspace:*
+        version: link:../../packages/headless-core
       '@andersseen/icon':
         specifier: workspace:*
         version: link:../../packages/icon-library
+      '@andersseen/layout':
+        specifier: workspace:*
+        version: link:../../packages/layout-core
       '@andersseen/motion':
         specifier: workspace:*
         version: link:../../packages/motion-core
+      '@andersseen/vanilla-components':
+        specifier: workspace:*
+        version: link:../../packages/vanilla-components
       '@andersseen/web-components':
         specifier: workspace:*
         version: link:../../packages/web-components

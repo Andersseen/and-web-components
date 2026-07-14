@@ -15,8 +15,12 @@
   },
   "dependencies": {
     "@andersseen/astro": "workspace:*",
+    "@andersseen/behaviors": "workspace:*",
+    "@andersseen/headless-components": "workspace:*",
     "@andersseen/icon": "workspace:*",
+    "@andersseen/layout": "workspace:*",
     "@andersseen/motion": "workspace:*",
+    "@andersseen/vanilla-components": "workspace:*",
     "@andersseen/web-components": "workspace:*",
     "@astrojs/starlight": "^0.37.7",
     "astro": "^5.7.10"
