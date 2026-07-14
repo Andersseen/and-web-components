@@ -45,6 +45,98 @@ documented API.
 @import '@andersseen/web-components/style.css';
 ```
 
+## A more complete example
+
+The same profile-form pattern as the [React](/framework-adapters/react/) and
+[Vue](/framework-adapters/vue/) pages — [Input](/components/input/),
+[Select](/components/select/), [Button](/components/button/), and an imperative
+[Toast](/components/toast/) call through a `ViewChild`:
+
+<div class="and-live-example" style="flex-direction: column; align-items: stretch;">
+  <div and-layout="vertical gap:sm" style="max-width: 22rem;">
+    <and-input id="ng-name" label="Display name" placeholder="Ada Lovelace" name="name"></and-input>
+    <and-select
+      id="ng-role"
+      label="Role"
+      placeholder="Choose a role"
+      options='[{"value":"admin","text":"Admin"},{"value":"editor","text":"Editor"},{"value":"viewer","text":"Viewer"}]'
+    ></and-select>
+    <and-button id="ng-save">Save changes</and-button>
+  </div>
+  <and-toast id="ng-toast" position="bottom-right"></and-toast>
+</div>
+
+<script>
+  document.getElementById('ng-save')?.addEventListener('click', () => {
+    const name = document.getElementById('ng-name').value || 'Unnamed';
+    const role = document.getElementById('ng-role').value || 'no role';
+    document.getElementById('ng-toast').present(`Saved ${name} as ${role}`, 'success', 3000);
+  });
+</script>
+
+_(Rendered above with the raw custom elements this docs site registers globally
+— the component below produces the same DOM through the Angular wrappers.)_
+
+```ts
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AndInput,
+  AndSelect,
+  AndButton,
+  AndToast,
+} from '@andersseen/angular-components';
+import type { HTMLAndToastElement } from '@andersseen/web-components';
+
+@Component({
+  selector: 'app-profile-form',
+  imports: [AndInput, AndSelect, AndButton, AndToast],
+  template: `
+    <div and-layout="vertical gap:sm" style="max-width: 22rem">
+      <and-input
+        label="Display name"
+        placeholder="Ada Lovelace"
+        [value]="name"
+        (andInputChange)="name = $event.detail"
+      ></and-input>
+      <and-select
+        label="Role"
+        placeholder="Choose a role"
+        [options]="roles"
+        [value]="role"
+        (andSelectChange)="role = $event.detail"
+      ></and-select>
+      <and-button (andButtonClick)="save()">Save changes</and-button>
+      <and-toast #toast position="bottom-right"></and-toast>
+    </div>
+  `,
+})
+export class ProfileFormComponent {
+  name = '';
+  role = '';
+  roles = [
+    { value: 'admin', text: 'Admin' },
+    { value: 'editor', text: 'Editor' },
+    { value: 'viewer', text: 'Viewer' },
+  ];
+
+  @ViewChild('toast', { read: ElementRef })
+  toastRef!: ElementRef<HTMLAndToastElement>;
+
+  save() {
+    this.toastRef.nativeElement.present(
+      `Saved ${this.name || 'Unnamed'} as ${this.role || 'no role'}`,
+      'success',
+      3000,
+    );
+  }
+}
+```
+
+`[options]` binds the array directly, same as React/Vue — the
+`ProxyCmp`-generated inputs are real property bindings, not attributes. Methods
+like `present()` aren't proxied either, so grab the native element with
+`{ read: ElementRef }` and call it off `.nativeElement`.
+
 ## Known limitation
 
 Angular's `ProxyCmp` decorator eagerly registers every custom element it wraps
