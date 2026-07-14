@@ -5,11 +5,12 @@ verified by reading the actual code, so a new session (possibly a smaller model)
 can start working immediately **without re-exploring the repo**. Trust these
 facts unless a file you open contradicts them; if it does, update this file.
 
-**Snapshot date:** 2026-07-08 · branch `main`, dirty (wrapper move + event
-rename in progress). **Companion docs:** [SSD.md](./SSD.md) (architecture spec)
-· [CODEMAP.md](./CODEMAP.md) (task→files) ·
-[AGENT-PLAYBOOKS.md](./AGENT-PLAYBOOKS.md) (recipes) · [PLAN.md](./PLAN.md)
-(phased work plan) · [../AGENTS.md](../AGENTS.md) (hard rules).
+**Snapshot date:** 2026-07-14 · branch `main`, clean. **Companion docs:**
+[SSD.md](./SSD.md) (architecture spec) · [CODEMAP.md](./CODEMAP.md) (task→files)
+· [AGENT-PLAYBOOKS.md](./AGENT-PLAYBOOKS.md) (recipes) ·
+[ROADMAP.md](./ROADMAP.md) (prioritized work plan) ·
+[../AGENTS.md](../AGENTS.md) (hard rules). (`PLAN.md` no longer exists — do not
+look for it.)
 
 ---
 
@@ -27,28 +28,33 @@ landing / demo).
 
 - pnpm `10.30.1` pinned via `packageManager` in root `package.json`. Workspace
   globs: `packages/*`, `apps/*` (**not** `apps/*/projects/*`).
-- Node 22 in all CI workflows. No `engines` field exists. README claims Node
-  18+.
+- Node 22 in all CI workflows. Root `package.json` declares
+  `"engines": { "node": ">=20" }`; README says Node v20+.
 - TypeScript 5.9, Stencil ^4.43, Vitest 4, Storybook 10 (with v8 leftovers, see
   §8), ESLint 10 flat config, Prettier 3, Husky + lint-staged (Prettier only),
   Changesets 2, wrangler ^3.99 (root devDep).
 
 ## 3. Packages (all verified from package.json files)
 
-| npm name                          | dir                           | version | notes                                                                            |
-| --------------------------------- | ----------------------------- | ------- | -------------------------------------------------------------------------------- | ------------------------ |
-| `@andersseen/headless-components` | `packages/headless-core`      | 0.1.2   | ESM+CJS via 2×tsc + `scripts/fix-esm-extensions.cjs`; per-module subpath exports |
-| `@andersseen/web-components`      | `packages/web-components`     | 0.0.8   | Stencil; deps: headless, icon, motion (workspace) + cva, clsx, tailwind-merge    |
-| `@andersseen/vanilla-components`  | `packages/vanilla-components` | 0.0.1   | zero production deps (hard rule); motion via dynamic import only                 |
-| `@andersseen/icon`                | `packages/icon-library`       | —       | 87 `export const` icons in `src/icons.ts` + `registry.ts`                        |
-| `@andersseen/motion`              | `packages/motion-core`        | —       | `MotionController`/`initMotion` + `createMotionPlayer`; `src/core.css`           |
-| `@andersseen/layout`              | `packages/layout-core`        | —       | pure SCSS → CSS, no JS                                                           |
-| `@andersseen/astro`               | `packages/astro`              | —       | integration injects registration scripts; options `components: 'all'             | string[]`, `icons: bool` |
-| `@andersseen/angular-components`  | `packages/angular-components` | 0.0.1   | Generated Angular standalone directives; first-class workspace package           |
-| `@andersseen/react-components`    | `packages/react-components`   | 0.0.1   | Generated React wrappers; first-class workspace package                          |
-| `@andersseen/vue-components`      | `packages/vue-components`     | 0.0.1   | Generated Vue 3 wrappers; first-class workspace package                          |
-| `@andersseen/astro-landing` (app) | `apps/astro-landing`          | private | Astro + Playwright e2e                                                           |
-| `angular-workspace` (app)         | `apps/angular-workspace`      | private | Angular CLI workspace: demo-app only (angular-components moved to packages)      |
+Versions below verified 2026-07-14; they drift fast — trust `package.json` over
+this column.
+
+| npm name                          | dir                           | version | notes                                                                                            |
+| --------------------------------- | ----------------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `@andersseen/headless-components` | `packages/headless-core`      | 0.1.3   | ESM+CJS via 2×tsc + `scripts/fix-esm-extensions.cjs`; per-module subpath exports                 |
+| `@andersseen/web-components`      | `packages/web-components`     | 0.2.0   | Stencil; deps: headless, icon, motion (workspace) + cva, clsx, tailwind-merge                    |
+| `@andersseen/vanilla-components`  | `packages/vanilla-components` | 0.1.0   | zero production deps (hard rule); motion via dynamic import only                                 |
+| `@andersseen/behaviors`           | `packages/behaviors`          | 0.1.0   | attribute-driven DOM behaviors (splitter, drag-drop, tooltip, dialog); zero production deps      |
+| `@andersseen/icon`                | `packages/icon-library`       | 0.0.3   | 87 `export const` icons in `src/icons.ts` + `registry.ts`                                        |
+| `@andersseen/motion`              | `packages/motion-core`        | 0.1.1   | `MotionController`/`initMotion` + `createMotionPlayer`; `src/core.css`                           |
+| `@andersseen/layout`              | `packages/layout-core`        | 0.0.1   | pure SCSS → CSS, no JS                                                                           |
+| `@andersseen/astro`               | `packages/astro`              | 0.0.1   | integration injects registration scripts; options `components: 'all' \| string[]`, `icons: bool` |
+| `@andersseen/angular-components`  | `packages/angular-components` | 0.2.0   | Generated Angular standalone directives; first-class workspace package                           |
+| `@andersseen/react-components`    | `packages/react-components`   | 0.2.0   | Generated React wrappers; first-class workspace package                                          |
+| `@andersseen/vue-components`      | `packages/vue-components`     | 0.2.0   | Generated Vue 3 wrappers; first-class workspace package                                          |
+| `@andersseen/skills`              | `packages/skills`             | 0.0.1   | installable AI agent skills + `and-skills` CLI; no build step                                    |
+| `@andersseen/astro-landing` (app) | `apps/astro-landing`          | private | Astro + Playwright e2e                                                                           |
+| `angular-workspace` (app)         | `apps/angular-workspace`      | private | Angular CLI workspace: demo-app only (angular-components moved to packages)                      |
 
 ## 4. Component inventory (verified by listing dirs)
 
@@ -143,35 +149,22 @@ landing / demo).
   `publish:web-components` scripts. The only publish path is Changesets via
   `release.yml`.
 
-## 8. Verified issues / debt (full register: SSD.md §15, TD-1…TD-10)
+## 8. Verified issues / debt
 
-1. **TD-4 (high):** ~~legacy publish scripts bypass Changesets~~ removed in
-   Phase 2.
-2. **TD-5 (high):** ~~`@andersseen/angular-components` outside workspace +
-   Changesets; publishing path undocumented.~~ Resolved in wrapper move session
-   (2026-07-08): moved to `packages/angular-components`, added React/Vue
-   wrappers, all built by `build:all` and released via Changesets.
-3. **TD-3 (high):** ~~test gaps listed in §6 for headless carousel/input/menu~~
-   covered in Phase 6; remaining gaps are Stencil specs and stories.
-4. **TD-7 (medium):** ~~`packages/web-components` devDeps mix Storybook 10 with
-   `@storybook/manager-api`/`@storybook/theming` v8; leftover `jest`,
-   `jest-cli`, `@types/jest`, `puppeteer`, `lit`~~ cleaned up in Phase 4 (kept
-   `lit`; root `wrangler@^3.99` bump remains optional).
-5. **TD-1/TD-2 (medium):** ~~README table and DEPLOYMENT.md drift~~ fixed in
-   Phase 3.
-6. **TD-6 (low):** tracked `.DS_Store` (root + `packages/`), `.DS_Store` not
-   gitignored; one-off codemods `migrate-store.mjs`, `refactor-stories.mjs` at
-   repo root; local clutter `debug-storybook.log`, `storybook-static/`,
-   `playwright-report/` (ignored, untracked).
-7. **TD-8 (medium):** no root `LICENSE` (only
-   `packages/web-components/LICENSE`), no `CONTRIBUTING.md`, no `engines`.
-8. **TD-9 (medium):** ~~CI missing vanilla/motion tests; pre-commit is
-   Prettier-only~~ fixed in Phase 5.
-9. **TD-10 (low):** ~~event naming inconsistent.~~ Resolved in wrapper move
-   session (2026-07-08): all events now follow `and<Component><Action>`
-   (`andButtonClick`, `andModalClose`, `andInputChange`, etc.). Ambiguous legacy
-   names (`andInput`, `andBlur`, `andClose`, `navItemClick`, `navLinkClick`,
-   `tabTriggerClick`, etc.) were renamed and all references updated.
+**Single source of truth:**
+[SSD.md §15](./SSD.md#15-known-gaps-and-technical-debt-register) (TD-1…TD-15).
+Earlier snapshots kept a full copy of the register here and it drifted twice —
+**do not duplicate entries in this file again**; update SSD §15 and, if
+priorities change, [ROADMAP.md](./ROADMAP.md).
+
+Open items as of 2026-07-14: **TD-11** (Angular wrapper tree-shaking — upstream
+bug, don't try to fix locally), **TD-12** (`and-select` still needs
+`ElementInternals` form participation — High; `and-input` resolved, see P9 step
+0), **TD-13** (missing form controls: checkbox/radio/switch/textarea/slider —
+High), **TD-14** (no per-component docs site), **TD-15** (no browser e2e /
+visual regression). TD-9 closed 2026-07-14 (CI test matrix complete). TD-7 has
+one optional leftover (root `wrangler` v3 bump). Everything else (TD-1…TD-6,
+TD-8, TD-10) is resolved.
 
 ## 9. What was created in the analysis session (2026-07-05)
 
@@ -198,16 +191,18 @@ landing / demo).
 
 ## 11. Session log (append one line per work session)
 
-| Date       | Session did                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Phases touched |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| 2026-07-05 | Full repo analysis; created SSD/CODEMAP/PLAYBOOKS/CLAUDE.md/CONTEXT/PLAN                                                                                                                                                                                                                                                                                                                                                                                                                                 | —              |
-| 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores                                                                                                                                                                                                                                                                                                                                                                                               | 1              |
-| 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md                                                                                                                                                                                                                                                                                                                                                                                                 | 2              |
-| 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                                                                                                                                                                                                                                                                                                                                                                                                               | 3              |
-| 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit                                                                                                                                                                                                                                                                                                                                                                                                    | 4              |
-| 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                                                                                                                                                                                                                                                                                                                                                                                                               | 5              |
-| 2026-07-05 | Phase 6: added headless tests for carousel, input, menu; 19/19 modules covered                                                                                                                                                                                                                                                                                                                                                                                                                           | 6              |
-| 2026-07-05 | Phase 7: added Stencil specs for badge, breadcrumb, card, pagination                                                                                                                                                                                                                                                                                                                                                                                                                                     | 7              |
-| 2026-07-05 | Phase 8: added Stencil specs for carousel, context-menu, menu-list; skeleton story; fixed carousel clamping                                                                                                                                                                                                                                                                                                                                                                                              | 8              |
-| 2026-07-08 | Wrapper architecture: moved Angular to packages/angular-components; added React/Vue wrappers; renamed all events to `and<Component><Action>`; updated docs, CI, and lint config                                                                                                                                                                                                                                                                                                                          | 9, 10          |
-| 2026-07-13 | Fase 1 stabilization: fixed `packages/angular-components` test script (added vitest + public-API smoke test); cleaned 4 lint warnings (motion-player curly, icon registry `any`, navbar/sidebar `no-useless-assignment`); corrected stale `apps/angular-workspace/projects/angular-components` path refs and 23→24 component counts in AGENTS.md/CODEMAP.md/SSD.md/CONTEXT.md; added SSD.md §1.1 "Positioning" and README "Package Roles" sections explaining product core / foundation / adapters tiers | 1              |
+| Date       | Session did                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Phases touched |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| 2026-07-05 | Full repo analysis; created SSD/CODEMAP/PLAYBOOKS/CLAUDE.md/CONTEXT/PLAN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | —              |
+| 2026-07-05 | Phase 1: removed tracked .DS_Store and codemods; added LICENSE, CONTRIBUTING.md, engines, prettier ignores                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 1              |
+| 2026-07-05 | Phase 2: removed legacy publish:headless / publish:web-components scripts; updated SSD.md and CONTEXT.md                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | 2              |
+| 2026-07-05 | Phase 3: synced README and DEPLOYMENT.md with repo reality                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 3              |
+| 2026-07-05 | Phase 4: removed Storybook v8 deps and unused test frameworks; deleted deprecated e2e tests; kept lit                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 4              |
+| 2026-07-05 | Phase 5: added vanilla/motion tests to CI; aligned AGENTS.md with Prettier-only pre-commit                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 5              |
+| 2026-07-05 | Phase 6: added headless tests for carousel, input, menu; 19/19 modules covered                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 6              |
+| 2026-07-05 | Phase 7: added Stencil specs for badge, breadcrumb, card, pagination                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 7              |
+| 2026-07-05 | Phase 8: added Stencil specs for carousel, context-menu, menu-list; skeleton story; fixed carousel clamping                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 8              |
+| 2026-07-08 | Wrapper architecture: moved Angular to packages/angular-components; added React/Vue wrappers; renamed all events to `and<Component><Action>`; updated docs, CI, and lint config                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 9, 10          |
+| 2026-07-13 | Fase 1 stabilization: fixed `packages/angular-components` test script (added vitest + public-API smoke test); cleaned 4 lint warnings (motion-player curly, icon registry `any`, navbar/sidebar `no-useless-assignment`); corrected stale `apps/angular-workspace/projects/angular-components` path refs and 23→24 component counts in AGENTS.md/CODEMAP.md/SSD.md/CONTEXT.md; added SSD.md §1.1 "Positioning" and README "Package Roles" sections explaining product core / foundation / adapters tiers                                                                                                                                                          | 1              |
+| 2026-07-14 | Docs maintenance + planning: marked TD-4 resolved and narrowed TD-9 to the real remaining CI gaps; added TD-12…TD-15 to SSD §15 (form participation, missing form controls, docs site, browser e2e/visual tests); replaced CONTEXT §8 duplicate register with pointer to SSD §15; refreshed §2 engines fact and §3 package versions, added behaviors/skills rows; created docs/ROADMAP.md; added playbook P9 (form-associated components) to AGENT-PLAYBOOKS.md; linked ROADMAP from CLAUDE.md                                                                                                                                                                    | —              |
+| 2026-07-14 | R1.1: added behaviors/icon-library/layout-core/Angular/React/Vue test steps to `ci-cd.yml`, closing TD-9. R1.2: found (verified live in a browser) that `and-input` already had native form participation via its light-DOM `scoped: true` architecture, so implementing P9's Shadow DOM + `ElementInternals` as originally written would have broken working behavior and risked duplicate `FormData` entries; fixed the real gap instead (resync on native `form.reset()`), added a "In a form" story, and corrected P9/TD-12/ROADMAP to document the light-DOM-vs-custom-widget distinction for future form controls; TD-12 stays open for `and-select` (R1.3) | —              |
