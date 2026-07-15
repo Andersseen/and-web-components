@@ -42,7 +42,7 @@ recipes: [AGENT-PLAYBOOKS.md](./AGENT-PLAYBOOKS.md). Hard rules:
 | `@andersseen/icon`                | `packages/icon-library`                    | TS lib                | `pnpm build:icons`                       |
 | `@andersseen/motion`              | `packages/motion-core`                     | TS lib + CSS          | `pnpm build:motion`                      |
 | `@andersseen/layout`              | `packages/layout-core`                     | SCSS → CSS            | `pnpm build:layout`                      |
-| `@andersseen/astro`               | `packages/astro`                           | Astro integration     | (tsc via package script)                 |
+| `@andersseen/astro`               | `packages/astro`                           | Astro integration     | `pnpm build:astro-integration`           |
 | `@andersseen/angular-components`  | `packages/angular-components`              | Generated Angular lib | `pnpm build:angular`                     |
 | — (app)                           | `apps/angular-workspace/projects/demo-app` | Angular app           | `pnpm build:angular`                     |
 | — (app)                           | `apps/astro-landing`                       | Astro site            | `pnpm build:astro`                       |
