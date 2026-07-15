@@ -6,14 +6,13 @@ description:
 ---
 
 Common layouts composed only from [`and-layout`](/layout/overview/) and
-[`and-text`](/layout/overview/#and-text-reference) tokens — no custom CSS, no
-JavaScript. Every example below is live; resize the window to see the responsive
-ones respond.
+[`and-text`](/layout/typography/) tokens — no custom CSS, no JavaScript. Every
+example below is live; resize the window to see the responsive ones respond.
 
 ## Center a block
 
 `m-x:auto` on a width-constrained block centers it horizontally — the spacing
-scale's [`auto` value](/layout/overview/#spacing) resolves to `margin: auto`:
+scale's [`auto` value](/layout/spacing/#scale) resolves to `margin: auto`:
 
 <div class="and-live-example" style="display: block;">
   <div and-layout="m-x:auto p:md" style="max-width: 20rem; background: hsl(var(--muted)); border-radius: 0.5rem; text-align: center;">
