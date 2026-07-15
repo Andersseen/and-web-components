@@ -12,8 +12,11 @@ import andersseen from '@andersseen/astro';
 //   - `initMotion()` for the Motion pages' `[and-motion]` examples, plus
 //     `createMotionPlayer` exposed as `window.andMotion` so a plain content
 //     <script> (e.g. the Imperative Player page) can call it directly.
-//   - `defineBehaviors({ observe: true })` for the Behaviors page's
-//     `and-tooltip`/`and-splitter`/etc. attribute examples.
+//   - `defineBehaviors({ observe: true })` for the Behaviors pages'
+//     `and-tooltip`/`and-splitter`/etc. attribute examples, plus the
+//     `create*` factories exposed as `window.andBehaviors` so each behavior's
+//     "Imperative API" section (and the Recipes page) can call them directly
+//     (same reasoning as `window.andMotion`).
 //   - a side-effect import of `@andersseen/vanilla-components`, which
 //     self-registers its custom elements (`and-vanilla-button` etc.) on
 //     import — see packages/vanilla-components/src/index.ts.
@@ -28,11 +31,12 @@ function productCoreInit() {
         injectScript(
           'page',
           `import { initMotion, createMotionPlayer } from '@andersseen/motion';
-           import { defineBehaviors } from '@andersseen/behaviors';
+           import { defineBehaviors, createSplitter, createTooltip, createDialog, createDraggable, createDropZone } from '@andersseen/behaviors';
            import { createButton, createAccordion } from '@andersseen/headless-components';
            import '@andersseen/vanilla-components';
            window.andMotion = { createMotionPlayer };
            window.andHeadless = { createButton, createAccordion };
+           window.andBehaviors = { createSplitter, createTooltip, createDialog, createDraggable, createDropZone };
            initMotion();
            defineBehaviors({ observe: true });`,
         );
@@ -137,7 +141,14 @@ export default defineConfig({
         },
         {
           label: 'Behaviors',
-          items: [{ label: 'Overview', slug: 'behaviors/overview' }],
+          items: [
+            { label: 'Overview', slug: 'behaviors/overview' },
+            { label: 'Splitter', slug: 'behaviors/splitter' },
+            { label: 'Tooltip', slug: 'behaviors/tooltip' },
+            { label: 'Dialog', slug: 'behaviors/dialog' },
+            { label: 'Drag & Drop', slug: 'behaviors/drag-drop' },
+            { label: 'Recipes', slug: 'behaviors/recipes' },
+          ],
         },
         {
           label: 'Vanilla Components',
