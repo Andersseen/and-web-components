@@ -136,6 +136,10 @@ export default defineConfig({
           label: 'Layout',
           items: [
             { label: 'Overview', slug: 'layout/overview' },
+            { label: 'Flex', slug: 'layout/flex' },
+            { label: 'Grid', slug: 'layout/grid' },
+            { label: 'Spacing', slug: 'layout/spacing' },
+            { label: 'Typography', slug: 'layout/typography' },
             { label: 'Recipes', slug: 'layout/recipes' },
           ],
         },

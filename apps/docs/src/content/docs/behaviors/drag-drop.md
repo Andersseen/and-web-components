@@ -25,11 +25,14 @@ on drop. Drag an item to a new position:
 </div>
 ```
 
-:::note[Auto-reorder is a declarative-only convenience] The automatic DOM
-reordering is wired up by `defineBehaviors` when it sees
+:::note[Auto-reorder is a declarative-only convenience]
+
+The automatic DOM reordering is wired up by `defineBehaviors` when it sees
 `and-drop-zone-sortable`, **not** by `createDropZone` itself. Imperative
 `createDropZone(el, { sortable: true })` emits the `and-drop` event (with a
-`detail.index`) but leaves the actual re-insertion to you. :::
+`detail.index`) but leaves the actual re-insertion to you.
+
+:::
 
 Dragging between two different sortable zones works the same way, purely from
 markup — see
