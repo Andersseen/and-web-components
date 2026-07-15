@@ -6,9 +6,11 @@ description:
   disabled control, and a promise-based confirm dialog.
 ---
 
-Practical patterns combining the [declarative attributes](/behaviors/overview/)
-and the [imperative factories](/behaviors/imperative-api/) — grounded in the
-real engine, no extra helper library.
+Practical patterns combining the declarative attributes and imperative factories
+documented on the [Splitter](/behaviors/splitter/),
+[Tooltip](/behaviors/tooltip/), [Dialog](/behaviors/dialog/), and
+[Drag & Drop](/behaviors/drag-drop/) pages — grounded in the real engine, no
+extra helper library.
 
 ## Cross-list drag & drop
 

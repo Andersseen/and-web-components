@@ -46,25 +46,11 @@ button.queries.isDisabled(); // derived boolean
 button.handleClick(event); // event handler (guards disabled/loading)
 ```
 
-`getButtonProps()` returns exactly what a UI layer spreads onto its element —
-for a button that's:
-
-```jsonc
-{
-  "type": "button",
-  "disabled": false,
-  "tabindex": 0,
-  "aria-disabled": false,
-  "aria-busy": false,
-  "data-state": "active",
-  "data-disabled": false,
-}
-```
-
 Method names vary per component (a dropdown has `getTriggerProps()` /
 `getMenuProps()` / `handleKeyDown()`, tabs has `getTabProps(id)`, etc.), but the
 five buckets — `state`, `subscribe`, `actions`, `queries`, prop-getters +
-handlers — are consistent across all of them.
+handlers — are consistent across all of them. See each factory's own page for
+its exact shape.
 
 ## Reactivity: `subscribe`
 
@@ -120,43 +106,40 @@ just the plain object a UI layer would spread onto its own `<button>`:
 
 ## Available factories
 
-Eighteen component factories, each powering the matching styled component in
-`@andersseen/web-components`. Import from the package root or a per-component
-subpath (`@andersseen/headless-components/button`).
+Seventeen component factories, each with its own page: full config, state,
+actions/queries, prop-getters, and a live demo. Import from the package root or
+a per-component subpath (`@andersseen/headless-components/button`).
 
-| Factory               | Powers                                                                         |
-| --------------------- | ------------------------------------------------------------------------------ |
-| `createButton`        | [Button](/components/button/)                                                  |
-| `createAccordion`     | [Accordion](/components/accordion/)                                            |
-| `createTabs`          | [Tabs](/components/tabs/)                                                      |
-| `createDropdown`      | [Dropdown](/components/dropdown/)                                              |
-| `createModal`         | [Modal](/components/modal/)                                                    |
-| `createDrawer`        | [Drawer](/components/drawer/)                                                  |
-| `createTooltip`       | [Tooltip](/components/tooltip/)                                                |
-| `createToastManager`  | [Toast](/components/toast/)                                                    |
-| `createInput`         | [Input](/components/input/)                                                    |
-| `createSelect`        | [Select](/components/select/)                                                  |
-| `createAlert`         | [Alert](/components/alert/)                                                    |
-| `createNavbar`        | [Navbar](/components/navbar/)                                                  |
-| `createSidebar`       | [Sidebar](/components/sidebar/)                                                |
-| `createBreadcrumb`    | [Breadcrumb](/components/breadcrumb/)                                          |
-| `createCarousel`      | [Carousel](/components/carousel/)                                              |
-| `createMenuList`      | [Menu List](/components/menu-list/)                                            |
-| `createContextMenu`   | [Context Menu](/components/context-menu/)                                      |
-| `createMenuSelection` | shared menu-disclosure logic (internal to dropdown / menu-list / context-menu) |
+| Factory              | Page                                    | Powers                                    |
+| -------------------- | --------------------------------------- | ----------------------------------------- |
+| `createButton`       | [Button](/headless/button/)             | [Button](/components/button/)             |
+| `createAccordion`    | [Accordion](/headless/accordion/)       | [Accordion](/components/accordion/)       |
+| `createTabs`         | [Tabs](/headless/tabs/)                 | [Tabs](/components/tabs/)                 |
+| `createDropdown`     | [Dropdown](/headless/dropdown/)         | [Dropdown](/components/dropdown/)         |
+| `createModal`        | [Modal](/headless/modal/)               | [Modal](/components/modal/)               |
+| `createDrawer`       | [Drawer](/headless/drawer/)             | [Drawer](/components/drawer/)             |
+| `createTooltip`      | [Tooltip](/headless/tooltip/)           | [Tooltip](/components/tooltip/)           |
+| `createToastManager` | [Toast](/headless/toast/)               | [Toast](/components/toast/)               |
+| `createInput`        | [Input](/headless/input/)               | [Input](/components/input/)               |
+| `createSelect`       | [Select](/headless/select/)             | [Select](/components/select/)             |
+| `createAlert`        | [Alert](/headless/alert/)               | [Alert](/components/alert/)               |
+| `createNavbar`       | [Navbar](/headless/navbar/)             | [Navbar](/components/navbar/)             |
+| `createSidebar`      | [Sidebar](/headless/sidebar/)           | [Sidebar](/components/sidebar/)           |
+| `createBreadcrumb`   | [Breadcrumb](/headless/breadcrumb/)     | [Breadcrumb](/components/breadcrumb/)     |
+| `createCarousel`     | [Carousel](/headless/carousel/)         | [Carousel](/components/carousel/)         |
+| `createMenuList`     | [Menu List](/headless/menu-list/)       | [Menu List](/components/menu-list/)       |
+| `createContextMenu`  | [Context Menu](/headless/context-menu/) | [Context Menu](/components/context-menu/) |
+
+Plus [`createMenuSelection`](/headless/primitives/#createmenuselection) — shared
+menu-disclosure logic factored out of Dropdown and Context Menu, covered on the
+Primitives page rather than getting its own.
 
 ## Primitives
 
-Alongside the component factories, the package exports the low-level building
-blocks they're made of:
-
-| Export                             | What it is                                                                                                           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `StateStore` / `createStore`       | The reactive core — a tiny `setState`/`subscribe` store. Freezes snapshots and only notifies on actual change.       |
-| `createMachine`                    | A finite state-machine primitive (`states`, `on` transitions, `guards`, `effects`) for modelling more complex flows. |
-| `createIdGenerator`                | Collision-free id helper for wiring `aria-controls` / `aria-labelledby`.                                             |
-| `Keys` / `KeyboardKey`             | Named keyboard constants (`Keys.Enter`, `Keys.ArrowDown`, …) used by the keyboard handlers.                          |
-| `AriaAttributes`, `DataAttributes` | The shared prop-getter return types (`aria-*` and `data-state`/`data-disabled`/`data-orientation`).                  |
+Alongside the factories above, the package exports the low-level building blocks
+they're made of — `StateStore`, `createMachine`, `createIdGenerator`, `Keys`,
+and the shared `AriaAttributes`/`DataAttributes` prop-getter types. See
+[Primitives](/headless/primitives/) for the full reference.
 
 ```ts
 import { createStore } from '@andersseen/headless-components';
@@ -233,3 +216,8 @@ export class ButtonComponent implements OnInit {
   }
 }
 ```
+
+## Next steps
+
+[Primitives](/headless/primitives/), then any factory page above for its full
+reference.

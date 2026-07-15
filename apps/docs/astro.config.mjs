@@ -20,9 +20,10 @@ import andersseen from '@andersseen/astro';
 //   - a side-effect import of `@andersseen/vanilla-components`, which
 //     self-registers its custom elements (`and-vanilla-button` etc.) on
 //     import — see packages/vanilla-components/src/index.ts.
-//   - `createButton`/`createAccordion` from `@andersseen/headless-components`
-//     exposed as `window.andHeadless`, so the Headless Core page can print
-//     its actual (unstyled, DOM-free) return value live.
+//   - every `create*` factory from `@andersseen/headless-components` exposed
+//     as `window.andHeadless`, so each Headless Core page (Overview + one
+//     per factory) can print its actual (unstyled, DOM-free) return value
+//     live, and call its actions from a demo button.
 function productCoreInit() {
   return {
     name: 'product-core-init',
@@ -32,10 +33,20 @@ function productCoreInit() {
           'page',
           `import { initMotion, createMotionPlayer } from '@andersseen/motion';
            import { defineBehaviors, createSplitter, createTooltip, createDialog, createDraggable, createDropZone } from '@andersseen/behaviors';
-           import { createButton, createAccordion } from '@andersseen/headless-components';
+           import {
+             createButton, createAccordion, createTabs, createDropdown, createModal, createDrawer,
+             createTooltip as createHeadlessTooltip, createToastManager, createInput, createSelect,
+             createAlert, createNavbar, createSidebar, createBreadcrumb, createCarousel, createMenuList,
+             createContextMenu,
+           } from '@andersseen/headless-components';
            import '@andersseen/vanilla-components';
            window.andMotion = { createMotionPlayer };
-           window.andHeadless = { createButton, createAccordion };
+           window.andHeadless = {
+             createButton, createAccordion, createTabs, createDropdown, createModal, createDrawer,
+             createTooltip: createHeadlessTooltip, createToastManager, createInput, createSelect,
+             createAlert, createNavbar, createSidebar, createBreadcrumb, createCarousel, createMenuList,
+             createContextMenu,
+           };
            window.andBehaviors = { createSplitter, createTooltip, createDialog, createDraggable, createDropZone };
            initMotion();
            defineBehaviors({ observe: true });`,
@@ -115,7 +126,27 @@ export default defineConfig({
           // machines/a11y logic, zero DOM, powers both web-components and
           // vanilla-components internally.
           label: 'Headless Core',
-          items: [{ label: 'Overview', slug: 'headless/overview' }],
+          items: [
+            { label: 'Overview', slug: 'headless/overview' },
+            { label: 'Primitives', slug: 'headless/primitives' },
+            { label: 'Button', slug: 'headless/button' },
+            { label: 'Accordion', slug: 'headless/accordion' },
+            { label: 'Tabs', slug: 'headless/tabs' },
+            { label: 'Dropdown', slug: 'headless/dropdown' },
+            { label: 'Modal', slug: 'headless/modal' },
+            { label: 'Drawer', slug: 'headless/drawer' },
+            { label: 'Tooltip', slug: 'headless/tooltip' },
+            { label: 'Toast', slug: 'headless/toast' },
+            { label: 'Input', slug: 'headless/input' },
+            { label: 'Select', slug: 'headless/select' },
+            { label: 'Alert', slug: 'headless/alert' },
+            { label: 'Navbar', slug: 'headless/navbar' },
+            { label: 'Sidebar', slug: 'headless/sidebar' },
+            { label: 'Breadcrumb', slug: 'headless/breadcrumb' },
+            { label: 'Carousel', slug: 'headless/carousel' },
+            { label: 'Menu List', slug: 'headless/menu-list' },
+            { label: 'Context Menu', slug: 'headless/context-menu' },
+          ],
         },
         {
           // Everything below is "product core" (root README) — usable
@@ -157,6 +188,10 @@ export default defineConfig({
         {
           label: 'Vanilla Components',
           items: [{ label: 'Overview', slug: 'vanilla/overview' }],
+        },
+        {
+          label: 'Skills',
+          items: [{ label: 'Overview', slug: 'skills/overview' }],
         },
         {
           // Framework adapters (root README tier): thin, mostly-generated
