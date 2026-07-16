@@ -154,25 +154,38 @@ component fallback list; TD-16 marked resolved in SSD §15; no changeset.
 
 ## F2 — `and-select` native form participation (R1.3, closes TD-12)
 
-- [ ] Status
+- [x] Status — done 2026-07-16
 
-Follow **ROADMAP R1.3 verbatim** — it is fully specified there and in playbook
-**P9 steps 1–8**. Summary: unlike `and-input` (light DOM, already participates),
-`and-select` renders a `<button>` + ARIA listbox with no real nested form
-control, so it needs `shadow: true` + `@AttachInternals()`: `setFormValue` on
-every value change, `formResetCallback`, `formDisabledCallback`; **no** implicit
-Enter-to-submit for listbox-style controls. Add spec tests + an "In a form"
-story (mirror the `and-input` one from R1.2).
+**The plan text below was wrong and is kept only as a record of what NOT to
+assume.** It said `and-select` renders a `<button>` + ARIA listbox with no real
+nested form control, so it needs `shadow: true` + `@AttachInternals()`. Reading
+`and-select.tsx` (and verifying live in a browser) showed it already renders
+`scoped: true` (light DOM) with a hidden `<input type="hidden">` mirroring
+`value` — the same shape as `and-input`, already covered by P9 step 0's first
+bullet. Implementing the shadow-DOM rewrite as originally written would have
+broken the working `FormData` mechanism. The actual gap: native `form.reset()`
+was a complete no-op (Stencil re-stamps the hidden input's `value` attribute on
+every selection, dragging its reset-default along with it), fixed with the same
+`reset`-listener pattern as `and-input`, plus a new headless `setSelectedValue`
+action for the "reset to no selection" case. See ROADMAP R1.3 and
+AGENT-PLAYBOOKS P9 for the corrected, detailed writeup — both updated as part of
+this phase. Added spec tests + an "In a form" Storybook story
+(submit/reset/fieldset-disabled).
 
-**Verification:** `pnpm lint` · `pnpm build:stencil` ·
-`pnpm -C packages/web-components test:spec` · manual browser check via Storybook
-(form submit includes the value; `form.reset()` resyncs; `fieldset[disabled]`
-disables it).
+**Verification:** `pnpm -C packages/headless-core test` · `pnpm build:stencil` ·
+`pnpm -C packages/web-components test:spec` · `pnpm lint` — all green. Manually
+verified in a real browser via Playwright (not just Storybook): built
+`dist/index.js`, drove a live form — confirmed `FormData` included the value,
+confirmed `form.reset()` was broken before the fix and correct after, confirmed
+`<fieldset disabled>` already disabled the trigger natively (Playwright itself
+refused to click it).
 
 **DoD:** ROADMAP R1.3 DoD; TD-12 closed in SSD §15 (keep the "P9 step 0 first"
-rule for future controls); changeset `minor` for `@andersseen/web-components`;
-update `apps/docs/src/content/docs/components/select.md` prose to mention form
-support.
+rule for future controls — this is the second confirmed case of the light-DOM
+shape); changeset `minor` for `@andersseen/web-components` **and**
+`@andersseen/headless-components`;
+`apps/docs/src/content/docs/components/select.mdx` prose updated to mention
+`form.reset()` / `fieldset[disabled]` support.
 
 ---
 

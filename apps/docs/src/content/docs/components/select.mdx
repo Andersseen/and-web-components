@@ -14,7 +14,10 @@ mirrors `value` when `name` is set.
 Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: that hidden
 input is a real descendant of whatever `<form>` wraps this component, so it
 actually shows up in `FormData` on submit — inside a Shadow DOM it would be
-invisible to the enclosing form.
+invisible to the enclosing form. Native `form.reset()` restores the original
+default value and `<fieldset disabled>` disables the trigger automatically —
+both work with zero extra wiring, since the trigger and hidden input are real
+form-associated elements.
 
 `options` accepts either a real array or a JSON string — each option is
 `{ value: string; text: string; disabled?: boolean }` — so it works directly as

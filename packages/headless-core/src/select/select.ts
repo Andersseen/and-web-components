@@ -65,6 +65,7 @@ export interface SelectReturn {
     highlightLast: () => void;
     selectHighlighted: () => void;
     selectValue: (value: string) => void;
+    setSelectedValue: (value: string | null) => void;
     setDisabled: (disabled: boolean) => void;
     setOptions: (options: SelectOption[]) => void;
   };
@@ -232,6 +233,18 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
     if (idx >= 0) {
       selectIndex(idx);
     }
+  };
+
+  // Unlike selectValue, this doesn't require a matching option — needed to
+  // restore a native <form> reset back to "no selection" (an empty default),
+  // which selectValue can't express since it no-ops when nothing matches.
+  const setSelectedValue = (value: string | null) => {
+    if (store.state.selectedValue === value) {
+      return;
+    }
+    const idx = findIndex(value);
+    store.setState({ selectedValue: value, highlightedIndex: idx });
+    config.onValueChange?.(value ?? '');
   };
 
   /* ── Open / Close ──────────────────────────────────────────────── */
@@ -417,6 +430,7 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
       highlightLast,
       selectHighlighted,
       selectValue,
+      setSelectedValue,
       setDisabled,
       setOptions,
     },

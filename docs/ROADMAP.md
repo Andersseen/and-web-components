@@ -50,15 +50,31 @@ referenced below).
       `FormData`). P9 and TD-12 corrected to reflect this. **DoD:** met — see
       P9. Changeset: `minor` for `@andersseen/web-components`.
 
-- [ ] **R1.3 — Native form participation for `and-select`** _(TD-12 · medium ·
-      playbook **P9** steps 1-8)_ Unlike `and-input`, `and-select` renders a
-      `<button>` + ARIA listbox with no real nested form control (confirmed
-      2026-07-14), so it genuinely needs the full `shadow: true` +
-      `@AttachInternals()` treatment — `setFormValue` on every value change,
-      `formResetCallback`, `formDisabledCallback`; no implicit Enter-to-submit
-      for listbox-style controls. Closing this item closes TD-12 for existing
-      components; keep TD-12/P9 step 0 as the required first check for future
-      controls.
+- [x] **R1.3 — Native form participation for `and-select`** _(done 2026-07-16 ·
+      TD-12 · playbook **P9** step 0)_ The 2026-07-14 note above was wrong:
+      verified by reading `and-select.tsx` (and confirmed live in a browser via
+      Playwright) that it already renders `scoped: true` (light DOM) with a
+      hidden `<input type="hidden">` mirroring `value` — the same shape as
+      `and-input`, not the "custom widget with no real nested form control"
+      shape. `shadow: true` + `ElementInternals` was never needed and would have
+      broken the working `FormData` mechanism. `<fieldset disabled>` already
+      works natively too (verified: the trigger `<button>` picks up real
+      browser-level disabled inheritance, `:disabled` CSS applies, clicks are
+      suppressed — confirmed by Playwright itself refusing to click it). The one
+      genuine gap, and it's worse than `and-input`'s: Stencil re-stamps the
+      hidden input's `value` **attribute** on every selection change, which
+      drags its native reset-default along with it, so `form.reset()` was a
+      complete no-op (restored the _last selected_ value, not the true default)
+      — verified live before the fix. Fixed with the same "listen for `reset` on
+      `this.el.closest('form')`" pattern as `and-input` (P9 step 0), plus a new
+      `setSelectedValue` headless action (unlike `selectValue`, it doesn't
+      require a matching option, needed to restore "no selection"). Added spec
+      tests + an "In a form" Storybook story (submit/reset/fieldset- disabled).
+      Changeset: `minor` for `@andersseen/web-components` and
+      `@andersseen/headless-components`. Closes TD-12 for existing components;
+      keep TD-12/P9 step 0 as the required first check for future controls —
+      this is now the _second_ time assuming the shadow-DOM shape without
+      checking the actual code would have been wrong.
 
 - [x] **R1.4 — Debt-register hygiene** _(done 2026-07-14)_ TD-4 marked resolved;
       TD-9 narrowed; TD-12…TD-15 added; CONTEXT §8 de-duplicated into a pointer;

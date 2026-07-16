@@ -15,7 +15,10 @@ import { selectVariants } from './and-select-variants';
  * Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: that
  * hidden input is a real descendant of whatever `<form>` wraps this
  * component, so it actually shows up in `FormData` on submit — inside a
- * Shadow DOM it would be invisible to the enclosing form.
+ * Shadow DOM it would be invisible to the enclosing form. A `reset` listener
+ * on the wrapping `<form>` restores the original default on native
+ * `form.reset()` (see `connectedCallback`) — needed because the mirror
+ * input's own reset default drifts to whatever was last selected.
  *
  * @example
  * ```html
@@ -44,6 +47,8 @@ export class AndSelect {
   private prevHighlightedIndex = -1;
   private prevIsOpen = false;
   private unsubscribe?: () => void;
+  private defaultValue: string = '';
+  private formEl: HTMLFormElement | null = null;
 
   /** Options rendered in the select menu. Can be an array or a JSON string. */
   @Prop() options: SelectOption[] | string = [];
@@ -89,6 +94,7 @@ export class AndSelect {
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
+    this.defaultValue = this.value;
     this.selectLogic = createSelect({
       options: this.resolvedOptions,
       defaultValue: this.value || undefined,
@@ -127,8 +133,23 @@ export class AndSelect {
     });
   }
 
+  // connectedCallback (unlike componentWillLoad) re-fires whenever the
+  // element is (re)inserted into the DOM, so it also catches the element
+  // being moved into a <form> after its first mount.
+  connectedCallback() {
+    // The hidden mirror <input> (see render()) is a real light-DOM descendant
+    // of any wrapping <form>, so FormData already sees it. But it doesn't fix
+    // native form.reset() on its own: Stencil re-stamps that input's `value`
+    // attribute on every selection change, which drags its own reset default
+    // along with it — so a native reset restores the *last selected* value,
+    // not the true original default. Force it back ourselves.
+    this.formEl = this.el.closest('form');
+    this.formEl?.addEventListener('reset', this.handleFormReset);
+  }
+
   disconnectedCallback() {
     this.unsubscribe?.();
+    this.formEl?.removeEventListener('reset', this.handleFormReset);
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -185,6 +206,10 @@ export class AndSelect {
     } else {
       this.selectLogic.handleTriggerKeyDown(event);
     }
+  };
+
+  private handleFormReset = () => {
+    this.selectLogic?.actions.setSelectedValue(this.defaultValue || null);
   };
 
   /* ── Menu control ───────────────────────────────────────────────── */
