@@ -79,6 +79,9 @@ jobs:
       - name: Run docs app tests
         run: pnpm test:docs
 
+      - name: Build Astro integration
+        run: pnpm build:astro-integration
+
       - name: Build docs app
         run: pnpm -C apps/docs build
 

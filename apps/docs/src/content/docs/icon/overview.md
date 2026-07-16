@@ -88,10 +88,10 @@ reference (`name`, `size`, `color`, `stroke-width`).
 Every icon currently registered on this page (all <span id="icon-count">…</span>
 of them). Filter by name:
 
-<div class="and-live-example" style="flex-direction: column; align-items: stretch; gap: 1rem;">
-  <input id="icon-search" type="search" placeholder="Filter icons…" autocomplete="off" spellcheck="false" style="padding: 0.5rem 0.75rem; border: 1px solid hsl(var(--border)); border-radius: 0.5rem; background: hsl(var(--background)); color: hsl(var(--foreground)); max-width: 20rem;" />
-  <div id="icon-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem;"></div>
-  <p id="icon-empty" style="display: none; margin: 0; color: hsl(var(--muted-foreground));">No icons match that filter.</p>
+<div class="and-live-example icon-gallery-example">
+  <input id="icon-search" class="icon-gallery-search" type="search" placeholder="Filter icons…" autocomplete="off" spellcheck="false" />
+  <div id="icon-grid" class="icon-gallery-grid"></div>
+  <p id="icon-empty" class="icon-gallery-empty">No icons match that filter.</p>
 </div>
 
 <script>
@@ -104,20 +104,12 @@ of them). Filter by name:
     const countEl = document.getElementById('icon-count');
     if (countEl) countEl.textContent = String(names.length);
 
-    const cellStyle = [
-      'display: flex', 'flex-direction: column', 'align-items: center',
-      'gap: 0.4rem', 'padding: 0.75rem 0.5rem', 'border-radius: 0.5rem',
-      'border: 1px solid hsl(var(--border))', 'background: hsl(var(--background))',
-      'color: hsl(var(--foreground))', 'text-align: center',
-    ].join('; ');
-    const labelStyle = 'font-size: 0.7rem; color: hsl(var(--muted-foreground)); word-break: break-word; line-height: 1.2;';
-
     grid.innerHTML = names
       .map(
         n =>
-          '<div class="icon-cell" data-name="' + n + '" style="' + cellStyle + '">' +
+          '<div class="icon-cell" data-name="' + n + '">' +
           '<and-icon name="' + n + '" size="22"></and-icon>' +
-          '<span style="' + labelStyle + '">' + n + '</span></div>',
+          '<span>' + n + '</span></div>',
       )
       .join('');
 

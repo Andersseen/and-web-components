@@ -82,3 +82,55 @@
 .and-live-example *:not(p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, dl, dt, dd) {
   margin-top: 0;
 }
+
+.icon-gallery-example {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.icon-gallery-search {
+  max-width: 20rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.icon-gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.icon-cell {
+  display: flex;
+  flex: 1 1 6.75rem;
+  min-height: 5.75rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  text-align: center;
+}
+
+.icon-cell span {
+  max-width: 100%;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.7rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.icon-gallery-empty {
+  display: none;
+  margin: 0;
+  color: hsl(var(--muted-foreground));
+}
