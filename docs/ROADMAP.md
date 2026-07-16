@@ -82,10 +82,26 @@ referenced below).
 
 ## R2 — Next: close the adoption gaps
 
-- [ ] **R2.1 — `and-switch`** _(TD-13 · playbooks P1 → P2, form-associated per
-      P9 from day one)_ Headless module first
-      (`packages/headless-core/src/switch/`), then Stencil component. Smallest
-      of the missing form controls — establishes the pattern the rest will copy.
+- [x] **R2.1 — `and-switch`** _(done 2026-07-16 · TD-13 · playbooks P1 → P2 +
+      P9)_ Headless module first (`packages/headless-core/src/switch/`,
+      `createSwitch`), then the Stencil component. **P9 step 0 check paid off
+      again** (third time in a row): rather than assuming the "no nestable
+      native control surface" path from P9's original note, built it around a
+      real `<input type="checkbox" role="switch">` in light DOM (`scoped: true`,
+      like `and-input`/`and-select`) — the visible track/thumb are two sibling
+      `<span>`s styled purely via Tailwind `peer-checked:`/`peer-disabled:`/
+      `peer-focus-visible:` variants keyed off the checkbox's own native state,
+      and wrapping everything in a `<label>` gives click-to-toggle for free.
+      Verified live in a browser via Playwright: `FormData` includes/excludes
+      the value correctly on checked/unchecked, `form.reset()` restores the
+      default (same `reset`-listener pattern as `and-input`/`and-select`),
+      `<fieldset disabled>` disables it natively, and Space toggles it when
+      focused — all with zero `ElementInternals` code. Added spec tests + an "In
+      a form" Storybook story + a docs page (`apps/docs/.../switch.mdx`). Also
+      added the durable "docs page + sidebar entry" requirement to playbook P2
+      (step 9) so F4–F7 don't have to be told separately. Smallest of the
+      missing form controls — establishes the pattern the rest (checkbox, radio,
+      slider) should try first before assuming `ElementInternals`.
 - [ ] **R2.2 — `and-checkbox`** _(TD-13 · P1 → P2 + P9; include indeterminate
       state in the headless model)_
 - [ ] **R2.3 — `and-textarea`** _(TD-13 · P2 + P9; reuse the `input` headless

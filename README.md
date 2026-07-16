@@ -305,6 +305,7 @@ import '@andersseen/motion/style.css';
 | Select       | `and-select`       | Dropdown selection                                       |
 | Sidebar      | `and-sidebar`      | Collapsible side navigation                              |
 | Skeleton     | `and-skeleton`     | Loading placeholders                                     |
+| Switch       | `and-switch`       | Boolean on/off toggle, native form participation         |
 | Tabs         | `and-tabs`         | Tabbed content switching                                 |
 | Toast        | `and-toast`        | Notification messages                                    |
 | Tooltip      | `and-tooltip`      | Info popups on hover/focus                               |

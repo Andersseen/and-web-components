@@ -98,6 +98,15 @@ returns nothing).
    DOM stays mounted during exit animations. Respect `prefers-reduced-motion`
    (motion-core does this — do not bypass it).
 8. JSDoc every prop, event, slot, part, and CSS var (feeds generated docs).
+9. **Docs page** (added 2026-07-16, PLAN F3): every user-facing component needs
+   a page in `apps/docs/src/content/docs/components/<name>.mdx` plus a sidebar
+   entry in `apps/docs/sidebar.config.mjs` — `pnpm test:docs` enforces the
+   pairing (fails if either is missing). Use `<ApiTables tag="and-<name>" />`
+   (see F1 / `apps/docs/src/components/ApiTables.astro`) for the
+   Properties/Events tables instead of hand-copying them — pass `fallback` only
+   for compound components sharing a directory (see the ApiTables doc comment
+   for the current list). Include at least one live
+   `<div class="and-live-example">` demo plus its `html` code fence.
 
 **Verify:**
 
@@ -105,13 +114,16 @@ returns nothing).
 pnpm build:stencil                          # must succeed; regenerates readme.md, components.d.ts, Angular wrappers
 pnpm -C packages/web-components test:spec
 pnpm -C packages/web-components lint
+pnpm test:docs                              # sidebar/content pairing
+pnpm -C apps/docs build                     # docs page renders, ApiTables resolves
 pnpm storybook                              # auto-builds missing deps on first run; open the new story and check the a11y addon panel
 ```
 
-**Definition of Done:** build + specs + lint pass; story renders in Storybook
-with no a11y-addon violations; all four files exist; component is in a bundle;
-keyboard interactions work (tab, arrows, Esc as applicable); focus returns to
-trigger on close for overlays.
+**Definition of Done:** build + specs + lint + docs test/build pass; story
+renders in Storybook with no a11y-addon violations; all four component files
+exist plus the docs page/sidebar entry; component is in a bundle; keyboard
+interactions work (tab, arrows, Esc as applicable); focus returns to trigger on
+close for overlays.
 
 ---
 
@@ -224,50 +236,63 @@ disabling, and constraint validation. Tracked as **TD-12** in SSD §15.
 fixes:
 
 - **Wraps a real native control in light DOM** (`scoped: true`, not
-  `shadow: true`) — e.g. `and-input`, `and-select`. A genuine native form
-  element (a real `<input>` for `and-input`; a hidden mirror
-  `<input type="hidden">` for `and-select`, which otherwise renders a
-  `<button>` + ARIA listbox) is already a descendant of the wrapping `<form>` in
-  the actual DOM tree, so `FormData` and `<fieldset disabled>` **all already
-  work natively — do not add `shadow: true` or `ElementInternals`.** Doing so
+  `shadow: true`) — e.g. `and-input`, `and-select`, `and-switch`. A genuine
+  native form element is already a descendant of the wrapping `<form>` in the
+  actual DOM tree, so `FormData` and `<fieldset disabled>` **all already work
+  natively — do not add `shadow: true` or `ElementInternals`.** This shows up in
+  two variants: the control itself doubles as the whole interactive surface (a
+  real `<input>` for `and-input`; a real `<input type="checkbox" role="switch">`
+  for `and-switch`, with the visible track/thumb as sibling `<span>`s styled off
+  its native `:checked`/`:disabled` state via Tailwind `peer-*` variants, and
+  label-click-to-toggle for free from wrapping it in a `<label>`), or the
+  control is a hidden mirror sitting alongside a separate custom visual widget
+  (a hidden `<input type="hidden">` for `and-select`, which otherwise renders a
+  `<button>` + ARIA listbox). Either way, doing the shadow-DOM rewrite instead
   would move the real control behind a shadow boundary (breaking the native
   behavior you already have for free) and — since the host's `name` prop is
   usually already reflected onto both the host **and** the inner control — risks
   the same field submitting twice under one key once `setFormValue` is added on
-  top. Verified live in a real browser via Playwright both times (`and-input`
-  2026-07-14, `and-select` 2026-07-16): `FormData` and `<fieldset disabled>`
-  worked with zero `ElementInternals` code — for `<fieldset disabled>`,
-  Playwright itself refused to click the trigger, confirming the browser's own
-  disabled-inheritance already applies (and Tailwind's `disabled:` variant
-  classes already key off the real `:disabled` pseudo-class, so the
-  dimmed/not-allowed styling follows for free). **Do not assume a component
-  needs the shadow-DOM shape just because it isn't a plain `<input>`** — read
-  the render() output (or check live) for a hidden mirror input before reaching
-  for `ElementInternals`; two out of two form controls investigated so far
-  turned out to be this shape, not the one below. The one real gap for this
-  shape: the browser's native form-reset algorithm resets the real control's
-  _displayed_ value directly, without notifying the wrapping Stencil component,
-  so its internal state and next controlled render go stale. For `and-select`
-  this is worse than a display mismatch: Stencil re-stamps the hidden input's
-  `value` **attribute** on every selection change, which drags the input's own
-  reset-default along with it, so `form.reset()` was a complete no-op (verified
-  live) — it restored the _last selected_ value, not the true original default,
-  until fixed. Fix (both components): listen for the `reset` event on
-  `this.el.closest('form')` in `connectedCallback()` (not `componentWillLoad()`
-  — it must re-resolve if the element is later moved into a form), restore the
-  value captured at first `componentWillLoad()`, and remove the listener in
-  `disconnectedCallback()`. `and-select` additionally needed a new headless
-  `setSelectedValue` action (unlike the existing `selectValue`, it doesn't
-  require a matching option — needed to restore "no selection" when the default
-  was empty). See `and-input.tsx` / `and-select.tsx` for the reference
-  implementations. Skip the rest of this playbook for this shape.
-- **Custom widget with no real nested form control at all** — no hidden mirror
-  input anywhere in the render output, nothing in the light DOM for `FormData`
-  to find. No component in this repo has actually needed this path yet (both
-  candidates investigated so far turned out to be the light-DOM shape above); if
-  you find one, it genuinely needs `shadow: true` + `@AttachInternals()`.
-  Continue with steps 1-8 below. Supported natively since Stencil 4.5; the
-  repo's `@stencil/core` 4.43.3 has it — no dependency changes needed.
+  top. Verified live in a real browser via Playwright every time (`and-input`
+  2026-07-14, `and-select` 2026-07-16, `and-switch` 2026-07-16): `FormData` and
+  `<fieldset disabled>` worked with zero `ElementInternals` code — for
+  `<fieldset disabled>`, Playwright itself refused to click the trigger,
+  confirming the browser's own disabled-inheritance already applies (and
+  Tailwind's `disabled:`/`peer-disabled:` variant classes already key off the
+  real `:disabled` pseudo-class, so the dimmed/not-allowed styling follows for
+  free). **Do not assume a component needs the shadow-DOM shape just because it
+  isn't a plain `<input>`** — read the render() output (or check live) for a
+  real or mirrored native control before reaching for `ElementInternals`; three
+  out of three form controls investigated so far turned out to be this shape,
+  not the one below. The one real gap for this shape: the browser's native
+  form-reset algorithm resets the real control's _displayed_ value directly,
+  without notifying the wrapping Stencil component, so its internal state and
+  next controlled render go stale. For `and-select` this is worse than a display
+  mismatch: Stencil re-stamps the hidden input's `value` **attribute** on every
+  selection change, which drags the input's own reset-default along with it, so
+  `form.reset()` was a complete no-op (verified live) — it restored the _last
+  selected_ value, not the true original default, until fixed. Fix (all three
+  components): listen for the `reset` event on `this.el.closest('form')` in
+  `connectedCallback()` (not `componentWillLoad()` — it must re-resolve if the
+  element is later moved into a form), restore the value captured at first
+  `componentWillLoad()`, and remove the listener in `disconnectedCallback()`.
+  `and-select` additionally needed a new headless `setSelectedValue` action
+  (unlike the existing `selectValue`, it doesn't require a matching option —
+  needed to restore "no selection" when the default was empty). If a prop can be
+  set programmatically too (e.g. `and-switch`'s `checked`, `and-select`'s
+  `value`), add a matching `@Watch()` that forwards into the headless action —
+  otherwise external assignment (not just user interaction) silently desyncs the
+  headless store from the reflected prop (caught by a failing reset spec test on
+  `and-switch`, fixed by adding `@Watch('checked')`). See `and-input.tsx` /
+  `and-select.tsx` / `and-switch.tsx` for the reference implementations. Skip
+  the rest of this playbook for this shape.
+- **Custom widget with no real nested form control at all** — no real or
+  mirrored native control anywhere in the render output, nothing in the light
+  DOM for `FormData` to find. No component in this repo has actually needed this
+  path yet (all three candidates investigated so far turned out to be the
+  light-DOM shape above); if you find one, it genuinely needs `shadow: true` +
+  `@AttachInternals()`. Continue with steps 1-8 below. Supported natively since
+  Stencil 4.5; the repo's `@stencil/core` 4.43.3 has it — no dependency changes
+  needed.
 
 1. In the component options set `formAssociated: true`:
    `@Component({ tag: 'and-input', shadow: true, formAssociated: true })`, and

@@ -39,6 +39,7 @@ export const config: Config = {
     { components: ['and-menu-list', 'and-menu-item'] },
     { components: ['and-pagination'] },
     { components: ['and-input'] },
+    { components: ['and-switch'] },
     { components: ['and-icon'] },
     { components: ['and-code'] },
     { components: ['and-control'] },

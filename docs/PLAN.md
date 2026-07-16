@@ -193,33 +193,52 @@ shape); changeset `minor` for `@andersseen/web-components` **and**
 
 One phase per component, **in this order** (effort/value, per TD-13):
 
-- [ ] **F3 — `and-switch`** (R2.1) — smallest; establishes the pattern.
+- [x] **F3 — `and-switch`** (R2.1) — done 2026-07-16. Smallest; establishes the
+      pattern. **The step 3 text below was wrong** (see the corrected version
+      that replaces it): switch has a nestable native control after all — a real
+      `<input type="checkbox" role="switch">` — so it used the same light-DOM
+      shape as `and-input`/`and-select`, not `ElementInternals`. Verified live
+      via Playwright: `FormData`, `form.reset()` (same reset-listener fix),
+      `<fieldset disabled>`, and Space-to-toggle all work natively. See ROADMAP
+      R2.1 and AGENT-PLAYBOOKS P9 for the full writeup, both updated as part of
+      this phase.
 - [ ] **F4 — `and-checkbox`** (R2.2) — include indeterminate state in the
-      headless model.
+      headless model. Almost certainly the light-DOM shape too (a real
+      `<input type="checkbox">`, no `role` override needed) — check P9 step 0
+      before assuming otherwise.
 - [ ] **F5 — `and-textarea`** (R2.3) — decide in the PR whether the existing
       `input` headless module's state model fits; don't fork logic blindly.
+      Light-DOM shape (a real `<textarea>`), same as `and-input`.
 - [ ] **F6 — `and-radio-group` + `and-radio`** (R2.4) — roving tabindex keyboard
-      model lives in headless.
+      model lives in headless. Each `and-radio` likely wraps a real
+      `<input type="radio">` (light-DOM shape); check P9 step 0 first.
 - [ ] **F7 — `and-slider`** (R2.5) — hardest: arrow/home/end keys,
-      `aria-valuenow/min/max`, RTL.
+      `aria-valuenow/min/max`, RTL. A real `<input type="range">` may cover the
+      light-DOM shape here too, depending on how much custom visual control the
+      design needs — check P9 step 0 first regardless.
 
 **Recipe for each (same every time):**
 
 1. **Headless module first** — playbook **P1**:
-   `packages/headless-core/src/<name>/` + tests (keep the 19/19-tested invariant
-   alive).
+   `packages/headless-core/src/<name>/` + tests (keep the invariant of every
+   non-util headless module having a test file alive — 20/20 after F3).
 2. **Stencil component** — playbook **P2**: CVA variant map + `cn()`,
-   subscribe/unsubscribe pattern per the `and-button` reference, **add the new
-   component to a bundle in `stencil.config.ts`** (hard requirement), spec
-   test + Storybook story.
-3. **Form-associated from day one** — playbook **P9, step 0 first**: decide
-   light-DOM (`scoped: true`, like `and-input`) vs `shadow: true` +
-   `ElementInternals` (like `and-select` after F2) _before_ writing the
-   component. Switch/checkbox/radio/slider have no nestable native control
-   surface → expect the ElementInternals path; textarea may go light-DOM like
-   input.
-4. **Docs page** — NEW requirement not yet in P2 (the playbook predates
-   `apps/docs`): add `apps/docs/src/content/docs/components/<name>.md(x)` using
+   subscribe/unsubscribe pattern per the `and-button`/`and-input` reference,
+   **add the new component to a bundle in `stencil.config.ts`** (hard
+   requirement), spec test + Storybook story.
+3. **Form-associated from day one** — playbook **P9, step 0 first, and actually
+   read the render() output before picking a shape.** F3 found that "no nestable
+   native control surface" was a wrong assumption for `and-switch` (a real
+   `<input type="checkbox" role="switch">` covers it) — 3 out of 3 form controls
+   investigated so far (`and-input`, `and-select`, `and-switch`) turned out to
+   be the light-DOM shape, not `shadow: true` + `ElementInternals`. Don't assume
+   checkbox/radio/slider need `ElementInternals` just because they're not text
+   inputs — they map to real native input types (`checkbox`, `radio`, `range`)
+   and can very likely wrap those directly, styled via `peer-*` Tailwind
+   variants like `and-switch`. Only reach for `ElementInternals` if you actually
+   can't find a way to anchor a real native control in the light DOM.
+4. **Docs page** — now a durable step in playbook P2 itself (step 9, added
+   during F3): add `apps/docs/src/content/docs/components/<name>.mdx` using
    `<ApiTables>` from F1, plus a sidebar entry in
    `apps/docs/sidebar.config.mjs`. `pnpm test:docs` enforces the pairing.
 5. Changesets: `minor` for `@andersseen/headless-components` and
@@ -227,11 +246,13 @@ One phase per component, **in this order** (effort/value, per TD-13):
 
 **Verification (each phase):** `pnpm lint` · `pnpm test:headless` ·
 `pnpm build:stencil` · `pnpm -C packages/web-components test:spec` ·
-`pnpm test:docs` · manual Storybook form check (FormData, reset, disabled).
+`pnpm test:docs` · `pnpm -C apps/docs build` · verify live in a real browser
+(Playwright or Storybook) — FormData inclusion/exclusion, `form.reset()`,
+`<fieldset disabled>`, and the relevant keyboard interaction all actually work,
+don't just trust that the code looks right.
 
 **DoD (each phase):** matching R2.x DoD in ROADMAP; after F7, close TD-13 in SSD
-§15. During F3, update playbook P2 to add the docs-page step (step 4 above) so
-the requirement is durable.
+§15.
 
 ---
 
