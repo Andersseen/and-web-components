@@ -3,6 +3,8 @@ title: Pagination
 description: Page-number navigation with previous/next controls.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Page-number navigation (`nav aria-label="Pagination"`) with previous/next
 controls. Renders one button per page — for very large `totalPages`, consider
 paging through results some other way, since this doesn't truncate with an
@@ -16,7 +18,7 @@ ellipsis.
 
 <script>
   const demoPagination = document.getElementById('demo-pagination');
-  demoPagination?.addEventListener('andPageChange', e => { demoPagination.currentPage = e.detail; });
+  demoPagination?.addEventListener('andPageChange', e => \{ demoPagination.currentPage = e.detail; \});
 </script>
 
 ```html
@@ -27,15 +29,4 @@ ellipsis.
 </script>
 ```
 
-## Properties
-
-| Property      | Attribute      | Description                    | Type     | Default |
-| ------------- | -------------- | ------------------------------ | -------- | ------- |
-| `currentPage` | `current-page` | Current active page (1-based). | `number` | `1`     |
-| `totalPages`  | `total-pages`  | Total number of pages.         | `number` | `1`     |
-
-## Events
-
-| Event           | Description                    | Type                  |
-| --------------- | ------------------------------ | --------------------- |
-| `andPageChange` | Emitted when the page changes. | `CustomEvent<number>` |
+<ApiTables tag="and-pagination" />

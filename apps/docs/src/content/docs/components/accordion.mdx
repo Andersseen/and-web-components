@@ -5,6 +5,8 @@ description:
   and-accordion-item, and-accordion-trigger and and-accordion-content.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Vertically stacked collapsible sections. Composed from four elements:
 `and-accordion` (the root), `and-accordion-item` (one trigger/content pair),
 `and-accordion-trigger`, and `and-accordion-content`. The root injects the
@@ -44,6 +46,8 @@ anything yourself.
 </and-accordion>
 ```
 
+<ApiTables tag="and-accordion" fallback>
+
 ## Properties
 
 ### `and-accordion` (root)
@@ -62,12 +66,4 @@ anything yourself.
 | `value`    | `value`    | Unique value identifying this item. Auto-generated if omitted.    | `string`  | `undefined` |
 | `disabled` | `disabled` | Whether this item is disabled (non-interactive, visually dimmed). | `boolean` | `false`     |
 
-<small>
-  Note: at the time of writing, the generated `readme.md` in
-  `packages/web-components/src/components/and-accordion/` documents
-  `and-accordion-trigger` instead of the root `and-accordion` — several
-  compound components share a directory and Stencil's docs-readme output
-  writes all of them to the same `readme.md` filename, so only the
-  last-processed one survives. The tables above come from reading
-  `and-accordion.tsx`/`and-accordion-item.tsx` directly.
-</small>
+</ApiTables>

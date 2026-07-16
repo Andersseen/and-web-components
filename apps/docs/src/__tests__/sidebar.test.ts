@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const rootDir = fileURLToPath(new URL('../..', import.meta.url));
 const contentDir = join(rootDir, 'src/content/docs');
-const configPath = join(rootDir, 'astro.config.mjs');
+const configPath = join(rootDir, 'sidebar.config.mjs');
 
 function collectSlugs(dir: string, base = ''): string[] {
   const slugs: string[] = [];
@@ -39,7 +39,7 @@ describe('sidebar / content parity', () => {
 
   it('every content page is listed in the sidebar', () => {
     const orphaned = contentSlugs.filter(slug => !sidebarSlugs.includes(slug));
-    expect(orphaned, `pages missing a sidebar entry in astro.config.mjs: ${orphaned.join(', ')}`).toEqual([]);
+    expect(orphaned, `pages missing a sidebar entry in sidebar.config.mjs: ${orphaned.join(', ')}`).toEqual([]);
   });
 
   it('every sidebar entry points at a real content page', () => {

@@ -1,0 +1,24 @@
+---
+title: Code
+description:
+  Read-only command/code snippet block with a copy-to-clipboard button.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Read-only command/code snippet block with a copy-to-clipboard button. Plain text
+only — it doesn't do syntax highlighting, and `prompt` is just a display hint
+(no relation to any actual shell or language). The prompt character is hidden by
+default; opt in with `showPrompt`.
+
+## Example
+
+<div class="and-live-example" style="flex-direction: column; align-items: stretch;">
+  <and-code value="pnpm add @andersseen/web-components" show-prompt></and-code>
+</div>
+
+```html
+<and-code value="pnpm add @andersseen/web-components" show-prompt></and-code>
+```
+
+<ApiTables tag="and-code" />

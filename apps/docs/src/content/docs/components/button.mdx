@@ -1,0 +1,36 @@
+---
+title: Button
+description: Interactive button, or an anchor styled as one when href is set.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Interactive button, or an anchor styled as one when `href` is set.
+
+For `size="icon"` (no visible text), pass `aria-label` on the element — it's
+forwarded to the inner control since the host itself is never left
+focusable/labelled (an explicit `role`/`tabindex` on the host is moved to the
+inner button/anchor on load, so there's only one interactive surface for
+assistive tech to land on).
+
+## Example
+
+<div class="and-live-example">
+  <and-button variant="default">Default</and-button>
+  <and-button variant="destructive">Destructive</and-button>
+  <and-button variant="outline">Outline</and-button>
+  <and-button variant="secondary">Secondary</and-button>
+  <and-button variant="ghost">Ghost</and-button>
+  <and-button variant="link">Link</and-button>
+</div>
+
+```html
+<and-button variant="default">Default</and-button>
+<and-button variant="destructive">Destructive</and-button>
+<and-button variant="outline">Outline</and-button>
+<and-button variant="secondary">Secondary</and-button>
+<and-button variant="ghost">Ghost</and-button>
+<and-button variant="link">Link</and-button>
+```
+
+<ApiTables tag="and-button" />

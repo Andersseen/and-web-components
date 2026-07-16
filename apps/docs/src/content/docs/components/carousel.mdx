@@ -5,6 +5,8 @@ description:
   indicators, and optional autoplay.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Slideshow of `and-carousel-item` slides with previous/next controls, dot
 indicators, and optional autoplay.
 
@@ -37,6 +39,8 @@ pauses automatically while any control inside the carousel has focus.
 </and-carousel>
 ```
 
+<ApiTables tag="and-carousel" fallback>
+
 ## Properties
 
 ### `and-carousel` (root)
@@ -58,3 +62,5 @@ pauses automatically while any control inside the carousel has focus.
 | Event            | Description                            | Type                  |
 | ---------------- | -------------------------------------- | --------------------- |
 | `andSlideChange` | Emitted when the active slide changes. | `CustomEvent<number>` |
+
+</ApiTables>

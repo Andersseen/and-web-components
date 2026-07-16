@@ -5,6 +5,8 @@ description:
   and-tabs-content via shared headless logic.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Tabs root — coordinates `and-tabs-list` > `and-tabs-trigger` and
 `and-tabs-content` children via shared headless logic, injected into each child
 automatically. Arrow keys, Home/End, and roving tabindex are handled for you.
@@ -37,6 +39,8 @@ automatically. Arrow keys, Home/End, and roving tabindex are handled for you.
 </and-tabs>
 ```
 
+<ApiTables tag="and-tabs" fallback>
+
 ## Properties
 
 ### `and-tabs` (root)
@@ -67,9 +71,4 @@ automatically. Arrow keys, Home/End, and roving tabindex are handled for you.
 | -------------- | -------------------------------------- | --------------------- |
 | `andTabChange` | Emitted when the selected tab changes. | `CustomEvent<string>` |
 
-<small>
-  Note: `packages/web-components/src/components/and-tabs/readme.md` currently
-  documents `and-tabs-trigger`, not the `and-tabs` root — see the note on the
-  [Accordion](/components/accordion/) page for why. The root's table above
-  comes from `and-tabs.tsx` directly.
-</small>
+</ApiTables>

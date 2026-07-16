@@ -4,6 +4,8 @@ description:
   Right-click (or long-press) menu that opens over its trigger-slotted content.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Right-click (or long-press) menu that opens over its `trigger`-slotted content.
 Supports two usage modes: pass `items` for a built-in, keyboard-navigable list
 (arrow keys, Home/End, Enter/Space, Escape), or omit `items` and slot your own
@@ -25,13 +27,13 @@ attribute.
 </div>
 
 <script>
-  customElements.whenDefined('and-context-menu').then(() => {
+  customElements.whenDefined('and-context-menu').then(() => \{
     document.getElementById('demo-context-menu').items = [
-      { value: 'rename', text: 'Rename' },
-      { value: 'duplicate', text: 'Duplicate' },
-      { value: 'delete', text: 'Delete' },
+      \{ value: 'rename', text: 'Rename' \},
+      \{ value: 'duplicate', text: 'Duplicate' \},
+      \{ value: 'delete', text: 'Delete' \},
     ];
-  });
+  \});
 </script>
 
 ```html
@@ -53,18 +55,4 @@ attribute.
 </script>
 ```
 
-## Properties
-
-| Property      | Attribute    | Description                                                                                  | Type                | Default          |
-| ------------- | ------------ | -------------------------------------------------------------------------------------------- | ------------------- | ---------------- |
-| `customClass` | `class`      | Additional CSS classes to merge with internal styles.                                        | `string`            | `''`             |
-| `items`       | --           | Optional items to render in the context menu. When provided, keyboard navigation is enabled. | `ContextMenuItem[]` | `[]`             |
-| `menuLabel`   | `menu-label` | Accessible label for the context menu panel.                                                 | `string`            | `'Context menu'` |
-| `open`        | `open`       | Whether the context menu is currently open (controlled).                                     | `boolean`           | `false`          |
-
-## Events
-
-| Event                      | Description                          | Type                   |
-| -------------------------- | ------------------------------------ | ---------------------- |
-| `andContextMenuOpenChange` | Emitted when the open state changes. | `CustomEvent<boolean>` |
-| `andContextMenuSelect`     | Emitted when an item is selected.    | `CustomEvent<string>`  |
+<ApiTables tag="and-context-menu" />

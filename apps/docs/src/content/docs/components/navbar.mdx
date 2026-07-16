@@ -1,0 +1,35 @@
+---
+title: Navbar
+description:
+  Responsive top navigation bar that collapses progressively as viewport
+  shrinks.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Responsive top navigation bar. Collapses progressively as viewport shrinks
+(`full` → `compact` → `minimal` → `mobile`), falling back to an
+[Drawer](/components/drawer/)-based hamburger menu at the `mobile` stage.
+Active-item tracking supports route, hash, scroll-spy, or fully manual modes via
+`activeMode`.
+
+`items` accepts either a real array or a JSON string, so it works directly as a
+plain HTML attribute — no script needed.
+
+## Example
+
+<div class="and-live-example" style="padding: 0;">
+  <and-navbar
+    items='[{"id":"home","label":"Home","href":"#"},{"id":"docs","label":"Docs","href":"#"},{"id":"about","label":"About","href":"#"}]'
+    active-item="home"
+  ></and-navbar>
+</div>
+
+```html
+<and-navbar
+  items='[{"id":"home","label":"Home","href":"#"},{"id":"docs","label":"Docs","href":"#"},{"id":"about","label":"About","href":"#"}]'
+  active-item="home"
+></and-navbar>
+```
+
+<ApiTables tag="and-navbar" />

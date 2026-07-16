@@ -5,6 +5,8 @@ description:
   and-card-description, and-card-content, and and-card-footer.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Generic content container. Purely presentational — compose it with
 `and-card-header`, `and-card-title`, `and-card-description`, `and-card-content`,
 and `and-card-footer` for the standard layout, or use it alone with
@@ -44,6 +46,8 @@ and `and-card-footer` for the standard layout, or use it alone with
 </and-card>
 ```
 
+<ApiTables tag="and-card" fallback>
+
 ## Properties
 
 ### `and-card` (root)
@@ -64,9 +68,4 @@ and `and-card-footer` for the standard layout, or use it alone with
 `and-card-footer` are purely presentational layout slots — no props beyond
 `customClass`.
 
-<small>
-  Note: `packages/web-components/src/components/and-card/readme.md` currently
-  documents `and-card-title`, not the `and-card` root — see the note on the
-  [Accordion](/components/accordion/) page for why. The root's table above
-  comes from `and-card.tsx`/`and-card-variants.ts` directly.
-</small>
+</ApiTables>

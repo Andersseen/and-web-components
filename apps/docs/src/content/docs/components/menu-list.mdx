@@ -4,6 +4,8 @@ description:
   Data-driven menu that renders items as keyboard-navigable menuitem entries.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Data-driven menu (`role="menu"`) that renders `items` as keyboard-navigable
 `role="menuitem"` entries — arrow keys, Home/End, and typeahead are handled for
 you. Omit `items` to slot arbitrary content instead (e.g. `and-menu-item`
@@ -21,13 +23,13 @@ parent) — handy for slotting individual items directly, e.g. inside
 </div>
 
 <script>
-  customElements.whenDefined('and-menu-list').then(() => {
+  customElements.whenDefined('and-menu-list').then(() => \{
     document.getElementById('demo-menu-list').items = [
-      { id: 'profile', label: 'Profile' },
-      { id: 'settings', label: 'Settings' },
-      { id: 'logout', label: 'Log out' },
+      \{ id: 'profile', label: 'Profile' \},
+      \{ id: 'settings', label: 'Settings' \},
+      \{ id: 'logout', label: 'Log out' \},
     ];
-  });
+  \});
 </script>
 
 ```html
@@ -53,6 +55,8 @@ parent) — handy for slotting individual items directly, e.g. inside
 </and-menu-list>
 ```
 
+<ApiTables tag="and-menu-list" fallback>
+
 ## Properties
 
 ### `and-menu-list`
@@ -77,3 +81,5 @@ parent) — handy for slotting individual items directly, e.g. inside
 | Event               | Description                       | Type                  |
 | ------------------- | --------------------------------- | --------------------- |
 | `andMenuItemSelect` | Emitted when an item is selected. | `CustomEvent<string>` |
+
+</ApiTables>

@@ -3,6 +3,8 @@ title: Breadcrumb
 description: Navigation trail showing the user's location in a hierarchy.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Navigation trail showing the user's location in a hierarchy. `and-breadcrumb`
 renders a `<nav aria-label>` wrapping an `<ol>`; group `and-breadcrumb-item`
 children inside it and mark the last one `current`.
@@ -24,6 +26,8 @@ children inside it and mark the last one `current`.
   <and-breadcrumb-item current>Current page</and-breadcrumb-item>
 </and-breadcrumb>
 ```
+
+<ApiTables tag="and-breadcrumb" fallback>
 
 ## Properties
 
@@ -49,9 +53,4 @@ children inside it and mark the last one `current`.
 | ----------------------- | -------------------------------------------- | --------------------- |
 | `andBreadcrumbNavigate` | Emitted when a breadcrumb link is activated. | `CustomEvent<string>` |
 
-<small>
-  Note: `packages/web-components/src/components/and-breadcrumb/readme.md`
-  currently documents `and-breadcrumb-item`, not the `and-breadcrumb` root —
-  see the note on the [Accordion](/components/accordion/) page for why. The
-  root's table above comes from `and-breadcrumb.tsx` directly.
-</small>
+</ApiTables>

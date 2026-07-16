@@ -1,0 +1,33 @@
+---
+title: Alert
+description: Contextual message banner for feedback, warnings, or errors.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Contextual message banner for feedback, warnings, or errors.
+
+Renders with `role="alert"` so assistive tech announces it as soon as it mounts
+— don't use it for content that appears well before it's relevant, since that
+triggers an announcement immediately on page load too. Depends on
+[`and-icon`](/components/icon/) internally for the dismiss control.
+
+## Example
+
+<div class="and-live-example" style="flex-direction: column; align-items: stretch;">
+  <and-alert variant="default">Heads up — this is a default alert.</and-alert>
+  <and-alert variant="info">Here's some useful information.</and-alert>
+  <and-alert variant="success">Your changes were saved.</and-alert>
+  <and-alert variant="warning">Double-check this before continuing.</and-alert>
+  <and-alert variant="destructive" dismissible>Something went wrong.</and-alert>
+</div>
+
+```html
+<and-alert variant="default">Heads up — this is a default alert.</and-alert>
+<and-alert variant="info">Here's some useful information.</and-alert>
+<and-alert variant="success">Your changes were saved.</and-alert>
+<and-alert variant="warning">Double-check this before continuing.</and-alert>
+<and-alert variant="destructive" dismissible>Something went wrong.</and-alert>
+```
+
+<ApiTables tag="and-alert" />

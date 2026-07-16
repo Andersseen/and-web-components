@@ -5,6 +5,8 @@ description:
   restoration on close.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Centered dialog (`role="dialog"`, `aria-modal="true"`) with a focus trap,
 Escape-to-close, backdrop click, and focus restoration on close. Renders nothing
 while closed.
@@ -29,9 +31,9 @@ while closed.
   const modalTrigger = document.getElementById('modal-trigger');
   const demoModal = document.getElementById('demo-modal');
   const modalCancel = document.getElementById('modal-cancel');
-  modalTrigger?.addEventListener('click', () => { demoModal.open = true; });
-  modalCancel?.addEventListener('click', () => { demoModal.open = false; });
-  demoModal?.addEventListener('andModalClose', () => { demoModal.open = false; });
+  modalTrigger?.addEventListener('click', () => \{ demoModal.open = true; \});
+  modalCancel?.addEventListener('click', () => \{ demoModal.open = false; \});
+  demoModal?.addEventListener('andModalClose', () => \{ demoModal.open = false; \});
 </script>
 
 ```html
@@ -49,15 +51,4 @@ while closed.
 </script>
 ```
 
-## Properties
-
-| Property   | Attribute  | Description                                     | Type      | Default |
-| ---------- | ---------- | ----------------------------------------------- | --------- | ------- |
-| `animated` | `animated` | Whether to animate the modal entrance and exit. | `boolean` | `false` |
-| `open`     | `open`     | Whether the modal is open.                      | `boolean` | `false` |
-
-## Events
-
-| Event           | Description                       | Type                |
-| --------------- | --------------------------------- | ------------------- |
-| `andModalClose` | Emitted when the modal is closed. | `CustomEvent<void>` |
+<ApiTables tag="and-modal" />

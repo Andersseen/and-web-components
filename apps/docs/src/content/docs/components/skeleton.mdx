@@ -3,6 +3,8 @@ title: Skeleton
 description: Pulsing placeholder shown while content is loading.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Pulsing placeholder shown while content is loading. Announces itself via
 `aria-busy="true"` and `aria-label="Loading"` — no props needed for
 accessibility, just size it to roughly match the content it stands in for.
@@ -21,11 +23,4 @@ accessibility, just size it to roughly match the content it stands in for.
 <and-skeleton variant="text" width="160px"></and-skeleton>
 ```
 
-## Properties
-
-| Property      | Attribute | Description                               | Type                              | Default     |
-| ------------- | --------- | ----------------------------------------- | --------------------------------- | ----------- |
-| `customClass` | `class`   | Additional CSS classes from the consumer. | `string`                          | `''`        |
-| `height`      | `height`  | CSS height (e.g. `16px`, `1rem`).         | `string`                          | `'16px'`    |
-| `variant`     | `variant` | Visual shape of the skeleton.             | `"circle" \| "default" \| "text"` | `'default'` |
-| `width`       | `width`   | CSS width (e.g. `100px`, `100%`).         | `string`                          | `'100%'`    |
+<ApiTables tag="and-skeleton" />

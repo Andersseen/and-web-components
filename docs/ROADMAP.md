@@ -79,11 +79,17 @@ referenced below).
       tabindex keyboard model lives in headless)_
 - [ ] **R2.5 — `and-slider`** _(TD-13 · P1 → P2 + P9; hardest — arrow/home/end
       keys, `aria-valuenow/min/max`, RTL)_
-- [ ] **R2.6 — Docs site skeleton** _(TD-14 · medium-large)_ New `apps/docs`
-      (Astro Starlight, dogfooding `@andersseen/astro`). Phase 1 = one page per
-      component rendering the **generated** `readme.md` API tables plus a
-      hand-written usage example; deploy to Cloudflare Pages like the other two
-      apps. **DoD:** site builds in CI, deploys, and covers all 24+ components.
+- [x] **R2.6 — Docs site skeleton** _(done 2026-07-16 · TD-14 · medium-large)_
+      `apps/docs` (Astro Starlight, dogfooding `@andersseen/astro`) exists and
+      exceeds the original DoD: ~70 pages covering all 24+ components plus
+      headless/motion/icon/layout/behaviors/vanilla/skills/framework-adapters.
+      Closed via [PLAN.md](./PLAN.md) phase F0: fixed the broken
+      `sidebar.test.ts` (pointed at `sidebar.config.mjs`, where the sidebar
+      actually lives) and wired `pnpm test:docs` + `pnpm -C apps/docs build`
+      into the `build-and-test` job in `ci-cd.yml`. **DoD met:** site builds in
+      CI, deploys (`deploy-docs.yml`), covers all components. TD-14 closed in
+      SSD §15; new TD-16 (hand-synced API tables) registered there, to be closed
+      by PLAN F1.
 - [ ] **R2.7 — Browser e2e for interactive components** _(TD-15 · medium)_
       Playwright suite (new `packages/web-components/e2e/` or reuse the
       astro-landing setup) running against built Storybook: modal focus trap,
@@ -123,6 +129,7 @@ referenced below).
 
 ## Changelog of this file
 
-| Date       | Change                                    |
-| ---------- | ----------------------------------------- |
-| 2026-07-14 | Created (R1–R3 seeded from repo analysis) |
+| Date       | Change                                                                                                        |
+| ---------- | ------------------------------------------------------------------------------------------------------------- |
+| 2026-07-14 | Created (R1–R3 seeded from repo analysis)                                                                     |
+| 2026-07-15 | [PLAN.md](./PLAN.md) created — phase ordering now lives there (F0–F12); R-item DoDs here remain authoritative |

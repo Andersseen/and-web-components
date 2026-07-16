@@ -5,6 +5,8 @@ description:
   @andersseen/icon.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Renders an SVG icon registered via `registerIcons()`/`registerAllIcons()` from
 `@andersseen/icon`. Always `aria-hidden="true"` — it's treated as purely
 decorative, so any accessible name (e.g. "Close", "Copy") must come from the
@@ -33,11 +35,4 @@ registered automatically when you use the
 <and-icon name="check" size="20" color="green"></and-icon>
 ```
 
-## Properties
-
-| Property      | Attribute      | Description                                                                | Type               | Default          |
-| ------------- | -------------- | -------------------------------------------------------------------------- | ------------------ | ---------------- |
-| `color`       | `color`        | The stroke/fill color (defaults to `currentColor` for theme inheritance).  | `string`           | `'currentColor'` |
-| `name`        | `name`         | The name of the icon to render (must be registered via `registerIcons()`). | `string`           | `undefined`      |
-| `size`        | `size`         | The size of the icon in pixels.                                            | `number \| string` | `24`             |
-| `strokeWidth` | `stroke-width` | SVG stroke width.                                                          | `number \| string` | `2`              |
+<ApiTables tag="and-icon" />

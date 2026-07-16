@@ -5,6 +5,8 @@ description:
   error message.
 ---
 
+import ApiTables from '../../../components/ApiTables.astro';
+
 Generic form-field wrapper: label + your own native/custom control + hint or
 error message, wired together with real `for`/`id` and `aria-describedby` — for
 the cases [Input](/components/input/) / [Select](/components/select/) don't
@@ -33,11 +35,4 @@ framework.
 </and-control>
 ```
 
-## Properties
-
-| Property   | Attribute  | Description                                                                                           | Type      | Default |
-| ---------- | ---------- | ----------------------------------------------------------------------------------------------------- | --------- | ------- |
-| `error`    | `error`    | Error message shown below the control instead of `hint`. Also sets `aria-invalid` on the control.     | `string`  | `''`    |
-| `hint`     | `hint`     | Helper text shown below the control. Hidden while `error` is set.                                     | `string`  | `''`    |
-| `label`    | `label`    | Label text for the slotted control.                                                                   | `string`  | `''`    |
-| `required` | `required` | Shows a required indicator next to the label. Purely visual — set `required` on your own control too. | `boolean` | `false` |
+<ApiTables tag="and-control" />
