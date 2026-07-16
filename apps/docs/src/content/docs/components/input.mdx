@@ -1,0 +1,34 @@
+---
+title: Input
+description:
+  Single-line text input, rendered in light DOM so it works with native forms.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Single-line text input. Since it renders a plain `<input>` with no associated
+`<label>`, always set `label` (used as `aria-label`) — and when `hasError` is
+true, also set `describedBy` to point at the id of your visible error message,
+otherwise screen readers announce the field as invalid without saying why.
+
+Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: the `<input>`
+this component renders is a real descendant of whatever `<form>` wraps it, so
+`FormData`, native `required`/`pattern` validation, autofill, and password
+managers all work without any extra wiring.
+
+## Example
+
+<div class="and-live-example" style="flex-direction: column; align-items: stretch;">
+  <and-input label="Email address" type="email" placeholder="you@example.com" name="email" style="max-width: 24rem;"></and-input>
+</div>
+
+```html
+<and-input
+  label="Email address"
+  type="email"
+  placeholder="you@example.com"
+  name="email"
+></and-input>
+```
+
+<ApiTables tag="and-input" />

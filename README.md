@@ -1,7 +1,7 @@
 # Andersseen Web Components
 
 A modular, framework-agnostic UI ecosystem: headless logic, DOM behaviors,
-design tokens, layout primitives, animations, icons, and **24 accessible UI
+design tokens, layout primitives, animations, icons, and **25 accessible UI
 components** — built with [StencilJS](https://stenciljs.com/), ready for any
 framework or plain HTML. Each package below can be installed and used on its
 own; see [Package Roles](#package-roles) for how they fit together.
@@ -305,6 +305,7 @@ import '@andersseen/motion/style.css';
 | Select       | `and-select`       | Dropdown selection                                       |
 | Sidebar      | `and-sidebar`      | Collapsible side navigation                              |
 | Skeleton     | `and-skeleton`     | Loading placeholders                                     |
+| Switch       | `and-switch`       | Boolean on/off toggle, native form participation         |
 | Tabs         | `and-tabs`         | Tabbed content switching                                 |
 | Toast        | `and-toast`        | Notification messages                                    |
 | Tooltip      | `and-tooltip`      | Info popups on hover/focus                               |

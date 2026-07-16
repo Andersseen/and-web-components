@@ -50,15 +50,31 @@ referenced below).
       `FormData`). P9 and TD-12 corrected to reflect this. **DoD:** met — see
       P9. Changeset: `minor` for `@andersseen/web-components`.
 
-- [ ] **R1.3 — Native form participation for `and-select`** _(TD-12 · medium ·
-      playbook **P9** steps 1-8)_ Unlike `and-input`, `and-select` renders a
-      `<button>` + ARIA listbox with no real nested form control (confirmed
-      2026-07-14), so it genuinely needs the full `shadow: true` +
-      `@AttachInternals()` treatment — `setFormValue` on every value change,
-      `formResetCallback`, `formDisabledCallback`; no implicit Enter-to-submit
-      for listbox-style controls. Closing this item closes TD-12 for existing
-      components; keep TD-12/P9 step 0 as the required first check for future
-      controls.
+- [x] **R1.3 — Native form participation for `and-select`** _(done 2026-07-16 ·
+      TD-12 · playbook **P9** step 0)_ The 2026-07-14 note above was wrong:
+      verified by reading `and-select.tsx` (and confirmed live in a browser via
+      Playwright) that it already renders `scoped: true` (light DOM) with a
+      hidden `<input type="hidden">` mirroring `value` — the same shape as
+      `and-input`, not the "custom widget with no real nested form control"
+      shape. `shadow: true` + `ElementInternals` was never needed and would have
+      broken the working `FormData` mechanism. `<fieldset disabled>` already
+      works natively too (verified: the trigger `<button>` picks up real
+      browser-level disabled inheritance, `:disabled` CSS applies, clicks are
+      suppressed — confirmed by Playwright itself refusing to click it). The one
+      genuine gap, and it's worse than `and-input`'s: Stencil re-stamps the
+      hidden input's `value` **attribute** on every selection change, which
+      drags its native reset-default along with it, so `form.reset()` was a
+      complete no-op (restored the _last selected_ value, not the true default)
+      — verified live before the fix. Fixed with the same "listen for `reset` on
+      `this.el.closest('form')`" pattern as `and-input` (P9 step 0), plus a new
+      `setSelectedValue` headless action (unlike `selectValue`, it doesn't
+      require a matching option, needed to restore "no selection"). Added spec
+      tests + an "In a form" Storybook story (submit/reset/fieldset- disabled).
+      Changeset: `minor` for `@andersseen/web-components` and
+      `@andersseen/headless-components`. Closes TD-12 for existing components;
+      keep TD-12/P9 step 0 as the required first check for future controls —
+      this is now the _second_ time assuming the shadow-DOM shape without
+      checking the actual code would have been wrong.
 
 - [x] **R1.4 — Debt-register hygiene** _(done 2026-07-14)_ TD-4 marked resolved;
       TD-9 narrowed; TD-12…TD-15 added; CONTEXT §8 de-duplicated into a pointer;
@@ -66,10 +82,26 @@ referenced below).
 
 ## R2 — Next: close the adoption gaps
 
-- [ ] **R2.1 — `and-switch`** _(TD-13 · playbooks P1 → P2, form-associated per
-      P9 from day one)_ Headless module first
-      (`packages/headless-core/src/switch/`), then Stencil component. Smallest
-      of the missing form controls — establishes the pattern the rest will copy.
+- [x] **R2.1 — `and-switch`** _(done 2026-07-16 · TD-13 · playbooks P1 → P2 +
+      P9)_ Headless module first (`packages/headless-core/src/switch/`,
+      `createSwitch`), then the Stencil component. **P9 step 0 check paid off
+      again** (third time in a row): rather than assuming the "no nestable
+      native control surface" path from P9's original note, built it around a
+      real `<input type="checkbox" role="switch">` in light DOM (`scoped: true`,
+      like `and-input`/`and-select`) — the visible track/thumb are two sibling
+      `<span>`s styled purely via Tailwind `peer-checked:`/`peer-disabled:`/
+      `peer-focus-visible:` variants keyed off the checkbox's own native state,
+      and wrapping everything in a `<label>` gives click-to-toggle for free.
+      Verified live in a browser via Playwright: `FormData` includes/excludes
+      the value correctly on checked/unchecked, `form.reset()` restores the
+      default (same `reset`-listener pattern as `and-input`/`and-select`),
+      `<fieldset disabled>` disables it natively, and Space toggles it when
+      focused — all with zero `ElementInternals` code. Added spec tests + an "In
+      a form" Storybook story + a docs page (`apps/docs/.../switch.mdx`). Also
+      added the durable "docs page + sidebar entry" requirement to playbook P2
+      (step 9) so F4–F7 don't have to be told separately. Smallest of the
+      missing form controls — establishes the pattern the rest (checkbox, radio,
+      slider) should try first before assuming `ElementInternals`.
 - [ ] **R2.2 — `and-checkbox`** _(TD-13 · P1 → P2 + P9; include indeterminate
       state in the headless model)_
 - [ ] **R2.3 — `and-textarea`** _(TD-13 · P2 + P9; reuse the `input` headless
@@ -79,11 +111,17 @@ referenced below).
       tabindex keyboard model lives in headless)_
 - [ ] **R2.5 — `and-slider`** _(TD-13 · P1 → P2 + P9; hardest — arrow/home/end
       keys, `aria-valuenow/min/max`, RTL)_
-- [ ] **R2.6 — Docs site skeleton** _(TD-14 · medium-large)_ New `apps/docs`
-      (Astro Starlight, dogfooding `@andersseen/astro`). Phase 1 = one page per
-      component rendering the **generated** `readme.md` API tables plus a
-      hand-written usage example; deploy to Cloudflare Pages like the other two
-      apps. **DoD:** site builds in CI, deploys, and covers all 24+ components.
+- [x] **R2.6 — Docs site skeleton** _(done 2026-07-16 · TD-14 · medium-large)_
+      `apps/docs` (Astro Starlight, dogfooding `@andersseen/astro`) exists and
+      exceeds the original DoD: ~70 pages covering all 24+ components plus
+      headless/motion/icon/layout/behaviors/vanilla/skills/framework-adapters.
+      Closed via [PLAN.md](./PLAN.md) phase F0: fixed the broken
+      `sidebar.test.ts` (pointed at `sidebar.config.mjs`, where the sidebar
+      actually lives) and wired `pnpm test:docs` + `pnpm -C apps/docs build`
+      into the `build-and-test` job in `ci-cd.yml`. **DoD met:** site builds in
+      CI, deploys (`deploy-docs.yml`), covers all components. TD-14 closed in
+      SSD §15; new TD-16 (hand-synced API tables) registered there, to be closed
+      by PLAN F1.
 - [ ] **R2.7 — Browser e2e for interactive components** _(TD-15 · medium)_
       Playwright suite (new `packages/web-components/e2e/` or reuse the
       astro-landing setup) running against built Storybook: modal focus trap,
@@ -123,6 +161,7 @@ referenced below).
 
 ## Changelog of this file
 
-| Date       | Change                                    |
-| ---------- | ----------------------------------------- |
-| 2026-07-14 | Created (R1–R3 seeded from repo analysis) |
+| Date       | Change                                                                                                        |
+| ---------- | ------------------------------------------------------------------------------------------------------------- |
+| 2026-07-14 | Created (R1–R3 seeded from repo analysis)                                                                     |
+| 2026-07-15 | [PLAN.md](./PLAN.md) created — phase ordering now lives there (F0–F12); R-item DoDs here remain authoritative |

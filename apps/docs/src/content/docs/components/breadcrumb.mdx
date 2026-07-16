@@ -1,0 +1,56 @@
+---
+title: Breadcrumb
+description: Navigation trail showing the user's location in a hierarchy.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Navigation trail showing the user's location in a hierarchy. `and-breadcrumb`
+renders a `<nav aria-label>` wrapping an `<ol>`; group `and-breadcrumb-item`
+children inside it and mark the last one `current`.
+
+## Example
+
+<div class="and-live-example">
+  <and-breadcrumb>
+    <and-breadcrumb-item href="/" hide-separator>Home</and-breadcrumb-item>
+    <and-breadcrumb-item href="/docs">Docs</and-breadcrumb-item>
+    <and-breadcrumb-item current>Breadcrumb</and-breadcrumb-item>
+  </and-breadcrumb>
+</div>
+
+```html
+<and-breadcrumb>
+  <and-breadcrumb-item href="/" hide-separator>Home</and-breadcrumb-item>
+  <and-breadcrumb-item href="/docs">Docs</and-breadcrumb-item>
+  <and-breadcrumb-item current>Current page</and-breadcrumb-item>
+</and-breadcrumb>
+```
+
+<ApiTables tag="and-breadcrumb" fallback>
+
+## Properties
+
+### `and-breadcrumb` (root)
+
+| Property   | Attribute    | Description                            | Type                   | Default        |
+| ---------- | ------------ | -------------------------------------- | ---------------------- | -------------- |
+| `size`     | `size`       | Size variant for the breadcrumb trail. | `"lg" \| "md" \| "sm"` | `'md'`         |
+| `navLabel` | `aria-label` | Accessible label for the navigation.   | `string`               | `'Breadcrumb'` |
+
+### `and-breadcrumb-item`
+
+| Property        | Attribute        | Description                                                | Type                   | Default     |
+| --------------- | ---------------- | ---------------------------------------------------------- | ---------------------- | ----------- |
+| `current`       | `current`        | Marks this item as the current page (adds aria-current).   | `boolean`              | `false`     |
+| `hideSeparator` | `hide-separator` | Hide the leading separator (typically for the first item). | `boolean`              | `false`     |
+| `href`          | `href`           | Optional URL. When set, the item renders as a link.        | `string`               | `undefined` |
+| `size`          | `size`           | Size variant — should match the parent breadcrumb size.    | `"lg" \| "md" \| "sm"` | `'md'`      |
+
+## Events
+
+| Event                   | Description                                  | Type                  |
+| ----------------------- | -------------------------------------------- | --------------------- |
+| `andBreadcrumbNavigate` | Emitted when a breadcrumb link is activated. | `CustomEvent<string>` |
+
+</ApiTables>

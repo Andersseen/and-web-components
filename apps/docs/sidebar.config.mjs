@@ -31,6 +31,7 @@ export const sidebar = [
       { label: 'Select', slug: 'components/select' },
       { label: 'Sidebar', slug: 'components/sidebar' },
       { label: 'Skeleton', slug: 'components/skeleton' },
+      { label: 'Switch', slug: 'components/switch' },
       { label: 'Tabs', slug: 'components/tabs' },
       { label: 'Toast', slug: 'components/toast' },
       { label: 'Tooltip', slug: 'components/tooltip' },

@@ -1,0 +1,32 @@
+---
+title: Switch
+description:
+  Boolean on/off toggle, rendered in light DOM so it works with native forms.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Boolean on/off toggle. Since it renders a plain `<input type="checkbox"
+role="switch">` with no associated `<label>`, always set `label` (used as
+`aria-label`).
+
+Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: the
+checkbox this component renders is a real descendant of whatever `<form>`
+wraps it, so `FormData`, native `required` validation, and
+`<fieldset disabled>` all work without any extra wiring — the visible
+track/thumb are styled purely off the checkbox's own `:checked`/`:disabled`
+state via Tailwind `peer-*` variants, and wrapping everything in a `<label>`
+gives click-to-toggle for free. `form.reset()` restores the original default,
+the same as [Input](/components/input/) and [Select](/components/select/).
+
+## Example
+
+<div class="and-live-example">
+  <and-switch label="Enable notifications" name="notifications" checked></and-switch>
+</div>
+
+```html
+<and-switch label="Enable notifications" name="notifications" checked></and-switch>
+```
+
+<ApiTables tag="and-switch" />

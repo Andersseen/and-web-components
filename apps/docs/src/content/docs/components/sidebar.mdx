@@ -1,0 +1,33 @@
+---
+title: Sidebar
+description:
+  Collapsible vertical navigation sidebar with main and bottom item sections.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Collapsible vertical navigation sidebar (`<aside>`), with `main` and `bottom`
+item sections and a built-in collapse toggle.
+
+`items` accepts either a real array or a JSON string, so it works directly as a
+plain HTML attribute. Items with `section: 'bottom'` render in the footer area.
+
+## Example
+
+<div class="and-live-example" style="align-items: stretch; padding: 0;">
+  <and-sidebar
+    items='[{"id":"home","label":"Home"},{"id":"docs","label":"Docs"},{"id":"settings","label":"Settings","section":"bottom"}]'
+    active-item="home"
+    expanded-width="14rem"
+    style="height: 20rem;"
+  ></and-sidebar>
+</div>
+
+```html
+<and-sidebar
+  items='[{"id":"home","label":"Home"},{"id":"docs","label":"Docs"},{"id":"settings","label":"Settings","section":"bottom"}]'
+  active-item="home"
+></and-sidebar>
+```
+
+<ApiTables tag="and-sidebar" />

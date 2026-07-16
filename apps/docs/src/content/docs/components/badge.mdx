@@ -1,0 +1,30 @@
+---
+title: Badge
+description: Small label for status, category, or count.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Small label for status, category, or count. Purely presentational — it has no
+default ARIA role, since forcing `role="status"` on every badge would mislabel
+static labels (e.g. "Beta") as live regions and cause screen readers to announce
+them as if they update. If a specific badge _does_ represent a live status (e.g.
+an unread count), add `role="status"` on the instance yourself.
+
+## Example
+
+<div class="and-live-example">
+  <and-badge variant="default">Default</and-badge>
+  <and-badge variant="secondary">Secondary</and-badge>
+  <and-badge variant="destructive">Destructive</and-badge>
+  <and-badge variant="outline">Outline</and-badge>
+</div>
+
+```html
+<and-badge variant="default">Default</and-badge>
+<and-badge variant="secondary">Secondary</and-badge>
+<and-badge variant="destructive">Destructive</and-badge>
+<and-badge variant="outline">Outline</and-badge>
+```
+
+<ApiTables tag="and-badge" />

@@ -1,0 +1,47 @@
+---
+title: Select
+description: Custom role=combobox select, styleable unlike a native select.
+---
+
+import ApiTables from '../../../components/ApiTables.astro';
+
+Custom `role="combobox"` select, styleable unlike a native `<select>`.
+Implements the ARIA combobox pattern: `aria-expanded`, `aria-controls`,
+`aria-activedescendant` tracks the highlighted option while focus stays on the
+trigger, and the listbox options get `aria-selected`. A hidden native `<input>`
+mirrors `value` when `name` is set.
+
+Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: that hidden
+input is a real descendant of whatever `<form>` wraps this component, so it
+actually shows up in `FormData` on submit — inside a Shadow DOM it would be
+invisible to the enclosing form. Native `form.reset()` restores the original
+default value and `<fieldset disabled>` disables the trigger automatically —
+both work with zero extra wiring, since the trigger and hidden input are real
+form-associated elements.
+
+`options` accepts either a real array or a JSON string — each option is
+`{ value: string; text: string; disabled?: boolean }` — so it works directly as
+a plain HTML attribute.
+
+## Example
+
+<div class="and-live-example" style="flex-direction: column; align-items: stretch;">
+  <and-select
+    label="Framework"
+    name="framework"
+    placeholder="Choose a framework"
+    options='[{"value":"angular","text":"Angular"},{"value":"react","text":"React"},{"value":"vue","text":"Vue"},{"value":"vanilla","text":"Vanilla"}]'
+    style="max-width: 20rem;"
+  ></and-select>
+</div>
+
+```html
+<and-select
+  label="Framework"
+  name="framework"
+  placeholder="Choose a framework"
+  options='[{"value":"angular","text":"Angular"},{"value":"react","text":"React"},{"value":"vue","text":"Vue"}]'
+></and-select>
+```
+
+<ApiTables tag="and-select" />

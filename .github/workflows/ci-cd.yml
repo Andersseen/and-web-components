@@ -76,6 +76,12 @@ jobs:
       - name: Run Vue wrapper tests
         run: pnpm -C packages/vue-components test
 
+      - name: Run docs app tests
+        run: pnpm test:docs
+
+      - name: Build docs app
+        run: pnpm -C apps/docs build
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:

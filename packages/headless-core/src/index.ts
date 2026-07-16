@@ -25,6 +25,7 @@ export * from './menu';
 export * from './select';
 export * from './menu-list';
 export * from './context-menu';
+export * from './switch';
 
 // Export common types and utilities
 export * from './types/common';

@@ -47,3 +47,57 @@ const Template = args => html`
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const InAForm = () => html`
+  <div style="padding: 20px; max-width: 320px;">
+    <form
+      @submit=${(e: SubmitEvent) => {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const output = form.querySelector('#and-select-form-output') as HTMLElement;
+        const data: Record<string, FormDataEntryValue> = {};
+        new FormData(form).forEach((value, key) => {
+          data[key] = value;
+        });
+        output.textContent = JSON.stringify(data);
+      }}
+      @reset=${(e: Event) => {
+        const form = e.target as HTMLFormElement;
+        const output = form.querySelector('#and-select-form-output') as HTMLElement;
+        output.textContent = '(reset)';
+      }}
+    >
+      <fieldset id="and-select-form-fieldset" style="border: 0; padding: 0;">
+        <div class="mb-2">
+          <label class="text-sm font-medium" for="and-select-form-framework">Framework</label>
+        </div>
+        <and-select
+          id="and-select-form-framework"
+          name="framework"
+          .options=${OPTIONS}
+          value="react"
+          required
+        ></and-select>
+      </fieldset>
+      <label style="display: flex; align-items: center; gap: 6px; font-size: 0.875rem; margin-top: 12px;">
+        <input
+          type="checkbox"
+          onchange=${(e: Event) => {
+            const checkbox = e.target as HTMLInputElement;
+            const fieldset = checkbox
+              .closest('form')
+              ?.querySelector('#and-select-form-fieldset') as HTMLFieldSetElement;
+            if (fieldset) fieldset.disabled = checkbox.checked;
+          }}
+        />
+        Disable the fieldset (tests native disabled-inheritance, no extra wiring needed)
+      </label>
+      <div style="margin-top: 12px; display: flex; gap: 8px;">
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+      </div>
+      <pre id="and-select-form-output" style="margin-top: 12px; font-size: 12px;"></pre>
+    </form>
+  </div>
+`;
+InAForm.storyName = 'In a form';

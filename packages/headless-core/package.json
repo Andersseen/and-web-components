@@ -83,6 +83,10 @@
     "./select": {
       "types": "./dist/select/index.d.ts",
       "import": "./dist/select/index.js"
+    },
+    "./switch": {
+      "types": "./dist/switch/index.d.ts",
+      "import": "./dist/switch/index.js"
     }
   },
   "files": [
