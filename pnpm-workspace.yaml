@@ -3,5 +3,6 @@ packages:
   - apps/*
 
 onlyBuiltDependencies:
+  - codebase-memory-mcp
   - esbuild
   - sharp
