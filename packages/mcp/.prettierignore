@@ -1,0 +1,5 @@
+# Generated — written by scripts/generate-catalog.mjs, never format by hand.
+src/catalog-generated.ts
+
+# Build output
+dist/

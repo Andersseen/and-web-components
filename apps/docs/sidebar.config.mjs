@@ -9,6 +9,7 @@ export const sidebar = [
       { label: 'Getting Started', slug: 'guides/getting-started' },
       { label: 'Styling Integration', slug: 'guides/styling-integration' },
       { label: 'Theming & Tokens', slug: 'guides/theming-tokens' },
+      { label: 'MCP Server (AI)', slug: 'guides/mcp-server' },
     ],
   },
   {

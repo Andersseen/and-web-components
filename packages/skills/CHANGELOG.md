@@ -1,5 +1,14 @@
 # @andersseen/skills
 
+## 0.0.2
+
+### Patch Changes
+
+- a8162f2: Documents the new Tailwind-optional styling paths (`tokens.css`,
+  `elements.css`, `tailwind-preset`) and clarifies that `and-theme` now has a
+  full structural effect (navbar/sidebar/carousel dimensions, motion, focus
+  ring), not just radius/spacing, plus the custom-theme override recipe.
+
 ## 0.0.1
 
 ### Patch Changes

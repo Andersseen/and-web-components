@@ -1,0 +1,73 @@
+{
+  "name": "@andersseen/mcp",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server for And Web Components — lets AI assistants (Claude, Cursor, Copilot, VS Code…) query the component catalog and generate correct, framework-specific usage snippets.",
+  "type": "module",
+  "bin": {
+    "and-mcp": "./dist/stdio.js"
+  },
+  "main": "./dist/server.js",
+  "module": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "import": "./dist/catalog.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "generate": "node scripts/generate-catalog.mjs",
+    "check:catalog": "node scripts/generate-catalog.mjs --check",
+    "prebuild": "node scripts/generate-catalog.mjs",
+    "build": "rm -rf dist && tsc && node ../../scripts/fix-esm-extensions.cjs dist && chmod +x dist/stdio.js",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "web-components",
+    "andersseen",
+    "claude",
+    "cursor",
+    "copilot",
+    "ai",
+    "react",
+    "vue",
+    "angular"
+  ],
+  "author": "Andersseen",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@andersseen/web-components": "workspace:*",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.13.5",
+    "eslint": "^10.1.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andersseen/and-web-components.git",
+    "directory": "packages/mcp"
+  }
+}
