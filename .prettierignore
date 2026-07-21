@@ -20,6 +20,7 @@ apps/astro-landing/test-results/
 packages/web-components/src/components.d.ts
 packages/web-components/src/components/*/readme.md
 packages/web-components/custom-elements.json
+packages/mcp/src/catalog-generated.ts
 apps/angular-workspace/projects/angular-components/src/lib/stencil-generated/
 pnpm-lock.yaml
 
