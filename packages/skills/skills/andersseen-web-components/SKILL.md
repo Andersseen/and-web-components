@@ -47,6 +47,27 @@ for this package:
 @import '@andersseen/web-components/style.css';
 ```
 
+Tailwind is optional here, not required — `style.css` is tokens + host
+utilities + a Tailwind Preflight reset bundled together for zero-setup use. Two
+narrower imports exist for when that reset fights the host app's own CSS:
+
+```css
+/* SASS / plain CSS, no Tailwind, no reset: */
+@import '@andersseen/web-components/tokens.css'; /* tokens only */
+@import '@andersseen/web-components/elements.css'; /* host utility classes only, no Preflight */
+```
+
+If the host app already uses Tailwind, add the shareable preset instead of
+hand-copying colors/radius into its config — it maps `bg-primary`, `rounded-lg`,
+`t-gap-*` etc. to this package's own `--*` tokens:
+
+```js
+// tailwind.config.js (host app)
+module.exports = {
+  presets: [require('@andersseen/web-components/tailwind-preset')],
+};
+```
+
 Optionally import one color theme after it to make that palette the default:
 
 ```css
@@ -97,6 +118,15 @@ Key semantic tokens:
 --border / --input / --ring
 --success / --warning / --info (each with a -foreground pair)
 ```
+
+`--radius` drives every rounded corner (`rounded-lg` = `var(--radius)`,
+`rounded-md`/`rounded-sm` scale proportionally from it). `and-theme` also sets
+per-component `--theme-navbar-*`/`--theme-sidebar-*`/`--theme-carousel-*`
+dimensions, motion timings, and focus-ring sizing — not just radius/spacing — so
+switching it has a real structural effect, not just a cosmetic one. Custom
+themes: layer overrides on an existing preset via
+`[and-theme='brand'] { --primary: ...; --radius: ...; }` rather than forking a
+new theme file.
 
 Prefer `hsl(var(--token))` over hardcoded colors when extending styles.
 

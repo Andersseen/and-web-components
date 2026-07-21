@@ -1,0 +1,18 @@
+/**
+ * Light-DOM host utilities — Preflight-free.
+ *
+ * Same Tailwind utility classes as document.css ships (components apply
+ * some utilities to their custom-element host, and Shadow DOM styles can't
+ * reach the host through a normal `.utility` selector — see document.css),
+ * but WITHOUT `@tailwind base` (the Preflight reset) and WITHOUT the
+ * opinionated `body { bg-background text-foreground }` rule.
+ *
+ * For consumers who load tokens.css (or their own palette/style imports)
+ * and want host-level utility classes without Tailwind's global reset
+ * fighting their own SASS/CSS.
+ *
+ * Compiled separately from document.css by scripts/build-elements-css.mjs
+ * (Stencil's `globalStyle` only compiles one entry file).
+ */
+
+@tailwind utilities;
