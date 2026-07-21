@@ -1,5 +1,15 @@
 # @andersseen/react-components
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [5dd2d20]
+- Updated dependencies [b7e1634]
+- Updated dependencies [bfcecb9]
+- Updated dependencies [6972daf]
+  - @andersseen/web-components@0.3.0
+
 ## 0.2.0
 
 ### Patch Changes

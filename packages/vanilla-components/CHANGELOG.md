@@ -1,5 +1,13 @@
 # @andersseen/vanilla-components
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [b7e1634]
+- Updated dependencies [6972daf]
+  - @andersseen/headless-components@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes
