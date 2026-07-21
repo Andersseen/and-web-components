@@ -1,0 +1,103 @@
+---
+import SectionHeader from '../components/SectionHeader.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+
+const tools = [
+  {
+    icon: 'terminal',
+    title: 'MCP Server',
+    description:
+      'Run `npx -y @andersseen/mcp` and your AI assistant queries the live component catalog — generated from the real custom-elements.json — for correct, framework-specific code.',
+    tags: ['Claude', 'Cursor', 'VS Code'],
+    delay: '0ms',
+  },
+  {
+    icon: 'code',
+    title: 'Agent Skills',
+    description:
+      'Installable, per-library skills for Claude Code, Cursor and other agents. Teach your assistant one package at a time — pick only what your project uses.',
+    tags: ['@andersseen/skills'],
+    delay: '100ms',
+  },
+  {
+    icon: 'file-text',
+    title: 'System Prompts',
+    description:
+      "Curated XML context blocks you paste into any assistant that doesn't speak MCP — drops hallucinated props, selectors and classes to near zero.",
+    tags: ['Zero-config', 'Any LLM'],
+    delay: '200ms',
+  },
+];
+---
+
+<section id="ai-tools">
+  <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+    <SectionHeader
+      badge="AI Tools"
+      title="Built for AI-Native Development"
+      description="However your team codes with AI, this ecosystem meets it there — with a live MCP server, agent skills, and copy-paste prompt context so assistants generate real, correct components."
+    />
+
+    <div and-layout="grid cols:1 cols@md:3 gap:lg" class="items-stretch">
+      {
+        tools.map((tool) => (
+          <FeatureCard
+            icon={tool.icon}
+            title={tool.title}
+            description={tool.description}
+            tags={tool.tags}
+            delay={tool.delay}
+          />
+        ))
+      }
+    </div>
+
+    <!-- MCP quick start -->
+    <div
+      and-layout="vertical gap:lg p:xxl"
+      class="rounded-2xl bg-primary/5 border border-primary/10"
+      and-motion="zoom"
+      and-motion-trigger="enter"
+      and-motion-duration="800ms"
+    >
+      <div and-layout="horizontal align:center gap:md wrap:wrap">
+        <div class="h-14 w-14 shrink-0 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+          <and-icon name="terminal" size="28"></and-icon>
+        </div>
+        <div and-layout="vertical gap:xxs">
+          <h3 and-text="h3 weight:bold" class="tracking-tight">Connect the MCP server</h3>
+          <p and-text="p" class="text-muted-foreground max-w-[560px]">
+            No install — it runs on demand. Add it to your assistant, then ask it to build with And Web Components.
+          </p>
+        </div>
+      </div>
+
+      <code
+        class="block text-sm bg-muted/80 px-4 py-3 rounded-lg border whitespace-pre-wrap break-all text-foreground/90"
+        >npx -y @andersseen/mcp</code
+      >
+
+      <code
+        class="block text-xs sm:text-sm bg-muted/80 px-4 py-3 rounded-lg border whitespace-pre overflow-x-auto text-foreground/85"
+        >{`// .mcp.json (Claude) — or .vscode/mcp.json / .cursor/mcp.json
+{
+  "mcpServers": {
+    "and-web-components": {
+      "command": "npx",
+      "args": ["-y", "@andersseen/mcp"]
+    }
+  }
+}`}</code
+      >
+
+      <div and-layout="horizontal gap:md align:center wrap:wrap">
+        <a href="https://github.com/Andersseen/and-web-components/tree/main/packages/mcp" target="_blank" rel="noopener">
+          <and-button variant="outline" size="lg">
+            <and-icon name="github" size="18"></and-icon>
+            Read the docs
+          </and-button>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

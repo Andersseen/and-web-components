@@ -9,6 +9,7 @@ import { HEADLESS_CORE_PROMPT, ICON_PROMPT, LAYOUT_PROMPT, MOTION_PROMPT, WEB_CO
 type PackageManager = 'pnpm' | 'npm' | 'yarn';
 type PromptLibrary = 'web-components' | 'headless-core' | 'icon' | 'motion' | 'layout';
 type SkillTarget = 'all' | 'orchestrator' | 'web-components' | 'headless-core' | 'icon' | 'motion' | 'layout';
+type McpClient = 'claude' | 'cursor' | 'vscode';
 
 @Component({
   selector: 'app-docs-ai',
@@ -26,7 +27,7 @@ type SkillTarget = 'all' | 'orchestrator' | 'web-components' | 'headless-core' |
     <div class="mx-auto w-full min-w-0 max-w-5xl overflow-x-clip px-4 pb-10 sm:px-6 sm:pb-12">
       <demo-header
         title="Docs for AI-Driven Development"
-        description="A specialized toolkit to help you construct the perfect system prompt. Copy the base instructions and append the architectural context of the specific libraries your project needs to drastically reduce LLM hallucinations."
+        description="A toolkit for feeding AI assistants accurate context about this design system — three ways, strongest last: paste a curated system prompt, install per-library agent skills, or connect the MCP server so the agent queries the live component catalog directly."
       />
       <demo-section title="Appendix: Workspace Installation">
         <demo-panel
@@ -187,6 +188,43 @@ type SkillTarget = 'all' | 'orchestrator' | 'web-components' | 'headless-core' |
           </span>
         </div>
       </demo-section>
+
+      <demo-section title="4. MCP Server (live component catalog)">
+        <demo-panel
+          title="Let your agent query the real API"
+          description="The strongest option when your agent speaks MCP: instead of pasting context, it calls tools that read the live component catalog — generated from custom-elements.json, so it never drifts — and returns correct, framework-specific snippets (HTML, React, Vue, Angular). Runs locally, no install."
+        >
+          <div class="mt-4">
+            <demo-code-block label="Run" [code]="mcpRunCommand" language="bash" [copyable]="true" />
+          </div>
+        </demo-panel>
+
+        <and-tabs
+          [value]="selectedMcpClient()"
+          (andTabChange)="onMcpClientTabChange($event)"
+          class="mb-3 block w-full mt-4"
+        >
+          <and-tabs-list class="flex w-full flex-wrap gap-2">
+            @for (client of mcpClients; track client) {
+              <and-tabs-trigger [value]="client" class="px-4 py-2 text-sm font-semibold capitalize transition-all">
+                {{ mcpClientLabel(client) }}
+              </and-tabs-trigger>
+            }
+          </and-tabs-list>
+        </and-tabs>
+
+        <demo-code-block [label]="mcpConfigLabel()" [code]="mcpConfig()" language="json" [copyable]="true" />
+
+        <div class="mt-3">
+          <span
+            class="text-xs leading-relaxed text-foreground/70 bg-muted/40 px-3 py-1.5 rounded-md border border-border/50"
+          >
+            <strong>Tools:</strong> <code>list_components</code> · <code>get_component</code> ·
+            <code>get_usage_example</code> · <code>get_install_info</code> · <code>get_theme_info</code> ·
+            <code>get_project_info</code>.
+          </span>
+        </div>
+      </demo-section>
     </div>
   `,
 })
@@ -284,6 +322,64 @@ Now, implement the user's request based ONLY on the provided system capabilities
   );
 
   readonly skillDownloadCommand = computed(() => `${this.skillInstallCommand()} --download`);
+
+  readonly mcpRunCommand = 'npx -y @andersseen/mcp';
+  readonly mcpClients: McpClient[] = ['claude', 'cursor', 'vscode'];
+  readonly selectedMcpClient = signal<McpClient>('claude');
+
+  private readonly mcpClientLabels: Record<McpClient, string> = {
+    claude: 'Claude',
+    cursor: 'Cursor / Windsurf',
+    vscode: 'VS Code',
+  };
+
+  private readonly mcpConfigLabelByClient: Record<McpClient, string> = {
+    claude: '.mcp.json',
+    cursor: '.cursor/mcp.json',
+    vscode: '.vscode/mcp.json',
+  };
+
+  private readonly mcpConfigByClient: Record<McpClient, string> = {
+    claude: `{
+  "mcpServers": {
+    "and-web-components": {
+      "command": "npx",
+      "args": ["-y", "@andersseen/mcp"]
+    }
+  }
+}`,
+    cursor: `{
+  "mcpServers": {
+    "and-web-components": {
+      "command": "npx",
+      "args": ["-y", "@andersseen/mcp"]
+    }
+  }
+}`,
+    vscode: `{
+  "servers": {
+    "and-web-components": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@andersseen/mcp"]
+    }
+  }
+}`,
+  };
+
+  readonly mcpConfig = computed(() => this.mcpConfigByClient[this.selectedMcpClient()]);
+  readonly mcpConfigLabel = computed(() => this.mcpConfigLabelByClient[this.selectedMcpClient()]);
+
+  mcpClientLabel(client: McpClient) {
+    return this.mcpClientLabels[client];
+  }
+
+  onMcpClientTabChange(event: CustomEvent<string>) {
+    const value = event.detail;
+    if (this.mcpClients.includes(value as McpClient)) {
+      this.selectedMcpClient.set(value as McpClient);
+    }
+  }
 
   copyInstallCommand() {
     navigator.clipboard?.writeText(this.installCommand());
