@@ -78,30 +78,88 @@ feel different beyond corners — they drive real dimensions in `and-navbar`,
 ## Building a custom theme
 
 Don't fork a new theme file — layer your own values on top of an existing
-preset, the same pattern shadcn/ui and Radix Themes use. Load a base theme, then
-override just the tokens you care about:
+preset, the same pattern shadcn/ui and Radix Themes use. There is no separate
+"custom theme" mechanism to learn: `and-theme` is just an attribute selector, so
+any value you put on it — including one the library doesn't ship — works as long
+as you write the matching CSS rule.
+
+### 1. Pick a starting point
+
+Start from the built-in preset closest to what you want (`default`, `compact`,
+`playful`, `retro`, or `elegant`) — see the
+[Style tokens](#style-tokens-and-theme) table above for what each changes. Load
+it the same way as any other theme:
+
+```ts
+import '@andersseen/web-components/tokens.css'; // default palette + default style
+```
+
+### 2. Override brand colors
+
+Add a rule scoped to your own theme name. Override only the tokens that differ
+from the base — everything else keeps inheriting from what you loaded in step 1:
 
 ```css
-/* Load a base palette + style theme first */
-@import '@andersseen/web-components/tokens.css';
-
-/* Then override only what your brand needs */
 [and-theme='brand'] {
+  /* Brand primary color, its scale, and the text color that sits on it */
   --primary: 262 83% 58%;
   --primary-foreground: 0 0% 100%;
-  --radius: 0.375rem;
-  --theme-navbar-height: 3.75rem;
+
+  /* Optional: full scale if you use primary-50..950 utilities anywhere */
+  --primary-500: 262 83% 66%;
+  --primary-600: 262 83% 58%;
+  --primary-700: 262 74% 48%;
 }
 ```
 
+Remember the values are bare `H S% L%` triplets (no `hsl()` wrapper) — that's
+what lets both the library and `hsl(var(--primary) / 0.5)`-style opacity
+overrides work.
+
+### 3. Override shape/density tokens
+
+Same rule, same selector — add whichever `--radius`, `--spacing-factor`, or
+`--theme-*` tokens your brand needs:
+
+```css
+[and-theme='brand'] {
+  /* ...colors from step 2... */
+
+  --radius: 0.375rem;
+  --theme-navbar-height: 3.75rem;
+  --theme-focus-ring-width: 3px;
+}
+```
+
+### 4. Handle dark mode
+
+If your brand color needs a different value in dark mode, nest it under
+`and-mode="dark"` (or `.dark`, the supported shorthand) combined with your theme
+selector:
+
+```css
+[and-theme='brand'][and-mode='dark'],
+[and-theme='brand'].dark {
+  --primary: 262 83% 70%;
+  --primary-foreground: 262 47% 14%;
+}
+```
+
+### 5. Apply and verify
+
 ```html
-<html and-theme="brand"></html>
+<html and-theme="brand" and-color="indigo-rose"></html>
 ```
 
 Because every component consumes these through `var(--token, fallback)`,
 overriding a handful of tokens is enough — you don't need to touch component
 CSS, and updates to the library won't silently revert your overrides (they live
-in your own stylesheet, loaded after the library's).
+in your own stylesheet, loaded after the library's). To sanity-check a theme
+visually before wiring it into your app, the fastest loop is Storybook
+(`pnpm storybook` in `packages/web-components`) or the Angular demo app
+(`pnpm start:demo`) — both apply `and-theme`/`and-color` on `<html>` the same
+way, and the demo app's navbar has a live theme/palette switcher you can use as
+a reference for how the attribute wiring should look in your own app.
 
 See [Styling Integration](/guides/styling-integration/) for the no-Tailwind and
 Tailwind-preset paths for loading these tokens in the first place.
