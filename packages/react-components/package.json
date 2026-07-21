@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/react-components",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "React wrappers for @andersseen/web-components Stencil library",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
