@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/mcp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Model Context Protocol server for And Web Components — lets AI assistants (Claude, Cursor, Copilot, VS Code…) query the component catalog and generate correct, framework-specific usage snippets.",
   "type": "module",
   "bin": {

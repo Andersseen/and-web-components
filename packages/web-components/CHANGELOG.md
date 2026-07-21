@@ -1,5 +1,60 @@
 # @andersseen/web-components
 
+## 0.3.0
+
+### Minor Changes
+
+- 5dd2d20: `and-input` now resyncs its value with a wrapping `<form>` after a
+  native `form.reset()`. Its inner `<input>` already renders in light DOM as a
+  real descendant of the form, so `FormData`, `required` validation, and
+  Enter-to-submit worked natively already — the only gap was that a native reset
+  changed the visible input's value without notifying the component, leaving its
+  internal state stale. Also adds an "In a form" Storybook story demonstrating
+  submit and reset.
+- b7e1634: Adds `and-switch`, a boolean on/off toggle. Renders in light DOM
+  around a real `<input type="checkbox" role="switch">`, so `FormData`, native
+  `required` validation, `<fieldset disabled>`, keyboard (Space), and
+  label-click-to-toggle all work natively with no extra wiring — the visible
+  track/thumb are styled purely off the checkbox's own `:checked`/`:disabled`
+  state via Tailwind `peer-*` variants. Also resyncs on native `form.reset()`,
+  the same fix already shipped for `and-input` and `and-select`. Adds the new
+  `createSwitch` headless factory (`@andersseen/headless-components/switch`),
+  spec tests, a Storybook "In a form" story, and a docs page.
+- bfcecb9: Makes Tailwind optional at the consumer end: adds `./tokens.css`
+  (pure design tokens, no `@tailwind`, no Preflight reset), `./elements.css`
+  (the same host utility classes `style.css` ships, without Preflight), and a
+  shareable `./tailwind-preset` so apps that already use Tailwind can map
+  `bg-primary` / `rounded-lg` / `t-gap-*` to the library's tokens without
+  copying config. `style.css` is unchanged and still supported.
+
+  Also fixes a theming gap: switching style themes at runtime via the documented
+  `and-theme` attribute (e.g. `<html and-theme="playful">`) only set 6
+  structural tokens, while the static `themes/styles/*.css` imports set ~36
+  (including `--theme-navbar-*`, `--theme-sidebar-*`, `--theme-carousel-*`,
+  motion timings). The two are now kept in sync, so runtime theme switching
+  produces the full effect. `borderRadius` (`rounded-md`/`rounded-sm`) now
+  scales proportionally from `--radius` instead of fixed pixel offsets, so
+  themes with a larger base radius (e.g. `playful`) differentiate their radius
+  steps more clearly.
+
+- 6972daf: `and-select` now resyncs its value with a wrapping `<form>` after a
+  native `form.reset()`. It already renders in light DOM with a hidden
+  `<input type="hidden">` mirroring `value` as a real descendant of the form, so
+  `FormData` and `<fieldset disabled>` worked natively already — the gap was
+  that Stencil re-stamps the hidden input's `value` attribute on every
+  selection, dragging its native reset-default along with it, so a form reset
+  previously restored the _last selected_ value instead of the true default.
+  Fixed with the same `reset`-listener pattern as `and-input`, plus a new
+  `setSelectedValue` headless action for restoring "no selection". Also adds an
+  "In a form" Storybook story demonstrating submit, reset, and
+  `fieldset[disabled]`.
+
+### Patch Changes
+
+- Updated dependencies [b7e1634]
+- Updated dependencies [6972daf]
+  - @andersseen/headless-components@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes

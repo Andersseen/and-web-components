@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/vue-components",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Vue wrappers for @andersseen/web-components Stencil library",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
