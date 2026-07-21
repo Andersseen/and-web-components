@@ -47,6 +47,12 @@ Then load the design tokens so components render styled:
 import '@andersseen/web-components/style.css';
 ```
 
+`style.css` bundles the tokens, host utility classes, and a Tailwind Preflight
+reset. If you're on SASS/plain CSS and don't want the reset, or you already use
+Tailwind in your own app, see
+[Styling Integration](/guides/styling-integration/) for the Tailwind-free and
+Tailwind-preset paths.
+
 ### Angular / React / Vue
 
 Install the generated wrapper package instead and import components directly —
@@ -64,6 +70,9 @@ attribute on `<html>`:
 ```html
 <html and-theme="compact" and-color="slate-amber"></html>
 ```
+
+See [Theming & Tokens](/guides/theming-tokens/) for the full token reference and
+how to layer your own custom theme on top of a preset.
 
 See each component's page in the sidebar for its full API (properties, events,
 CSS parts) and a live usage example.

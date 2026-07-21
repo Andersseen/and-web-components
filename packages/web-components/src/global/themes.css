@@ -6,9 +6,52 @@
   --navbar-link-active-weight: 600;
   --navbar-link-letter-spacing: 0;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 80rem;
+  --theme-motion-fast: 150ms;
+  --theme-motion-base: 220ms;
+  --theme-motion-slow: 320ms;
+  --theme-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 2px;
+  --theme-surface-blur: 8px;
+  --theme-overlay-opacity: 0.5;
+  --theme-modal-backdrop-blur: 4px;
+  --theme-navbar-height: 4rem;
+  --theme-navbar-px: 1rem;
+  --theme-navbar-px-sm: 1.5rem;
+  --theme-navbar-px-lg: 2rem;
+  --theme-navbar-item-gap: 0.25rem;
+  --theme-navbar-section-gap: 1rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 16rem;
+  --theme-sidebar-collapsed-width: 4rem;
+  --theme-sidebar-header-height: 3.5rem;
+  --theme-sidebar-item-gap: 0.125rem;
+  --theme-sidebar-icon-size: 1.125rem;
+  --theme-sidebar-px: 0.5rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: var(--radius);
+  --theme-carousel-control-size: 2.5rem;
+  --theme-carousel-control-offset: 1rem;
+  --theme-carousel-control-radius: 50%;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
-/* :host-context() is unsupported in WebKit/Safari. A combined selector
+/* This file is the runtime-switchable twin of themes/styles/*.css: each
+   variant below must carry the exact same tokens as its
+   themes/styles/<name>.css counterpart (kept in sync by hand — there is no
+   shared build step between "switch via [and-theme] attribute at runtime"
+   and "import one theme's CSS file statically"). Previously these blocks
+   only set 6 structural tokens (radius/spacing-factor/border-width/navbar
+   link styling) while themes/styles/*.css set ~30 more (--theme-navbar-*,
+   --theme-sidebar-*, --theme-carousel-*, motion timings, focus ring, overlay
+   blur/opacity) — so switching `and-theme` at runtime, the mechanism
+   documented in the Getting Started guide, produced a far weaker effect than
+   importing the theme's CSS file directly. Kept identical here so both paths
+   produce the same result.
+
+   :host-context() is unsupported in WebKit/Safari. A combined selector
    list (e.g. `[and-theme='compact'], :host-context(...)`) is invalid as
    a whole there, which drops the plain attribute-selector rule too.
    Each variant is duplicated as its own standalone rule so light-DOM
@@ -16,41 +59,161 @@
 [and-theme='compact'],
 [data-theme='compact'] {
   --radius: 0.25rem;
-  --spacing-factor: 0.75;
+  --spacing-factor: 0.82;
   --border-width: 1px;
   --navbar-link-active-weight: 600;
   --navbar-link-letter-spacing: 0;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 74rem;
+  --theme-motion-fast: 120ms;
+  --theme-motion-base: 180ms;
+  --theme-motion-slow: 260ms;
+  --theme-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 1px;
+  --theme-surface-blur: 6px;
+  --theme-overlay-opacity: 0.46;
+  --theme-modal-backdrop-blur: 3px;
+  --theme-navbar-height: 3.5rem;
+  --theme-navbar-px: 0.75rem;
+  --theme-navbar-px-sm: 1rem;
+  --theme-navbar-px-lg: 1.25rem;
+  --theme-navbar-item-gap: 0.125rem;
+  --theme-navbar-section-gap: 0.625rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 14rem;
+  --theme-sidebar-collapsed-width: 3.5rem;
+  --theme-sidebar-header-height: 3rem;
+  --theme-sidebar-item-gap: 0.1rem;
+  --theme-sidebar-icon-size: 1rem;
+  --theme-sidebar-px: 0.375rem;
+  --theme-sidebar-section-gap: 0.375rem;
+  --theme-carousel-track-radius: var(--radius);
+  --theme-carousel-control-size: 2rem;
+  --theme-carousel-control-offset: 0.625rem;
+  --theme-carousel-control-radius: 9999px;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 :host-context([and-theme='compact']),
 :host-context([data-theme='compact']) {
   --radius: 0.25rem;
-  --spacing-factor: 0.75;
+  --spacing-factor: 0.82;
   --border-width: 1px;
   --navbar-link-active-weight: 600;
   --navbar-link-letter-spacing: 0;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 74rem;
+  --theme-motion-fast: 120ms;
+  --theme-motion-base: 180ms;
+  --theme-motion-slow: 260ms;
+  --theme-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 1px;
+  --theme-surface-blur: 6px;
+  --theme-overlay-opacity: 0.46;
+  --theme-modal-backdrop-blur: 3px;
+  --theme-navbar-height: 3.5rem;
+  --theme-navbar-px: 0.75rem;
+  --theme-navbar-px-sm: 1rem;
+  --theme-navbar-px-lg: 1.25rem;
+  --theme-navbar-item-gap: 0.125rem;
+  --theme-navbar-section-gap: 0.625rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 14rem;
+  --theme-sidebar-collapsed-width: 3.5rem;
+  --theme-sidebar-header-height: 3rem;
+  --theme-sidebar-item-gap: 0.1rem;
+  --theme-sidebar-icon-size: 1rem;
+  --theme-sidebar-px: 0.375rem;
+  --theme-sidebar-section-gap: 0.375rem;
+  --theme-carousel-track-radius: var(--radius);
+  --theme-carousel-control-size: 2rem;
+  --theme-carousel-control-offset: 0.625rem;
+  --theme-carousel-control-radius: 9999px;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 [and-theme='playful'],
 [data-theme='playful'] {
   --radius: 1rem;
-  --spacing-factor: 1.25;
+  --spacing-factor: 1.24;
   --border-width: 2px;
   --navbar-link-active-weight: 700;
   --navbar-link-letter-spacing: 0.01em;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 86rem;
+  --theme-motion-fast: 170ms;
+  --theme-motion-base: 260ms;
+  --theme-motion-slow: 360ms;
+  --theme-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-focus-ring-width: 3px;
+  --theme-focus-ring-offset: 3px;
+  --theme-surface-blur: 12px;
+  --theme-overlay-opacity: 0.58;
+  --theme-modal-backdrop-blur: 6px;
+  --theme-navbar-height: 4.5rem;
+  --theme-navbar-px: 1.25rem;
+  --theme-navbar-px-sm: 1.75rem;
+  --theme-navbar-px-lg: 2.5rem;
+  --theme-navbar-item-gap: 0.5rem;
+  --theme-navbar-section-gap: 1.25rem;
+  --theme-navbar-indicator-height: 3px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 17rem;
+  --theme-sidebar-collapsed-width: 4.5rem;
+  --theme-sidebar-header-height: 4rem;
+  --theme-sidebar-item-gap: 0.25rem;
+  --theme-sidebar-icon-size: 1.25rem;
+  --theme-sidebar-px: 0.75rem;
+  --theme-sidebar-section-gap: 0.625rem;
+  --theme-carousel-track-radius: calc(var(--radius) * 1.1);
+  --theme-carousel-control-size: 2.75rem;
+  --theme-carousel-control-offset: 1.25rem;
+  --theme-carousel-control-radius: 50%;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 :host-context([and-theme='playful']),
 :host-context([data-theme='playful']) {
   --radius: 1rem;
-  --spacing-factor: 1.25;
+  --spacing-factor: 1.24;
   --border-width: 2px;
   --navbar-link-active-weight: 700;
   --navbar-link-letter-spacing: 0.01em;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 86rem;
+  --theme-motion-fast: 170ms;
+  --theme-motion-base: 260ms;
+  --theme-motion-slow: 360ms;
+  --theme-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-focus-ring-width: 3px;
+  --theme-focus-ring-offset: 3px;
+  --theme-surface-blur: 12px;
+  --theme-overlay-opacity: 0.58;
+  --theme-modal-backdrop-blur: 6px;
+  --theme-navbar-height: 4.5rem;
+  --theme-navbar-px: 1.25rem;
+  --theme-navbar-px-sm: 1.75rem;
+  --theme-navbar-px-lg: 2.5rem;
+  --theme-navbar-item-gap: 0.5rem;
+  --theme-navbar-section-gap: 1.25rem;
+  --theme-navbar-indicator-height: 3px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 17rem;
+  --theme-sidebar-collapsed-width: 4.5rem;
+  --theme-sidebar-header-height: 4rem;
+  --theme-sidebar-item-gap: 0.25rem;
+  --theme-sidebar-icon-size: 1.25rem;
+  --theme-sidebar-px: 0.75rem;
+  --theme-sidebar-section-gap: 0.625rem;
+  --theme-carousel-track-radius: calc(var(--radius) * 1.1);
+  --theme-carousel-control-size: 2.75rem;
+  --theme-carousel-control-offset: 1.25rem;
+  --theme-carousel-control-radius: 50%;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 [and-theme='retro'],
@@ -61,6 +224,36 @@
   --navbar-link-active-weight: 700;
   --navbar-link-letter-spacing: 0.04em;
   --navbar-link-text-transform: uppercase;
+  --theme-layout-max-width: 80rem;
+  --theme-motion-fast: 90ms;
+  --theme-motion-base: 140ms;
+  --theme-motion-slow: 200ms;
+  --theme-easing-standard: linear;
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 2px;
+  --theme-surface-blur: 0px;
+  --theme-overlay-opacity: 0.62;
+  --theme-modal-backdrop-blur: 0px;
+  --theme-navbar-height: 4rem;
+  --theme-navbar-px: 1rem;
+  --theme-navbar-px-sm: 1.5rem;
+  --theme-navbar-px-lg: 2rem;
+  --theme-navbar-item-gap: 0.125rem;
+  --theme-navbar-section-gap: 1rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 0;
+  --theme-sidebar-width: 16rem;
+  --theme-sidebar-collapsed-width: 4rem;
+  --theme-sidebar-header-height: 3.5rem;
+  --theme-sidebar-item-gap: 0.125rem;
+  --theme-sidebar-icon-size: 1.125rem;
+  --theme-sidebar-px: 0.5rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: 0;
+  --theme-carousel-control-size: 2.25rem;
+  --theme-carousel-control-offset: 1rem;
+  --theme-carousel-control-radius: 0;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 :host-context([and-theme='retro']),
@@ -71,24 +264,114 @@
   --navbar-link-active-weight: 700;
   --navbar-link-letter-spacing: 0.04em;
   --navbar-link-text-transform: uppercase;
+  --theme-layout-max-width: 80rem;
+  --theme-motion-fast: 90ms;
+  --theme-motion-base: 140ms;
+  --theme-motion-slow: 200ms;
+  --theme-easing-standard: linear;
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 2px;
+  --theme-surface-blur: 0px;
+  --theme-overlay-opacity: 0.62;
+  --theme-modal-backdrop-blur: 0px;
+  --theme-navbar-height: 4rem;
+  --theme-navbar-px: 1rem;
+  --theme-navbar-px-sm: 1.5rem;
+  --theme-navbar-px-lg: 2rem;
+  --theme-navbar-item-gap: 0.125rem;
+  --theme-navbar-section-gap: 1rem;
+  --theme-navbar-indicator-height: 2px;
+  --theme-navbar-indicator-radius: 0;
+  --theme-sidebar-width: 16rem;
+  --theme-sidebar-collapsed-width: 4rem;
+  --theme-sidebar-header-height: 3.5rem;
+  --theme-sidebar-item-gap: 0.125rem;
+  --theme-sidebar-icon-size: 1.125rem;
+  --theme-sidebar-px: 0.5rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: 0;
+  --theme-carousel-control-size: 2.25rem;
+  --theme-carousel-control-offset: 1rem;
+  --theme-carousel-control-radius: 0;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 [and-theme='elegant'],
 [data-theme='elegant'] {
   --radius: 0.75rem;
-  --spacing-factor: 1.1;
+  --spacing-factor: 1.12;
   --border-width: 0.5px;
   --navbar-link-active-weight: 600;
   --navbar-link-letter-spacing: 0.015em;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 84rem;
+  --theme-motion-fast: 200ms;
+  --theme-motion-base: 280ms;
+  --theme-motion-slow: 420ms;
+  --theme-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 3px;
+  --theme-surface-blur: 14px;
+  --theme-overlay-opacity: 0.42;
+  --theme-modal-backdrop-blur: 8px;
+  --theme-navbar-height: 4.25rem;
+  --theme-navbar-px: 1.25rem;
+  --theme-navbar-px-sm: 1.75rem;
+  --theme-navbar-px-lg: 2.25rem;
+  --theme-navbar-item-gap: 0.375rem;
+  --theme-navbar-section-gap: 1.125rem;
+  --theme-navbar-indicator-height: 1px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 15.5rem;
+  --theme-sidebar-collapsed-width: 3.75rem;
+  --theme-sidebar-header-height: 3.75rem;
+  --theme-sidebar-item-gap: 0.2rem;
+  --theme-sidebar-icon-size: 1.1rem;
+  --theme-sidebar-px: 0.625rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: calc(var(--radius) * 0.9);
+  --theme-carousel-control-size: 2.5rem;
+  --theme-carousel-control-offset: 1.125rem;
+  --theme-carousel-control-radius: 9999px;
+  --theme-carousel-control-border-width: var(--border-width);
 }
 
 :host-context([and-theme='elegant']),
 :host-context([data-theme='elegant']) {
   --radius: 0.75rem;
-  --spacing-factor: 1.1;
+  --spacing-factor: 1.12;
   --border-width: 0.5px;
   --navbar-link-active-weight: 600;
   --navbar-link-letter-spacing: 0.015em;
   --navbar-link-text-transform: none;
+  --theme-layout-max-width: 84rem;
+  --theme-motion-fast: 200ms;
+  --theme-motion-base: 280ms;
+  --theme-motion-slow: 420ms;
+  --theme-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-focus-ring-width: 2px;
+  --theme-focus-ring-offset: 3px;
+  --theme-surface-blur: 14px;
+  --theme-overlay-opacity: 0.42;
+  --theme-modal-backdrop-blur: 8px;
+  --theme-navbar-height: 4.25rem;
+  --theme-navbar-px: 1.25rem;
+  --theme-navbar-px-sm: 1.75rem;
+  --theme-navbar-px-lg: 2.25rem;
+  --theme-navbar-item-gap: 0.375rem;
+  --theme-navbar-section-gap: 1.125rem;
+  --theme-navbar-indicator-height: 1px;
+  --theme-navbar-indicator-radius: 9999px;
+  --theme-sidebar-width: 15.5rem;
+  --theme-sidebar-collapsed-width: 3.75rem;
+  --theme-sidebar-header-height: 3.75rem;
+  --theme-sidebar-item-gap: 0.2rem;
+  --theme-sidebar-icon-size: 1.1rem;
+  --theme-sidebar-px: 0.625rem;
+  --theme-sidebar-section-gap: 0.5rem;
+  --theme-carousel-track-radius: calc(var(--radius) * 0.9);
+  --theme-carousel-control-size: 2.5rem;
+  --theme-carousel-control-offset: 1.125rem;
+  --theme-carousel-control-radius: 9999px;
+  --theme-carousel-control-border-width: var(--border-width);
 }

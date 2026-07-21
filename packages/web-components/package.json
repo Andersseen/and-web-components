@@ -37,6 +37,9 @@
     },
     "./style.css": "./dist/web-components/web-components.css",
     "./dist/web-components/web-components.css": "./dist/web-components/web-components.css",
+    "./tokens.css": "./themes/tokens.css",
+    "./elements.css": "./dist/web-components/elements.css",
+    "./tailwind-preset": "./tailwind-preset.js",
     "./colors/*.css": "./themes/colors/*.css",
     "./colors/*": "./themes/colors/*.css",
     "./themes": "./themes/index.css",
@@ -74,10 +77,11 @@
   "files": [
     "dist/",
     "loader/",
-    "themes/"
+    "themes/",
+    "tailwind-preset.js"
   ],
   "scripts": {
-    "build": "stencil build && node scripts/generate-all-barrel.cjs",
+    "build": "stencil build && node scripts/generate-all-barrel.cjs && node scripts/build-elements-css.mjs",
     "start": "stencil build --dev --watch --serve",
     "test": "node scripts/ensure-built.cjs && vitest run",
     "test:spec": "vitest run --project spec",

@@ -131,6 +131,58 @@ referenced below).
       issue on `stenciljs/output-targets` with the eager `defineCustomElementFn`
       analysis from SSD §15 TD-11 (it is complete and verifiable). Link the
       issue back into TD-11.
+- [x] **R2.9 — Make Tailwind optional at the consumer end (works with SASS _or_
+      with Tailwind)** _(done 2026-07-21 · medium)_ Added `themes/tokens.css`
+      (default palette + style theme, pure `:root` custom properties, zero
+      `@tailwind`) and `src/global/elements.css` (`@tailwind     utilities` only
+      — no Preflight, no `body` rule), compiled separately from `document.css`
+      by a new `scripts/build-elements-css.mjs` (Stencil's `globalStyle` only
+      supports one entry file) and wired into the package `build` script. Added
+      `tailwind-preset.js`, a shareable preset carrying the `theme.extend`
+      (colors, `borderRadius`, `borderWidth`, `t-gap` spacing) that used to live
+      only in `tailwind.config.js` — the internal config now does
+      `presets: [require('./tailwind-preset.js')]` so the two can never drift,
+      and consumers do
+      `presets: [require('@andersseen/web-components/tailwind-preset')]` to get
+      `bg-primary`/`rounded-lg`/`t-gap-*` resolving to the library's own tokens.
+      Added `./tokens.css`, `./elements.css`, `./tailwind-preset` package
+      exports; `style.css` unchanged for backwards compat. Documented both paths
+      in new `apps/docs` guide `guides/styling-integration`. **DoD met:**
+      verified live — `elements.css` build output has no Preflight/`body` rule
+      (grep-checked) and still emits the real utility classes;
+      `tailwind.config.js` resolves through the preset with `require()`;
+      compiled `style.css` still produces correct `.bg-primary`/`.rounded-md`
+      rules through the preset indirection. Changeset added (`minor`,
+      `@andersseen/web-components`).
+- [x] **R2.10 — Theme token contract + fix runtime theme-switching parity (no
+      6th theme)** _(done 2026-07-21 · medium)_ Investigation corrected the
+      original premise: `playful` wasn't under-designed — `themes/styles/*.css`
+      (the static per-theme import files) already had the full ~36-token
+      treatment (navbar/sidebar/carousel dimensions, motion timings, focus ring,
+      overlay blur). The actual bug was that `src/global/themes.css` — the
+      `[and-theme='…']` attribute-selector blocks that back the **documented,
+      runtime** theming API (`<html and-theme="playful">` from
+      `guides/getting-started`) — only ever set 6 of those ~36 tokens. So the
+      one mechanism consumers are told to use produced a far weaker effect than
+      the static import path. Fixed by syncing all four `themes.css` variants
+      (compact/playful/retro/elegant, plus the default `:root`) to the same
+      token values as their `themes/styles/*.css` counterparts, preserving the
+      existing `[and-theme]`/`[data-theme]`/`:host-context()` triplication
+      (Safari compat). Also switched `borderRadius` (`rounded-md`/`rounded-sm`)
+      in `tailwind-preset.js` from fixed `-2px`/`-4px` offsets to a proportional
+      `calc(var(--radius) * 0.75 / 0.5)` ramp, so themes with a larger
+      `--radius` (e.g. `playful`) differentiate their radius steps instead of
+      flattening; unchanged at the default `--radius: 0.5rem` and still `0` at
+      every step for `retro` (`--radius: 0`) — no regression. Added
+      `guides/theming-tokens` (full token reference + the
+      `[and-theme="brand"] { --primary; --radius; … }` layering recipe, the
+      shadcn/Radix override model) to `apps/docs`, linked from
+      `getting-started`. **DoD met:** verified live via a built-`dist` HTML page
+      screenshotted in a real browser — `and-navbar` height/padding/border now
+      visibly differs across `default`/`playful`/`retro`/`compact` when only the
+      `and-theme` attribute changes (previously near-identical); compiled
+      `[and-theme='playful']` block confirmed to carry all 36 declarations, up
+      from 6. Changeset added (`minor`, `@andersseen/web-components`).
 
 ## R3 — Later: maturity
 
@@ -161,7 +213,8 @@ referenced below).
 
 ## Changelog of this file
 
-| Date       | Change                                                                                                        |
-| ---------- | ------------------------------------------------------------------------------------------------------------- |
-| 2026-07-14 | Created (R1–R3 seeded from repo analysis)                                                                     |
-| 2026-07-15 | [PLAN.md](./PLAN.md) created — phase ordering now lives there (F0–F12); R-item DoDs here remain authoritative |
+| Date       | Change                                                                                                                                                                           |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-07-14 | Created (R1–R3 seeded from repo analysis)                                                                                                                                        |
+| 2026-07-15 | [PLAN.md](./PLAN.md) created — phase ordering now lives there (F0–F12); R-item DoDs here remain authoritative                                                                    |
+| 2026-07-21 | R2.9 (Tailwind-optional consumption: tokens.css/elements.css/tailwind-preset) and R2.10 (theme token contract + runtime theme-switching parity fix) added and completed same day |

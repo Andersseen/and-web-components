@@ -5,7 +5,11 @@
 export const sidebar = [
   {
     label: 'Guides',
-    items: [{ label: 'Getting Started', slug: 'guides/getting-started' }],
+    items: [
+      { label: 'Getting Started', slug: 'guides/getting-started' },
+      { label: 'Styling Integration', slug: 'guides/styling-integration' },
+      { label: 'Theming & Tokens', slug: 'guides/theming-tokens' },
+    ],
   },
   {
     label: 'Components',

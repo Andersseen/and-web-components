@@ -1,0 +1,22 @@
+/* =============================================================================
+   Tokens — Tailwind-free convenience bundle
+   @andersseen/web-components
+
+   Pure CSS custom properties. No @tailwind directives, no Preflight reset,
+   no `body` rule — safe to import into a SASS/plain-CSS project or any
+   Tailwind-less bundler without fighting your own global styles.
+
+   Combines the default color palette (Indigo & Rose, light + dark) with the
+   default style theme (radius/spacing/motion/navbar/sidebar/carousel
+   structural tokens). For a different palette or style theme, import the
+   underlying files directly instead of this bundle:
+
+     @import "@andersseen/web-components/colors/slate-amber.css";
+     @import "@andersseen/web-components/themes/styles/compact.css";
+
+   Usage:
+     @import "@andersseen/web-components/tokens.css";
+   ============================================================================= */
+
+@import './colors/indigo-rose.css';
+@import './styles/default.css';
