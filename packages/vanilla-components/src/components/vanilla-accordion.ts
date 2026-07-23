@@ -1,3 +1,4 @@
+import { HTMLElementBase } from '../utils/env';
 import { createAccordion, type AccordionReturn, type AccordionContentProps } from '@andersseen/headless-components';
 import { loadMotionPlayer, type MotionPlayerLike } from '../utils/motion-loader';
 
@@ -11,7 +12,7 @@ const ATTR_ANIMATED = 'animated';
  *
  * Motion is optional: add `animated` and install `@andersseen/motion`.
  */
-export class VanillaAccordion extends HTMLElement {
+export class VanillaAccordion extends HTMLElementBase {
   static observedAttributes = [ATTR_ALLOW_MULTIPLE, ATTR_ANIMATED];
 
   private accordionLogic: AccordionReturn | null = null;

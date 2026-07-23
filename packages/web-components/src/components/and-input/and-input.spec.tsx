@@ -88,3 +88,27 @@ describe('and-input', () => {
     form.remove();
   });
 });
+
+describe('and-input — ARIA serialization (regression)', () => {
+  it('emits aria-required as "true"/"false", never as an empty attribute', async () => {
+    // A boolean `true` serialises to aria-required="", which is not a valid
+    // ARIA boolean and is read as the default (false) by screen readers.
+    const { root } = await render(<and-input label="Email" required></and-input>);
+
+    const input = root.querySelector('input');
+    expect(input.getAttribute('aria-required')).toBe('true');
+  });
+
+  it('omits empty aria-describedby instead of rendering describedby=""', async () => {
+    const { root } = await render(<and-input label="Email"></and-input>);
+
+    const input = root.querySelector('input');
+    expect(input.hasAttribute('aria-describedby')).toBe(false);
+  });
+
+  it('keeps aria-describedby when one is provided', async () => {
+    const { root } = await render(<and-input label="Email" describedBy="err-1"></and-input>);
+
+    expect(root.querySelector('input').getAttribute('aria-describedby')).toBe('err-1');
+  });
+});

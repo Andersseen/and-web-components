@@ -30,3 +30,7 @@ export { DEFAULT_TOOLTIP_CONFIG } from './tooltip/types';
 export { createDialog, type DialogRef } from './dialog/create-dialog';
 export type { DialogConfig, DialogPosition } from './dialog/types';
 export { DEFAULT_DIALOG_CONFIG } from './dialog/types';
+
+// Overlay primitives (also available as `@andersseen/behaviors/overlay`)
+export { calculatePosition, type OverlayPosition, type OverlaySize } from './utils/position';
+export { clamp, listen, setStyles, type ListenerCleanup } from './utils/dom';

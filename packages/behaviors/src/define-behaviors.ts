@@ -178,6 +178,14 @@ function initDialogs(root: HTMLElement, instances: BehaviorInstance[]): void {
  * Returns a cleanup function that destroys all created instances.
  */
 export function defineBehaviors(options: DefineBehaviorsOptions = {}): () => void {
+  // Behaviors attach to real DOM, so there is nothing to do during SSR.
+  // Return an inert teardown rather than throwing on `document.body`, so
+  // callers can invoke this from shared setup code without branching on
+  // the environment.
+  if (typeof document === 'undefined') {
+    return () => undefined;
+  }
+
   const root = options.root ?? document.body;
   const instances: BehaviorInstance[] = [];
 

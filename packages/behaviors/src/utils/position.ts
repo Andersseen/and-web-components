@@ -85,9 +85,21 @@ function fitsInViewport(
   );
 }
 
+/** Anything with a width/height, so callers aren't forced to own an element. */
+export interface OverlaySize {
+  width: number;
+  height: number;
+}
+
 export function calculatePosition(
   anchorRect: DOMRect,
-  overlayEl: HTMLElement,
+  /**
+   * The overlay, either as a live element (its offset box is measured) or as
+   * a plain size. The size form keeps this function pure and usable from a
+   * component that hasn't mounted its popover yet — or from a unit test with
+   * no DOM at all.
+   */
+  overlayEl: HTMLElement | OverlaySize,
   placement: TooltipPlacement,
   offset: number,
   flip: boolean,
@@ -96,9 +108,11 @@ export function calculatePosition(
     height: globalThis.window?.innerHeight ?? 0,
   },
 ): OverlayPosition {
-  const ow = overlayEl.offsetWidth;
-  const oh = overlayEl.offsetHeight;
-  const overlay = { width: ow, height: oh };
+  const overlay: OverlaySize =
+    'offsetWidth' in overlayEl
+      ? { width: overlayEl.offsetWidth, height: overlayEl.offsetHeight }
+      : { width: overlayEl.width, height: overlayEl.height };
+  const { width: ow, height: oh } = overlay;
 
   let resolvedPlacement = placement;
   let pos = computeRaw(anchorRect, overlay, placement, offset);

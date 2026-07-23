@@ -4,7 +4,7 @@
 
 import type { Component } from './types';
 
-export const CATALOG_VERSION = "2026-07-21";
+export const CATALOG_VERSION = "2026-07-23";
 
 export const catalog: Component[] = [
   {
@@ -244,7 +244,7 @@ export const catalog: Component[] = [
   {
     "tag": "and-button",
     "name": "AndButton",
-    "description": "Interactive button, or an anchor styled as one when `href` is set. For `size=\"icon\"` (no visible text), pass `aria-label` on the element — it's forwarded to the inner control since the host itself is never left focusable/labelled (an explicit `role`/`tabindex` on the host is moved to the inner button/anchor on load, so there's only one interactive surface for assistive tech to land on).",
+    "description": "Interactive button, or an anchor styled as one when `href` is set. `type=\"submit\"` / `type=\"reset\"` are honoured explicitly: the real `<button>` lives inside this component's shadow root, so it has no form owner and the browser's implicit submission never reaches the enclosing `<form>`. The click handler resolves the associated form (the `form` prop by id, else the nearest ancestor `<form>`) and calls `requestSubmit()` / `reset()` on it, which keeps native constraint validation and the `submit` event intact. For `size=\"icon\"` (no visible text), pass `aria-label` on the element — it's forwarded to the inner control since the host itself is never left focusable/labelled (an explicit `role`/`tabindex` on the host is moved to the inner button/anchor on load, so there's only one interactive surface for assistive tech to land on).",
     "attributes": [
       {
         "name": "class",
@@ -259,6 +259,13 @@ export const catalog: Component[] = [
         "type": "boolean",
         "default": "false",
         "description": "Disables the button when true."
+      },
+      {
+        "name": "form",
+        "field": "form",
+        "type": "string",
+        "default": "''",
+        "description": "Id of the `<form>` this button submits or resets, mirroring the native `form` attribute. Defaults to the nearest ancestor `<form>`."
       },
       {
         "name": "href",
@@ -319,7 +326,14 @@ export const catalog: Component[] = [
     ],
     "methods": [],
     "slots": [],
-    "cssParts": []
+    "cssParts": [
+      {
+        "name": "button"
+      },
+      {
+        "name": "link"
+      }
+    ]
   },
   {
     "tag": "and-card",
@@ -881,7 +895,11 @@ export const catalog: Component[] = [
     ],
     "methods": [],
     "slots": [],
-    "cssParts": []
+    "cssParts": [
+      {
+        "name": "input"
+      }
+    ]
   },
   {
     "tag": "and-menu-item",
@@ -961,7 +979,7 @@ export const catalog: Component[] = [
   {
     "tag": "and-modal",
     "name": "AndModal",
-    "description": "Centered dialog (`role=\"dialog\"`, `aria-modal=\"true\"`) with a focus trap, Escape-to-close, backdrop click, and focus restoration on close. Renders nothing (`<Host />`, no DOM) while closed.",
+    "description": "Centered dialog (`role=\"dialog\"`, `aria-modal=\"true\"`) with a focus trap that spans slotted content, Escape-to-close, backdrop click, body scroll lock, an inert background, and focus restoration on close. Renders nothing (`<Host />`, no DOM) while closed. Give every modal an accessible name: either set `label`, or slot a heading (`<h1>`–`<h6>`) as the first element — it is wired up as `aria-labelledby` automatically.",
     "attributes": [
       {
         "name": "animated",
@@ -969,6 +987,34 @@ export const catalog: Component[] = [
         "type": "boolean",
         "default": "false",
         "description": "Whether to animate the modal entrance and exit."
+      },
+      {
+        "name": "close-on-escape",
+        "field": "closeOnEscape",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether pressing Escape closes the modal."
+      },
+      {
+        "name": "close-on-overlay-click",
+        "field": "closeOnOverlayClick",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether clicking the backdrop closes the modal."
+      },
+      {
+        "name": "hide-close",
+        "field": "hideClose",
+        "type": "boolean",
+        "default": "false",
+        "description": "Hides the built-in close button when true."
+      },
+      {
+        "name": "label",
+        "field": "label",
+        "type": "string",
+        "default": "''",
+        "description": "Accessible name for the dialog. When empty, a slotted heading is used via `aria-labelledby` instead."
       },
       {
         "name": "open",
@@ -981,13 +1027,35 @@ export const catalog: Component[] = [
     "events": [
       {
         "name": "andModalClose",
-        "description": "Emitted when the modal is closed.",
+        "description": "Emitted when the modal is closed. Fires exactly once per close.",
         "type": "CustomEvent<void>"
       }
     ],
-    "methods": [],
+    "methods": [
+      {
+        "name": "hide",
+        "description": "Close the modal imperatively, running the exit animation if enabled."
+      },
+      {
+        "name": "show",
+        "description": "Open the modal imperatively."
+      }
+    ],
     "slots": [],
-    "cssParts": []
+    "cssParts": [
+      {
+        "name": "close-button"
+      },
+      {
+        "name": "container"
+      },
+      {
+        "name": "content"
+      },
+      {
+        "name": "overlay"
+      }
+    ]
   },
   {
     "tag": "and-navbar",

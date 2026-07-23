@@ -1,6 +1,7 @@
 {
   "name": "@andersseen/astro",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "sideEffects": false,
   "description": "Astro integration for @andersseen/web-components",
   "type": "module",
   "main": "./dist/index.js",

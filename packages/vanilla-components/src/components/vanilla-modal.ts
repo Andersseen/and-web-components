@@ -1,8 +1,11 @@
 import { createModal, type ModalReturn } from '@andersseen/headless-components';
 import { loadMotionPlayer, type MotionPlayerLike } from '../utils/motion-loader';
+import { HTMLElementBase } from '../utils/env';
+import { focusFirst, lockBodyScroll, trapTab, unlockBodyScroll } from '../utils/overlay';
 
 const ATTR_OPEN = 'open';
 const ATTR_ANIMATED = 'animated';
+const ATTR_LABEL = 'label';
 
 type AttributeValue = string | boolean | number | undefined;
 
@@ -19,45 +22,139 @@ type AttributeValue = string | boolean | number | undefined;
  *
  * Motion is optional: add `animated` and install `@andersseen/motion`.
  */
-export class VanillaModal extends HTMLElement {
-  static observedAttributes = [ATTR_OPEN, ATTR_ANIMATED];
+export class VanillaModal extends HTMLElementBase {
+  static observedAttributes = [ATTR_OPEN, ATTR_ANIMATED, ATTR_LABEL];
 
   private modalLogic: ModalReturn | null = null;
   private motionPlayer: MotionPlayerLike | null = null;
   private contentEl: HTMLElement | null = null;
-  private originalContent: Node[] = [];
+  /**
+   * The author's original children, moved out of the element on first
+   * connect and re-parented into the rendered body each time it opens.
+   *
+   * Held in a DocumentFragment and captured exactly once: `connectedCallback`
+   * fires again whenever the element is moved in the DOM, and re-reading
+   * `childNodes` there used to overwrite this with whatever was rendered at
+   * the time (nothing, when closed) — permanently destroying the content.
+   */
+  private slottedContent: DocumentFragment | null = null;
   private isClosing = false;
   private ignoreAttributeChange = false;
   private closeRequestId = 0;
+  private previouslyFocused: Element | null = null;
+  private scrollLocked = false;
 
   connectedCallback(): void {
-    this.originalContent = Array.from(this.childNodes);
-    this.innerHTML = '';
+    if (!this.slottedContent) {
+      const fragment = document.createDocumentFragment();
+      fragment.append(...Array.from(this.childNodes));
+      this.slottedContent = fragment;
+    }
 
-    this.modalLogic = createModal({
-      defaultOpen: this.hasAttribute(ATTR_OPEN),
-      onOpenChange: isOpen => {
-        this.syncOpenAttribute(isOpen);
-        this.render();
-        if (isOpen) {
-          this.playEnter();
-        } else if (!this.isClosing) {
-          this.dispatchEvent(new CustomEvent('andModalClose', { bubbles: true, composed: true }));
-        }
-      },
-    });
+    if (!this.modalLogic) {
+      this.modalLogic = createModal({
+        defaultOpen: this.hasAttribute(ATTR_OPEN),
+        label: this.getAttribute(ATTR_LABEL) || undefined,
+        onOpenChange: isOpen => {
+          this.syncOpenAttribute(isOpen);
+          this.render();
+          if (isOpen) {
+            this.applyOpenSideEffects();
+            this.playEnter();
+          } else if (!this.isClosing) {
+            this.releaseOpenSideEffects();
+            this.dispatchEvent(new CustomEvent('andModalClose', { bubbles: true, composed: true }));
+          }
+        },
+      });
+    }
 
+    document.addEventListener('keydown', this.handleKeyDown);
     this.render();
+    if (this.modalLogic.state.isOpen) {
+      this.applyOpenSideEffects();
+    }
   }
 
   disconnectedCallback(): void {
+    document.removeEventListener('keydown', this.handleKeyDown);
+    this.releaseOpenSideEffects();
     this.motionPlayer?.destroy();
     this.motionPlayer = null;
+  }
+
+  /**
+   * Escape-to-close (delegated to the headless logic, which owns the
+   * `closeOnEscape` policy) plus Tab containment while open. Nothing was
+   * listening for keydown before, so neither worked.
+   */
+  private handleKeyDown = (event: KeyboardEvent): void => {
+    if (!this.modalLogic?.state.isOpen) {
+      return;
+    }
+    this.modalLogic.handleKeyDown(event);
+    if (this.contentEl) {
+      trapTab(event, this.contentEl);
+    }
+  };
+
+  private applyOpenSideEffects(): void {
+    if (!this.scrollLocked) {
+      lockBodyScroll();
+      this.scrollLocked = true;
+    }
+    this.previouslyFocused = document.activeElement;
+    this.syncAccessibleName();
+    if (this.contentEl) {
+      focusFirst(this.contentEl);
+    }
+  }
+
+  private releaseOpenSideEffects(): void {
+    if (this.scrollLocked) {
+      unlockBodyScroll();
+      this.scrollLocked = false;
+    }
+    if (this.previouslyFocused instanceof HTMLElement && this.previouslyFocused.isConnected) {
+      this.previouslyFocused.focus();
+    }
+    this.previouslyFocused = null;
+  }
+
+  /**
+   * Prefer the `label` attribute; otherwise adopt a slotted heading as
+   * `aria-labelledby` so the dialog gets a real accessible name from the
+   * markup an author would write anyway.
+   */
+  private syncAccessibleName(): void {
+    const dialog = this.contentEl;
+    if (!dialog) {
+      return;
+    }
+    const label = this.getAttribute(ATTR_LABEL);
+    if (label) {
+      dialog.setAttribute('aria-label', label);
+      dialog.removeAttribute('aria-labelledby');
+      return;
+    }
+    const heading = dialog.querySelector<HTMLElement>('h1, h2, h3, h4, h5, h6');
+    if (!heading) {
+      return;
+    }
+    if (!heading.id) {
+      heading.id = `and-vanilla-modal-title-${Math.random().toString(36).slice(2, 9)}`;
+    }
+    dialog.setAttribute('aria-labelledby', heading.id);
+    dialog.removeAttribute('aria-label');
   }
 
   attributeChangedCallback(name: string): void {
     if (!this.modalLogic) {
       return;
+    }
+
+    if (name === ATTR_LABEL) {
+      this.syncAccessibleName();
     }
 
     if (name === ATTR_OPEN && !this.ignoreAttributeChange) {
@@ -172,6 +269,9 @@ export class VanillaModal extends HTMLElement {
     const isOpen = this.modalLogic?.state.isOpen ?? false;
     const shouldRender = isOpen || this.isClosing;
 
+    // Reclaim the author's nodes before any innerHTML wipe below.
+    this.stashSlottedContent();
+
     if (shouldRender) {
       // The motion player is bound to a specific content element. Replacing the
       // DOM creates a new content element, so discard the old player to avoid
@@ -197,9 +297,13 @@ export class VanillaModal extends HTMLElement {
       this.contentEl = this.querySelector('.and-modal-content');
 
       const body = this.querySelector('.and-modal-body');
-      if (body) {
-        body.append(...this.originalContent);
+      if (body && this.slottedContent) {
+        // Moves every child out of the fragment in one go; the fragment is
+        // left empty and refilled by stashSlottedContent() before the next
+        // innerHTML wipe, so the author's nodes are never discarded.
+        body.append(this.slottedContent);
       }
+      this.syncAccessibleName();
 
       const backdrop = this.querySelector('.and-modal-backdrop');
       backdrop?.addEventListener('click', () => this.close());
@@ -210,6 +314,19 @@ export class VanillaModal extends HTMLElement {
       this.innerHTML = '';
       this.contentEl = null;
     }
+  }
+
+  /**
+   * Move whatever the author slotted back out of the rendered body and into
+   * the holding fragment, so the next `innerHTML` assignment cannot destroy
+   * it. Safe to call when nothing is rendered.
+   */
+  private stashSlottedContent(): void {
+    const body = this.querySelector('.and-modal-body');
+    if (!body || !this.slottedContent) {
+      return;
+    }
+    this.slottedContent.append(...Array.from(body.childNodes));
   }
 
   private attrString(props: Record<string, AttributeValue>): string {

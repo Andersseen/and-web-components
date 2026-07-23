@@ -3,6 +3,7 @@ import { cn } from '../../utils/cn';
 import { createDrawer, type DrawerPlacement, type DrawerReturn } from '@andersseen/headless-components';
 import { applyGlobalAnimationFlag } from '../../utils/animation-config';
 import { focusFirst, handleTabInFocusTrap } from '../../utils/focus-trap';
+import { lockBodyScroll, unlockBodyScroll, setBackgroundInert } from '../../utils/overlay-page';
 import { overlayVariants, contentVariants, closeBtnVariants } from './and-drawer-variants';
 
 /**
@@ -68,6 +69,10 @@ export class AndDrawer {
 
   private previouslyFocused: Element | null = null;
 
+  private releaseInert: (() => void) | null = null;
+
+  private scrollLocked = false;
+
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
@@ -80,10 +85,10 @@ export class AndDrawer {
         this.isOpen = isOpen;
         this.open = isOpen;
         if (isOpen) {
-          document.body.style.overflow = 'hidden';
+          this.applyPageSideEffects();
           this.andDrawerOpen.emit();
         } else {
-          document.body.style.overflow = '';
+          this.releasePageSideEffects();
           this.andDrawerClose.emit();
         }
       },
@@ -147,6 +152,26 @@ export class AndDrawer {
     return this.el.shadowRoot ?? this.el;
   }
 
+  /* ── Page side effects ──────────────────────────────────────────── */
+
+  private applyPageSideEffects() {
+    if (!this.scrollLocked) {
+      lockBodyScroll();
+      this.scrollLocked = true;
+    }
+    this.releaseInert?.();
+    this.releaseInert = setBackgroundInert(this.el);
+  }
+
+  private releasePageSideEffects() {
+    if (this.scrollLocked) {
+      unlockBodyScroll();
+      this.scrollLocked = false;
+    }
+    this.releaseInert?.();
+    this.releaseInert = null;
+  }
+
   private restoreFocus() {
     if (this.previouslyFocused instanceof HTMLElement) {
       this.previouslyFocused.focus();
@@ -173,9 +198,9 @@ export class AndDrawer {
     // Close drawer on unmount to prevent memory leaks and restore body scroll
     if (this.open) {
       this.drawer.actions.close();
-      document.body.style.overflow = '';
       this.restoreFocus();
     }
+    this.releasePageSideEffects();
   }
 
   /* ── Render ─────────────────────────────────────────────────────── */

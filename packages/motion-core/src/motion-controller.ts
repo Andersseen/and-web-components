@@ -74,24 +74,47 @@ interface ListenerRecord {
 // ─── Controller ────────────────────────────────────────────────────────────
 
 export class MotionController {
-  private readonly root: HTMLElement;
+  private readonly root: HTMLElement | null;
   private readonly once: boolean;
-  private readonly prefersReducedMotion: boolean;
+  private prefersReducedMotion: boolean;
 
   private observer: IntersectionObserver | null = null;
   private listeners: ListenerRecord[] = [];
   private observedElements: Set<HTMLElement> = new Set();
   private destroyed = false;
+  private motionQuery: MediaQueryList | null = null;
+  private motionQueryListener: ((event: MediaQueryListEvent) => void) | null = null;
 
   constructor(options: MotionControllerOptions = {}) {
-    const { root = document.body, threshold = 0.1, rootMargin = '0px', once = true } = options;
+    const { threshold = 0.1, rootMargin = '0px', once = true } = options;
 
-    this.root = root;
     this.once = once;
 
+    // ── Server-safe bail-out ──
+    // `document.body` and `IntersectionObserver` don't exist during SSR
+    // (Astro, Next, an Angular server build). Construct inert rather than
+    // throwing, so calling code doesn't have to branch on the environment.
+    if (typeof document === 'undefined' || typeof IntersectionObserver === 'undefined') {
+      this.root = null;
+      this.prefersReducedMotion = true;
+      this.destroyed = true;
+      return;
+    }
+
+    this.root = options.root ?? document.body;
+
     // ── Reduced-motion detection (JS layer, mirrors CSS @media) ──
-    this.prefersReducedMotion =
-      typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    // Tracked live: the CSS layer reacts to the user flipping the OS setting
+    // mid-session, and this one used to be read once in the constructor and
+    // never updated, so the two layers could disagree.
+    this.motionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)') ?? null;
+    this.prefersReducedMotion = this.motionQuery?.matches ?? false;
+    if (this.motionQuery) {
+      this.motionQueryListener = event => {
+        this.prefersReducedMotion = event.matches;
+      };
+      this.motionQuery.addEventListener('change', this.motionQueryListener);
+    }
 
     // ── Create shared IntersectionObserver ──
     this.observer = new IntersectionObserver(entries => this.handleIntersections(entries), { threshold, rootMargin });
@@ -107,7 +130,7 @@ export class MotionController {
    * Safe to call multiple times (idempotent per element).
    */
   scan(): void {
-    if (this.destroyed) {
+    if (this.destroyed || !this.root) {
       return;
     }
 
@@ -136,6 +159,13 @@ export class MotionController {
     }
     this.listeners = [];
     this.observedElements.clear();
+
+    // Stop tracking the reduced-motion media query
+    if (this.motionQuery && this.motionQueryListener) {
+      this.motionQuery.removeEventListener('change', this.motionQueryListener);
+    }
+    this.motionQuery = null;
+    this.motionQueryListener = null;
   }
 
   // ─── Private — Element Setup ─────────────────────────────────────────────

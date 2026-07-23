@@ -92,10 +92,14 @@ describe('createModal', () => {
     expect(props.type).toBe('button');
   });
 
-  it('provides correct default aria-label', () => {
+  it('omits aria-label when no label is configured', () => {
+    // Inventing a generic name here made every dialog on a page announce
+    // as "Dialog" while still passing automated a11y checks — the caller
+    // has to supply a real name (aria-label or aria-labelledby).
     const modal = createModal();
     const props = modal.getContentProps();
-    expect(props['aria-label']).toBe('Dialog');
+    expect(props['aria-label']).toBeUndefined();
+    expect('aria-label' in props).toBe(false);
   });
 
   it('allows custom aria-label', () => {

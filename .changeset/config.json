@@ -7,5 +7,9 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@andersseen/astro-landing", "angular-workspace"]
+  "ignore": [
+    "@andersseen/astro-landing",
+    "angular-workspace",
+    "@andersseen/vanilla-components"
+  ]
 }

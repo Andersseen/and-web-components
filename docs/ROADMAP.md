@@ -184,6 +184,97 @@ referenced below).
       `[and-theme='playful']` block confirmed to carry all 36 declarations, up
       from 6. Changeset added (`minor`, `@andersseen/web-components`).
 
+- [x] **R2.11 — P0 correctness pass on modal / drawer / button** _(done
+      2026-07-23 · TD-15-adjacent)_ Five defects found by driving the built
+      `dist/` in a real browser rather than reading the specs, all now covered
+      by regression tests: (1) `and-button type="submit"` never submitted its
+      form (the real `<button>` is in shadow DOM, so it has no form owner) — now
+      resolves the form and calls `requestSubmit()`/`reset()`, plus a new `form`
+      prop; (2) the modal/drawer focus trap was a flat
+      `shadowRoot.querySelectorAll()` that saw neither slotted content nor
+      nested shadow roots, so Shift+Tab from the first field escaped the dialog
+      — rewritten to walk the composed tree, with deep-activeElement tracking
+      and stray-focus recovery; (3) `andModalClose` fired twice with `animated`
+      and focus was never restored on that path; (4) the modal had no body
+      scroll lock and no inert background (both now reference-counted in
+      `utils/overlay-page.ts`, and the drawer's leaky `body.style.overflow = ''`
+      reset was replaced with it); (5) every modal announced as "Dialog" — added
+      a `label` prop plus automatic `aria-labelledby` adoption of a slotted
+      heading, and stopped `createModal` inventing a generic name. Also surfaced
+      `closeOnEscape`, `closeOnOverlayClick`, `hideClose`, `show()`/`hide()`,
+      and the first CSS parts. **Verification:** the new
+      `src/utils/focus-trap.spec.tsx` fails 5/5 against the previous
+      implementation and passes 5/5 against the new one; full suite 136 specs
+      (was 117) + 293 headless, `pnpm lint` clean (62 pre-existing warnings
+      unchanged). Changeset: `minor` for `@andersseen/web-components` and
+      `@andersseen/headless-components`.
+
+- [ ] **R2.12 — CSS parts across the remaining components** _(TD-17 · High ·
+      medium)_ 22 components still expose no `::part()` surface. Settle a naming
+      convention first (it becomes public API at 1.0), then apply it component
+      by component and document it. Do this **before** R3.1's freeze.
+
+- [ ] **R2.13 — Popovers must escape `overflow: hidden`** _(TD-18 · High ·
+      medium-large)_ `and-select`, `and-dropdown`, `and-tooltip`,
+      `and-context-menu`, `and-menu-list` are all clipped by any scrolling or
+      overflow-hidden ancestor. Prefer the `popover` attribute + CSS anchor
+      positioning (top layer, no portal bookkeeping), keeping the existing
+      placement math as the fallback path. Needs a browser-support decision
+      recorded as an ADR in SSD §14.
+
+- [ ] **R2.14 — RTL support** _(TD-20 · Medium · mechanical but wide)_ Replace
+      the 39 hard-coded directional utilities with logical properties and add an
+      RTL story/e2e case. Cheaper now than after the 1.0 freeze.
+
+- [x] **R2.15 — Cross-package audit follow-ups** _(done 2026-07-23 ·
+      TD-23…TD-27)_ Audited every package outside `web-components` by running
+      them, not reading them. Fixed: `StateStore` returned a fresh frozen object
+      on every `state` read, breaking React's `useSyncExternalStore` contract
+      and `===` memoisation everywhere else (now cached, invalidated on real
+      change); `@andersseen/vanilla-components` threw
+      `HTMLElement is not defined` on bare import and `initMotion()` /
+      `defineBehaviors()` threw `document is not defined` in Node (all four
+      packages now import and run clean server-side); `vanilla-modal` had no
+      keyboard, no focus management and no scroll lock — and permanently
+      destroyed its slotted content when the element was moved in the DOM,
+      because `connectedCallback` re-read `childNodes` into its content backup
+      on every re-insertion (content now held in a DocumentFragment captured
+      once); `prefers-reduced-motion` was read once in the `MotionController`
+      constructor so the JS and CSS layers could disagree (now tracked live);
+      unregistered icon names rendered an empty box in silence (now a one-time
+      dev warning, tree-shaking unaffected — re-verified at 306 B for one icon
+      vs 11.4 KB for all). Published `@andersseen/behaviors/overlay`
+      (`calculatePosition` with flip-on-collision, now accepting a plain size so
+      it works with no DOM) and declared `sideEffects` on four packages.
+      `vanilla-components` dropped 1.0.0 → 0.0.2 (0.0.1 is already taken on
+      npm), marked experimental in its README, and added to the Changesets
+      ignore list. **Verification:** the new `store.test.ts` fails 5/7 and the
+      new `vanilla-modal` regressions fail 6/14 against the previous code;
+      suites now 300 headless / 136 stencil / 18 vanilla / 36 behaviors,
+      `pnpm build:all` and `pnpm lint` clean.
+
+- [ ] **R2.16 — Consume `behaviors/overlay` from `web-components`** _(TD-24 →
+      unblocks TD-18 · High)_ The positioning and modal primitives are now
+      public and tested; `web-components` still ships its own weaker copies. Add
+      `@andersseen/behaviors` to the package-boundary table in AGENTS.md, then
+      migrate `and-select`, `and-dropdown`, `and-tooltip`, `and-context-menu`
+      and `and-menu-list` onto portal-based positioning. Pair with R2.13.
+
+- [ ] **R2.17 — Retire `@andersseen/vanilla-components@1.0.0` on npm** _(TD-23 ·
+      small · no code, decision required)_ The repo now says `0.0.2`, but
+      `1.0.0` is still the published `latest`. Two options, and the trade-off is
+      a permanent one: **(a) unpublish** —
+      `npm unpublish '@andersseen/vanilla-components@1.0.0'` removes it, but the
+      version number `1.0.0` can then never be used again for this package; that
+      is the exact tombstone that already pushed
+      `angular`/`react`/`vue-components` permanently onto the `0.x` line. **(b)
+      deprecate** —
+      `npm deprecate '@andersseen/vanilla-components@1.0.0'     'Published in error; experimental package, tracks 0.0.x. Use     @andersseen/web-components.'`
+      keeps it installable so no existing lockfile 404s, and shows a warning on
+      install. Publishing `0.0.2` does **not** require either. Whichever is
+      chosen, finish with
+      `npm dist-tag add @andersseen/vanilla-components@0.0.2 latest`.
+
 ## R3 — Later: maturity
 
 - [ ] **R3.1 — Path to 1.0.** Write `docs/STABILITY.md`: which packages/APIs are

@@ -108,3 +108,114 @@ describe('VanillaModal', () => {
     expect(closeHandler).toHaveBeenCalled();
   });
 });
+
+describe('VanillaModal — regressions', () => {
+  let host: HTMLElement;
+
+  beforeEach(() => {
+    host = document.createElement('div');
+    document.body.appendChild(host);
+  });
+
+  afterEach(() => {
+    host.remove();
+    document.body.style.overflow = '';
+  });
+
+  const mount = (): HTMLElement => {
+    host.innerHTML = `
+      <and-vanilla-modal>
+        <h2>Delete account</h2>
+        <input id="field" />
+        <button id="confirm">Confirm</button>
+      </and-vanilla-modal>`;
+    return host.querySelector('and-vanilla-modal') as HTMLElement;
+  };
+
+  it('keeps the author content when the element is moved in the DOM', () => {
+    // connectedCallback fires again on every re-insertion. It used to
+    // re-read childNodes into `originalContent` — which is empty while the
+    // modal is closed — permanently destroying the slotted content.
+    const modal = mount();
+    modal.setAttribute('open', '');
+    expect(modal.querySelector('#field')).toBeTruthy();
+    modal.removeAttribute('open');
+
+    const elsewhere = document.createElement('section');
+    document.body.appendChild(elsewhere);
+    elsewhere.appendChild(modal);
+
+    modal.setAttribute('open', '');
+
+    expect(modal.querySelector('#field')).toBeTruthy();
+    expect(modal.querySelector('#confirm')).toBeTruthy();
+    expect(modal.querySelector('h2')?.textContent).toBe('Delete account');
+    elsewhere.remove();
+  });
+
+  it('survives repeated open/close cycles', () => {
+    const modal = mount();
+    for (let i = 0; i < 3; i++) {
+      modal.setAttribute('open', '');
+      expect(modal.querySelector('#field')).toBeTruthy();
+      modal.removeAttribute('open');
+    }
+    modal.setAttribute('open', '');
+    expect(modal.querySelector('#confirm')).toBeTruthy();
+  });
+
+  it('closes on Escape', () => {
+    // Nothing was listening for keydown, so the headless closeOnEscape
+    // policy could never fire.
+    const modal = mount();
+    modal.setAttribute('open', '');
+    expect(modal.hasAttribute('open')).toBe(true);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+    expect(modal.hasAttribute('open')).toBe(false);
+  });
+
+  it('locks and restores body scroll', () => {
+    const modal = mount();
+    modal.setAttribute('open', '');
+    expect(document.body.style.overflow).toBe('hidden');
+
+    modal.removeAttribute('open');
+    expect(document.body.style.overflow).toBe('');
+  });
+
+  it('moves focus into the dialog and restores it on close', () => {
+    const opener = document.createElement('button');
+    document.body.appendChild(opener);
+    opener.focus();
+
+    const modal = mount();
+    modal.setAttribute('open', '');
+    expect(document.activeElement?.id).toBe('field');
+
+    modal.removeAttribute('open');
+    expect(document.activeElement).toBe(opener);
+    opener.remove();
+  });
+
+  it('names the dialog from a slotted heading', () => {
+    const modal = mount();
+    modal.setAttribute('open', '');
+
+    const dialog = modal.querySelector('[role="dialog"]') as HTMLElement;
+    const heading = modal.querySelector('h2') as HTMLElement;
+    expect(dialog.getAttribute('aria-labelledby')).toBe(heading.id);
+    expect(heading.id).toBeTruthy();
+  });
+
+  it('prefers an explicit label attribute over the heading', () => {
+    const modal = mount();
+    modal.setAttribute('label', 'Confirm deletion');
+    modal.setAttribute('open', '');
+
+    const dialog = modal.querySelector('[role="dialog"]') as HTMLElement;
+    expect(dialog.getAttribute('aria-label')).toBe('Confirm deletion');
+    expect(dialog.hasAttribute('aria-labelledby')).toBe(false);
+  });
+});

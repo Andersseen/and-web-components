@@ -1,3 +1,4 @@
+import { HTMLElementBase } from '../utils/env';
 import { createButton, type ButtonReturn } from '@andersseen/headless-components';
 import { loadMotionPlayer, type MotionPlayerLike } from '../utils/motion-loader';
 
@@ -17,7 +18,7 @@ const ATTRS = {
  * Motion is optional: add `animated` and install `@andersseen/motion` to get
  * a tap animation.
  */
-export class VanillaButton extends HTMLElement {
+export class VanillaButton extends HTMLElementBase {
   static observedAttributes = [ATTRS.VARIANT, ATTRS.SIZE, ATTRS.DISABLED, ATTRS.ANIMATED];
 
   private buttonLogic: ButtonReturn | null = null;

@@ -74,7 +74,13 @@ export interface ModalContentProps extends AriaAttributes, DataAttributes {
   'role': 'dialog';
   'aria-modal': boolean;
   'aria-hidden': boolean;
-  'aria-label': string;
+  /**
+   * Only present when a `label` was configured. Consumers are expected to
+   * supply an accessible name themselves (`aria-label` or `aria-labelledby`)
+   * — inventing a generic one here would make every dialog on a page
+   * announce identically while looking correct to automated checks.
+   */
+  'aria-label'?: string;
   'data-state': 'open' | 'closed';
   'tabindex': number;
 }
@@ -218,7 +224,7 @@ export function createModal(config: ModalConfig = {}): ModalReturn {
       'role': 'dialog',
       'aria-modal': true,
       'aria-hidden': !isOpen,
-      'aria-label': config.label ?? 'Dialog',
+      ...(config.label ? { 'aria-label': config.label } : {}),
       'data-state': isOpen ? 'open' : 'closed',
       'tabindex': -1,
     };
