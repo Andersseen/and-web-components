@@ -18,24 +18,38 @@
 
 export class StateStore<T extends object> {
   private _state: T;
+  private _snapshot: Readonly<T> | null = null;
   private _listeners = new Set<(state: Readonly<T>, prev: Readonly<T>) => void>();
 
   constructor(initial: T) {
     this._state = initial;
   }
 
-  /** Current frozen state snapshot */
+  /**
+   * Current frozen state snapshot.
+   *
+   * The same object identity is returned until `setState` actually changes
+   * something. That stability is a hard requirement, not an optimisation:
+   * React's `useSyncExternalStore` compares snapshots with `Object.is` and
+   * throws "The result of getSnapshot should be cached to avoid an infinite
+   * loop" if a fresh object comes back every read. The same applies to
+   * `===`-based memoisation in Vue, Svelte and Angular OnPush — i.e. to
+   * every framework this package claims to support without an adapter.
+   */
   get state(): Readonly<T> {
-    return Object.freeze({ ...this._state });
+    if (this._snapshot === null) {
+      this._snapshot = Object.freeze({ ...this._state });
+    }
+    return this._snapshot;
   }
 
   /** Merge partial updates and notify all subscribers */
   setState(partial: Partial<T>): void {
-    const prev = { ...this._state } as Record<string, unknown>;
+    const current = this._state as Record<string, unknown>;
     let changed = false;
 
     for (const key of Object.keys(partial)) {
-      if (prev[key] !== (partial as Record<string, unknown>)[key]) {
+      if (current[key] !== (partial as Record<string, unknown>)[key]) {
         changed = true;
         break;
       }
@@ -45,9 +59,10 @@ export class StateStore<T extends object> {
       return;
     }
 
+    const frozenPrev = this.state;
     this._state = { ...this._state, ...partial };
+    this._snapshot = null; // invalidate; the next read rebuilds it
     const frozenState = this.state;
-    const frozenPrev = Object.freeze(prev) as Readonly<T>;
 
     // Notify all subscribers
     this._listeners.forEach(cb => cb(frozenState, frozenPrev));

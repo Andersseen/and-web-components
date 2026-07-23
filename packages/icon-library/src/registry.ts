@@ -33,8 +33,42 @@ export const registerIcons = (icons: Record<string, string>): void => {
  * Returns `undefined` if the icon has not been registered.
  */
 export const getIcon = (name: string): string | undefined => {
-  return getGlobalRegistry().get(name);
+  const icon = getGlobalRegistry().get(name);
+  if (icon === undefined) {
+    warnMissingIcon(name);
+  }
+  return icon;
 };
+
+/** Names already warned about, so a repeated render doesn't spam the console. */
+const warnedNames = new Set<string>();
+
+/**
+ * An unregistered or misspelled name used to render as an empty box with no
+ * diagnostic at all, which is a slow thing to debug. Warn once per name, and
+ * only outside production builds.
+ */
+const warnMissingIcon = (name: string): void => {
+  if (warnedNames.has(name)) {
+    return;
+  }
+  warnedNames.add(name);
+
+  const isProduction =
+    typeof process !== 'undefined' && (process as { env?: Record<string, string> }).env?.NODE_ENV === 'production';
+  if (isProduction || typeof console === 'undefined') {
+    return;
+  }
+
+  console.warn(
+    `[@andersseen/icon] Icon "${name}" is not registered, so nothing will render. ` +
+      `Register it first: import { registerIcons, ${toConstName(name)} } from '@andersseen/icon'; ` +
+      `registerIcons({ '${name}': ${toConstName(name)} }); ` +
+      `— or call registerAllIcons() in a demo app (defeats tree-shaking).`,
+  );
+};
+
+const toConstName = (name: string): string => name.replace(/-/g, '_').toUpperCase();
 
 /**
  * Check if an icon is registered.

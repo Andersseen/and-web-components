@@ -226,6 +226,44 @@ referenced below).
       the 39 hard-coded directional utilities with logical properties and add an
       RTL story/e2e case. Cheaper now than after the 1.0 freeze.
 
+- [x] **R2.15 — Cross-package audit follow-ups** _(done 2026-07-23 ·
+      TD-23…TD-27)_ Audited every package outside `web-components` by running
+      them, not reading them. Fixed: `StateStore` returned a fresh frozen object
+      on every `state` read, breaking React's `useSyncExternalStore` contract
+      and `===` memoisation everywhere else (now cached, invalidated on real
+      change); `@andersseen/vanilla-components` threw
+      `HTMLElement is not defined` on bare import and `initMotion()` /
+      `defineBehaviors()` threw `document is not defined` in Node (all four
+      packages now import and run clean server-side); `vanilla-modal` had no
+      keyboard, no focus management and no scroll lock — and permanently
+      destroyed its slotted content when the element was moved in the DOM,
+      because `connectedCallback` re-read `childNodes` into its content backup
+      on every re-insertion (content now held in a DocumentFragment captured
+      once); `prefers-reduced-motion` was read once in the `MotionController`
+      constructor so the JS and CSS layers could disagree (now tracked live);
+      unregistered icon names rendered an empty box in silence (now a one-time
+      dev warning, tree-shaking unaffected — re-verified at 306 B for one icon
+      vs 11.4 KB for all). Published `@andersseen/behaviors/overlay`
+      (`calculatePosition` with flip-on-collision, now accepting a plain size so
+      it works with no DOM) and declared `sideEffects` on four packages.
+      `vanilla-components` dropped 1.0.0 → 0.0.1, marked experimental in its
+      README, and added to the Changesets ignore list. **Verification:** the new
+      `store.test.ts` fails 5/7 and the new `vanilla-modal` regressions fail
+      6/14 against the previous code; suites now 300 headless / 136 stencil / 18
+      vanilla / 36 behaviors, `pnpm build:all` and `pnpm lint` clean.
+
+- [ ] **R2.16 — Consume `behaviors/overlay` from `web-components`** _(TD-24 →
+      unblocks TD-18 · High)_ The positioning and modal primitives are now
+      public and tested; `web-components` still ships its own weaker copies. Add
+      `@andersseen/behaviors` to the package-boundary table in AGENTS.md, then
+      migrate `and-select`, `and-dropdown`, `and-tooltip`, `and-context-menu`
+      and `and-menu-list` onto portal-based positioning. Pair with R2.13.
+
+- [ ] **R2.17 — Deprecate `@andersseen/vanilla-components@1.0.0` on npm**
+      _(TD-23 · small · no code)_ The repo now says `0.0.1`, but the mistaken
+      `1.0.0` still resolves for any lockfile pinning `^1.0.0`. Run:
+      `npm deprecate '@andersseen/vanilla-components@1.0.0' 'Published in     error; this package is experimental and tracks 0.0.x. Use     @andersseen/web-components.'`
+
 ## R3 — Later: maturity
 
 - [ ] **R3.1 — Path to 1.0.** Write `docs/STABILITY.md`: which packages/APIs are
