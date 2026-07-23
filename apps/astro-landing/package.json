@@ -18,7 +18,7 @@
     "@andersseen/layout": "workspace:*",
     "@andersseen/motion": "workspace:*",
     "@andersseen/web-components": "workspace:*",
-    "astro": "^5.7.10"
+    "astro": "^7.1.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
