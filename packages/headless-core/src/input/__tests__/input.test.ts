@@ -122,8 +122,8 @@ describe('createInput', () => {
     expect(props.disabled).toBe(true);
     expect(props.required).toBe(true);
     expect(props.maxlength).toBe(20);
-    expect(props['aria-disabled']).toBe(true);
-    expect(props['aria-required']).toBe(true);
+    expect(props['aria-disabled']).toBe('true');
+    expect(props['aria-required']).toBe('true');
     expect(props['data-state']).toBe('inactive');
   });
 
@@ -131,13 +131,13 @@ describe('createInput', () => {
     const input = createInput({ required: true });
     input.actions.blur();
     const props = input.getInputProps();
-    expect(props['aria-invalid']).toBe(true);
+    expect(props['aria-invalid']).toBe('true');
   });
 
   it('does not mark aria-invalid when required but not touched', () => {
     const input = createInput({ required: true });
     const props = input.getInputProps();
-    expect(props['aria-invalid']).toBe(false);
+    expect(props['aria-invalid']).toBe('false');
   });
 
   it('uses active data-state when not disabled', () => {

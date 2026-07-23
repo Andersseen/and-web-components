@@ -184,6 +184,48 @@ referenced below).
       `[and-theme='playful']` block confirmed to carry all 36 declarations, up
       from 6. Changeset added (`minor`, `@andersseen/web-components`).
 
+- [x] **R2.11 — P0 correctness pass on modal / drawer / button** _(done
+      2026-07-23 · TD-15-adjacent)_ Five defects found by driving the built
+      `dist/` in a real browser rather than reading the specs, all now covered
+      by regression tests: (1) `and-button type="submit"` never submitted its
+      form (the real `<button>` is in shadow DOM, so it has no form owner) — now
+      resolves the form and calls `requestSubmit()`/`reset()`, plus a new `form`
+      prop; (2) the modal/drawer focus trap was a flat
+      `shadowRoot.querySelectorAll()` that saw neither slotted content nor
+      nested shadow roots, so Shift+Tab from the first field escaped the dialog
+      — rewritten to walk the composed tree, with deep-activeElement tracking
+      and stray-focus recovery; (3) `andModalClose` fired twice with `animated`
+      and focus was never restored on that path; (4) the modal had no body
+      scroll lock and no inert background (both now reference-counted in
+      `utils/overlay-page.ts`, and the drawer's leaky `body.style.overflow = ''`
+      reset was replaced with it); (5) every modal announced as "Dialog" — added
+      a `label` prop plus automatic `aria-labelledby` adoption of a slotted
+      heading, and stopped `createModal` inventing a generic name. Also surfaced
+      `closeOnEscape`, `closeOnOverlayClick`, `hideClose`, `show()`/`hide()`,
+      and the first CSS parts. **Verification:** the new
+      `src/utils/focus-trap.spec.tsx` fails 5/5 against the previous
+      implementation and passes 5/5 against the new one; full suite 136 specs
+      (was 117) + 293 headless, `pnpm lint` clean (62 pre-existing warnings
+      unchanged). Changeset: `minor` for `@andersseen/web-components` and
+      `@andersseen/headless-components`.
+
+- [ ] **R2.12 — CSS parts across the remaining components** _(TD-17 · High ·
+      medium)_ 22 components still expose no `::part()` surface. Settle a naming
+      convention first (it becomes public API at 1.0), then apply it component
+      by component and document it. Do this **before** R3.1's freeze.
+
+- [ ] **R2.13 — Popovers must escape `overflow: hidden`** _(TD-18 · High ·
+      medium-large)_ `and-select`, `and-dropdown`, `and-tooltip`,
+      `and-context-menu`, `and-menu-list` are all clipped by any scrolling or
+      overflow-hidden ancestor. Prefer the `popover` attribute + CSS anchor
+      positioning (top layer, no portal bookkeeping), keeping the existing
+      placement math as the fallback path. Needs a browser-support decision
+      recorded as an ADR in SSD §14.
+
+- [ ] **R2.14 — RTL support** _(TD-20 · Medium · mechanical but wide)_ Replace
+      the 39 hard-coded directional utilities with logical properties and add an
+      RTL story/e2e case. Cheaper now than after the 1.0 freeze.
+
 ## R3 — Later: maturity
 
 - [ ] **R3.1 — Path to 1.0.** Write `docs/STABILITY.md`: which packages/APIs are

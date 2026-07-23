@@ -34,9 +34,15 @@ export interface InputElementProps {
   'disabled': boolean;
   'required': boolean;
   'maxlength'?: number;
-  'aria-disabled': boolean;
-  'aria-required': boolean;
-  'aria-invalid': boolean;
+  /**
+   * ARIA state attributes are emitted as the strings `'true'`/`'false'`,
+   * not booleans: a boolean `true` serialises to an empty attribute value
+   * (`aria-required=""`), which is not a valid ARIA boolean and is read as
+   * the default (false) by assistive technology.
+   */
+  'aria-disabled': 'true' | 'false';
+  'aria-required': 'true' | 'false';
+  'aria-invalid': 'true' | 'false';
   'data-state': 'active' | 'inactive';
 }
 
@@ -110,9 +116,9 @@ export function createInput(config: InputConfig = {}): InputReturn {
       disabled,
       required,
       'maxlength': config.maxLength,
-      'aria-disabled': disabled,
-      'aria-required': required,
-      'aria-invalid': invalid,
+      'aria-disabled': disabled ? 'true' : 'false',
+      'aria-required': required ? 'true' : 'false',
+      'aria-invalid': invalid ? 'true' : 'false',
       'data-state': disabled ? 'inactive' : 'active',
     };
   };

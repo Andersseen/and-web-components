@@ -160,8 +160,9 @@ export class AndInput {
           name={this.name || undefined}
           class={cn(inputVariants({ hasError: this.hasError }), this.customClass)}
           placeholder={this.placeholder}
-          aria-label={this.label}
-          aria-describedby={this.describedBy}
+          part="input"
+          aria-label={this.label || undefined}
+          aria-describedby={this.describedBy || undefined}
           aria-invalid={this.hasError ? 'true' : undefined}
           onInput={this.handleInput}
           onBlur={this.handleBlur}

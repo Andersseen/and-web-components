@@ -7,6 +7,14 @@ import { buttonVariants, spinnerClass, type ButtonVariantProps } from './and-but
 /**
  * Interactive button, or an anchor styled as one when `href` is set.
  *
+ * `type="submit"` / `type="reset"` are honoured explicitly: the real
+ * `<button>` lives inside this component's shadow root, so it has no form
+ * owner and the browser's implicit submission never reaches the enclosing
+ * `<form>`. The click handler resolves the associated form (the `form`
+ * prop by id, else the nearest ancestor `<form>`) and calls
+ * `requestSubmit()` / `reset()` on it, which keeps native constraint
+ * validation and the `submit` event intact.
+ *
  * For `size="icon"` (no visible text), pass `aria-label` on the element —
  * it's forwarded to the inner control since the host itself is never left
  * focusable/labelled (an explicit `role`/`tabindex` on the host is moved
@@ -53,6 +61,12 @@ export class AndButton {
 
   /** Rel attribute for the anchor. Defaults to `noopener noreferrer` when target is `_blank`. */
   @Prop({ reflect: true }) rel: string = '';
+
+  /**
+   * Id of the `<form>` this button submits or resets, mirroring the native
+   * `form` attribute. Defaults to the nearest ancestor `<form>`.
+   */
+  @Prop({ reflect: true }) form: string = '';
 
   /** Emitted on button click. */
   @Event({ bubbles: true, composed: true }) andButtonClick!: EventEmitter<MouseEvent>;
@@ -108,6 +122,50 @@ export class AndButton {
     this.buttonLogic?.actions.setLoading(newValue);
   }
 
+  /* ── Form participation ─────────────────────────────────────────── */
+
+  /**
+   * Resolve the form this button acts on. Uses the same root as the host so
+   * it works whether the button sits in the document or inside another
+   * component's shadow tree.
+   */
+  private getAssociatedForm(): HTMLFormElement | null {
+    if (this.form) {
+      const root = this.el.getRootNode() as Document | ShadowRoot;
+      const byId = root.getElementById?.(this.form);
+      return byId instanceof HTMLFormElement ? byId : null;
+    }
+    return this.el.closest('form');
+  }
+
+  private handleClick = (ev: MouseEvent) => {
+    if (this.disabled || this.loading) {
+      return;
+    }
+    this.buttonLogic?.handleClick(ev);
+
+    if (this.type === 'button' || ev.defaultPrevented) {
+      return;
+    }
+
+    const form = this.getAssociatedForm();
+    if (!form) {
+      return;
+    }
+
+    if (this.type === 'submit') {
+      // requestSubmit() (not submit()) so constraint validation runs and a
+      // cancellable `submit` event is still dispatched.
+      if (typeof form.requestSubmit === 'function') {
+        form.requestSubmit();
+      } else {
+        form.submit();
+      }
+    } else if (this.type === 'reset') {
+      form.reset();
+    }
+  };
+
   /* ── Render ─────────────────────────────────────────────────────── */
 
   render() {
@@ -136,6 +194,7 @@ export class AndButton {
           aria-label={ariaLabel}
           tabindex={this.disabled || this.loading ? '-1' : undefined}
           role={this.hostRole || undefined}
+          part="link"
           onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)}
         >
           {content}
@@ -146,9 +205,15 @@ export class AndButton {
     return (
       <button
         {...props}
-        onClick={(e: MouseEvent) => this.buttonLogic?.handleClick(e)}
+        // Always `button`: implicit submission can't cross the shadow
+        // boundary anyway, and submit/reset are dispatched explicitly in
+        // handleClick — leaving `type="submit"` here would risk a double
+        // submission if that ever changed.
+        type="button"
+        onClick={this.handleClick}
         class={classes}
         role={this.hostRole || undefined}
+        part="button"
       >
         {content}
       </button>
