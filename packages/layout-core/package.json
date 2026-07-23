@@ -13,7 +13,7 @@
     "clean": "rm -rf dist",
     "watch": "sass --watch src/index.scss:dist/layout.css",
     "test": "vitest run",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "test -d dist || pnpm run build"
   },
   "exports": {
     ".": "./dist/layout.css",

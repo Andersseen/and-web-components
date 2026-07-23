@@ -10,35 +10,48 @@ interface Props {
 }
 
 const { icon, name, subtitle, description, version, tags, delay = '0ms' } = Astro.props;
+const npmUrl = `https://www.npmjs.com/package/${name}`;
 ---
 
 <and-card
+  class="group h-full transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
   and-motion="slide-up"
   and-motion-trigger="enter"
   and-motion-delay={delay}
 >
   <and-card-header>
-    <div and-layout="horizontal align:center justify:between">
+    <div and-layout="horizontal align:center justify:between gap:sm">
       <div and-layout="horizontal align:center gap:sm">
-        <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+        <div
+          class="h-10 w-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary/20"
+        >
           <and-icon name={icon} size="20"></and-icon>
         </div>
-        <div>
-          <and-card-title>{name}</and-card-title>
+        <div and-layout="vertical gap:xxs">
+          <and-card-title class="text-base leading-tight break-all">{name}</and-card-title>
           <and-card-description>{subtitle}</and-card-description>
         </div>
       </div>
-      <and-badge>{version}</and-badge>
+      <and-badge class="shrink-0">{version}</and-badge>
     </div>
   </and-card-header>
+
   <and-card-content>
-    <p and-text="p-sm" class="text-muted-foreground">
-      {description}
-    </p>
-    <div and-layout="horizontal gap:xs wrap:wrap">
-      {tags.map((tag) => (
-        <and-badge variant="secondary">{tag}</and-badge>
-      ))}
+    <p and-text="p-sm" class="text-muted-foreground">{description}</p>
+
+    <div and-layout="horizontal gap:sm wrap:wrap align:center justify:between">
+      <div and-layout="horizontal gap:xs wrap:wrap">
+        {tags.map(tag => <and-badge variant="secondary">{tag}</and-badge>)}
+      </div>
+      <a
+        href={npmUrl}
+        target="_blank"
+        rel="noopener"
+        class="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
+      >
+        npm
+        <and-icon name="external-link" size="12"></and-icon>
+      </a>
     </div>
   </and-card-content>
 </and-card>

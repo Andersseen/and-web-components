@@ -153,6 +153,9 @@ importers:
 
   apps/astro-landing:
     dependencies:
+      '@andersseen/behaviors':
+        specifier: workspace:*
+        version: link:../../packages/behaviors
       '@andersseen/icon':
         specifier: workspace:*
         version: link:../../packages/icon-library

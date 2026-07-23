@@ -2,39 +2,39 @@
 import SectionHeader from '../components/SectionHeader.astro';
 import ShowcaseCard from '../components/ShowcaseCard.astro';
 import MotionDemo from '../components/MotionDemo.astro';
+import { counts, iconNames } from '../lib/site-data';
 
 const animations = [
   { icon: 'zap', label: 'Bounce', animation: 'bounce' },
   { icon: 'maximize', label: 'Scale Up', animation: 'scale-up' },
   { icon: 'minimize', label: 'Scale Down', animation: 'scale-down' },
   { icon: 'arrow-up', label: 'Slide Up', animation: 'slide-up' },
-  { icon: 'arrow-left', label: 'Slide Left', animation: 'slide-in-left' },
-  { icon: 'arrow-right', label: 'Slide Right', animation: 'slide-in-right' },
+  { icon: 'heart', label: 'Heart Beat', animation: 'heart-beat' },
+  { icon: 'rotate-cw', label: 'Flip Y', animation: 'flip-y' },
+  { icon: 'move-horizontal', label: 'Shake X', animation: 'shake-x' },
+  { icon: 'refresh-cw', label: 'Rubber Band', animation: 'rubber-band' },
+  { icon: 'star', label: 'Tada', animation: 'tada' },
 ];
 
-const icons = [
-  'home', 'search', 'heart', 'star', 'settings', 'user',
-  'bell', 'mail', 'zap', 'code', 'terminal', 'github',
-  'layers', 'compass', 'award', 'eye', 'lock', 'edit',
-  'share', 'download', 'upload', 'filter', 'monitor', 'smartphone',
-];
+/* Real icon names straight from the package registry — nothing hand-typed,
+   so a renamed or removed icon can never leave a hole in this grid. */
+const showcaseIcons = iconNames.slice(0, 30);
 ---
 
 <section id="showcase">
   <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
-
     <SectionHeader
       badge="Showcase"
       title="See It In Action"
-      description="Real components, real interactivity. Everything below is powered by our libraries."
+      description="Nothing below is a screenshot or a mock. Every control on this page is the published package, running in your browser right now."
     />
 
     <!-- Row 1: Buttons & Alerts -->
-    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl" class="items-stretch">
       <ShowcaseCard
         icon="mouse-pointer"
         title="Buttons"
-        description="Multiple variants and sizes with loading states."
+        description="Five variants, four sizes, loading and icon-only states."
         motion="slide-in-left"
       >
         <div and-layout="horizontal gap:sm wrap:wrap align:center">
@@ -50,7 +50,7 @@ const icons = [
       <ShowcaseCard
         icon="bell"
         title="Alerts"
-        description="Contextual feedback messages for user actions."
+        description="Contextual feedback that inherits the active palette."
         motion="slide-in-right"
       >
         <div and-layout="vertical gap:sm">
@@ -60,13 +60,38 @@ const icons = [
       </ShowcaseCard>
     </div>
 
-    <!-- Row 2: Accordion & Tabs -->
-    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+    <!-- Row 2: Form controls & Accordion -->
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl" class="items-stretch">
+      <ShowcaseCard
+        icon="text-cursor"
+        title="Form Controls"
+        description="Inputs, switches and selects with real labels and focus rings."
+        motion="slide-in-left"
+      >
+        <div and-layout="vertical gap:md">
+          <and-input label="Email" type="email" placeholder="you@example.com"></and-input>
+          <and-select
+            label="Framework"
+            options={JSON.stringify([
+              { value: 'react', label: 'React' },
+              { value: 'angular', label: 'Angular' },
+              { value: 'vue', label: 'Vue' },
+              { value: 'none', label: 'No framework' },
+            ])}></and-select>
+          {/* `label` on and-switch is the aria-label only — the component
+              renders no visible text — so pair it with a visible span. */}
+          <div and-layout="horizontal align:center gap:sm">
+            <and-switch checked label="Ship without a framework runtime"></and-switch>
+            <span and-text="p-sm">Ship without a framework runtime</span>
+          </div>
+        </div>
+      </ShowcaseCard>
+
       <ShowcaseCard
         icon="list"
         title="Accordion"
-        description="Collapsible content sections with smooth animations."
-        motion="slide-in-left"
+        description="Collapsible sections with WAI-ARIA keyboard support."
+        motion="slide-in-right"
       >
         <and-accordion>
           <and-accordion-item value="item-1">
@@ -78,23 +103,27 @@ const icons = [
           <and-accordion-item value="item-2">
             <and-accordion-trigger>Is it framework agnostic?</and-accordion-trigger>
             <and-accordion-content>
-              Absolutely. Built with Stencil, our components work as native custom elements in any framework.
+              Absolutely. These are native custom elements, so they work in any framework — or in none at all.
             </and-accordion-content>
           </and-accordion-item>
           <and-accordion-item value="item-3">
-            <and-accordion-trigger>Can I customize it?</and-accordion-trigger>
+            <and-accordion-trigger>Can I theme it?</and-accordion-trigger>
             <and-accordion-content>
-              Yes. All components use CSS custom properties and are fully styleable with Tailwind CSS.
+              Yes. Six colour palettes and five style themes, all switchable at runtime — try the selectors in the
+              header.
             </and-accordion-content>
           </and-accordion-item>
         </and-accordion>
       </ShowcaseCard>
+    </div>
 
+    <!-- Row 3: Tabs & Animations -->
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl" class="items-stretch">
       <ShowcaseCard
         icon="panel-top"
         title="Tabs"
-        description="Organize content into switchable tabbed panels."
-        motion="slide-in-right"
+        description="Roving-tabindex tab list with panels wired by value."
+        motion="slide-in-left"
       >
         <and-tabs default-value="overview">
           <and-tabs-list>
@@ -104,72 +133,76 @@ const icons = [
           </and-tabs-list>
           <and-tabs-content value="overview">
             <div and-layout="vertical gap:xs p:sm">
-              <p and-text="p-sm">A complete set of 24+ web components designed for production use. Framework-agnostic, accessible, and beautifully styled.</p>
+              <p and-text="p-sm">
+                {counts.components} custom elements designed for production use — accessible, themeable, and tied to no framework.
+              </p>
             </div>
           </and-tabs-content>
           <and-tabs-content value="code">
             <div and-layout="vertical gap:xs p:sm">
-              <code class="text-sm bg-muted p-3 rounded-lg block">&lt;and-button variant="default"&gt;Click me&lt;/and-button&gt;</code>
+              <code class="code-surface block px-3 py-2 text-sm"
+                >&lt;and-button variant="default"&gt;Click me&lt;/and-button&gt;</code
+              >
             </div>
           </and-tabs-content>
           <and-tabs-content value="usage">
             <div and-layout="vertical gap:xs p:sm">
-              <p and-text="p-sm">Import the loader and call <code class="bg-muted px-1 rounded">defineCustomElements()</code>. That's it — use the tags anywhere in your HTML.</p>
+              <p and-text="p-sm">
+                Import the loader and call <code class="token-chip">defineCustomElements()</code>. That's it — use the
+                tags anywhere in your HTML.
+              </p>
             </div>
           </and-tabs-content>
         </and-tabs>
       </ShowcaseCard>
-    </div>
 
-    <!-- Row 3: Animations & Icons -->
-    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
       <ShowcaseCard
         icon="activity"
         title="Animations"
-        description="Hover over the cards below to see motion-core in action."
-        motion="slide-in-left"
-      >
-        <div and-layout="grid cols:2 cols@md:3 gap:sm">
-          {animations.map((item) => (
-            <MotionDemo icon={item.icon} label={item.label} animation={item.animation} />
-          ))}
-        </div>
-      </ShowcaseCard>
-
-      <ShowcaseCard
-        icon="star"
-        title="Icon Library"
-        description="70+ crisp SVG icons with customizable size, color, and stroke width."
+        description={`Hover any tile to replay it. ${counts.animations} presets ship in the package.`}
         motion="slide-in-right"
       >
-        <div and-layout="grid cols:4 cols@md:6 gap:sm">
-          {icons.map((icon) => (
-            <and-tooltip content={icon}>
-              <div class="bg-muted/50 rounded-lg p-3 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer border hover:border-primary/30">
-                <and-icon name={icon} size="20"></and-icon>
-              </div>
-            </and-tooltip>
-          ))}
+        <div and-layout="grid cols:2 cols@md:3 gap:sm">
+          {animations.map(item => <MotionDemo icon={item.icon} label={item.label} animation={item.animation} />)}
         </div>
       </ShowcaseCard>
     </div>
 
-    <!-- Row 4: Layout System -->
+    <!-- Row 4: Icons -->
+    <ShowcaseCard
+      icon="star"
+      title="Icon Library"
+      description={`${counts.icons} crisp SVG icons with customisable size, colour and stroke width. Hover for the name.`}
+      motion="zoom"
+    >
+      <div and-layout="grid cols:5 cols@md:10 gap:sm">
+        {
+          showcaseIcons.map(icon => (
+            <div class="demo-tile p-3 cursor-pointer hover:border-primary hover:text-primary" and-tooltip={icon}>
+              <and-icon name={icon} size="20" />
+            </div>
+          ))
+        }
+      </div>
+    </ShowcaseCard>
+
+    <!-- Row 5: Layout System -->
     <and-card and-motion="zoom" and-motion-trigger="enter" and-motion-duration="800ms">
       <and-card-header>
         <div and-layout="horizontal align:center gap:xs">
           <and-icon name="layout" size="18" class="text-primary"></and-icon>
-          <and-card-title>Layout System — <code class="text-sm bg-muted px-2 py-0.5 rounded">and-layout</code></and-card-title>
+          <and-card-title>Layout System — <code class="token-chip">and-layout</code></and-card-title>
         </div>
         <and-card-description>
-          Pure attribute-driven layouts — no CSS classes. Supports responsive breakpoints, flex, grid, spacing, and typography.
+          Attribute-driven layouts with no CSS classes. Responsive breakpoints, flex, grid, spacing and typography.
         </and-card-description>
       </and-card-header>
       <and-card-content>
         <div and-layout="grid cols:1 cols@lg:2 gap:lg">
           <!-- Code -->
-          <div class="bg-muted rounded-xl p-5 overflow-auto">
-            <code class="text-sm leading-relaxed whitespace-pre block text-foreground"><span class="text-muted-foreground">&lt;!-- Responsive Grid --&gt;</span>
+          <div class="code-surface p-5 overflow-auto">
+            <code class="text-sm leading-relaxed whitespace-pre block text-foreground"><span
+                class="text-muted-foreground">&lt;!-- Responsive Grid --&gt;</span>
 &lt;div <span class="text-primary">and-layout</span>="<span class="text-primary">grid cols:1 cols@md:2 cols@lg:3 gap:md</span>"&gt;
   &lt;div&gt;Card 1&lt;/div&gt;
   &lt;div&gt;Card 2&lt;/div&gt;
@@ -191,26 +224,34 @@ const icons = [
           <!-- Visual demo -->
           <div and-layout="vertical gap:md">
             <div and-layout="vertical gap:xxs">
-              <span and-text="caption" class="text-foreground/80 uppercase tracking-widest font-medium">Responsive Grid</span>
+              <span and-text="caption" class="text-foreground/80 uppercase tracking-widest font-medium"
+                >Responsive Grid</span
+              >
               <div and-layout="grid cols:3 gap:xs">
-                <div class="bg-primary/15 text-primary text-center rounded-lg p-3 text-sm font-semibold border border-primary/30">1</div>
-                <div class="bg-primary/15 text-primary text-center rounded-lg p-3 text-sm font-semibold border border-primary/30">2</div>
-                <div class="bg-primary/15 text-primary text-center rounded-lg p-3 text-sm font-semibold border border-primary/30">3</div>
+                <div class="demo-tile bg-primary/10 text-primary p-3 text-sm font-semibold">1</div>
+                <div class="demo-tile bg-primary/10 text-primary p-3 text-sm font-semibold">2</div>
+                <div class="demo-tile bg-primary/10 text-primary p-3 text-sm font-semibold">3</div>
               </div>
             </div>
             <div and-layout="vertical gap:xxs">
-              <span and-text="caption" class="text-foreground/80 uppercase tracking-widest font-medium">Flex + Justify Between</span>
-              <div and-layout="horizontal align:center justify:between gap:md" class="bg-muted rounded-lg p-3 border border-border/60">
+              <span and-text="caption" class="text-foreground/80 uppercase tracking-widest font-medium"
+                >Flex + Justify Between</span
+              >
+              <div and-layout="horizontal align:center justify:between gap:md" class="demo-tile p-3">
                 <and-badge variant="default">Left</and-badge>
                 <and-badge variant="default">Center</and-badge>
                 <and-badge variant="default">Right</and-badge>
               </div>
             </div>
             <div and-layout="vertical gap:xxs">
-              <span and-text="caption" class="text-foreground/80 uppercase tracking-widest font-medium">Spacing & Typography</span>
-              <div and-layout="vertical gap:xs p:md" class="bg-muted rounded-lg border border-border/60">
+              <span and-text="caption" class="text-foreground/80 uppercase tracking-widest font-medium"
+                >Spacing &amp; Typography</span
+              >
+              <div and-layout="vertical gap:xs p:md" class="demo-tile">
                 <span and-text="h5 weight:bold" class="text-foreground">Heading 5</span>
-                <span and-text="p-sm" class="text-foreground/80">Body text with <code class="bg-background px-1.5 py-0.5 rounded text-xs">and-text="p-sm"</code></span>
+                <span and-text="p-sm" class="text-foreground/80"
+                  >Body text with <code class="token-chip">and-text="p-sm"</code></span
+                >
                 <span and-text="caption" class="text-muted-foreground">Caption text</span>
               </div>
             </div>
@@ -218,6 +259,5 @@ const icons = [
         </div>
       </and-card-content>
     </and-card>
-
   </div>
 </section>

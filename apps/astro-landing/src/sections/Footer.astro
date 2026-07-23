@@ -1,19 +1,24 @@
 ---
+import { links } from '../lib/site-data';
+
 const resourceLinks = [
   { href: '#features', label: 'Features' },
   { href: '#showcase', label: 'Showcase' },
+  { href: '#behaviors', label: 'Behaviors' },
   { href: '#ecosystem', label: 'Ecosystem' },
+  { href: '#ai-tools', label: 'AI Tools' },
 ];
 
 const communityLinks = [
-  { href: '#', label: 'GitHub', icon: 'github' },
-  { href: '#', label: 'Contact', icon: 'mail' },
+  { href: links.github, label: 'GitHub', icon: 'github', external: true },
+  { href: links.npm, label: 'npm', icon: 'box', external: true },
+  { href: links.storybook, label: 'Storybook', icon: 'layout', external: true },
+  { href: links.docs, label: 'Documentation', icon: 'book-open', external: true },
 ];
 ---
 
 <footer class="border-t">
   <div and-layout="vertical gap:xl p-y:xxl p-x:lg" class="max-w-[1200px] mx-auto">
-
     <!-- Footer top -->
     <div and-layout="grid cols:1 cols@md:3 gap:xl">
       <!-- Brand -->
@@ -22,27 +27,34 @@ const communityLinks = [
           <and-icon name="layers" size="24" class="text-primary"></and-icon>
           <span class="font-bold text-lg">Andersseen</span>
         </div>
-        <p and-text="p-sm" class="text-muted-foreground">
-          A modern, framework-agnostic web component ecosystem for building beautiful interfaces.
+        <p and-text="p-sm" class="text-muted-foreground max-w-[320px]">
+          A framework-agnostic UI ecosystem built on web standards — components, layout, motion, icons, headless logic
+          and DOM behaviors.
         </p>
       </div>
 
       <!-- Resource Links -->
       <div and-layout="vertical gap:sm">
-        <h5 and-text="p-sm weight:bold" class="uppercase tracking-wider text-muted-foreground">Resources</h5>
-        {resourceLinks.map(({ href, label }) => (
-          <a href={href} class="text-sm hover:text-primary transition-colors">{label}</a>
-        ))}
+        <h5 and-text="p-sm weight:bold" class="uppercase tracking-wider text-muted-foreground">On this page</h5>
+        {resourceLinks.map(({ href, label }) => <a href={href} class="text-sm hover:text-primary transition-colors">{label}</a>)}
       </div>
 
       <!-- Community Links -->
       <div and-layout="vertical gap:sm">
-        <h5 and-text="p-sm weight:bold" class="uppercase tracking-wider text-muted-foreground">Community</h5>
-        {communityLinks.map(({ href, label, icon }) => (
-          <a href={href} class="text-sm hover:text-primary transition-colors inline-flex items-center gap-1">
-            <and-icon name={icon} size="14"></and-icon> {label}
-          </a>
-        ))}
+        <h5 and-text="p-sm weight:bold" class="uppercase tracking-wider text-muted-foreground">Project</h5>
+        {
+          communityLinks.map(({ href, label, icon, external }) => (
+            <a
+              href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener' : undefined}
+              class="text-sm hover:text-primary transition-colors inline-flex items-center gap-1"
+            >
+              <and-icon name={icon} size="14" />
+              {label}
+            </a>
+          ))
+        }
       </div>
     </div>
 
@@ -50,14 +62,12 @@ const communityLinks = [
     <div class="border-t pt-6">
       <div and-layout="horizontal align:center justify:between wrap:wrap gap:sm">
         <p and-text="p-xs" class="text-muted-foreground">
-          &copy; {new Date().getFullYear()} Andersseen. All rights reserved.
+          &copy; {new Date().getFullYear()} Andersseen. Released under the MIT licence.
         </p>
-        <div and-layout="horizontal gap:md">
-          <a href="#" class="text-xs text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-          <a href="#" class="text-xs text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-        </div>
+        <p and-text="p-xs" class="text-muted-foreground">
+          Every component on this page is the published package, running live.
+        </p>
       </div>
     </div>
-
   </div>
 </footer>

@@ -1,46 +1,57 @@
 ---
 import SectionHeader from '../components/SectionHeader.astro';
 import FeatureCard from '../components/FeatureCard.astro';
+import { links } from '../lib/site-data';
 
 const tools = [
   {
     icon: 'terminal',
     title: 'MCP Server',
     description:
-      'Run `npx -y @andersseen/mcp` and your AI assistant queries the live component catalog — generated from the real custom-elements.json — for correct, framework-specific code.',
+      'Run npx -y @andersseen/mcp and your assistant queries the live component catalog — generated from the real custom-elements manifest — for correct, framework-specific code.',
     tags: ['Claude', 'Cursor', 'VS Code'],
     delay: '0ms',
   },
   {
-    icon: 'code',
+    icon: 'book-open',
     title: 'Agent Skills',
     description:
-      'Installable, per-library skills for Claude Code, Cursor and other agents. Teach your assistant one package at a time — pick only what your project uses.',
+      'Installable, per-library skills for Claude Code, Cursor and other agents. Teach your assistant one package at a time — only the ones your project actually uses.',
     tags: ['@andersseen/skills'],
-    delay: '100ms',
+    delay: '80ms',
   },
   {
     icon: 'file-text',
     title: 'System Prompts',
     description:
-      "Curated XML context blocks you paste into any assistant that doesn't speak MCP — drops hallucinated props, selectors and classes to near zero.",
+      'Curated context blocks to paste into any assistant that does not speak MCP — drops hallucinated props, selectors and class names to near zero.',
     tags: ['Zero-config', 'Any LLM'],
-    delay: '200ms',
+    delay: '160ms',
   },
 ];
+
+const mcpConfig = `// .mcp.json (Claude) — or .vscode/mcp.json / .cursor/mcp.json
+{
+  "mcpServers": {
+    "and-web-components": {
+      "command": "npx",
+      "args": ["-y", "@andersseen/mcp"]
+    }
+  }
+}`;
 ---
 
-<section id="ai-tools">
+<section id="ai-tools" class="bg-muted/30 border-y">
   <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
     <SectionHeader
       badge="AI Tools"
       title="Built for AI-Native Development"
-      description="However your team codes with AI, this ecosystem meets it there — with a live MCP server, agent skills, and copy-paste prompt context so assistants generate real, correct components."
+      description="However your team codes with AI, this ecosystem meets it there — a live MCP server, installable agent skills, and copy-paste context so assistants generate real components instead of plausible ones."
     />
 
     <div and-layout="grid cols:1 cols@md:3 gap:lg" class="items-stretch">
       {
-        tools.map((tool) => (
+        tools.map(tool => (
           <FeatureCard
             icon={tool.icon}
             title={tool.title}
@@ -55,7 +66,7 @@ const tools = [
     <!-- MCP quick start -->
     <div
       and-layout="vertical gap:lg p:xxl"
-      class="rounded-2xl bg-primary/5 border border-primary/10"
+      class="accent-panel"
       and-motion="zoom"
       and-motion-trigger="enter"
       and-motion-duration="800ms"
@@ -72,31 +83,20 @@ const tools = [
         </div>
       </div>
 
-      <code
-        class="block text-sm bg-muted/80 px-4 py-3 rounded-lg border whitespace-pre-wrap break-all text-foreground/90"
+      <code class="code-surface block px-4 py-3 text-sm whitespace-pre-wrap break-all text-foreground/90"
         >npx -y @andersseen/mcp</code
       >
 
       <code
-        class="block text-xs sm:text-sm bg-muted/80 px-4 py-3 rounded-lg border whitespace-pre overflow-x-auto text-foreground/85"
-        >{`// .mcp.json (Claude) — or .vscode/mcp.json / .cursor/mcp.json
-{
-  "mcpServers": {
-    "and-web-components": {
-      "command": "npx",
-      "args": ["-y", "@andersseen/mcp"]
-    }
-  }
-}`}</code
+        class="code-surface block px-4 py-3 text-xs sm:text-sm whitespace-pre overflow-x-auto text-foreground/85"
+        >{mcpConfig}</code
       >
 
       <div and-layout="horizontal gap:md align:center wrap:wrap">
-        <a href="https://github.com/Andersseen/and-web-components/tree/main/packages/mcp" target="_blank" rel="noopener">
-          <and-button variant="outline" size="lg">
-            <and-icon name="github" size="18"></and-icon>
-            Read the docs
-          </and-button>
-        </a>
+        <and-button variant="outline" size="lg" href={`${links.github}/tree/main/packages/mcp`} target="_blank">
+          <and-icon name="github" size="18"></and-icon>
+          Read the docs
+        </and-button>
       </div>
     </div>
   </div>

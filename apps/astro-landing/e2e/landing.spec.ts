@@ -20,7 +20,7 @@ test.describe('Landing Page Basics', () => {
   test('all main sections are visible', async ({ page }) => {
     // Hero section
     await expect(page.locator('#hero')).toBeVisible();
-    await expect(page.locator('#hero h1')).toContainText('Build Modern UIs with');
+    await expect(page.locator('#hero h1')).toContainText('One UI ecosystem.');
 
     // Features section
     await expect(page.locator('#features')).toBeVisible();
@@ -30,9 +30,17 @@ test.describe('Landing Page Basics', () => {
     await expect(page.locator('#showcase')).toBeVisible();
     await expect(page.locator('#showcase')).toContainText('See It In Action');
 
+    // Behaviors section
+    await expect(page.locator('#behaviors')).toBeVisible();
+    await expect(page.locator('#behaviors')).toContainText('Enhance HTML You Already Have');
+
     // Ecosystem section
     await expect(page.locator('#ecosystem')).toBeVisible();
     await expect(page.locator('#ecosystem')).toContainText('Modular By Design');
+
+    // AI tools section
+    await expect(page.locator('#ai-tools')).toBeVisible();
+    await expect(page.locator('#ai-tools')).toContainText('Built for AI-Native Development');
 
     // Footer section
     await expect(page.locator('footer')).toBeVisible();

@@ -9,10 +9,10 @@ const { icon, label, animation } = Astro.props;
 ---
 
 <div
-  class="bg-muted/50 rounded-lg p-4 text-center cursor-pointer border hover:border-primary transition-colors"
+  class="demo-tile flex-col gap-1 p-4 cursor-pointer hover:border-primary hover:text-primary"
   and-motion={animation}
   and-motion-trigger="hover"
 >
-  <and-icon name={icon} size="20" class="text-primary mx-auto mb-1"></and-icon>
+  <and-icon name={icon} size="20" class="text-primary"></and-icon>
   <span and-text="p-xs">{label}</span>
 </div>

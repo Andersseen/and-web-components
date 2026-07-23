@@ -35,7 +35,9 @@ test.describe('Interactive Components', () => {
   });
 
   test('tabs switch content', async ({ page }) => {
-    const tabs = page.locator('and-tabs');
+    // The page now renders more than one <and-tabs> (showcase + ecosystem),
+    // so this must be scoped or the locator is ambiguous under strict mode.
+    const tabs = page.locator('#showcase and-tabs');
     await expect(tabs).toBeVisible();
 
     // Triggers
@@ -57,7 +59,20 @@ test.describe('Interactive Components', () => {
     // Click 'Overview' tab back
     await overviewTrigger.click();
     await expect(overviewContent).toBeVisible();
-    await expect(overviewContent).toContainText('A complete set of 24+ web components');
+    await expect(overviewContent).toContainText('custom elements designed for production use');
+  });
+
+  test('ecosystem tabs switch package groups', async ({ page }) => {
+    const tabs = page.locator('#ecosystem and-tabs');
+    await expect(tabs).toBeVisible();
+
+    const coreContent = tabs.locator('and-tabs-content[value="core"]');
+    await expect(coreContent).toContainText('@andersseen/web-components');
+
+    await tabs.locator('and-tabs-trigger[value="tooling"]').click();
+    const toolingContent = tabs.locator('and-tabs-content[value="tooling"]');
+    await expect(toolingContent).toBeVisible();
+    await expect(toolingContent).toContainText('@andersseen/mcp');
   });
 
   // Note: Carousel was mentioned in the prompt, but it's not present in Showcase.astro.

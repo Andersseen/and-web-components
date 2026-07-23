@@ -1,68 +1,71 @@
 ---
 import SectionHeader from '../components/SectionHeader.astro';
 import FeatureCard from '../components/FeatureCard.astro';
+import { counts } from '../lib/site-data';
 
 const features = [
   {
     icon: 'box',
-    title: 'Web Components',
-    description: '24+ accessible components built with StencilJS. Works in React, Angular, Vue, Svelte, or vanilla HTML.',
+    title: 'UI Components',
+    description: `${counts.components} accessible custom elements. Equally native in React, Angular, Vue, Svelte or plain HTML — a custom element is not a framework component.`,
     delay: '0ms',
   },
   {
     icon: 'layout',
     title: 'Layout System',
-    description: 'Attribute-driven CSS layouts with responsive grid, flex, spacing, and typography — no classes needed.',
-    delay: '100ms',
+    description:
+      'Grid, flex, spacing and typography driven by HTML attributes, with responsive breakpoints. Pure CSS — no class names to memorise, no JavaScript to ship.',
+    delay: '60ms',
   },
   {
     icon: 'activity',
     title: 'Motion Library',
-    description: 'Declarative animations via HTML attributes: fade, slide, zoom, bounce, scale — triggered on enter, hover, or tap.',
-    delay: '200ms',
+    description: `${counts.animations} declarative animations triggered on enter, hover or tap, with configurable duration, delay and easing. Silent under prefers-reduced-motion.`,
+    delay: '120ms',
   },
   {
     icon: 'star',
     title: 'Icon Library',
-    description: '70+ SVG icons, tree-shakeable, with a global registry. Use individually or register all at once.',
-    delay: '300ms',
+    description: `${counts.icons} hand-drawn SVG icons with tree-shakeable exports and a global registry. Import the three you need, or register the lot.`,
+    delay: '180ms',
   },
   {
     icon: 'sliders',
     title: 'Headless Core',
-    description: 'Framework-agnostic state machines for accordion, dropdown, modal, tabs, toast, and more.',
-    delay: '400ms',
+    description:
+      'The state machines behind accordion, dropdown, modal, tabs and toast — no DOM, no styles. Reuse the logic, render it your own way.',
+    delay: '240ms',
   },
   {
-    icon: 'monitor',
-    title: 'Responsive First',
-    description: 'Every layout attribute supports responsive breakpoints from mobile to desktop.',
-    tags: ['cols@md:3', 'gap@lg:xl', 'p@xl:2xl'],
-    delay: '500ms',
+    icon: 'move',
+    title: 'DOM Behaviors',
+    description: 'Splitter, drag & drop, tooltip and dialog attached to markup you already have, through and-* attributes.',
+    tags: ['and-splitter', 'and-draggable', 'and-tooltip'],
+    delay: '300ms',
   },
 ];
 ---
 
 <section id="features" class="bg-muted/30 border-y">
   <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
-
     <SectionHeader
       badge="Features"
       title="Everything You Need"
-      description="From layout primitives to complex interactive components — our ecosystem covers the full spectrum of modern UI development."
+      description="Six independent libraries covering the full span of a modern UI — from a CSS-only layout attribute to a fully accessible modal."
     />
 
     <div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg" class="items-stretch">
-      {features.map((feature) => (
-        <FeatureCard
-          icon={feature.icon}
-          title={feature.title}
-          description={feature.description}
-          delay={feature.delay}
-          tags={feature.tags}
-        />
-      ))}
+      {
+        features.map(feature => (
+          <FeatureCard
+            icon={feature.icon}
+            title={feature.title}
+            description={feature.description}
+            delay={feature.delay}
+            tags={feature.tags}
+          />
+        ))
+      }
     </div>
-
   </div>
 </section>

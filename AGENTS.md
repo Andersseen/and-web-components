@@ -188,6 +188,13 @@ pnpm version-packages
 pnpm release
 ```
 
+`changeset publish` publishes all packages **concurrently**. `prepublishOnly`
+scripts must therefore never wipe or rebuild `dist` unconditionally — a
+concurrent `rm -rf dist` in a dependency (e.g. `headless-core`) breaks another
+package's build mid-publish. Use the guard `test -d dist || pnpm run build`: the
+root `release` script always builds everything in dependency order before
+publishing, so in CI the guard is a no-op and it only covers manual publishes.
+
 ## Animation
 
 `packages/motion-core` provides two APIs:

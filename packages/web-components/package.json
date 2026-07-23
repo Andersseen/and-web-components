@@ -91,7 +91,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "generate": "stencil generate",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "test -d dist || pnpm run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "pnpm run build && storybook build"
   },

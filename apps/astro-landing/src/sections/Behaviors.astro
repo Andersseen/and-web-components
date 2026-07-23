@@ -1,0 +1,171 @@
+---
+import SectionHeader from '../components/SectionHeader.astro';
+import ShowcaseCard from '../components/ShowcaseCard.astro';
+
+const sortableItems = [
+  { icon: 'box', label: 'Components' },
+  { icon: 'layout', label: 'Layout' },
+  { icon: 'activity', label: 'Motion' },
+  { icon: 'star', label: 'Icons' },
+];
+
+const tooltipButtons = [
+  { label: 'Top', placement: 'top' },
+  { label: 'Right', placement: 'right' },
+  { label: 'Bottom', placement: 'bottom' },
+  { label: 'Left', placement: 'left' },
+];
+---
+
+<section id="behaviors" class="bg-muted/30 border-y">
+  <div and-layout="vertical gap:xxl p-y:xxxl p-x:lg" class="max-w-[1200px] mx-auto">
+    <SectionHeader
+      badge="Behaviors"
+      title="Enhance HTML You Already Have"
+      description="Not every interaction deserves a component. @andersseen/behaviors wires splitters, drag & drop, tooltips and dialogs onto plain elements through and-* attributes — no framework, no wrapper, no re-render."
+    />
+
+    <div and-layout="grid cols:1 cols@lg:2 gap:xl">
+      <!-- Splitter -->
+      <ShowcaseCard
+        icon="columns"
+        title="Splitter"
+        description="Drag the divider, or focus it and use the arrow keys. Announced as role=separator with live aria-valuenow."
+        motion="slide-in-left"
+      >
+        <div and-layout="vertical gap:sm">
+          <div
+            and-splitter="horizontal"
+            and-splitter-default-position="45"
+            and-splitter-min="20"
+            and-splitter-max="80"
+            class="h-64 rounded-lg border border-border overflow-hidden"
+          >
+            <div and-splitter-panel="primary" class="bg-muted/40 p-4 overflow-auto">
+              <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Primary</span>
+              <p and-text="p-sm" class="mt-1 text-foreground/80">Resize me.</p>
+            </div>
+            <div and-splitter-handle aria-label="Resize demo panels"></div>
+            <div and-splitter-panel="secondary" class="bg-background p-4 overflow-auto">
+              <span and-text="caption" class="text-muted-foreground uppercase tracking-widest">Secondary</span>
+              <p and-text="p-sm" class="mt-1 text-foreground/80">Both panels are ordinary divs.</p>
+            </div>
+          </div>
+          <code class="token-chip w-full block">and-splitter="horizontal" and-splitter-min="20"</code>
+        </div>
+      </ShowcaseCard>
+
+      <!-- Drag & drop -->
+      <ShowcaseCard
+        icon="move"
+        title="Drag &amp; Drop"
+        description="A sortable list built from list items. Sortable drop zones reorder their children on drop for you."
+        motion="slide-in-right"
+      >
+        <div and-layout="vertical gap:sm">
+          <ul and-drop-zone and-drop-zone-sortable and-layout="vertical gap:xs" class="rounded-lg border border-border p-2">
+            {
+              sortableItems.map(item => (
+                <li and-draggable and-draggable-data={item.label} class="demo-tile justify-start gap-2 px-3 py-2">
+                  <and-icon name="menu" size="14" class="text-muted-foreground" />
+                  <and-icon name={item.icon} size="16" class="text-primary" />
+                  <span and-text="p-sm">{item.label}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <code class="token-chip w-full block">and-drop-zone and-drop-zone-sortable</code>
+        </div>
+      </ShowcaseCard>
+
+      <!-- Tooltip -->
+      <ShowcaseCard
+        icon="message-square"
+        title="Tooltip"
+        description="Hover or focus any element. Wires aria-describedby, and a focused trigger dismisses on Escape."
+        motion="slide-in-left"
+      >
+        <div and-layout="vertical gap:sm">
+          <div and-layout="horizontal gap:sm wrap:wrap">
+            {
+              tooltipButtons.map(button => (
+                <and-button
+                  variant="outline"
+                  size="sm"
+                  and-tooltip={`Placed on the ${button.placement}`}
+                  and-tooltip-placement={button.placement}
+                >
+                  {button.label}
+                </and-button>
+              ))
+            }
+          </div>
+          <code class="token-chip w-full block">and-tooltip="…" and-tooltip-placement="top"</code>
+        </div>
+      </ShowcaseCard>
+
+      <!-- Dialog -->
+      <ShowcaseCard
+        icon="app-window"
+        title="Dialog"
+        description="Point a trigger at any element by id. Focus is trapped, body scroll locks, and focus returns to the trigger on close."
+        motion="slide-in-right"
+      >
+        <div and-layout="vertical gap:sm">
+          <div and-layout="horizontal gap:sm wrap:wrap">
+            <and-button and-dialog-trigger="behaviors-dialog" and-dialog-panel-class="and-dialog-panel">
+              <and-icon name="app-window" size="16"></and-icon>
+              Open centred
+            </and-button>
+            <and-button
+              variant="outline"
+              and-dialog-trigger="behaviors-drawer"
+              and-dialog-position="right"
+              and-dialog-panel-class="and-dialog-panel and-dialog-panel--side"
+            >
+              <and-icon name="panel-left-open" size="16"></and-icon>
+              Open from right
+            </and-button>
+          </div>
+          <code class="token-chip w-full block">and-dialog-trigger="target-id"</code>
+        </div>
+      </ShowcaseCard>
+    </div>
+  </div>
+
+  {/*
+    Dialog contents live outside the cards; the behavior moves them into a
+    portal on open and puts them back on close, toggling the `hidden` class.
+
+    Keep `and-layout` OFF these wrappers. Layout ships unlayered CSS, so its
+    `display: flex` outranks Tailwind's layered `.hidden { display: none }`
+    and the "hidden" content renders straight into the page. The layout
+    attribute belongs on the inner element instead.
+  */}
+  <div id="behaviors-dialog" class="hidden">
+    <div and-layout="vertical gap:md">
+      <h3 and-text="h4 weight:bold">Focus is trapped here</h3>
+      <p and-text="p-sm" class="text-muted-foreground">
+        Tab around — focus stays inside. Press Escape or click the backdrop to close, and focus returns to the button
+        that opened it.
+      </p>
+      <div and-layout="horizontal gap:sm justify:end">
+        <and-button variant="ghost" and-dialog-close>Cancel</and-button>
+        <and-button and-dialog-close>Got it</and-button>
+      </div>
+    </div>
+  </div>
+
+  <div id="behaviors-drawer" class="hidden">
+    <div and-layout="vertical gap:md">
+      <h3 and-text="h4 weight:bold">Same behavior, different position</h3>
+      <p and-text="p-sm" class="text-muted-foreground">
+        The only difference between this and the centred dialog is
+        <code class="token-chip">and-dialog-position="right"</code>.
+      </p>
+      <div and-layout="horizontal gap:sm justify:end">
+        <and-button and-dialog-close>Close</and-button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -9,6 +9,15 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+/*
+ * Port is overridable so the suite can be run while something else already
+ * occupies the default. With `reuseExistingServer` on, a stray server on the
+ * hard-coded port would otherwise be reused silently and the tests would run
+ * against the wrong site. CI is unaffected — it uses the defaults.
+ */
+const PORT = Number(process.env.PLAYWRIGHT_PORT ?? 4321);
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${PORT}`;
+
 export default defineConfig({
   testDir: './e2e',
   /* Run tests in files in parallel */
@@ -24,7 +33,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:4321',
+    baseURL: BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -60,8 +69,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm build && pnpm preview',
-    url: 'http://localhost:4321',
+    command: `pnpm build && pnpm preview --port ${PORT}`,
+    url: BASE_URL,
     reuseExistingServer: !process.env.CI,
   },
 });

@@ -1,30 +1,38 @@
 ---
 import StatItem from '../components/StatItem.astro';
+import { counts, links, packages } from '../lib/site-data';
 
+/*
+ * The hero speaks for the whole ecosystem, so it deliberately does not name
+ * an implementation detail of any single package here (Stencil builds
+ * @andersseen/web-components — that belongs on that package's card, not on
+ * the front door of a site that also ships pure-CSS layout, a zero-DOM
+ * headless core and attribute-driven behaviors).
+ */
 const stats = [
-  { value: '24+', label: 'Components' },
-  { value: '70+', label: 'Icons' },
-  { value: '10', label: 'Animations' },
-  { value: '0', label: 'Dependencies' },
+  { value: String(packages.length), label: 'Packages' },
+  { value: String(counts.components), label: 'Custom elements' },
+  { value: String(counts.icons), label: 'Icons' },
+  { value: String(counts.animations), label: 'Animations' },
 ];
 ---
 
 <section id="hero" class="relative overflow-hidden mt-8">
   <!-- Gradient background decoration -->
-  <div class="absolute inset-0 -z-10">
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl"></div>
     <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-3xl"></div>
   </div>
 
-  <div and-layout="vertical align:center gap:xl p-x:lg p-y:xxxl" class="max-w-[1200px] mx-auto min-h-[85vh] justify-center">
+  <div
+    and-layout="vertical align:center gap:xl p-x:lg p-y:xxxl"
+    class="max-w-[1200px] mx-auto min-h-[85vh] justify-center"
+  >
     <!-- Badge -->
-    <div
-      and-motion="fade"
-      and-motion-duration="600ms"
-    >
+    <div and-motion="fade" and-motion-duration="600ms">
       <and-badge variant="secondary" class="text-sm">
         <and-icon name="zap" size="14"></and-icon>
-        Framework Agnostic · Built with Stencil
+        Framework agnostic · Zero runtime dependencies
       </and-badge>
     </div>
 
@@ -36,32 +44,28 @@ const stats = [
       and-motion-duration="800ms"
       and-motion-delay="100ms"
     >
-      Build Modern UIs with<br/>
-      <span class="text-primary">Web Components</span>
+      One UI ecosystem.<br />
+      <span class="text-primary">Every framework.</span>
     </h1>
 
     <!-- Subtitle -->
     <p
       and-text="p align:center"
-      class="text-muted-foreground max-w-[600px] text-lg"
+      class="text-muted-foreground max-w-[640px] text-lg"
       and-motion="fade"
       and-motion-delay="300ms"
     >
-      A complete ecosystem of design tokens, layout primitives, animations, icons,
-      and 24+ accessible web components — ready for any framework.
+      Components, layout, motion, icons, headless logic and DOM behaviors — independent libraries built on web
+      standards, not on a framework. Take one, or take all of them.
     </p>
 
     <!-- CTA Buttons -->
-    <div
-      and-layout="horizontal align:center gap:md"
-      and-motion="zoom"
-      and-motion-delay="500ms"
-    >
-      <and-button size="lg">
+    <div and-layout="horizontal align:center gap:md wrap:wrap justify:center" and-motion="zoom" and-motion-delay="500ms">
+      <and-button size="lg" href="#ecosystem">
         <and-icon name="play" size="18"></and-icon>
-        Get Started
+        Explore the ecosystem
       </and-button>
-      <and-button size="lg" variant="outline" href="https://docs.andersseen.dev">
+      <and-button size="lg" variant="outline" href={links.docs}>
         <and-icon name="book-open" size="18"></and-icon>
         Documentation
       </and-button>
@@ -74,17 +78,23 @@ const stats = [
       and-motion="slide-up"
       and-motion-delay="700ms"
     >
-      {stats.map((stat, i) => (
-        <>
-          {i > 0 && <div class="w-px h-10 bg-border"></div>}
-          <StatItem value={stat.value} label={stat.label} />
-        </>
-      ))}
+      {
+        stats.map((stat, index) => (
+          <>
+            {index > 0 && <div class="w-px h-10 bg-border" aria-hidden="true" />}
+            <StatItem value={stat.value} label={stat.label} />
+          </>
+        ))
+      }
     </div>
 
     <!-- Scroll indicator -->
     <div class="mt-12 animate-bounce" and-motion="fade" and-motion-delay="1000ms">
-      <a href="#features" class="text-muted-foreground hover:text-foreground transition-colors">
+      <a
+        href="#features"
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="Scroll to features"
+      >
         <and-icon name="chevron-down" size="28"></and-icon>
       </a>
     </div>

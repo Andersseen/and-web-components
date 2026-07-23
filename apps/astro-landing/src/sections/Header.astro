@@ -1,8 +1,11 @@
 ---
+import { links } from '../lib/site-data';
+
 const navItems = [
   { id: 'home', label: 'Home', href: '#hero' },
   { id: 'features', label: 'Features', href: '#features' },
   { id: 'showcase', label: 'Showcase', href: '#showcase' },
+  { id: 'behaviors', label: 'Behaviors', href: '#behaviors' },
   { id: 'ecosystem', label: 'Ecosystem', href: '#ecosystem' },
 ];
 
@@ -21,6 +24,12 @@ const colorThemes = [
   { value: 'emerald-orange', label: 'Emerald/Orange' },
   { value: 'violet-cyan', label: 'Violet/Cyan' },
   { value: 'rose-teal', label: 'Rose/Teal' },
+];
+
+const actionLinks = [
+  { href: links.docs, label: 'Docs', icon: 'book-open', external: false },
+  { href: links.github, label: 'GitHub', icon: 'github', external: true },
+  { href: links.storybook, label: 'Storybook', icon: 'layout', external: true },
 ];
 ---
 
@@ -44,9 +53,7 @@ const colorThemes = [
       id="theme-style-select"
       class="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground transition-colors outline-none focus:border-primary"
     >
-      {styleThemes.map((theme) => (
-        <option value={theme.value}>{theme.label}</option>
-      ))}
+      {styleThemes.map(theme => <option value={theme.value}>{theme.label}</option>)}
     </select>
 
     <label for="theme-color-select" class="sr-only">Component color palette</label>
@@ -54,29 +61,22 @@ const colorThemes = [
       id="theme-color-select"
       class="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground transition-colors outline-none focus:border-primary"
     >
-      {colorThemes.map((theme) => (
-        <option value={theme.value}>{theme.label}</option>
-      ))}
+      {colorThemes.map(theme => <option value={theme.value}>{theme.label}</option>)}
     </select>
   </div>
 
-
-
-  <div slot="actions">
-    <and-button size="sm" variant="link" href="https://docs.andersseen.dev">
-      <and-icon name="book-open" size="16"></and-icon>
-      Docs
-    </and-button>
-    <and-button size="sm" variant="link" href="https://github.com/Andersseen/and-web-components" target="_blank">
-      <and-icon name="github" size="16"></and-icon>
-      GitHub
-    </and-button>
-    <and-button size="sm" variant="link" href="https://and-web-components-storybook.pages.dev" target="_blank">
-      <and-icon name="layout" size="16"></and-icon>
-      Storybook
-    </and-button>
+  <div slot="actions" class="flex items-center">
+    {
+      actionLinks.map(link => (
+        <and-button size="sm" variant="link" href={link.href} target={link.external ? '_blank' : undefined}>
+          <and-icon name={link.icon} size="16" />
+          {link.label}
+        </and-button>
+      ))
+    }
   </div>
-    <and-button
+
+  <and-button
     slot="actions"
     id="theme-mode-toggle"
     variant="outline"

@@ -1,4 +1,31 @@
+/*
+ * Cascade layer order — MUST stay the first statement in this file.
+ *
+ * `@andersseen/web-components/style.css` is compiled by Tailwind v3, which
+ * emits UNLAYERED css, including the v3 preflight:
+ *
+ *   *,::before,::after { border-width:0; border-style:solid; border-color:#e5e7eb }
+ *
+ * This app is on Tailwind v4, which puts every utility inside a cascade
+ * layer. Unlayered css beats *every* layer regardless of specificity, so
+ * left alone that one `*` rule silently kills every border utility written
+ * in this app: `border-y` computes to 0px and `border-border/70` computes to
+ * #e5e7eb — a hard light-grey hairline that ignores the theme token and
+ * glares on dark backgrounds.
+ *
+ * Importing the package into an explicit `andersseen` layer restores normal
+ * cascade rules. The layer sits ABOVE `base` (so the components' own
+ * `.border` / `.border-border` host utilities still beat v4's preflight)
+ * and BELOW `utilities` (so anything this app writes wins, as authored).
+ *
+ * `@andersseen/motion` and `@andersseen/layout` ship no preflight and are
+ * intentionally left unlayered — their `[and-motion]` / `[and-layout]`
+ * attribute contracts are meant to win over utility classes.
+ */
+@layer theme, base, andersseen, components, utilities;
+
 @import 'tailwindcss';
+@import '@andersseen/web-components/style.css' layer(andersseen);
 
 @theme {
   --color-border: hsl(var(--border));
@@ -90,6 +117,26 @@
   }
 }
 
+/*
+ * The vendor preflight (Tailwind v3) hard-codes that framework's default
+ * border colour, #e5e7eb. Any element given a bare `border` / `border-t`
+ * with no explicit colour therefore renders a fixed light-grey hairline
+ * that ignores the active palette entirely — barely visible in light mode,
+ * and a glaring bright line on dark surfaces.
+ *
+ * Re-point the default at the theme token so borders follow the palette in
+ * both modes. Declared inside `andersseen` (after the import, so it wins on
+ * source order within the layer) which keeps it below every `border-*`
+ * utility this app writes.
+ */
+@layer andersseen {
+  *,
+  ::before,
+  ::after {
+    border-color: hsl(var(--border));
+  }
+}
+
 /* Smooth scroll offset for sticky navbar */
 html {
   scroll-padding-top: 4rem;
@@ -105,4 +152,132 @@ html {
   margin-inline: auto;
   padding-inline: 2rem;
   max-width: 1400px;
+}
+
+/* ── Shared surfaces ──────────────────────────────────────────────────────
+ * Every non-<and-card> surface on the page routes through one of these so
+ * the borders match the card component instead of each section inventing
+ * its own weight.
+ */
+
+/** Small interactive tile — icon grid cells, motion demos, sortable items. */
+@utility demo-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  background-color: hsl(var(--muted) / 0.4);
+  transition:
+    border-color 200ms var(--theme-easing-standard),
+    background-color 200ms var(--theme-easing-standard),
+    color 200ms var(--theme-easing-standard);
+}
+
+/** Inline code chip used for attribute/token examples. */
+@utility token-chip {
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  background-color: hsl(var(--muted) / 0.6);
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+/** Full-width tinted callout (CTA blocks). */
+@utility accent-panel {
+  border: 1px solid hsl(var(--primary) / 0.2);
+  border-radius: calc(var(--radius) * 2);
+  background-color: hsl(var(--primary) / 0.05);
+}
+
+/** Code block surface. */
+@utility code-surface {
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  background-color: hsl(var(--muted) / 0.5);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ── @andersseen/behaviors ────────────────────────────────────────────────
+ * The behaviors package deliberately ships no CSS: it only applies layout
+ * critical inline styles plus stable class hooks, leaving appearance to the
+ * host app. These are this site's implementations of those hooks.
+ */
+
+.and-splitter-handle {
+  position: relative;
+  background-color: hsl(var(--border));
+  transition: background-color 150ms var(--theme-easing-standard);
+}
+
+.and-splitter-handle:hover,
+.and-splitter-handle--dragging {
+  background-color: hsl(var(--primary));
+}
+
+.and-splitter-handle:focus-visible {
+  outline: var(--theme-focus-ring-width) solid hsl(var(--ring));
+  outline-offset: var(--theme-focus-ring-offset);
+}
+
+.and-splitter-handle--horizontal {
+  width: 3px;
+}
+
+.and-splitter-handle--vertical {
+  height: 3px;
+}
+
+/* Widen the pointer target well beyond the 3px visual line. */
+.and-splitter-handle::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+
+.and-draggable {
+  transition:
+    opacity 150ms var(--theme-easing-standard),
+    border-color 150ms var(--theme-easing-standard);
+}
+
+.and-draggable.and-dragging {
+  opacity: 0.4;
+  border-color: hsl(var(--primary));
+}
+
+.and-drop-zone.and-drag-over {
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--primary) / 0.06);
+}
+
+.and-tooltip {
+  max-width: 16rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  background-color: hsl(var(--popover));
+  padding: 0.375rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: hsl(var(--popover-foreground));
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.35);
+}
+
+.and-dialog-panel {
+  width: min(32rem, calc(100vw - 2rem));
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) * 1.5);
+  background-color: hsl(var(--card));
+  padding: 1.5rem;
+  color: hsl(var(--card-foreground));
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.5);
+}
+
+/* Edge-anchored positions stretch to full height, so square off the
+   outer corners the way a drawer should look. */
+.and-dialog-panel--side {
+  border-radius: 0;
+  border-block: 0;
 }

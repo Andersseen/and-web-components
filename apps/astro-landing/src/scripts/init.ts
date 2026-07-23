@@ -32,6 +32,9 @@ registerAllIcons();
 // ── Motion (attribute-driven animations) ──
 import { initMotion } from '@andersseen/motion';
 
+// ── Behaviors (attribute-driven DOM enhancement) ──
+import { defineBehaviors } from '@andersseen/behaviors';
+
 type Mode = 'light' | 'dark';
 
 const THEME_STORAGE_KEYS = {
@@ -133,6 +136,11 @@ const setupThemeControls = (): void => {
 const bootstrap = () => {
   setupThemeControls();
   initMotion();
+
+  // `observe: true` so behaviors attached to markup that custom elements
+  // render or move later (the dialog demos re-parent their own content) are
+  // still wired up.
+  defineBehaviors({ observe: true });
 };
 
 if (document.readyState === 'loading') {

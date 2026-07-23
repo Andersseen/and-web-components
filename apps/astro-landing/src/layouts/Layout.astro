@@ -5,8 +5,10 @@ interface Props {
 
 const { title } = Astro.props;
 
+// NOTE: `@andersseen/web-components/style.css` is intentionally NOT imported
+// here — global.css pulls it in through `@import ... layer(andersseen)` so it
+// lands in a cascade layer. See the comment at the top of global.css.
 import "../styles/global.css";
-import "@andersseen/web-components/style.css";
 import "@andersseen/motion/style.css";
 import "@andersseen/layout/dist/layout.css";
 

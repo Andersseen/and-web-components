@@ -10,16 +10,23 @@ interface Props {
 const { icon, title, description, delay = '0ms', tags = [] } = Astro.props;
 ---
 
+{/*
+  Border, radius, surface colour and shadow all come from <and-card> itself.
+  Overriding them here is what made the page look inconsistent: some cards
+  carried the component's themed border while others carried a hand-written
+  one, so the two never matched. This only adds the hover affordance.
+*/}
 <and-card
-  class="group h-full overflow-hidden border-border/70 bg-gradient-to-b from-background to-muted/25 transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-xl"
+  class="group h-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
   and-motion="slide-up"
   and-motion-trigger="enter"
   and-motion-delay={delay}
-  variant="elevated"
 >
   <and-card-header class="pb-3">
     <div and-layout="horizontal align:start gap:md">
-      <div class="h-12 w-12 shrink-0 rounded-xl bg-primary/10 ring-1 ring-primary/20 flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary/15">
+      <div
+        class="h-12 w-12 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary/20"
+      >
         <and-icon name={icon} size="22"></and-icon>
       </div>
       <div and-layout="vertical gap:xxs">
@@ -31,15 +38,15 @@ const { icon, title, description, delay = '0ms', tags = [] } = Astro.props;
     </div>
   </and-card-header>
 
-  {tags.length > 0 && (
-    <and-card-content class="pt-0">
-      <div and-layout="horizontal gap:xs wrap:wrap">
-        {tags.map((tag) => (
-          <code class="text-xs rounded-md border border-border bg-muted px-2 py-1 text-foreground/85">
-            {tag}
-          </code>
-        ))}
-      </div>
-    </and-card-content>
-  )}
+  {
+    tags.length > 0 && (
+      <and-card-content class="pt-0">
+        <div and-layout="horizontal gap:xs wrap:wrap">
+          {tags.map(tag => (
+            <code class="token-chip">{tag}</code>
+          ))}
+        </div>
+      </and-card-content>
+    )
+  }
 </and-card>
