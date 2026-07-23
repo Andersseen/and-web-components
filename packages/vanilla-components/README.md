@@ -19,8 +19,9 @@
 > ### Note on versions
 >
 > A `1.0.0` was published to npm by mistake and does not reflect maturity. The
-> package now tracks `0.0.x`. If your lockfile resolves `^1.0.0` you are pinned
-> to that old build — depend on an exact `0.0.x` version instead.
+> package tracks `0.0.x`. Note that `0.0.1` and `0.1.0` are earlier builds
+> already on npm, so the next release is `0.0.2`. Depend on an exact `0.0.x`
+> version.
 
 Zero-runtime-dependency native Custom Elements built on the same headless core
 as the Stencil components. `@andersseen/motion` is optional and loaded

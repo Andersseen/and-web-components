@@ -246,11 +246,12 @@ referenced below).
       vs 11.4 KB for all). Published `@andersseen/behaviors/overlay`
       (`calculatePosition` with flip-on-collision, now accepting a plain size so
       it works with no DOM) and declared `sideEffects` on four packages.
-      `vanilla-components` dropped 1.0.0 → 0.0.1, marked experimental in its
-      README, and added to the Changesets ignore list. **Verification:** the new
-      `store.test.ts` fails 5/7 and the new `vanilla-modal` regressions fail
-      6/14 against the previous code; suites now 300 headless / 136 stencil / 18
-      vanilla / 36 behaviors, `pnpm build:all` and `pnpm lint` clean.
+      `vanilla-components` dropped 1.0.0 → 0.0.2 (0.0.1 is already taken on
+      npm), marked experimental in its README, and added to the Changesets
+      ignore list. **Verification:** the new `store.test.ts` fails 5/7 and the
+      new `vanilla-modal` regressions fail 6/14 against the previous code;
+      suites now 300 headless / 136 stencil / 18 vanilla / 36 behaviors,
+      `pnpm build:all` and `pnpm lint` clean.
 
 - [ ] **R2.16 — Consume `behaviors/overlay` from `web-components`** _(TD-24 →
       unblocks TD-18 · High)_ The positioning and modal primitives are now
@@ -259,10 +260,20 @@ referenced below).
       migrate `and-select`, `and-dropdown`, `and-tooltip`, `and-context-menu`
       and `and-menu-list` onto portal-based positioning. Pair with R2.13.
 
-- [ ] **R2.17 — Deprecate `@andersseen/vanilla-components@1.0.0` on npm**
-      _(TD-23 · small · no code)_ The repo now says `0.0.1`, but the mistaken
-      `1.0.0` still resolves for any lockfile pinning `^1.0.0`. Run:
-      `npm deprecate '@andersseen/vanilla-components@1.0.0' 'Published in     error; this package is experimental and tracks 0.0.x. Use     @andersseen/web-components.'`
+- [ ] **R2.17 — Retire `@andersseen/vanilla-components@1.0.0` on npm** _(TD-23 ·
+      small · no code, decision required)_ The repo now says `0.0.2`, but
+      `1.0.0` is still the published `latest`. Two options, and the trade-off is
+      a permanent one: **(a) unpublish** —
+      `npm unpublish '@andersseen/vanilla-components@1.0.0'` removes it, but the
+      version number `1.0.0` can then never be used again for this package; that
+      is the exact tombstone that already pushed
+      `angular`/`react`/`vue-components` permanently onto the `0.x` line. **(b)
+      deprecate** —
+      `npm deprecate '@andersseen/vanilla-components@1.0.0'     'Published in error; experimental package, tracks 0.0.x. Use     @andersseen/web-components.'`
+      keeps it installable so no existing lockfile 404s, and shows a warning on
+      install. Publishing `0.0.2` does **not** require either. Whichever is
+      chosen, finish with
+      `npm dist-tag add @andersseen/vanilla-components@0.0.2 latest`.
 
 ## R3 — Later: maturity
 

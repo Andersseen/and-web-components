@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/vanilla-components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "EXPERIMENTAL — proof-of-concept zero-dependency vanilla custom elements. Not production-ready; use @andersseen/web-components instead.",
   "type": "module",
   "sideEffects": true,
