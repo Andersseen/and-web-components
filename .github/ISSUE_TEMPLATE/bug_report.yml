@@ -1,0 +1,85 @@
+name: Bug report
+description: Something in a published package doesn't behave as documented
+labels: ['bug']
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package is affected? Pick the one closest to the problem.
+      options:
+        - '@andersseen/web-components'
+        - '@andersseen/headless-components'
+        - '@andersseen/layout'
+        - '@andersseen/motion'
+        - '@andersseen/behaviors'
+        - '@andersseen/icon'
+        - '@andersseen/vanilla-components'
+        - '@andersseen/angular-components'
+        - '@andersseen/react-components'
+        - '@andersseen/vue-components'
+        - '@andersseen/astro'
+        - '@andersseen/mcp'
+        - '@andersseen/skills'
+        - Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `npm ls <package>`, or the version from your lockfile.
+      placeholder: '0.4.0'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where does it happen?
+      options:
+        - Plain HTML / no framework
+        - Angular
+        - React
+        - Vue
+        - Astro
+        - Svelte
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Include the full error and stack trace if there is one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: >
+        A link to a minimal repo or StackBlitz is by far the fastest route to a
+        fix. Failing that, the smallest snippet that shows the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: >
+        Browser and version, bundler, SSR or static build, custom theme —
+        anything that might matter.
+    validations:
+      required: false

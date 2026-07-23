@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://docs.andersseen.dev
+    about: Component reference, theming, layout and behaviors guides.
+  - name: Live component demo
+    url: https://and-web-components-demo.pages.dev
+    about: Check whether the behaviour reproduces in the showcase app first.
+  - name: Security vulnerability
+    url: https://github.com/Andersseen/and-web-components/security/advisories/new
+    about: Report privately — please don't open a public issue.

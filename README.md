@@ -1,350 +1,156 @@
-# Andersseen Web Components
+<div align="center">
 
-A modular, framework-agnostic UI ecosystem: headless logic, DOM behaviors,
-design tokens, layout primitives, animations, icons, and **25 accessible UI
-components** — built with [StencilJS](https://stenciljs.com/), ready for any
-framework or plain HTML. Each package below can be installed and used on its
-own; see [Package Roles](#package-roles) for how they fit together.
+# And Libs
 
-| Package                           | npm                                                                                                                                   | Description                                      |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `@andersseen/web-components`      | [![npm](https://img.shields.io/npm/v/@andersseen/web-components)](https://www.npmjs.com/package/@andersseen/web-components)           | Stencil UI components (buttons, modals, tabs …)  |
-| `@andersseen/headless-components` | [![npm](https://img.shields.io/npm/v/@andersseen/headless-components)](https://www.npmjs.com/package/@andersseen/headless-components) | Framework-agnostic headless state machines       |
-| `@andersseen/icon`                | [![npm](https://img.shields.io/npm/v/@andersseen/icon)](https://www.npmjs.com/package/@andersseen/icon)                               | 70+ SVG icon library with tree-shaking           |
-| `@andersseen/motion`              | [![npm](https://img.shields.io/npm/v/@andersseen/motion)](https://www.npmjs.com/package/@andersseen/motion)                           | Attribute-driven CSS/JS animations               |
-| `@andersseen/layout`              | [![npm](https://img.shields.io/npm/v/@andersseen/layout)](https://www.npmjs.com/package/@andersseen/layout)                           | Pure CSS layout & typography via HTML attributes |
-| `@andersseen/vanilla-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/vanilla-components)](https://www.npmjs.com/package/@andersseen/vanilla-components)   | Zero-dependency native Custom Elements           |
-| `@andersseen/behaviors`           | [![npm](https://img.shields.io/npm/v/@andersseen/behaviors)](https://www.npmjs.com/package/@andersseen/behaviors)                     | Attribute-driven DOM behaviors                   |
-| `@andersseen/angular-components`  | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone directive wrappers            |
-| `@andersseen/react-components`    | [![npm](https://img.shields.io/npm/v/@andersseen/react-components)](https://www.npmjs.com/package/@andersseen/react-components)       | Generated React wrappers                         |
-| `@andersseen/vue-components`      | [![npm](https://img.shields.io/npm/v/@andersseen/vue-components)](https://www.npmjs.com/package/@andersseen/vue-components)           | Generated Vue 3 wrappers                         |
-| `@andersseen/astro`               | [![npm](https://img.shields.io/npm/v/@andersseen/astro)](https://www.npmjs.com/package/@andersseen/astro)                             | Official Astro integration                       |
+**A UI stack you adopt one layer at a time.**
 
-## Package Roles
+Headless state machines, DOM behaviors, layout primitives, motion, icons and 25
+accessible components — each published on its own, none requiring the others.
+Works in Angular, React, Vue, Astro, Svelte, or a plain HTML file.
 
-Andersseen is not one library — it's a stack of independently-installable
-packages. Each tier can be adopted on its own or combined:
+[![npm](https://img.shields.io/npm/v/@andersseen/web-components?label=web-components&color=0b7285)](https://www.npmjs.com/package/@andersseen/web-components)
+[![Release](https://img.shields.io/github/actions/workflow/status/Andersseen/and-web-components/release.yml?branch=main&label=release)](https://github.com/Andersseen/and-web-components/actions/workflows/release.yml)
+[![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![Node](https://img.shields.io/badge/node-%E2%89%A520-5a9e4b)](https://nodejs.org)
+[![pnpm](https://img.shields.io/badge/pnpm-10-f69220)](https://pnpm.io)
 
-- **Product core** — the packages most consumers reach for directly:
-  `@andersseen/web-components` (styled UI), `@andersseen/icon`,
-  `@andersseen/motion`, `@andersseen/layout`, `@andersseen/behaviors`.
-- **Foundation** — `@andersseen/headless-components`: framework-agnostic state
-  machines and a11y/keyboard logic with zero styling. It powers `web-components`
-  and `vanilla-components` internally, and is also published standalone for
-  teams building their own design system on top of it.
-- **Framework adapters** — thin, mostly-generated wrappers around
-  `web-components` for a specific framework: `@andersseen/angular-components`,
-  `@andersseen/react-components`, `@andersseen/vue-components`,
-  `@andersseen/astro`. These follow the core package's release cadence and don't
-  carry independent design decisions.
+[**Landing**](https://libs.andersseen.dev/) ·
+[**Docs**](https://docs.andersseen.dev/) ·
+[**Component demo**](https://and-web-components-demo.pages.dev) ·
+[**Storybook**](https://and-web-components-storybook.pages.dev)
 
-Packages don't require each other unless documented. For example, an Angular app
-that only wants attribute-driven layout/typography can install just
-`@andersseen/layout` — a pure CSS package with no JS runtime — without pulling
-in `web-components`, `headless-components`, or any framework adapter.
+</div>
 
-## Features
+---
 
-- **Framework-agnostic** — Works with Angular, React, Vue, Svelte, Astro, or
-  vanilla HTML.
-- **Headless core** — State machines, accessibility, and keyboard navigation
-  without any styling.
-- **Design tokens** — HSL-based theming with light/dark modes and color
-  palettes.
-- **Attribute-driven layout** — Flexbox, grid, spacing, and typography from HTML
-  attributes.
-- **Progressive DOM behaviors** — Add splitters, drag & drop, tooltips, and
-  dialogs to existing HTML with `and-*` attributes or imperative APIs.
-- **Animation system** — Enter, hover, and tap animations via `and-motion`
-  attributes with reduced-motion support.
-- **70+ icons** — Tree-shakeable SVG icons with a global registry.
-- **Shadow DOM** — Encapsulated styles with no conflicts.
-- **TailwindCSS** — Components styled with Tailwind + CSS variables.
+## Why this exists
 
-## Project Structure
+Most component libraries are all-or-nothing: you want a grid helper, you install
+a runtime, a theme, and 40 components you'll never render. And Libs splits that
+into layers you can take individually.
+
+An Angular app that only wants attribute-driven layout installs
+`@andersseen/layout` — pure CSS, no JS runtime, no components. A team building
+its own design system takes `@andersseen/headless-components` and skips every
+styled package. Nothing pulls in a sibling unless the docs say so.
 
 ```
-and-web-components/
-├── packages/
-│   ├── headless-core/         # @andersseen/headless-components
-│   ├── icon-library/          # @andersseen/icon
-│   ├── layout-core/           # @andersseen/layout  (SCSS → CSS)
-│   ├── motion-core/           # @andersseen/motion  (TS + CSS)
-│   ├── web-components/        # @andersseen/web-components (Stencil)
-│   ├── vanilla-components/    # @andersseen/vanilla-components (zero-dep CE)
-│   ├── behaviors/             # @andersseen/behaviors (attribute-driven DOM)
-│   ├── angular-components/    # @andersseen/angular-components (generated Angular)
-│   ├── react-components/      # @andersseen/react-components (generated React)
-│   ├── vue-components/        # @andersseen/vue-components (generated Vue)
-│   └── astro/                 # @andersseen/astro integration
-├── apps/
-│   ├── angular-workspace/     # Angular CLI workspace (demo app only)
-│   │   └── projects/
-│   │       └── demo-app/            # Component showcase app
-│   └── astro-landing/         # Landing page built with Astro (Playwright e2e)
-├── package.json               # Root scripts
-├── pnpm-workspace.yaml        # Workspace config
+                      ┌───────────────────────────────────┐
+  adapters            │  angular · react · vue · astro    │   generated wrappers
+                      └────────────────┬──────────────────┘
+                                       │
+                      ┌────────────────▼──────────────────┐
+  styled UI           │  web-components  (Stencil, Shadow │   25 components
+                      │  DOM, Tailwind + CVA)             │
+                      └────────────────┬──────────────────┘
+                                       │
+                      ┌────────────────▼──────────────────┐
+  foundation          │  headless-components              │   pure TS, no DOM
+                      └───────────────────────────────────┘
 
+  standalone — nothing above required
+  ┌──────────┬──────────┬───────────┬──────────┬─────────────────────┐
+  │  layout  │  motion  │ behaviors │   icon   │ vanilla-components  │
+  │ CSS only │ CSS + TS │ DOM only  │ 88 SVGs  │  zero-dependency CE │
+  └──────────┴──────────┴───────────┴──────────┴─────────────────────┘
 ```
 
-## Getting Started
+## Packages
 
-### Prerequisites
+| Package                                                           | Version                                                                                                                                                   | What it is                                             |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`@andersseen/web-components`](./packages/web-components)         | [![npm](https://img.shields.io/npm/v/@andersseen/web-components?color=0b7285&label=)](https://www.npmjs.com/package/@andersseen/web-components)           | 25 Stencil components, Shadow DOM, themeable           |
+| [`@andersseen/headless-components`](./packages/headless-core)     | [![npm](https://img.shields.io/npm/v/@andersseen/headless-components?color=0b7285&label=)](https://www.npmjs.com/package/@andersseen/headless-components) | State machines + a11y logic, zero styling, no DOM      |
+| [`@andersseen/layout`](./packages/layout-core)                    | [![npm](https://img.shields.io/npm/v/@andersseen/layout?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/layout)                           | Flexbox/grid/typography from HTML attributes           |
+| [`@andersseen/motion`](./packages/motion-core)                    | [![npm](https://img.shields.io/npm/v/@andersseen/motion?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/motion)                           | Declarative animations, reduced-motion aware           |
+| [`@andersseen/behaviors`](./packages/behaviors)                   | [![npm](https://img.shields.io/npm/v/@andersseen/behaviors?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/behaviors)                     | Splitters, drag & drop, tooltips, dialogs on plain DOM |
+| [`@andersseen/icon`](./packages/icon-library)                     | [![npm](https://img.shields.io/npm/v/@andersseen/icon?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/icon)                               | 88 tree-shakeable SVG icons                            |
+| [`@andersseen/vanilla-components`](./packages/vanilla-components) | [![npm](https://img.shields.io/npm/v/@andersseen/vanilla-components?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/vanilla-components)   | Zero-dependency native Custom Elements                 |
+| [`@andersseen/angular-components`](./packages/angular-components) | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components?color=868e96&label=)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone wrappers                            |
+| [`@andersseen/react-components`](./packages/react-components)     | [![npm](https://img.shields.io/npm/v/@andersseen/react-components?color=868e96&label=)](https://www.npmjs.com/package/@andersseen/react-components)       | React wrappers                                         |
+| [`@andersseen/vue-components`](./packages/vue-components)         | [![npm](https://img.shields.io/npm/v/@andersseen/vue-components?color=868e96&label=)](https://www.npmjs.com/package/@andersseen/vue-components)           | Vue 3 wrappers                                         |
+| [`@andersseen/astro`](./packages/astro)                           | [![npm](https://img.shields.io/npm/v/@andersseen/astro?color=868e96&label=)](https://www.npmjs.com/package/@andersseen/astro)                             | Astro integration                                      |
+| [`@andersseen/mcp`](./packages/mcp)                               | [![npm](https://img.shields.io/npm/v/@andersseen/mcp?color=e8590c&label=)](https://www.npmjs.com/package/@andersseen/mcp)                                 | MCP server — lets AI assistants query the catalog      |
+| [`@andersseen/skills`](./packages/skills)                         | [![npm](https://img.shields.io/npm/v/@andersseen/skills?color=e8590c&label=)](https://www.npmjs.com/package/@andersseen/skills)                           | Installable agent skills, one per library              |
 
-- **Node.js** v20+
-- **pnpm** v10+ (`corepack enable && corepack prepare pnpm@latest --activate`)
+## Quick start
 
-### Install
+Install only what you need:
 
 ```bash
-git clone https://github.com/Andersseen/and-web-components.git
-cd and-web-components
-pnpm install
+# The styled components
+npm install @andersseen/web-components
+
+# …or just the CSS layout layer, with no JS at all
+npm install @andersseen/layout
 ```
 
-### Build all libraries
-
-```bash
-pnpm build:all
-```
-
-This builds: `headless-core` → `icon-library` → `motion-core` → `web-components`
-→ `layout-core` → `vanilla-components` → `behaviors` → `angular-components` →
-`react-components` → `vue-components` → `demo-app`.
-
-## Development
-
-### Angular Demo App
-
-```bash
-# Full build + serve
-pnpm start:demo
-
-# Dev mode with Stencil watch + Angular serve
-pnpm start:demo:dev
-```
-
-Opens at `http://localhost:4200` — showcases all components, headless patterns,
-icons, motion, and layout utilities.
-
-### Astro Landing Page
-
-```bash
-pnpm start:astro:dev
-```
-
-### Stencil dev server (components only)
-
-```bash
-pnpm -C packages/web-components start
-```
-
-## Build Scripts
-
-| Script                 | Description                                 |
-| ---------------------- | ------------------------------------------- |
-| `pnpm build:headless`  | Build headless state machines               |
-| `pnpm build:icons`     | Build icon library                          |
-| `pnpm build:motion`    | Build animation library                     |
-| `pnpm build:layout`    | Build SCSS → CSS layout library             |
-| `pnpm build:behaviors` | Build attribute-driven DOM behaviors        |
-| `pnpm build:stencil`   | Build headless + icons + Stencil components |
-| `pnpm build:angular`   | Build Angular wrappers + demo app           |
-| `pnpm build:react`     | Build React wrappers                        |
-| `pnpm build:vue`       | Build Vue wrappers                          |
-| `pnpm build:all`       | Build everything                            |
-| `pnpm build:astro`     | Build Astro landing page                    |
-| `pnpm test:behaviors`  | Run DOM behavior tests with Vitest          |
-| `pnpm start:demo`      | Build libs + serve Angular demo             |
-| `pnpm start:demo:dev`  | Stencil watch + Angular serve (concurrent)  |
-| `pnpm start:astro:dev` | Build libs + Astro dev server               |
-
-## Using the Libraries
-
-### In any HTML page
+Theme from a single attribute on `<html>`, register the elements once, then use
+them anywhere:
 
 ```html
-<script
-  type="module"
-  src="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.esm.js"
-></script>
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/@andersseen/web-components/dist/web-components/web-components.css"
-/>
-
-<and-button variant="default">Click me</and-button>
+<html and-color="violet-cyan" and-theme="compact" and-mode="dark">
+  <head>
+    <script type="module">
+      import { defineAllCustomElements } from '@andersseen/web-components';
+      defineAllCustomElements();
+    </script>
+  </head>
+  <body>
+    <and-button variant="primary">Ship it</and-button>
+  </body>
+</html>
 ```
 
-### In a bundled app (Vite, Webpack, etc.)
-
-```bash
-npm install @andersseen/web-components @andersseen/icon @andersseen/motion @andersseen/layout @andersseen/behaviors
-```
-
-```ts
-// Register all custom elements
-import '@andersseen/web-components/components/all';
-
-// Register icons
-import { registerAllIcons } from '@andersseen/icon';
-registerAllIcons();
-
-// Enable animations
-import { enableAnimations } from '@andersseen/web-components';
-enableAnimations();
-
-// Attribute-driven animations
-import { initMotion } from '@andersseen/motion';
-initMotion();
-
-// Enhance existing HTML with and-* interaction behaviors
-import { defineBehaviors } from '@andersseen/behaviors';
-defineBehaviors({ observe: true });
-```
-
-```css
-/* Import styles */
-@import '@andersseen/web-components/style.css';
-@import '@andersseen/motion/style.css';
-@import '@andersseen/layout/dist/layout.css';
-```
-
-### In Angular
-
-```bash
-npm install @andersseen/web-components @andersseen/angular-components @andersseen/icon
-```
-
-```ts
-// app.component.ts
-import { AndButton, AndModal, AndIcon } from '@andersseen/angular-components';
-
-@Component({
-  imports: [AndButton, AndModal, AndIcon],
-  template: `<and-button variant="default">Click me</and-button>`,
-})
-export class AppComponent {}
-```
-
-### In React
-
-```bash
-npm install @andersseen/web-components @andersseen/react-components @andersseen/icon
-```
-
-```tsx
-// App.tsx
-import { AndButton } from '@andersseen/react-components';
-import '@andersseen/web-components/style.css';
-
-export function App() {
-  return <AndButton variant="default">Click me</AndButton>;
-}
-```
-
-### In Vue
-
-```bash
-npm install @andersseen/web-components @andersseen/vue-components @andersseen/icon
-```
-
-```vue
-<!-- App.vue -->
-<script setup lang="ts">
-import { AndButton } from '@andersseen/vue-components';
-import '@andersseen/web-components/style.css';
-</script>
-
-<template>
-  <AndButton variant="default">Click me</AndButton>
-</template>
-```
-
-### In Astro
-
-```astro
----
-import '@andersseen/web-components/style.css';
-import '@andersseen/motion/style.css';
----
-
-<and-button variant="outline">Hello</and-button>
-
-<script>
-  import '@andersseen/web-components/components/all';
-  import { registerAllIcons } from '@andersseen/icon';
-  import { initMotion } from '@andersseen/motion';
-  registerAllIcons();
-  initMotion();
-</script>
-```
+Framework users can skip the manual registration and install the matching
+adapter — [Angular](./packages/angular-components),
+[React](./packages/react-components), [Vue](./packages/vue-components) or
+[Astro](./packages/astro).
 
 ## Components
 
-| Component    | Tag                | Features                                                 |
-| ------------ | ------------------ | -------------------------------------------------------- |
-| Accordion    | `and-accordion`    | Expandable panels with keyboard navigation               |
-| Alert        | `and-alert`        | Dismissible status messages                              |
-| Badge        | `and-badge`        | Labels and status indicators                             |
-| Breadcrumb   | `and-breadcrumb`   | Navigation breadcrumbs                                   |
-| Button       | `and-button`       | 6 variants, loading state, link mode                     |
-| Card         | `and-card`         | Content container with slots                             |
-| Carousel     | `and-carousel`     | Image/content slider                                     |
-| Code         | `and-code`         | Code display / copy                                      |
-| Context Menu | `and-context-menu` | Right-click menus                                        |
-| Control      | `and-control`      | Label/hint/error wrapper around any slotted form control |
-| Drawer       | `and-drawer`       | Slide-out panels                                         |
-| Dropdown     | `and-dropdown`     | Menu overlays                                            |
-| Icon         | `and-icon`         | 70+ SVG icons                                            |
-| Input        | `and-input`        | Form input with validation                               |
-| Menu List    | `and-menu-list`    | Navigable menu items                                     |
-| Modal        | `and-modal`        | Dialog overlays with focus trap                          |
-| Navbar       | `and-navbar`       | Fixed/sticky navigation with scroll spy                  |
-| Pagination   | `and-pagination`   | Page navigation                                          |
-| Select       | `and-select`       | Dropdown selection                                       |
-| Sidebar      | `and-sidebar`      | Collapsible side navigation                              |
-| Skeleton     | `and-skeleton`     | Loading placeholders                                     |
-| Switch       | `and-switch`       | Boolean on/off toggle, native form participation         |
-| Tabs         | `and-tabs`         | Tabbed content switching                                 |
-| Toast        | `and-toast`        | Notification messages                                    |
-| Tooltip      | `and-tooltip`      | Info popups on hover/focus                               |
+25 components, registering 39 custom elements once sub-parts (`and-card-header`,
+`and-tabs-trigger`, …) are counted.
 
-## Theming
+Accordion · Alert · Badge · Breadcrumb · Button · Card · Carousel · Code ·
+Context Menu · Control · Drawer · Dropdown · Icon · Input · Menu List · Modal ·
+Navbar · Pagination · Select · Sidebar · Skeleton · Switch · Tabs · Toast ·
+Tooltip
 
-Components use CSS custom properties with HSL values. Set an `and-color`
-attribute on `<html>` to switch between every bundled palette:
+Every one is driven by a headless state machine from
+`@andersseen/headless-components`, so keyboard navigation, focus management and
+ARIA wiring are shared rather than reimplemented per component.
 
-```html
-<html and-color="violet-cyan"></html>
-```
+<details>
+<summary><b>Theming</b> — palettes, density themes, light/dark</summary>
 
-The public document attributes are namespaced to avoid collisions with
-application-owned `data-*` attributes:
+<br>
+
+Components read HSL custom properties. Switch everything from one attribute on
+`<html>`:
 
 ```html
 <html and-color="violet-cyan" and-theme="compact" and-mode="dark"></html>
 ```
 
-- `and-color`: `indigo-rose`, `slate-amber`, `emerald-orange`, `violet-cyan`,
-  `rose-teal`, or `warm-gold`.
-- `and-theme`: `default`, `compact`, `playful`, `retro`, or `elegant`.
-- `and-mode`: `light` or `dark`. The existing `class="dark"` API is also
-  supported.
+| Attribute   | Values                                                                                  |
+| ----------- | --------------------------------------------------------------------------------------- |
+| `and-color` | `indigo-rose`, `slate-amber`, `emerald-orange`, `violet-cyan`, `rose-teal`, `warm-gold` |
+| `and-theme` | `default`, `compact`, `playful`, `retro`, `elegant`                                     |
+| `and-mode`  | `light`, `dark` (`class="dark"` also works)                                             |
 
-The former `data-color`, `data-theme`, and `data-mode` selectors remain as
-deprecated compatibility aliases.
+Attributes are namespaced to avoid colliding with application-owned `data-*`.
+The former `data-color` / `data-theme` / `data-mode` selectors still work as
+deprecated aliases.
 
-To make one palette the application default, import it after the component
-stylesheet. The available color themes are `indigo-rose`, `slate-amber`,
-`emerald-orange`, `violet-cyan`, and `rose-teal`:
+To bake one palette in as the default, import it after the component stylesheet:
 
 ```css
 @import '@andersseen/web-components/style.css';
 @import '@andersseen/web-components/colors/violet-cyan.css';
 ```
 
-You can also override variables directly:
+Or override the variables yourself:
 
 ```css
 :root {
@@ -354,17 +160,14 @@ You can also override variables directly:
   --foreground: 224 71% 4%;
   --radius: 0.5rem;
 }
-
-.dark {
-  --primary: 234 89% 74%;
-  --background: 229 50% 6%;
-  --foreground: 226 100% 97%;
-}
 ```
 
-## Layout System
+</details>
 
-Attribute-driven layout utilities — no classes needed:
+<details>
+<summary><b>Layout</b> — flexbox and grid from attributes, no classes</summary>
+
+<br>
 
 ```html
 <div and-layout="horizontal gap:md align:center justify:between wrap:wrap">
@@ -375,21 +178,23 @@ Attribute-driven layout utilities — no classes needed:
 </div>
 
 <!-- Responsive modifiers -->
-<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">...</div>
+<div and-layout="grid cols:1 cols@md:2 cols@lg:3 gap:lg">…</div>
 ```
 
-## Motion System
+`@andersseen/layout` ships compiled CSS only — no JavaScript runtime, no
+preflight, safe to drop into an existing app.
 
-Declarative animations via HTML attributes:
+</details>
+
+<details>
+<summary><b>Motion</b> — enter, hover and tap animations</summary>
+
+<br>
 
 ```html
-<!-- Animate on scroll into view -->
 <div and-motion="fade-in" and-motion-trigger="enter">Content</div>
-
-<!-- Animate on hover -->
 <div and-motion="zoom-in" and-motion-trigger="hover">Hover me</div>
 
-<!-- With custom timing -->
 <div
   and-motion="slide-in-up"
   and-motion-trigger="enter"
@@ -400,23 +205,18 @@ Declarative animations via HTML attributes:
 </div>
 ```
 
-Supports `prefers-reduced-motion` automatically.
+`prefers-reduced-motion` is honoured automatically.
 
-## Behaviors
+</details>
 
-`@andersseen/behaviors` progressively enhances existing DOM without a framework
-runtime. Unlike `@andersseen/headless-components`, which contains pure state
-machines and never touches the DOM, behaviors attach interaction directly to
-elements through `and-*` attributes.
+<details>
+<summary><b>Behaviors</b> — enhance existing DOM without a framework</summary>
 
-Install it independently when you only need DOM behaviors:
+<br>
 
-```bash
-npm install @andersseen/behaviors
-```
-
-Call `defineBehaviors()` after the document body is available. Passing
-`observe: true` also initializes matching elements added later:
+Where `headless-components` is pure state and never touches the DOM,
+`@andersseen/behaviors` attaches interaction directly to elements you already
+have.
 
 ```html
 <div and-splitter="horizontal" and-splitter-default-position="30">
@@ -427,17 +227,9 @@ Call `defineBehaviors()` after the document body is available. Passing
 
 <button and-tooltip="Save changes" and-tooltip-placement="top">Save</button>
 
-<button and-dialog-trigger="settings-dialog">Settings</button>
-<div id="settings-dialog" and-dialog-position="center">
-  <h2>Settings</h2>
-  <button and-dialog-close>Close</button>
-</div>
-
 <script type="module">
   import { defineBehaviors } from '@andersseen/behaviors';
-
   const cleanup = defineBehaviors({ observe: true });
-  // Call cleanup() to destroy all behaviors and stop observing the DOM.
 </script>
 ```
 
@@ -449,68 +241,104 @@ Call `defineBehaviors()` after the document body is available. Passing
 | `and-tooltip`        | Hover/focus tooltip               | `createTooltip(element, options)`      |
 | `and-dialog-trigger` | Modal or drawer trigger           | `createDialog(targetElement, options)` |
 
-For manual lifecycle control and tighter tree-shaking, import the root API or a
-behavior-specific subpath:
+Subpath imports (`@andersseen/behaviors/splitter`, `/tooltip`, `/dialog`,
+`/drag-drop`) keep bundles tight. No production dependencies. Keyboard resizing,
+`aria-describedby`, Escape dismissal and focus trapping are built in — see the
+[package README](./packages/behaviors/README.md) for the full reference.
 
-```ts
-import { createSplitter } from '@andersseen/behaviors/splitter';
-import { createTooltip } from '@andersseen/behaviors/tooltip';
+</details>
 
-const splitter = createSplitter(document.querySelector('#workspace')!, {
-  orientation: 'vertical',
-});
-const tooltip = createTooltip(document.querySelector('#save')!, {
-  content: 'Save changes',
-  placement: 'top',
-});
+<details>
+<summary><b>AI tooling</b> — MCP server and agent skills</summary>
 
-// Later:
-splitter.destroy();
-tooltip.destroy();
+<br>
+
+`@andersseen/mcp` exposes the component catalog over the Model Context Protocol,
+so Claude, Cursor, Copilot and VS Code can query real props and emit
+framework-correct snippets instead of guessing.
+
+`@andersseen/skills` ships installable agent skills — one focused skill per
+library, plus an orchestrator.
+
+</details>
+
+## Repository
+
+```
+and-web-components/
+├── packages/
+│   ├── headless-core/         # @andersseen/headless-components
+│   ├── web-components/        # @andersseen/web-components  (Stencil)
+│   ├── vanilla-components/    # @andersseen/vanilla-components
+│   ├── behaviors/             # @andersseen/behaviors
+│   ├── layout-core/           # @andersseen/layout          (SCSS → CSS)
+│   ├── motion-core/           # @andersseen/motion
+│   ├── icon-library/          # @andersseen/icon
+│   ├── angular-components/    # generated Angular wrappers
+│   ├── react-components/      # generated React wrappers
+│   ├── vue-components/        # generated Vue wrappers
+│   ├── astro/                 # @andersseen/astro integration
+│   ├── mcp/                   # @andersseen/mcp
+│   └── skills/                # @andersseen/skills
+├── apps/
+│   ├── angular-workspace/     # Angular demo app
+│   ├── astro-landing/         # Landing page  (Playwright e2e)
+│   └── docs/                  # Documentation site
+└── docs/                      # Architecture spec, codemap, roadmap
 ```
 
-Available subpaths are `@andersseen/behaviors/splitter`,
-`@andersseen/behaviors/drag-drop`, `@andersseen/behaviors/tooltip`, and
-`@andersseen/behaviors/dialog`. The behaviors package has no production
-dependencies and includes accessibility support such as keyboard resizing for
-splitters, `aria-describedby` and Escape dismissal for tooltips, and focus
-trapping/restoration for dialogs. See the
-[package README](./packages/behaviors/README.md) for the complete attribute and
-event reference.
+### Local development
 
-## Deployment
-
-Both apps deploy to **Cloudflare Pages**:
+Requires **Node 20+** (CI runs 22) and **pnpm 10**.
 
 ```bash
-# Angular demo app
-pnpm deploy:cloudflare
-
-# Astro landing page
-pnpm deploy:landing
+git clone https://github.com/Andersseen/and-web-components.git
+cd and-web-components
+pnpm install
+pnpm build:all
 ```
 
-## Publishing to npm
+| Command                | What it runs                                    |
+| ---------------------- | ----------------------------------------------- |
+| `pnpm build:all`       | Every publishable package, in dependency order  |
+| `pnpm build:stencil`   | Core chain — required once before Stencil tests |
+| `pnpm start:demo`      | Angular showcase app                            |
+| `pnpm start:astro:dev` | Landing page                                    |
+| `pnpm start:docs:dev`  | Documentation site                              |
+| `pnpm storybook`       | Component workbench                             |
+| `pnpm lint`            | Lint every package                              |
 
-Libraries use [Changesets](https://github.com/changesets/changesets) with
-independent versioning. The only sanctioned publish path is via CI:
+Contributor guide: [CONTRIBUTING.md](./CONTRIBUTING.md). Architecture, contracts
+and ADRs live in [docs/SSD.md](./docs/SSD.md); the task → files map is in
+[docs/CODEMAP.md](./docs/CODEMAP.md).
+
+### Deployments
+
+| Surface   | URL                                                                                      | Workflow                                                       |
+| --------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Landing   | [libs.andersseen.dev](https://libs.andersseen.dev/)                                      | [`deploy-landing.yml`](./.github/workflows/deploy-landing.yml) |
+| Docs      | [docs.andersseen.dev](https://docs.andersseen.dev/)                                      | [`deploy-docs.yml`](./.github/workflows/deploy-docs.yml)       |
+| Demo      | [and-web-components-demo.pages.dev](https://and-web-components-demo.pages.dev)           | [`deploy-demo.yml`](./.github/workflows/deploy-demo.yml)       |
+| Storybook | [and-web-components-storybook.pages.dev](https://and-web-components-storybook.pages.dev) | manual — `pnpm deploy:storybook`                               |
+
+All four run on Cloudflare Pages. See
+[.github/DEPLOYMENT.md](./.github/DEPLOYMENT.md).
+
+### Releasing
+
+Versioning is [Changesets](https://github.com/changesets/changesets)-driven and
+publishing only happens in CI:
 
 ```bash
-# 1. Add a changeset for your changes
-pnpm changeset
-
-# 2. Commit and open a PR; merge to main
+pnpm changeset      # describe your change
+# commit, open a PR, merge to main
 ```
 
-Merging to `main` triggers `.github/workflows/release.yml`, which uses
-`changesets/action` to either open a "chore: version packages" PR (if there are
-pending changesets) or publish the newly-versioned packages to npm (when that PR
-is merged). Do not run `pnpm release` or `pnpm publish` locally except in
-emergencies, because it bypasses Changesets and risks version drift.
-
-Each package under `packages/` is scoped to `@andersseen/` and configured with
-`"publishConfig": { "access": "public" }`.
+Merging to `main` runs [`release.yml`](./.github/workflows/release.yml), which
+either opens a `chore: version packages` PR or — once that PR merges — publishes
+the newly-versioned packages. Don't run `pnpm release` or `pnpm publish`
+locally; it bypasses Changesets and causes version drift.
 
 ## License
 
-MIT
+[MIT](./LICENSE) © Andersseen

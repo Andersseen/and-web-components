@@ -1,19 +1,21 @@
-name: Deploy Landing to Cloudflare Pages
+name: Deploy Storybook to Cloudflare Pages
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+# Manual only. Storybook rebuilds Stencil from scratch, so running it on every
+# push to main would roughly double CI time for no benefit — the component demo
+# already covers post-merge verification.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
-    name: Build & Deploy Landing
+    name: Build & Deploy Storybook
     runs-on: ubuntu-latest
     environment:
-      name: landing
-      url: https://libs.andersseen.dev
+      name: storybook
+      url: https://and-web-components-storybook.pages.dev
     permissions:
       contents: read
       deployments: write
@@ -32,7 +34,7 @@ jobs:
 
       - name: Ensure Cloudflare Pages project exists
         run: |
-          PROJECT_NAME="and-web-components-landing"
+          PROJECT_NAME="and-web-components-storybook"
           HTTP_CODE=$(curl -s -o /tmp/cf-project-check.json -w "%{http_code}" \
             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${PROJECT_NAME}" \
             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")
@@ -57,7 +59,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Build & Deploy
-        run: pnpm deploy:landing:actions
+        run: pnpm deploy:storybook:actions
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

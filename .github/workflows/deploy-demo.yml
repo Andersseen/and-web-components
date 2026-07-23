@@ -11,6 +11,9 @@ jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
+    environment:
+      name: demo
+      url: https://and-web-components-demo.pages.dev
     permissions:
       contents: read
       deployments: write

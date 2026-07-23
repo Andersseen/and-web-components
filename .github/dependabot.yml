@@ -1,0 +1,46 @@
+version: 2
+
+updates:
+  # Root workspace — the bulk of shared tooling lives here.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    versioning-strategy: increase-if-necessary
+    groups:
+      # Stencil, Angular, Vite and friends move in lockstep; one PR each
+      # beats a dozen that fail to build in isolation.
+      stencil:
+        patterns:
+          - '@stencil/*'
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
+          - 'ng-packagr'
+      dev-tooling:
+        patterns:
+          - 'eslint*'
+          - '@eslint/*'
+          - 'typescript-eslint'
+          - 'prettier'
+          - 'vitest'
+          - '@vitest/*'
+          - 'husky'
+          - 'lint-staged'
+    ignore:
+      # pnpm 11.x regresses OIDC trusted publishing (pnpm/pnpm#11513).
+      # Revisit once that ships a fix.
+      - dependency-name: pnpm
+        versions: ['11.x']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    groups:
+      actions:
+        patterns:
+          - '*'

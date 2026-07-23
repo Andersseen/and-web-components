@@ -1,0 +1,55 @@
+name: Feature request
+description: Propose a new component, behavior, or API
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Larger proposals are worth discussing here before you open a PR — the
+        architecture rules in
+        [AGENTS.md](https://github.com/Andersseen/and-web-components/blob/main/AGENTS.md)
+        constrain where new code can live.
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Which layer does this belong to?
+      description: >
+        Pure logic goes in headless-core; styled UI in web-components;
+        attribute-driven DOM enhancement in behaviors. Pick "Not sure" if the
+        boundary is exactly what you want to discuss.
+      options:
+        - Headless logic (no DOM)
+        - Styled component
+        - DOM behavior (and-* attributes)
+        - Layout / motion / icons
+        - Framework adapter
+        - Tooling (MCP, skills, build)
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the use case, not the implementation you have in mind.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API
+      description: Sketch the markup, attributes or function signature you'd want.
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What have you tried instead?
+      description: >
+        Existing packages, workarounds, or another library that gets this right.
+    validations:
+      required: false
