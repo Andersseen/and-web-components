@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/motion",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "sideEffects": [
     "*.css",
     "./dist/core.css"

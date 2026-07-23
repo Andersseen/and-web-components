@@ -129,9 +129,24 @@ close for overlays.
 
 ## P3 — Add a new vanilla component
 
+> **This package is experimental and is excluded from Changesets.** It is a
+> proof of concept, pinned to `0.0.x`. If you change it, hand-write the
+> `CHANGELOG.md` entry and bump `package.json` yourself — see P7.
+
 1. Create `packages/vanilla-components/src/components/vanilla-<name>.ts`. Copy
-   `vanilla-modal.ts` structure: a class extending `HTMLElement`, consuming the
-   headless factory for state + ARIA props.
+   `vanilla-modal.ts` structure: a class extending **`HTMLElementBase`** (from
+   `../utils/env`, **not** `HTMLElement` directly — the class body is evaluated
+   at module load, so extending `HTMLElement` makes the whole package throw on
+   import in any SSR build), consuming the headless factory for state + ARIA
+   props.
+   - Overlay-ish component? Use `focusFirst`/`trapTab`/`lockBodyScroll` from
+     `../utils/overlay` rather than re-implementing them, and remember to attach
+     a `keydown` listener — the headless `handleKeyDown` does nothing until
+     something calls it.
+   - Re-parenting light-DOM children into rendered markup? Hold them in a
+     `DocumentFragment` captured **once**, never re-read `childNodes` in
+     `connectedCallback` (it fires again on every DOM move, and would capture
+     whatever is rendered at that moment).
 2. Match the attribute/event API of the equivalent Stencil component when one
    exists.
 3. Animations: only via dynamic `import('@andersseen/motion')` when the
@@ -210,6 +225,43 @@ passes; `pnpm build:stencil` still succeeds.
    changed and how to use it), not a commit message.
 5. Commit the generated `.changeset/*.md` file with your change. **Never** run
    `pnpm release` or the `publish:*` scripts locally — CI publishes.
+
+### Packages Changesets does not manage
+
+`.changeset/config.json` `ignore` currently lists `@andersseen/astro-landing`,
+`angular-workspace` and **`@andersseen/vanilla-components`**. `pnpm changeset`
+will not offer them and `pnpm version-packages` will not touch their version or
+`CHANGELOG.md`.
+
+For `@andersseen/vanilla-components` this is deliberate — it is an experimental
+proof of concept that must not inherit the stack's release cadence. If you
+change it you must, by hand:
+
+1. Add a section at the top of `packages/vanilla-components/CHANGELOG.md`.
+2. Bump `version` in its `package.json` along the `0.0.x` line. **Check npm
+   first** — `npm view @andersseen/vanilla-components versions`. `0.0.1`,
+   `0.1.0` and `1.0.0` are already taken and can never be reused.
+
+### After `pnpm version-packages`, always check the wrapper versions
+
+`@andersseen/web-components` is a **peerDependency** of
+`angular-components`/`react-components`/`vue-components`. Changesets bumps
+peer-dependents as **major** by default, because widening a peer range is
+breaking for consumers. On a `0.x` package that turns into a jump straight to
+`1.0.0` — which for these three packages is **unpublishable**: `1.0.0` was
+unpublished from npm and npm never allows a version number to be reused.
+
+This has now bitten twice (commit `7882f65`, then again on 2026-07-23). Until
+the root cause is settled (SSD **TD-28**), after every `pnpm version-packages`:
+
+```bash
+node -e "for (const a of ['angular','react','vue']) console.log(a, require('./packages/'+a+'-components/package.json').version)"
+```
+
+If any of them reads `1.0.0`, correct it to mirror the new
+`@andersseen/web-components` version (the pattern the CHANGELOG history follows)
+in both `package.json` and the heading Changesets just wrote into
+`CHANGELOG.md`.
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "name": "@andersseen/behaviors",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "sideEffects": false,
   "description": "Framework-agnostic DOM behaviors driven by `and-*` attributes (splitter, drag & drop, tooltip, dialog). Progressive enhancement, no framework required.",
   "type": "module",
