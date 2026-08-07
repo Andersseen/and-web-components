@@ -33,4 +33,27 @@ assistive tech to land on).
 <and-button variant="link">Link</and-button>
 ```
 
+## Full width
+
+There is no `full` prop. `and-button` is `display: inline-block` and sizes to
+its content. To stretch it, pass the width through `class`: the attribute stays
+on the host (styled by `@andersseen/web-components/style.css`) _and_ is merged
+into the inner control's classes, so one attribute widens both boxes.
+
+```html
+<and-button class="w-full">Save changes</and-button>
+```
+
+Without that stylesheet, size both boxes yourself — the host from the outside,
+the inner control through its `button` part:
+
+```css
+and-button {
+  display: block;
+}
+and-button::part(button) {
+  width: 100%;
+}
+```
+
 <ApiTables tag="and-button" />

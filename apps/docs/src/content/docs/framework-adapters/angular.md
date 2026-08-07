@@ -85,7 +85,9 @@ import {
   AndButton,
   AndToast,
 } from '@andersseen/angular-components';
-import type { HTMLAndToastElement } from '@andersseen/web-components';
+// `HTMLAndToastElement` and its siblings are ambient global types, not named
+// exports — this type-only import just brings the declarations into scope.
+import type {} from '@andersseen/web-components';
 
 @Component({
   selector: 'app-profile-form',
