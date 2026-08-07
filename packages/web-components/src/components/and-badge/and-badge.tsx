@@ -17,7 +17,7 @@ import { badgeVariants, type BadgeVariantProps } from './and-badge-variants';
  */
 @Component({
   tag: 'and-badge',
-  styleUrls: ['and-badge.css', '../../global/component-base.css'],
+  styleUrls: ['../../global/component-base.css', 'and-badge.css'],
   shadow: true,
 })
 export class AndBadge {

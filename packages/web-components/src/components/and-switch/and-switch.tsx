@@ -26,7 +26,7 @@ import { switchRootVariants, switchTrackClass, switchThumbClass } from './and-sw
  */
 @Component({
   tag: 'and-switch',
-  styleUrls: ['and-switch.css', '../../global/component-base.css'],
+  styleUrls: ['../../global/component-base.css', 'and-switch.css'],
   scoped: true,
 })
 export class AndSwitch {

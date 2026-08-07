@@ -21,6 +21,11 @@ import { buttonVariants, spinnerClass, type ButtonVariantProps } from './and-but
  * to the inner button/anchor on load, so there's only one interactive
  * surface for assistive tech to land on).
  *
+ * There is no `full` prop: the host is `display: inline-block` and sizes to
+ * its content. For a full-width button pass the width through `class`
+ * (`<and-button class="w-full">`) — it lands on the host and is merged into
+ * the inner control — or style `::part(button)` yourself.
+ *
  * @example
  * ```html
  * <and-button variant="destructive" size="lg">Delete</and-button>
@@ -29,7 +34,7 @@ import { buttonVariants, spinnerClass, type ButtonVariantProps } from './and-but
  */
 @Component({
   tag: 'and-button',
-  styleUrls: ['and-button.css', '../../global/component-base.css'],
+  styleUrls: ['../../global/component-base.css', 'and-button.css'],
   shadow: { delegatesFocus: true },
 })
 export class AndButton {

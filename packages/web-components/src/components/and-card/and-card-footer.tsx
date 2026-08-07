@@ -16,7 +16,7 @@ import { cn } from '../../utils/cn';
  */
 @Component({
   tag: 'and-card-footer',
-  styleUrls: ['and-card-footer.css', '../../global/component-base.css'],
+  styleUrls: ['../../global/component-base.css', 'and-card-footer.css'],
   shadow: true,
 })
 export class AndCardFooter {

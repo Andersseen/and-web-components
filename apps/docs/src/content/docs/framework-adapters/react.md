@@ -74,7 +74,9 @@ import {
   AndButton,
   AndToast,
 } from '@andersseen/react-components';
-import type { HTMLAndToastElement } from '@andersseen/web-components';
+// `HTMLAndToastElement` and its siblings are ambient global types, not named
+// exports — this type-only import just brings the declarations into scope.
+import type {} from '@andersseen/web-components';
 import '@andersseen/web-components/style.css';
 
 const roles = [

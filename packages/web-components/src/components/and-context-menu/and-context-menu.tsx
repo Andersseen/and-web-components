@@ -24,7 +24,7 @@ export type ContextMenuItem = {
  */
 @Component({
   tag: 'and-context-menu',
-  styleUrls: ['and-context-menu.css', '../../global/component-base.css'],
+  styleUrls: ['../../global/component-base.css', 'and-context-menu.css'],
   shadow: true,
 })
 export class AndContextMenu {
