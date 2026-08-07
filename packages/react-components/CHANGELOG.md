@@ -1,5 +1,12 @@
 # @andersseen/react-components
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [54ec775]
+  - @andersseen/web-components@0.4.1
+
 ## 0.4.0
 
 ### Patch Changes
