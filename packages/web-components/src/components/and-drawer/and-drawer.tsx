@@ -22,7 +22,7 @@ import { overlayVariants, contentVariants, closeBtnVariants } from './and-drawer
  */
 @Component({
   tag: 'and-drawer',
-  styleUrls: ['and-drawer.css', '../../global/component-base.css', '../../global/animations.css'],
+  styleUrls: ['../../global/component-base.css', 'and-drawer.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDrawer {

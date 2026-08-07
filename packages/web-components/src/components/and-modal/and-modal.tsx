@@ -27,7 +27,7 @@ import { overlayVariants, contentVariants, closeButtonVariants } from './and-mod
  */
 @Component({
   tag: 'and-modal',
-  styleUrls: ['and-modal.css', '../../global/component-base.css', '../../global/animations.css'],
+  styleUrls: ['../../global/component-base.css', 'and-modal.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndModal {

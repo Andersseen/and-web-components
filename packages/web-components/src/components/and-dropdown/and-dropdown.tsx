@@ -42,7 +42,7 @@ export type DropdownPlacement = 'top' | 'bottom' | 'left' | 'right';
  */
 @Component({
   tag: 'and-dropdown',
-  styleUrls: ['and-dropdown.css', '../../global/component-base.css', '../../global/animations.css'],
+  styleUrls: ['../../global/component-base.css', 'and-dropdown.css', '../../global/animations.css'],
   shadow: true,
 })
 export class AndDropdown {
