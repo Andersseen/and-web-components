@@ -298,13 +298,17 @@ fixes:
   its native `:checked`/`:disabled` state via Tailwind `peer-*` variants, and
   label-click-to-toggle for free from wrapping it in a `<label>`), or the
   control is a hidden mirror sitting alongside a separate custom visual widget
-  (a hidden `<input type="hidden">` for `and-select`, which otherwise renders a
-  `<button>` + ARIA listbox). Either way, doing the shadow-DOM rewrite instead
-  would move the real control behind a shadow boundary (breaking the native
-  behavior you already have for free) and — since the host's `name` prop is
-  usually already reflected onto both the host **and** the inner control — risks
-  the same field submitting twice under one key once `setFormValue` is added on
-  top. Verified live in a real browser via Playwright every time (`and-input`
+  (a visually hidden, focusable native `<select>` for `and-select`, which
+  otherwise renders a `<button>` + ARIA listbox — **not**
+  `<input type="hidden">`, which was tried first and found unable to support
+  `required`: hidden inputs are unconditionally barred from constraint
+  validation per the HTML spec, so `required` was a silent no-op; see TD-12
+  addendum 2026-08-28). Either way, doing the shadow-DOM rewrite instead would
+  move the real control behind a shadow boundary (breaking the native behavior
+  you already have for free) and — since the host's `name` prop is usually
+  already reflected onto both the host **and** the inner control — risks the
+  same field submitting twice under one key once `setFormValue` is added on top.
+  Verified live in a real browser via Playwright every time (`and-input`
   2026-07-14, `and-select` 2026-07-16, `and-switch` 2026-07-16): `FormData` and
   `<fieldset disabled>` worked with zero `ElementInternals` code — for
   `<fieldset disabled>`, Playwright itself refused to click the trigger,

@@ -74,6 +74,26 @@ describe('createSelect', () => {
     expect(select.state.selectedValue).toBeNull();
   });
 
+  it('selectValue closes the menu, same as selectHighlighted (mouse-click vs keyboard-Enter parity)', () => {
+    const select = createSelect({ options });
+    select.actions.open();
+    expect(select.state.isOpen).toBe(true);
+
+    select.actions.selectValue('cherry');
+
+    expect(select.state.selectedValue).toBe('cherry');
+    expect(select.state.isOpen).toBe(false);
+  });
+
+  it('selectValue re-selecting the already-selected value still closes the menu', () => {
+    const select = createSelect({ options, defaultValue: 'cherry' });
+    select.actions.open();
+
+    select.actions.selectValue('cherry');
+
+    expect(select.state.isOpen).toBe(false);
+  });
+
   it('selects highlighted option', () => {
     const select = createSelect({ options });
     select.actions.open();

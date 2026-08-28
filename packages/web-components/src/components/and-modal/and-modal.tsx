@@ -14,8 +14,10 @@ import { overlayVariants, contentVariants, closeButtonVariants } from './and-mod
  * Renders nothing (`<Host />`, no DOM) while closed.
  *
  * Give every modal an accessible name: either set `label`, or slot a
- * heading (`<h1>`–`<h6>`) as the first element — it is wired up as
- * `aria-labelledby` automatically.
+ * heading (`<h1>`–`<h6>`) as the first element — its text is read into the
+ * dialog's `aria-label` automatically (not `aria-labelledby`: this
+ * component is `shadow: true`, and ID-reference ARIA attributes can't
+ * resolve across the shadow boundary to light-DOM content).
  *
  * @example
  * ```html
@@ -40,8 +42,8 @@ export class AndModal {
   @Prop({ reflect: true }) animated: boolean = false;
 
   /**
-   * Accessible name for the dialog. When empty, a slotted heading is used
-   * via `aria-labelledby` instead.
+   * Accessible name for the dialog. When empty, the text of a slotted
+   * heading (`<h1>`–`<h6>`) is used instead.
    */
   @Prop() label: string = '';
 
@@ -58,7 +60,10 @@ export class AndModal {
   @Event({ bubbles: true, composed: true }) andModalClose!: EventEmitter<void>;
 
   @State() private isClosing = false;
-  @State() private labelledById: string | undefined;
+  @State() private derivedLabel: string | undefined;
+
+  /** One-time dev diagnostic guard — never repeat the missing-name warning for the same instance. */
+  private warnedMissingLabel = false;
 
   private modalLogic!: ModalReturn;
   private previouslyFocused: Element | null = null;
@@ -230,24 +235,43 @@ export class AndModal {
   /* ── Accessible name ────────────────────────────────────────────── */
 
   /**
-   * Prefer an explicit `label`; otherwise adopt a slotted heading as the
-   * dialog's `aria-labelledby` target so authors get a correct accessible
-   * name from the markup they'd write anyway.
+   * Prefer an explicit `label`; otherwise adopt a slotted heading's text as
+   * the dialog's accessible name so authors get a correct name from the
+   * markup they'd write anyway. When neither exists, the dialog is left
+   * with no accessible name at all — a generic invented name (e.g.
+   * `"Dialog"`) would silently hide a real authoring mistake from
+   * accessibility tooling instead of surfacing it.
+   *
+   * Deliberately **not** `aria-labelledby` pointing at the heading's `id`:
+   * this component is `shadow: true`, and ID-reference ARIA attributes
+   * (`aria-labelledby`, `aria-describedby`, …) only resolve within the same
+   * shadow tree. The `[role="dialog"]` element lives in this component's
+   * shadow root while a slotted heading is light DOM — a different tree —
+   * so the browser's accessible-name computation can never actually find
+   * it. Verified live: Chromium reports an empty accessible name for the
+   * dialog despite a "resolved" `aria-labelledby` attribute pointing at a
+   * real, matching `id`. Reading the heading's own text into a plain
+   * `aria-label` string sidesteps cross-root ID resolution entirely instead
+   * of depending on it.
    */
   private syncAccessibleName() {
     if (this.label) {
-      this.labelledById = undefined;
+      this.derivedLabel = undefined;
       return;
     }
     const heading = this.el.querySelector<HTMLElement>('h1, h2, h3, h4, h5, h6');
-    if (!heading) {
-      this.labelledById = undefined;
+    const headingText = heading?.textContent?.trim();
+    if (!headingText) {
+      this.derivedLabel = undefined;
+      if (!this.warnedMissingLabel) {
+        this.warnedMissingLabel = true;
+        console.warn(
+          '<and-modal> has no accessible name — set the "label" prop or slot a heading (h1–h6) as the first element.',
+        );
+      }
       return;
     }
-    if (!heading.id) {
-      heading.id = `and-modal-title-${Math.random().toString(36).slice(2, 9)}`;
-    }
-    this.labelledById = heading.id;
+    this.derivedLabel = headingText;
   }
 
   /* ── Focus Trap ─────────────────────────────────────────────────── */
@@ -318,8 +342,7 @@ export class AndModal {
             class={cn(contentVariants())}
             data-state={state}
             {...contentProps}
-            aria-label={this.labelledById ? undefined : this.label || 'Dialog'}
-            aria-labelledby={this.labelledById}
+            aria-label={this.label || this.derivedLabel || undefined}
           >
             <div class="flex flex-col gap-4">
               <slot onSlotchange={() => this.syncAccessibleName()} />

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-modal e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="open-labeled">Open labeled modal</button>
+    <and-modal id="labeled-modal">
+      <h2>Delete account</h2>
+      <p>This cannot be undone.</p>
+      <label>
+        Confirmation
+        <input type="text" id="confirm-input" />
+      </label>
+      <a href="#" id="learn-more-link">Learn more</a>
+      <button type="button" id="confirm-delete">Confirm</button>
+    </and-modal>
+
+    <button id="open-unlabeled">Open unlabeled modal</button>
+    <and-modal id="unlabeled-modal">
+      <p>No heading and no label prop — deliberately, for the a11y regression test.</p>
+    </and-modal>
+
+    <script type="module">
+      const labeledModal = document.getElementById('labeled-modal');
+      const unlabeledModal = document.getElementById('unlabeled-modal');
+
+      document.getElementById('open-labeled').addEventListener('click', () => {
+        labeledModal.open = true;
+      });
+      document.getElementById('open-unlabeled').addEventListener('click', () => {
+        unlabeledModal.open = true;
+      });
+    </script>
+  </body>
+</html>

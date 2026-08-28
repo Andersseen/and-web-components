@@ -86,6 +86,8 @@
     "test": "node scripts/ensure-built.cjs && vitest run",
     "test:spec": "vitest run --project spec",
     "test:watch": "vitest --watch",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
@@ -96,6 +98,8 @@
     "build-storybook": "pnpm run build && storybook build"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.58.2",
     "@stencil-community/postcss": "^2.2.0",
     "@stencil/angular-output-target": "^1.4.0",
     "@stencil/core": "^4.43.3",

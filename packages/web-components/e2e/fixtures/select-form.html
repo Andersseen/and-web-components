@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-select e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 20rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Required, no default value: proves `required` actually blocks submission. -->
+    <form id="form-required">
+      <and-select
+        label="Country (required)"
+        name="country"
+        required
+        options='[{"value":"us","text":"United States"},{"value":"ca","text":"Canada"},{"value":"mx","text":"Mexico"}]'
+      ></and-select>
+      <button type="submit">Submit</button>
+      <pre class="result" data-result="form-required"></pre>
+    </form>
+
+    <!-- Has a default value: proves correct FormData + form.reset() + keyboard nav. -->
+    <form id="form-value">
+      <and-select
+        label="Country"
+        name="country"
+        value="us"
+        options='[{"value":"us","text":"United States"},{"value":"ca","text":"Canada"},{"value":"mx","text":"Mexico"}]'
+      ></and-select>
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+      <pre class="result" data-result="form-value"></pre>
+    </form>
+
+    <!-- Disabled directly via the `disabled` prop (not a <fieldset>): value must not reach FormData. -->
+    <form id="form-disabled">
+      <and-select
+        label="Country (disabled)"
+        name="country"
+        value="us"
+        disabled
+        options='[{"value":"us","text":"United States"},{"value":"ca","text":"Canada"},{"value":"mx","text":"Mexico"}]'
+      ></and-select>
+      <button type="submit">Submit</button>
+      <pre class="result" data-result="form-disabled"></pre>
+    </form>
+
+    <!-- Disabled via a wrapping <fieldset disabled>: the browser's own inheritance must apply. -->
+    <form id="form-fieldset-disabled">
+      <fieldset disabled>
+        <and-select
+          label="Country (fieldset disabled)"
+          name="country"
+          value="us"
+          options='[{"value":"us","text":"United States"},{"value":"ca","text":"Canada"},{"value":"mx","text":"Mexico"}]'
+        ></and-select>
+      </fieldset>
+      <button type="submit">Submit</button>
+      <pre class="result" data-result="form-fieldset-disabled"></pre>
+    </form>
+
+    <pre id="invalid-log"></pre>
+
+    <script type="module">
+      const invalidLog = [];
+      document.addEventListener(
+        'invalid',
+        event => {
+          const target = event.target;
+          invalidLog.push(target.getAttribute?.('aria-label') ?? target.name ?? 'unknown');
+          document.getElementById('invalid-log').textContent = JSON.stringify(invalidLog);
+        },
+        true,
+      );
+
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', event => {
+          event.preventDefault();
+          const data = Object.fromEntries(new FormData(form));
+          form.querySelector('.result').textContent = JSON.stringify(data);
+        });
+      });
+    </script>
+  </body>
+</html>
