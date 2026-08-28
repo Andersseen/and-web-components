@@ -85,7 +85,12 @@ export interface MachineConfig<C extends Record<string, any>> {
 export interface MachineSnapshot<C extends Record<string, any>> {
   value: string;
   context: Readonly<C>;
-  /** The event that caused the current state (null for initial). */
+  /**
+   * The event that caused the current state — `null` only for the initial
+   * snapshot, before any `send()`. Consistent whether read via
+   * `machine.snapshot` or received by a `subscribe()` callback: a blocked
+   * (guard-failed) or unhandled `send()` never changes it.
+   */
   event: MachineEvent | null;
   /** Whether this state can handle the given event. */
   can: (eventType: string) => boolean;
@@ -110,6 +115,12 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
   let context: C = { ...(config.context ?? ({} as C)) };
   let previousState: string | null = null;
   let currentEffectCleanup: (() => void) | void = undefined;
+  // The event that produced the current state — null until the first
+  // transition happens. Only a completed transition (guard passed, target
+  // resolved) updates this; a blocked or unhandled `send()` never overwrites
+  // it, so `snapshot.event` always describes the event that actually caused
+  // the current state, whether read directly or received by a subscriber.
+  let lastEvent: MachineEvent | null = null;
   const listeners = new Set<(snapshot: MachineSnapshot<C>, prev: MachineSnapshot<C>) => void>();
 
   const getSnapshot = (): MachineSnapshot<C> => {
@@ -117,7 +128,7 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
     return {
       value: stateValue,
       context: Object.freeze({ ...context }),
-      event: null, // populated during transition
+      event: lastEvent,
       can: (eventType: string) => {
         const transition = stateDef?.on?.[eventType];
         if (!transition) {
@@ -149,9 +160,8 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
     }
   };
 
-  const notify = (prevSnapshot: MachineSnapshot<C>, event: MachineEvent) => {
+  const notify = (prevSnapshot: MachineSnapshot<C>) => {
     const nextSnapshot = getSnapshot();
-    nextSnapshot.event = event;
     listeners.forEach(cb => cb(nextSnapshot, prevSnapshot));
   };
 
@@ -169,9 +179,9 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
       return;
     }
 
-    // Build previous snapshot before transition
+    // Build previous snapshot before transition (still carries whatever
+    // event produced the *outgoing* state).
     const prevSnapshot = getSnapshot();
-    prevSnapshot.event = ev;
 
     // Apply action (context updater)
     if (transition.action) {
@@ -181,12 +191,13 @@ export function createMachine<C extends Record<string, any>>(config: MachineConf
     // Transition
     previousState = stateValue;
     stateValue = transition.target;
+    lastEvent = ev;
 
     // Run new state's effect
     runEffect();
 
     // Notify subscribers
-    notify(prevSnapshot, ev);
+    notify(prevSnapshot);
   };
 
   const subscribe = (callback: (snapshot: MachineSnapshot<C>, prev: MachineSnapshot<C>) => void): (() => void) => {

@@ -85,7 +85,7 @@ describe('and-select', () => {
     expect(blurSpy).toHaveReceivedEventTimes(1);
   });
 
-  it('renders its hidden mirror input in light DOM (not Shadow DOM) so a wrapping <form> can see it', async () => {
+  it('renders its mirror select in light DOM (not Shadow DOM) so a wrapping <form> can see it', async () => {
     const { root, waitForChanges } = await render(
       <and-select options={options} name="fruit" value="banana"></and-select>,
     );
@@ -96,11 +96,11 @@ describe('and-select', () => {
     root.ownerDocument.body.appendChild(form);
     await waitForChanges();
 
-    const hidden = root.querySelector('input[type="hidden"]') as HTMLInputElement;
-    expect(hidden.getAttribute('name')).toBe('fruit');
-    expect(hidden.getAttribute('value') ?? hidden.value).toBe('banana');
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror.getAttribute('name')).toBe('fruit');
+    expect(mirror.value).toBe('banana');
     // A real descendant of <form> in the DOM tree — the actual condition FormData relies on.
-    expect(form.contains(hidden)).toBe(true);
+    expect(form.contains(mirror)).toBe(true);
 
     form.remove();
   });

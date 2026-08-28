@@ -9,16 +9,26 @@ import { selectVariants } from './and-select-variants';
  * Custom `role="combobox"` select, styleable unlike a native `<select>`.
  * Implements the ARIA combobox pattern: `aria-expanded`, `aria-controls`,
  * `aria-activedescendant` tracks the highlighted option while focus stays
- * on the trigger, and the listbox options get `aria-selected`. A hidden
- * native `<input>` mirrors `value` when `name` is set.
+ * on the trigger, and the listbox options get `aria-selected`. A visually
+ * hidden native `<select>` mirrors `value`/`disabled`/`required` whenever
+ * `name` or `required` is set.
  *
  * Renders in light DOM (`scoped` styles, not Shadow DOM) on purpose: that
- * hidden input is a real descendant of whatever `<form>` wraps this
+ * mirror `<select>` is a real descendant of whatever `<form>` wraps this
  * component, so it actually shows up in `FormData` on submit — inside a
- * Shadow DOM it would be invisible to the enclosing form. A `reset` listener
- * on the wrapping `<form>` restores the original default on native
- * `form.reset()` (see `connectedCallback`) — needed because the mirror
- * input's own reset default drifts to whatever was last selected.
+ * Shadow DOM it would be invisible to the enclosing form. It's a real
+ * `<select>` rather than `<input type="hidden">` specifically so `required`
+ * has a native effect: hidden inputs are unconditionally barred from
+ * constraint validation, so `required` was a pure no-op before this. The
+ * mirror stays visually hidden (Tailwind `sr-only` — not `display: none`,
+ * which would also exclude it from constraint validation) and out of the
+ * normal tab order (`tabindex="-1"`), so the only way a user reaches it is
+ * the browser's own focus-on-invalid-control step when a required selection
+ * is missing at submit time — exactly when its native validation bubble
+ * should appear. A `reset` listener on the wrapping `<form>` restores the
+ * original default on native `form.reset()` (see `connectedCallback`) —
+ * needed because the mirror's own reset default drifts to whatever was last
+ * selected.
  *
  * @example
  * ```html
@@ -42,6 +52,7 @@ export class AndSelect {
   private wrapperEl?: HTMLDivElement;
   private menuEl?: HTMLDivElement;
   private triggerEl?: HTMLButtonElement;
+  private bubbleSelectEl?: HTMLSelectElement;
   private generateId = createIdGenerator('select');
   private listboxId = this.generateId('listbox');
   private prevHighlightedIndex = -1;
@@ -150,6 +161,16 @@ export class AndSelect {
   disconnectedCallback() {
     this.unsubscribe?.();
     this.formEl?.removeEventListener('reset', this.handleFormReset);
+  }
+
+  // Stencil's JSX doesn't drive a native <select>'s selected option the way
+  // a controlled `value` prop would, so keep the bubble select's displayed
+  // value in sync imperatively after every render (mirrors the existing
+  // pattern for placement/focus side effects in this file).
+  componentDidRender() {
+    if (this.bubbleSelectEl) {
+      this.bubbleSelectEl.value = this.value;
+    }
   }
 
   /* ── Watchers ───────────────────────────────────────────────────── */
@@ -364,7 +385,24 @@ export class AndSelect {
             })}
           </div>
 
-          {this.name && <input type="hidden" name={this.name} value={this.value} />}
+          {(this.name || this.required) && (
+            <select
+              class="sr-only"
+              name={this.name || undefined}
+              required={this.required}
+              disabled={this.disabled}
+              tabIndex={-1}
+              aria-label={this.label || undefined}
+              ref={el => {
+                this.bubbleSelectEl = el as HTMLSelectElement;
+              }}
+            >
+              <option value="" />
+              {this.resolvedOptions.map(option => (
+                <option value={option.value}>{option.text}</option>
+              ))}
+            </select>
+          )}
         </div>
       </Host>
     );

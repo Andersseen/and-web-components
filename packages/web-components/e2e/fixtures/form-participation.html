@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-input / and-switch / and-button e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 20rem;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form-basic">
+      <and-input label="Email" name="email" value="a@b.com"></and-input>
+      <and-switch label="Subscribe" name="subscribe" checked></and-switch>
+      <and-button type="submit">Submit</and-button>
+      <and-button type="reset">Reset</and-button>
+      <pre class="result" data-result="form-basic"></pre>
+    </form>
+
+    <form id="form-fieldset-disabled">
+      <fieldset disabled>
+        <and-input label="Email (disabled)" name="email2" value="x@y.com"></and-input>
+        <and-switch label="Subscribe (disabled)" name="subscribe2" checked></and-switch>
+      </fieldset>
+      <button type="submit">Submit</button>
+      <pre class="result" data-result="form-fieldset-disabled"></pre>
+    </form>
+
+    <script type="module">
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', event => {
+          event.preventDefault();
+          const data = Object.fromEntries(new FormData(form));
+          form.querySelector('.result').textContent = JSON.stringify(data);
+        });
+      });
+    </script>
+  </body>
+</html>

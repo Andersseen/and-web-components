@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, h } from '@stencil/vitest';
 import './and-modal';
 
@@ -42,7 +42,11 @@ describe('and-modal — regressions', () => {
     expect((root as HTMLAndModalElement).open).toBe(false);
   });
 
-  it('adopts a slotted heading as aria-labelledby instead of announcing "Dialog"', async () => {
+  it('reads a slotted heading\'s text into aria-label instead of announcing "Dialog"', async () => {
+    // aria-label, not aria-labelledby: this component is shadow: true, and
+    // ID-reference ARIA attributes cannot resolve across the shadow
+    // boundary into light-DOM slotted content (verified live — see
+    // syncAccessibleName()'s comment in and-modal.tsx).
     const { root, waitForChanges } = await render(
       <and-modal open>
         <h2>Delete account</h2>
@@ -51,10 +55,20 @@ describe('and-modal — regressions', () => {
     await waitForChanges();
 
     const dialog = root.shadowRoot.querySelector('[role="dialog"]');
+    expect(dialog.getAttribute('aria-label')).toBe('Delete account');
+    expect(dialog.getAttribute('aria-labelledby')).toBeNull();
+  });
+
+  it('does not mutate the slotted heading (no id assigned to consumer markup)', async () => {
+    const { root, waitForChanges } = await render(
+      <and-modal open>
+        <h2>Delete account</h2>
+      </and-modal>,
+    );
+    await waitForChanges();
+
     const heading = root.querySelector('h2');
-    expect(dialog.getAttribute('aria-labelledby')).toBe(heading.id);
-    expect(heading.id).toBeTruthy();
-    expect(dialog.getAttribute('aria-label')).toBeNull();
+    expect(heading.id).toBe('');
   });
 
   it('uses the label prop as the accessible name when set', async () => {
@@ -88,5 +102,36 @@ describe('and-modal — regressions', () => {
 
     const parts = Array.from(root.shadowRoot.querySelectorAll('[part]')).map(el => el.getAttribute('part'));
     expect(parts).toEqual(expect.arrayContaining(['overlay', 'container', 'content', 'close-button']));
+  });
+
+  it('does not invent a generic accessible name when neither label nor a heading is present', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { root, waitForChanges } = await render(<and-modal open></and-modal>);
+    await waitForChanges();
+
+    const dialog = root.shadowRoot.querySelector('[role="dialog"]');
+    expect(dialog.getAttribute('aria-label')).toBeNull();
+    expect(dialog.getAttribute('aria-labelledby')).toBeNull();
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy.mock.calls[0][0]).toContain('no accessible name');
+
+    warnSpy.mockRestore();
+  });
+
+  it('only warns once per instance about a missing accessible name', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { root, waitForChanges } = await render(<and-modal open></and-modal>);
+    await waitForChanges();
+
+    // Closing and reopening re-runs the open side effects (which call
+    // syncAccessibleName again) on the same instance.
+    (root as HTMLAndModalElement).open = false;
+    await waitForChanges();
+    (root as HTMLAndModalElement).open = true;
+    await waitForChanges();
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+
+    warnSpy.mockRestore();
   });
 });

@@ -232,6 +232,11 @@ export function createSelect(config: SelectConfig = {}): SelectReturn {
     const idx = findIndex(value);
     if (idx >= 0) {
       selectIndex(idx);
+      // Committing a real selection always closes the menu, same as
+      // selectHighlighted() (the keyboard-Enter path) — otherwise a mouse
+      // click on an option leaves the listbox open and visually overlapping
+      // whatever is rendered after it, unlike keyboard selection.
+      close();
     }
   };
 

@@ -18,12 +18,52 @@ describe('and-select', () => {
     expect(trigger?.getAttribute('aria-expanded')).toBe('false');
   });
 
-  it('mirrors its value into a named form input', async () => {
+  it('mirrors its name into a named native select', async () => {
+    const { root, waitForChanges } = await render(
+      <and-select options={options} name="number" value="two"></and-select>,
+    );
+    await waitForChanges();
+
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror.getAttribute('name')).toBe('number');
+    expect(mirror.value).toBe('two');
+  });
+
+  it('renders no mirror control when neither name nor required is set', async () => {
+    const { root } = await render(<and-select options={options}></and-select>);
+
+    expect(root.querySelector('select')).toBeNull();
+  });
+
+  it('renders a required mirror select even without a name', async () => {
+    const { root } = await render(<and-select options={options} required></and-select>);
+
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror).toBeTruthy();
+    expect(mirror.hasAttribute('required')).toBe(true);
+  });
+
+  it('disables the mirror select so a disabled select is excluded from FormData', async () => {
+    const { root } = await render(<and-select options={options} name="number" value="two" disabled></and-select>);
+
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror.hasAttribute('disabled')).toBe(true);
+  });
+
+  it('keeps the mirror select enabled when the component is not disabled', async () => {
     const { root } = await render(<and-select options={options} name="number" value="two"></and-select>);
 
-    const input = root.querySelector('input[type="hidden"]') as HTMLInputElement;
-    expect(input.name).toBe('number');
-    expect(input.value).toBe('two');
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror.hasAttribute('disabled')).toBe(false);
+  });
+
+  it('mirror select is out of the tab order and not exposed as a duplicate accessible control', async () => {
+    const { root } = await render(<and-select options={options} name="number" label="Number" required></and-select>);
+
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror.tabIndex).toBe(-1);
+    expect(mirror.getAttribute('aria-label')).toBe('Number');
+    expect(mirror.classList.contains('sr-only')).toBe(true);
   });
 
   it('restores its default value when the wrapping <form> is reset', async () => {
@@ -43,8 +83,8 @@ describe('and-select', () => {
     await waitForChanges();
 
     expect((root as HTMLAndSelectElement).value).toBe('one');
-    const input = root.querySelector('input[type="hidden"]') as HTMLInputElement;
-    expect(input.value).toBe('one');
+    const mirror = root.querySelector('select') as HTMLSelectElement;
+    expect(mirror.value).toBe('one');
 
     form.remove();
   });
