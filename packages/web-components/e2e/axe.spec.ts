@@ -7,7 +7,13 @@ test.describe('axe accessibility scan — representative rendered states', () =>
     // The visible trigger and the visually-hidden mirror <select> (added for
     // real `required` validation) both compute to role "combobox" with the
     // same name — target the real button unambiguously.
-    await page.locator('#form-value button[role="combobox"][aria-label="Country"]').click();
+    const trigger = page.locator('#form-value button[role="combobox"][aria-label="Country"]');
+    await trigger.click();
+    // Wait for the open state to actually settle before scanning — a bare
+    // click() only dispatches the event; the menu's aria-expanded flip
+    // happens on the next render, and axe must not race it (see the modal
+    // test below for the CI failure this exact race caused there).
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
 
     const results = await new AxeBuilder({ page })
       // Same justified, narrow exclusion as the form-participation test
@@ -27,6 +33,15 @@ test.describe('axe accessibility scan — representative rendered states', () =>
   test('a properly labeled open modal has no serious/critical violations', async ({ page }) => {
     await page.goto('/e2e/fixtures/modal-a11y.html');
     await page.getByRole('button', { name: 'Open labeled modal' }).click();
+    // The dialog's aria-label is set by syncAccessibleName(), which runs
+    // from componentDidRender() *after* Stencil commits the open state —
+    // not synchronously with the click. Without this wait, axe can scan the
+    // DOM mid-render on a slow/CI machine and see a momentarily unnamed
+    // dialog, flooding aria-dialog-name as a false failure (verified: this
+    // exact race failed consistently on WebKit in CI while passing locally).
+    // Waiting on the *named* role query, not just "dialog", makes the test
+    // assert the real precondition instead of merely papering over the race.
+    await expect(page.getByRole('dialog', { name: 'Delete account' })).toBeVisible();
 
     const results = await new AxeBuilder({ page }).analyze();
     const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
@@ -37,6 +52,9 @@ test.describe('axe accessibility scan — representative rendered states', () =>
   test('an unlabeled open modal IS flagged by axe for missing an accessible name', async ({ page }) => {
     await page.goto('/e2e/fixtures/modal-a11y.html');
     await page.getByRole('button', { name: 'Open unlabeled modal' }).click();
+    // Same race as above — wait for the dialog itself to be rendered (it
+    // has no name to wait on, by design) before scanning.
+    await expect(page.locator('and-modal#unlabeled-modal [role="dialog"]')).toBeVisible();
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -49,6 +67,10 @@ test.describe('axe accessibility scan — representative rendered states', () =>
 
   test('form-participation fixture has no serious/critical violations', async ({ page }) => {
     await page.goto('/e2e/fixtures/form-participation.html');
+    // Wait for Stencil hydration to actually finish (component upgrade from
+    // plain custom element to its rendered form) before scanning, same
+    // rationale as the modal race above.
+    await expect(page.getByRole('switch', { name: 'Subscribe', exact: true })).toBeChecked();
 
     const results = await new AxeBuilder({ page })
       // Justified, narrow exclusion (not a blanket rule disable): controls
