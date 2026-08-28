@@ -42,7 +42,7 @@
   "license": "MIT",
   "dependencies": {},
   "peerDependencies": {
-    "@andersseen/headless-components": ">=0.3.0",
+    "@andersseen/headless-components": ">=0.3.1",
     "@andersseen/motion": ">=0.2.0"
   },
   "peerDependenciesMeta": {
