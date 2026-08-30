@@ -1,5 +1,12 @@
 # @andersseen/angular-components
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [e83f2c7]
+  - @andersseen/web-components@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes
