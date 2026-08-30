@@ -70,27 +70,27 @@ describe('createDrawer', () => {
     const drawer = createDrawer();
     let props = drawer.getOverlayProps();
     expect(props['data-state']).toBe('closed');
-    expect(props['aria-hidden']).toBe(true);
+    expect(props['aria-hidden']).toBe('true');
 
     drawer.actions.open();
     props = drawer.getOverlayProps();
     expect(props['data-state']).toBe('open');
-    expect(props['aria-hidden']).toBe(false);
+    expect(props['aria-hidden']).toBe('false');
   });
 
   it('provides correct content props', () => {
     const drawer = createDrawer();
     let props = drawer.getContentProps();
     expect(props.role).toBe('dialog');
-    expect(props['aria-modal']).toBe(true);
-    expect(props['aria-hidden']).toBe(true);
+    expect(props['aria-modal']).toBe('true');
+    expect(props['aria-hidden']).toBe('true');
     expect(props['data-state']).toBe('closed');
     expect(props['data-side']).toBe('left');
     expect(props.tabindex).toBe(-1);
 
     drawer.actions.open();
     props = drawer.getContentProps();
-    expect(props['aria-hidden']).toBe(false);
+    expect(props['aria-hidden']).toBe('false');
     expect(props['data-state']).toBe('open');
   });
 
@@ -101,10 +101,10 @@ describe('createDrawer', () => {
     expect(props.type).toBe('button');
   });
 
-  it('provides correct default aria-label', () => {
+  it('invents no fallback aria-label when unset (a generic name would hide a real authoring mistake)', () => {
     const drawer = createDrawer();
     const props = drawer.getContentProps();
-    expect(props['aria-label']).toBe('Drawer');
+    expect(props['aria-label']).toBeUndefined();
   });
 
   it('allows custom aria-label', () => {

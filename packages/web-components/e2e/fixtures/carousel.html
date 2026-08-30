@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-carousel e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+      }
+      and-carousel {
+        max-width: 30rem;
+        display: block;
+      }
+      /* and-carousel's overlay controls (prev/next/dots/pause) are
+         absolutely positioned inside an overflow-hidden section sized by
+         its slide content — same as the documented Storybook usage
+         (aspect-video slides), slides need real height here too. */
+      .slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        background: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Manual carousel (no autoplay)</h2>
+      <!-- Real height matters: the overlay controls (prev/next/dots) are
+           absolutely positioned within an overflow-hidden section, so —
+           same as the documented Storybook usage — slides need real
+           dimensions (e.g. aspect-video), not bare inline text. -->
+      <and-carousel id="basic" label="Featured products">
+        <and-carousel-item label="Slide 1">
+          <div class="slide"><span>Slide one content</span></div>
+        </and-carousel-item>
+        <and-carousel-item label="Slide 2">
+          <div class="slide"><span>Slide two content</span></div>
+        </and-carousel-item>
+        <and-carousel-item label="Slide 3">
+          <div class="slide"><span>Slide three content</span></div>
+        </and-carousel-item>
+      </and-carousel>
+    </div>
+
+    <div>
+      <h2>Autoplay carousel</h2>
+      <and-carousel id="autoplay" label="Autoplay demo" autoplay="true" interval="60000">
+        <and-carousel-item label="Auto 1">
+          <div class="slide"><span>Auto slide one</span></div>
+        </and-carousel-item>
+        <and-carousel-item label="Auto 2">
+          <div class="slide"><span>Auto slide two</span></div>
+        </and-carousel-item>
+      </and-carousel>
+    </div>
+  </body>
+</html>

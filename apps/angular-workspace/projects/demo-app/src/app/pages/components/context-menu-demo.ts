@@ -30,7 +30,7 @@ import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@andersseen/a
                 <span class="text-sm text-muted-foreground"> Right-click here </span>
               </div>
 
-              <and-menu-list ariaMenuLabel="Context actions">
+              <and-menu-list menuLabel="Context actions">
                 <and-menu-item value="cut">
                   <and-icon slot="start" name="scissors" size="16"></and-icon>
                   Cut
@@ -70,7 +70,7 @@ import { AndContextMenu, AndMenuList, AndMenuItem, AndIcon } from '@andersseen/a
                 </div>
               </div>
 
-              <and-menu-list ariaMenuLabel="File actions">
+              <and-menu-list menuLabel="File actions">
                 <and-menu-item value="open">
                   <and-icon slot="start" name="external-link" size="16"></and-icon>
                   Open
@@ -109,7 +109,7 @@ export default class ContextMenuDemo {
   templateCode = `<and-context-menu>
   <div slot="trigger" class="...">Right-click here</div>
 
-  <and-menu-list ariaMenuLabel="Actions">
+  <and-menu-list menuLabel="Actions">
     <and-menu-item value="cut">Cut</and-menu-item>
     <and-menu-item value="copy">Copy</and-menu-item>
     <and-menu-item value="paste">Paste</and-menu-item>

@@ -29,9 +29,12 @@ export interface TriggerItemProps {
  * Clickable header that toggles an `and-accordion-item`.
  *
  * Must be a child of `and-accordion-item`, which injects the shared headless
- * logic via `setItemProps()`. Renders `aria-expanded`/`aria-controls`/`role="button"`
- * from that logic, so screen readers and keyboard users get the same contract
- * as the visual state.
+ * logic via `setItemProps()`. Renders `aria-expanded`/`role="button"` from
+ * that logic, so screen readers and keyboard users get the same contract as
+ * the visual state. Deliberately no `aria-controls`: it renders in a
+ * different shadow tree than `and-accordion-content`, so the ID reference
+ * could never resolve (same class of bug already fixed on `<and-modal>`'s
+ * `aria-labelledby` — see SSD.md TD-15 / ROADMAP R2.11).
  *
  * @example
  * ```html
@@ -114,7 +117,6 @@ export class AndAccordionTrigger {
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
           aria-expanded={triggerProps['aria-expanded']}
-          aria-controls={triggerProps['aria-controls']}
           aria-disabled={triggerProps['aria-disabled']}
           role={triggerProps.role}
           tabindex={triggerProps.tabindex}

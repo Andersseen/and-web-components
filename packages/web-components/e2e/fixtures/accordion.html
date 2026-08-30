@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-accordion e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        max-width: 30rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Single-expansion accordion</h2>
+      <and-accordion id="single">
+        <and-accordion-item value="item-1">
+          <and-accordion-trigger>Section one</and-accordion-trigger>
+          <and-accordion-content>Content for section one.</and-accordion-content>
+        </and-accordion-item>
+        <and-accordion-item value="item-2">
+          <and-accordion-trigger>Section two</and-accordion-trigger>
+          <and-accordion-content>Content for section two.</and-accordion-content>
+        </and-accordion-item>
+        <and-accordion-item value="item-3" disabled>
+          <and-accordion-trigger>Section three (disabled)</and-accordion-trigger>
+          <and-accordion-content>Content for section three.</and-accordion-content>
+        </and-accordion-item>
+      </and-accordion>
+    </div>
+
+    <div>
+      <h2>Multi-expansion accordion, item-1 open by default</h2>
+      <and-accordion id="multi" allow-multiple="true">
+        <and-accordion-item value="m-1">
+          <and-accordion-trigger>Alpha</and-accordion-trigger>
+          <and-accordion-content>Alpha content.</and-accordion-content>
+        </and-accordion-item>
+        <and-accordion-item value="m-2">
+          <and-accordion-trigger>Beta</and-accordion-trigger>
+          <and-accordion-content>Beta content.</and-accordion-content>
+        </and-accordion-item>
+      </and-accordion>
+    </div>
+  </body>
+</html>

@@ -19,7 +19,7 @@ describe('and-menu-list', () => {
   });
 
   it('uses custom aria label', async () => {
-    const { root } = await render(<and-menu-list items={items} aria-menu-label="Options"></and-menu-list>);
+    const { root } = await render(<and-menu-list items={items} menu-label="Options"></and-menu-list>);
 
     const menu = root.shadowRoot.querySelector('ul');
     expect(menu.getAttribute('aria-label')).toBe('Options');

@@ -46,7 +46,13 @@ export class AndTabsTrigger {
 
     const parent = this.el.parentElement;
     const allTriggers = Array.from(parent?.querySelectorAll('and-tabs-trigger') || []);
-    const allTabIds = allTriggers.map((t: HTMLAndTabsTriggerElement) => t.value).filter(Boolean);
+    // Exclude disabled tabs from the navigable set, same as every other
+    // roving-focus component in this repo (and-dropdown, and-menu-list):
+    // arrow/Home/End must skip them, not land on and auto-activate them.
+    const allTabIds = allTriggers
+      .filter((t: HTMLAndTabsTriggerElement) => !t.disabled)
+      .map((t: HTMLAndTabsTriggerElement) => t.value)
+      .filter(Boolean);
 
     this.tabsLogic.handleTriggerKeyDown(e, this.value, allTabIds);
 
@@ -64,13 +70,18 @@ export class AndTabsTrigger {
   render() {
     const triggerProps = this.tabsLogic?.getTriggerProps(this.value) || {
       'role': 'tab',
-      'aria-selected': this.selected,
+      'aria-selected': this.selected ? 'true' : 'false',
       'tabindex': this.selected ? 0 : -1,
     };
 
     return (
       <Host
         {...triggerProps}
+        // Override the headless `aria-disabled`, which only reflects the
+        // *whole tabs group*'s disabled state — this tab's own `disabled`
+        // prop (per-tab, not wired into the shared headless module) must
+        // still be exposed to assistive tech.
+        aria-disabled={this.disabled ? 'true' : triggerProps['aria-disabled']}
         onClick={() => !this.disabled && this.andTabTriggerClick.emit(this.value)}
         onKeyDown={this.handleKeyDown}
         tabIndex={this.selected ? 0 : -1}

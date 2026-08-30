@@ -80,27 +80,28 @@ describe('createAccordion', () => {
     expect(accordion.getContainerProps()['data-orientation']).toBe('vertical');
 
     const triggerProps = accordion.getTriggerProps('item-1');
-    expect(triggerProps['aria-expanded']).toBe(true);
+    expect(triggerProps['aria-expanded']).toBe('true');
     expect(triggerProps.role).toBe('button');
 
     const contentProps = accordion.getContentProps('item-1');
     expect(contentProps.role).toBe('region');
-    expect(contentProps['aria-hidden']).toBe(false);
+    expect(contentProps['aria-hidden']).toBe('false');
   });
 
-  it('keeps aria-controls and content id in sync and stable', () => {
+  it('keeps the content id stable across repeated calls', () => {
+    // No `aria-controls` on the trigger: it renders in a different shadow
+    // tree than the content it would reference (and-accordion-trigger vs.
+    // and-accordion-content are sibling shadow-DOM components), so the ID
+    // reference could never resolve — see the comment on getTriggerProps.
     const accordion = createAccordion();
 
     const triggerProps1 = accordion.getTriggerProps('item-1');
+    expect(triggerProps1).not.toHaveProperty('aria-controls');
+
     const contentProps1 = accordion.getContentProps('item-1');
+    expect(contentProps1.id).toBeTruthy();
 
-    expect(triggerProps1['aria-controls']).toBe(contentProps1.id);
-    expect(triggerProps1['aria-controls']).toBeTruthy();
-
-    // IDs must remain stable across repeated calls
-    const triggerProps2 = accordion.getTriggerProps('item-1');
     const contentProps2 = accordion.getContentProps('item-1');
-    expect(triggerProps2['aria-controls']).toBe(triggerProps1['aria-controls']);
     expect(contentProps2.id).toBe(contentProps1.id);
   });
 

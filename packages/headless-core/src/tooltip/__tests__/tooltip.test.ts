@@ -137,7 +137,7 @@ describe('createTooltip', () => {
 
     // when hidden
     expect(props.role).toBe('tooltip');
-    expect(props['aria-hidden']).toBe(true);
+    expect(props['aria-hidden']).toBe('true');
     expect(props['data-state']).toBe('closed');
     expect(props['data-side']).toBe('left');
     expect(props.hidden).toBe(true);
@@ -148,7 +148,7 @@ describe('createTooltip', () => {
 
     // when shown
     const shownProps = tooltip.getTooltipProps();
-    expect(shownProps['aria-hidden']).toBe(false);
+    expect(shownProps['aria-hidden']).toBe('false');
     expect(shownProps['data-state']).toBe('open');
     expect(shownProps.hidden).toBe(false);
   });

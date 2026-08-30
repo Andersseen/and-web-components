@@ -98,7 +98,7 @@ export interface MenuSeparatorProps extends DataAttributes {
 export interface MenuItemProps extends AriaAttributes, DataAttributes {
   'role': 'menuitem';
   'tabindex': number;
-  'aria-disabled'?: boolean;
+  'aria-disabled'?: 'true';
   'data-state'?: 'active' | 'inactive';
   'data-disabled'?: boolean;
 }
@@ -161,16 +161,25 @@ export interface MenuListReturn {
 export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
   const rovingFocus = config.rovingFocus ?? true;
 
-  const store = createStore<MenuListState>({
-    items: config.items ?? [],
-    ariaLabel: config.ariaLabel ?? 'Menu',
-    focusedIndex: -1,
-  });
-
   /* ── Helpers ─────────────────────────────────────────────────────── */
 
   const isMenuItem = (item: MenuItemConfig): item is MenuInteractiveItem =>
     !item.separator && typeof item.id === 'string' && item.id.length > 0;
+
+  // A roving-tabindex menu must always have exactly one tab stop when it
+  // has interactive items — otherwise the whole menu is unreachable by
+  // sequential Tab navigation. Default it to the first enabled item
+  // instead of -1 (verified live: without this, every <li role="menuitem">
+  // rendered tabindex="-1" and the menu was skipped entirely by Tab).
+  const findFirstFocusableIndex = (items: MenuItemConfig[]): number =>
+    items.findIndex(item => isMenuItem(item) && !item.disabled);
+
+  const initialItems = config.items ?? [];
+  const store = createStore<MenuListState>({
+    items: initialItems,
+    ariaLabel: config.ariaLabel ?? 'Menu',
+    focusedIndex: rovingFocus ? findFirstFocusableIndex(initialItems) : -1,
+  });
 
   const getInteractiveItems = (): MenuInteractiveItem[] =>
     store.state.items.filter(isMenuItem).filter(item => !item.disabled);
@@ -233,7 +242,7 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
   /* ── Actions ─────────────────────────────────────────────────────── */
 
   const setItems = (items: MenuItemConfig[]): void => {
-    store.setState({ items, focusedIndex: -1 });
+    store.setState({ items, focusedIndex: rovingFocus ? findFirstFocusableIndex(items) : -1 });
   };
 
   const focusItem = (index: number): void => {
@@ -262,7 +271,7 @@ export function createMenuList(config: MenuListConfig = {}): MenuListReturn {
     return {
       'role': 'menuitem',
       'tabindex': isFocused || (!rovingFocus && isMenuItem(item) && !item.disabled) ? 0 : -1,
-      ...(item.disabled ? { 'aria-disabled': true } : {}),
+      ...(item.disabled ? { 'aria-disabled': 'true' as const } : {}),
       'data-state': isFocused ? 'active' : 'inactive',
       ...(item.disabled ? { 'data-disabled': true } : {}),
     };

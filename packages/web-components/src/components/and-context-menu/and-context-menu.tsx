@@ -15,11 +15,20 @@ export type ContextMenuItem = {
  * keyboard-navigable list (arrow keys, Home/End, Enter/Space, Escape), or
  * omit `items` and slot your own menu content into the default slot.
  *
+ * `items` is a plain JS array, so it must be set as a property, not an HTML
+ * attribute (the generated docs table reflects this: `Attribute: --`).
+ *
  * @example
  * ```html
- * <and-context-menu items='[{"text":"Copy","value":"copy"},{"text":"Delete","value":"delete"}]'>
+ * <and-context-menu id="ctx">
  *   <div slot="trigger">Right-click me</div>
  * </and-context-menu>
+ * <script>
+ *   document.getElementById('ctx').items = [
+ *     { text: 'Copy', value: 'copy' },
+ *     { text: 'Delete', value: 'delete' },
+ *   ];
+ * </script>
  * ```
  */
 @Component({

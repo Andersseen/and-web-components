@@ -146,12 +146,73 @@ referenced below).
       surfaced TD-29 (axe/fieldset-disabled contrast false positive, documented
       and narrowly excluded, not a real defect). **DoD met** for the components
       above; **not yet done** for the rest — see R2.7b.
-- [ ] **R2.7b — Browser e2e for the remaining interactive components** _(TD-15 ·
-      medium)_ Extend `packages/web-components/e2e/` (same infra/pattern as
-      R2.7a) to dropdown, tabs, accordion, tooltip, carousel, menu,
-      context-menu, and drawer: keyboard navigation, outside dismissal, Escape,
-      focus management, and an axe scan per open/active state. **DoD:** suite
-      runs in CI on PRs; failures block merge.
+- [x] **R2.7b — Browser e2e for the remaining interactive components** _(done
+      2026-08-30 · TD-15 first half now fully closed · medium)_ Extended
+      `packages/web-components/e2e/` (same infra/pattern as R2.7a — Playwright
+      against the built `dist/components/all.js` bundle, Chromium + Firefox +
+      WebKit) to `and-dropdown`, `and-tabs`, `and-accordion`, `and-tooltip`,
+      `and-carousel`, `and-menu-list` + `and-context-menu` (one combined
+      fixture, per the task's grouping guidance), and `and-drawer`: 8 new
+      fixtures, 8 new spec files (161 new tests × 3 browsers), plus 8 new axe
+      scans of representative active states (open dropdown, selected/disabled
+      tab, expanded accordion, visible tooltip, paused-autoplay carousel, open
+      menu-list + context-menu, open drawer) appended to `e2e/axe.spec.ts`.
+      Investigating each component's actual current implementation (headless +
+      Stencil + existing spec/story) before writing tests — per the task brief,
+      not inventing behavior from ARIA-APG expectations — surfaced 12 real,
+      browser-only defects invisible to mock-doc `.spec.tsx` tests, all fixed
+      with regression coverage (browser E2E + updated/added headless unit tests)
+      and one `major`+`minor` changeset: a systemic Stencil
+      boolean→`aria-*`-attribute serialization bug hit 5 headless modules
+      (`dropdown`/`accordion`/`tooltip`/`menu-list`/`drawer`, all silently
+      emitting invalid/missing ARIA state); `and-tabs`'s per-tab `disabled`
+      blocked clicks but not keyboard activation and never set `aria-disabled`;
+      `<and-tabs orientation="vertical">` never propagated to
+      `<and-tabs-list>`'s own disconnected `orientation` prop; `and-drawer` had
+      the exact same "bare `requestAnimationFrame` races Stencil's commit"
+      initial-focus bug already fixed on `and-modal` in R2.11, plus a separate
+      re-entrancy bug that skipped `restoreFocus()` on every internal-close path
+      (Escape/overlay/close-button — only an externally set `open` prop worked),
+      plus an invented empty-string fallback name inconsistent with
+      `and-modal`'s "no accessible name" precedent; `and-menu-list` (and,
+      transitively, the standalone `and-menu-item`, same engine) was completely
+      unreachable by sequential Tab navigation in its documented "items
+      provided, focus managed for you" mode, and even after fixing that,
+      arrow-key navigation moved the ARIA/tabindex state but not real DOM focus
+      (a `ref`-callback assumption that doesn't hold across Stencil re-renders);
+      `and-dropdown`'s disabled items had no `aria-disabled`, which is why axe
+      correctly flagged their dimmed text as a real contrast violation;
+      `and-accordion-trigger`'s `aria-controls` pointed at an `id` in a
+      _different_ shadow tree (`and-accordion-content` is a sibling Stencil
+      component) and could never resolve — the identical root cause as the
+      `and-modal` `aria-labelledby` fix, this time caught as a critical
+      `aria-valid-attr-value` axe violation; and `and-menu-list` shipped
+      `aria-menu-label` as its public attribute name, which is not a real ARIA
+      attribute and is a critical `aria-valid-attr` violation — renamed to
+      `menu-label` (breaking, `major` changeset for
+      `@andersseen/web-components`), matching `and-context-menu`'s existing
+      correct convention. Also fixed three stale JSDoc `@example`s
+      (`and-dropdown`/`and-context-menu`/`and-menu-list`) showing an
+      `items='[...]'` HTML-attribute-string form that actually crashes at
+      runtime; `items` has always been property-only. **Deliberately not fixed,
+      registered as new debt instead:** `and-carousel`'s `getSlideProps()`
+      `aria-hidden` (marking inactive slides for AT) is computed by the headless
+      module but never wired into `and-carousel-item.tsx` — doing so needs the
+      same parent→child prop- injection plumbing `and-tabs`/`and-accordion`
+      already use, which is larger than a targeted fix (TD-33). A pre-existing,
+      intermittent Firefox-only axe `color-contrast` failure on `and-select`'s
+      open listbox option text was found (reproduced on a clean `main` checkout
+      before this session's changes, so not introduced here) and is
+      `and-select`/R2.7a territory, out of this item's scope (TD-34). **DoD
+      met:** suite runs in CI on PRs (already wired as the `e2e-web-components`
+      job, unchanged); 261/261 e2e tests green across Chromium + Firefox +
+      WebKit in the same run (`CI=true`);
+      `pnpm     -C packages/web-components test:spec` 144/144;
+      `pnpm test:headless` 310/310 (was 308 — 2 net-new roving-focus tests
+      replacing/covering the old always-`-1` assertions); `pnpm lint` clean (0
+      errors). TD-15's browser-e2e half is now fully closed for all
+      originally-listed components; its visual-regression half stays open under
+      R3.2 — see the SSD.md TD-15 addendum for the precise split.
 - [ ] **R2.8 — File the upstream TD-11 issue** _(small · no code)_ Open a GitHub
       issue on `stenciljs/output-targets` with the eager `defineCustomElementFn`
       analysis from SSD §15 TD-11 (it is complete and verifiable). Link the
@@ -369,9 +430,10 @@ referenced below).
 
 ## Changelog of this file
 
-| Date       | Change                                                                                                                                                                                                                                 |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-07-14 | Created (R1–R3 seeded from repo analysis)                                                                                                                                                                                              |
-| 2026-07-15 | [PLAN.md](./PLAN.md) created — phase ordering now lives there (F0–F12); R-item DoDs here remain authoritative                                                                                                                          |
-| 2026-07-21 | R2.9 (Tailwind-optional consumption: tokens.css/elements.css/tailwind-preset) and R2.10 (theme token contract + runtime theme-switching parity fix) added and completed same day                                                       |
-| 2026-08-28 | R2.7 split into R2.7a (done) / R2.7b; added R2.18–R2.21 (packaging validation, consumer tarball fixtures, release-safety gating, adapter peer/module audit) covering the phases scoped out of the correctness-slice-+-e2e-gate session |
+| Date       | Change                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-07-14 | Created (R1–R3 seeded from repo analysis)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 2026-07-15 | [PLAN.md](./PLAN.md) created — phase ordering now lives there (F0–F12); R-item DoDs here remain authoritative                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| 2026-07-21 | R2.9 (Tailwind-optional consumption: tokens.css/elements.css/tailwind-preset) and R2.10 (theme token contract + runtime theme-switching parity fix) added and completed same day                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 2026-08-28 | R2.7 split into R2.7a (done) / R2.7b; added R2.18–R2.21 (packaging validation, consumer tarball fixtures, release-safety gating, adapter peer/module audit) covering the phases scoped out of the correctness-slice-+-e2e-gate session                                                                                                                                                                                                                                                                                                                                                                                                      |
+| 2026-08-30 | R2.7b done — browser e2e for dropdown/tabs/accordion/tooltip/carousel/menu-list+context-menu/drawer; 12 real defects found and fixed (systemic ARIA boolean-serialization bug, tabs disabled-tab/orientation gaps, drawer focus-race + focus-restoration + invented-name bugs, menu-list Tab-unreachability + focus-follows-tabindex bugs, dropdown/accordion missing-`aria-disabled`/unresolvable-`aria-controls`, menu-list's invalid `aria-menu-label` attribute name); added TD-33 (carousel per-slide `aria-hidden` never wired up) and TD-34 (pre-existing, intermittent Firefox-only axe contrast flake on and-select, out of scope) |

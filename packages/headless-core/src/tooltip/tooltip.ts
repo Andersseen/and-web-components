@@ -73,7 +73,7 @@ export interface TooltipTriggerProps extends AriaAttributes {
 export interface TooltipContentProps extends AriaAttributes, DataAttributes {
   'role': 'tooltip';
   'id': string;
-  'aria-hidden': boolean;
+  'aria-hidden': 'true' | 'false';
   'data-state': 'open' | 'closed';
   'data-side': TooltipPlacement;
   'hidden': boolean;
@@ -217,7 +217,7 @@ export function createTooltip(config: TooltipConfig = {}): TooltipReturn {
   const getTooltipProps = (): TooltipContentProps => ({
     'role': 'tooltip',
     'id': tooltipId,
-    'aria-hidden': !store.state.isVisible,
+    'aria-hidden': !store.state.isVisible ? 'true' : 'false',
     'data-state': store.state.isVisible ? 'open' : 'closed',
     'data-side': store.state.placement,
     'hidden': !store.state.isVisible,

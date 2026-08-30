@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-menu-list / and-context-menu e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+      }
+      .surface {
+        max-width: 16rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 4px;
+      }
+      .drop-zone {
+        display: flex;
+        height: 150px;
+        width: 300px;
+        align-items: center;
+        justify-content: center;
+        border: 1px dashed #ccc;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>and-menu-list (data-driven)</h2>
+      <div class="surface">
+        <and-menu-list id="menu" menu-label="File actions"></and-menu-list>
+      </div>
+      <p id="menu-log"></p>
+    </div>
+
+    <div>
+      <h2>and-context-menu (items-driven, right-click)</h2>
+      <and-context-menu id="ctx" menu-label="Row actions">
+        <div slot="trigger" class="drop-zone">Right-click inside this box</div>
+      </and-context-menu>
+      <p id="ctx-log"></p>
+    </div>
+
+    <script type="module">
+      // `items` is a plain JS array prop (no HTML-attribute form) — assign
+      // after the elements are defined, same pattern documented on the
+      // components themselves.
+      const menu = document.getElementById('menu');
+      menu.items = [
+        { id: 'open', label: 'Open' },
+        { id: 'rename', label: 'Rename' },
+        { id: 'delete', label: 'Delete', disabled: true },
+      ];
+      const menuLog = document.getElementById('menu-log');
+      menu.addEventListener('andMenuItemSelect', e => {
+        menuLog.textContent = `selected:${e.detail}`;
+      });
+
+      const ctx = document.getElementById('ctx');
+      ctx.items = [
+        { text: 'Copy', value: 'copy' },
+        { text: 'Paste', value: 'paste' },
+        { text: 'Delete', value: 'delete', disabled: true },
+      ];
+      const ctxLog = document.getElementById('ctx-log');
+      ctx.addEventListener('andContextMenuSelect', e => {
+        ctxLog.textContent = `selected:${e.detail}`;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-tabs e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Horizontal tabs</h2>
+      <and-tabs id="horizontal" default-value="tab-1">
+        <and-tabs-list>
+          <and-tabs-trigger value="tab-1">Account</and-tabs-trigger>
+          <and-tabs-trigger value="tab-2">Password</and-tabs-trigger>
+          <and-tabs-trigger value="tab-3" disabled>Billing</and-tabs-trigger>
+          <and-tabs-trigger value="tab-4">Notifications</and-tabs-trigger>
+        </and-tabs-list>
+        <and-tabs-content value="tab-1">Account settings panel.</and-tabs-content>
+        <and-tabs-content value="tab-2">Password settings panel.</and-tabs-content>
+        <and-tabs-content value="tab-3">Billing panel (disabled tab).</and-tabs-content>
+        <and-tabs-content value="tab-4">Notification settings panel.</and-tabs-content>
+      </and-tabs>
+    </div>
+
+    <div>
+      <h2>Vertical tabs</h2>
+      <and-tabs id="vertical" default-value="v-1" orientation="vertical">
+        <and-tabs-list>
+          <and-tabs-trigger value="v-1">First</and-tabs-trigger>
+          <and-tabs-trigger value="v-2">Second</and-tabs-trigger>
+          <and-tabs-trigger value="v-3">Third</and-tabs-trigger>
+        </and-tabs-list>
+        <and-tabs-content value="v-1">First panel.</and-tabs-content>
+        <and-tabs-content value="v-2">Second panel.</and-tabs-content>
+        <and-tabs-content value="v-3">Third panel.</and-tabs-content>
+      </and-tabs>
+    </div>
+  </body>
+</html>

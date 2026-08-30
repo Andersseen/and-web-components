@@ -267,7 +267,7 @@ Events   : andCodeCopy → { value: string; success: boolean }
 \`\`\`
 
 ### and-menu-list + and-menu-item
-Props (list) : ariaMenuLabel   customClass
+Props (list) : menuLabel   customClass
 Props (item) : intent (default|destructive)   disabled   value   customClass
 Events (item): andMenuItemSelect → string (value)
 \`\`\`html

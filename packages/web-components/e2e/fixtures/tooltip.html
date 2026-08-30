@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-tooltip e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Default tooltip (no delay)</h2>
+      <and-tooltip id="basic" content="Saved successfully">
+        <button id="basic-trigger">Hover or focus me</button>
+      </and-tooltip>
+    </div>
+
+    <div>
+      <h2>Second trigger (for orphan-check after removal)</h2>
+      <div id="removable-host">
+        <and-tooltip id="removable" content="Ephemeral tooltip">
+          <button id="removable-trigger">Removable trigger</button>
+        </and-tooltip>
+      </div>
+      <button id="after">Next focusable element</button>
+    </div>
+  </body>
+</html>

@@ -67,9 +67,8 @@ export interface AccordionContainerProps extends DataAttributes {
  * Props for accordion item trigger/button element
  */
 export interface AccordionTriggerProps extends AriaAttributes, DataAttributes {
-  'aria-expanded': boolean;
-  'aria-controls': string;
-  'aria-disabled': boolean;
+  'aria-expanded': 'true' | 'false';
+  'aria-disabled': 'true' | 'false';
   'role': 'button';
   'tabindex': number;
 }
@@ -80,7 +79,7 @@ export interface AccordionTriggerProps extends AriaAttributes, DataAttributes {
 export interface AccordionContentProps extends AriaAttributes, DataAttributes {
   'role': 'region';
   'id': string;
-  'aria-hidden': boolean;
+  'aria-hidden': 'true' | 'false';
   'hidden': boolean;
 }
 
@@ -256,12 +255,21 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
 
   const getTriggerProps = (itemId: string): AccordionTriggerProps => {
     const expanded = isExpanded(itemId);
-    const contentId = generateId(`content-${itemId}`);
 
+    // Deliberately no `aria-controls` here (unlike a same-shadow-tree
+    // implementation might have): the trigger `<button>` renders inside
+    // and-accordion-trigger's own shadow root while the content it would
+    // reference lives on and-accordion-content's HOST element — a
+    // different shadow tree entirely. ID-reference ARIA attributes only
+    // resolve within the same tree (same root cause already documented on
+    // <and-modal>'s aria-labelledby, SSD.md TD-15/ROADMAP R2.11); verified
+    // live via axe: `aria-controls` pointing at that unreachable ID is
+    // flagged `aria-valid-attr-value` (critical), not silently ignored.
+    // `aria-expanded`, `role="button"`, and DOM adjacency already convey
+    // the trigger/panel relationship correctly without it.
     return {
-      'aria-expanded': expanded,
-      'aria-controls': contentId,
-      'aria-disabled': store.state.disabled,
+      'aria-expanded': expanded ? 'true' : 'false',
+      'aria-disabled': store.state.disabled ? 'true' : 'false',
       'role': 'button',
       'tabindex': store.state.disabled ? -1 : 0,
       'data-state': expanded ? 'open' : 'closed',
@@ -276,7 +284,7 @@ export function createAccordion(config: AccordionConfig = {}): AccordionReturn {
     return {
       'role': 'region',
       'id': contentId,
-      'aria-hidden': !expanded,
+      'aria-hidden': !expanded ? 'true' : 'false',
       'hidden': !expanded,
       'data-state': expanded ? 'open' : 'closed',
     };
