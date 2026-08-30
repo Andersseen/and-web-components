@@ -5,16 +5,16 @@ export default {
   title: 'Components/MenuList',
   component: 'and-menu-list',
   argTypes: {
-    ariaMenuLabel: { control: 'text' },
+    menuLabel: { control: 'text' },
   },
   args: {
-    ariaMenuLabel: 'Main Menu',
+    menuLabel: 'Main Menu',
   },
 };
 
 const Template = args => html`
   <div style="padding: 20px; max-width: 250px; background: white; border: 1px solid #e2e8f0; border-radius: 8px;">
-    <and-menu-list aria-menu-label=${ifDefined(args.ariaMenuLabel)}>
+    <and-menu-list menu-label=${ifDefined(args.menuLabel)}>
       <li class="px-2 py-1.5 hover:bg-accent hover:text-accent-foreground cursor-default rounded-sm text-sm">
         Dashboard
       </li>

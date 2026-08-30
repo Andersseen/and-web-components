@@ -73,6 +73,9 @@ export class AndDrawer {
 
   private scrollLocked = false;
 
+  /** Set once the panel is open, consumed by componentDidRender once the (now-visible) DOM actually exists. */
+  private pendingOpenFocus = false;
+
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
   componentWillLoad() {
@@ -88,7 +91,23 @@ export class AndDrawer {
           this.applyPageSideEffects();
           this.andDrawerOpen.emit();
         } else {
+          // Dismissal paths that close via the headless action directly
+          // (Escape, overlay click, the close button) land here — NOT
+          // through the `@Watch('open')` else-branch below, because by the
+          // time `this.open = isOpen` (just above) triggers that watcher
+          // reentrantly, `this.isOpen` already matches the new value and
+          // its `if (newValue === this.isOpen) return;` guard skips the
+          // rest of the branch, including `restoreFocus()`. Call it here
+          // instead so focus restoration works on every dismissal path,
+          // not only when a consumer sets the `open` prop externally.
+          // (`restoreFocus()` is idempotent, so the watcher's own call for
+          // the external-prop path stays safe.) Order matters:
+          // `releasePageSideEffects()` must run FIRST — the previously
+          // focused element (e.g. the trigger) is itself marked `inert`
+          // while the drawer is open (it's a background sibling), and
+          // browsers silently refuse to focus an inert element.
           this.releasePageSideEffects();
+          this.restoreFocus();
           this.andDrawerClose.emit();
         }
       },
@@ -124,8 +143,16 @@ export class AndDrawer {
       this.previouslyFocused = document.activeElement;
       this.drawer.actions.open();
 
-      // Focus the first focusable element once the panel is visible.
-      requestAnimationFrame(() => focusFirst(this.getTrapRoot()));
+      // A bare requestAnimationFrame is not enough here — Stencil schedules
+      // its render asynchronously, so the frame can fire while the content
+      // (including slotted children reached through <slot>) still reflects
+      // the *closed* render, e.g. aria-hidden="true" on the content div,
+      // which makes the focus-trap walker skip the whole subtree and
+      // silently leave focus on <body> (verified live: every "first
+      // focusable element" / Tab-containment assertion failed in real
+      // Chromium/Firefox/WebKit until this deferred to componentDidRender,
+      // same fix already applied to and-modal — see its comment).
+      this.pendingOpenFocus = true;
     } else {
       // Close: always animate.
       this.openSeq++;
@@ -150,6 +177,14 @@ export class AndDrawer {
 
   private getTrapRoot(): HTMLElement | ShadowRoot {
     return this.el.shadowRoot ?? this.el;
+  }
+
+  componentDidRender() {
+    if (!this.pendingOpenFocus || !this.isOpen) {
+      return;
+    }
+    this.pendingOpenFocus = false;
+    focusFirst(this.getTrapRoot());
   }
 
   /* ── Page side effects ──────────────────────────────────────────── */

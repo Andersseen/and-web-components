@@ -49,7 +49,7 @@ parent) — handy for slotting individual items directly, e.g. inside
 </script>
 
 <!-- Or slot and-menu-item directly, without a parent-managed items array -->
-<and-menu-list aria-menu-label="Row actions">
+<and-menu-list menu-label="Row actions">
   <and-menu-item value="edit">Edit</and-menu-item>
   <and-menu-item value="delete" intent="destructive">Delete</and-menu-item>
 </and-menu-list>
@@ -63,7 +63,7 @@ parent) — handy for slotting individual items directly, e.g. inside
 
 | Property        | Attribute         | Description                                                                                    | Type               | Default  |
 | --------------- | ----------------- | ---------------------------------------------------------------------------------------------- | ------------------ | -------- |
-| `ariaMenuLabel` | `aria-menu-label` | Accessible label for the menu.                                                                 | `string`           | `'Menu'` |
+| `menuLabel` | `menu-label` | Accessible label for the menu.                                                                 | `string`           | `'Menu'` |
 | `customClass`   | `class`           | Additional CSS classes to merge with internal styles.                                          | `string`           | `''`     |
 | `items`         | --                | Optional items to render. When provided, keyboard navigation is coordinated by this component. | `MenuItemConfig[]` | `[]`     |
 

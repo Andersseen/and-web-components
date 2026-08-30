@@ -4,7 +4,7 @@
 
 import type { Component } from './types';
 
-export const CATALOG_VERSION = "2026-08-28";
+export const CATALOG_VERSION = "2026-08-30";
 
 export const catalog: Component[] = [
   {
@@ -88,7 +88,7 @@ export const catalog: Component[] = [
   {
     "tag": "and-accordion-trigger",
     "name": "AndAccordionTrigger",
-    "description": "Clickable header that toggles an `and-accordion-item`. Must be a child of `and-accordion-item`, which injects the shared headless logic via `setItemProps()`. Renders `aria-expanded`/`aria-controls`/`role=\"button\"` from that logic, so screen readers and keyboard users get the same contract as the visual state.",
+    "description": "Clickable header that toggles an `and-accordion-item`. Must be a child of `and-accordion-item`, which injects the shared headless logic via `setItemProps()`. Renders `aria-expanded`/`role=\"button\"` from that logic, so screen readers and keyboard users get the same contract as the visual state. Deliberately no `aria-controls`: it renders in a different shadow tree than `and-accordion-content`, so the ID reference could never resolve (same class of bug already fixed on `<and-modal>`'s `aria-labelledby` — see SSD.md TD-15 / ROADMAP R2.11).",
     "parent": "and-accordion",
     "attributes": [],
     "events": [],
@@ -588,7 +588,7 @@ export const catalog: Component[] = [
   {
     "tag": "and-context-menu",
     "name": "AndContextMenu",
-    "description": "Right-click (or long-press) menu that opens over its `trigger`-slotted content. Supports two usage modes: pass `items` for a built-in, keyboard-navigable list (arrow keys, Home/End, Enter/Space, Escape), or omit `items` and slot your own menu content into the default slot.",
+    "description": "Right-click (or long-press) menu that opens over its `trigger`-slotted content. Supports two usage modes: pass `items` for a built-in, keyboard-navigable list (arrow keys, Home/End, Enter/Space, Escape), or omit `items` and slot your own menu content into the default slot. `items` is a plain JS array, so it must be set as a property, not an HTML attribute (the generated docs table reflects this: `Attribute: --`).",
     "attributes": [
       {
         "name": "class",
@@ -720,7 +720,7 @@ export const catalog: Component[] = [
   {
     "tag": "and-dropdown",
     "name": "AndDropdown",
-    "description": "Menu button that opens a list of `items` on click. The trigger gets `aria-haspopup`/`aria-expanded` automatically, and the menu supports arrow keys, Home/End, Enter/Space, and Escape. If you slot a custom `trigger` instead of using the default button, you're responsible for adding those ARIA attributes yourself — they can't be forwarded onto arbitrary slotted content.",
+    "description": "Menu button that opens a list of `items` on click. The trigger gets `aria-haspopup`/`aria-expanded` automatically, and the menu supports arrow keys, Home/End, Enter/Space, and Escape. If you slot a custom `trigger` instead of using the default button, you're responsible for adding those ARIA attributes yourself — they can't be forwarded onto arbitrary slotted content. `items` is a plain JS array, so it must be set as a property, not an HTML attribute (the generated docs table reflects this: `Attribute: --`).",
     "attributes": [
       {
         "name": "close-on-select",
@@ -948,21 +948,21 @@ export const catalog: Component[] = [
   {
     "tag": "and-menu-list",
     "name": "AndMenuList",
-    "description": "Data-driven menu (`role=\"menu\"`) that renders `items` as keyboard-navigable `role=\"menuitem\"` entries — arrow keys, Home/End, and typeahead are handled for you. Omit `items` to slot arbitrary content instead (e.g. `and-menu-item` elements), in which case this component only renders the `<ul>` wrapper and doesn't manage focus for you.",
+    "description": "Data-driven menu (`role=\"menu\"`) that renders `items` as keyboard-navigable `role=\"menuitem\"` entries — arrow keys, Home/End, and typeahead are handled for you. Omit `items` to slot arbitrary content instead (e.g. `and-menu-item` elements), in which case this component only renders the `<ul>` wrapper and doesn't manage focus for you. `items` is a plain JS array, so it must be set as a property, not an HTML attribute (the generated docs table reflects this: `Attribute: --`).",
     "attributes": [
-      {
-        "name": "aria-menu-label",
-        "field": "ariaMenuLabel",
-        "type": "string",
-        "default": "'Menu'",
-        "description": "Accessible label for the menu."
-      },
       {
         "name": "class",
         "field": "customClass",
         "type": "string",
         "default": "''",
         "description": "Additional CSS classes to merge with internal styles."
+      },
+      {
+        "name": "menu-label",
+        "field": "menuLabel",
+        "type": "string",
+        "default": "'Menu'",
+        "description": "Accessible label for the menu, rendered as the `<ul>`'s real `aria-label`. Named `menu-label`, not `aria-menu-label`: `aria-*` is reserved for the standard ARIA vocabulary, and a made-up `aria-*` attribute is an `aria-valid-attr` violation — this component shipped with exactly that bug until it was caught live by axe (see and-context-menu's `menuLabel`, which already used the correct naming)."
       }
     ],
     "events": [

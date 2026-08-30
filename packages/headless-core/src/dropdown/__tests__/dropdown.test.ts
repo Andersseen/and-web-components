@@ -101,13 +101,13 @@ describe('createDropdown', () => {
     const dropdown = createDropdown();
     let props = dropdown.getTriggerProps();
     expect(props['aria-haspopup']).toBe('menu');
-    expect(props['aria-expanded']).toBe(false);
-    expect(props['aria-disabled']).toBe(false);
+    expect(props['aria-expanded']).toBe('false');
+    expect(props['aria-disabled']).toBe('false');
     expect(props['data-state']).toBe('closed');
 
     dropdown.actions.open();
     props = dropdown.getTriggerProps();
-    expect(props['aria-expanded']).toBe(true);
+    expect(props['aria-expanded']).toBe('true');
     expect(props['data-state']).toBe('open');
   });
 

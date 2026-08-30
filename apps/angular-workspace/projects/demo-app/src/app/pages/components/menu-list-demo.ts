@@ -22,7 +22,7 @@ import { AndMenuList, AndMenuItem, AndIcon } from '@andersseen/angular-component
         <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-10 flex flex-col items-center justify-center gap-6 min-h-[200px]">
             <div class="w-64 rounded-md border border-border bg-popover shadow-md overflow-hidden">
-              <and-menu-list ariaMenuLabel="File actions">
+              <and-menu-list menuLabel="File actions">
                 <and-menu-item value="edit">
                   <and-icon slot="start" name="pencil" size="16"></and-icon>
                   Edit
@@ -54,7 +54,7 @@ import { AndMenuList, AndMenuItem, AndIcon } from '@andersseen/angular-component
             <div class="flex flex-col items-center gap-2">
               <span class="text-xs text-muted-foreground mb-1">Default</span>
               <div class="w-56 rounded-md border border-border bg-popover shadow-md overflow-hidden">
-                <and-menu-list ariaMenuLabel="Default items">
+                <and-menu-list menuLabel="Default items">
                   <and-menu-item value="profile">Profile</and-menu-item>
                   <and-menu-item value="settings">Settings</and-menu-item>
                   <and-menu-item value="billing">Billing</and-menu-item>
@@ -66,7 +66,7 @@ import { AndMenuList, AndMenuItem, AndIcon } from '@andersseen/angular-component
             <div class="flex flex-col items-center gap-2">
               <span class="text-xs text-muted-foreground mb-1">Destructive</span>
               <div class="w-56 rounded-md border border-border bg-popover shadow-md overflow-hidden">
-                <and-menu-list ariaMenuLabel="Danger zone">
+                <and-menu-list menuLabel="Danger zone">
                   <and-menu-item value="reset" intent="destructive"> Reset Data </and-menu-item>
                   <and-menu-item value="revoke" intent="destructive"> Revoke Access </and-menu-item>
                   <and-menu-item value="delete-account" intent="destructive"> Delete Account </and-menu-item>
@@ -78,7 +78,7 @@ import { AndMenuList, AndMenuItem, AndIcon } from '@andersseen/angular-component
             <div class="flex flex-col items-center gap-2">
               <span class="text-xs text-muted-foreground mb-1">Disabled</span>
               <div class="w-56 rounded-md border border-border bg-popover shadow-md overflow-hidden">
-                <and-menu-list ariaMenuLabel="Mixed states">
+                <and-menu-list menuLabel="Mixed states">
                   <and-menu-item value="open">Open</and-menu-item>
                   <and-menu-item value="save" disabled> Save (disabled) </and-menu-item>
                   <and-menu-item value="export" disabled> Export (disabled) </and-menu-item>
@@ -98,7 +98,7 @@ import { AndMenuList, AndMenuItem, AndIcon } from '@andersseen/angular-component
   `,
 })
 export default class MenuListDemo {
-  templateCode = `<and-menu-list ariaMenuLabel="Actions">
+  templateCode = `<and-menu-list menuLabel="Actions">
   <and-menu-item value="edit">Edit</and-menu-item>
   <and-menu-item value="duplicate">Duplicate</and-menu-item>
   <and-menu-item value="delete" intent="destructive">Delete</and-menu-item>

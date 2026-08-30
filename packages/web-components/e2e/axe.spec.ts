@@ -90,4 +90,93 @@ test.describe('axe accessibility scan — representative rendered states', () =>
 
     expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
   });
+
+  test('open dropdown menu has no serious/critical violations', async ({ page }) => {
+    await page.goto('/e2e/fixtures/dropdown.html');
+    const trigger = page.locator('and-dropdown#basic').getByRole('button', { name: 'Options' });
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
+
+  test('tabs with a selected tab and a disabled tab present have no serious/critical violations', async ({ page }) => {
+    await page.goto('/e2e/fixtures/tabs.html');
+    await expect(page.locator('and-tabs#horizontal').getByRole('tab', { name: 'Account' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
+
+  test('expanded accordion item, with a disabled item present, has no serious/critical violations', async ({
+    page,
+  }) => {
+    await page.goto('/e2e/fixtures/accordion.html');
+    const trigger1 = page.locator('and-accordion#single').getByRole('button', { name: 'Section one' });
+    await trigger1.click();
+    await expect(trigger1).toHaveAttribute('aria-expanded', 'true');
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
+
+  test('visible tooltip has no serious/critical violations', async ({ page }) => {
+    await page.goto('/e2e/fixtures/tooltip.html');
+    const trigger = page.getByRole('button', { name: 'Hover or focus me' });
+    await trigger.focus();
+    await expect(page.locator('and-tooltip#basic').locator('[role="tooltip"]')).toHaveAttribute('data-state', 'open');
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
+
+  test('carousel with autoplay paused has no serious/critical violations', async ({ page }) => {
+    await page.goto('/e2e/fixtures/carousel.html');
+    const pauseButton = page.locator('and-carousel#autoplay').getByRole('button', { name: 'Pause carousel' });
+    await pauseButton.click();
+    await expect(page.locator('and-carousel#autoplay').getByRole('button', { name: 'Play carousel' })).toBeVisible();
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
+
+  test('menu-list and open context menu, both with a disabled item, have no serious/critical violations', async ({
+    page,
+  }) => {
+    await page.goto('/e2e/fixtures/menu.html');
+    await expect(page.getByRole('menu', { name: 'File actions' }).getByRole('menuitem')).toHaveCount(3);
+
+    await page.getByText('Right-click inside this box').click({ button: 'right' });
+    await expect(page.getByRole('menu', { name: 'Row actions' })).toBeVisible();
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
+
+  test('open drawer has no serious/critical violations', async ({ page }) => {
+    await page.goto('/e2e/fixtures/drawer.html');
+    await page.getByRole('button', { name: 'Open settings drawer' }).click();
+    await expect(page.getByRole('dialog', { name: 'Settings' })).toBeVisible();
+
+    const results = await new AxeBuilder({ page }).analyze();
+    const seriousOrCritical = results.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+
+    expect(seriousOrCritical, JSON.stringify(seriousOrCritical, null, 2)).toEqual([]);
+  });
 });

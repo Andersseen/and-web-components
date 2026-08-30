@@ -76,7 +76,7 @@ export interface DrawerState {
  */
 export interface DrawerOverlayProps extends DataAttributes {
   'data-state': 'open' | 'closed';
-  'aria-hidden': boolean;
+  'aria-hidden': 'true' | 'false';
 }
 
 /**
@@ -84,9 +84,9 @@ export interface DrawerOverlayProps extends DataAttributes {
  */
 export interface DrawerContentProps extends AriaAttributes, DataAttributes {
   'role': 'dialog';
-  'aria-modal': boolean;
-  'aria-hidden': boolean;
-  'aria-label': string;
+  'aria-modal': 'true';
+  'aria-hidden': 'true' | 'false';
+  'aria-label'?: string;
   'data-state': 'open' | 'closed';
   'data-side': DrawerPlacement;
   'tabindex': number;
@@ -223,14 +223,18 @@ export function createDrawer(config: DrawerConfig = {}): DrawerReturn {
   // Get element props
   const getOverlayProps = (): DrawerOverlayProps => ({
     'data-state': store.state.isOpen ? 'open' : 'closed',
-    'aria-hidden': !store.state.isOpen,
+    'aria-hidden': !store.state.isOpen ? 'true' : 'false',
   });
 
   const getContentProps = (): DrawerContentProps => ({
     'role': 'dialog',
-    'aria-modal': true,
-    'aria-hidden': !store.state.isOpen,
-    'aria-label': config.label ?? 'Drawer',
+    'aria-modal': 'true',
+    'aria-hidden': !store.state.isOpen ? 'true' : 'false',
+    // Deliberately no invented fallback name (e.g. "Drawer") when `label` is
+    // unset — an invented generic name would silently hide a real authoring
+    // mistake from accessibility tooling instead of surfacing it. See the
+    // equivalent decision for <and-modal> (SSD.md TD-15 / ROADMAP R2.11).
+    ...(config.label ? { 'aria-label': config.label } : {}),
     'data-state': store.state.isOpen ? 'open' : 'closed',
     'data-side': store.state.placement,
     'tabindex': -1,

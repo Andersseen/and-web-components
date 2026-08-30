@@ -34,10 +34,18 @@ export type DropdownPlacement = 'top' | 'bottom' | 'left' | 'right';
  * adding those ARIA attributes yourself — they can't be forwarded onto
  * arbitrary slotted content.
  *
+ * `items` is a plain JS array, so it must be set as a property, not an HTML
+ * attribute (the generated docs table reflects this: `Attribute: --`).
+ *
  * @example
  * ```html
- * <and-dropdown label="Options" items='[{"text":"Edit","value":"edit"},{"text":"Delete","value":"delete"}]'>
- * </and-dropdown>
+ * <and-dropdown id="actions" label="Options"></and-dropdown>
+ * <script>
+ *   document.getElementById('actions').items = [
+ *     { text: 'Edit', value: 'edit' },
+ *     { text: 'Delete', value: 'delete' },
+ *   ];
+ * </script>
  * ```
  */
 @Component({
@@ -298,6 +306,7 @@ export class AndDropdown {
                   }}
                   class={cn(menuItemClass, item.disabled && 'pointer-events-none opacity-50')}
                   tabindex={item.disabled ? -1 : isFocused ? 0 : -1}
+                  aria-disabled={item.disabled ? 'true' : undefined}
                   onClick={() => !item.disabled && this.handleSelect(item.value)}
                   onMouseEnter={() => this.focusItem(index)}
                 >

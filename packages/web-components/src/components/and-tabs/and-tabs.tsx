@@ -116,6 +116,12 @@ export class AndTabs {
   private updateChildren() {
     const triggers = Array.from(this.el.querySelectorAll('and-tabs-trigger'));
     const contents = Array.from(this.el.querySelectorAll('and-tabs-content'));
+    // and-tabs-list has its own `orientation` prop (defaulting to
+    // 'horizontal') instead of reading the shared headless state, so it
+    // must be pushed down explicitly — otherwise its `aria-orientation`
+    // silently disagrees with the arrow-key direction the triggers actually
+    // honor (they read the shared tabsLogic, not this element).
+    const lists = Array.from(this.el.querySelectorAll('and-tabs-list'));
 
     triggers.forEach((trigger: HTMLAndTabsTriggerElement) => {
       trigger.selected = trigger.value === this.value;
@@ -125,6 +131,10 @@ export class AndTabs {
     contents.forEach((content: HTMLAndTabsContentElement) => {
       content.selected = content.value === this.value;
       content.tabsLogic = this.tabsLogic;
+    });
+
+    lists.forEach((list: HTMLAndTabsListElement) => {
+      list.orientation = this.orientation;
     });
   }
 

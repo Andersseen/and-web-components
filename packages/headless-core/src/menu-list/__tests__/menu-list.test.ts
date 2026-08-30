@@ -10,6 +10,21 @@ describe('createMenuList', () => {
     expect(menu.actions).toBeDefined();
   });
 
+  it('defaults roving focus to the first enabled item, so the menu has a real Tab stop', () => {
+    // Without this, every item renders tabindex="-1" and the whole menu is
+    // unreachable by sequential Tab navigation (verified live in a browser).
+    const items = [{ separator: true }, { id: '1', disabled: true }, { id: '2' }, { id: '3' }];
+    const menu = createMenuList({ items });
+    expect(menu.state.focusedIndex).toBe(2);
+    expect(menu.getItemProps(items[2], 2).tabindex).toBe(0);
+  });
+
+  it('falls back to no focused item when every item is disabled or a separator', () => {
+    const items = [{ separator: true }, { id: '1', disabled: true }];
+    const menu = createMenuList({ items });
+    expect(menu.state.focusedIndex).toBe(-1);
+  });
+
   it('can explicitly set initial config', () => {
     const items = [{ id: '1' }, { id: '2', disabled: true }];
     const menu = createMenuList({ ariaLabel: 'Actions', items });
@@ -29,12 +44,12 @@ describe('createMenuList', () => {
     expect(menu.getSeparatorProps()).toEqual({ role: 'separator' });
   });
 
-  it('can set items', () => {
+  it('can set items, landing roving focus on the first enabled item', () => {
     const menu = createMenuList();
     const items = [{ id: '1' }];
     menu.actions.setItems(items);
     expect(menu.state.items).toEqual(items);
-    expect(menu.state.focusedIndex).toBe(-1);
+    expect(menu.state.focusedIndex).toBe(0);
   });
 
   it('can focus an enabled item', () => {
@@ -44,18 +59,18 @@ describe('createMenuList', () => {
     expect(menu.state.focusedIndex).toBe(1);
   });
 
-  it('does not focus a disabled item', () => {
+  it('does not focus a disabled item (leaves the current roving-tabindex position unchanged)', () => {
     const items = [{ id: '1' }, { id: '2', disabled: true }];
     const menu = createMenuList({ items });
     menu.actions.focusItem(1);
-    expect(menu.state.focusedIndex).toBe(-1);
+    expect(menu.state.focusedIndex).toBe(0);
   });
 
-  it('does not focus a separator', () => {
+  it('does not focus a separator (leaves the current roving-tabindex position unchanged)', () => {
     const items = [{ id: '1' }, { separator: true }, { id: '2' }];
     const menu = createMenuList({ items });
     menu.actions.focusItem(1);
-    expect(menu.state.focusedIndex).toBe(-1);
+    expect(menu.state.focusedIndex).toBe(0);
   });
 
   it('can select an enabled item and triggers onSelect callback', () => {
@@ -128,7 +143,7 @@ describe('createMenuList', () => {
     expect(props2.role).toBe('menuitem');
     expect(props2.tabindex).toBe(-1);
     expect(props2['data-state']).toBe('inactive');
-    expect(props2['aria-disabled']).toBe(true);
+    expect(props2['aria-disabled']).toBe('true');
     expect(props2['data-disabled']).toBe(true);
   });
 
@@ -145,28 +160,27 @@ describe('createMenuList', () => {
     const menu = createMenuList({ items });
     const preventDefault = vi.fn();
 
-    // ArrowDown from start (or nowhere) -> 1 (index 0)
-    menu.handleMenuKeyDown({ key: 'ArrowDown', preventDefault } as any);
-    expect(preventDefault).toHaveBeenCalled();
+    // Starts on the first enabled item (index 0).
     expect(menu.state.focusedIndex).toBe(0);
 
     // ArrowDown -> 3 (index 3, skipping separator index 1 and disabled index 2)
     menu.handleMenuKeyDown({ key: 'ArrowDown', preventDefault } as any);
+    expect(preventDefault).toHaveBeenCalled();
     expect(menu.state.focusedIndex).toBe(3);
 
-    // ArrowDown at end -> loops to 1 (index 0)
+    // ArrowDown at end -> loops to 0
     menu.handleMenuKeyDown({ key: 'ArrowDown', preventDefault } as any);
     expect(menu.state.focusedIndex).toBe(0);
 
-    // ArrowUp -> loops to 3 (index 2)
+    // ArrowUp at start -> loops to 3
     menu.handleMenuKeyDown({ key: 'ArrowUp', preventDefault } as any);
     expect(menu.state.focusedIndex).toBe(3);
 
-    // Home -> 1 (index 0)
+    // Home -> 0
     menu.handleMenuKeyDown({ key: 'Home', preventDefault } as any);
     expect(menu.state.focusedIndex).toBe(0);
 
-    // End -> 3 (index 2)
+    // End -> 3
     menu.handleMenuKeyDown({ key: 'End', preventDefault } as any);
     expect(menu.state.focusedIndex).toBe(3);
   });

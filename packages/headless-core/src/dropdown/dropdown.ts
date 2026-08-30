@@ -65,8 +65,8 @@ export interface DropdownState {
  */
 export interface DropdownTriggerProps extends AriaAttributes, DataAttributes {
   'aria-haspopup': 'menu';
-  'aria-expanded': boolean;
-  'aria-disabled': boolean;
+  'aria-expanded': 'true' | 'false';
+  'aria-disabled': 'true' | 'false';
   'data-state': 'open' | 'closed';
 }
 
@@ -218,8 +218,8 @@ export function createDropdown(config: DropdownConfig = {}): DropdownReturn {
   // Get element props
   const getTriggerProps = (): DropdownTriggerProps => ({
     'aria-haspopup': 'menu',
-    'aria-expanded': store.state.isOpen,
-    'aria-disabled': store.state.disabled,
+    'aria-expanded': store.state.isOpen ? 'true' : 'false',
+    'aria-disabled': store.state.disabled ? 'true' : 'false',
     'data-state': store.state.isOpen ? 'open' : 'closed',
   });
 

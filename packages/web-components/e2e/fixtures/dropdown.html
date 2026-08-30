@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-dropdown e2e fixture</title>
+    <link rel="stylesheet" href="/src/global/global.css" />
+    <script type="module">
+      import '/dist/components/all.js';
+      import { registerAllIcons } from '/node_modules/@andersseen/icon/dist/index.js';
+      registerAllIcons();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Basic dropdown</h2>
+      <and-dropdown id="basic" label="Options"></and-dropdown>
+      <p id="basic-log"></p>
+    </div>
+
+    <div>
+      <h2>Second dropdown (for outside-click target)</h2>
+      <and-dropdown id="second" label="Second"></and-dropdown>
+    </div>
+
+    <script type="module">
+      // `items` is a plain JS array prop (no HTML-attribute form — see the
+      // generated docs table, `Attribute: --`), so it must be assigned as a
+      // property after the element upgrades.
+      const basic = document.getElementById('basic');
+      basic.items = [
+        { text: 'Edit', value: 'edit' },
+        { text: 'Duplicate', value: 'duplicate' },
+        { text: 'Delete', value: 'delete', disabled: true },
+      ];
+      const log = document.getElementById('basic-log');
+      basic.addEventListener('andDropdownSelect', e => {
+        log.textContent = `selected:${e.detail}`;
+      });
+
+      document.getElementById('second').items = [
+        { text: 'One', value: 'one' },
+        { text: 'Two', value: 'two' },
+      ];
+    </script>
+  </body>
+</html>
