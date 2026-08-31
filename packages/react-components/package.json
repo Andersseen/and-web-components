@@ -32,7 +32,7 @@
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0",
-    "@andersseen/web-components": "workspace:*"
+    "@andersseen/web-components": "workspace:>=0.4.0 <1.0.0"
   },
   "dependencies": {
     "@stencil/react-output-target": "^1.6.0"

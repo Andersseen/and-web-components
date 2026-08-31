@@ -40,6 +40,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Validate release policy (TD-28)
+        run: pnpm validate:release-policy
+
+      - name: Release-plan regression test (TD-28)
+        run: pnpm test:release-policy
+
       - name: Run linter
         run: pnpm lint
 

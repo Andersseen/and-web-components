@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Validate release policy (TD-28)
+        run: pnpm validate:release-policy
+
       # Build all publishable libraries in dependency order (includes new Angular/React/Vue wrappers)
       - name: Build all packages
         run: pnpm build:all

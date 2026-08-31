@@ -400,6 +400,27 @@ referenced below).
       boolean-prop passing, and generated types against a real consumer build.
       **DoD:** a documented, deliberate peer range per adapter backed by a real
       build test, not just a version bump.
+- [x] **R2.22 — TD-28 release-policy hardening** _(done 2026-08-31 · TD-28 ·
+      medium)_ Reproduced the wrapper-`1.0.0` bug deterministically against the
+      real `@changesets/assemble-release-plan` engine in disposable fixtures,
+      confirmed the root cause (`shouldBumpMajor()` unconditionally forces a
+      major bump on any `peerDependencies`-linked dependent when the peer's own
+      release is minor/major, and the wrappers' exact-pinned `workspace:*` peer
+      range could never satisfy `onlyUpdatePeerDependentsWhenOutOfRange`'s
+      out-of-range check), and fixed it by adding a Changesets `fixed` group
+      (`web-components` + the three wrappers) with
+      `onlyUpdatePeerDependentsWhenOutOfRange: true` and widening the wrapper
+      peer ranges to `workspace:>=0.4.0 <1.0.0`. Added
+      `scripts/validate-release-policy.mjs` (static guard) and
+      `scripts/release-policy/release-plan.test.mjs` (exercises the real
+      Changesets CLI against disposable fixtures — patch/minor simulations, a
+      reproduction of the pre-fix bug, validator self-tests), wired into
+      `ci-cd.yml` and `release.yml` via `pnpm validate:release-policy` /
+      `pnpm test:release-policy`. **DoD met:** both patch and minor
+      `web-components` release-plan simulations produce matched, non-`1.0.0`
+      wrapper versions; deliberately forcing a wrapper to `1.0.0` or breaking
+      the fixed group fails validation. See SSD TD-28/ADR-5/§13 invariants
+      #15–18 and AGENT-PLAYBOOKS P7.
 
 ## R3 — Later: maturity
 
@@ -437,3 +458,4 @@ referenced below).
 | 2026-07-21 | R2.9 (Tailwind-optional consumption: tokens.css/elements.css/tailwind-preset) and R2.10 (theme token contract + runtime theme-switching parity fix) added and completed same day                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 2026-08-28 | R2.7 split into R2.7a (done) / R2.7b; added R2.18–R2.21 (packaging validation, consumer tarball fixtures, release-safety gating, adapter peer/module audit) covering the phases scoped out of the correctness-slice-+-e2e-gate session                                                                                                                                                                                                                                                                                                                                                                                                      |
 | 2026-08-30 | R2.7b done — browser e2e for dropdown/tabs/accordion/tooltip/carousel/menu-list+context-menu/drawer; 12 real defects found and fixed (systemic ARIA boolean-serialization bug, tabs disabled-tab/orientation gaps, drawer focus-race + focus-restoration + invented-name bugs, menu-list Tab-unreachability + focus-follows-tabindex bugs, dropdown/accordion missing-`aria-disabled`/unresolvable-`aria-controls`, menu-list's invalid `aria-menu-label` attribute name); added TD-33 (carousel per-slide `aria-hidden` never wired up) and TD-34 (pre-existing, intermittent Firefox-only axe contrast flake on and-select, out of scope) |
+| 2026-08-31 | R2.22 added and completed same day — TD-28 release-policy hardening (Changesets `fixed` group + `onlyUpdatePeerDependentsWhenOutOfRange` + widened wrapper peer ranges, plus `validate:release-policy`/`test:release-policy` guards in CI and release.yml)                                                                                                                                                                                                                                                                                                                                                                                  |

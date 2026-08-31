@@ -31,7 +31,7 @@
   },
   "peerDependencies": {
     "vue": "^3.0.0",
-    "@andersseen/web-components": "workspace:*"
+    "@andersseen/web-components": "workspace:>=0.4.0 <1.0.0"
   },
   "dependencies": {
     "@stencil/vue-output-target": "^0.14.0"
