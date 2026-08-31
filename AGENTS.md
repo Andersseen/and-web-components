@@ -195,6 +195,13 @@ package's build mid-publish. Use the guard `test -d dist || pnpm run build`: the
 root `release` script always builds everything in dependency order before
 publishing, so in CI the guard is a no-op and it only covers manual publishes.
 
+`@andersseen/web-components` and its three generated framework wrappers
+(`angular-components`/`react-components`/`vue-components`) are a Changesets
+`fixed` group — they always release at the same version, and `1.0.0` is
+permanently invalid for the wrappers (SSD **TD-28**, playbook P7). Never
+hand-edit their versions after `pnpm version-packages`; run
+`pnpm validate:release-policy` instead.
+
 ## Animation
 
 `packages/motion-core` provides two APIs:

@@ -242,26 +242,35 @@ change it you must, by hand:
    first** — `npm view @andersseen/vanilla-components versions`. `0.0.1`,
    `0.1.0` and `1.0.0` are already taken and can never be reused.
 
-### After `pnpm version-packages`, always check the wrapper versions
+### Wrapper versions mirror `web-components` automatically (TD-28, resolved)
 
-`@andersseen/web-components` is a **peerDependency** of
-`angular-components`/`react-components`/`vue-components`. Changesets bumps
-peer-dependents as **major** by default, because widening a peer range is
-breaking for consumers. On a `0.x` package that turns into a jump straight to
-`1.0.0` — which for these three packages is **unpublishable**: `1.0.0` was
-unpublished from npm and npm never allows a version number to be reused.
-
-This has now bitten twice (commit `7882f65`, then again on 2026-07-23). Until
-the root cause is settled (SSD **TD-28**), after every `pnpm version-packages`:
+`@andersseen/web-components` and the three framework wrappers
+(`angular-components`/`react-components`/`vue-components`) sit in a Changesets
+`fixed` group in `.changeset/config.json`, combined with
+`___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange: true`
+and a widened wrapper peer range (`workspace:>=0.4.0 <1.0.0` instead of the old
+exact-pin `workspace:*`). This used to bite twice (commit `7882f65`, then again
+on 2026-07-23): Changesets bumps `peerDependencies`-linked dependents as
+**major** by default whenever the peer's own release is `minor` or `major`,
+which on a `0.x` package with an exact-pinned peer range jumped the wrappers
+straight to the one version they can never republish, `1.0.0` (unpublished from
+npm; npm never allows reuse). `pnpm version-packages` now produces the correct,
+matched versions itself — **do not hand-correct its output.** If you ever see a
+wrapper land on `1.0.0` or diverge from `web-components`'s version after running
+it, treat that as a regression in the release-policy config (SSD **TD-28**, §13
+invariants #15–18), not something to patch by hand:
 
 ```bash
-node -e "for (const a of ['angular','react','vue']) console.log(a, require('./packages/'+a+'-components/package.json').version)"
+pnpm validate:release-policy   # fails loudly and explains what's wrong
 ```
 
-If any of them reads `1.0.0`, correct it to mirror the new
-`@andersseen/web-components` version (the pattern the CHANGELOG history follows)
-in both `package.json` and the heading Changesets just wrote into
-`CHANGELOG.md`.
+Any change to `.changeset/config.json`'s `fixed`/
+`___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH` keys, or to a wrapper's
+`peerDependencies["@andersseen/web-components"]`, must be re-verified with
+`pnpm test:release-policy` — it exercises the real Changesets engine against
+disposable fixtures (patch and minor `web-components` release-plan simulations),
+because this exact bug was invisible to reading the config and only showed up in
+the actual computed release plan.
 
 ---
 

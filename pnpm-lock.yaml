@@ -237,7 +237,7 @@ importers:
   packages/angular-components:
     dependencies:
       '@andersseen/web-components':
-        specifier: workspace:*
+        specifier: workspace:>=0.4.0 <1.0.0
         version: link:../web-components
       tslib:
         specifier: ^2.3.0
@@ -407,7 +407,7 @@ importers:
   packages/react-components:
     dependencies:
       '@andersseen/web-components':
-        specifier: workspace:*
+        specifier: workspace:>=0.4.0 <1.0.0
         version: link:../web-components
       '@stencil/react-output-target':
         specifier: ^1.6.0
@@ -461,7 +461,7 @@ importers:
   packages/vue-components:
     dependencies:
       '@andersseen/web-components':
-        specifier: workspace:*
+        specifier: workspace:>=0.4.0 <1.0.0
         version: link:../web-components
       '@stencil/vue-output-target':
         specifier: ^0.14.0
