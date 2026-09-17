@@ -3,6 +3,7 @@
 @import '@andersseen/layout/dist/layout.css';
 @import '@andersseen/motion/style.css';
 @import '@andersseen/vanilla-components/style.css';
+@import '@andersseen/icon/icons.css';
 
 @theme {
   --font-sans: var(--font-family, 'Inter', sans-serif);
