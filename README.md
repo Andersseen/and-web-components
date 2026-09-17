@@ -149,9 +149,11 @@ Two ways to use the catalog, both reading the same source:
 npm install @andersseen/icon
 ```
 
-Also available from jsDelivr/unpkg with no npm install at all — see the
-[icon package docs](./packages/icon-library) for CDN URLs, `<i>`/`<div>` host
-elements, generating a subset stylesheet, and the `<and-icon>`-from-CDN setup.
+The CSS-only path supports four loading strategies (full `icons.css`, selective
+`base.css` + `icons/<name>.css`, a build-time `and-icons` scanner CLI, or opt-in
+runtime lazy loading via `initLazyIcons()`) — pick per app; see the
+[icon package docs](./packages/icon-library) for all four, CDN URLs,
+`<i>`/`<div>` host elements, and the `<and-icon>`-from-CDN setup.
 
 </details>
 

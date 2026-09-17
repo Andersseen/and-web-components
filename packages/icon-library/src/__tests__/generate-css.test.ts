@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateIconsCss } from '../generate-css';
+import { generateIconsCss, generateIconsBaseCss, generateIconCss } from '../generate-css';
 import { ALL_ICONS } from '../icons';
 
 const iconNames = Object.keys(ALL_ICONS);
@@ -65,5 +65,65 @@ describe('generateIconsCss', () => {
     const ruleNames = [...css.matchAll(/\[and-icon='([^']+)'\]/g)].map(match => match[1]);
 
     expect(ruleNames).toEqual(['close', 'home', 'star']);
+  });
+});
+
+describe('generateIconsBaseCss (dist/base.css / @andersseen/icon/base.css)', () => {
+  it('contains only the shared [and-icon] rule — no banner, no icon-specific mask-image', () => {
+    const css = generateIconsBaseCss();
+
+    expect(css).toContain('[and-icon] {');
+    expect(css).toContain('width: 1em;');
+    expect(css).toContain('background-color: currentColor;');
+    expect(css).not.toContain('mask-image');
+    expect(css).not.toContain('AUTO-GENERATED');
+  });
+
+  it('is byte-identical to the base rule embedded in the full generateIconsCss() output', () => {
+    const base = generateIconsBaseCss().trim();
+    const full = generateIconsCss();
+
+    expect(full).toContain(base);
+  });
+});
+
+describe('generateIconCss (dist/icons/<name>.css / @andersseen/icon/icons/<name>.css)', () => {
+  it('contains only that icon’s rule — no base rule, no banner, no other icon', () => {
+    const css = generateIconCss('home', ALL_ICONS.home);
+
+    expect(css).toContain("[and-icon='home'] {");
+    expect(css).not.toContain('[and-icon] {');
+    expect(css).not.toContain('AUTO-GENERATED');
+    expect(css).not.toContain("[and-icon='search']");
+  });
+
+  it('produces the exact same rule text every full-catalog icon rule is built from', () => {
+    for (const [name, svg] of Object.entries(ALL_ICONS)) {
+      const standalone = generateIconCss(name, svg).trim();
+      const full = generateIconsCss();
+
+      expect(full, `${name} rule in generateIconsCss() output should match generateIconCss(${name}, ...)`).toContain(
+        standalone,
+      );
+    }
+  });
+});
+
+describe('generateIconsCss composition (single generator, no parallel implementation)', () => {
+  it('equals the banner + generateIconsBaseCss() + one generateIconCss() per icon, joined', () => {
+    const subset = { close: ALL_ICONS.close, home: ALL_ICONS.home, star: ALL_ICONS.star };
+    const composed = generateIconsCss(subset);
+
+    const base = generateIconsBaseCss().trim();
+    const rules = Object.keys(subset)
+      .sort()
+      .map(name => generateIconCss(name, subset[name]).trim());
+
+    expect(composed).toContain(base);
+    for (const rule of rules) {
+      expect(composed).toContain(rule);
+    }
+    // banner, base, then one block per icon — nothing else.
+    expect(composed.split('\n\n').length).toBe(1 + 1 + rules.length);
   });
 });

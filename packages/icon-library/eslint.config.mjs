@@ -35,6 +35,9 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', 'dist-cjs/**', 'node_modules/**', '**/*.d.ts'],
+    // Scanner test fixtures are deliberately minimal, not-quite-real source
+    // snippets (no framework runtime, JSX with no configured `jsx` target,
+    // etc.) — they exist to be scanned as text, not type-checked.
+    ignores: ['dist/**', 'dist-cjs/**', 'node_modules/**', '**/*.d.ts', 'src/__tests__/fixtures/**'],
   },
 ];

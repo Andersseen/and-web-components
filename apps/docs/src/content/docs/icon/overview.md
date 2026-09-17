@@ -16,6 +16,22 @@ There are two ways to use the catalog: a **CSS-only attribute API** (no
 JavaScript at all) and the **registry + `<and-icon>`** Web Component. Both read
 the exact same `ALL_ICONS` source — nothing is hand-duplicated between them.
 
+## Choose your loading strategy
+
+The CSS-only `and-icon="name"` attribute supports four loading strategies, all
+in the same package, reading the same `ALL_ICONS` source. None is universally
+better — pick per app, and it's fine to mix them.
+
+| Strategy                                      | Runtime JS | Payload             | Best for                              |
+| --------------------------------------------- | ---------- | ------------------- | ------------------------------------- |
+| [Full CSS](#css-only-usage-no-javascript)     | 0          | all icons           | prototypes, docs, simple CDN usage    |
+| [Selective CSS](#selective-per-icon-css)      | 0          | manually selected   | you know exactly which few icons      |
+| [Build-time scanner](#build-time-scanner)     | 0          | icons actually used | production apps with a build step     |
+| [Runtime lazy loading](#runtime-lazy-loading) | small      | icons on demand     | dynamic/CMS content, unknown at build |
+
+The registry + `<and-icon>` Web Component (further down this page) is unaffected
+by any of the four — it always reads from `ALL_ICONS` via `registerIcons()`.
+
 ## Install
 
 ```bash
@@ -111,6 +127,135 @@ writeFileSync(
 ```
 
 Zero JavaScript — the stylesheet alone is enough.
+
+## Selective per-icon CSS
+
+For when you know exactly which few icons an app needs and don't want the full
+catalog. `dist/base.css` has only the shared `[and-icon] { ... }` rule (sizing,
+`currentColor`, mask geometry); `dist/icons/<name>.css` has only that one icon's
+`mask-image` rule — both generated from the same `ALL_ICONS` map and the same
+generator as `icons.css`.
+
+```css
+@import '@andersseen/icon/base.css';
+@import '@andersseen/icon/icons/home.css';
+@import '@andersseen/icon/icons/search.css';
+```
+
+```html
+<span and-icon="home" aria-hidden="true"></span>
+<span and-icon="search" aria-hidden="true"></span>
+```
+
+Only those two icons' CSS ships. CDN, zero JavaScript:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/base.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/icons/home.css"
+/>
+<!-- or the equivalent unpkg.com/@andersseen/icon@<version>/dist/... paths -->
+```
+
+## Build-time scanner
+
+Recommended for **production apps with a build step** — zero runtime JS, and no
+hand-picking icon names. The `and-icons` CLI ships with this package (no
+separate install) and scans source files for static `and-icon="<name>"`
+literals, generating one CSS file with exactly the base rule plus the icons
+actually used — built from the same `generateIconsCss()` generator as the
+selective-CSS path above.
+
+```bash
+pnpm exec and-icons scan --out ./src/and-icons.generated.css
+```
+
+```css
+@import './and-icons.generated.css';
+```
+
+It scans `.html`, `.htm`, `.astro`, `.ts`, `.tsx`, `.jsx`, `.vue`, and `.svelte`
+files, deliberately with a simple textual match rather than a framework parser,
+and ignores `node_modules`/`dist`/`build`/`coverage`/`.git`/
+`.angular`/`.next`/`.nuxt` by default. It **cannot** resolve a dynamic value —
+`[attr.and-icon]="icon"` (Angular), `and-icon={icon}` (JSX), `:and-icon="icon"`
+(Vue) are all skipped, since the name can't be known without running the app.
+For those, list the possible names in a small config file:
+
+```js
+// and-icons.config.mjs
+export default {
+  safelist: ['home', 'search', 'user', 'settings'],
+  // include: ['src'],      // root-relative dirs to scan (default: the whole cwd)
+  // exclude: ['fixtures'], // extra dirs to ignore, merged with the built-in defaults
+  // outFile: './src/and-icons.generated.css',
+};
+```
+
+A static usage or safelist entry naming an icon outside `ALL_ICONS` fails the
+scan on purpose — reported with its file, non-zero exit — rather than silently
+generating an empty mask:
+
+```text
+Unknown icon "homme"
+  src/components/header.html
+```
+
+A Node-only programmatic API is also available, never imported by the main
+entry: `import { scanIcons, buildIconsCss } from '@andersseen/icon/build';`.
+
+## Runtime lazy loading
+
+For **dynamic runtime content** where icon names aren't knowable at build time —
+CMS-driven markup, third-party-injected HTML, a highly dynamic CDN page. Opt-in
+only: importing the module does nothing by itself.
+
+```ts
+import { initLazyIcons } from '@andersseen/icon/lazy';
+
+const cleanup = initLazyIcons();
+```
+
+```html
+<span and-icon="home" aria-hidden="true"></span>
+```
+
+`initLazyIcons()` scans existing `[and-icon]` elements, then watches for new
+ones and for the attribute changing (`MutationObserver`), loading each icon's
+`icons/<name>.css` over the network exactly once — deduplicated, no re-fetch for
+an icon already loaded. The base rule is injected once as an inline `<style>`,
+never fetched as `icons.css`/`base.css`; `dist/lazy.js` itself never contains
+SVG data, only the machinery to load the already-generated `icons/<name>.css`
+files.
+
+CDN usage resolves URLs automatically, relative to the script itself:
+
+```html
+<script type="module">
+  import { initLazyIcons } from 'https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/lazy.js';
+  initLazyIcons();
+</script>
+```
+
+After bundling, `import.meta.url` is not guaranteed to still point at this
+package's `dist/` inside `node_modules` — pass `baseUrl` (a path your build
+copies `dist/icons/` to) or a full `resolveIconUrl(name)` resolver:
+
+```ts
+initLazyIcons({ baseUrl: '/assets/and-icons/' });
+```
+
+For a bundled app where the icon set is knowable at build time, prefer the
+[build-time scanner](#build-time-scanner) instead — zero runtime JS, no URL
+configuration. Every `and-icon` value is validated against the same
+lowercase-kebab-case contract the bundled icon names follow before it's ever
+used to build a URL, so `and-icon="../../etc/passwd"` is rejected outright. A
+failed stylesheet load doesn't crash the app or retry; it logs one development
+warning per icon name (override with `onError`).
 
 ## Registry + `<and-icon>` (Web Component)
 

@@ -421,6 +421,51 @@ referenced below).
       wrapper versions; deliberately forcing a wrapper to `1.0.0` or breaking
       the fixed group fails validation. See SSD TD-28/ADR-5/§13 invariants
       #15–18 and AGENT-PLAYBOOKS P7.
+- [x] **R2.23 — `@andersseen/icon` four CSS-only loading strategies** _(done
+      2026-09-17 · user-directed, not a backlog pick · medium-large)_ Extended
+      `@andersseen/icon`'s existing CSS-only `and-icon="name"` attribute API
+      (full `icons.css`) with three more opt-in strategies, all in the same
+      package, all reading `ALL_ICONS`: **selective CSS** (`base.css` — the
+      shared rule only — plus one `icons/<name>.css` per catalog entry, new
+      `./base.css`/`./icons/*.css` exports); a **build-time scanner**, the
+      `and-icons` CLI (`bin`, no separate npm package) that walks
+      `.html/.htm/.astro/.ts/.tsx/.jsx/.vue/.svelte` for static
+      `and-icon="<name>"` literals, supports an `and-icons.config.mjs`
+      (`safelist`/`include`/`exclude`/`outFile`), fails the build non-zero on an
+      unknown icon name instead of emitting a silent empty mask, and writes one
+      generated CSS file (also exported programmatically, Node-only, as
+      `@andersseen/icon/build`); and **runtime lazy loading**,
+      `@andersseen/icon/lazy`'s opt-in `initLazyIcons()` (`MutationObserver`,
+      deduplicated per-icon `<link>` loading, inline-injected base rule, never
+      imports `ALL_ICONS`). Refactored `generate-css.ts` into shared primitives
+      (`generateIconsBaseCss()`, `generateIconCss(name, svg)`) that the existing
+      public `generateIconsCss()` is now composed from — byte-identical output
+      verified against the full pre-existing test suite before any new test was
+      written. No plugins (Vite/Webpack/Astro/ Angular), no AST parsers, no new
+      packages — the CLI's scanner is a plain `node:fs` walk + regex, per the
+      task's explicit constraint. Found one real bug while building the
+      lazy-loading E2E suite: writing `new URL(dynamicPath, import.meta.url)`
+      inline (rather than binding `import.meta.url` to a variable first) is
+      silently mishandled by Vite's own static-asset-bundling analysis for
+      dynamic paths — broke only under the Vitest/Vite-powered unit-test
+      harness, never in a real browser (`dist/lazy.js` is plain `tsc` output,
+      untouched by Vite) — fixed in source regardless, since relying on "only
+      correct outside the test harness" is a trap for the next person to trip
+      on. **DoD met** (all four strategies demonstrated end-to-end, see
+      CONTEXT.md session log for the full verification trail):
+      `packages/icon-library` test suite 588/588 (was 459 — all pre-existing
+      tests still pass unmodified), `pnpm lint` clean, new Playwright suite
+      `packages/web-components/e2e/and-icon-lazy.spec.ts` 30/30 green across
+      Chromium/Firefox/WebKit alongside the pre-existing
+      `and-icon-cdn`/`icon-css` suites, `pnpm pack --dry-run` tarball contents
+      verified (all 86 `icons/*.css`, `base.css`, `lazy.js`, `cli.js`,
+      `build.js`, types), and the packed tarball verified to work standalone
+      (extracted outside the workspace/`node_modules`, no `npm install`, plain
+      Node ESM + `import.meta.resolve` — no accidental dependency on
+      pnpm-internal resolution). `<and-icon>`/`registerIcons`/
+      `registerAllIcons`/`@andersseen/icon/browser` all unchanged and reverified
+      green. Changeset: `minor` for `@andersseen/icon` — new subpath exports and
+      a new `bin`, no breaking change.
 
 ## R3 — Later: maturity
 
@@ -459,3 +504,4 @@ referenced below).
 | 2026-08-28 | R2.7 split into R2.7a (done) / R2.7b; added R2.18–R2.21 (packaging validation, consumer tarball fixtures, release-safety gating, adapter peer/module audit) covering the phases scoped out of the correctness-slice-+-e2e-gate session                                                                                                                                                                                                                                                                                                                                                                                                      |
 | 2026-08-30 | R2.7b done — browser e2e for dropdown/tabs/accordion/tooltip/carousel/menu-list+context-menu/drawer; 12 real defects found and fixed (systemic ARIA boolean-serialization bug, tabs disabled-tab/orientation gaps, drawer focus-race + focus-restoration + invented-name bugs, menu-list Tab-unreachability + focus-follows-tabindex bugs, dropdown/accordion missing-`aria-disabled`/unresolvable-`aria-controls`, menu-list's invalid `aria-menu-label` attribute name); added TD-33 (carousel per-slide `aria-hidden` never wired up) and TD-34 (pre-existing, intermittent Firefox-only axe contrast flake on and-select, out of scope) |
 | 2026-08-31 | R2.22 added and completed same day — TD-28 release-policy hardening (Changesets `fixed` group + `onlyUpdatePeerDependentsWhenOutOfRange` + widened wrapper peer ranges, plus `validate:release-policy`/`test:release-policy` guards in CI and release.yml)                                                                                                                                                                                                                                                                                                                                                                                  |
+| 2026-09-17 | R2.23 added and completed same day — `@andersseen/icon` four CSS-only loading strategies (selective `base.css`/`icons/<name>.css`, the `and-icons` build-time scanner CLI + `@andersseen/icon/build`, opt-in `initLazyIcons()` runtime lazy loading), all built on a shared, refactored `generate-css.ts`                                                                                                                                                                                                                                                                                                                                   |

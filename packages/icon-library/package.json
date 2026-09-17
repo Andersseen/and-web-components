@@ -6,6 +6,9 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "and-icons": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,6 +16,8 @@
       "require": "./dist-cjs/index.js"
     },
     "./icons.css": "./dist/icons.css",
+    "./base.css": "./dist/base.css",
+    "./icons/*.css": "./dist/icons/*.css",
     "./browser": {
       "types": "./dist/browser.d.ts",
       "import": "./dist/browser.js"
@@ -20,6 +25,14 @@
     "./generate-css": {
       "types": "./dist/generate-css.d.ts",
       "import": "./dist/generate-css.js"
+    },
+    "./build": {
+      "types": "./dist/build.d.ts",
+      "import": "./dist/build.js"
+    },
+    "./lazy": {
+      "types": "./dist/lazy.d.ts",
+      "import": "./dist/lazy.js"
     }
   },
   "sideEffects": [
@@ -32,7 +45,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist dist-cjs && tsc && node ../../scripts/fix-esm-extensions.cjs dist && tsc -p tsconfig.cjs.json && node scripts/build-icons-css.mjs",
+    "build": "rm -rf dist dist-cjs && tsc && node ../../scripts/fix-esm-extensions.cjs dist && tsc -p tsconfig.cjs.json && node scripts/build-icons-css.mjs && chmod +x dist/cli.js",
     "clean": "rm -rf dist dist-cjs",
     "test": "vitest run",
     "lint": "eslint src --ext .ts,.tsx",
