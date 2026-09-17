@@ -12,13 +12,115 @@ string constants, plus a tiny global registry that
 any other Andersseen package, even to register your own icon set under
 `and-icon`-compatible names.
 
+There are two ways to use the catalog: a **CSS-only attribute API** (no
+JavaScript at all) and the **registry + `<and-icon>`** Web Component. Both read
+the exact same `ALL_ICONS` source — nothing is hand-duplicated between them.
+
 ## Install
 
 ```bash
 pnpm add @andersseen/icon
 ```
 
-## Tree-shakeable registration (recommended)
+## CSS-only usage (no JavaScript)
+
+```html
+<link rel="stylesheet" href="node_modules/@andersseen/icon/dist/icons.css" />
+
+<span and-icon="home" aria-hidden="true"></span>
+```
+
+or, with a bundler:
+
+```css
+@import '@andersseen/icon/icons.css';
+```
+
+```html
+<span and-icon="home" aria-hidden="true"></span>
+<i and-icon="search" aria-hidden="true"></i>
+<div and-icon="close" aria-hidden="true"></div>
+```
+
+<div class="and-live-example">
+  <span and-icon="home" aria-hidden="true" style="font-size: 20px"></span>
+  <span and-icon="chevron-down" aria-hidden="true" style="font-size: 20px"></span>
+  <span and-icon="star" aria-hidden="true" style="font-size: 20px"></span>
+  <span and-icon="terminal" aria-hidden="true" style="font-size: 20px"></span>
+</div>
+
+The API is the **`and-icon` attribute**, not any particular element — `<span>`
+is the recommended host since it carries no default semantics, but `<i>` and
+`<div>` work identically. Under the hood it's plain CSS `mask-image`:
+
+```css
+[and-icon] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor; /* size and color are standard CSS — font-size and color */
+}
+```
+
+`icons.css` is **generated** from the same `ALL_ICONS` map the registry reads —
+see [`generateIconsCss()`](#generating-a-subset) below for how, and for
+generating a smaller stylesheet with only the icons you use.
+
+**Limitations:** this path is for monochromatic icons that inherit
+`currentColor` — exactly what this catalog is (Lucide-style stroke icons). It
+does not support multicolor/gradient artwork, a runtime-configurable stroke
+width, or animating individual paths; use `<and-icon>` (below) for those.
+
+**Accessibility:** icons are decorative by default — always pair the attribute
+with `aria-hidden="true"` and put the accessible name on the surrounding
+control, exactly like `<and-icon>`:
+
+```html
+<button aria-label="Close">
+  <span and-icon="close" aria-hidden="true"></span>
+</button>
+```
+
+### Generating a subset
+
+`generateIconsCss()` is a small Node-only utility (it's what builds the full
+`icons.css` you just imported) that also accepts a custom icon map, so you can
+ship only the icons your app actually uses:
+
+```ts
+import { generateIconsCss } from '@andersseen/icon/generate-css';
+import { HOME, SEARCH, CLOSE } from '@andersseen/icon';
+import { writeFileSync } from 'node:fs';
+
+writeFileSync(
+  'subset-icons.css',
+  generateIconsCss({ home: HOME, search: SEARCH, close: CLOSE }),
+);
+```
+
+### CDN (jsDelivr / unpkg)
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/icons.css"
+/>
+<!-- or: https://unpkg.com/@andersseen/icon@<version>/dist/icons.css -->
+
+<span and-icon="home" aria-hidden="true"></span>
+```
+
+Zero JavaScript — the stylesheet alone is enough.
+
+## Registry + `<and-icon>` (Web Component)
+
+If you're already using `@andersseen/web-components`, `<and-icon>` renders a
+real `<svg>` from the registry instead of a CSS mask — useful when you need
+runtime stroke-width, per-instance color props, or plan to layer the icon into a
+larger component. It reads the same `ALL_ICONS` catalog as the CSS path above;
+register icons first, then reference them by name.
+
+### Tree-shakeable registration (recommended)
 
 Import and register only the icons you actually use:
 
@@ -41,7 +143,7 @@ myElement.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24"
   fill="none" stroke="currentColor" stroke-width="2">${STAR}</svg>`;
 ```
 
-## Everything at once (demos only)
+### Everything at once (demos only)
 
 ```ts
 import { registerAllIcons } from '@andersseen/icon';
@@ -65,7 +167,7 @@ need to render their own chrome: `close`, `chevron-down`, `chevron-up`,
 `chevron-left`, `chevron-right`, `menu`. Register at least these if you use
 `@andersseen/web-components` without registering everything.
 
-## Example
+### Example
 
 Once registered, reference an icon by its registry name from `<and-icon>`:
 
@@ -83,7 +185,7 @@ Once registered, reference an icon by its registry name from `<and-icon>`:
 See the [`<and-icon>` component page](/components/icon/) for its full prop
 reference (`name`, `size`, `color`, `stroke-width`).
 
-## Icon gallery
+### Icon gallery
 
 Every icon currently registered on this page (all <span id="icon-count">…</span>
 of them). Filter by name:
@@ -134,7 +236,7 @@ of them). Filter by name:
   }
 </script>
 
-## Registry API
+### Registry API
 
 | Function                   | Description                                              |
 | -------------------------- | -------------------------------------------------------- |
@@ -157,6 +259,38 @@ regardless of which bundle registered a given icon first. Registering the same
 name again overwrites it — which is how you swap in your own artwork under a
 built-in name.
 
+**Trust contract:** `registerIcons()` content is inserted via `innerHTML` by
+`<and-icon>` — only register SVG markup you trust, never unsanitized
+user-generated or third-party content. In development, markup outside the
+stroke-icon contract (a disallowed element, an event-handler attribute, a
+`javascript:` URI) triggers a one-time console warning per name — this is a
+lint-level signal, not a sanitizer; it never rejects or alters what gets
+registered. The CSS-only `and-icon="name"` attribute (above) has a narrower
+attack surface for the same reason a `background-image` does: a browser never
+executes script/event-handler content inside a `mask-image`.
+
+### Using `<and-icon>` from a CDN (no npm)
+
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/browser.js"
+></script>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@andersseen/web-components@<version>/dist/web-components/web-components.esm.js"
+></script>
+
+<and-icon name="home"></and-icon>
+```
+
+The first script registers the full icon catalog (`@andersseen/icon/browser` — a
+side-effectful entrypoint that exists specifically for this, isolated from the
+tree-shakeable npm entry). The second is `@andersseen/web-components`'s Stencil
+lazy-loading bundle (the same file its `unpkg`/`./lazy` package fields point
+at); loading it via `<script type="module">` self-registers every `and-*` tag,
+no explicit `defineAllCustomElements()` call needed.
+
 ## Design
 
 Every icon is a plain string of inner SVG markup (`<path>`/`<g>` elements, no
@@ -164,3 +298,7 @@ wrapping `<svg>`), theme-agnostic — the consuming `<and-icon>`/`<svg>` wrapper
 controls sizing and color via `currentColor`. Because a name is just a registry
 key, you're never limited to the bundled set: `registerIcons({ logo: MY_SVG })`
 makes `<and-icon name="logo">` work with your own path data.
+
+`dist/icons.css` (the CSS-only path above) is generated from this exact same
+`ALL_ICONS` map by `generateIconsCss()` — there is no second, hand-maintained
+copy of the icon set to keep in sync.

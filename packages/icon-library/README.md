@@ -9,13 +9,67 @@ any other Andersseen package.
 > register your own icon set under `and-icon`-compatible names, even outside
 > this component ecosystem.
 
+Two ways to consume it: a **CSS-only `and-icon="name"` attribute** (zero
+JavaScript) and the **registry + `<and-icon>`** Web Component. Both read the
+same `ALL_ICONS` source.
+
 ## Installation
 
 ```bash
 pnpm add @andersseen/icon
 ```
 
-## Usage
+## CSS-only usage (no JavaScript)
+
+```css
+@import '@andersseen/icon/icons.css';
+```
+
+```html
+<span and-icon="home" aria-hidden="true"></span>
+<i and-icon="search" aria-hidden="true"></i>
+<div and-icon="close" aria-hidden="true"></div>
+```
+
+The API is the `and-icon` attribute, not a specific element — `<span>` is the
+recommended host (no default semantics), but any element works. Sizing and color
+are plain CSS (`font-size` controls the `1em` box, `color` controls the
+`currentColor` fill via `mask-image`) — there's no `and-icon-size`/
+`and-icon-color` attribute, standard CSS already covers it.
+
+`icons.css` is generated from `ALL_ICONS` by `generateIconsCss()` — no
+hand-maintained duplicate. Same function generates a smaller stylesheet for a
+subset of icons:
+
+```ts
+import { generateIconsCss } from '@andersseen/icon/generate-css';
+import { HOME, SEARCH } from '@andersseen/icon';
+import { writeFileSync } from 'node:fs';
+
+writeFileSync('subset.css', generateIconsCss({ home: HOME, search: SEARCH }));
+```
+
+**Limitations:** monochromatic, `currentColor`-inheriting icons only (this
+catalog is Lucide-style stroke icons) — no multicolor/gradient artwork, no
+runtime stroke-width, no per-path animation. Use `<and-icon>` for those.
+
+**CDN** (jsDelivr / unpkg), zero JavaScript:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/icons.css"
+/>
+<!-- or: https://unpkg.com/@andersseen/icon@<version>/dist/icons.css -->
+
+<span and-icon="home" aria-hidden="true"></span>
+```
+
+**Accessibility:** icons are decorative by default — pair with
+`aria-hidden="true"` and put the accessible name on the surrounding control
+(e.g. `aria-label` on a button), never on the icon itself.
+
+## Registry + `<and-icon>` usage
 
 ### Tree-shakeable (recommended)
 
@@ -78,6 +132,13 @@ Once registered, reference an icon by its registry name:
 The registry is a single `Map` on `globalThis` (or `window`, when present), so
 it's shared across every consumer on the page regardless of which bundle
 registered a given icon first.
+
+**Trust contract:** `registerIcons()` content is inserted via `innerHTML` by
+`<and-icon>` — only register SVG markup you trust, never unsanitized
+user-generated or third-party content. In development, markup outside the
+stroke-icon contract below (a disallowed element, an event-handler attribute, a
+`javascript:` URI) triggers a one-time `console.warn` per name — a lint-level
+signal, not a sanitizer; it never rejects or mutates what gets registered.
 
 ## Design
 

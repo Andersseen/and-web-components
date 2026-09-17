@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   registerAllIcons,
   registerIcons,
@@ -58,5 +58,39 @@ describe('@andersseen/icon registration', () => {
       expect(ALL_ICONS).toHaveProperty(name);
       expect(ALL_ICONS[name]).toBe(COMPONENT_ICONS[name]);
     }
+  });
+});
+
+describe('registerIcons() trust guard', () => {
+  it('warns once (not throws) when registering markup with an event-handler attribute, and still registers it', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    expect(() => registerIcons({ evil: '<image href="x" onerror="alert(1)" />' })).not.toThrow();
+    expect(getIcon('evil')).toBe('<image href="x" onerror="alert(1)" />');
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy.mock.calls[0][0]).toContain('evil');
+
+    registerIcons({ evil: '<image href="x" onerror="alert(1)" />' });
+    expect(warnSpy).toHaveBeenCalledTimes(1); // still once — warned names aren't repeated
+
+    warnSpy.mockRestore();
+  });
+
+  it('warns when registering a disallowed element like <script>', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    registerIcons({ 'script-icon': '<script>alert(1)</script>' });
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    warnSpy.mockRestore();
+  });
+
+  it('does not warn for markup using only the allowed stroke-icon elements', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    registerIcons({ 'safe': CLOSE, 'safe-2': CHEVRON_DOWN });
+
+    expect(warnSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
   });
 });

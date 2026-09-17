@@ -10,7 +10,7 @@ describe('and-icon', () => {
     expect(root.getAttribute('name')).toBe('close');
     expect(root.getAttribute('size')).toBe('16');
     expect(root.getAttribute('stroke-width')).toBe('1.5');
-    expect(root.getAttribute('role')).toBe('img');
     expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root.getAttribute('role')).toBeNull();
   });
 });

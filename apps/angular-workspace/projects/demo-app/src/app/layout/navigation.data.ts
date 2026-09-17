@@ -58,6 +58,12 @@ export const COMPONENT_ITEMS: SidebarItem[] = [
   { id: 'tooltip', label: 'Tooltip', icon: 'message-square' },
 ];
 
+export const ICONS_ITEMS: SidebarItem[] = [
+  { id: 'gallery', label: 'All Icons', icon: 'gallery' },
+  { id: 'examples', label: 'Examples', icon: 'code' },
+  { id: 'usage', label: 'Usage & API', icon: 'book-open' },
+];
+
 export const HEADLESS_ITEMS: SidebarItem[] = [
   { id: 'overview', label: 'Overview', icon: 'compass' },
   { id: 'button', label: 'Button', icon: 'circle-dot' },

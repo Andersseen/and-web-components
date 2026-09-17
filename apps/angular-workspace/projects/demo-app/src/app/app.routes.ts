@@ -21,7 +21,7 @@ export const routes: Routes = [
       },
       {
         path: 'icons',
-        loadComponent: () => import('./pages/icons/icons-demo.component'),
+        loadChildren: () => import('./icons.routes'),
       },
       {
         path: 'motion',

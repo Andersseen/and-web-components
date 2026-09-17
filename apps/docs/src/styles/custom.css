@@ -36,6 +36,7 @@
 @import '@andersseen/motion/style.css' layer(and-design-system);
 @import '@andersseen/layout' layer(and-layout-utils);
 @import '@andersseen/vanilla-components/style.css' layer(and-design-system);
+@import '@andersseen/icon/icons.css' layer(and-design-system);
 
 /* @andersseen/layout's color utilities (`and-text="color:*"`, and the `caption`
    preset) resolve through `--color-*` custom properties, but web-components'

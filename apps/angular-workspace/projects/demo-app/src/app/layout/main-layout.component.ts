@@ -15,6 +15,7 @@ import {
   COLOR_OPTIONS,
   COMPONENT_ITEMS,
   HEADLESS_ITEMS,
+  ICONS_ITEMS,
   LAYOUT_ITEMS,
   MOTION_ITEMS,
   NAV_ITEMS,
@@ -99,6 +100,15 @@ interface SidebarConfig {
               (andSidebarItemClick)="onSidebarItemClick($event)"
             />
           }
+          @case ('icons') {
+            <and-sidebar
+              #mainSidebar
+              class="bg-background"
+              [items]="iconsItems"
+              [activeItem]="activeIcons()"
+              (andSidebarItemClick)="onSidebarItemClick($event)"
+            />
+          }
           @case ('motion') {
             <and-sidebar
               #mainSidebar
@@ -158,6 +168,8 @@ export class MainLayoutComponent {
 
   readonly headlessItems: SidebarItem[] = HEADLESS_ITEMS;
 
+  readonly iconsItems: SidebarItem[] = ICONS_ITEMS;
+
   readonly motionItems: SidebarItem[] = MOTION_ITEMS;
 
   readonly layoutItems: SidebarItem[] = LAYOUT_ITEMS;
@@ -175,6 +187,7 @@ export class MainLayoutComponent {
   readonly activeSection = signal<Section>('components');
   readonly activeComponent = signal('accordion');
   readonly activeHeadless = signal('overview');
+  readonly activeIcons = signal('gallery');
   readonly activeMotion = signal('attribute');
   readonly activeLayout = signal('overview');
   readonly activeVanilla = signal('overview');
@@ -206,6 +219,11 @@ export class MainLayoutComponent {
       items: this.headlessItems,
       active: this.activeHeadless,
       route: '/headless',
+    },
+    icons: {
+      items: this.iconsItems,
+      active: this.activeIcons,
+      route: '/icons',
     },
     motion: {
       items: this.motionItems,

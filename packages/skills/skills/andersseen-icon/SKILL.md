@@ -1,19 +1,24 @@
 ---
 name: andersseen-icon
 description:
-  'Register and render SVG icons with @andersseen/icon. Load when using
-  registerIcons / registerAllIcons / getIcon / COMPONENT_ICONS, wiring the
-  and-icon element, or resolving "icon not showing" issues. COMPONENT_ICONS must
-  be registered whenever @andersseen/web-components is used. Trigger phrases:
-  icon, svg, registerIcons, and-icon, icon registry, icon not rendering.'
+  'Register and render SVG icons with @andersseen/icon: the CSS-only
+  and-icon="name" attribute (no JS) or registerIcons / registerAllIcons /
+  getIcon / COMPONENT_ICONS with the and-icon element. Load when wiring either
+  icon API or resolving "icon not showing" issues. COMPONENT_ICONS must be
+  registered whenever @andersseen/web-components and-icon is used. Trigger
+  phrases: icon, svg, and-icon, registerIcons, icon registry, icon not
+  rendering, icons.css, mask-image icon.'
 ---
 
-# @andersseen/icon — SVG icon registry
+# @andersseen/icon — SVG icon library
 
-Framework-agnostic SVG string registry: tree-shakable icon constants + runtime
-registration functions. Used internally by `and-icon` in
-`@andersseen/web-components`, and consumable standalone to render SVGs in any
-framework.
+Framework-agnostic SVG icon set: tree-shakable icon constants + a runtime
+registry, plus a generated CSS stylesheet for zero-JS usage. Two consumption
+paths, both reading the same `ALL_ICONS` source:
+
+1. **CSS-only** — `and-icon="name"` attribute + `mask-image`, no JavaScript.
+2. **Registry + `<and-icon>`** — `registerIcons()`/`registerAllIcons()` feed the
+   `<and-icon>` Web Component from `@andersseen/web-components`.
 
 ## Install
 
@@ -21,7 +26,45 @@ framework.
 npm i @andersseen/icon
 ```
 
-## Core API
+## CSS-only (no JavaScript)
+
+```css
+@import '@andersseen/icon/icons.css';
+```
+
+```html
+<span and-icon="home" aria-hidden="true"></span>
+<i and-icon="search" aria-hidden="true"></i>
+```
+
+The API is the `and-icon` attribute, not a specific element — any host element
+works; `<span>` is the recommended default. Size via `font-size` (the icon is
+`1em` square), color via `color` (`currentColor`-driven `mask-image`) — no
+`and-icon-size`/`and-icon-color` attributes, plain CSS already covers both.
+Monochrome/`currentColor` icons only — no multicolor, no runtime stroke-width;
+use `<and-icon>` for that.
+
+CDN, zero JavaScript:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@andersseen/icon@<version>/dist/icons.css"
+/>
+<span and-icon="home" aria-hidden="true"></span>
+```
+
+Generating a smaller stylesheet for only the icons an app uses:
+
+```ts
+import { generateIconsCss } from '@andersseen/icon/generate-css';
+import { HOME, SEARCH } from '@andersseen/icon';
+import { writeFileSync } from 'node:fs';
+
+writeFileSync('subset.css', generateIconsCss({ home: HOME, search: SEARCH }));
+```
+
+## Registry + `<and-icon>` API
 
 ```ts
 import {
@@ -40,16 +83,16 @@ Verified behavior:
 - `registerIcons` merges entries into that global Map.
 - `getIcon(name)` returns an SVG string or `undefined` if not registered.
 
-## Setup options
+### Setup options
 
-### Option A — register all icons (prototyping / small apps)
+#### Option A — register all icons (prototyping / small apps)
 
 ```ts
 import { registerAllIcons } from '@andersseen/icon';
 registerAllIcons();
 ```
 
-### Option B — tree-shakable selective registration (production recommended)
+#### Option B — tree-shakable selective registration (production recommended)
 
 ```ts
 import {
@@ -67,13 +110,14 @@ registerIcons(COMPONENT_ICONS);
 registerIcons({ home: HOME, close: CLOSE, search: SEARCH });
 ```
 
-### COMPONENT_ICONS
+#### COMPONENT_ICONS
 
-A pre-built record containing every icon that `@andersseen/web-components` uses
-internally (chevron, close, check, spinner, …). Always include it when using the
-web-components package.
+A pre-built record of the six icons `@andersseen/web-components` uses
+internally: `close`, `chevron-down`, `chevron-up`, `chevron-left`,
+`chevron-right`, `menu`. Always include it when using the web-components
+package.
 
-## Using registered icons
+### Using registered icons
 
 ```ts
 const svg = getIcon('home'); // SVG string or undefined
@@ -90,13 +134,13 @@ console.log(getRegisteredIconCount());
 // Pure HTML: element.innerHTML = getIcon('home') ?? '';
 ```
 
-## With and-icon (web component)
+### With and-icon (web component)
 
 After registration, use the icon by name via the `name` prop:
 
 ```html
 <and-icon name="home" size="20"></and-icon>
-<and-icon name="sparkles" size="16" color="hsl(var(--primary))"></and-icon>
+<and-icon name="star" size="16" color="hsl(var(--primary))"></and-icon>
 <and-icon name="arrow-right" size="24" stroke-width="1.5"></and-icon>
 ```
 
@@ -106,19 +150,29 @@ Exported constants use `SCREAMING_SNAKE_CASE`; registration keys (and `name`
 prop values) use `kebab-case`.
 
 ```ts
-import { ARROW_RIGHT, CHECK_CIRCLE, LOADING_SPINNER } from '@andersseen/icon';
+import { ARROW_RIGHT, CHECK, LOADER } from '@andersseen/icon';
 registerIcons({
   'arrow-right': ARROW_RIGHT,
-  'check-circle': CHECK_CIRCLE,
-  'loading-spinner': LOADING_SPINNER,
+  'check': CHECK,
+  'loader': LOADER,
 });
 ```
 
+Same convention for the CSS-only path — the `and-icon="name"` attribute value is
+always the `kebab-case` registry key (`and-icon="arrow-right"`, never
+`and-icon="ARROW_RIGHT"`).
+
 ## Rules
 
-- Always register icons before rendering `and-icon` or calling `getIcon`.
+- CSS-only path: no registration needed — `@import '@andersseen/icon/icons.css'`
+  then `and-icon="name"` works immediately.
+- Registry path: always register icons before rendering `and-icon` or calling
+  `getIcon`.
 - In production prefer selective registration; avoid `registerAllIcons` outside
   demos/prototypes.
-- Keep `and-icon name` exactly aligned with registry keys.
-- Do not inline random SVG literals when the registry can be used.
-- Register `COMPONENT_ICONS` whenever `@andersseen/web-components` is used.
+- Keep `and-icon name`/attribute value exactly aligned with registry keys.
+- Do not inline random SVG literals when the registry or catalog can be used.
+- Register `COMPONENT_ICONS` whenever `@andersseen/web-components`'s
+  `<and-icon>` is used.
+- `registerIcons()` content is inserted via `innerHTML` — only register SVG you
+  trust, never unsanitized user/third-party content.

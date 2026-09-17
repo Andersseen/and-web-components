@@ -56,13 +56,13 @@ export class AndIcon {
 
   render() {
     if (!this.svgContent) {
-      return <Host aria-hidden="true" role="img" />;
+      return <Host aria-hidden="true" />;
     }
 
     const resolvedSize = typeof this.size === 'number' ? this.size : parseInt(this.size, 10) || 24;
 
     return (
-      <Host aria-hidden="true" role="img">
+      <Host aria-hidden="true">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={resolvedSize}
