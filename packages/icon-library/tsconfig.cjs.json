@@ -3,5 +3,13 @@
   "compilerOptions": {
     "module": "CommonJS",
     "outDir": "./dist-cjs"
-  }
+  },
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/__tests__/**",
+    "src/lazy.ts",
+    "src/scanner.ts",
+    "src/build.ts",
+    "src/cli.ts"
+  ]
 }

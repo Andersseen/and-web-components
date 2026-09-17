@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-icon runtime lazy loading (@andersseen/icon/lazy) e2e fixture</title>
+    <!-- Structurally identical to the documented CDN recipe (icon/overview.md,
+         "Runtime lazy loading"): a single <script type="module"> importing
+         initLazyIcons() and calling it explicitly — no auto-init on import. -->
+  </head>
+  <body>
+    <span id="home" and-icon="home" aria-hidden="true"></span>
+
+    <script type="module">
+      import { initLazyIcons } from '/node_modules/@andersseen/icon/dist/lazy.js';
+      initLazyIcons();
+    </script>
+  </body>
+</html>
