@@ -5,8 +5,8 @@
 **A UI stack you adopt one layer at a time.**
 
 Headless state machines, DOM behaviors, layout primitives, motion, icons and 25
-accessible components — each published on its own, none requiring the others.
-Works in Angular, React, Vue, Astro, Svelte, or a plain HTML file.
+accessible components — each published on its own. Adopt only the layers you
+need. Works in Angular, React, Vue, Astro, Svelte, or a plain HTML file.
 
 [![npm](https://img.shields.io/npm/v/@andersseen/web-components?label=web-components&color=0b7285)](https://www.npmjs.com/package/@andersseen/web-components)
 [![Release](https://img.shields.io/github/actions/workflow/status/Andersseen/and-web-components/release.yml?branch=main&label=release)](https://github.com/Andersseen/and-web-components/actions/workflows/release.yml)
@@ -32,7 +32,13 @@ into layers you can take individually.
 An Angular app that only wants attribute-driven layout installs
 `@andersseen/layout` — pure CSS, no JS runtime, no components. A team building
 its own design system takes `@andersseen/headless-components` and skips every
-styled package. Nothing pulls in a sibling unless the docs say so.
+styled package. `@andersseen/layout`, `@andersseen/motion`,
+`@andersseen/behaviors`, `@andersseen/icon` and
+`@andersseen/headless-components` have zero in-repo dependencies and work
+standalone. `@andersseen/web-components` (and its generated Angular/React/Vue
+wrappers) is the one package that does pull in siblings by design — it builds on
+`headless-components`, `icon` and `motion` so you get accessible, themeable,
+icon-capable components out of the box.
 
 ```
                       ┌───────────────────────────────────┐
@@ -48,10 +54,10 @@ styled package. Nothing pulls in a sibling unless the docs say so.
   foundation          │  headless-components              │   pure TS, no DOM
                       └───────────────────────────────────┘
 
-  standalone — nothing above required
+  standalone core (zero in-repo deps) — vanilla-components peer-depends only on headless-components
   ┌──────────┬──────────┬───────────┬──────────┬─────────────────────┐
   │  layout  │  motion  │ behaviors │   icon   │ vanilla-components  │
-  │ CSS only │ CSS + TS │ DOM only  │ 88 SVGs  │  zero-dependency CE │
+  │ CSS only │ CSS + TS │ DOM only  │ 86 SVGs  │  zero-dependency CE │
   └──────────┴──────────┴───────────┴──────────┴─────────────────────┘
 ```
 
@@ -64,7 +70,7 @@ styled package. Nothing pulls in a sibling unless the docs say so.
 | [`@andersseen/layout`](./packages/layout-core)                    | [![npm](https://img.shields.io/npm/v/@andersseen/layout?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/layout)                           | Flexbox/grid/typography from HTML attributes           |
 | [`@andersseen/motion`](./packages/motion-core)                    | [![npm](https://img.shields.io/npm/v/@andersseen/motion?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/motion)                           | Declarative animations, reduced-motion aware           |
 | [`@andersseen/behaviors`](./packages/behaviors)                   | [![npm](https://img.shields.io/npm/v/@andersseen/behaviors?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/behaviors)                     | Splitters, drag & drop, tooltips, dialogs on plain DOM |
-| [`@andersseen/icon`](./packages/icon-library)                     | [![npm](https://img.shields.io/npm/v/@andersseen/icon?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/icon)                               | 88 tree-shakeable SVG icons                            |
+| [`@andersseen/icon`](./packages/icon-library)                     | [![npm](https://img.shields.io/npm/v/@andersseen/icon?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/icon)                               | 86 tree-shakeable SVG icons                            |
 | [`@andersseen/vanilla-components`](./packages/vanilla-components) | [![npm](https://img.shields.io/npm/v/@andersseen/vanilla-components?color=6741d9&label=)](https://www.npmjs.com/package/@andersseen/vanilla-components)   | Zero-dependency native Custom Elements                 |
 | [`@andersseen/angular-components`](./packages/angular-components) | [![npm](https://img.shields.io/npm/v/@andersseen/angular-components?color=868e96&label=)](https://www.npmjs.com/package/@andersseen/angular-components)   | Angular standalone wrappers                            |
 | [`@andersseen/react-components`](./packages/react-components)     | [![npm](https://img.shields.io/npm/v/@andersseen/react-components?color=868e96&label=)](https://www.npmjs.com/package/@andersseen/react-components)       | React wrappers                                         |
@@ -120,6 +126,34 @@ Tooltip
 Every one is driven by a headless state machine from
 `@andersseen/headless-components`, so keyboard navigation, focus management and
 ARIA wiring are shared rather than reimplemented per component.
+
+<details>
+<summary><b>Icons</b> — 86 SVGs, CSS-only or as a Web Component</summary>
+
+<br>
+
+Two ways to use the catalog, both reading the same source:
+
+```html
+<!-- CSS-only — zero JavaScript -->
+<link rel="stylesheet" href="node_modules/@andersseen/icon/dist/icons.css" />
+<span and-icon="home" aria-hidden="true"></span>
+```
+
+```html
+<!-- Web Component -->
+<and-icon name="home"></and-icon>
+```
+
+```bash
+npm install @andersseen/icon
+```
+
+Also available from jsDelivr/unpkg with no npm install at all — see the
+[icon package docs](./packages/icon-library) for CDN URLs, `<i>`/`<div>` host
+elements, generating a subset stylesheet, and the `<and-icon>`-from-CDN setup.
+
+</details>
 
 <details>
 <summary><b>Theming</b> — palettes, density themes, light/dark</summary>

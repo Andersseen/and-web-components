@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-icon CSS-only (mask-image) e2e fixture</title>
+    <!-- No <script> anywhere in this page on purpose — this fixture proves the
+         and-icon="name" attribute renders with zero JavaScript. -->
+    <link rel="stylesheet" href="/node_modules/@andersseen/icon/dist/icons.css" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+      }
+      #red {
+        color: red;
+        font-size: 40px;
+      }
+      #blue {
+        color: blue;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <span id="plain" and-icon="home" aria-hidden="true"></span>
+    <i id="italic-host" and-icon="search" aria-hidden="true"></i>
+    <div id="div-host" and-icon="close" aria-hidden="true"></div>
+    <span id="red" and-icon="star" aria-hidden="true"></span>
+    <span id="blue" and-icon="home" aria-hidden="true"></span>
+    <span id="unregistered" and-icon="this-icon-does-not-exist" aria-hidden="true"></span>
+  </body>
+</html>

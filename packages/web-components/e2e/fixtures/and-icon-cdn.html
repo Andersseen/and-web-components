@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>and-icon CDN (icon/browser + web-components lazy bundle) e2e fixture</title>
+    <!-- Structurally identical to the documented CDN recipe (icon/overview.md):
+         two <script type="module"> tags, no import statements, no explicit
+         defineAllCustomElements() call. jsDelivr/unpkg would serve the exact
+         same files this static server serves from node_modules/dist. -->
+    <script type="module" src="/node_modules/@andersseen/icon/dist/browser.js"></script>
+    <script type="module" src="/dist/web-components/web-components.esm.js"></script>
+  </head>
+  <body>
+    <and-icon name="home"></and-icon>
+  </body>
+</html>

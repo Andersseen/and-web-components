@@ -46,7 +46,7 @@ provides:
   and zero UI, consumable from any framework or vanilla JS.
 - A **design token system** (HSL-based CSS custom properties) with light/dark
   modes and ~10 prebuilt themes.
-- Satellite libraries: **icons** (87 tree-shakeable SVG icons), **motion**
+- Satellite libraries: **icons** (86 tree-shakeable SVG icons), **motion**
   (attribute-driven animations + imperative player), **layout**
   (attribute-driven CSS utilities).
 - Framework adapters: auto-generated **Angular** standalone directives and an
@@ -144,7 +144,7 @@ and-web-components/
 │   ├── angular-components/       # @andersseen/angular-components — generated Angular standalone directives
 │   ├── react-components/         # @andersseen/react-components — generated React wrappers
 │   ├── vue-components/           # @andersseen/vue-components — generated Vue wrappers
-│   ├── icon-library/             # @andersseen/icon — 87 SVG icons + registry
+│   ├── icon-library/             # @andersseen/icon — 86 SVG icons + registry
 │   ├── motion-core/              # @andersseen/motion — animation system
 │   ├── layout-core/              # @andersseen/layout — SCSS→CSS attribute-driven layout
 │   └── astro/                    # @andersseen/astro — Astro integration
@@ -336,11 +336,23 @@ Standalone (no repo dependencies): @andersseen/layout (pure CSS)
 
 ### 5.4 `@andersseen/icon` (`packages/icon-library`)
 
-- **Purpose:** 87 SVG icons as string constants + a global registry consumed by
-  `and-icon`.
+- **Purpose:** 86 SVG icons as string constants + a global registry consumed by
+  `and-icon`. The count is a single source of truth (`ALL_ICONS` in
+  `src/icons.ts`) — a regression test (`src/__tests__/doc-icon-count.test.ts`)
+  fails if any tracked doc drifts from it.
 - **API:** `registerIcon(name, svg)`, `registerAllIcons()`, per-icon named
   exports for tree-shaking.
-- **Build:** same tsc dual ESM/CJS pattern as headless-core.
+- **CSS-only consumption:** `dist/icons.css` (subpath export
+  `@andersseen/icon/icons.css`) is generated from the same `ALL_ICONS` map by
+  `generateIconsCss()` (`src/generate-css.ts`, also exported standalone as
+  `@andersseen/icon/generate-css` for subset generation) —
+  `background-color: currentColor` + `mask-image`/`-webkit-mask-image` data
+  URIs, selected via the `and-icon="<name>"` HTML attribute. Zero JavaScript
+  required. A side-effectful `@andersseen/icon/browser` entrypoint
+  (`registerAllIcons()` on import, never imported by the main entry) exists
+  purely for CDN `<script type="module">` usage with `<and-icon>`.
+- **Build:** same tsc dual ESM/CJS pattern as headless-core, plus
+  `scripts/build-icons-css.mjs` generating `dist/icons.css` after the TS build.
 
 ### 5.5 `@andersseen/motion` (`packages/motion-core`)
 

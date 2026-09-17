@@ -20,7 +20,7 @@ pnpm-workspace monorepo for the `@andersseen/*` web-component ecosystem. Layers:
 `headless-core` (pure TS state machines, no DOM) → `web-components` (StencilJS,
 Shadow DOM, Tailwind v3 + CVA) → generated Angular wrappers + Astro integration.
 Parallel `vanilla-components` (zero-dep Custom Elements on the same headless
-core). Satellites: `icon` (87 SVG icons), `motion` (animations), `layout`
+core). Satellites: `icon` (86 SVG icons), `motion` (animations), `layout`
 (SCSS→CSS attribute utilities). Deploys 4 Cloudflare Pages sites (storybook /
 landing / demo / docs — see §4.1).
 
