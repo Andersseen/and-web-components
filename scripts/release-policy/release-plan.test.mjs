@@ -216,6 +216,18 @@ withTempDir(dir => {
   );
 });
 
+console.log('\n=== validator self-test: rejects a peer range that lost its upper bound ===');
+withTempDir(dir => {
+  // Reproduces the 2026-09-18 incident: a "chore: version packages" commit
+  // rewrote every wrapper's peer range from "workspace:>=0.4.0 <1.0.0" to a
+  // bare "workspace:>=0.5.1", which still satisfies the current version (so
+  // the plain satisfiesRange check above misses it) and isn't "1.0.0" (so
+  // the 1.0.0 check misses it too), but silently removes the guardrail that
+  // stops the range from ever reaching 1.0.0 again.
+  buildFixture(dir, { versions: BASE_VERSIONS, peerRange: 'workspace:>=0.5.1', config: REAL_CONFIG });
+  check('validator fails when the peer range has no upper bound', runValidator(dir) === false);
+});
+
 console.log('\n=== validator self-test: passes on the real, current repository ===');
 check('validator passes against the live repository', runValidator(REPO_ROOT) === true);
 
