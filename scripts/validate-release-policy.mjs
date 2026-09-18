@@ -153,10 +153,25 @@ for (const wrapper of WRAPPERS) {
     );
   } else if (productVersion) {
     const stripped = range.slice('workspace:'.length);
+    const isBareProtocol = stripped === '*' || stripped === '^' || stripped === '~';
     try {
-      if (stripped !== '*' && stripped !== '^' && stripped !== '~' && !satisfiesRange(productVersion, stripped)) {
+      if (!isBareProtocol && !satisfiesRange(productVersion, stripped)) {
         fail(
           `packages/${wrapper}/package.json: peerDependencies["@andersseen/web-components"] = "${range}" is not satisfied by the current version "${productVersion}".`,
+        );
+      }
+      // Invariant: an explicit range must keep an upper bound ("< X.0.0").
+      // `changeset version` has been observed (2026-09-18) to rewrite this
+      // range to a bare ">=newVersion" when web-components gets bumped only
+      // as a cascading effect of `updateInternalDependencies` (e.g. a patch
+      // triggered by an internal, non-peer dependency's release) rather than
+      // by its own changeset — silently reopening the exact "wrapper creeps
+      // toward the unpublishable 1.0.0 line" hazard TD-28 was written to
+      // close, without ever producing a literal "1.0.0" the other checks
+      // here would catch.
+      if (!isBareProtocol && !/(^|\s)<\d+\.\d+\.\d+(\s|$)/.test(stripped)) {
+        fail(
+          `packages/${wrapper}/package.json: peerDependencies["@andersseen/web-components"] = "${range}" has no upper bound (no "< X.Y.Z" clause) — "changeset version" silently drops the upper bound under some internal-dependency-cascade bumps (TD-28). Expected a bounded range like "workspace:>=0.4.0 <1.0.0".`,
         );
       }
     } catch (err) {
