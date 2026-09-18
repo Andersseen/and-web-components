@@ -1,5 +1,14 @@
 # @andersseen/docs
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [0987b67]
+- Updated dependencies [f967ef3]
+  - @andersseen/icon@0.2.0
+  - @andersseen/web-components@0.5.1
+
 ## 0.0.6
 
 ### Patch Changes
