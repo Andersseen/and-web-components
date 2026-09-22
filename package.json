@@ -8,6 +8,8 @@
     "clean:angular": "rm -rf apps/angular-workspace/.angular/cache",
     "clean:stencil": "rm -rf packages/web-components/dist packages/web-components/www packages/web-components/loader",
     "clean": "pnpm clean:angular && pnpm clean:stencil",
+    "agents:install": "agentyx install",
+    "agents:doctor": "agentyx doctor --check",
     "build:headless": "pnpm -C packages/headless-core build",
     "build:icons": "pnpm -C packages/icon-library build",
     "build:motion": "pnpm -C packages/motion-core build",
@@ -61,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@agentyx/cli": "0.7.0",
     "@changesets/cli": "^2.30.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^25.2.1",

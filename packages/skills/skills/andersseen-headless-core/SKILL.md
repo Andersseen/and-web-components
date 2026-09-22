@@ -1,14 +1,8 @@
 ---
 name: andersseen-headless-core
 description:
-  'Reuse Andersseen headless behavior primitives
-  (@andersseen/headless-components) for state, accessibility, and keyboard logic
-  when building a CUSTOM UI. Load when you need correct open/close, focus, ARIA,
-  or keyboard handling without a pre-styled component: createTabs,
-  createDropdown, createModal, createTooltip, createToastManager,
-  createAccordion, createDrawer, createNavbar, createSidebar. Trigger phrases:
-  headless, state machine, a11y logic, keyboard navigation, ARIA props, custom
-  component behavior.'
+  'Use @andersseen/headless-components for state, ARIA, focus, and keyboard
+  logic when building custom unstyled UI.'
 ---
 
 # @andersseen/headless-components — headless behavior primitives

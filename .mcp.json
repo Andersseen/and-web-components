@@ -1,8 +1,14 @@
 {
   "mcpServers": {
-    "codebase-memory-mcp": {
-      "command": "node_modules/.bin/codebase-memory-mcp",
-      "args": []
+    "codebase-memory": {
+      "args": [],
+      "command": "codebase-memory-mcp",
+      "env": {},
+      "type": "stdio"
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
     }
   }
 }

@@ -1,14 +1,8 @@
 ---
 name: andersseen
 description:
-  'Orchestrator for the Andersseen front-end ecosystem. Use this to decide WHICH
-  Andersseen library to reach for and route to its focused skill before writing
-  code. Trigger phrases: andersseen, @andersseen, and-* component, andersseen
-  design system, which andersseen package, build a UI with andersseen, headless
-  logic, icon, motion animation, layout attributes, attribute behaviors,
-  progressive enhancement, splitter, drag and drop, tooltip, dialog. Routes to:
-  andersseen-web-components, andersseen-headless-core, andersseen-icon,
-  andersseen-motion, andersseen-layout, andersseen-behaviors.'
+  'Route Andersseen ecosystem work to the correct focused skill: styled custom
+  elements, headless logic, icons, motion, layout, or DOM behaviors.'
 ---
 
 # Andersseen — ecosystem orchestrator

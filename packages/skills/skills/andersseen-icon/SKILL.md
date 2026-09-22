@@ -1,17 +1,8 @@
 ---
 name: andersseen-icon
 description:
-  'Register and render SVG icons with @andersseen/icon: the CSS-only
-  and-icon="name" attribute (four loading strategies — full icons.css, selective
-  base.css + icons/<name>.css, the and-icons build-time scanner CLI, or
-  initLazyIcons() runtime lazy loading) or registerIcons / registerAllIcons /
-  getIcon / COMPONENT_ICONS with the and-icon element. Load when wiring any
-  icon-loading strategy, adding the and-icons scan step to a build, wiring
-  initLazyIcons(), or resolving "icon not showing" issues. COMPONENT_ICONS must
-  be registered whenever @andersseen/web-components and-icon is used. Trigger
-  phrases: icon, svg, and-icon, registerIcons, icon registry, icon not
-  rendering, icons.css, mask-image icon, and-icons scan, and-icons CLI,
-  initLazyIcons, lazy icons, base.css, icons.generated.css.'
+  'Register and render SVG icons with @andersseen/icon, including CSS, scanner,
+  lazy-loading, and component registry strategies.'
 ---
 
 # @andersseen/icon — SVG icon library
