@@ -16,7 +16,7 @@ import { createAlert, type AlertVariant } from '@andersseen/headless-components'
         </p>
       </header>
 
-      <section class="mb-12">
+      <section class="headless-primitive mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
         <div class="rounded-xl border border-border bg-card shadow-sm">
           <div class="p-8">

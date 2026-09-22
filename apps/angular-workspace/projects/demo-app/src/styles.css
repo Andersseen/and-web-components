@@ -97,6 +97,34 @@ body {
   font-family: var(--font-family, 'Inter', sans-serif);
 }
 
+/* Headless demos intentionally expose browser-native controls. The surrounding
+   documentation still provides context, but the interactive primitives do not
+   inherit the app's visual component language. */
+.headless-demo-surface {
+  color-scheme: light dark;
+}
+
+.headless-primitive :is(button, input, select, textarea) {
+  all: revert !important;
+  box-sizing: border-box;
+  color-scheme: inherit;
+  font: revert !important;
+}
+
+.headless-primitive button {
+  cursor: pointer !important;
+}
+
+.headless-primitive
+  :is(div, nav, ul, ol, li, p, span, h3, h4, [role='alert'], [role='dialog'], [role='menu'], [role='tooltip']) {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  text-shadow: none !important;
+}
+
 /* Icons Grid */
 .icons-grid {
   display: grid;

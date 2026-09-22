@@ -147,7 +147,17 @@ interface SidebarConfig {
           }
         }
 
-        <div class="flex-1 overflow-y-auto bg-background text-foreground p-4 sm:p-6 lg:p-8">
+        <div
+          class="flex-1 overflow-y-auto bg-background text-foreground p-4 sm:p-6 lg:p-8"
+          [class.headless-demo-surface]="activeSection() === 'headless'"
+        >
+          @if (activeSection() === 'headless') {
+            <p class="mx-auto mb-6 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+              <strong class="font-semibold text-foreground">Headless preview.</strong>
+              These examples deliberately use native browser controls. The visible behavior comes from state, ARIA
+              attributes, and keyboard handling — not a component skin.
+            </p>
+          }
           <router-outlet />
         </div>
       </div>

@@ -17,70 +17,38 @@ import { createDropdown } from '@andersseen/headless-components';
       </header>
 
       <!-- Preview Section -->
-      <section class="mb-12">
+      <section class="headless-primitive mb-12">
         <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
         <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div class="p-12 flex items-center justify-center min-h-[300px]">
-            <div class="relative inline-block" #dropdownContainer>
-              <!-- Trigger -->
+            <div #dropdownContainer>
               <button
-                class="inline-flex items-center gap-2 rounded-md text-sm font-medium h-10 px-4 border border-border bg-transparent text-foreground cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+                type="button"
                 [attr.aria-expanded]="isOpen()"
+                aria-haspopup="menu"
                 (click)="toggle()"
                 (keydown)="onTriggerKeydown($event)"
               >
-                Options
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="opacity-50"
-                  [class.rotate-180]="isOpen()"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
+                Options {{ isOpen() ? '▲' : '▼' }}
               </button>
 
-              <!-- Menu Content -->
-              <div
-                class="absolute right-0 z-50 mt-2 w-56 rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md animate-fade-in hidden"
-                [class.block]="isOpen()"
-                role="menu"
-                tabindex="-1"
-              >
-                <div class="px-2 py-1.5 text-sm font-semibold text-foreground">My Account</div>
-                <div class="-mx-1 and-1 h-px bg-muted"></div>
-
-                @for (item of items; track item.id) {
-                  <button
-                    class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none bg-transparent border-0 text-popover-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                    role="menuitem"
-                    (click)="select(item)"
-                    (keydown)="onMenuKeydown($event)"
-                  >
-                    <span class="mr-2 flex h-3.5 w-3.5 items-center justify-center">{{ item.icon }}</span>
-                    <span>{{ item.label }}</span>
-                    @if (item.shortcut) {
-                      <span class="ml-auto text-xs tracking-widest opacity-60">{{ item.shortcut }}</span>
-                    }
-                  </button>
-                }
-
-                <div class="-mx-1 and-1 h-px bg-muted"></div>
-                <button
-                  class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none bg-transparent border-0 text-destructive hover:bg-destructive hover:text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground"
-                  role="menuitem"
-                  (click)="select({ id: 'logout', label: 'Log out' })"
-                >
-                  <span class="mr-2 flex h-3.5 w-3.5 items-center justify-center">🚪</span>
-                  <span>Log out</span>
-                </button>
-              </div>
+              @if (isOpen()) {
+                <ul role="menu" aria-label="Account actions" (keydown)="onMenuKeydown($event)">
+                  <li>My Account</li>
+                  @for (item of items; track item.id) {
+                    <li>
+                      <button type="button" role="menuitem" (click)="select(item)">
+                        {{ item.label }}{{ item.shortcut ? ' (' + item.shortcut + ')' : '' }}
+                      </button>
+                    </li>
+                  }
+                  <li>
+                    <button type="button" role="menuitem" (click)="select({ id: 'logout', label: 'Log out' })">
+                      Log out
+                    </button>
+                  </li>
+                </ul>
+              }
             </div>
           </div>
         </div>
