@@ -7,37 +7,68 @@ import type { DropdownOption } from './navigation.data';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AndSelect, AndButton, AndIcon],
   template: `
-    <div class="flex items-center gap-1">
-      <div class="w-[152px] max-[1180px]:w-[136px]">
-        <and-select
-          label="Theme"
-          [options]="themeOptions()"
-          [value]="currentTheme()"
-          (andSelectChange)="onThemeSelect($event)"
-        ></and-select>
-      </div>
+    <div class="flex items-center gap-2">
+      <details class="relative">
+        <summary
+          aria-label="Customize demo appearance"
+          title="Customize demo appearance"
+          class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground [&::-webkit-details-marker]:hidden"
+        >
+          <and-icon name="sliders" size="17" />
+        </summary>
+        <div
+          class="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-72 rounded-xl border border-border bg-background p-3 shadow-xl"
+        >
+          <p class="mb-3 text-sm font-medium text-foreground">Demo appearance</p>
+          <div class="space-y-3">
+            <and-select
+              label="Theme"
+              [options]="themeOptions()"
+              [value]="currentTheme()"
+              (andSelectChange)="onThemeSelect($event)"
+            ></and-select>
+            <and-select
+              label="Palette"
+              [options]="colorOptions()"
+              [value]="currentColor()"
+              (andSelectChange)="onColorSelect($event)"
+            ></and-select>
+          </div>
+        </div>
+      </details>
 
-      <div class="w-[170px] max-[1180px]:w-[150px]">
-        <and-select
-          label="Palette"
-          [options]="colorOptions()"
-          [value]="currentColor()"
-          (andSelectChange)="onColorSelect($event)"
-        ></and-select>
-      </div>
+      <details class="relative">
+        <summary
+          aria-label="Open resources"
+          title="Open resources"
+          class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground [&::-webkit-details-marker]:hidden"
+        >
+          <and-icon name="book-open" size="17" />
+        </summary>
+        <div
+          class="absolute right-0 top-[calc(100%+0.75rem)] z-50 grid w-44 gap-1 rounded-xl border border-border bg-background p-1.5 shadow-xl"
+        >
+          <a
+            class="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            href="https://libs.andersseen.dev"
+          >
+            <and-icon name="app-window" size="16" />
+            Home
+          </a>
+          <a
+            class="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            href="https://github.com/Andersseen/and-web-components"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <and-icon name="github" size="16" />
+            GitHub
+          </a>
+        </div>
+      </details>
 
-      <and-button variant="ghost" size="icon" (click)="darkModeToggle.emit()" title="Toggle Dark Mode">
+      <and-button variant="outline" size="icon" (click)="darkModeToggle.emit()" title="Toggle Dark Mode">
         <and-icon [name]="isDark() ? 'sun' : 'moon'" />
-      </and-button>
-
-      <and-button size="sm" variant="link" href="https://libs.andersseen.dev">
-        <and-icon name="app-window" size="16" />
-        Home
-      </and-button>
-
-      <and-button size="sm" variant="link" href="https://github.com/Andersseen/and-web-components" target="_blank">
-        <and-icon name="github" size="16" />
-        GitHub
       </and-button>
     </div>
   `,

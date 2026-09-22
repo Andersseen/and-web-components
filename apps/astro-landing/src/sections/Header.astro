@@ -3,9 +3,7 @@ import { links } from '../lib/site-data';
 
 const navItems = [
   { id: 'home', label: 'Home', href: '#hero' },
-  { id: 'features', label: 'Features', href: '#features' },
-  { id: 'showcase', label: 'Showcase', href: '#showcase' },
-  { id: 'behaviors', label: 'Behaviors', href: '#behaviors' },
+  { id: 'showcase', label: 'Demos', href: '#showcase' },
   { id: 'ecosystem', label: 'Ecosystem', href: '#ecosystem' },
 ];
 
@@ -47,33 +45,67 @@ const actionLinks = [
     <span>Andersseen</span>
   </div>
 
-  <div slot="actions" class="hidden xl:flex items-center gap-2 text-xs text-muted-foreground">
-    <label for="theme-style-select" class="sr-only">Component style theme</label>
-    <select
-      id="theme-style-select"
-      class="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground transition-colors outline-none focus:border-primary"
-    >
-      {styleThemes.map(theme => <option value={theme.value}>{theme.label}</option>)}
-    </select>
+  <div slot="actions" class="flex items-center gap-2">
+    <details class="group relative">
+      <summary
+        aria-label="Customize demo appearance"
+        title="Customize demo appearance"
+        class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border bg-background/60 text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground [&::-webkit-details-marker]:hidden"
+      >
+        <and-icon name="sliders" size="16"></and-icon>
+      </summary>
 
-    <label for="theme-color-select" class="sr-only">Component color palette</label>
-    <select
-      id="theme-color-select"
-      class="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground transition-colors outline-none focus:border-primary"
-    >
-      {colorThemes.map(theme => <option value={theme.value}>{theme.label}</option>)}
-    </select>
-  </div>
+      <div class="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-72 rounded-xl border border-border bg-background p-3 shadow-xl">
+        <p class="mb-3 text-sm font-medium text-foreground">Demo appearance</p>
+        <div class="space-y-3">
+          <label class="grid gap-1.5 text-xs font-medium text-muted-foreground" for="theme-style-select">
+            Component style
+            <select
+              id="theme-style-select"
+              class="h-9 rounded-md border border-border bg-background px-2 text-sm font-normal text-foreground outline-none transition-colors focus:border-primary"
+            >
+              {styleThemes.map(theme => <option value={theme.value}>{theme.label}</option>)}
+            </select>
+          </label>
 
-  <div slot="actions" class="flex items-center">
-    {
-      actionLinks.map(link => (
-        <and-button size="sm" variant="link" href={link.href} target={link.external ? '_blank' : undefined}>
-          <and-icon name={link.icon} size="16" />
-          {link.label}
-        </and-button>
-      ))
-    }
+          <label class="grid gap-1.5 text-xs font-medium text-muted-foreground" for="theme-color-select">
+            Color palette
+            <select
+              id="theme-color-select"
+              class="h-9 rounded-md border border-border bg-background px-2 text-sm font-normal text-foreground outline-none transition-colors focus:border-primary"
+            >
+              {colorThemes.map(theme => <option value={theme.value}>{theme.label}</option>)}
+            </select>
+          </label>
+        </div>
+      </div>
+    </details>
+
+    <details class="group relative">
+      <summary
+        aria-label="Open resources"
+        title="Open resources"
+        class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border bg-background/60 text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground [&::-webkit-details-marker]:hidden"
+      >
+        <and-icon name="book-open" size="17"></and-icon>
+      </summary>
+
+      <div class="absolute right-0 top-[calc(100%+0.75rem)] z-50 grid w-44 gap-1 rounded-xl border border-border bg-background p-1.5 shadow-xl">
+        {
+          actionLinks.map(link => (
+            <a
+              class="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noreferrer' : undefined}
+            >
+              <and-icon name={link.icon} size="16"></and-icon>
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </details>
   </div>
 
   <and-button

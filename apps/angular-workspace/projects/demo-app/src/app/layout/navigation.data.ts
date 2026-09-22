@@ -28,7 +28,6 @@ export const NAV_ITEMS: Array<{ id: Section; label: string }> = [
   { id: 'layout', label: 'Layout' },
   { id: 'vanilla', label: 'Vanilla' },
   { id: 'behaviors', label: 'Behaviors' },
-
   { id: 'docs', label: 'Docs' },
 ];
 
