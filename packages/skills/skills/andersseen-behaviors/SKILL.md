@@ -1,15 +1,8 @@
 ---
 name: andersseen-behaviors
 description:
-  'Attach framework-agnostic DOM behaviors onto existing HTML via `and-*`
-  attributes with @andersseen/behaviors. Load when you need progressive
-  enhancement / imperative interaction wired onto elements already in the page —
-  resizable splitters, HTML5 drag & drop, hover/focus tooltips, or modal dialogs
-  — WITHOUT a framework and WITHOUT a pre-styled custom element:
-  defineBehaviors, createSplitter, createDraggable, createDropZone,
-  createTooltip, createDialog. Trigger phrases: and-splitter, and-tooltip,
-  and-draggable, and-drop-zone, and-dialog, defineBehaviors, attribute
-  behaviors, progressive enhancement, resizable panels, sortable drag and drop.'
+  'Attach framework-agnostic @andersseen/behaviors to existing HTML for
+  progressive enhancement, drag and drop, splitters, tooltips, and dialogs.'
 ---
 
 # @andersseen/behaviors — attribute-driven DOM behaviors

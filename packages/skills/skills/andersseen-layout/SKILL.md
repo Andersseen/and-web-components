@@ -1,12 +1,8 @@
 ---
 name: andersseen-layout
 description:
-  'Compose layout and typography with @andersseen/layout — a pure-CSS,
-  attribute-driven system using and-layout and and-text with @breakpoint
-  responsive modifiers. Load when building responsive page shells, grids, flex
-  layouts, spacing, or type scales without a utility framework. Trigger phrases:
-  and-layout, and-text, responsive grid, flex layout, spacing scale, typography,
-  cols, gap, and-layout attributes.'
+  'Compose responsive layouts and typography with the pure-CSS, attribute-driven
+  @andersseen/layout system.'
 ---
 
 # @andersseen/layout — attribute-driven layout & typography

@@ -1,12 +1,8 @@
 ---
 name: andersseen-motion
 description:
-  'Add attribute-driven animations with @andersseen/motion — scroll/enter,
-  hover, and tap triggers via and-motion HTML attributes plus
-  initMotion/MotionController. Load when animating element entrances, hover/tap
-  feedback, staggered lists, or configuring duration/delay/easing. Respects
-  prefers-reduced-motion. Trigger phrases: animation, motion, and-motion,
-  fade-up, scroll animation, initMotion, entrance animation.'
+  'Add accessible @andersseen/motion attribute-driven animations for scroll,
+  hover, tap, stagger, and entrance effects.'
 ---
 
 # @andersseen/motion — attribute-driven animation engine

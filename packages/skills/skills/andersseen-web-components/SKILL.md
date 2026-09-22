@@ -1,14 +1,8 @@
 ---
 name: andersseen-web-components
 description:
-  'Use ready-made, styled Andersseen UI custom elements
-  (@andersseen/web-components). Load when placing or wiring and-* elements —
-  and-button, and-card, and-modal, and-tabs, and-drawer, and-dropdown,
-  and-select, and-input, and-navbar, and-sidebar, and-toast, and-tooltip,
-  and-accordion, and-alert, and-badge, and-breadcrumb, and-carousel,
-  and-pagination — in plain HTML, Angular, React, Vue, or Astro. Trigger
-  phrases: and-* component, andersseen web component, stencil custom element,
-  shadow dom UI, design tokens.'
+  'Use @andersseen/web-components ready-made styled custom elements in HTML,
+  Angular, React, Vue, or Astro.'
 ---
 
 # @andersseen/web-components — styled UI custom elements

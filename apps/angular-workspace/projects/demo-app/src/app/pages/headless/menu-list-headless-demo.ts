@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, QueryList, signal, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { createMenuList } from '@andersseen/headless-components';
 
@@ -18,46 +18,37 @@ import { createMenuList } from '@andersseen/headless-components';
       </header>
 
       <!-- Preview Section -->
-      <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
-        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
-          <div class="p-10 flex items-center justify-center min-h-[300px]">
-            <div class="w-64 rounded-lg border border-border bg-popover p-1 shadow-sm">
-              <ul role="menu" aria-label="Actions" class="list-none m-0 p-0" (keydown)="onMenuKeydown($event)">
-                @for (item of previewItems; track item.id; let i = $index) {
-                  @if (item.separator) {
-                    <li class="my-1 h-px bg-muted" role="separator"></li>
-                  } @else {
-                    <li
-                      role="menuitem"
-                      class="relative flex w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none cursor-pointer transition-colors"
-                      [class.text-popover-foreground]="item.intent !== 'destructive'"
-                      [class.hover:bg-accent]="item.intent !== 'destructive' && !item.disabled"
-                      [class.hover:text-accent-foreground]="item.intent !== 'destructive' && !item.disabled"
-                      [class.focus:bg-accent]="item.intent !== 'destructive' && !item.disabled"
-                      [class.text-destructive]="item.intent === 'destructive'"
-                      [class.hover:bg-destructive]="item.intent === 'destructive' && !item.disabled"
-                      [class.hover:text-destructive-foreground]="item.intent === 'destructive' && !item.disabled"
-                      [class.opacity-50]="!!item.disabled"
-                      [class.pointer-events-none]="!!item.disabled"
-                      [attr.aria-disabled]="item.disabled || null"
-                      [tabIndex]="i === focusedIndex() ? 0 : -1"
-                      (click)="selectItem(item)"
-                    >
-                      <span class="mr-2">{{ item.icon }}</span>
-                      <span>{{ item.label }}</span>
-                      @if (item.shortcut) {
-                        <span class="ml-auto text-xs tracking-widest opacity-60">
-                          {{ item.shortcut }}
-                        </span>
-                      }
-                    </li>
-                  }
-                }
-              </ul>
-            </div>
-          </div>
-        </div>
+      <section class="headless-primitive mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Unstyled behavior</h2>
+        <fieldset>
+          <legend>Account actions</legend>
+          <p>Use Arrow keys, Home, or End to move between actions. Archive is disabled.</p>
+          <ul role="menu" aria-label="Account actions" (keydown)="onMenuKeydown($event)">
+            @for (item of previewItems; track item.id) {
+              @if (item.separator) {
+                <li role="separator"><hr /></li>
+              } @else {
+                <li>
+                  <button
+                    #previewMenuItem
+                    type="button"
+                    role="menuitem"
+                    [disabled]="item.disabled"
+                    [attr.aria-disabled]="item.disabled || null"
+                    [tabIndex]="isFocused(item) ? 0 : -1"
+                    (click)="selectItem(item)"
+                  >
+                    {{ item.label }}
+                    @if (item.shortcut) {
+                      ({{ item.shortcut }})
+                    }
+                  </button>
+                </li>
+              }
+            }
+          </ul>
+          <output aria-live="polite">Focused: {{ focusedItemLabel() }} · Selected: {{ selectedItemLabel() }}</output>
+        </fieldset>
       </section>
 
       <!-- Usage Code -->
@@ -139,6 +130,8 @@ menu.actions.selectItem('edit');</code></pre>
   `,
 })
 export default class MenuListHeadlessDemo {
+  @ViewChildren('previewMenuItem') previewMenuItems!: QueryList<ElementRef<HTMLButtonElement>>;
+
   previewItems: Array<{
     id?: string;
     label?: string;
@@ -173,6 +166,7 @@ export default class MenuListHeadlessDemo {
   });
 
   focusedIndex = signal(this._menu.state.focusedIndex);
+  selectedItemLabel = signal('None');
 
   // Headless section
   headlessMenuItems = [
@@ -198,11 +192,29 @@ export default class MenuListHeadlessDemo {
     if (item.disabled || !item.id) return;
     this._menu.actions.selectItem(item.id);
     this.focusedIndex.set(this._menu.state.focusedIndex);
+    this.selectedItemLabel.set(this.getLabel(item.id));
   }
 
   onMenuKeydown(event: KeyboardEvent) {
     this._menu.handleMenuKeyDown(event);
     this.focusedIndex.set(this._menu.state.focusedIndex);
+    queueMicrotask(() => this.previewMenuItems.get(this.focusedIndex())?.nativeElement.focus());
+  }
+
+  isFocused(item: { id?: string }) {
+    return this.getInteractiveIndex(item.id) === this.focusedIndex();
+  }
+
+  focusedItemLabel() {
+    return this.getLabel(this.previewItems.filter(item => !item.separator)[this.focusedIndex()]?.id);
+  }
+
+  private getInteractiveIndex(id?: string) {
+    return this.previewItems.filter(item => !item.separator).findIndex(item => item.id === id);
+  }
+
+  private getLabel(id?: string) {
+    return this.previewItems.find(item => item.id === id)?.label ?? 'None';
   }
 
   headlessSelect(item: { id: string; disabled?: boolean }) {

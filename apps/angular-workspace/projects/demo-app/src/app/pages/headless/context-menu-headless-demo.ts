@@ -18,59 +18,44 @@ import { createContextMenu } from '@andersseen/headless-components';
       </header>
 
       <!-- Preview Section -->
-      <section class="mb-12">
-        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Preview</h2>
-        <div class="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
-          <div class="p-10 flex items-center justify-center min-h-[300px]">
-            <div
-              class="relative w-80 h-48 rounded-lg border-2 border-dashed border-border flex items-center justify-center select-none bg-muted/30"
-              (contextmenu)="onContextMenu($event)"
-              #triggerArea
-            >
-              <span class="text-sm text-muted-foreground pointer-events-none"> Right-click here </span>
+      <section class="headless-primitive mb-12">
+        <h2 class="text-xl font-semibold tracking-tight text-foreground mb-5">Unstyled behavior</h2>
+        <fieldset>
+          <legend>Context menu trigger</legend>
+          <p id="context-menu-hint">Use the secondary mouse button on this control. Press Escape to close the menu.</p>
+          <button type="button" aria-describedby="context-menu-hint" (contextmenu)="onContextMenu($event)" #triggerArea>
+            Right-click this button
+          </button>
+          @if (selectedAction()) {
+            <p aria-live="polite">Last selected: {{ selectedAction() }}</p>
+          }
+        </fieldset>
 
-              <!-- Context Menu Panel -->
-              @if (isOpen()) {
-                <div
-                  class="fixed z-50 min-w-[200px] rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md animate-fade-in"
-                  [style.left.px]="position().x"
-                  [style.top.px]="position().y"
-                  role="menu"
-                  aria-label="Context menu"
-                >
-                  @for (item of menuItems; track item.id) {
-                    @if (item.separator) {
-                      <div class="my-1 h-px bg-muted" role="separator"></div>
-                    } @else {
-                      <button
-                        class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none bg-transparent border-0 transition-colors"
-                        [class.text-popover-foreground]="item.intent !== 'destructive'"
-                        [class.hover:bg-accent]="item.intent !== 'destructive'"
-                        [class.hover:text-accent-foreground]="item.intent !== 'destructive'"
-                        [class.focus:bg-accent]="item.intent !== 'destructive'"
-                        [class.text-destructive]="item.intent === 'destructive'"
-                        [class.hover:bg-destructive]="item.intent === 'destructive'"
-                        [class.hover:text-destructive-foreground]="item.intent === 'destructive'"
-                        role="menuitem"
-                        (click)="selectItem(item)"
-                      >
-                        <span class="mr-2 flex h-3.5 w-3.5 items-center justify-center">
-                          {{ item.icon }}
-                        </span>
-                        <span>{{ item.label }}</span>
-                        @if (item.shortcut) {
-                          <span class="ml-auto text-xs tracking-widest opacity-60">
-                            {{ item.shortcut }}
-                          </span>
-                        }
-                      </button>
+        @if (isOpen()) {
+          <ul
+            [style.position]="'fixed'"
+            [style.zIndex]="50"
+            [style.left.px]="position().x"
+            [style.top.px]="position().y"
+            role="menu"
+            aria-label="Context menu"
+          >
+            @for (item of menuItems; track item.id) {
+              @if (item.separator) {
+                <li role="separator"><hr /></li>
+              } @else {
+                <li>
+                  <button type="button" role="menuitem" (click)="selectItem(item)">
+                    {{ item.label }}
+                    @if (item.shortcut) {
+                      ({{ item.shortcut }})
                     }
-                  }
-                </div>
+                  </button>
+                </li>
               }
-            </div>
-          </div>
-        </div>
+            }
+          </ul>
+        }
       </section>
 
       <!-- Usage Code -->
@@ -212,6 +197,7 @@ export default class ContextMenuHeadlessDemo {
 
   isOpen = signal(false);
   position = signal({ x: 0, y: 0 });
+  selectedAction = signal<string | null>(null);
 
   // Headless context menu
   private _headlessCtx = createContextMenu({
@@ -236,6 +222,7 @@ export default class ContextMenuHeadlessDemo {
 
   selectItem(item: { id?: string; label?: string }) {
     if (!item.id) return;
+    this.selectedAction.set(item.label ?? item.id);
     this._ctx.actions.selectItem(item.id);
     this.isOpen.set(this._ctx.state.isOpen);
   }

@@ -1,0 +1,34 @@
+{
+  "packs": [
+    "technical",
+    "typescript",
+    "angular",
+    "efficiency",
+    "agentic",
+    "testing",
+    "accessibility",
+    "documentation",
+    "git",
+    "devops",
+    "andersseen-ecosystem"
+  ],
+  "enable": ["rtk", "codebase-memory"],
+  "targets": ["codex", "claude"],
+  "skillDirectories": ["packages/skills/skills"],
+  "localPacks": [
+    {
+      "name": "andersseen-ecosystem",
+      "category": "framework",
+      "description": "Repository-owned guidance for the Andersseen component ecosystem.",
+      "skills": [
+        "andersseen",
+        "andersseen-web-components",
+        "andersseen-headless-core",
+        "andersseen-icon",
+        "andersseen-motion",
+        "andersseen-layout",
+        "andersseen-behaviors"
+      ]
+    }
+  ]
+}
